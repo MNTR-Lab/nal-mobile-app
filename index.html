@@ -3044,6 +3044,9 @@ const SHOP_URL =
 const SCORES_URL =
   "https://www.thenationalarenaleague.com/stats#/1200/scores?division_id=41958";
 
+const WATCH_URL =
+  "https://www.nal-network.com/";
+
 
 /* =========================================================
    PAGE ELEMENTS
@@ -3206,6 +3209,26 @@ navButtons.forEach(button => {
               accent: "#e31b23"
             },
             navPage: "scoresPage"
+          }
+        );
+
+        return;
+      }
+
+      if (pageId === "watchPage") {
+
+        openArticle(
+          WATCH_URL,
+          {
+            mode: "team",
+            title: "NAL NETWORK",
+            subtitle: "THE GAME. THE LEAGUE. THE NETWORK.",
+            loadingText: "LOADING NAL NETWORK",
+            brand: {
+              primary: "#07172b",
+              accent: "#e31b23"
+            },
+            navPage: "watchPage"
           }
         );
 
