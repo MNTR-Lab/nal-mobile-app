@@ -3620,7 +3620,9 @@ async function loadNALTeams() {
 
 /* =========================================================
    TEAM PAGE ROUTER
-   Amarillo is the first Team Home prototype.
+   All Season X teams use the reusable Team Home.
+   Colorado opens a branded limited page because it does not
+   currently use the FootballShift team-data structure.
    ========================================================= */
 
 async function openTeam(teamSlug) {
@@ -3659,23 +3661,12 @@ async function openTeam(teamSlug) {
       );
     }
 
-    /* Amarillo is our first Team Home prototype */
-    if (team.slug === "amarillo-warbirds") {
-
-      console.log(
-        "Opening Amarillo Warbirds Team Home:",
-        team
-      );
-
-      openTeamHome(team);
-      return;
-    }
-
-    /* Other teams will be activated after Amarillo is approved */
     console.log(
-      "Team page coming soon:",
+      "Opening Team Home:",
       team.name
     );
+
+    openTeamHome(team);
 
   } catch (error) {
 
@@ -3722,38 +3713,68 @@ function openTeamHome(team) {
 
   /* =====================================================
      TEAM BRANDING
-     Amarillo prototype colors
+     Reusable colors for all Season X Team Home screens.
+     These are presentation colors only and can be refined
+     later without changing the page architecture.
      ===================================================== */
 
-  let primaryColor =
-    "#07172b";
+  const teamBranding = {
+    "amarillo-warbirds": {
+      primary: "#07172b",
+      accent: "#e31b23"
+    },
+    "colorado-spartans": {
+      primary: "#07172b",
+      accent: "#e31b23"
+    },
+    "dallas-apex": {
+      primary: "#07172b",
+      accent: "#e31b23"
+    },
+    "louisiana-rouxgaroux": {
+      primary: "#07172b",
+      accent: "#e31b23"
+    },
+    "omaha-beef": {
+      primary: "#07172b",
+      accent: "#e31b23"
+    },
+    "pueblo-punishers": {
+      primary: "#07172b",
+      accent: "#e31b23"
+    },
+    "salina-liberty": {
+      primary: "#07172b",
+      accent: "#e31b23"
+    },
+    "sioux-city-bandits": {
+      primary: "#07172b",
+      accent: "#e31b23"
+    },
+    "southwest-kansas-storm": {
+      primary: "#07172b",
+      accent: "#e31b23"
+    },
+    "wheeling-miners": {
+      primary: "#2c2c2c",
+      accent: "#c99a2e"
+    }
+  };
 
-  let accentColor =
-    "#e31b23";
-
-
-  if (
-    team.slug ===
-    "amarillo-warbirds"
-  ) {
-
-    primaryColor =
-      "#07172b";
-
-    accentColor =
-      "#e31b23";
-
-  }
-
+  const brand =
+    teamBranding[team.slug] || {
+      primary: "#07172b",
+      accent: "#e31b23"
+    };
 
   teamPage.style.setProperty(
     "--team-primary",
-    primaryColor
+    brand.primary
   );
 
   teamPage.style.setProperty(
     "--team-accent",
-    accentColor
+    brand.accent
   );
 
 
@@ -3905,6 +3926,47 @@ function openTeamHome(team) {
 
 
   /* =====================================================
+     COLORADO LIMITED TEAM HOME
+     Colorado does not currently use FootballShift.
+     Keep the branded Team Home, but hide unsupported
+     team-data sections and controls for now.
+     ===================================================== */
+
+  const footballSection =
+    document.querySelector(
+      "#teamPage .team-menu-grid"
+    )?.closest(".team-section");
+
+  const newsSectionTeam =
+    document.getElementById(
+      "teamNewsTitle"
+    )?.closest(".team-section");
+
+  const nextGameSection =
+    document.querySelector(
+      "#teamPage .team-coming-soon"
+    )?.closest(".team-section");
+
+  const hasTeamData =
+    !!team.footballShift;
+
+  if (footballSection) {
+    footballSection.style.display =
+      hasTeamData ? "" : "none";
+  }
+
+  if (newsSectionTeam) {
+    newsSectionTeam.style.display =
+      hasTeamData ? "" : "none";
+  }
+
+  if (nextGameSection) {
+    nextGameSection.style.display =
+      hasTeamData ? "" : "none";
+  }
+
+
+  /* =====================================================
      OFFICIAL WEBSITE BUTTON
      ===================================================== */
 
@@ -3974,11 +4036,11 @@ function openTeamHome(team) {
             return;
           }
 
-          window.open(
-            url,
-            "_blank",
-            "noopener,noreferrer"
-          );
+          /*
+             Keep team information inside the NAL app shell.
+             The existing in-app reader is reused here.
+          */
+          openArticle(url);
 
         };
 
