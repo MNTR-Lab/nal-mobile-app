@@ -1941,6 +1941,261 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
 .team-website-button:active {
   transform: scale(.985);
 }
+
+/* =========================================================
+   TEAM NEWS — LIVE FEED
+   ========================================================= */
+
+.team-news-section {
+  padding-right: 0;
+}
+
+.team-news-section .section-header {
+  padding-right: 16px;
+}
+
+.team-news-loading {
+  margin-right: 16px;
+  min-height: 145px;
+  border-radius: 12px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--team-primary, #07172b),
+      #07172b
+    );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.team-news-loading-logo {
+  width: 82px;
+  max-height: 70px;
+  object-fit: contain;
+}
+
+.team-news-spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255,255,255,.25);
+  border-top-color: var(--team-accent, #e31b23);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+.team-news-lead {
+  margin-right: 16px;
+  min-height: 235px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--team-primary, #07172b);
+  text-decoration: none;
+  display: block;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
+.team-news-lead-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 1;
+}
+
+.team-news-lead-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,.14),
+      var(--team-primary, #07172b) 70%
+    );
+}
+
+.team-news-lead-fallback img {
+  width: 130px;
+  max-width: 48%;
+  max-height: 115px;
+  object-fit: contain;
+  opacity: .55;
+}
+
+.team-news-lead-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.02) 0%,
+      rgba(0,0,0,.10) 30%,
+      rgba(0,0,0,.62) 68%,
+      rgba(0,0,0,.94) 100%
+    );
+}
+
+.team-news-lead-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  padding: 55px 16px 16px;
+}
+
+.team-news-category {
+  display: inline-flex;
+  align-items: center;
+  min-height: 19px;
+  padding: 4px 8px;
+  margin-bottom: 7px;
+  border-radius: 4px;
+  background: var(--team-accent, #e31b23);
+  color: #ffffff;
+  font-size: 7px;
+  font-weight: 950;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+}
+
+.team-news-lead-title {
+  color: #ffffff;
+  font-size: 17px;
+  line-height: 1.1;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.team-news-lead-description {
+  margin-top: 7px;
+  color: rgba(255,255,255,.78);
+  font-size: 9px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.team-news-read {
+  margin-top: 9px;
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+
+.team-news-scroll {
+  display: flex;
+  gap: 11px;
+  overflow-x: auto;
+  padding: 14px 16px 7px 0;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+.team-news-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.team-news-card {
+  min-width: 205px;
+  width: 205px;
+  border: 1px solid #e0e5e9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  text-decoration: none;
+  scroll-snap-align: start;
+  box-shadow: 0 3px 10px rgba(0,0,0,.05);
+}
+
+.team-news-card-image-wrap {
+  height: 118px;
+  position: relative;
+  overflow: hidden;
+  background: var(--team-primary, #07172b);
+}
+
+.team-news-card-image {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.team-news-card-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--team-primary, #07172b);
+}
+
+.team-news-card-fallback img {
+  width: 92px;
+  max-width: 52%;
+  max-height: 82px;
+  object-fit: contain;
+  opacity: .48;
+}
+
+.team-news-card-body {
+  padding: 10px 11px 12px;
+}
+
+.team-news-card-date {
+  margin-bottom: 5px;
+  color: var(--team-accent, #e31b23);
+  font-size: 7px;
+  font-weight: 950;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+}
+
+.team-news-card-title {
+  color: var(--team-primary, #07172b);
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 950;
+  text-transform: uppercase;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.team-news-swipe-hint {
+  padding: 4px 16px 0 0;
+  color: #8b949e;
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: .7px;
+  text-align: right;
+  text-transform: uppercase;
+}
+
 </style>
 </head>
 
@@ -2293,29 +2548,25 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
 
 
   <!-- TEAM NEWS -->
-  <section class="team-section">
+  <section class="team-section team-news-section" id="teamNewsSection">
 
     <div class="section-header">
-
-      <div
-        id="teamNewsTitle"
-        class="section-title"
-      >
+      <div id="teamNewsTitle" class="section-title">
         Latest Team News
       </div>
-
     </div>
 
-    <div class="team-coming-soon team-coming-soon-light">
-
-      <div class="team-coming-soon-title">
-        TEAM NEWS
+    <div id="teamNewsContent">
+      <div class="team-news-loading">
+        <img
+          id="teamNewsLoadingLogo"
+          class="team-news-loading-logo"
+          src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
+          alt=""
+        >
+        <div class="team-news-spinner"></div>
+        <div>Loading Team News</div>
       </div>
-
-      <div class="team-coming-soon-copy">
-        Latest stories and updates will appear here.
-      </div>
-
     </div>
 
   </section>
@@ -2790,6 +3041,9 @@ const NEWS_FEED =
 const SHOP_URL =
   "https://nalshop.com/";
 
+const SCORES_URL =
+  "https://www.thenationalarenaleague.com/stats#/1200/scores?division_id=41958";
+
 
 /* =========================================================
    PAGE ELEMENTS
@@ -2934,6 +3188,30 @@ navButtons.forEach(button => {
       const pageId =
         button.dataset.page;
 
+      /*
+         SCORES uses the same in-app FootballShift viewer
+         as the team football pages.
+      */
+      if (pageId === "scoresPage") {
+
+        openArticle(
+          SCORES_URL,
+          {
+            mode: "team",
+            title: "NAL SCORES",
+            subtitle: "SEASON X",
+            loadingText: "LOADING NAL SCORES",
+            brand: {
+              primary: "#07172b",
+              accent: "#e31b23"
+            },
+            navPage: "scoresPage"
+          }
+        );
+
+        return;
+      }
+
       if (
         articleFrame.src !==
         "about:blank"
@@ -3076,13 +3354,16 @@ function openArticle(url, options = {}) {
     button.classList.remove("active");
   });
 
-  const homeButton =
+  const viewerNavPage =
+    options.navPage || "homePage";
+
+  const viewerNavButton =
     document.querySelector(
-      '[data-page="homePage"]'
+      `[data-page="${viewerNavPage}"]`
     );
 
-  if (homeButton) {
-    homeButton.classList.add("active");
+  if (viewerNavButton) {
+    viewerNavButton.classList.add("active");
   }
 
   articleLoading.style.display =
@@ -3721,6 +4002,318 @@ async function loadNALTeams() {
 
 
 /* =========================================================
+   TEAM NEWS — LOAD FROM data/team-news/[team-slug].json
+   ========================================================= */
+
+function normalizeTeamNewsFeed(feed) {
+  if (Array.isArray(feed)) {
+    return feed;
+  }
+
+  if (feed && Array.isArray(feed.articles)) {
+    return feed.articles;
+  }
+
+  return [];
+}
+
+
+function teamNewsImageMarkup(article, className) {
+  if (!article || !article.image) {
+    return "";
+  }
+
+  return `
+    <img
+      class="${className}"
+      src="${escapeHTML(article.image)}"
+      alt="${escapeHTML(article.title || "")}"
+      loading="lazy"
+      onerror="this.style.display='none'"
+    >
+  `;
+}
+
+
+function renderTeamNews(team, articles) {
+  const section =
+    document.getElementById("teamNewsSection");
+
+  const content =
+    document.getElementById("teamNewsContent");
+
+  if (!section || !content) {
+    return;
+  }
+
+  if (
+    !Array.isArray(articles) ||
+    articles.length === 0
+  ) {
+    section.style.display = "none";
+    content.innerHTML = "";
+    return;
+  }
+
+  section.style.display = "";
+
+  const lead = articles[0];
+  const additional = articles.slice(1, 5);
+  const fallbackLogo =
+    team.logo || NAL_LOGO;
+
+  let html = `
+    <a
+      class="team-news-lead"
+      href="${escapeHTML(lead.url || "")}"
+      data-team-news-story="true"
+    >
+      <div class="team-news-lead-fallback">
+        <img
+          src="${escapeHTML(fallbackLogo)}"
+          alt=""
+        >
+      </div>
+
+      ${teamNewsImageMarkup(
+        lead,
+        "team-news-lead-image"
+      )}
+
+      <div class="team-news-lead-overlay"></div>
+
+      <div class="team-news-lead-content">
+        <div class="team-news-category">
+          ${escapeHTML(
+            lead.category ||
+            team.name ||
+            "TEAM NEWS"
+          )}
+        </div>
+
+        <div class="team-news-lead-title">
+          ${escapeHTML(lead.title || "TEAM NEWS")}
+        </div>
+
+        ${
+          lead.description
+            ? `
+              <div class="team-news-lead-description">
+                ${escapeHTML(lead.description)}
+              </div>
+            `
+            : ""
+        }
+
+        <div class="team-news-read">
+          READ STORY →
+        </div>
+      </div>
+    </a>
+  `;
+
+  if (additional.length > 0) {
+    html += `
+      <div class="team-news-scroll">
+    `;
+
+    additional.forEach(article => {
+      html += `
+        <a
+          class="team-news-card"
+          href="${escapeHTML(article.url || "")}"
+          data-team-news-story="true"
+        >
+          <div class="team-news-card-image-wrap">
+            <div class="team-news-card-fallback">
+              <img
+                src="${escapeHTML(fallbackLogo)}"
+                alt=""
+              >
+            </div>
+
+            ${teamNewsImageMarkup(
+              article,
+              "team-news-card-image"
+            )}
+          </div>
+
+          <div class="team-news-card-body">
+            <div class="team-news-card-date">
+              ${escapeHTML(
+                formatNewsDate(article.date)
+              )}
+            </div>
+
+            <div class="team-news-card-title">
+              ${escapeHTML(
+                article.title || "TEAM NEWS"
+              )}
+            </div>
+          </div>
+        </a>
+      `;
+    });
+
+    html += `
+      </div>
+
+      <div class="team-news-swipe-hint">
+        SWIPE FOR MORE →
+      </div>
+    `;
+  }
+
+  content.innerHTML = html;
+}
+
+
+async function loadTeamNews(team) {
+  const section =
+    document.getElementById("teamNewsSection");
+
+  const content =
+    document.getElementById("teamNewsContent");
+
+  const loadingLogo =
+    document.getElementById("teamNewsLoadingLogo");
+
+  if (!section || !content || !team) {
+    return;
+  }
+
+  /*
+     Colorado does not currently use the FootballShift
+     team-news source, so its news section stays hidden.
+  */
+  if (team.slug === "colorado-spartans") {
+    section.style.display = "none";
+    content.innerHTML = "";
+    return;
+  }
+
+  section.style.display = "";
+
+  if (loadingLogo) {
+    loadingLogo.src =
+      team.logo || NAL_LOGO;
+  }
+
+  content.innerHTML = `
+    <div class="team-news-loading">
+      <img
+        class="team-news-loading-logo"
+        src="${escapeHTML(team.logo || NAL_LOGO)}"
+        alt=""
+      >
+      <div class="team-news-spinner"></div>
+      <div>Loading ${escapeHTML(team.name || "Team")} News</div>
+    </div>
+  `;
+
+  try {
+    const response = await fetch(
+      `data/team-news/${encodeURIComponent(team.slug)}.json?v=${Date.now()}`,
+      {
+        cache: "no-store"
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Team news request failed: ${response.status}`
+      );
+    }
+
+    const feed = await response.json();
+    const articles =
+      normalizeTeamNewsFeed(feed);
+
+    /*
+       Protect against a user switching teams before
+       this team's request finishes.
+    */
+    if (
+      !activeTeam ||
+      activeTeam.slug !== team.slug
+    ) {
+      return;
+    }
+
+    renderTeamNews(
+      team,
+      articles
+    );
+
+  } catch (error) {
+    console.error(
+      `Unable to load team news for ${team.name}:`,
+      error
+    );
+
+    /*
+       A missing/empty team feed should not create an
+       error box in the app. We simply hide the section.
+    */
+    if (
+      activeTeam &&
+      activeTeam.slug === team.slug
+    ) {
+      section.style.display = "none";
+      content.innerHTML = "";
+    }
+  }
+}
+
+
+const teamNewsSection =
+  document.getElementById("teamNewsSection");
+
+if (teamNewsSection) {
+  teamNewsSection.addEventListener(
+    "click",
+    event => {
+      const story =
+        event.target.closest(
+          '[data-team-news-story="true"]'
+        );
+
+      if (!story) {
+        return;
+      }
+
+      const url =
+        story.getAttribute("href");
+
+      if (!url || !activeTeam) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const brand =
+        activeTeam._appBrand || {
+          primary: "#07172b",
+          accent: "#e31b23"
+        };
+
+      openArticle(
+        url,
+        {
+          mode: "team",
+          title: "TEAM NEWS",
+          subtitle:
+            activeTeam.name || "NAL TEAM",
+          loadingText: "LOADING TEAM NEWS",
+          brand: brand
+        }
+      );
+    }
+  );
+}
+
+
+/* =========================================================
    TEAM PAGE ROUTER
    All Season X teams use the reusable Team Home.
    Colorado opens a branded limited page because it does not
@@ -4044,6 +4637,10 @@ function openTeamHome(team) {
   }
 
 
+  /* Load this team's live news feed */
+  loadTeamNews(team);
+
+
   /* =====================================================
      COLORADO LIMITED TEAM HOME
      Colorado does not currently use FootballShift.
@@ -4076,7 +4673,9 @@ function openTeamHome(team) {
 
   if (newsSectionTeam) {
     newsSectionTeam.style.display =
-      hasTeamData ? "" : "none";
+      team.slug === "colorado-spartans"
+        ? "none"
+        : "";
   }
 
   if (nextGameSection) {
