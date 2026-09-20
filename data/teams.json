@@ -3,24 +3,24 @@
   "year": 2027,
   "teams": [
     {
-  "name": "Amarillo Warbirds",
-  "shortName": "Amarillo",
-  "slug": "amarillo-warbirds",
-  "city": "Amarillo",
-  "state": "TX",
-  "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089",
-  "website": "https://www.amarillowarbirds.com/",
-  "footballShift": {
-    "home": "https://www.amarillowarbirds.com/",
-    "news": "https://www.amarillowarbirds.com/news",
-    "schedule": "https://www.amarillowarbirds.com/schedule",
-    "roster": "https://www.amarillowarbirds.com/roster",
-    "stats": "https://www.amarillowarbirds.com/stats",
-    "standings": "https://www.amarillowarbirds.com/standings",
-    "staff": "https://www.amarillowarbirds.com/staff",
-    "tickets": "https://www.amarillowarbirds.com/tickets"
-  
-},
+      "name": "Amarillo Warbirds",
+      "shortName": "Amarillo",
+      "slug": "amarillo-warbirds",
+      "city": "Amarillo",
+      "state": "TX",
+      "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089",
+      "website": "https://www.amarillowarbirds.com/",
+      "footballShift": {
+        "home": "https://www.amarillowarbirds.com/",
+        "news": "https://www.amarillowarbirds.com/news",
+        "schedule": "https://www.amarillowarbirds.com/schedule",
+        "roster": "https://www.amarillowarbirds.com/roster",
+        "stats": "https://www.amarillowarbirds.com/stats",
+        "standings": "https://www.amarillowarbirds.com/standings",
+        "staff": "https://www.amarillowarbirds.com/staff",
+        "tickets": "https://www.amarillowarbirds.com/tickets"
+      }
+    },
     {
       "name": "Colorado Spartans",
       "shortName": "Colorado",
