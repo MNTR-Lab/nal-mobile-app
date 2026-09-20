@@ -1,22 +1,16 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
 <meta
   name="viewport"
   content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
-
 <meta name="theme-color" content="#07172b">
 
 <title>National Arena League</title>
 
 <style>
-
-/* =========================================================
-   GLOBAL
-========================================================= */
 
 * {
   box-sizing: border-box;
@@ -62,30 +56,20 @@ button {
   font-family: inherit;
 }
 
-
-/* =========================================================
-   APP SHELL
-========================================================= */
-
 .app {
   width: 100%;
   max-width: 600px;
   min-height: 100vh;
-
   margin: 0 auto;
-
   background: var(--light);
-
   padding-bottom: var(--nav-height);
-
   position: relative;
-
   overflow-x: hidden;
 }
 
 
 /* =========================================================
-   TOP HEADER
+   HEADER
 ========================================================= */
 
 .topbar {
@@ -99,7 +83,6 @@ button {
   background: var(--nal-blue);
 
   display: grid;
-
   grid-template-columns: 50px 1fr 50px;
 
   align-items: center;
@@ -107,41 +90,37 @@ button {
   border-bottom: 3px solid var(--nal-red);
 
   position: sticky;
-
   top: 0;
 
   z-index: 3000;
 }
 
-.header-left {
+.header-left,
+.header-right {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+}
+
+.header-left {
+  justify-content: flex-start;
+}
+
+.header-right {
+  justify-content: flex-end;
 }
 
 .header-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-
   text-decoration: none;
-
-  cursor: pointer;
 }
 
 .nal-logo {
   width: 76px;
   height: 52px;
-
   object-fit: contain;
-
   display: block;
-}
-
-.header-right {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 }
 
 .header-button {
@@ -149,9 +128,7 @@ button {
   height: 38px;
 
   border: 0;
-
   background: transparent;
-
   color: white;
 
   display: flex;
@@ -206,7 +183,7 @@ button {
 
 
 /* =========================================================
-   SEASON X HERO
+   HERO
 ========================================================= */
 
 .season-x-hero {
@@ -217,7 +194,6 @@ button {
   overflow: hidden;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
@@ -227,20 +203,13 @@ button {
     url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Game_Image_2.jpg?v=1789843442");
 
   background-size: cover;
-
   background-position: center;
 }
-
-
-/* =========================================================
-   CENTERED NAVY GRADIENT
-========================================================= */
 
 .season-x-hero::before {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
   background:
@@ -256,16 +225,10 @@ button {
   z-index: 1;
 }
 
-
-/* =========================================================
-   TOP / BOTTOM DEPTH
-========================================================= */
-
 .season-x-hero::after {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
   background:
@@ -280,11 +243,6 @@ button {
   z-index: 2;
 }
 
-
-/* =========================================================
-   RED CENTER GLOW
-========================================================= */
-
 .hero-red-glow {
   position: absolute;
 
@@ -294,26 +252,16 @@ button {
   left: 50%;
   top: 50%;
 
-  transform:
-    translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
-  background:
-    rgba(227,27,35,.10);
+  background: rgba(227,27,35,.10);
 
-  filter:
-    blur(75px);
+  filter: blur(75px);
 
   border-radius: 50%;
 
   z-index: 2;
-
-  pointer-events: none;
 }
-
-
-/* =========================================================
-   HERO CONTENT
-========================================================= */
 
 .hero-content {
   width: 100%;
@@ -321,11 +269,9 @@ button {
   padding: 24px 20px 36px;
 
   position: relative;
-
   z-index: 4;
 
   display: flex;
-
   flex-direction: column;
 
   align-items: center;
@@ -333,11 +279,6 @@ button {
 
   text-align: center;
 }
-
-
-/* =========================================================
-   HERO EYEBROW
-========================================================= */
 
 .hero-eyebrow {
   color: rgba(255,255,255,.90);
@@ -352,18 +293,11 @@ button {
 
   margin-bottom: 9px;
 
-  text-shadow:
-    0 2px 8px rgba(0,0,0,.8);
+  text-shadow: 0 2px 8px rgba(0,0,0,.8);
 }
-
-
-/* =========================================================
-   NATIONAL BOWL X LOGO
-========================================================= */
 
 .national-bowl-logo {
   width: 340px;
-
   max-width: 88%;
 
   height: auto;
@@ -380,15 +314,10 @@ button {
     );
 }
 
-
-/* =========================================================
-   HERO TAGLINE
-========================================================= */
-
 .hero-tagline {
   margin-top: 10px;
 
-  color: #ffffff;
+  color: white;
 
   font-size: 11px;
 
@@ -400,14 +329,8 @@ button {
 
   text-align: center;
 
-  text-shadow:
-    0 2px 8px rgba(0,0,0,.85);
+  text-shadow: 0 2px 8px rgba(0,0,0,.85);
 }
-
-
-/* =========================================================
-   HERO RED ACCENT
-========================================================= */
 
 .hero-accent-line {
   position: absolute;
@@ -415,14 +338,12 @@ button {
   left: 50%;
   bottom: 17px;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   width: 58px;
   height: 3px;
 
-  background:
-    var(--nal-red);
+  background: var(--nal-red);
 
   border-radius: 10px;
 
@@ -431,7 +352,7 @@ button {
 
 
 /* =========================================================
-   GENERAL HOME SECTIONS
+   GENERAL SECTIONS
 ========================================================= */
 
 .section {
@@ -446,7 +367,6 @@ button {
   display: flex;
 
   justify-content: space-between;
-
   align-items: center;
 
   gap: 10px;
@@ -480,237 +400,311 @@ button {
 
 
 /* =========================================================
-   NEXT GAME
+   NEXT GAMES
 ========================================================= */
 
-.game-card {
+.schedule-placeholder {
   border: 1px solid var(--border);
 
-  border-radius: 15px;
+  border-radius: 14px;
 
-  overflow: hidden;
+  min-height: 105px;
 
-  background: white;
-
-  box-shadow:
-    0 4px 16px rgba(0,0,0,.05);
-}
-
-.game-top {
-  background: #f5f6f8;
-
-  text-align: center;
-
-  padding: 8px;
-
-  color: var(--gray);
-
-  font-size: 10px;
-
-  font-weight: 800;
-
-  letter-spacing: .7px;
-}
-
-.matchup {
-  display: grid;
-
-  grid-template-columns:
-    1fr 90px 1fr;
-
-  align-items: center;
-
-  padding: 20px 10px;
-}
-
-.team {
-  text-align: center;
-}
-
-.team-logo {
-  width: 58px;
-  height: 58px;
-
-  margin:
-    0 auto 8px;
-
-  border-radius: 50%;
-
-  background: var(--nal-blue);
-
-  color: white;
+  background:
+    linear-gradient(
+      135deg,
+      #f7f8fa,
+      #eef1f4
+    );
 
   display: flex;
 
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 20px;
+}
+
+.schedule-placeholder-title {
+  color: var(--nal-blue);
 
   font-size: 13px;
 
   font-weight: 900;
+
+  letter-spacing: .5px;
+
+  text-transform: uppercase;
 }
 
-.team-name {
-  font-size: 11px;
-
-  line-height: 1.15;
-
-  font-weight: 900;
-
-  color: var(--nal-blue);
-}
-
-.game-time {
-  text-align: center;
-}
-
-.time {
-  font-size: 17px;
-
-  font-weight: 900;
-
-  color: var(--nal-blue);
-}
-
-.day {
-  margin-top: 3px;
+.schedule-placeholder-text {
+  margin-top: 6px;
 
   color: var(--gray);
 
-  font-size: 9px;
-
-  font-weight: 800;
-}
-
-.versus {
-  color: var(--nal-red);
-
   font-size: 11px;
 
-  font-weight: 900;
-
-  margin-top: 6px;
-}
-
-.game-button {
-  display: block;
-
-  width: 100%;
-
-  background: var(--nal-blue);
-
-  color: white;
-
-  text-decoration: none;
-
-  text-align: center;
-
-  padding: 13px;
-
-  font-size: 11px;
-
-  font-weight: 900;
-
-  letter-spacing: .8px;
+  line-height: 1.45;
 }
 
 
 /* =========================================================
-   FEATURED
+   NAL NETWORK
 ========================================================= */
 
-.featured-card {
-  border-radius: 15px;
+.network-placeholder {
+  height: 150px;
+
+  border-radius: 14px;
 
   overflow: hidden;
-
-  background: var(--nal-blue);
-
-  color: white;
-
-  box-shadow:
-    0 6px 20px rgba(0,0,0,.12);
-}
-
-.featured-image {
-  height: 195px;
 
   background:
     radial-gradient(
       circle at center,
       #234d77 0%,
-      #102b4e 45%,
+      #102b4e 48%,
       #07172b 100%
     );
 
+  position: relative;
+
   display: flex;
 
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  position: relative;
+  text-align: center;
 }
 
-.play {
-  width: 58px;
-  height: 58px;
+.network-placeholder::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 4px;
 
   background: var(--nal-red);
-
-  border-radius: 50%;
-
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  font-size: 22px;
-
-  padding-left: 4px;
-
-  box-shadow:
-    0 5px 18px rgba(0,0,0,.3);
 }
 
-.featured-info {
-  padding: 16px;
+.network-placeholder-title {
+  color: white;
+
+  font-size: 18px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
 }
 
-.featured-label {
-  color: var(--nal-red);
+.network-placeholder-text {
+  margin-top: 6px;
+
+  color: rgba(255,255,255,.70);
 
   font-size: 10px;
 
-  font-weight: 900;
+  font-weight: 700;
 
-  letter-spacing: 1.2px;
-
-  margin-bottom: 5px;
-}
-
-.featured-title {
-  font-size: 20px;
-
-  font-weight: 900;
-}
-
-.watch-now {
-  margin-top: 11px;
-
-  display: inline-block;
-
-  color: white;
-
-  text-decoration: none;
-
-  font-size: 11px;
-
-  font-weight: 900;
+  letter-spacing: .6px;
 }
 
 
 /* =========================================================
    NEWS
+========================================================= */
+
+.news-section {
+  padding-right: 0;
+}
+
+.news-section .section-header {
+  padding-right: 17px;
+}
+
+
+/* =========================================================
+   LEAD NEWS STORY
+========================================================= */
+
+.lead-story {
+  margin-right: 17px;
+
+  min-height: 265px;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  background: var(--nal-blue);
+
+  text-decoration: none;
+
+  display: block;
+
+  position: relative;
+
+  box-shadow:
+    0 7px 20px rgba(0,0,0,.14);
+}
+
+.lead-story-image {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.lead-story-fallback {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      #244d77 0%,
+      #102b4e 42%,
+      #07172b 100%
+    );
+}
+
+.lead-story-fallback img {
+  width: 180px;
+
+  max-width: 55%;
+
+  opacity: .45;
+
+  filter:
+    drop-shadow(
+      0 8px 12px rgba(0,0,0,.4)
+    );
+}
+
+.lead-story-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7,23,43,.02) 0%,
+      rgba(7,23,43,.10) 30%,
+      rgba(7,23,43,.55) 62%,
+      rgba(7,23,43,.98) 100%
+    );
+
+  z-index: 2;
+}
+
+.lead-story-content {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 3;
+
+  padding: 60px 18px 18px;
+}
+
+.story-category {
+  display: inline-flex;
+
+  align-items: center;
+
+  min-height: 20px;
+
+  padding: 4px 8px;
+
+  border-radius: 4px;
+
+  background: var(--nal-red);
+
+  color: white;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: .8px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 8px;
+}
+
+.lead-story-title {
+  color: white;
+
+  font-size: 19px;
+
+  line-height: 1.08;
+
+  font-weight: 900;
+
+  text-transform: uppercase;
+
+  max-width: 480px;
+}
+
+.lead-story-subtitle {
+  margin-top: 8px;
+
+  color: rgba(255,255,255,.78);
+
+  font-size: 10px;
+
+  line-height: 1.35;
+
+  max-width: 450px;
+
+  display: -webkit-box;
+
+  -webkit-line-clamp: 2;
+
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+.read-story {
+  margin-top: 10px;
+
+  color: white;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: .7px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   SMALL NEWS CARDS
 ========================================================= */
 
 .news-scroll {
@@ -720,12 +714,15 @@ button {
 
   overflow-x: auto;
 
+  padding:
+    15px
+    17px
+    7px
+    0;
+
   scrollbar-width: none;
 
-  padding-bottom: 5px;
-
-  scroll-snap-type:
-    x proximity;
+  scroll-snap-type: x mandatory;
 }
 
 .news-scroll::-webkit-scrollbar {
@@ -733,73 +730,187 @@ button {
 }
 
 .news-card {
-  min-width: 205px;
-
-  width: 205px;
+  min-width: 220px;
+  width: 220px;
 
   border: 1px solid var(--border);
 
-  border-radius: 12px;
+  border-radius: 14px;
 
   overflow: hidden;
 
   background: white;
 
+  text-decoration: none;
+
   scroll-snap-align: start;
+
+  box-shadow:
+    0 3px 12px rgba(0,0,0,.06);
 }
 
-.news-image {
-  height: 110px;
+.news-card-image-wrap {
+  height: 128px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #172d48,
-      #315b88
-    );
+  position: relative;
+
+  overflow: hidden;
+
+  background: var(--nal-blue);
+}
+
+.news-card-image {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.news-card-fallback {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
 
   display: flex;
 
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  color:
-    rgba(255,255,255,.65);
+  background:
+    radial-gradient(
+      circle at center,
+      #234d77,
+      #07172b 75%
+    );
+}
 
-  font-size: 11px;
+.news-card-fallback img {
+  width: 105px;
+
+  max-width: 55%;
+
+  opacity: .45;
+}
+
+.news-card-body {
+  padding: 11px 12px 13px;
+}
+
+.news-card-date {
+  color: var(--nal-red);
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: .7px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 6px;
+}
+
+.news-card-title {
+  color: var(--nal-blue);
+
+  font-size: 12px;
+
+  line-height: 1.27;
+
+  font-weight: 900;
+
+  text-transform: uppercase;
+
+  display: -webkit-box;
+
+  -webkit-line-clamp: 3;
+
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+.swipe-hint {
+  padding:
+    4px
+    17px
+    0
+    0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 5px;
+
+  color: #9aa2ab;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: .7px;
+
+  text-transform: uppercase;
+}
+
+.swipe-hint svg {
+  width: 14px;
+  height: 14px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* =========================================================
+   FUTURE SECTIONS
+========================================================= */
+
+.future-section {
+  background: white;
+
+  margin-top: 9px;
+
+  padding: 20px 17px;
+}
+
+.future-placeholder {
+  border: 1px dashed #cfd5dc;
+
+  border-radius: 12px;
+
+  padding: 22px 15px;
+
+  text-align: center;
+
+  color: #9aa2ab;
+
+  font-size: 10px;
 
   font-weight: 800;
 
   letter-spacing: .5px;
 }
 
-.news-info {
-  padding: 12px;
-}
-
-.news-category {
-  color: var(--nal-red);
-
-  font-size: 9px;
-
-  font-weight: 900;
-
-  margin-bottom: 5px;
-}
-
-.news-title {
-  font-size: 13px;
-
-  line-height: 1.25;
-
-  font-weight: 900;
-
-  color: var(--nal-blue);
-}
-
 
 /* =========================================================
-   PLACEHOLDER PAGES
+   OTHER PAGES
 ========================================================= */
 
 .placeholder-page {
@@ -821,8 +932,7 @@ button {
   width: 70px;
   height: 70px;
 
-  margin:
-    0 auto 20px;
+  margin: 0 auto 20px;
 
   border-radius: 50%;
 
@@ -847,7 +957,6 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
-
   stroke-linejoin: round;
 }
 
@@ -862,8 +971,7 @@ button {
 .placeholder-page p {
   max-width: 350px;
 
-  margin:
-    10px auto 0;
+  margin: 10px auto 0;
 
   color: var(--gray);
 
@@ -874,7 +982,7 @@ button {
 
 
 /* =========================================================
-   NAL SHOP
+   SHOP
 ========================================================= */
 
 .shop-page {
@@ -891,25 +999,18 @@ button {
 .shop-toolbar {
   height: 58px;
 
-  padding:
-    8px 15px;
+  padding: 8px 15px;
 
   background: white;
 
-  border-bottom:
-    1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 
   display: flex;
 
   align-items: center;
-
   justify-content: space-between;
 
   gap: 15px;
-}
-
-.shop-heading {
-  min-width: 0;
 }
 
 .shop-title {
@@ -950,8 +1051,6 @@ button {
 
   justify-content: center;
   align-items: center;
-
-  flex-shrink: 0;
 }
 
 .shop-external svg {
@@ -1011,25 +1110,19 @@ button {
   width: 34px;
   height: 34px;
 
-  border:
-    4px solid #e7eaee;
+  border: 4px solid #e7eaee;
 
-  border-top-color:
-    var(--nal-red);
+  border-top-color: var(--nal-red);
 
   border-radius: 50%;
 
-  animation:
-    spin .8s linear infinite;
+  animation: spin .8s linear infinite;
 }
 
 @keyframes spin {
-
   to {
-    transform:
-      rotate(360deg);
+    transform: rotate(360deg);
   }
-
 }
 
 .shop-loading-text {
@@ -1057,7 +1150,7 @@ button {
 
 
 /* =========================================================
-   BOTTOM NAVIGATION
+   BOTTOM NAV
 ========================================================= */
 
 .bottom-nav {
@@ -1067,29 +1160,22 @@ button {
 
   left: 50%;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   width: 100%;
-
   max-width: 600px;
 
-  height:
-    var(--nav-height);
+  height: var(--nav-height);
 
-  padding-bottom:
-    env(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 
-  background:
-    var(--nal-blue);
+  background: var(--nal-blue);
 
-  border-top:
-    3px solid var(--nal-red);
+  border-top: 3px solid var(--nal-red);
 
   display: grid;
 
-  grid-template-columns:
-    repeat(5,1fr);
+  grid-template-columns: repeat(5,1fr);
 
   z-index: 4000;
 
@@ -1103,8 +1189,6 @@ button {
   border: 0;
 
   background: transparent;
-
-  text-decoration: none;
 
   display: flex;
 
@@ -1137,7 +1221,6 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
-
   stroke-linejoin: round;
 }
 
@@ -1190,8 +1273,7 @@ button {
 
   margin-top: -25px;
 
-  border:
-    4px solid var(--nal-blue);
+  border: 4px solid var(--nal-blue);
 
   box-shadow:
     0 4px 13px rgba(0,0,0,.28);
@@ -1219,7 +1301,7 @@ button {
 
 
 /* =========================================================
-   DESKTOP PREVIEW
+   DESKTOP
 ========================================================= */
 
 @media (min-width: 601px) {
@@ -1235,49 +1317,20 @@ button {
 
 }
 
-
-/* =========================================================
-   SMALL PHONES
-========================================================= */
-
-@media (max-width: 370px) {
-
-  .nav-item {
-    font-size: 8px;
-  }
-
-  .nav-item svg {
-    width: 21px;
-    height: 21px;
-  }
-
-  .nal-logo {
-    width: 68px;
-  }
-
-  .national-bowl-logo {
-    width: 300px;
-    max-width: 90%;
-  }
-
-}
-
 </style>
 </head>
 
 
 <body>
 
-
 <div class="app">
 
 
 <!-- =====================================================
-     TOP HEADER
+     HEADER
 ====================================================== -->
 
 <header class="topbar">
-
 
   <div class="header-left">
 
@@ -1287,13 +1340,8 @@ button {
     >
 
       <svg viewBox="0 0 24 24">
-
-        <path
-          d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
-        ></path>
-
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
         <path d="M10 21h4"></path>
-
       </svg>
 
       <span class="notification-dot"></span>
@@ -1303,12 +1351,10 @@ button {
   </div>
 
 
-
   <a
     href="#"
     class="header-logo"
     id="homeLogo"
-    aria-label="NAL Home"
   >
 
     <img
@@ -1320,7 +1366,6 @@ button {
   </a>
 
 
-
   <div class="header-right">
 
     <button
@@ -1330,15 +1375,9 @@ button {
 
       <svg viewBox="0 0 24 24">
 
-        <circle
-          cx="12"
-          cy="12"
-          r="3"
-        ></circle>
+        <circle cx="12" cy="12" r="3"></circle>
 
-        <path
-          d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.63 15 1.7 1.7 0 0 0 3.07 14H3v-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.63a1.7 1.7 0 0 0 1-1.56V3h4v.09A1.7 1.7 0 0 0 15 4.65a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.37 9 1.7 1.7 0 0 0 20.93 10H21v4h-.09A1.7 1.7 0 0 0 19.4 15z"
-        ></path>
+        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.63 15 1.7 1.7 0 0 0 3.07 14H3v-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.63a1.7 1.7 0 0 0 1-1.56V3h4v.09A1.7 1.7 0 0 0 15 4.65a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.37 9 1.7 1.7 0 0 0 20.93 10H21v4h-.09A1.7 1.7 0 0 0 19.4 15z"></path>
 
       </svg>
 
@@ -1346,13 +1385,11 @@ button {
 
   </div>
 
-
 </header>
 
 
-
 <!-- =====================================================
-     HOME / NEWS PAGE
+     HOME
 ====================================================== -->
 
 <main
@@ -1361,14 +1398,11 @@ button {
 >
 
 
-<!-- =====================================================
-     SEASON X HERO
-====================================================== -->
+<!-- HERO -->
 
 <section class="season-x-hero">
 
   <div class="hero-red-glow"></div>
-
 
   <div class="hero-content">
 
@@ -1376,13 +1410,11 @@ button {
       NATIONAL ARENA LEAGUE • SEASON X
     </div>
 
-
     <img
       src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/National_Bowl_Logo_X.png?v=1789933997"
       alt="National Bowl X"
       class="national-bowl-logo"
     >
-
 
     <div class="hero-tagline">
       WHERE CHAMPIONS ARE CROWNED
@@ -1390,16 +1422,12 @@ button {
 
   </div>
 
-
   <div class="hero-accent-line"></div>
 
 </section>
 
 
-
-<!-- =====================================================
-     NEXT GAMES
-====================================================== -->
+<!-- NEXT GAMES -->
 
 <section class="section">
 
@@ -1409,137 +1437,51 @@ button {
       Next Games
     </div>
 
-    <a
-      class="section-link"
-      href="#"
-    >
-      ALL GAMES →
-    </a>
-
   </div>
 
+  <div class="schedule-placeholder">
 
-  <div class="game-card">
+    <div>
 
-    <div class="game-top">
-      SATURDAY • 7:00 PM
-    </div>
-
-
-    <div class="matchup">
-
-
-      <div class="team">
-
-        <div class="team-logo">
-          DAL
-        </div>
-
-        <div class="team-name">
-          DALLAS<br>APEX
-        </div>
-
+      <div class="schedule-placeholder-title">
+        Season X
       </div>
 
-
-
-      <div class="game-time">
-
-        <div class="time">
-          7:00 PM
-        </div>
-
-        <div class="day">
-          SATURDAY
-        </div>
-
-        <div class="versus">
-          VS
-        </div>
-
+      <div class="schedule-placeholder-text">
+        Upcoming games will appear here following
+        the official schedule release.
       </div>
-
-
-
-      <div class="team">
-
-        <div class="team-logo">
-          OMA
-        </div>
-
-        <div class="team-name">
-          OMAHA<br>BEEF
-        </div>
-
-      </div>
-
 
     </div>
-
-
-    <a
-      href="#"
-      class="game-button"
-    >
-      GAMECENTER →
-    </a>
-
 
   </div>
 
 </section>
 
 
-
-<!-- =====================================================
-     FEATURED
-====================================================== -->
+<!-- NAL NETWORK -->
 
 <section class="section">
 
   <div class="section-header">
 
     <div class="section-title">
-      Featured
+      NAL Network
     </div>
-
-    <a
-      class="section-link"
-      href="#"
-    >
-      VIEW ALL →
-    </a>
 
   </div>
 
+  <div class="network-placeholder">
 
-  <div class="featured-card">
+    <div>
 
-    <div class="featured-image">
-
-      <div class="play">
-        ▶
-      </div>
-
-    </div>
-
-
-    <div class="featured-info">
-
-      <div class="featured-label">
+      <div class="network-placeholder-title">
         NAL NETWORK
       </div>
 
-      <div class="featured-title">
-        Around the NAL
+      <div class="network-placeholder-text">
+        THE GAME. THE LEAGUE. THE NETWORK.
       </div>
-
-      <a
-        class="watch-now"
-        href="#"
-      >
-        WATCH NOW →
-      </a>
 
     </div>
 
@@ -1548,12 +1490,11 @@ button {
 </section>
 
 
-
 <!-- =====================================================
      LATEST NEWS
 ====================================================== -->
 
-<section class="section">
+<section class="section news-section">
 
   <div class="section-header">
 
@@ -1563,7 +1504,9 @@ button {
 
     <a
       class="section-link"
-      href="#"
+      href="https://www.thenationalarenaleague.com/"
+      target="_blank"
+      rel="noopener"
     >
       ALL NEWS →
     </a>
@@ -1571,74 +1514,282 @@ button {
   </div>
 
 
+  <!-- LEAD STORY -->
+
+  <a
+    class="lead-story"
+    href="https://www.thenationalarenaleague.com/news/national-arena-league-unveils-around-the-nal-with"
+    target="_blank"
+    rel="noopener"
+  >
+
+    <div class="lead-story-fallback">
+
+      <img
+        src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
+        alt=""
+      >
+
+    </div>
+
+
+    <!--
+      WHEN FOOTBALLSHIFT IMAGE FEED IS CONNECTED,
+      THIS IMAGE SRC IS POPULATED AUTOMATICALLY.
+    -->
+
+    <img
+      class="lead-story-image footballshift-image"
+      src=""
+      alt=""
+    >
+
+
+    <div class="lead-story-overlay"></div>
+
+
+    <div class="lead-story-content">
+
+      <div class="story-category">
+        NAL NEWS
+      </div>
+
+
+      <div class="lead-story-title">
+        NATIONAL ARENA LEAGUE UNVEILS
+        “AROUND THE NAL” WITH BRAYDEN BUTLER
+      </div>
+
+
+      <div class="lead-story-subtitle">
+        New free-to-watch, year-round weekly program
+        will bring fans closer to the news, stories
+        and conversations from across the National
+        Arena League.
+      </div>
+
+
+      <div class="read-story">
+        READ STORY →
+      </div>
+
+    </div>
+
+  </a>
+
+
+  <!-- SECONDARY NEWS -->
+
   <div class="news-scroll">
 
 
-    <article class="news-card">
+    <!-- STORY 2 -->
 
-      <div class="news-image">
-        STORY IMAGE
+    <a
+      class="news-card"
+      href="https://www.thenationalarenaleague.com/news/national-arena-league-announces-brayden-bulter-as"
+      target="_blank"
+      rel="noopener"
+    >
+
+      <div class="news-card-image-wrap">
+
+        <div class="news-card-fallback">
+
+          <img
+            src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
+            alt=""
+          >
+
+        </div>
+
+
+        <img
+          class="news-card-image footballshift-image"
+          src=""
+          alt=""
+        >
+
       </div>
 
-      <div class="news-info">
 
-        <div class="news-category">
+      <div class="news-card-body">
+
+        <div class="news-card-date">
           NAL NEWS
         </div>
 
-        <div class="news-title">
-          Season X is coming to the National Arena League.
+        <div class="news-card-title">
+          National Arena League Announces Brayden
+          Butler As “The Voice Of The NAL”
         </div>
 
       </div>
 
-    </article>
+    </a>
 
 
+    <!-- STORY 3 -->
 
-    <article class="news-card">
+    <a
+      class="news-card"
+      href="https://www.thenationalarenaleague.com/news/national-arena-league-names-jeff-blumenauer-direct"
+      target="_blank"
+      rel="noopener"
+    >
 
-      <div class="news-image">
-        STORY IMAGE
-      </div>
+      <div class="news-card-image-wrap">
 
-      <div class="news-info">
+        <div class="news-card-fallback">
 
-        <div class="news-category">
-          NAL NETWORK
+          <img
+            src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
+            alt=""
+          >
+
         </div>
 
-        <div class="news-title">
-          Around the NAL brings fans inside the league.
-        </div>
 
-      </div>
-
-    </article>
-
-
-
-    <article class="news-card">
-
-      <div class="news-image">
-        STORY IMAGE
-      </div>
-
-      <div class="news-info">
-
-        <div class="news-category">
-          LEAGUE
-        </div>
-
-        <div class="news-title">
-          The road to National Bowl X begins.
-        </div>
+        <img
+          class="news-card-image footballshift-image"
+          src=""
+          alt=""
+        >
 
       </div>
 
-    </article>
+
+      <div class="news-card-body">
+
+        <div class="news-card-date">
+          SEASON X
+        </div>
+
+        <div class="news-card-title">
+          National Arena League Names Jeff Blumenauer
+          Director Of Broadcast Operations
+        </div>
+
+      </div>
+
+    </a>
 
 
+    <!-- STORY 4 -->
+
+    <a
+      class="news-card"
+      href="https://www.thenationalarenaleague.com/news/national-arena-league-names-steven-shotola-directo"
+      target="_blank"
+      rel="noopener"
+    >
+
+      <div class="news-card-image-wrap">
+
+        <div class="news-card-fallback">
+
+          <img
+            src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
+            alt=""
+          >
+
+        </div>
+
+
+        <img
+          class="news-card-image footballshift-image"
+          src=""
+          alt=""
+        >
+
+      </div>
+
+
+      <div class="news-card-body">
+
+        <div class="news-card-date">
+          SEASON X
+        </div>
+
+        <div class="news-card-title">
+          National Arena League Names Steven Shotola
+          Director Of NAL Life
+        </div>
+
+      </div>
+
+    </a>
+
+
+  </div>
+
+
+  <div class="swipe-hint">
+
+    SWIPE FOR MORE
+
+    <svg viewBox="0 0 24 24">
+      <path d="M5 12h14"></path>
+      <path d="M13 6l6 6-6 6"></path>
+    </svg>
+
+  </div>
+
+</section>
+
+
+<!-- FAN ZONE -->
+
+<section class="future-section">
+
+  <div class="section-header">
+
+    <div class="section-title">
+      Trending In Fan Zone
+    </div>
+
+  </div>
+
+  <div class="future-placeholder">
+    FAN ZONE FEATURE WILL GO HERE
+  </div>
+
+</section>
+
+
+<!-- TEAMS -->
+
+<section class="future-section">
+
+  <div class="section-header">
+
+    <div class="section-title">
+      NAL Teams
+    </div>
+
+  </div>
+
+  <div class="future-placeholder">
+    TEAM LOGOS WILL GO HERE
+  </div>
+
+</section>
+
+
+<!-- PARTNERS -->
+
+<section class="future-section">
+
+  <div class="section-header">
+
+    <div class="section-title">
+      Official Partners
+    </div>
+
+  </div>
+
+  <div class="future-placeholder">
+    OFFICIAL PARTNERS WILL GO HERE
   </div>
 
 </section>
@@ -1647,9 +1798,8 @@ button {
 </main>
 
 
-
 <!-- =====================================================
-     SCORES PAGE
+     SCORES
 ====================================================== -->
 
 <main
@@ -1660,26 +1810,13 @@ button {
   <div class="placeholder-icon">
 
     <svg viewBox="0 0 24 24">
-
-      <rect
-        x="3"
-        y="5"
-        width="18"
-        height="14"
-        rx="2"
-      ></rect>
-
+      <rect x="3" y="5" width="18" height="14" rx="2"></rect>
       <path d="M12 5v14"></path>
-
     </svg>
 
   </div>
 
-
-  <h2>
-    SCORES
-  </h2>
-
+  <h2>SCORES</h2>
 
   <p>
     Live scores, schedules, standings and Gamecenter
@@ -1689,10 +1826,7 @@ button {
 </main>
 
 
-
-<!-- =====================================================
-     WATCH PAGE
-====================================================== -->
+<!-- WATCH -->
 
 <main
   id="watchPage"
@@ -1702,20 +1836,12 @@ button {
   <div class="placeholder-icon">
 
     <svg viewBox="0 0 24 24">
-
-      <polygon
-        points="8,5 19,12 8,19"
-      ></polygon>
-
+      <polygon points="8,5 19,12 8,19"></polygon>
     </svg>
 
   </div>
 
-
-  <h2>
-    WATCH
-  </h2>
-
+  <h2>WATCH</h2>
 
   <p>
     NAL Network, live games and MNTR+ content will
@@ -1725,10 +1851,7 @@ button {
 </main>
 
 
-
-<!-- =====================================================
-     FAN ZONE PAGE
-====================================================== -->
+<!-- FAN ZONE -->
 
 <main
   id="fanPage"
@@ -1738,20 +1861,12 @@ button {
   <div class="placeholder-icon">
 
     <svg viewBox="0 0 24 24">
-
-      <path
-        d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.7-4.3A8.4 8.4 0 1 1 21 11.5z"
-      ></path>
-
+      <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.7-4.3A8.4 8.4 0 1 1 21 11.5z"></path>
     </svg>
 
   </div>
 
-
-  <h2>
-    FAN ZONE
-  </h2>
-
+  <h2>FAN ZONE</h2>
 
   <p>
     Fan discussions, team rooms, polls, gameday
@@ -1761,21 +1876,16 @@ button {
 </main>
 
 
-
-<!-- =====================================================
-     NAL SHOP PAGE
-====================================================== -->
+<!-- SHOP -->
 
 <main
   id="shopPage"
   class="app-page shop-page"
 >
 
-
   <div class="shop-toolbar">
 
-
-    <div class="shop-heading">
+    <div>
 
       <div class="shop-title">
         NAL SHOP
@@ -1793,30 +1903,20 @@ button {
       target="_blank"
       rel="noopener"
       class="shop-external"
-      aria-label="Open NAL Shop"
     >
 
       <svg viewBox="0 0 24 24">
-
         <path d="M14 3h7v7"></path>
-
         <path d="M10 14L21 3"></path>
-
-        <path
-          d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"
-        ></path>
-
+        <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
       </svg>
 
     </a>
 
-
   </div>
 
 
-
   <div class="shop-frame-wrap">
-
 
     <div
       class="shop-loading"
@@ -1841,9 +1941,7 @@ button {
       loading="lazy"
     ></iframe>
 
-
   </div>
-
 
 </main>
 
@@ -1851,44 +1949,29 @@ button {
 </div>
 
 
-
-<!-- =========================================================
+<!-- =====================================================
      BOTTOM NAVIGATION
-========================================================= -->
+====================================================== -->
 
 <nav class="bottom-nav">
 
 
-<!-- NEWS -->
+<!-- HOME -->
 
 <button
   class="nav-item active"
   data-page="homePage"
-  aria-label="News"
 >
 
   <svg viewBox="0 0 24 24">
-
-    <path d="M4 5h13v14H4z"></path>
-
-    <path
-      d="M17 8h3v11a2 2 0 0 1-2 2H6"
-    ></path>
-
-    <path d="M7 8h7"></path>
-
-    <path d="M7 12h7"></path>
-
-    <path d="M7 16h4"></path>
-
+    <path d="M3 11.5L12 4l9 7.5"></path>
+    <path d="M5 10v10h14V10"></path>
+    <path d="M9 20v-6h6v6"></path>
   </svg>
 
-  <div>
-    NEWS
-  </div>
+  <div>HOME</div>
 
 </button>
-
 
 
 <!-- SCORES -->
@@ -1896,37 +1979,20 @@ button {
 <button
   class="nav-item"
   data-page="scoresPage"
-  aria-label="Scores"
 >
 
   <svg viewBox="0 0 24 24">
-
-    <rect
-      x="3"
-      y="5"
-      width="18"
-      height="14"
-      rx="2"
-    ></rect>
-
+    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
     <path d="M8 9h2"></path>
-
     <path d="M14 9h2"></path>
-
     <path d="M8 13h2"></path>
-
     <path d="M14 13h2"></path>
-
     <path d="M12 5v14"></path>
-
   </svg>
 
-  <div>
-    SCORES
-  </div>
+  <div>SCORES</div>
 
 </button>
-
 
 
 <!-- WATCH -->
@@ -1934,17 +2000,12 @@ button {
 <button
   class="nav-item watch-nav"
   data-page="watchPage"
-  aria-label="Watch"
 >
 
   <div class="watch-circle">
 
     <svg viewBox="0 0 24 24">
-
-      <polygon
-        points="8,5 19,12 8,19"
-      ></polygon>
-
+      <polygon points="8,5 19,12 8,19"></polygon>
     </svg>
 
   </div>
@@ -1956,64 +2017,42 @@ button {
 </button>
 
 
-
 <!-- FAN ZONE -->
 
 <button
   class="nav-item"
   data-page="fanPage"
-  aria-label="Fan Zone"
 >
 
   <svg viewBox="0 0 24 24">
-
-    <path
-      d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.7-4.3A8.4 8.4 0 1 1 21 11.5z"
-    ></path>
-
+    <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.7-4.3A8.4 8.4 0 1 1 21 11.5z"></path>
     <path d="M8 11h.01"></path>
-
     <path d="M12 11h.01"></path>
-
     <path d="M16 11h.01"></path>
-
   </svg>
 
-  <div>
-    FAN ZONE
-  </div>
+  <div>FAN ZONE</div>
 
 </button>
 
 
-
-<!-- NAL SHOP -->
+<!-- SHOP -->
 
 <button
   class="nav-item"
   data-page="shopPage"
-  aria-label="NAL Shop"
 >
 
   <svg viewBox="0 0 24 24">
-
     <path d="M3 9l2-5h14l2 5"></path>
-
     <path d="M5 13v7h14v-7"></path>
-
     <path d="M9 20v-5h6v5"></path>
-
     <path d="M3 9a3 3 0 0 0 6 0"></path>
-
     <path d="M9 9a3 3 0 0 0 6 0"></path>
-
     <path d="M15 9a3 3 0 0 0 6 0"></path>
-
   </svg>
 
-  <div>
-    NAL SHOP
-  </div>
+  <div>NAL SHOP</div>
 
 </button>
 
@@ -2021,92 +2060,57 @@ button {
 </nav>
 
 
-
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
-
 <script>
 
+/* =========================================================
+   PAGE SYSTEM
+========================================================= */
 
 const pages =
   document.querySelectorAll(".app-page");
 
-
 const navButtons =
   document.querySelectorAll(".nav-item");
-
 
 const homeLogo =
   document.getElementById("homeLogo");
 
-
 const shopFrame =
   document.getElementById("shopFrame");
-
 
 const shopLoading =
   document.getElementById("shopLoading");
 
-
 let shopLoaded = false;
 
-
-
-/* =========================================================
-   SHOW PAGE
-========================================================= */
 
 function showPage(
   pageId,
   clickedButton = null
 ) {
 
-
   pages.forEach(page => {
-
-    page.classList.remove(
-      "active"
-    );
-
+    page.classList.remove("active");
   });
-
 
 
   const selectedPage =
-    document.getElementById(
-      pageId
-    );
+    document.getElementById(pageId);
 
 
   if (selectedPage) {
-
-    selectedPage.classList.add(
-      "active"
-    );
-
+    selectedPage.classList.add("active");
   }
-
 
 
   navButtons.forEach(button => {
-
-    button.classList.remove(
-      "active"
-    );
-
+    button.classList.remove("active");
   });
 
 
-
   if (clickedButton) {
-
-    clickedButton.classList.add(
-      "active"
-    );
-
+    clickedButton.classList.add("active");
   }
-
 
 
   window.scrollTo({
@@ -2115,111 +2119,118 @@ function showPage(
   });
 
 
-
-  /* LOAD SHOP ON FIRST VISIT */
-
   if (
     pageId === "shopPage" &&
     !shopLoaded
   ) {
 
-
-    const shopURL =
-      shopFrame.getAttribute(
-        "data-src"
-      );
-
-
     shopFrame.src =
-      shopURL;
+      shopFrame.getAttribute("data-src");
 
-
-    shopLoaded =
-      true;
+    shopLoaded = true;
 
   }
 
 }
 
 
-
 /* =========================================================
-   BOTTOM NAVIGATION
+   NAVIGATION
 ========================================================= */
 
 navButtons.forEach(button => {
-
 
   button.addEventListener(
     "click",
     () => {
 
-
-      const pageId =
-        button.getAttribute(
-          "data-page"
-        );
-
-
       showPage(
-        pageId,
+        button.getAttribute("data-page"),
         button
       );
-
 
     }
   );
 
-
 });
 
-
-
-/* =========================================================
-   NAL LOGO RETURNS HOME
-========================================================= */
 
 homeLogo.addEventListener(
   "click",
   event => {
 
-
     event.preventDefault();
 
-
-    const newsButton =
+    const homeButton =
       document.querySelector(
         '[data-page="homePage"]'
       );
 
-
     showPage(
       "homePage",
-      newsButton
+      homeButton
     );
-
 
   }
 );
 
 
-
 /* =========================================================
-   SHOP LOADING
+   SHOP
 ========================================================= */
 
 shopFrame.addEventListener(
   "load",
   () => {
 
-
     shopLoading.style.display =
       "none";
-
 
   }
 );
 
+
+/* =========================================================
+   NEWS IMAGE SAFETY
+
+   When our FootballShift feed supplies an image URL,
+   the image appears.
+
+   If FootballShift does not supply a valid image,
+   the NAL branded background remains visible.
+========================================================= */
+
+document
+  .querySelectorAll(".footballshift-image")
+  .forEach(image => {
+
+    if (!image.getAttribute("src")) {
+
+      image.style.display = "none";
+
+    }
+
+
+    image.addEventListener(
+      "error",
+      () => {
+
+        image.style.display = "none";
+
+      }
+    );
+
+
+    image.addEventListener(
+      "load",
+      () => {
+
+        image.style.display = "block";
+
+      }
+    );
+
+  });
 
 </script>
 
