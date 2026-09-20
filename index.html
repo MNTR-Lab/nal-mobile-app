@@ -2,15 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
 <meta
   name="viewport"
   content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
+
 <meta name="theme-color" content="#07172b">
 
 <title>National Arena League</title>
 
 <style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
 
 * {
   box-sizing: border-box;
@@ -60,16 +66,21 @@ button {
   width: 100%;
   max-width: 600px;
   min-height: 100vh;
+
   margin: 0 auto;
+
   background: var(--light);
+
   padding-bottom: var(--nav-height);
+
   position: relative;
+
   overflow-x: hidden;
 }
 
 
 /* =========================================================
-   HEADER
+   TOP HEADER
 ========================================================= */
 
 .topbar {
@@ -113,13 +124,16 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+
   text-decoration: none;
 }
 
 .nal-logo {
   width: 76px;
   height: 52px;
+
   object-fit: contain;
+
   display: block;
 }
 
@@ -128,7 +142,9 @@ button {
   height: 38px;
 
   border: 0;
+
   background: transparent;
+
   color: white;
 
   display: flex;
@@ -183,7 +199,7 @@ button {
 
 
 /* =========================================================
-   HERO
+   SEASON X HERO
 ========================================================= */
 
 .season-x-hero {
@@ -261,6 +277,8 @@ button {
   border-radius: 50%;
 
   z-index: 2;
+
+  pointer-events: none;
 }
 
 .hero-content {
@@ -269,6 +287,7 @@ button {
   padding: 24px 20px 36px;
 
   position: relative;
+
   z-index: 4;
 
   display: flex;
@@ -293,11 +312,13 @@ button {
 
   margin-bottom: 9px;
 
-  text-shadow: 0 2px 8px rgba(0,0,0,.8);
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.8);
 }
 
 .national-bowl-logo {
   width: 340px;
+
   max-width: 88%;
 
   height: auto;
@@ -317,7 +338,7 @@ button {
 .hero-tagline {
   margin-top: 10px;
 
-  color: white;
+  color: #ffffff;
 
   font-size: 11px;
 
@@ -329,7 +350,8 @@ button {
 
   text-align: center;
 
-  text-shadow: 0 2px 8px rgba(0,0,0,.85);
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.85);
 }
 
 .hero-accent-line {
@@ -367,6 +389,7 @@ button {
   display: flex;
 
   justify-content: space-between;
+
   align-items: center;
 
   gap: 10px;
@@ -420,6 +443,7 @@ button {
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   text-align: center;
@@ -474,6 +498,7 @@ button {
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   text-align: center;
@@ -704,7 +729,7 @@ button {
 
 
 /* =========================================================
-   SMALL NEWS CARDS
+   NEWS CARDS
 ========================================================= */
 
 .news-scroll {
@@ -731,6 +756,7 @@ button {
 
 .news-card {
   min-width: 220px;
+
   width: 220px;
 
   border: 1px solid var(--border);
@@ -782,6 +808,7 @@ button {
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   background:
@@ -848,6 +875,7 @@ button {
   display: flex;
 
   align-items: center;
+
   justify-content: flex-end;
 
   gap: 5px;
@@ -874,6 +902,7 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
+
   stroke-linejoin: round;
 }
 
@@ -910,7 +939,203 @@ button {
 
 
 /* =========================================================
-   OTHER PAGES
+   IN-APP ARTICLE FRAME
+========================================================= */
+
+.article-page {
+  background: #ffffff;
+
+  height:
+    calc(
+      100vh -
+      var(--header-height) -
+      var(--nav-height)
+    );
+
+  overflow: hidden;
+}
+
+.article-toolbar {
+  height: 54px;
+
+  padding: 0 14px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid var(--border);
+
+  display: grid;
+
+  grid-template-columns: 42px 1fr 42px;
+
+  align-items: center;
+
+  position: relative;
+
+  z-index: 10;
+}
+
+.article-back,
+.article-external {
+  width: 38px;
+  height: 38px;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: #f1f3f5;
+
+  color: var(--nal-blue);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+  text-decoration: none;
+}
+
+.article-back svg,
+.article-external svg {
+  width: 19px;
+  height: 19px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2.2;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+.article-toolbar-center {
+  text-align: center;
+
+  min-width: 0;
+}
+
+.article-toolbar-title {
+  color: var(--nal-blue);
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: .9px;
+
+  text-transform: uppercase;
+}
+
+.article-toolbar-subtitle {
+  color: var(--nal-red);
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: .6px;
+
+  margin-top: 2px;
+}
+
+.article-frame-container {
+  position: relative;
+
+  height:
+    calc(
+      100% - 54px
+    );
+
+  background: white;
+}
+
+.article-loading {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  background: white;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+}
+
+.article-loading-logo {
+  width: 90px;
+
+  height: auto;
+
+  object-fit: contain;
+}
+
+.article-spinner {
+  width: 32px;
+  height: 32px;
+
+  border: 4px solid #e4e7ea;
+
+  border-top-color: var(--nal-red);
+
+  border-radius: 50%;
+
+  animation:
+    articleSpin .8s linear infinite;
+}
+
+@keyframes articleSpin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+.article-loading-text {
+  color: var(--nal-blue);
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+.article-frame {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  background: white;
+
+  display: block;
+}
+
+
+/* =========================================================
+   PLACEHOLDER PAGES
 ========================================================= */
 
 .placeholder-page {
@@ -943,6 +1168,7 @@ button {
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 }
 
@@ -957,6 +1183,7 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
+
   stroke-linejoin: round;
 }
 
@@ -1008,6 +1235,7 @@ button {
   display: flex;
 
   align-items: center;
+
   justify-content: space-between;
 
   gap: 15px;
@@ -1050,6 +1278,7 @@ button {
   display: flex;
 
   justify-content: center;
+
   align-items: center;
 }
 
@@ -1064,6 +1293,7 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
+
   stroke-linejoin: round;
 }
 
@@ -1095,6 +1325,7 @@ button {
   flex-direction: column;
 
   align-items: center;
+
   justify-content: center;
 
   gap: 12px;
@@ -1120,9 +1351,11 @@ button {
 }
 
 @keyframes spin {
+
   to {
     transform: rotate(360deg);
   }
+
 }
 
 .shop-loading-text {
@@ -1150,7 +1383,7 @@ button {
 
 
 /* =========================================================
-   BOTTOM NAV
+   BOTTOM NAVIGATION
 ========================================================= */
 
 .bottom-nav {
@@ -1163,11 +1396,13 @@ button {
   transform: translateX(-50%);
 
   width: 100%;
+
   max-width: 600px;
 
   height: var(--nav-height);
 
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom:
+    env(safe-area-inset-bottom);
 
   background: var(--nal-blue);
 
@@ -1195,6 +1430,7 @@ button {
   flex-direction: column;
 
   justify-content: center;
+
   align-items: center;
 
   gap: 5px;
@@ -1221,6 +1457,7 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
+
   stroke-linejoin: round;
 }
 
@@ -1269,6 +1506,7 @@ button {
   display: flex;
 
   justify-content: center;
+
   align-items: center;
 
   margin-top: -25px;
@@ -1340,8 +1578,13 @@ button {
     >
 
       <svg viewBox="0 0 24 24">
-        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+
+        <path
+          d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+        ></path>
+
         <path d="M10 21h4"></path>
+
       </svg>
 
       <span class="notification-dot"></span>
@@ -1355,6 +1598,7 @@ button {
     href="#"
     class="header-logo"
     id="homeLogo"
+    aria-label="NAL Home"
   >
 
     <img
@@ -1375,9 +1619,15 @@ button {
 
       <svg viewBox="0 0 24 24">
 
-        <circle cx="12" cy="12" r="3"></circle>
+        <circle
+          cx="12"
+          cy="12"
+          r="3"
+        ></circle>
 
-        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.63 15 1.7 1.7 0 0 0 3.07 14H3v-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.63a1.7 1.7 0 0 0 1-1.56V3h4v.09A1.7 1.7 0 0 0 15 4.65a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.37 9 1.7 1.7 0 0 0 20.93 10H21v4h-.09A1.7 1.7 0 0 0 19.4 15z"></path>
+        <path
+          d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.63 15 1.7 1.7 0 0 0 3.07 14H3v-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.63a1.7 1.7 0 0 0 1-1.56V3h4v.09A1.7 1.7 0 0 0 15 4.65a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.37 9 1.7 1.7 0 0 0 20.93 10H21v4h-.09A1.7 1.7 0 0 0 19.4 15z"
+        ></path>
 
       </svg>
 
@@ -1388,8 +1638,9 @@ button {
 </header>
 
 
+
 <!-- =====================================================
-     HOME
+     HOME PAGE
 ====================================================== -->
 
 <main
@@ -1427,6 +1678,7 @@ button {
 </section>
 
 
+
 <!-- NEXT GAMES -->
 
 <section class="section">
@@ -1438,6 +1690,7 @@ button {
     </div>
 
   </div>
+
 
   <div class="schedule-placeholder">
 
@@ -1459,6 +1712,7 @@ button {
 </section>
 
 
+
 <!-- NAL NETWORK -->
 
 <section class="section">
@@ -1470,6 +1724,7 @@ button {
     </div>
 
   </div>
+
 
   <div class="network-placeholder">
 
@@ -1490,11 +1745,13 @@ button {
 </section>
 
 
+
 <!-- =====================================================
-     LATEST NEWS
+     LATEST FROM THE NAL
 ====================================================== -->
 
 <section class="section news-section">
+
 
   <div class="section-header">
 
@@ -1514,13 +1771,12 @@ button {
   </div>
 
 
+
   <!-- LEAD STORY -->
 
   <a
     class="lead-story"
     href="https://www.thenationalarenaleague.com/news/national-arena-league-unveils-around-the-nal-with"
-    target="_blank"
-    rel="noopener"
   >
 
     <div class="lead-story-fallback">
@@ -1532,11 +1788,6 @@ button {
 
     </div>
 
-
-    <!--
-      WHEN FOOTBALLSHIFT IMAGE FEED IS CONNECTED,
-      THIS IMAGE SRC IS POPULATED AUTOMATICALLY.
-    -->
 
     <img
       class="lead-story-image footballshift-image"
@@ -1578,18 +1829,15 @@ button {
   </a>
 
 
-  <!-- SECONDARY NEWS -->
+
+  <!-- SECONDARY STORIES -->
 
   <div class="news-scroll">
 
 
-    <!-- STORY 2 -->
-
     <a
       class="news-card"
       href="https://www.thenationalarenaleague.com/news/national-arena-league-announces-brayden-bulter-as"
-      target="_blank"
-      rel="noopener"
     >
 
       <div class="news-card-image-wrap">
@@ -1602,7 +1850,6 @@ button {
           >
 
         </div>
-
 
         <img
           class="news-card-image footballshift-image"
@@ -1629,13 +1876,10 @@ button {
     </a>
 
 
-    <!-- STORY 3 -->
 
     <a
       class="news-card"
       href="https://www.thenationalarenaleague.com/news/national-arena-league-names-jeff-blumenauer-direct"
-      target="_blank"
-      rel="noopener"
     >
 
       <div class="news-card-image-wrap">
@@ -1648,7 +1892,6 @@ button {
           >
 
         </div>
-
 
         <img
           class="news-card-image footballshift-image"
@@ -1675,13 +1918,10 @@ button {
     </a>
 
 
-    <!-- STORY 4 -->
 
     <a
       class="news-card"
       href="https://www.thenationalarenaleague.com/news/national-arena-league-names-steven-shotola-directo"
-      target="_blank"
-      rel="noopener"
     >
 
       <div class="news-card-image-wrap">
@@ -1694,7 +1934,6 @@ button {
           >
 
         </div>
-
 
         <img
           class="news-card-image footballshift-image"
@@ -1729,13 +1968,18 @@ button {
     SWIPE FOR MORE
 
     <svg viewBox="0 0 24 24">
+
       <path d="M5 12h14"></path>
+
       <path d="M13 6l6 6-6 6"></path>
+
     </svg>
 
   </div>
 
+
 </section>
+
 
 
 <!-- FAN ZONE -->
@@ -1757,6 +2001,7 @@ button {
 </section>
 
 
+
 <!-- TEAMS -->
 
 <section class="future-section">
@@ -1774,6 +2019,7 @@ button {
   </div>
 
 </section>
+
 
 
 <!-- PARTNERS -->
@@ -1798,6 +2044,114 @@ button {
 </main>
 
 
+
+<!-- =====================================================
+     IN-APP ARTICLE PAGE
+====================================================== -->
+
+<main
+  id="articlePage"
+  class="app-page article-page"
+>
+
+  <div class="article-toolbar">
+
+
+    <button
+      class="article-back"
+      id="articleBack"
+      aria-label="Back"
+    >
+
+      <svg viewBox="0 0 24 24">
+
+        <path d="M19 12H5"></path>
+
+        <path d="M12 19l-7-7 7-7"></path>
+
+      </svg>
+
+    </button>
+
+
+    <div class="article-toolbar-center">
+
+      <div class="article-toolbar-title">
+        NAL NEWS
+      </div>
+
+      <div class="article-toolbar-subtitle">
+        NATIONAL ARENA LEAGUE
+      </div>
+
+    </div>
+
+
+    <a
+      class="article-external"
+      id="articleExternal"
+      href="#"
+      target="_blank"
+      rel="noopener"
+      aria-label="Open in browser"
+    >
+
+      <svg viewBox="0 0 24 24">
+
+        <path d="M14 3h7v7"></path>
+
+        <path d="M10 14L21 3"></path>
+
+        <path
+          d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"
+        ></path>
+
+      </svg>
+
+    </a>
+
+  </div>
+
+
+  <div class="article-frame-container">
+
+
+    <div
+      class="article-loading"
+      id="articleLoading"
+    >
+
+      <img
+        src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
+        alt="National Arena League"
+        class="article-loading-logo"
+      >
+
+
+      <div class="article-spinner"></div>
+
+
+      <div class="article-loading-text">
+        LOADING NAL NEWS
+      </div>
+
+    </div>
+
+
+    <iframe
+      id="articleFrame"
+      class="article-frame"
+      src="about:blank"
+      title="NAL News Article"
+    ></iframe>
+
+
+  </div>
+
+</main>
+
+
+
 <!-- =====================================================
      SCORES
 ====================================================== -->
@@ -1810,13 +2164,26 @@ button {
   <div class="placeholder-icon">
 
     <svg viewBox="0 0 24 24">
-      <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+
+      <rect
+        x="3"
+        y="5"
+        width="18"
+        height="14"
+        rx="2"
+      ></rect>
+
       <path d="M12 5v14"></path>
+
     </svg>
 
   </div>
 
-  <h2>SCORES</h2>
+
+  <h2>
+    SCORES
+  </h2>
+
 
   <p>
     Live scores, schedules, standings and Gamecenter
@@ -1826,7 +2193,10 @@ button {
 </main>
 
 
-<!-- WATCH -->
+
+<!-- =====================================================
+     WATCH
+====================================================== -->
 
 <main
   id="watchPage"
@@ -1836,12 +2206,20 @@ button {
   <div class="placeholder-icon">
 
     <svg viewBox="0 0 24 24">
-      <polygon points="8,5 19,12 8,19"></polygon>
+
+      <polygon
+        points="8,5 19,12 8,19"
+      ></polygon>
+
     </svg>
 
   </div>
 
-  <h2>WATCH</h2>
+
+  <h2>
+    WATCH
+  </h2>
+
 
   <p>
     NAL Network, live games and MNTR+ content will
@@ -1851,7 +2229,10 @@ button {
 </main>
 
 
-<!-- FAN ZONE -->
+
+<!-- =====================================================
+     FAN ZONE
+====================================================== -->
 
 <main
   id="fanPage"
@@ -1861,12 +2242,20 @@ button {
   <div class="placeholder-icon">
 
     <svg viewBox="0 0 24 24">
-      <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.7-4.3A8.4 8.4 0 1 1 21 11.5z"></path>
+
+      <path
+        d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.7-4.3A8.4 8.4 0 1 1 21 11.5z"
+      ></path>
+
     </svg>
 
   </div>
 
-  <h2>FAN ZONE</h2>
+
+  <h2>
+    FAN ZONE
+  </h2>
+
 
   <p>
     Fan discussions, team rooms, polls, gameday
@@ -1876,7 +2265,10 @@ button {
 </main>
 
 
-<!-- SHOP -->
+
+<!-- =====================================================
+     SHOP
+====================================================== -->
 
 <main
   id="shopPage"
@@ -1903,12 +2295,19 @@ button {
       target="_blank"
       rel="noopener"
       class="shop-external"
+      aria-label="Open NAL Shop"
     >
 
       <svg viewBox="0 0 24 24">
+
         <path d="M14 3h7v7"></path>
+
         <path d="M10 14L21 3"></path>
-        <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+
+        <path
+          d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"
+        ></path>
+
       </svg>
 
     </a>
@@ -1949,9 +2348,10 @@ button {
 </div>
 
 
-<!-- =====================================================
-     BOTTOM NAVIGATION
-====================================================== -->
+
+<!-- =========================================================
+     BOTTOM NAV
+========================================================= -->
 
 <nav class="bottom-nav">
 
@@ -1961,17 +2361,25 @@ button {
 <button
   class="nav-item active"
   data-page="homePage"
+  aria-label="Home"
 >
 
   <svg viewBox="0 0 24 24">
+
     <path d="M3 11.5L12 4l9 7.5"></path>
+
     <path d="M5 10v10h14V10"></path>
+
     <path d="M9 20v-6h6v6"></path>
+
   </svg>
 
-  <div>HOME</div>
+  <div>
+    HOME
+  </div>
 
 </button>
+
 
 
 <!-- SCORES -->
@@ -1979,20 +2387,37 @@ button {
 <button
   class="nav-item"
   data-page="scoresPage"
+  aria-label="Scores"
 >
 
   <svg viewBox="0 0 24 24">
-    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+
+    <rect
+      x="3"
+      y="5"
+      width="18"
+      height="14"
+      rx="2"
+    ></rect>
+
     <path d="M8 9h2"></path>
+
     <path d="M14 9h2"></path>
+
     <path d="M8 13h2"></path>
+
     <path d="M14 13h2"></path>
+
     <path d="M12 5v14"></path>
+
   </svg>
 
-  <div>SCORES</div>
+  <div>
+    SCORES
+  </div>
 
 </button>
+
 
 
 <!-- WATCH -->
@@ -2000,12 +2425,17 @@ button {
 <button
   class="nav-item watch-nav"
   data-page="watchPage"
+  aria-label="Watch"
 >
 
   <div class="watch-circle">
 
     <svg viewBox="0 0 24 24">
-      <polygon points="8,5 19,12 8,19"></polygon>
+
+      <polygon
+        points="8,5 19,12 8,19"
+      ></polygon>
+
     </svg>
 
   </div>
@@ -2017,23 +2447,35 @@ button {
 </button>
 
 
+
 <!-- FAN ZONE -->
 
 <button
   class="nav-item"
   data-page="fanPage"
+  aria-label="Fan Zone"
 >
 
   <svg viewBox="0 0 24 24">
-    <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.7-4.3A8.4 8.4 0 1 1 21 11.5z"></path>
+
+    <path
+      d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.7-4.3A8.4 8.4 0 1 1 21 11.5z"
+    ></path>
+
     <path d="M8 11h.01"></path>
+
     <path d="M12 11h.01"></path>
+
     <path d="M16 11h.01"></path>
+
   </svg>
 
-  <div>FAN ZONE</div>
+  <div>
+    FAN ZONE
+  </div>
 
 </button>
+
 
 
 <!-- SHOP -->
@@ -2041,18 +2483,28 @@ button {
 <button
   class="nav-item"
   data-page="shopPage"
+  aria-label="NAL Shop"
 >
 
   <svg viewBox="0 0 24 24">
+
     <path d="M3 9l2-5h14l2 5"></path>
+
     <path d="M5 13v7h14v-7"></path>
+
     <path d="M9 20v-5h6v5"></path>
+
     <path d="M3 9a3 3 0 0 0 6 0"></path>
+
     <path d="M9 9a3 3 0 0 0 6 0"></path>
+
     <path d="M15 9a3 3 0 0 0 6 0"></path>
+
   </svg>
 
-  <div>NAL SHOP</div>
+  <div>
+    NAL SHOP
+  </div>
 
 </button>
 
@@ -2060,10 +2512,16 @@ button {
 </nav>
 
 
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
 <script>
 
+
 /* =========================================================
-   PAGE SYSTEM
+   APP ELEMENTS
 ========================================================= */
 
 const pages =
@@ -2081,8 +2539,34 @@ const shopFrame =
 const shopLoading =
   document.getElementById("shopLoading");
 
+const articlePage =
+  document.getElementById("articlePage");
+
+const articleFrame =
+  document.getElementById("articleFrame");
+
+const articleLoading =
+  document.getElementById("articleLoading");
+
+const articleBack =
+  document.getElementById("articleBack");
+
+const articleExternal =
+  document.getElementById("articleExternal");
+
+
 let shopLoaded = false;
 
+let previousPage =
+  "homePage";
+
+let previousScrollPosition =
+  0;
+
+
+/* =========================================================
+   PAGE SWITCHING
+========================================================= */
 
 function showPage(
   pageId,
@@ -2090,26 +2574,44 @@ function showPage(
 ) {
 
   pages.forEach(page => {
-    page.classList.remove("active");
+
+    page.classList.remove(
+      "active"
+    );
+
   });
 
 
   const selectedPage =
-    document.getElementById(pageId);
+    document.getElementById(
+      pageId
+    );
 
 
   if (selectedPage) {
-    selectedPage.classList.add("active");
+
+    selectedPage.classList.add(
+      "active"
+    );
+
   }
 
 
   navButtons.forEach(button => {
-    button.classList.remove("active");
+
+    button.classList.remove(
+      "active"
+    );
+
   });
 
 
   if (clickedButton) {
-    clickedButton.classList.add("active");
+
+    clickedButton.classList.add(
+      "active"
+    );
+
   }
 
 
@@ -2125,7 +2627,9 @@ function showPage(
   ) {
 
     shopFrame.src =
-      shopFrame.getAttribute("data-src");
+      shopFrame.getAttribute(
+        "data-src"
+      );
 
     shopLoaded = true;
 
@@ -2135,7 +2639,7 @@ function showPage(
 
 
 /* =========================================================
-   NAVIGATION
+   BOTTOM NAVIGATION
 ========================================================= */
 
 navButtons.forEach(button => {
@@ -2144,8 +2648,14 @@ navButtons.forEach(button => {
     "click",
     () => {
 
+      const pageId =
+        button.getAttribute(
+          "data-page"
+        );
+
+
       showPage(
-        button.getAttribute("data-page"),
+        pageId,
         button
       );
 
@@ -2155,16 +2665,22 @@ navButtons.forEach(button => {
 });
 
 
+/* =========================================================
+   NAL LOGO RETURNS HOME
+========================================================= */
+
 homeLogo.addEventListener(
   "click",
   event => {
 
     event.preventDefault();
 
+
     const homeButton =
       document.querySelector(
         '[data-page="homePage"]'
       );
+
 
     showPage(
       "homePage",
@@ -2192,21 +2708,20 @@ shopFrame.addEventListener(
 
 /* =========================================================
    NEWS IMAGE SAFETY
-
-   When our FootballShift feed supplies an image URL,
-   the image appears.
-
-   If FootballShift does not supply a valid image,
-   the NAL branded background remains visible.
 ========================================================= */
 
 document
-  .querySelectorAll(".footballshift-image")
+  .querySelectorAll(
+    ".footballshift-image"
+  )
   .forEach(image => {
 
-    if (!image.getAttribute("src")) {
+    if (
+      !image.getAttribute("src")
+    ) {
 
-      image.style.display = "none";
+      image.style.display =
+        "none";
 
     }
 
@@ -2215,7 +2730,8 @@ document
       "error",
       () => {
 
-        image.style.display = "none";
+        image.style.display =
+          "none";
 
       }
     );
@@ -2225,12 +2741,235 @@ document
       "load",
       () => {
 
-        image.style.display = "block";
+        image.style.display =
+          "block";
 
       }
     );
 
   });
+
+
+/* =========================================================
+   OPEN ARTICLE INSIDE APP
+========================================================= */
+
+function openArticle(url) {
+
+
+  const activePage =
+    document.querySelector(
+      ".app-page.active"
+    );
+
+
+  previousPage =
+    activePage
+      ? activePage.id
+      : "homePage";
+
+
+  previousScrollPosition =
+    window.scrollY;
+
+
+  pages.forEach(page => {
+
+    page.classList.remove(
+      "active"
+    );
+
+  });
+
+
+  articlePage.classList.add(
+    "active"
+  );
+
+
+  /*
+     Keep HOME highlighted because
+     the user is still inside the
+     Home / News experience.
+  */
+
+  navButtons.forEach(button => {
+
+    button.classList.remove(
+      "active"
+    );
+
+  });
+
+
+  const homeButton =
+    document.querySelector(
+      '[data-page="homePage"]'
+    );
+
+
+  if (homeButton) {
+
+    homeButton.classList.add(
+      "active"
+    );
+
+  }
+
+
+  articleLoading.style.display =
+    "flex";
+
+
+  articleExternal.href =
+    url;
+
+
+  articleFrame.src =
+    url;
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "instant"
+  });
+
+}
+
+
+/* =========================================================
+   INTERCEPT STORY CLICKS
+========================================================= */
+
+document
+  .querySelectorAll(
+    ".lead-story, .news-card"
+  )
+  .forEach(story => {
+
+    story.addEventListener(
+      "click",
+      event => {
+
+
+        const url =
+          story.getAttribute(
+            "href"
+          );
+
+
+        if (!url) {
+
+          return;
+
+        }
+
+
+        event.preventDefault();
+
+
+        openArticle(url);
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   ARTICLE LOAD
+========================================================= */
+
+articleFrame.addEventListener(
+  "load",
+  () => {
+
+    articleLoading.style.display =
+      "none";
+
+  }
+);
+
+
+/* =========================================================
+   ARTICLE BACK BUTTON
+========================================================= */
+
+articleBack.addEventListener(
+  "click",
+  () => {
+
+
+    articleFrame.src =
+      "about:blank";
+
+
+    pages.forEach(page => {
+
+      page.classList.remove(
+        "active"
+      );
+
+    });
+
+
+    const previous =
+      document.getElementById(
+        previousPage
+      );
+
+
+    if (previous) {
+
+      previous.classList.add(
+        "active"
+      );
+
+    }
+
+
+    navButtons.forEach(button => {
+
+      button.classList.remove(
+        "active"
+      );
+
+    });
+
+
+    const homeButton =
+      document.querySelector(
+        '[data-page="homePage"]'
+      );
+
+
+    if (homeButton) {
+
+      homeButton.classList.add(
+        "active"
+      );
+
+    }
+
+
+    setTimeout(
+      () => {
+
+        window.scrollTo({
+          top:
+            previousScrollPosition,
+
+          behavior:
+            "instant"
+        });
+
+      },
+      10
+    );
+
+  }
+);
+
 
 </script>
 
