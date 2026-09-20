@@ -1,5 +1,38 @@
 {
-  "updatedAt": "",
+  "updatedAt": "2026-09-20T20:44:25.522002+00:00",
   "source": "https://www.thenationalarenaleague.com/",
-  "articles": []
+  "articles": [
+    {
+      "title": "NATIONAL ARENA LEAGUE UNVEILS “AROUND THE NAL” WITH BRAYDEN BULTER",
+      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-unveils-around-the-nal-with",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-8299a4c9-1a38-41ba-92fa-aa93c426558b/1789821164-1223.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-09-18T16:41:00+00:00",
+      "category": "NAL NEWS"
+    },
+    {
+      "title": "NATIONAL ARENA LEAGUE ANNOUNCES BRAYDEN BULTER AS “THE VOICE OF THE NAL”",
+      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-announces-brayden-bulter-as",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-c38bda78-0269-458b-b588-ed8c629d1b5d/1789821191-1223.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-09-17T20:02:00+00:00",
+      "category": "NAL NEWS"
+    },
+    {
+      "title": "National Arena League Names Jeff Blumenauer Director of Broadcast Operations",
+      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-names-jeff-blumenauer-direct",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-9fe103c4-8d74-4871-a81d-2b102ccc44ba/1789576988-1223.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-09-16T18:39:00+00:00",
+      "category": "NAL NEWS"
+    },
+    {
+      "title": "National Arena League Names Steven Shotola Director of NAL Life",
+      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-names-steven-shotola-directo",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-e7a36752-45c3-44fc-b687-955ac739a3a4/1789577253-1223.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-09-15T21:43:00+00:00",
+      "category": "NAL NEWS"
+    }
+  ]
 }
