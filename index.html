@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#07172b">
+
+  <title>NAL App</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --nal-blue: #07172b;
+      --nal-blue-light: #102b4e;
+      --nal-red: #e31b23;
+      --white: #ffffff;
+      --light: #f3f5f7;
+      --gray: #6d7682;
+      --border: #dfe3e8;
+      --black: #101419;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #d9dde2;
+      color: var(--black);
+    }
+
+    /* =========================
+       APP SHELL
+    ========================== */
+
+    .app {
+      width: 100%;
+      max-width: 600px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--light);
+      padding-bottom: 88px;
+      position: relative;
+    }
+
+    /* =========================
+       TOP HEADER
+    ========================== */
+
+    .topbar {
+      height: 68px;
+      padding:
+        max(8px, env(safe-area-inset-top))
+        18px
+        8px;
+      background: var(--nal-blue);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid var(--nal-red);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-weight: 900;
+      letter-spacing: 1px;
+      font-size: 18px;
+    }
+
+    .logo-placeholder {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: white;
+      color: var(--nal-blue);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .top-icon {
+      color: white;
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero {
+      min-height: 205px;
+      padding: 30px 20px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(7,23,43,.98),
+          rgba(16,43,78,.94)
+        );
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      width: 180px;
+      height: 180px;
+      border: 28px solid rgba(255,255,255,.035);
+      border-radius: 50%;
+      position: absolute;
+      right: -80px;
+      top: -65px;
+    }
+
+    .hero-small {
+      font-size: 12px;
+      letter-spacing: 3px;
+      font-weight: 800;
+      opacity: .8;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 {
+      font-size: 29px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -.5px;
+    }
+
+    .season {
+      color: var(--nal-red);
+      font-size: 31px;
+      font-weight: 900;
+      margin-top: 6px;
+    }
+
+    .tagline {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      margin-top: 10px;
+      opacity: .85;
+    }
+
+    /* =========================
+       SECTIONS
+    ========================== */
+
+    .section {
+      background: white;
+      margin-top: 9px;
+      padding: 20px 17px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+
+    .section-link {
+      color: var(--nal-red);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    /* =========================
+       NEXT GAME
+    ========================== */
+
+    .game-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 4px 16px rgba(0,0,0,.05);
+    }
+
+    .game-top {
+      background: #f5f6f8;
+      text-align: center;
+      padding: 8px;
+      color: var(--gray);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .7px;
+    }
+
+    .matchup {
+      display: grid;
+      grid-template-columns: 1fr 90px 1fr;
+      align-items: center;
+      padding: 20px 10px;
+    }
+
+    .team {
+      text-align: center;
+    }
+
+    .team-logo {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      background: var(--nal-blue);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .team-name {
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .game-time {
+      text-align: center;
+    }
+
+    .time {
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .day {
+      margin-top: 3px;
+      color: var(--gray);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .versus {
+      color: var(--nal-red);
+      font-size: 10px;
+      font-weight: 900;
+      margin-top: 5px;
+    }
+
+    .game-button {
+      display: block;
+      width: 100%;
+      background: var(--nal-blue);
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      padding: 12px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .7px;
+    }
+
+    /* =========================
+       FEATURED
+    ========================== */
+
+    .featured-card {
+      border-radius: 15px;
+      overflow: hidden;
+      background: var(--nal-blue);
+      color: white;
+      box-shadow: 0 6px 20px rgba(0,0,0,.12);
+    }
+
+    .featured-image {
+      height: 195px;
+      background:
+        linear-gradient(
+          135deg,
+          #07172b,
+          #1d416a
+        );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .play {
+      width: 58px;
+      height: 58px;
+      background: var(--nal-red);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 23px;
+      padding-left: 4px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.25);
+    }
+
+    .featured-info {
+      padding: 16px;
+    }
+
+    .featured-label {
+      color: var(--nal-red);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      margin-bottom: 5px;
+    }
+
+    .featured-title {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .watch-now {
+      margin-top: 11px;
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    /* =========================
+       NEWS
+    ========================== */
+
+    .news-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 5px;
+    }
+
+    .news-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .news-card {
+      min-width: 205px;
+      width: 205px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .news-image {
+      height: 110px;
+      background: linear-gradient(
+        135deg,
+        #172d48,
+        #315b88
+      );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .news-info {
+      padding: 12px;
+    }
+
+    .news-category {
+      color: var(--nal-red);
+      font-size: 9px;
+      font-weight: 900;
+      margin-bottom: 5px;
+    }
+
+    .news-title {
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    /* =========================
+       BOTTOM NAVIGATION
+    ========================== */
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 600px;
+      height: 76px;
+      padding-bottom: env(safe-area-inset-bottom);
+      background: var(--nal-blue);
+      border-top: 3px solid var(--nal-red);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      z-index: 1000;
+    }
+
+    .nav-item {
+      color: #9eabb9;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .nav-icon {
+      font-size: 20px;
+    }
+
+    .nav-item.active {
+      color: white;
+    }
+
+    .nav-item.active .nav-icon {
+      color: var(--nal-red);
+    }
+
+    .watch-nav {
+      position: relative;
+    }
+
+    .watch-circle {
+      width: 44px;
+      height: 44px;
+      background: var(--nal-red);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      margin-top: -20px;
+      border: 4px solid var(--nal-blue);
+    }
+
+    .watch-label {
+      color: white;
+      margin-top: -1px;
+    }
+
+    @media (min-width: 601px) {
+      body {
+        padding: 20px 0;
+      }
+
+      .app {
+        box-shadow: 0 10px 40px rgba(0,0,0,.18);
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-placeholder">NAL</div>
+      <span>NAL</span>
+    </div>
+
+    <div class="top-actions">
+      <span class="top-icon">🔔</span>
+      <span class="top-icon">⚙</span>
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-small">NATIONAL ARENA LEAGUE</div>
+    <h1>THE ROAD BEGINS</h1>
+    <div class="season">SEASON X</div>
+    <div class="tagline">WHERE CHAMPIONS ARE CROWNED</div>
+  </section>
+
+
+  <!-- NEXT GAMES -->
+  <section class="section">
+
+    <div class="section-header">
+      <div class="section-title">Next Games</div>
+      <a class="section-link" href="#">ALL GAMES →</a>
+    </div>
+
+    <div class="game-card">
+
+      <div class="game-top">
+        SATURDAY • 7:00 PM
+      </div>
+
+      <div class="matchup">
+
+        <div class="team">
+          <div class="team-logo">DAL</div>
+          <div class="team-name">DALLAS APEX</div>
+        </div>
+
+        <div class="game-time">
+          <div class="time">7:00 PM</div>
+          <div class="day">SATURDAY</div>
+          <div class="versus">VS</div>
+        </div>
+
+        <div class="team">
+          <div class="team-logo">OMA</div>
+          <div class="team-name">OMAHA BEEF</div>
+        </div>
+
+      </div>
+
+      <a href="#" class="game-button">
+        GAMECENTER →
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURED -->
+  <section class="section">
+
+    <div class="section-header">
+      <div class="section-title">Featured</div>
+      <a class="section-link" href="#">VIEW ALL →</a>
+    </div>
+
+    <div class="featured-card">
+
+      <div class="featured-image">
+        <div class="play">▶</div>
+      </div>
+
+      <div class="featured-info">
+        <div class="featured-label">NAL NETWORK</div>
+
+        <div class="featured-title">
+          Around the NAL
+        </div>
+
+        <a class="watch-now" href="#">
+          WATCH NOW →
+        </a>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- LATEST NEWS -->
+  <section class="section">
+
+    <div class="section-header">
+      <div class="section-title">Latest From The NAL</div>
+      <a class="section-link" href="#">ALL NEWS →</a>
+    </div>
+
+    <div class="news-scroll">
+
+      <article class="news-card">
+        <div class="news-image">
+          STORY IMAGE
+        </div>
+
+        <div class="news-info">
+          <div class="news-category">NAL NEWS</div>
+          <div class="news-title">
+            Season X is coming to the National Arena League.
+          </div>
+        </div>
+      </article>
+
+
+      <article class="news-card">
+        <div class="news-image">
+          STORY IMAGE
+        </div>
+
+        <div class="news-info">
+          <div class="news-category">NAL NETWORK</div>
+          <div class="news-title">
+            Around the NAL brings fans inside the league.
+          </div>
+        </div>
+      </article>
+
+
+      <article class="news-card">
+        <div class="news-image">
+          STORY IMAGE
+        </div>
+
+        <div class="news-info">
+          <div class="news-category">LEAGUE</div>
+          <div class="news-title">
+            The road to National Bowl X begins.
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav">
+
+  <a class="nav-item active" href="#">
+    <div class="nav-icon">▤</div>
+    <div>NEWS</div>
+  </a>
+
+  <a class="nav-item" href="#">
+    <div class="nav-icon">🏈</div>
+    <div>SCORES</div>
+  </a>
+
+  <a class="nav-item watch-nav" href="#">
+    <div class="watch-circle">▶</div>
+    <div class="watch-label">WATCH</div>
+  </a>
+
+  <a class="nav-item" href="#">
+    <div class="nav-icon">⬟</div>
+    <div>TEAMS</div>
+  </a>
+
+  <a class="nav-item" href="#">
+    <div class="nav-icon">▣</div>
+    <div>NAL SHOP</div>
+  </a>
+
+</nav>
+
+</body>
+</html>
