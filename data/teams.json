@@ -20,7 +20,7 @@
     "staff": "https://www.amarillowarbirds.com/staff",
     "tickets": "https://www.amarillowarbirds.com/tickets"
   
-},    },
+},
     {
       "name": "Colorado Spartans",
       "shortName": "Colorado",
@@ -75,5 +75,3 @@
       "slug": "wheeling-miners",
       "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners.png?v=1789867089"
     }
-  ]
-}
