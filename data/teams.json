@@ -1,0 +1,66 @@
+{
+  "season": "Season X",
+  "year": 2027,
+  "teams": [
+    {
+      "name": "Amarillo Warbirds",
+      "shortName": "Amarillo",
+      "slug": "amarillo-warbirds",
+      "logo": ""
+    },
+    {
+      "name": "Colorado Spartans",
+      "shortName": "Colorado",
+      "slug": "colorado-spartans",
+      "logo": ""
+    },
+    {
+      "name": "Dallas Apex",
+      "shortName": "Dallas",
+      "slug": "dallas-apex",
+      "logo": ""
+    },
+    {
+      "name": "Louisiana Rouxgaroux",
+      "shortName": "Louisiana",
+      "slug": "louisiana-rouxgaroux",
+      "logo": ""
+    },
+    {
+      "name": "Omaha Beef",
+      "shortName": "Omaha",
+      "slug": "omaha-beef",
+      "logo": ""
+    },
+    {
+      "name": "Pueblo Punishers",
+      "shortName": "Pueblo",
+      "slug": "pueblo-punishers",
+      "logo": ""
+    },
+    {
+      "name": "Salina Liberty",
+      "shortName": "Salina",
+      "slug": "salina-liberty",
+      "logo": ""
+    },
+    {
+      "name": "Sioux City Bandits",
+      "shortName": "Sioux City",
+      "slug": "sioux-city-bandits",
+      "logo": ""
+    },
+    {
+      "name": "Southwest Kansas Storm",
+      "shortName": "SW Kansas",
+      "slug": "southwest-kansas-storm",
+      "logo": ""
+    },
+    {
+      "name": "Wheeling Miners",
+      "shortName": "Wheeling",
+      "slug": "wheeling-miners",
+      "logo": ""
+    }
+  ]
+}
