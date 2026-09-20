@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 
 <meta
@@ -39,9 +38,8 @@
   --header-height: 72px;
 
   /*
-     FOOTBALLSHIFT ARTICLE CROP
-     Hides the FootballShift website header
-     while retaining the complete article title.
+     KEEP THIS AT 72PX.
+     This is the approved FootballShift article crop.
   */
   --footballshift-crop: 72px;
 }
@@ -542,6 +540,95 @@ button {
   padding-right: 17px;
 }
 
+.news-loading {
+  margin-right: 17px;
+
+  min-height: 170px;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #102b4e,
+      #07172b
+    );
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  color: white;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+.news-loading-logo {
+  width: 95px;
+  opacity: .7;
+}
+
+.news-spinner {
+  width: 22px;
+  height: 22px;
+
+  border: 3px solid rgba(255,255,255,.22);
+
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.news-error {
+  margin-right: 17px;
+
+  padding: 24px 18px;
+
+  border-radius: 14px;
+
+  background: #f5f6f8;
+
+  border: 1px solid var(--border);
+
+  text-align: center;
+}
+
+.news-error-title {
+  color: var(--nal-blue);
+
+  font-size: 13px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+}
+
+.news-error-text {
+  margin-top: 6px;
+
+  color: var(--gray);
+
+  font-size: 10px;
+
+  line-height: 1.4;
+}
+
 
 /* =========================================================
    LEAD STORY
@@ -579,6 +666,8 @@ button {
   object-fit: cover;
 
   display: block;
+
+  z-index: 1;
 }
 
 .lead-story-fallback {
@@ -916,6 +1005,153 @@ button {
 
 
 /* =========================================================
+   STANDARD PLACEHOLDER PAGES
+========================================================= */
+
+.placeholder-page {
+  padding: 30px 18px;
+}
+
+.placeholder-card {
+  min-height: 260px;
+
+  border-radius: 18px;
+
+  background: white;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 30px 20px;
+
+  border: 1px solid var(--border);
+}
+
+.placeholder-card h2 {
+  color: var(--nal-blue);
+
+  font-size: 20px;
+
+  font-weight: 900;
+
+  text-transform: uppercase;
+}
+
+.placeholder-card p {
+  color: var(--gray);
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+  margin-top: 8px;
+
+  max-width: 320px;
+}
+
+
+/* =========================================================
+   SHOP PAGE
+========================================================= */
+
+.shop-page {
+  background: white;
+
+  height:
+    calc(
+      100dvh -
+      var(--header-height) -
+      var(--nav-height)
+    );
+
+  min-height: 450px;
+
+  overflow: hidden;
+}
+
+.shop-toolbar {
+  height: 58px;
+
+  padding: 0 15px;
+
+  border-bottom: 1px solid var(--border);
+
+  background: white;
+
+  display: grid;
+
+  grid-template-columns: 1fr 42px;
+
+  align-items: center;
+}
+
+.shop-title {
+  color: var(--nal-blue);
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  letter-spacing: .8px;
+}
+
+.shop-subtitle {
+  margin-top: 2px;
+
+  color: var(--gray);
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: .5px;
+}
+
+.shop-external {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: var(--nal-blue);
+
+  text-decoration: none;
+}
+
+.shop-external svg {
+  width: 20px;
+  height: 20px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+}
+
+.shop-frame {
+  width: 100%;
+
+  height:
+    calc(
+      100% - 58px
+    );
+
+  border: 0;
+
+  background: #f2f2f2;
+}
+
+
+/* =========================================================
    IN-APP ARTICLE PAGE
 ========================================================= */
 
@@ -968,7 +1204,1688 @@ button {
 
   border-radius: 50%;
 
-  background: #f1f3f5;
+  background: transparent;
+
+  color: var(--nal-blue);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  text-decoration: none;
+}
+
+.article-back svg,
+.article-external svg {
+  width: 20px;
+  height: 20px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.article-toolbar-center {
+  text-align: center;
+}
+
+.article-toolbar-title {
+  color: var(--nal-blue);
+
+  font-size: 12px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+}
+
+.article-toolbar-subtitle {
+  margin-top: 2px;
+
+  color: var(--gray);
+
+  font-size: 7px;
+
+  font-weight: 800;
+
+  letter-spacing: .7px;
+}
+
+.article-frame-container {
+  position: relative;
+
+  height:
+    calc(
+      100% - 54px
+    );
+
+  overflow: hidden;
+
+  background: white;
+}
+
+.article-frame {
+  position: absolute;
+
+  left: 0;
+
+  top:
+    calc(
+      -1 *
+      var(--footballshift-crop)
+    );
+
+  width: 100%;
+
+  height:
+    calc(
+      100% +
+      var(--footballshift-crop)
+    );
+
+  border: 0;
+
+  background: white;
+
+  display: block;
+
+  z-index: 2;
+}
+
+.article-loading {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 10;
+
+  background: white;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+}
+
+.article-loading-logo {
+  width: 100px;
+}
+
+.article-spinner {
+  width: 25px;
+  height: 25px;
+
+  border: 3px solid #dfe3e8;
+
+  border-top-color: var(--nal-red);
+
+  border-radius: 50%;
+
+  animation: spin .8s linear infinite;
+}
+
+.article-loading-text {
+  color: var(--nal-blue);
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION
+========================================================= */
+
+.bottom-nav {
+  position: fixed;
+
+  left: 50%;
+  bottom: 0;
+
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 600px;
+
+  height:
+    calc(
+      var(--nav-height) +
+      env(safe-area-inset-bottom)
+    );
+
+  padding:
+    8px 6px
+    max(
+      8px,
+      env(safe-area-inset-bottom)
+    );
+
+  background: white;
+
+  border-top: 1px solid #d7dce2;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      5,
+      1fr
+    );
+
+  align-items: center;
+
+  z-index: 4000;
+
+  box-shadow:
+    0 -4px 16px rgba(0,0,0,.08);
+}
+
+.nav-button {
+  border: 0;
+
+  background: transparent;
+
+  color: #727b85;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  height: 60px;
+
+  cursor: pointer;
+}
+
+.nav-button svg {
+  width: 22px;
+  height: 22px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-button span {
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: .25px;
+
+  white-space: nowrap;
+}
+
+.nav-button.active {
+  color: var(--nal-red);
+}
+
+.watch-button {
+  position: relative;
+
+  top: -15px;
+}
+
+.watch-icon {
+  width: 54px;
+  height: 54px;
+
+  border-radius: 50%;
+
+  background: var(--nal-red);
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 5px 14px rgba(227,27,35,.35);
+
+  border: 5px solid white;
+}
+
+.watch-icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.watch-button span {
+  color: var(--nal-blue);
+
+  margin-top: -1px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="topbar">
+
+    <div class="header-left">
+
+      <button
+        class="header-button notification-button"
+        aria-label="Notifications"
+      >
+
+        <svg viewBox="0 0 24 24">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+          <path d="M10 21h4"></path>
+        </svg>
+
+        <span class="notification-dot"></span>
+
+      </button>
+
+    </div>
+
+
+    <a
+      href="#"
+      class="header-logo"
+      id="headerHome"
+      aria-label="National Arena League Home"
+    >
+
+      <img
+        class="nal-logo"
+        src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
+        alt="National Arena League"
+      >
+
+    </a>
+
+
+    <div class="header-right">
+
+      <button
+        class="header-button"
+        aria-label="Settings"
+      >
+
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.1A1.7 1.7 0 0 0 8.2 19.3a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 3.8 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H2V9.6h.1A1.7 1.7 0 0 0 3.7 8.2a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 8 3.8a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V2h4v.1A1.7 1.7 0 0 0 14.8 3.7a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.2 8a1.7 1.7 0 0 0 .6 1 1.7 1.7 0 0 0 1.1.4h.1v4h-.1a1.7 1.7 0 0 0-1.5 1.6z"></path>
+        </svg>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       HOME PAGE
+  ====================================================== -->
+
+  <main
+    id="homePage"
+    class="app-page active"
+  >
+
+
+    <!-- SEASON X HERO -->
+
+    <section class="season-x-hero">
+
+      <div class="hero-red-glow"></div>
+
+      <div class="hero-content">
+
+        <div class="hero-eyebrow">
+          NATIONAL ARENA LEAGUE • SEASON X
+        </div>
+
+        <img
+          src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/National_Bowl_Logo_X.png?v=1789933997"
+          alt="National Bowl X"
+          class="national-bowl-logo"
+        >
+
+        <div class="hero-tagline">
+          WHERE CHAMPIONS ARE CROWNED
+        </div>
+
+      </div>
+
+      <div class="hero-accent-line"></div>
+
+    </section>
+
+
+    <!-- NEXT GAMES -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+          Next Games
+        </div>
+
+      </div>
+
+      <div class="schedule-placeholder">
+
+        <div>
+
+          <div class="schedule-placeholder-title">
+            Season X
+          </div>
+
+          <div class="schedule-placeholder-text">
+            Upcoming games will appear here after the official schedule release.
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- NAL NETWORK -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+          NAL Network
+        </div>
+
+      </div>
+
+      <div class="network-placeholder">
+
+        <div>
+
+          <div class="network-placeholder-title">
+            NAL NETWORK
+          </div>
+
+          <div class="network-placeholder-text">
+            THE GAME. THE LEAGUE. THE NETWORK.
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =================================================
+         LIVE NEWS
+    ================================================== -->
+
+    <section
+      class="section news-section"
+      id="newsSection"
+    >
+
+      <div class="section-header">
+
+        <div class="section-title">
+          Latest From The NAL
+        </div>
+
+        <a
+          class="section-link"
+          href="https://www.thenationalarenaleague.com/"
+          target="_blank"
+          rel="noopener"
+        >
+          ALL NEWS →
+        </a>
+
+      </div>
+
+
+      <div id="newsContent">
+
+        <div class="news-loading">
+
+          <img
+            class="news-loading-logo"
+            src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
+            alt=""
+          >
+
+          <div class="news-spinner"></div>
+
+          <div>
+            Loading NAL News
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FAN ZONE -->
+
+    <section class="future-section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+          Trending In Fan Zone
+        </div>
+
+      </div>
+
+      <div class="future-placeholder">
+        FAN POLLS, DISCUSSIONS AND GAMEDAY CONVERSATIONS COMING SOON
+      </div>
+
+    </section>
+
+
+    <!-- TEAMS -->
+
+    <section class="future-section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+          NAL Teams
+        </div>
+
+      </div>
+
+      <div class="future-placeholder">
+        TEAM LOGOS AND TEAM PAGES COMING SOON
+      </div>
+
+    </section>
+
+
+    <!-- PARTNERS -->
+
+    <section class="future-section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+          Official Partners
+        </div>
+
+      </div>
+
+      <div class="future-placeholder">
+        OFFICIAL NATIONAL ARENA LEAGUE PARTNERS
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       SCORES
+  ====================================================== -->
+
+  <main
+    id="scoresPage"
+    class="app-page placeholder-page"
+  >
+
+    <div class="placeholder-card">
+
+      <h2>Scores</h2>
+
+      <p>
+        Live scores, game status and Season X results will appear here.
+      </p>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       WATCH
+  ====================================================== -->
+
+  <main
+    id="watchPage"
+    class="app-page placeholder-page"
+  >
+
+    <div class="placeholder-card">
+
+      <h2>Watch</h2>
+
+      <p>
+        NAL Network and MNTR+ viewing options will appear here.
+      </p>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FAN ZONE
+  ====================================================== -->
+
+  <main
+    id="fanPage"
+    class="app-page placeholder-page"
+  >
+
+    <div class="placeholder-card">
+
+      <h2>Fan Zone</h2>
+
+      <p>
+        The NAL fan community, polls, discussions and gameday rooms are coming soon.
+      </p>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       SHOP
+  ====================================================== -->
+
+  <main
+    id="shopPage"
+    class="app-page shop-page"
+  >
+
+    <div class="shop-toolbar">
+
+      <div>
+
+        <div class="shop-title">
+          NAL SHOP
+        </div>
+
+        <div class="shop-subtitle">
+          OFFICIAL NATIONAL ARENA LEAGUE MERCHANDISE
+        </div>
+
+      </div>
+
+      <a
+        href="https://nalshop.com/"
+        target="_blank"
+        rel="noopener"
+        class="shop-external"
+        aria-label="Open NAL Shop"
+      >
+
+        <svg viewBox="0 0 24 24">
+          <path d="M14 3h7v7"></path>
+          <path d="M10 14L21 3"></path>
+          <path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"></path>
+        </svg>
+
+      </a>
+
+    </div>
+
+    <iframe
+      id="shopFrame"
+      class="shop-frame"
+      src="about:blank"
+      title="NAL Shop"
+    ></iframe>
+
+  </main>
+
+
+  <!-- =====================================================
+       ARTICLE READER
+  ====================================================== -->
+
+  <main
+    id="articlePage"
+    class="app-page article-page"
+  >
+
+    <div class="article-toolbar">
+
+      <button
+        class="article-back"
+        id="articleBack"
+        aria-label="Back"
+      >
+
+        <svg viewBox="0 0 24 24">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+
+      </button>
+
+
+      <div class="article-toolbar-center">
+
+        <div class="article-toolbar-title">
+          NAL NEWS
+        </div>
+
+        <div class="article-toolbar-subtitle">
+          NATIONAL ARENA LEAGUE
+        </div>
+
+      </div>
+
+
+      <a
+        class="article-external"
+        id="articleExternal"
+        href="#"
+        target="_blank"
+        rel="noopener"
+        aria-label="Open original article"
+      >
+
+        <svg viewBox="0 0 24 24">
+          <path d="M14 3h7v7"></path>
+          <path d="M10 14L21 3"></path>
+          <path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"></path>
+        </svg>
+
+      </a>
+
+    </div>
+
+
+    <div class="article-frame-container">
+
+      <div
+        class="article-loading"
+        id="articleLoading"
+      >
+
+        <img
+          src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
+          alt="National Arena League"
+          class="article-loading-logo"
+        >
+
+        <div class="article-spinner"></div>
+
+        <div class="article-loading-text">
+          LOADING NAL NEWS
+        </div>
+
+      </div>
+
+
+      <iframe
+        id="articleFrame"
+        class="article-frame"
+        src="about:blank"
+        title="NAL News Article"
+        scrolling="yes"
+      ></iframe>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       BOTTOM NAV
+  ====================================================== -->
+
+  <nav class="bottom-nav">
+
+
+    <!-- HOME -->
+
+    <button
+      class="nav-button active"
+      data-page="homePage"
+      aria-label="Home"
+    >
+
+      <svg viewBox="0 0 24 24">
+        <path d="M3 11l9-8 9 8"></path>
+        <path d="M5 10v10h14V10"></path>
+        <path d="M9 20v-6h6v6"></path>
+      </svg>
+
+      <span>HOME</span>
+
+    </button>
+
+
+    <!-- SCORES -->
+
+    <button
+      class="nav-button"
+      data-page="scoresPage"
+      aria-label="Scores"
+    >
+
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <path d="M8 9h2"></path>
+        <path d="M14 9h2"></path>
+        <path d="M8 14h2"></path>
+        <path d="M14 14h2"></path>
+      </svg>
+
+      <span>SCORES</span>
+
+    </button>
+
+
+    <!-- WATCH -->
+
+    <button
+      class="nav-button watch-button"
+      data-page="watchPage"
+      aria-label="Watch"
+    >
+
+      <div class="watch-icon">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M8 5l11 7-11 7z"></path>
+        </svg>
+
+      </div>
+
+      <span>WATCH</span>
+
+    </button>
+
+
+    <!-- FAN ZONE -->
+
+    <button
+      class="nav-button"
+      data-page="fanPage"
+      aria-label="Fan Zone"
+    >
+
+      <svg viewBox="0 0 24 24">
+        <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path>
+      </svg>
+
+      <span>FAN ZONE</span>
+
+    </button>
+
+
+    <!-- SHOP -->
+
+    <button
+      class="nav-button"
+      data-page="shopPage"
+      aria-label="NAL Shop"
+    >
+
+      <svg viewBox="0 0 24 24">
+        <path d="M3 9l2-5h14l2 5"></path>
+        <path d="M5 13v7h14v-7"></path>
+        <path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"></path>
+      </svg>
+
+      <span>NAL SHOP</span>
+
+    </button>
+
+  </nav>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONSTANTS
+========================================================= */
+
+const NAL_LOGO =
+  "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055";
+
+const NEWS_FEED =
+  "data/news.json";
+
+const SHOP_URL =
+  "https://nalshop.com/";
+
+
+/* =========================================================
+   PAGE ELEMENTS
+========================================================= */
+
+const pages =
+  document.querySelectorAll(
+    ".app-page"
+  );
+
+const navButtons =
+  document.querySelectorAll(
+    ".nav-button"
+  );
+
+const homePage =
+  document.getElementById(
+    "homePage"
+  );
+
+const articlePage =
+  document.getElementById(
+    "articlePage"
+  );
+
+const articleFrame =
+  document.getElementById(
+    "articleFrame"
+  );
+
+const articleLoading =
+  document.getElementById(
+    "articleLoading"
+  );
+
+const articleExternal =
+  document.getElementById(
+    "articleExternal"
+  );
+
+const articleBack =
+  document.getElementById(
+    "articleBack"
+  );
+
+const newsSection =
+  document.getElementById(
+    "newsSection"
+  );
+
+const newsContent =
+  document.getElementById(
+    "newsContent"
+  );
+
+const shopFrame =
+  document.getElementById(
+    "shopFrame"
+  );
+
+const headerHome =
+  document.getElementById(
+    "headerHome"
+  );
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+function showPage(pageId) {
+
+  pages.forEach(page => {
+    page.classList.remove("active");
+  });
+
+  const page =
+    document.getElementById(
+      pageId
+    );
+
+  if (page) {
+    page.classList.add("active");
+  }
+
+
+  navButtons.forEach(button => {
+    button.classList.remove("active");
+  });
+
+
+  const navButton =
+    document.querySelector(
+      `[data-page="${pageId}"]`
+    );
+
+  if (navButton) {
+    navButton.classList.add("active");
+  }
+
+
+  if (
+    pageId === "shopPage" &&
+    shopFrame.src === "about:blank"
+  ) {
+
+    shopFrame.src =
+      SHOP_URL;
+
+  }
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "instant"
+  });
+
+}
+
+
+navButtons.forEach(button => {
+
+  button.addEventListener(
+    "click",
+    () => {
+
+      const pageId =
+        button.dataset.page;
+
+      if (
+        articleFrame.src !==
+        "about:blank"
+      ) {
+        articleFrame.src =
+          "about:blank";
+      }
+
+      showPage(pageId);
+
+    }
+  );
+
+});
+
+
+headerHome.addEventListener(
+  "click",
+  event => {
+
+    event.preventDefault();
+
+    if (
+      articleFrame.src !==
+      "about:blank"
+    ) {
+      articleFrame.src =
+        "about:blank";
+    }
+
+    showPage(
+      "homePage"
+    );
+
+  }
+);
+
+
+/* =========================================================
+   ARTICLE READER
+========================================================= */
+
+let previousPage =
+  "homePage";
+
+let previousScrollPosition =
+  0;
+
+
+function openArticle(url) {
+
+  if (!url) {
+    return;
+  }
+
+
+  const activePage =
+    document.querySelector(
+      ".app-page.active"
+    );
+
+
+  previousPage =
+    activePage
+      ? activePage.id
+      : "homePage";
+
+
+  previousScrollPosition =
+    window.scrollY;
+
+
+  pages.forEach(page => {
+    page.classList.remove(
+      "active"
+    );
+  });
+
+
+  articlePage.classList.add(
+    "active"
+  );
+
+
+  navButtons.forEach(button => {
+    button.classList.remove(
+      "active"
+    );
+  });
+
+
+  const homeButton =
+    document.querySelector(
+      '[data-page="homePage"]'
+    );
+
+
+  if (homeButton) {
+    homeButton.classList.add(
+      "active"
+    );
+  }
+
+
+  articleLoading.style.display =
+    "flex";
+
+
+  articleExternal.href =
+    url;
+
+
+  articleFrame.src =
+    url;
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "instant"
+  });
+
+}
+
+
+articleFrame.addEventListener(
+  "load",
+  () => {
+
+    if (
+      articleFrame.src !==
+      "about:blank"
+    ) {
+
+      articleLoading.style.display =
+        "none";
+
+    }
+
+  }
+);
+
+
+articleBack.addEventListener(
+  "click",
+  () => {
+
+    articleFrame.src =
+      "about:blank";
+
+
+    pages.forEach(page => {
+      page.classList.remove(
+        "active"
+      );
+    });
+
+
+    const previous =
+      document.getElementById(
+        previousPage
+      );
+
+
+    if (previous) {
+      previous.classList.add(
+        "active"
+      );
+    }
+
+
+    navButtons.forEach(button => {
+      button.classList.remove(
+        "active"
+      );
+    });
+
+
+    const previousNav =
+      document.querySelector(
+        `[data-page="${previousPage}"]`
+      );
+
+
+    if (previousNav) {
+
+      previousNav.classList.add(
+        "active"
+      );
+
+    } else {
+
+      const homeButton =
+        document.querySelector(
+          '[data-page="homePage"]'
+        );
+
+      if (homeButton) {
+        homeButton.classList.add(
+          "active"
+        );
+      }
+
+    }
+
+
+    setTimeout(
+      () => {
+
+        window.scrollTo({
+          top:
+            previousScrollPosition,
+          behavior:
+            "instant"
+        });
+
+      },
+      10
+    );
+
+  }
+);
+
+
+/* =========================================================
+   NEWS HELPERS
+========================================================= */
+
+function escapeHTML(value = "") {
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+function formatNewsDate(
+  value
+) {
+
+  if (!value) {
+    return "NAL NEWS";
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return value;
+
+  }
+
+
+  return date
+    .toLocaleDateString(
+      "en-US",
+      {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      }
+    )
+    .toUpperCase();
+
+}
+
+
+function imageMarkup(
+  article,
+  className
+) {
+
+  if (!article.image) {
+    return "";
+  }
+
+
+  return `
+    <img
+      class="${className}"
+      src="${escapeHTML(article.image)}"
+      alt="${escapeHTML(article.title)}"
+      loading="lazy"
+      onerror="this.style.display='none'"
+    >
+  `;
+
+}
+
+
+/* =========================================================
+   RENDER LIVE NEWS
+========================================================= */
+
+function renderNews(
+  articles
+) {
+
+  if (
+    !Array.isArray(articles) ||
+    articles.length === 0
+  ) {
+
+    showNewsError();
+
+    return;
+
+  }
+
+
+  const lead =
+    articles[0];
+
+
+  const additional =
+    articles.slice(
+      1,
+      5
+    );
+
+
+  const leadDescription =
+    lead.description || "";
+
+
+  let html = `
+
+    <a
+      class="lead-story"
+      href="${escapeHTML(lead.url)}"
+      data-news-story="true"
+    >
+
+      <div class="lead-story-fallback">
+
+        <img
+          src="${NAL_LOGO}"
+          alt=""
+        >
+
+      </div>
+
+      ${imageMarkup(
+        lead,
+        "lead-story-image"
+      )}
+
+      <div class="lead-story-overlay"></div>
+
+      <div class="lead-story-content">
+
+        <div class="story-category">
+          ${escapeHTML(
+            lead.category ||
+            "NAL NEWS"
+          )}
+        </div>
+
+        <div class="lead-story-title">
+          ${escapeHTML(
+            lead.title
+          )}
+        </div>
+
+        ${
+          leadDescription
+          ? `
+            <div class="lead-story-subtitle">
+              ${escapeHTML(
+                leadDescription
+              )}
+            </div>
+          `
+          : ""
+        }
+
+        <div class="read-story">
+          READ STORY →
+        </div>
+
+      </div>
+
+    </a>
+
+  `;
+
+
+  if (
+    additional.length > 0
+  ) {
+
+    html += `
+      <div class="news-scroll">
+    `;
+
+
+    additional.forEach(
+      article => {
+
+        html += `
+
+          <a
+            class="news-card"
+            href="${escapeHTML(article.url)}"
+            data-news-story="true"
+          >
+
+            <div class="news-card-image-wrap">
+
+              <div class="news-card-fallback">
+
+                <img
+                  src="${NAL_LOGO}"
+                  alt=""
+                >
+
+              </div>
+
+              ${imageMarkup(
+                article,
+                "news-card-image"
+              )}
+
+            </div>
+
+
+            <div class="news-card-body">
+
+              <div class="news-card-date">
+                ${escapeHTML(
+                  formatNewsDate(
+                    article.date
+                  )
+                )}
+              </div>
+
+              <div class="news-card-title">
+                ${escapeHTML(
+                  article.title
+                )}
+              </div>
+
+            </div>
+
+          </a>
+
+        `;
+
+      }
+    );
+
+
+    html += `
+      </div>
+
+      <div class="swipe-hint">
+
+        SWIPE FOR MORE
+
+        <svg viewBox="0 0 24 24">
+          <path d="M5 12h14"></path>
+          <path d="M13 6l6 6-6 6"></path>
+        </svg>
+
+      </div>
+    `;
+
+  }
+
+
+  newsContent.innerHTML =
+    html;
+
+}
+
+
+/* =========================================================
+   NEWS ERROR
+========================================================= */
+
+function showNewsError() {
+
+  newsContent.innerHTML = `
+
+    <div class="news-error">
+
+      <div class="news-error-title">
+        NAL News
+      </div>
+
+      <div class="news-error-text">
+        Latest league news is temporarily unavailable.
+        Please check back shortly.
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   LOAD NEWS.JSON
+========================================================= */
+
+async function loadNews() {
+
+  try {
+
+    /*
+       Cache-busting timestamp ensures the app
+       checks GitHub Pages for the newest JSON
+       instead of displaying an old cached copy.
+    */
+
+    const response =
+      await fetch(
+        `${NEWS_FEED}?v=${Date.now()}`,
+        {
+          cache: "no-store"
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        `News request failed: ${response.status}`
+      );
+
+    }
+
+
+    const feed =
+      await response.json();
+
+
+    if (
+      !feed ||
+      !Array.isArray(
+        feed.articles
+      )
+    ) {
+
+      throw new Error(
+        "Invalid news feed"
+      );
+
+    }
+
+
+    renderNews(
+      feed.articles
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Unable to load NAL news:",
+      error
+    );
+
+
+    showNewsError();
+
+  }
+
+}
+
+
+/* =========================================================
+   DYNAMIC NEWS CLICK HANDLING
+========================================================= */
+
+/*
+   Event delegation is important here.
+
+   The news cards do not exist when the page
+   initially loads. They are created AFTER
+   news.json is downloaded.
+
+   This listener therefore works for every
+   dynamically generated article.
+*/
+
+newsSection.addEventListener(
+  "click",
+  event => {
+
+    const story =
+      event.target.closest(
+        '[data-news-story="true"]'
+      );
+
+
+    if (!story) {
+      return;
+    }
+
+
+    const url =
+      story.getAttribute(
+        "href"
+      );
+
+
+    if (!url) {
+      return;
+    }
+
+
+    event.preventDefault();
+
+
+    openArticle(
+      url
+    );
+
+  }
+);
+
+
+/* =========================================================
+   START APP
+========================================================= */
+
+loadNews();
+
+</script>
+
+</body>
+</html>  background: #f1f3f5;
 
   color: var(--nal-blue);
 
