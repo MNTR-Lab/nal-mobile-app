@@ -3720,44 +3720,54 @@ function openTeamHome(team) {
 
   const teamBranding = {
     "amarillo-warbirds": {
-      primary: "#07172b",
-      accent: "#e31b23"
+      primary: "#4169E1",
+      accent: "#D71920",
+      third: "#07172B"
     },
     "colorado-spartans": {
-      primary: "#07172b",
-      accent: "#e31b23"
+      primary: "#1F6FB2",
+      accent: "#000000",
+      third: "#7A7D81"
     },
     "dallas-apex": {
-      primary: "#07172b",
-      accent: "#e31b23"
+      primary: "#C8102E",
+      accent: "#E1AD01",
+      third: "#000000"
     },
     "louisiana-rouxgaroux": {
-      primary: "#07172b",
-      accent: "#e31b23"
+      primary: "#CFB53B",
+      accent: "#800000",
+      third: "#000000"
     },
     "omaha-beef": {
-      primary: "#07172b",
-      accent: "#e31b23"
+      primary: "#F47A20",
+      accent: "#000000",
+      third: "#808080"
     },
     "pueblo-punishers": {
-      primary: "#07172b",
-      accent: "#e31b23"
+      primary: "#6F2DA8",
+      accent: "#000000",
+      third: "#C0C0C0"
     },
     "salina-liberty": {
-      primary: "#07172b",
-      accent: "#e31b23"
+      primary: "#3C3B6E",
+      accent: "#B22234",
+      third: "#FFFFFF"
     },
     "sioux-city-bandits": {
-      primary: "#07172b",
-      accent: "#e31b23"
+      primary: "#000000",
+      accent: "#C8102E",
+      third: "#D4AF37"
     },
     "southwest-kansas-storm": {
-      primary: "#07172b",
-      accent: "#e31b23"
+      primary: "#7FFF00",
+      accent: "#6F2DA8",
+      third: "#008C95"
     },
     "wheeling-miners": {
-      primary: "#2c2c2c",
-      accent: "#c99a2e"
+      primary: "#C9D62E",
+      accent: "#2C2C2C",
+      third: "#F2E8D5"
     }
   };
 
@@ -3775,6 +3785,11 @@ function openTeamHome(team) {
   teamPage.style.setProperty(
     "--team-accent",
     brand.accent
+  );
+
+  teamPage.style.setProperty(
+    "--team-third",
+    brand.third || "#ffffff"
   );
 
 
