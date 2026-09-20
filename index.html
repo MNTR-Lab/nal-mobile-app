@@ -1336,6 +1336,32 @@ button {
   animation: spin .8s linear infinite;
 }
 
+/* =========================================================
+   TEAM CONTENT VIEWER
+========================================================= */
+
+.article-page.team-content-mode .article-toolbar {
+  border-bottom: 4px solid var(--viewer-accent, var(--nal-red));
+}
+
+.article-page.team-content-mode .article-back,
+.article-page.team-content-mode .article-toolbar-title {
+  color: var(--viewer-primary, var(--nal-blue));
+}
+
+.article-page.team-content-mode .article-toolbar-subtitle {
+  color: var(--viewer-accent, var(--nal-red));
+}
+
+.article-page.team-content-mode .article-spinner {
+  border-top-color: var(--viewer-accent, var(--nal-red));
+}
+
+.article-page.team-content-mode .article-loading-text {
+  color: var(--viewer-primary, var(--nal-blue));
+}
+
+
 .article-loading-text {
   color: var(--nal-blue);
 
@@ -2575,11 +2601,11 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
 
       <div class="article-toolbar-center">
 
-        <div class="article-toolbar-title">
+        <div class="article-toolbar-title" id="articleToolbarTitle">
           NAL NEWS
         </div>
 
-        <div class="article-toolbar-subtitle">
+        <div class="article-toolbar-subtitle" id="articleToolbarSubtitle">
           NATIONAL ARENA LEAGUE
         </div>
 
@@ -2621,7 +2647,7 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
 
         <div class="article-spinner"></div>
 
-        <div class="article-loading-text">
+        <div class="article-loading-text" id="articleLoadingText">
           LOADING NAL NEWS
         </div>
 
@@ -2809,6 +2835,21 @@ const articleBack =
     "articleBack"
   );
 
+const articleToolbarTitle =
+  document.getElementById(
+    "articleToolbarTitle"
+  );
+
+const articleToolbarSubtitle =
+  document.getElementById(
+    "articleToolbarSubtitle"
+  );
+
+const articleLoadingText =
+  document.getElementById(
+    "articleLoadingText"
+  );
+
 const newsSection =
   document.getElementById(
     "newsSection"
@@ -2942,78 +2983,122 @@ let previousScrollPosition =
   0;
 
 
-function openArticle(url) {
+function openArticle(url, options = {}) {
 
   if (!url) {
     return;
   }
-
 
   const activePage =
     document.querySelector(
       ".app-page.active"
     );
 
-
   previousPage =
     activePage
       ? activePage.id
       : "homePage";
 
-
   previousScrollPosition =
     window.scrollY;
 
+  const isTeamContent =
+    options.mode === "team";
+
+  const title =
+    options.title || "NAL NEWS";
+
+  const subtitle =
+    options.subtitle || "NATIONAL ARENA LEAGUE";
+
+  const loadingText =
+    options.loadingText ||
+    (isTeamContent
+      ? `LOADING ${title}`
+      : "LOADING NAL NEWS");
+
+  if (articleToolbarTitle) {
+    articleToolbarTitle.textContent =
+      title.toUpperCase();
+  }
+
+  if (articleToolbarSubtitle) {
+    articleToolbarSubtitle.textContent =
+      subtitle.toUpperCase();
+  }
+
+  if (articleLoadingText) {
+    articleLoadingText.textContent =
+      loadingText.toUpperCase();
+  }
+
+  if (isTeamContent && options.brand) {
+    articlePage.style.setProperty(
+      "--viewer-primary",
+      options.brand.primary
+    );
+
+    articlePage.style.setProperty(
+      "--viewer-accent",
+      options.brand.accent
+    );
+
+    articlePage.classList.add(
+      "team-content-mode"
+    );
+  } else {
+    articlePage.style.removeProperty(
+      "--viewer-primary"
+    );
+
+    articlePage.style.removeProperty(
+      "--viewer-accent"
+    );
+
+    articlePage.classList.remove(
+      "team-content-mode"
+    );
+  }
+
+  if (articleExternal) {
+    articleExternal.href = url;
+    articleExternal.style.display =
+      isTeamContent ? "none" : "flex";
+  }
 
   pages.forEach(page => {
-    page.classList.remove(
-      "active"
-    );
+    page.classList.remove("active");
   });
 
-
-  articlePage.classList.add(
-    "active"
-  );
-
+  articlePage.classList.add("active");
 
   navButtons.forEach(button => {
-    button.classList.remove(
-      "active"
-    );
+    button.classList.remove("active");
   });
-
 
   const homeButton =
     document.querySelector(
       '[data-page="homePage"]'
     );
 
-
   if (homeButton) {
-    homeButton.classList.add(
-      "active"
-    );
+    homeButton.classList.add("active");
   }
-
 
   articleLoading.style.display =
     "flex";
 
+  articleFrame.title =
+    isTeamContent
+      ? `${subtitle} - ${title}`
+      : "NAL News Article";
 
-  articleExternal.href =
-    url;
-
-
-  articleFrame.src =
-    url;
-
+  articleFrame.src = url;
 
   window.scrollTo({
     top: 0,
     behavior: "instant"
   });
-
 }
 
 
@@ -3041,6 +3126,23 @@ articleBack.addEventListener(
 
     articleFrame.src =
       "about:blank";
+
+    articlePage.classList.remove(
+      "team-content-mode"
+    );
+
+    articlePage.style.removeProperty(
+      "--viewer-primary"
+    );
+
+    articlePage.style.removeProperty(
+      "--viewer-accent"
+    );
+
+    if (articleExternal) {
+      articleExternal.style.display =
+        "flex";
+    }
 
 
     pages.forEach(page => {
@@ -3792,6 +3894,8 @@ function openTeamHome(team) {
     brand.third || "#ffffff"
   );
 
+  activeTeam._appBrand = brand;
+
 
   /* =====================================================
      HERO INFORMATION
@@ -3998,10 +4102,15 @@ function openTeamHome(team) {
 
         if (team.website) {
 
-          window.open(
+          openArticle(
             team.website,
-            "_blank",
-            "noopener,noreferrer"
+            {
+              mode: "team",
+              title: "TEAM HOME",
+              subtitle: team.name || shortName,
+              loadingText: `LOADING ${team.name || shortName}`,
+              brand: brand
+            }
           );
 
         } else {
@@ -4051,11 +4160,31 @@ function openTeamHome(team) {
             return;
           }
 
-          /*
-             Keep team information inside the NAL app shell.
-             The existing in-app reader is reused here.
-          */
-          openArticle(url);
+          const sectionTitle =
+            destination === "schedule"
+              ? "SCHEDULE"
+              : destination === "roster"
+              ? "ROSTER"
+              : destination === "stats"
+              ? "STATS"
+              : destination === "standings"
+              ? "STANDINGS"
+              : destination === "staff"
+              ? "STAFF"
+              : destination === "tickets"
+              ? "TICKETS"
+              : destination.toUpperCase();
+
+          openArticle(
+            url,
+            {
+              mode: "team",
+              title: sectionTitle,
+              subtitle: team.name || shortName,
+              loadingText: `LOADING ${sectionTitle}`,
+              brand: brand
+            }
+          );
 
         };
 
