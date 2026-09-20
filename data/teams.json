@@ -13,10 +13,10 @@
       "footballShift": {
         "home": "https://www.amarillowarbirds.com/",
         "news": "https://www.amarillowarbirds.com/news",
-        "schedule": "https://www.amarillowarbirds.com/events",
-        "roster": "https://www.amarillowarbirds.com/roster",
+        "schedule": "https://www.amarillowarbirds.com/stats",
+        "roster": "https://www.amarillowarbirds.com/stats",
         "stats": "https://www.amarillowarbirds.com/stats",
-        "standings": "https://www.amarillowarbirds.com/standings",
+        "standings": "https://www.amarillowarbirds.com/stats",
         "staff": "https://www.amarillowarbirds.com/staff",
         "tickets": "https://www.amarillowarbirds.com/tickets"
       }
@@ -35,6 +35,156 @@
       "name": "Dallas Apex",
       "shortName": "Dallas",
       "slug": "dallas-apex",
+      "city": "Dallas",
+      "state": "TX",
+      "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex.png?v=1789867089",
+      "website": "https://www.dallasapex.com/",
+      "footballShift": {
+        "home": "https://www.dallasapex.com/",
+        "news": "https://www.dallasapex.com/news",
+        "schedule": "https://www.dallasapex.com/stats",
+        "roster": "https://www.dallasapex.com/stats",
+        "stats": "https://www.dallasapex.com/stats",
+        "standings": "https://www.dallasapex.com/stats",
+        "staff": "https://www.dallasapex.com/staff",
+        "tickets": "https://www.dallasapex.com/tickets"
+      }
+    },
+    {
+      "name": "Louisiana Rouxgaroux",
+      "shortName": "Louisiana",
+      "slug": "louisiana-rouxgaroux",
+      "city": "Bossier City",
+      "state": "LA",
+      "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux.png?v=1789867089",
+      "website": "https://www.geauxrouxgaroux.com/",
+      "footballShift": {
+        "home": "https://www.geauxrouxgaroux.com/",
+        "news": "https://www.geauxrouxgaroux.com/news",
+        "schedule": "https://www.geauxrouxgaroux.com/stats",
+        "roster": "https://www.geauxrouxgaroux.com/stats",
+        "stats": "https://www.geauxrouxgaroux.com/stats",
+        "standings": "https://www.geauxrouxgaroux.com/stats",
+        "staff": "https://www.geauxrouxgaroux.com/staff",
+        "tickets": "https://www.geauxrouxgaroux.com/tickets"
+      }
+    },
+    {
+      "name": "Omaha Beef",
+      "shortName": "Omaha",
+      "slug": "omaha-beef",
+      "city": "Omaha",
+      "state": "NE",
+      "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef.png?v=1789867089",
+      "website": "https://www.beeffootball.com/",
+      "footballShift": {
+        "home": "https://www.beeffootball.com/",
+        "news": "https://www.beeffootball.com/news",
+        "schedule": "https://www.beeffootball.com/stats",
+        "roster": "https://www.beeffootball.com/stats",
+        "stats": "https://www.beeffootball.com/stats",
+        "standings": "https://www.beeffootball.com/stats",
+        "staff": "https://www.beeffootball.com/staff",
+        "tickets": "https://www.beeffootball.com/tickets"
+      }
+    },
+    {
+      "name": "Pueblo Punishers",
+      "shortName": "Pueblo",
+      "slug": "pueblo-punishers",
+      "city": "Pueblo",
+      "state": "CO",
+      "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers.png?v=1789867089",
+      "website": "https://www.pueblopunishers.com/",
+      "footballShift": {
+        "home": "https://www.pueblopunishers.com/",
+        "news": "https://www.pueblopunishers.com/news",
+        "schedule": "https://www.pueblopunishers.com/stats",
+        "roster": "https://www.pueblopunishers.com/stats",
+        "stats": "https://www.pueblopunishers.com/stats",
+        "standings": "https://www.pueblopunishers.com/stats",
+        "staff": "https://www.pueblopunishers.com/staff",
+        "tickets": "https://www.pueblopunishers.com/seasontickets"
+      }
+    },
+    {
+      "name": "Salina Liberty",
+      "shortName": "Salina",
+      "slug": "salina-liberty",
+      "city": "Salina",
+      "state": "KS",
+      "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty.png?v=1789867089",
+      "website": "https://www.salinaliberty.com/",
+      "footballShift": {
+        "home": "https://www.salinaliberty.com/",
+        "news": "https://www.salinaliberty.com/news",
+        "schedule": "https://www.salinaliberty.com/stats",
+        "roster": "https://www.salinaliberty.com/stats",
+        "stats": "https://www.salinaliberty.com/stats",
+        "standings": "https://www.salinaliberty.com/stats",
+        "staff": "https://www.salinaliberty.com/staff",
+        "tickets": "https://www.salinaliberty.com/tickets"
+      }
+    },
+    {
+      "name": "Sioux City Bandits",
+      "shortName": "Sioux City",
+      "slug": "sioux-city-bandits",
+      "city": "Sioux City",
+      "state": "IA",
+      "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits.png?v=1789867089",
+      "website": "https://www.gobandits.fun/",
+      "footballShift": {
+        "home": "https://www.gobandits.fun/",
+        "news": "https://www.gobandits.fun/news",
+        "schedule": "https://www.gobandits.fun/stats",
+        "roster": "https://www.gobandits.fun/stats",
+        "stats": "https://www.gobandits.fun/stats",
+        "standings": "https://www.gobandits.fun/stats",
+        "staff": "https://www.gobandits.fun/staff",
+        "tickets": "https://www.gobandits.fun/tickets"
+      }
+    },
+    {
+      "name": "Southwest Kansas Storm",
+      "shortName": "SW Kansas",
+      "slug": "southwest-kansas-storm",
+      "city": "Dodge City",
+      "state": "KS",
+      "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm.png?v=1789867089",
+      "website": "https://www.swkstormfootball.com/",
+      "footballShift": {
+        "home": "https://www.swkstormfootball.com/",
+        "news": "https://www.swkstormfootball.com/news",
+        "schedule": "https://www.swkstormfootball.com/stats",
+        "roster": "https://www.swkstormfootball.com/stats",
+        "stats": "https://www.swkstormfootball.com/stats",
+        "standings": "https://www.swkstormfootball.com/stats",
+        "staff": "https://www.swkstormfootball.com/team-staff",
+        "tickets": "https://www.swkstormfootball.com/tickets"
+      }
+    },
+    {
+      "name": "Wheeling Miners",
+      "shortName": "Wheeling",
+      "slug": "wheeling-miners",
+      "city": "Wheeling",
+      "state": "WV",
+      "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners.png?v=1789867089",
+      "website": "https://www.wheelingminers.com/",
+      "footballShift": {
+        "home": "https://www.wheelingminers.com/",
+        "news": "https://www.wheelingminers.com/news",
+        "schedule": "https://www.wheelingminers.com/stats",
+        "roster": "https://www.wheelingminers.com/stats",
+        "stats": "https://www.wheelingminers.com/stats",
+        "standings": "https://www.wheelingminers.com/stats",
+        "staff": "https://www.wheelingminers.com/staff",
+        "tickets": "https://www.wheelingminers.com/tickets"
+      }
+    }
+  ]
+}      "slug": "dallas-apex",
       "city": "Dallas",
       "state": "TX",
       "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex.png?v=1789867089",
