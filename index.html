@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -13,7 +12,6 @@
 <meta name="theme-color" content="#07172b">
 
 <title>National Arena League</title>
-
 
 <style>
 
@@ -41,63 +39,45 @@
   --header-height: 72px;
 
   /*
-     FOOTBALLSHIFT HEADER CROP
-
-     If FootballShift changes its website header
-     later, this is the ONLY number we should
-     normally need to adjust.
+     FOOTBALLSHIFT ARTICLE CROP
+     Hides the FootballShift website header
+     while retaining the complete article title.
   */
-
-  --footballshift-crop: 104px;
+  --footballshift-crop: 72px;
 }
-
 
 html,
 body {
   min-height: 100%;
 }
 
-
 html {
   scroll-behavior: smooth;
 }
 
-
 body {
   font-family: Arial, Helvetica, sans-serif;
-
   background: #d9dde2;
-
   color: var(--black);
 }
-
 
 button,
 a {
   -webkit-tap-highlight-color: transparent;
 }
 
-
 button {
   font-family: inherit;
 }
 
-
 .app {
   width: 100%;
-
   max-width: 600px;
-
   min-height: 100vh;
-
   margin: 0 auto;
-
   background: var(--light);
-
   padding-bottom: var(--nav-height);
-
   position: relative;
-
   overflow-x: hidden;
 }
 
@@ -117,111 +97,79 @@ button {
   background: var(--nal-blue);
 
   display: grid;
-
-  grid-template-columns:
-    50px
-    1fr
-    50px;
-
+  grid-template-columns: 50px 1fr 50px;
   align-items: center;
 
-  border-bottom:
-    3px solid var(--nal-red);
+  border-bottom: 3px solid var(--nal-red);
 
   position: sticky;
-
   top: 0;
 
   z-index: 3000;
 }
 
-
 .header-left,
 .header-right {
   display: flex;
-
   align-items: center;
 }
-
 
 .header-left {
   justify-content: flex-start;
 }
 
-
 .header-right {
   justify-content: flex-end;
 }
 
-
 .header-logo {
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   text-decoration: none;
 }
 
-
 .nal-logo {
   width: 76px;
-
   height: 52px;
-
   object-fit: contain;
-
   display: block;
 }
 
-
 .header-button {
   width: 38px;
-
   height: 38px;
 
   border: 0;
-
   background: transparent;
 
   color: white;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   cursor: pointer;
 }
 
-
 .header-button svg {
   width: 24px;
-
   height: 24px;
 
   stroke: currentColor;
-
   fill: none;
 
   stroke-width: 2;
-
   stroke-linecap: round;
-
   stroke-linejoin: round;
 }
-
 
 .notification-button {
   position: relative;
 }
 
-
 .notification-dot {
   width: 7px;
-
   height: 7px;
 
   background: var(--nal-red);
@@ -231,7 +179,6 @@ button {
   position: absolute;
 
   top: 5px;
-
   right: 4px;
 }
 
@@ -243,7 +190,6 @@ button {
 .app-page {
   display: none;
 }
-
 
 .app-page.active {
   display: block;
@@ -258,13 +204,10 @@ button {
   min-height: 300px;
 
   position: relative;
-
   overflow: hidden;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   background-color: var(--nal-blue);
@@ -273,80 +216,60 @@ button {
     url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Game_Image_2.jpg?v=1789843442");
 
   background-size: cover;
-
   background-position: center;
 }
-
 
 .season-x-hero::before {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
   background:
     radial-gradient(
       ellipse at center,
-
       rgba(7,23,43,.94) 0%,
-
       rgba(7,23,43,.88) 22%,
-
       rgba(7,23,43,.70) 45%,
-
       rgba(7,23,43,.42) 68%,
-
       rgba(7,23,43,.18) 100%
     );
 
   z-index: 1;
 }
 
-
 .season-x-hero::after {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
   background:
     linear-gradient(
       180deg,
-
       rgba(0,0,0,.12) 0%,
-
       rgba(0,0,0,0) 30%,
-
       rgba(0,0,0,0) 65%,
-
       rgba(7,23,43,.45) 100%
     );
 
   z-index: 2;
 }
 
-
 .hero-red-glow {
   position: absolute;
 
   width: 320px;
-
   height: 190px;
 
   left: 50%;
-
   top: 50%;
 
-  transform:
-    translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
-  background:
-    rgba(227,27,35,.10);
+  background: rgba(227,27,35,.10);
 
-  filter:
-    blur(75px);
+  filter: blur(75px);
 
   border-radius: 50%;
 
@@ -355,37 +278,28 @@ button {
   pointer-events: none;
 }
 
-
 .hero-content {
   width: 100%;
 
-  padding:
-    24px
-    20px
-    36px;
+  padding: 24px 20px 36px;
 
   position: relative;
 
   z-index: 4;
 
   display: flex;
-
   flex-direction: column;
 
   align-items: center;
-
   justify-content: center;
 
   text-align: center;
 }
 
-
 .hero-eyebrow {
-  color:
-    rgba(255,255,255,.90);
+  color: rgba(255,255,255,.90);
 
   font-size: 9px;
-
   font-weight: 900;
 
   letter-spacing: 2.4px;
@@ -394,14 +308,11 @@ button {
 
   margin-bottom: 9px;
 
-  text-shadow:
-    0 2px 8px rgba(0,0,0,.8);
+  text-shadow: 0 2px 8px rgba(0,0,0,.8);
 }
-
 
 .national-bowl-logo {
   width: 340px;
-
   max-width: 88%;
 
   height: auto;
@@ -418,14 +329,12 @@ button {
     );
 }
 
-
 .hero-tagline {
   margin-top: 10px;
 
   color: #ffffff;
 
   font-size: 11px;
-
   font-weight: 900;
 
   letter-spacing: 1.8px;
@@ -434,27 +343,21 @@ button {
 
   text-align: center;
 
-  text-shadow:
-    0 2px 8px rgba(0,0,0,.85);
+  text-shadow: 0 2px 8px rgba(0,0,0,.85);
 }
-
 
 .hero-accent-line {
   position: absolute;
 
   left: 50%;
-
   bottom: 17px;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   width: 58px;
-
   height: 3px;
 
-  background:
-    var(--nal-red);
+  background: var(--nal-red);
 
   border-radius: 10px;
 
@@ -471,24 +374,19 @@ button {
 
   margin-top: 9px;
 
-  padding:
-    20px
-    17px;
+  padding: 20px 17px;
 }
-
 
 .section-header {
   display: flex;
 
   justify-content: space-between;
-
   align-items: center;
 
   gap: 10px;
 
   margin-bottom: 15px;
 }
-
 
 .section-title {
   font-size: 15px;
@@ -499,14 +397,11 @@ button {
 
   text-transform: uppercase;
 
-  color:
-    var(--nal-blue);
+  color: var(--nal-blue);
 }
 
-
 .section-link {
-  color:
-    var(--nal-red);
+  color: var(--nal-red);
 
   text-decoration: none;
 
@@ -523,8 +418,7 @@ button {
 ========================================================= */
 
 .schedule-placeholder {
-  border:
-    1px solid var(--border);
+  border: 1px solid var(--border);
 
   border-radius: 14px;
 
@@ -540,7 +434,6 @@ button {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   text-align: center;
@@ -548,10 +441,8 @@ button {
   padding: 20px;
 }
 
-
 .schedule-placeholder-title {
-  color:
-    var(--nal-blue);
+  color: var(--nal-blue);
 
   font-size: 13px;
 
@@ -562,12 +453,10 @@ button {
   text-transform: uppercase;
 }
 
-
 .schedule-placeholder-text {
   margin-top: 6px;
 
-  color:
-    var(--gray);
+  color: var(--gray);
 
   font-size: 11px;
 
@@ -599,12 +488,10 @@ button {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   text-align: center;
 }
-
 
 .network-placeholder::after {
   content: "";
@@ -612,17 +499,13 @@ button {
   position: absolute;
 
   left: 0;
-
   right: 0;
-
   bottom: 0;
 
   height: 4px;
 
-  background:
-    var(--nal-red);
+  background: var(--nal-red);
 }
-
 
 .network-placeholder-title {
   color: white;
@@ -634,12 +517,10 @@ button {
   letter-spacing: 1px;
 }
 
-
 .network-placeholder-text {
   margin-top: 6px;
 
-  color:
-    rgba(255,255,255,.70);
+  color: rgba(255,255,255,.70);
 
   font-size: 10px;
 
@@ -656,7 +537,6 @@ button {
 .news-section {
   padding-right: 0;
 }
-
 
 .news-section .section-header {
   padding-right: 17px;
@@ -676,8 +556,7 @@ button {
 
   overflow: hidden;
 
-  background:
-    var(--nal-blue);
+  background: var(--nal-blue);
 
   text-decoration: none;
 
@@ -689,21 +568,18 @@ button {
     0 7px 20px rgba(0,0,0,.14);
 }
 
-
 .lead-story-image {
   position: absolute;
 
   inset: 0;
 
   width: 100%;
-
   height: 100%;
 
   object-fit: cover;
 
   display: block;
 }
-
 
 .lead-story-fallback {
   position: absolute;
@@ -713,7 +589,6 @@ button {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   background:
@@ -724,7 +599,6 @@ button {
       #07172b 100%
     );
 }
-
 
 .lead-story-fallback img {
   width: 180px;
@@ -739,7 +613,6 @@ button {
     );
 }
 
-
 .lead-story-overlay {
   position: absolute;
 
@@ -748,37 +621,26 @@ button {
   background:
     linear-gradient(
       180deg,
-
       rgba(7,23,43,.02) 0%,
-
       rgba(7,23,43,.10) 30%,
-
       rgba(7,23,43,.55) 62%,
-
       rgba(7,23,43,.98) 100%
     );
 
   z-index: 2;
 }
 
-
 .lead-story-content {
   position: absolute;
 
   left: 0;
-
   right: 0;
-
   bottom: 0;
 
   z-index: 3;
 
-  padding:
-    60px
-    18px
-    18px;
+  padding: 60px 18px 18px;
 }
-
 
 .story-category {
   display: inline-flex;
@@ -787,14 +649,11 @@ button {
 
   min-height: 20px;
 
-  padding:
-    4px
-    8px;
+  padding: 4px 8px;
 
   border-radius: 4px;
 
-  background:
-    var(--nal-red);
+  background: var(--nal-red);
 
   color: white;
 
@@ -808,7 +667,6 @@ button {
 
   margin-bottom: 8px;
 }
-
 
 .lead-story-title {
   color: white;
@@ -824,12 +682,10 @@ button {
   max-width: 480px;
 }
 
-
 .lead-story-subtitle {
   margin-top: 8px;
 
-  color:
-    rgba(255,255,255,.78);
+  color: rgba(255,255,255,.78);
 
   font-size: 10px;
 
@@ -845,7 +701,6 @@ button {
 
   overflow: hidden;
 }
-
 
 .read-story {
   margin-top: 10px;
@@ -863,7 +718,7 @@ button {
 
 
 /* =========================================================
-   SMALL NEWS CARDS
+   NEWS CARDS
 ========================================================= */
 
 .news-scroll {
@@ -873,31 +728,22 @@ button {
 
   overflow-x: auto;
 
-  padding:
-    15px
-    17px
-    7px
-    0;
+  padding: 15px 17px 7px 0;
 
   scrollbar-width: none;
 
-  scroll-snap-type:
-    x mandatory;
+  scroll-snap-type: x mandatory;
 }
-
 
 .news-scroll::-webkit-scrollbar {
   display: none;
 }
 
-
 .news-card {
   min-width: 220px;
-
   width: 220px;
 
-  border:
-    1px solid var(--border);
+  border: 1px solid var(--border);
 
   border-radius: 14px;
 
@@ -913,7 +759,6 @@ button {
     0 3px 12px rgba(0,0,0,.06);
 }
 
-
 .news-card-image-wrap {
   height: 128px;
 
@@ -921,10 +766,8 @@ button {
 
   overflow: hidden;
 
-  background:
-    var(--nal-blue);
+  background: var(--nal-blue);
 }
-
 
 .news-card-image {
   position: relative;
@@ -932,14 +775,12 @@ button {
   z-index: 2;
 
   width: 100%;
-
   height: 100%;
 
   object-fit: cover;
 
   display: block;
 }
-
 
 .news-card-fallback {
   position: absolute;
@@ -951,7 +792,6 @@ button {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   background:
@@ -962,7 +802,6 @@ button {
     );
 }
 
-
 .news-card-fallback img {
   width: 105px;
 
@@ -971,18 +810,12 @@ button {
   opacity: .45;
 }
 
-
 .news-card-body {
-  padding:
-    11px
-    12px
-    13px;
+  padding: 11px 12px 13px;
 }
 
-
 .news-card-date {
-  color:
-    var(--nal-red);
+  color: var(--nal-red);
 
   font-size: 8px;
 
@@ -995,10 +828,8 @@ button {
   margin-bottom: 6px;
 }
 
-
 .news-card-title {
-  color:
-    var(--nal-blue);
+  color: var(--nal-blue);
 
   font-size: 12px;
 
@@ -1017,18 +848,12 @@ button {
   overflow: hidden;
 }
 
-
 .swipe-hint {
-  padding:
-    4px
-    17px
-    0
-    0;
+  padding: 4px 17px 0 0;
 
   display: flex;
 
   align-items: center;
-
   justify-content: flex-end;
 
   gap: 5px;
@@ -1044,10 +869,8 @@ button {
   text-transform: uppercase;
 }
 
-
 .swipe-hint svg {
   width: 14px;
-
   height: 14px;
 
   fill: none;
@@ -1057,7 +880,6 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
-
   stroke-linejoin: round;
 }
 
@@ -1071,21 +893,15 @@ button {
 
   margin-top: 9px;
 
-  padding:
-    20px
-    17px;
+  padding: 20px 17px;
 }
 
-
 .future-placeholder {
-  border:
-    1px dashed #cfd5dc;
+  border: 1px dashed #cfd5dc;
 
   border-radius: 12px;
 
-  padding:
-    22px
-    15px;
+  padding: 22px 15px;
 
   text-align: center;
 
@@ -1100,7 +916,7 @@ button {
 
 
 /* =========================================================
-   IN-APP ARTICLE READER
+   IN-APP ARTICLE PAGE
 ========================================================= */
 
 .article-page {
@@ -1108,10 +924,12 @@ button {
 
   height:
     calc(
-      100vh -
+      100dvh -
       var(--header-height) -
       var(--nav-height)
     );
+
+  min-height: 450px;
 
   overflow: hidden;
 }
@@ -1124,22 +942,15 @@ button {
 .article-toolbar {
   height: 54px;
 
-  padding:
-    0
-    14px;
+  padding: 0 14px;
 
-  background:
-    #ffffff;
+  background: #ffffff;
 
-  border-bottom:
-    1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 
   display: grid;
 
-  grid-template-columns:
-    42px
-    1fr
-    42px;
+  grid-template-columns: 42px 1fr 42px;
 
   align-items: center;
 
@@ -1148,11 +959,9 @@ button {
   z-index: 20;
 }
 
-
 .article-back,
 .article-external {
   width: 38px;
-
   height: 38px;
 
   border: 0;
@@ -1161,13 +970,11 @@ button {
 
   background: #f1f3f5;
 
-  color:
-    var(--nal-blue);
+  color: var(--nal-blue);
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   cursor: pointer;
@@ -1175,11 +982,9 @@ button {
   text-decoration: none;
 }
 
-
 .article-back svg,
 .article-external svg {
   width: 19px;
-
   height: 19px;
 
   fill: none;
@@ -1189,10 +994,8 @@ button {
   stroke-width: 2.2;
 
   stroke-linecap: round;
-
   stroke-linejoin: round;
 }
-
 
 .article-toolbar-center {
   text-align: center;
@@ -1200,10 +1003,8 @@ button {
   min-width: 0;
 }
 
-
 .article-toolbar-title {
-  color:
-    var(--nal-blue);
+  color: var(--nal-blue);
 
   font-size: 11px;
 
@@ -1214,10 +1015,8 @@ button {
   text-transform: uppercase;
 }
 
-
 .article-toolbar-subtitle {
-  color:
-    var(--nal-red);
+  color: var(--nal-red);
 
   font-size: 8px;
 
@@ -1230,22 +1029,13 @@ button {
 
 
 /* =========================================================
-   FOOTBALLSHIFT VIEWPORT
-
-   This container is the "window" through which
-   we see the FootballShift article.
-
-   overflow:hidden hides the FootballShift header
-   that we move above this visible area.
+   ARTICLE VIEWPORT
 ========================================================= */
 
 .article-frame-container {
   position: relative;
 
-  height:
-    calc(
-      100% - 54px
-    );
+  height: calc(100% - 54px);
 
   overflow: hidden;
 
@@ -1254,7 +1044,7 @@ button {
 
 
 /* =========================================================
-   LOADING SCREEN
+   ARTICLE LOADING SCREEN
 ========================================================= */
 
 .article-loading {
@@ -1271,12 +1061,10 @@ button {
   flex-direction: column;
 
   align-items: center;
-
   justify-content: center;
 
   gap: 12px;
 }
-
 
 .article-loading-logo {
   width: 90px;
@@ -1286,17 +1074,13 @@ button {
   object-fit: contain;
 }
 
-
 .article-spinner {
   width: 32px;
-
   height: 32px;
 
-  border:
-    4px solid #e4e7ea;
+  border: 4px solid #e4e7ea;
 
-  border-top-color:
-    var(--nal-red);
+  border-top-color: var(--nal-red);
 
   border-radius: 50%;
 
@@ -1304,20 +1088,16 @@ button {
     articleSpin .8s linear infinite;
 }
 
-
 @keyframes articleSpin {
 
   to {
-    transform:
-      rotate(360deg);
+    transform: rotate(360deg);
   }
 
 }
 
-
 .article-loading-text {
-  color:
-    var(--nal-blue);
+  color: var(--nal-blue);
 
   font-size: 9px;
 
@@ -1330,12 +1110,12 @@ button {
 
 
 /* =========================================================
-   CROPPED FOOTBALLSHIFT IFRAME
+   FOOTBALLSHIFT ARTICLE FRAME
 
-   The iframe is moved upward 104px.
+   FootballShift's website header remains loaded,
+   but sits ABOVE our visible viewport.
 
-   Its height is increased 104px so we don't
-   lose article space at the bottom.
+   The iframe itself remains fully scrollable.
 ========================================================= */
 
 .article-frame {
@@ -1345,10 +1125,8 @@ button {
 
   top:
     calc(
-      var(--footballshift-crop) * -1
+      -1 * var(--footballshift-crop)
     );
-
-  z-index: 2;
 
   width: 100%;
 
@@ -1363,6 +1141,8 @@ button {
   background: white;
 
   display: block;
+
+  z-index: 2;
 }
 
 
@@ -1378,44 +1158,33 @@ button {
       var(--nav-height)
     );
 
-  padding:
-    50px
-    25px;
+  padding: 50px 25px;
 
   background: white;
 
   text-align: center;
 }
 
-
 .placeholder-icon {
   width: 70px;
-
   height: 70px;
 
-  margin:
-    0
-    auto
-    20px;
+  margin: 0 auto 20px;
 
   border-radius: 50%;
 
-  background:
-    var(--nal-blue);
+  background: var(--nal-blue);
 
   color: white;
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 }
 
-
 .placeholder-icon svg {
   width: 32px;
-
   height: 32px;
 
   fill: none;
@@ -1425,31 +1194,23 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
-
   stroke-linejoin: round;
 }
 
-
 .placeholder-page h2 {
-  color:
-    var(--nal-blue);
+  color: var(--nal-blue);
 
   font-size: 24px;
 
   font-weight: 900;
 }
 
-
 .placeholder-page p {
   max-width: 350px;
 
-  margin:
-    10px
-    auto
-    0;
+  margin: 10px auto 0;
 
-  color:
-    var(--gray);
+  color: var(--gray);
 
   font-size: 13px;
 
@@ -1472,32 +1233,25 @@ button {
     );
 }
 
-
 .shop-toolbar {
   height: 58px;
 
-  padding:
-    8px
-    15px;
+  padding: 8px 15px;
 
   background: white;
 
-  border-bottom:
-    1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 
   display: flex;
 
   align-items: center;
-
   justify-content: space-between;
 
   gap: 15px;
 }
 
-
 .shop-title {
-  color:
-    var(--nal-blue);
+  color: var(--nal-blue);
 
   font-size: 16px;
 
@@ -1506,10 +1260,8 @@ button {
   letter-spacing: .5px;
 }
 
-
 .shop-subtitle {
-  color:
-    var(--gray);
+  color: var(--gray);
 
   font-size: 8px;
 
@@ -1520,32 +1272,26 @@ button {
   margin-top: 2px;
 }
 
-
 .shop-external {
   width: 38px;
-
   height: 38px;
 
   border-radius: 50%;
 
   background: #f3f5f7;
 
-  color:
-    var(--nal-red);
+  color: var(--nal-red);
 
   text-decoration: none;
 
   display: flex;
 
   justify-content: center;
-
   align-items: center;
 }
 
-
 .shop-external svg {
   width: 18px;
-
   height: 18px;
 
   fill: none;
@@ -1555,10 +1301,8 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
-
   stroke-linejoin: round;
 }
-
 
 .shop-frame-wrap {
   position: relative;
@@ -1567,7 +1311,7 @@ button {
 
   height:
     calc(
-      100vh -
+      100dvh -
       var(--header-height) -
       var(--nav-height) -
       58px
@@ -1577,7 +1321,6 @@ button {
 
   background: white;
 }
-
 
 .shop-loading {
   position: absolute;
@@ -1589,47 +1332,37 @@ button {
   flex-direction: column;
 
   align-items: center;
-
   justify-content: center;
 
   gap: 12px;
 
   background: white;
 
-  color:
-    var(--nal-blue);
+  color: var(--nal-blue);
 
   z-index: 1;
 }
 
-
 .shop-spinner {
   width: 34px;
-
   height: 34px;
 
-  border:
-    4px solid #e7eaee;
+  border: 4px solid #e7eaee;
 
-  border-top-color:
-    var(--nal-red);
+  border-top-color: var(--nal-red);
 
   border-radius: 50%;
 
-  animation:
-    spin .8s linear infinite;
+  animation: spin .8s linear infinite;
 }
-
 
 @keyframes spin {
 
   to {
-    transform:
-      rotate(360deg);
+    transform: rotate(360deg);
   }
 
 }
-
 
 .shop-loading-text {
   font-size: 11px;
@@ -1639,14 +1372,12 @@ button {
   letter-spacing: .7px;
 }
 
-
 .shop-frame {
   position: relative;
 
   z-index: 2;
 
   width: 100%;
-
   height: 100%;
 
   border: 0;
@@ -1668,36 +1399,30 @@ button {
 
   left: 50%;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   width: 100%;
 
   max-width: 600px;
 
-  height:
-    var(--nav-height);
+  height: var(--nav-height);
 
   padding-bottom:
     env(safe-area-inset-bottom);
 
-  background:
-    var(--nal-blue);
+  background: var(--nal-blue);
 
-  border-top:
-    3px solid var(--nal-red);
+  border-top: 3px solid var(--nal-red);
 
   display: grid;
 
-  grid-template-columns:
-    repeat(5,1fr);
+  grid-template-columns: repeat(5,1fr);
 
   z-index: 4000;
 
   box-shadow:
     0 -5px 18px rgba(0,0,0,.14);
 }
-
 
 .nav-item {
   color: #a8b3c0;
@@ -1711,7 +1436,6 @@ button {
   flex-direction: column;
 
   justify-content: center;
-
   align-items: center;
 
   gap: 5px;
@@ -1727,10 +1451,8 @@ button {
   cursor: pointer;
 }
 
-
 .nav-item svg {
   width: 23px;
-
   height: 23px;
 
   fill: none;
@@ -1740,27 +1462,22 @@ button {
   stroke-width: 2;
 
   stroke-linecap: round;
-
   stroke-linejoin: round;
 }
-
 
 .nav-item.active {
   color: white;
 }
 
-
 .nav-item.active::after {
   content: "";
 
   width: 26px;
-
   height: 3px;
 
   border-radius: 4px;
 
-  background:
-    var(--nal-red);
+  background: var(--nal-red);
 
   position: absolute;
 
@@ -1780,14 +1497,11 @@ button {
   padding-top: 8px;
 }
 
-
 .watch-circle {
   width: 50px;
-
   height: 50px;
 
-  background:
-    var(--nal-red);
+  background: var(--nal-red);
 
   color: white;
 
@@ -1796,31 +1510,25 @@ button {
   display: flex;
 
   justify-content: center;
-
   align-items: center;
 
   margin-top: -25px;
 
-  border:
-    4px solid var(--nal-blue);
+  border: 4px solid var(--nal-blue);
 
   box-shadow:
     0 4px 13px rgba(0,0,0,.28);
 }
 
-
 .watch-circle svg {
   width: 22px;
-
   height: 22px;
 
   fill: white;
-
   stroke: white;
 
   margin-left: 2px;
 }
-
 
 .watch-label {
   margin-top: 4px;
@@ -1840,11 +1548,8 @@ button {
 @media (min-width: 601px) {
 
   body {
-    padding:
-      20px
-      0;
+    padding: 20px 0;
   }
-
 
   .app {
     box-shadow:
@@ -1856,7 +1561,6 @@ button {
 </style>
 
 </head>
-
 
 
 <body>
@@ -1874,12 +1578,10 @@ button {
 
   <div class="header-left">
 
-
     <button
       class="header-button notification-button"
       aria-label="Notifications"
     >
-
 
       <svg viewBox="0 0 24 24">
 
@@ -1887,21 +1589,15 @@ button {
           d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
         ></path>
 
-        <path
-          d="M10 21h4"
-        ></path>
+        <path d="M10 21h4"></path>
 
       </svg>
 
-
       <span class="notification-dot"></span>
-
 
     </button>
 
-
   </div>
-
 
 
   <a
@@ -1911,29 +1607,23 @@ button {
     aria-label="NAL Home"
   >
 
-
     <img
       src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
       alt="National Arena League"
       class="nal-logo"
     >
 
-
   </a>
 
 
-
   <div class="header-right">
-
 
     <button
       class="header-button"
       aria-label="Settings"
     >
 
-
       <svg viewBox="0 0 24 24">
-
 
         <circle
           cx="12"
@@ -1941,17 +1631,13 @@ button {
           r="3"
         ></circle>
 
-
         <path
           d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.63 15 1.7 1.7 0 0 0 3.07 14H3v-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.63a1.7 1.7 0 0 0 1-1.56V3h4v.09A1.7 1.7 0 0 0 15 4.65a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.37 9 1.7 1.7 0 0 0 20.93 10H21v4h-.09A1.7 1.7 0 0 0 19.4 15z"
         ></path>
 
-
       </svg>
 
-
     </button>
-
 
   </div>
 
@@ -1974,19 +1660,13 @@ button {
 
 <section class="season-x-hero">
 
-
   <div class="hero-red-glow"></div>
-
 
   <div class="hero-content">
 
-
     <div class="hero-eyebrow">
-
       NATIONAL ARENA LEAGUE • SEASON X
-
     </div>
-
 
     <img
       src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/National_Bowl_Logo_X.png?v=1789933997"
@@ -1994,19 +1674,13 @@ button {
       class="national-bowl-logo"
     >
 
-
     <div class="hero-tagline">
-
       WHERE CHAMPIONS ARE CROWNED
-
     </div>
-
 
   </div>
 
-
   <div class="hero-accent-line"></div>
-
 
 </section>
 
@@ -2016,46 +1690,31 @@ button {
 
 <section class="section">
 
-
   <div class="section-header">
 
-
     <div class="section-title">
-
       Next Games
-
     </div>
-
 
   </div>
 
 
   <div class="schedule-placeholder">
 
-
     <div>
 
-
       <div class="schedule-placeholder-title">
-
         Season X
-
       </div>
-
 
       <div class="schedule-placeholder-text">
-
         Upcoming games will appear here following
         the official schedule release.
-
       </div>
-
 
     </div>
 
-
   </div>
-
 
 </section>
 
@@ -2065,45 +1724,30 @@ button {
 
 <section class="section">
 
-
   <div class="section-header">
 
-
     <div class="section-title">
-
       NAL Network
-
     </div>
-
 
   </div>
 
 
   <div class="network-placeholder">
 
-
     <div>
 
-
       <div class="network-placeholder-title">
-
         NAL NETWORK
-
       </div>
-
 
       <div class="network-placeholder-text">
-
         THE GAME. THE LEAGUE. THE NETWORK.
-
       </div>
-
 
     </div>
 
-
   </div>
-
 
 </section>
 
@@ -2118,13 +1762,9 @@ button {
 
   <div class="section-header">
 
-
     <div class="section-title">
-
       Latest From The NAL
-
     </div>
-
 
     <a
       class="section-link"
@@ -2132,11 +1772,8 @@ button {
       target="_blank"
       rel="noopener"
     >
-
       ALL NEWS →
-
     </a>
-
 
   </div>
 
@@ -2144,24 +1781,19 @@ button {
 
   <!-- LEAD STORY -->
 
-
   <a
     class="lead-story"
     href="https://www.thenationalarenaleague.com/news/national-arena-league-unveils-around-the-nal-with"
   >
 
-
     <div class="lead-story-fallback">
-
 
       <img
         src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
         alt=""
       >
 
-
     </div>
-
 
 
     <img
@@ -2171,48 +1803,35 @@ button {
     >
 
 
-
     <div class="lead-story-overlay"></div>
-
 
 
     <div class="lead-story-content">
 
-
       <div class="story-category">
-
         NAL NEWS
-
       </div>
 
 
       <div class="lead-story-title">
-
         NATIONAL ARENA LEAGUE UNVEILS
         “AROUND THE NAL” WITH BRAYDEN BUTLER
-
       </div>
 
 
       <div class="lead-story-subtitle">
-
         New free-to-watch, year-round weekly program
         will bring fans closer to the news, stories
         and conversations from across the National
         Arena League.
-
       </div>
 
 
       <div class="read-story">
-
         READ STORY →
-
       </div>
 
-
     </div>
-
 
   </a>
 
@@ -2220,12 +1839,7 @@ button {
 
   <!-- NEWS CAROUSEL -->
 
-
   <div class="news-scroll">
-
-
-
-    <!-- STORY 2 -->
 
 
     <a
@@ -2233,22 +1847,16 @@ button {
       href="https://www.thenationalarenaleague.com/news/national-arena-league-announces-brayden-bulter-as"
     >
 
-
       <div class="news-card-image-wrap">
 
-
         <div class="news-card-fallback">
-
 
           <img
             src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
             alt=""
           >
 
-
         </div>
-
-
 
         <img
           class="news-card-image footballshift-image"
@@ -2256,37 +1864,24 @@ button {
           alt=""
         >
 
-
       </div>
-
 
 
       <div class="news-card-body">
 
-
         <div class="news-card-date">
-
           NAL NEWS
-
         </div>
-
 
         <div class="news-card-title">
-
           National Arena League Announces Brayden
           Butler As “The Voice Of The NAL”
-
         </div>
-
 
       </div>
 
-
     </a>
 
-
-
-    <!-- STORY 3 -->
 
 
     <a
@@ -2294,22 +1889,16 @@ button {
       href="https://www.thenationalarenaleague.com/news/national-arena-league-names-jeff-blumenauer-direct"
     >
 
-
       <div class="news-card-image-wrap">
 
-
         <div class="news-card-fallback">
-
 
           <img
             src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
             alt=""
           >
 
-
         </div>
-
-
 
         <img
           class="news-card-image footballshift-image"
@@ -2317,37 +1906,24 @@ button {
           alt=""
         >
 
-
       </div>
-
 
 
       <div class="news-card-body">
 
-
         <div class="news-card-date">
-
           SEASON X
-
         </div>
-
 
         <div class="news-card-title">
-
           National Arena League Names Jeff Blumenauer
           Director Of Broadcast Operations
-
         </div>
-
 
       </div>
 
-
     </a>
 
-
-
-    <!-- STORY 4 -->
 
 
     <a
@@ -2355,22 +1931,16 @@ button {
       href="https://www.thenationalarenaleague.com/news/national-arena-league-names-steven-shotola-directo"
     >
 
-
       <div class="news-card-image-wrap">
 
-
         <div class="news-card-fallback">
-
 
           <img
             src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
             alt=""
           >
 
-
         </div>
-
-
 
         <img
           class="news-card-image footballshift-image"
@@ -2378,31 +1948,21 @@ button {
           alt=""
         >
 
-
       </div>
-
 
 
       <div class="news-card-body">
 
-
         <div class="news-card-date">
-
           SEASON X
-
         </div>
-
 
         <div class="news-card-title">
-
           National Arena League Names Steven Shotola
           Director Of NAL Life
-
         </div>
 
-
       </div>
-
 
     </a>
 
@@ -2410,25 +1970,17 @@ button {
   </div>
 
 
-
   <div class="swipe-hint">
-
 
     SWIPE FOR MORE
 
-
     <svg viewBox="0 0 24 24">
 
-      <path
-        d="M5 12h14"
-      ></path>
+      <path d="M5 12h14"></path>
 
-      <path
-        d="M13 6l6 6-6 6"
-      ></path>
+      <path d="M13 6l6 6-6 6"></path>
 
     </svg>
-
 
   </div>
 
@@ -2441,26 +1993,17 @@ button {
 
 <section class="future-section">
 
-
   <div class="section-header">
 
-
     <div class="section-title">
-
       Trending In Fan Zone
-
     </div>
 
-
   </div>
-
 
   <div class="future-placeholder">
-
     FAN ZONE FEATURE WILL GO HERE
-
   </div>
-
 
 </section>
 
@@ -2470,26 +2013,17 @@ button {
 
 <section class="future-section">
 
-
   <div class="section-header">
 
-
     <div class="section-title">
-
       NAL Teams
-
     </div>
 
-
   </div>
-
 
   <div class="future-placeholder">
-
     TEAM LOGOS WILL GO HERE
-
   </div>
-
 
 </section>
 
@@ -2499,26 +2033,17 @@ button {
 
 <section class="future-section">
 
-
   <div class="section-header">
 
-
     <div class="section-title">
-
       Official Partners
-
     </div>
 
-
   </div>
-
 
   <div class="future-placeholder">
-
     OFFICIAL PARTNERS WILL GO HERE
-
   </div>
-
 
 </section>
 
@@ -2537,9 +2062,6 @@ button {
 >
 
 
-  <!-- APP ARTICLE TOOLBAR -->
-
-
   <div class="article-toolbar">
 
 
@@ -2549,19 +2071,13 @@ button {
       aria-label="Back"
     >
 
-
       <svg viewBox="0 0 24 24">
 
-        <path
-          d="M19 12H5"
-        ></path>
+        <path d="M19 12H5"></path>
 
-        <path
-          d="M12 19l-7-7 7-7"
-        ></path>
+        <path d="M12 19l-7-7 7-7"></path>
 
       </svg>
-
 
     </button>
 
@@ -2569,20 +2085,13 @@ button {
 
     <div class="article-toolbar-center">
 
-
       <div class="article-toolbar-title">
-
         NAL NEWS
-
       </div>
-
 
       <div class="article-toolbar-subtitle">
-
         NATIONAL ARENA LEAGUE
-
       </div>
-
 
     </div>
 
@@ -2597,27 +2106,17 @@ button {
       aria-label="Open original article"
     >
 
-
       <svg viewBox="0 0 24 24">
 
+        <path d="M14 3h7v7"></path>
 
-        <path
-          d="M14 3h7v7"
-        ></path>
-
-
-        <path
-          d="M10 14L21 3"
-        ></path>
-
+        <path d="M10 14L21 3"></path>
 
         <path
           d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"
         ></path>
 
-
       </svg>
-
 
     </a>
 
@@ -2626,14 +2125,7 @@ button {
 
 
 
-  <!-- FOOTBALLSHIFT VIEWPORT -->
-
-
   <div class="article-frame-container">
-
-
-
-    <!-- LOADING SCREEN -->
 
 
     <div
@@ -2641,29 +2133,20 @@ button {
       id="articleLoading"
     >
 
-
       <img
         src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
         alt="National Arena League"
         class="article-loading-logo"
       >
 
-
       <div class="article-spinner"></div>
 
-
       <div class="article-loading-text">
-
         LOADING NAL NEWS
-
       </div>
-
 
     </div>
 
-
-
-    <!-- FOOTBALLSHIFT ARTICLE -->
 
 
     <iframe
@@ -2683,7 +2166,7 @@ button {
 
 
 <!-- =====================================================
-     SCORES PAGE
+     SCORES
 ====================================================== -->
 
 <main
@@ -2691,9 +2174,7 @@ button {
   class="app-page placeholder-page"
 >
 
-
   <div class="placeholder-icon">
-
 
     <svg viewBox="0 0 24 24">
 
@@ -2705,37 +2186,29 @@ button {
         rx="2"
       ></rect>
 
-      <path
-        d="M12 5v14"
-      ></path>
+      <path d="M12 5v14"></path>
 
     </svg>
-
 
   </div>
 
 
   <h2>
-
     SCORES
-
   </h2>
 
 
   <p>
-
     Live scores, schedules, standings and Gamecenter
     will live here.
-
   </p>
-
 
 </main>
 
 
 
 <!-- =====================================================
-     WATCH PAGE
+     WATCH
 ====================================================== -->
 
 <main
@@ -2743,9 +2216,7 @@ button {
   class="app-page placeholder-page"
 >
 
-
   <div class="placeholder-icon">
-
 
     <svg viewBox="0 0 24 24">
 
@@ -2755,31 +2226,25 @@ button {
 
     </svg>
 
-
   </div>
 
 
   <h2>
-
     WATCH
-
   </h2>
 
 
   <p>
-
     NAL Network, live games and MNTR+ content will
     live here.
-
   </p>
-
 
 </main>
 
 
 
 <!-- =====================================================
-     FAN ZONE PAGE
+     FAN ZONE
 ====================================================== -->
 
 <main
@@ -2787,9 +2252,7 @@ button {
   class="app-page placeholder-page"
 >
 
-
   <div class="placeholder-icon">
-
 
     <svg viewBox="0 0 24 24">
 
@@ -2799,31 +2262,25 @@ button {
 
     </svg>
 
-
   </div>
 
 
   <h2>
-
     FAN ZONE
-
   </h2>
 
 
   <p>
-
     Fan discussions, team rooms, polls, gameday
     conversations and fan photos are coming here.
-
   </p>
-
 
 </main>
 
 
 
 <!-- =====================================================
-     SHOP PAGE
+     SHOP
 ====================================================== -->
 
 <main
@@ -2831,29 +2288,19 @@ button {
   class="app-page shop-page"
 >
 
-
   <div class="shop-toolbar">
-
 
     <div>
 
-
       <div class="shop-title">
-
         NAL SHOP
-
       </div>
-
 
       <div class="shop-subtitle">
-
         OFFICIAL NATIONAL ARENA LEAGUE MERCHANDISE
-
       </div>
 
-
     </div>
-
 
 
     <a
@@ -2864,16 +2311,11 @@ button {
       aria-label="Open NAL Shop"
     >
 
-
       <svg viewBox="0 0 24 24">
 
-        <path
-          d="M14 3h7v7"
-        ></path>
+        <path d="M14 3h7v7"></path>
 
-        <path
-          d="M10 14L21 3"
-        ></path>
+        <path d="M10 14L21 3"></path>
 
         <path
           d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"
@@ -2881,35 +2323,25 @@ button {
 
       </svg>
 
-
     </a>
-
 
   </div>
 
 
-
   <div class="shop-frame-wrap">
-
 
     <div
       class="shop-loading"
       id="shopLoading"
     >
 
-
       <div class="shop-spinner"></div>
 
-
       <div class="shop-loading-text">
-
         LOADING NAL SHOP
-
       </div>
 
-
     </div>
-
 
 
     <iframe
@@ -2921,9 +2353,7 @@ button {
       loading="lazy"
     ></iframe>
 
-
   </div>
-
 
 </main>
 
@@ -2939,9 +2369,7 @@ button {
 <nav class="bottom-nav">
 
 
-
 <!-- HOME -->
-
 
 <button
   class="nav-item active"
@@ -2949,30 +2377,19 @@ button {
   aria-label="Home"
 >
 
-
   <svg viewBox="0 0 24 24">
 
-    <path
-      d="M3 11.5L12 4l9 7.5"
-    ></path>
+    <path d="M3 11.5L12 4l9 7.5"></path>
 
-    <path
-      d="M5 10v10h14V10"
-    ></path>
+    <path d="M5 10v10h14V10"></path>
 
-    <path
-      d="M9 20v-6h6v6"
-    ></path>
+    <path d="M9 20v-6h6v6"></path>
 
   </svg>
 
-
   <div>
-
     HOME
-
   </div>
-
 
 </button>
 
@@ -2980,13 +2397,11 @@ button {
 
 <!-- SCORES -->
 
-
 <button
   class="nav-item"
   data-page="scoresPage"
   aria-label="Scores"
 >
-
 
   <svg viewBox="0 0 24 24">
 
@@ -2998,35 +2413,21 @@ button {
       rx="2"
     ></rect>
 
-    <path
-      d="M8 9h2"
-    ></path>
+    <path d="M8 9h2"></path>
 
-    <path
-      d="M14 9h2"
-    ></path>
+    <path d="M14 9h2"></path>
 
-    <path
-      d="M8 13h2"
-    ></path>
+    <path d="M8 13h2"></path>
 
-    <path
-      d="M14 13h2"
-    ></path>
+    <path d="M14 13h2"></path>
 
-    <path
-      d="M12 5v14"
-    ></path>
+    <path d="M12 5v14"></path>
 
   </svg>
 
-
   <div>
-
     SCORES
-
   </div>
-
 
 </button>
 
@@ -3034,16 +2435,13 @@ button {
 
 <!-- WATCH -->
 
-
 <button
   class="nav-item watch-nav"
   data-page="watchPage"
   aria-label="Watch"
 >
 
-
   <div class="watch-circle">
-
 
     <svg viewBox="0 0 24 24">
 
@@ -3053,16 +2451,11 @@ button {
 
     </svg>
 
-
   </div>
-
 
   <div class="watch-label">
-
     WATCH
-
   </div>
-
 
 </button>
 
@@ -3070,13 +2463,11 @@ button {
 
 <!-- FAN ZONE -->
 
-
 <button
   class="nav-item"
   data-page="fanPage"
   aria-label="Fan Zone"
 >
-
 
   <svg viewBox="0 0 24 24">
 
@@ -3084,27 +2475,17 @@ button {
       d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.5 9.5 0 0 1-4-.9L3 21l1.7-4.3A8.4 8.4 0 1 1 21 11.5z"
     ></path>
 
-    <path
-      d="M8 11h.01"
-    ></path>
+    <path d="M8 11h.01"></path>
 
-    <path
-      d="M12 11h.01"
-    ></path>
+    <path d="M12 11h.01"></path>
 
-    <path
-      d="M16 11h.01"
-    ></path>
+    <path d="M16 11h.01"></path>
 
   </svg>
 
-
   <div>
-
     FAN ZONE
-
   </div>
-
 
 </button>
 
@@ -3112,49 +2493,31 @@ button {
 
 <!-- SHOP -->
 
-
 <button
   class="nav-item"
   data-page="shopPage"
   aria-label="NAL Shop"
 >
 
-
   <svg viewBox="0 0 24 24">
 
-    <path
-      d="M3 9l2-5h14l2 5"
-    ></path>
+    <path d="M3 9l2-5h14l2 5"></path>
 
-    <path
-      d="M5 13v7h14v-7"
-    ></path>
+    <path d="M5 13v7h14v-7"></path>
 
-    <path
-      d="M9 20v-5h6v5"
-    ></path>
+    <path d="M9 20v-5h6v5"></path>
 
-    <path
-      d="M3 9a3 3 0 0 0 6 0"
-    ></path>
+    <path d="M3 9a3 3 0 0 0 6 0"></path>
 
-    <path
-      d="M9 9a3 3 0 0 0 6 0"
-    ></path>
+    <path d="M9 9a3 3 0 0 0 6 0"></path>
 
-    <path
-      d="M15 9a3 3 0 0 0 6 0"
-    ></path>
+    <path d="M15 9a3 3 0 0 0 6 0"></path>
 
   </svg>
 
-
   <div>
-
     NAL SHOP
-
   </div>
-
 
 </button>
 
@@ -3171,75 +2534,44 @@ button {
 
 
 /* =========================================================
-   ELEMENTS
+   APP ELEMENTS
 ========================================================= */
 
 const pages =
-  document.querySelectorAll(
-    ".app-page"
-  );
-
+  document.querySelectorAll(".app-page");
 
 const navButtons =
-  document.querySelectorAll(
-    ".nav-item"
-  );
-
+  document.querySelectorAll(".nav-item");
 
 const homeLogo =
-  document.getElementById(
-    "homeLogo"
-  );
-
+  document.getElementById("homeLogo");
 
 const shopFrame =
-  document.getElementById(
-    "shopFrame"
-  );
-
+  document.getElementById("shopFrame");
 
 const shopLoading =
-  document.getElementById(
-    "shopLoading"
-  );
-
+  document.getElementById("shopLoading");
 
 const articlePage =
-  document.getElementById(
-    "articlePage"
-  );
-
+  document.getElementById("articlePage");
 
 const articleFrame =
-  document.getElementById(
-    "articleFrame"
-  );
-
+  document.getElementById("articleFrame");
 
 const articleLoading =
-  document.getElementById(
-    "articleLoading"
-  );
-
+  document.getElementById("articleLoading");
 
 const articleBack =
-  document.getElementById(
-    "articleBack"
-  );
-
+  document.getElementById("articleBack");
 
 const articleExternal =
-  document.getElementById(
-    "articleExternal"
-  );
+  document.getElementById("articleExternal");
 
 
 let shopLoaded = false;
 
-
 let previousPage =
   "homePage";
-
 
 let previousScrollPosition =
   0;
@@ -3254,45 +2586,34 @@ function showPage(
   clickedButton = null
 ) {
 
-
   pages.forEach(page => {
 
-    page.classList.remove(
-      "active"
-    );
+    page.classList.remove("active");
 
   });
 
 
   const selectedPage =
-    document.getElementById(
-      pageId
-    );
+    document.getElementById(pageId);
 
 
   if (selectedPage) {
 
-    selectedPage.classList.add(
-      "active"
-    );
+    selectedPage.classList.add("active");
 
   }
 
 
   navButtons.forEach(button => {
 
-    button.classList.remove(
-      "active"
-    );
+    button.classList.remove("active");
 
   });
 
 
   if (clickedButton) {
 
-    clickedButton.classList.add(
-      "active"
-    );
+    clickedButton.classList.add("active");
 
   }
 
@@ -3308,17 +2629,14 @@ function showPage(
     !shopLoaded
   ) {
 
-
     shopFrame.src =
       shopFrame.getAttribute(
         "data-src"
       );
 
-
     shopLoaded = true;
 
   }
-
 
 }
 
@@ -3329,16 +2647,9 @@ function showPage(
 
 navButtons.forEach(button => {
 
-
   button.addEventListener(
     "click",
     () => {
-
-
-      /*
-         If a user leaves an article using the
-         bottom navigation, unload the article.
-      */
 
 
       if (
@@ -3364,10 +2675,8 @@ navButtons.forEach(button => {
         button
       );
 
-
     }
   );
-
 
 });
 
@@ -3379,7 +2688,6 @@ navButtons.forEach(button => {
 homeLogo.addEventListener(
   "click",
   event => {
-
 
     event.preventDefault();
 
@@ -3399,7 +2707,6 @@ homeLogo.addEventListener(
       homeButton
     );
 
-
   }
 );
 
@@ -3412,10 +2719,8 @@ shopFrame.addEventListener(
   "load",
   () => {
 
-
     shopLoading.style.display =
       "none";
-
 
   }
 );
@@ -3431,11 +2736,8 @@ document
   )
   .forEach(image => {
 
-
     if (
-      !image.getAttribute(
-        "src"
-      )
+      !image.getAttribute("src")
     ) {
 
       image.style.display =
@@ -3448,10 +2750,8 @@ document
       "error",
       () => {
 
-
         image.style.display =
           "none";
-
 
       }
     );
@@ -3461,14 +2761,11 @@ document
       "load",
       () => {
 
-
         image.style.display =
           "block";
 
-
       }
     );
-
 
   });
 
@@ -3510,11 +2807,6 @@ function openArticle(url) {
   );
 
 
-  /*
-     Keep HOME active while reading news.
-  */
-
-
   navButtons.forEach(button => {
 
     button.classList.remove(
@@ -3539,28 +2831,12 @@ function openArticle(url) {
   }
 
 
-  /*
-     Show branded loading screen.
-  */
-
-
   articleLoading.style.display =
     "flex";
 
 
-  /*
-     External button still points to the
-     original FootballShift article.
-  */
-
-
   articleExternal.href =
     url;
-
-
-  /*
-     Load FootballShift.
-  */
 
 
   articleFrame.src =
@@ -3571,7 +2847,6 @@ function openArticle(url) {
     top: 0,
     behavior: "instant"
   });
-
 
 }
 
@@ -3585,7 +2860,6 @@ document
     ".lead-story, .news-card"
   )
   .forEach(story => {
-
 
     story.addEventListener(
       "click",
@@ -3608,14 +2882,10 @@ document
         event.preventDefault();
 
 
-        openArticle(
-          url
-        );
-
+        openArticle(url);
 
       }
     );
-
 
   });
 
@@ -3628,10 +2898,14 @@ articleFrame.addEventListener(
   "load",
   () => {
 
+    if (
+      articleFrame.src !== "about:blank"
+    ) {
 
-    articleLoading.style.display =
-      "none";
+      articleLoading.style.display =
+        "none";
 
+    }
 
   }
 );
@@ -3698,15 +2972,8 @@ articleBack.addEventListener(
     }
 
 
-    /*
-       Restore where the user was
-       on the Home page.
-    */
-
-
     setTimeout(
       () => {
-
 
         window.scrollTo({
 
@@ -3718,11 +2985,9 @@ articleBack.addEventListener(
 
         });
 
-
       },
       10
     );
-
 
   }
 );
@@ -3732,5 +2997,4 @@ articleBack.addEventListener(
 
 
 </body>
-
 </html>
