@@ -8528,7 +8528,6 @@ let selectedFanPollOption = null;
 function fanPollHeaders(extra = {}){
   return {
     "apikey": NAL_POLL_SUPABASE_KEY,
-    "Authorization": "Bearer " + NAL_POLL_SUPABASE_KEY,
     ...extra
   };
 }
