@@ -5476,7 +5476,8 @@ document.addEventListener("DOMContentLoaded", () => {
 /* =========================================================
    NAL LEGAL — TERMS OF USE
 ========================================================= */
-#fanTermsPage{
+#fanTermsPage,
+#fanGuidelinesPage{
   display:none;
   min-height:calc(100vh - var(--header-height));
   padding-bottom:100px;
@@ -7041,7 +7042,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           <label class="fan-account-check">
             <input id="fanGuidelinesAccepted" type="checkbox" required>
-            <span>I agree to the NAL Community Guidelines.</span>
+            <span>I agree to the NAL <button type="button" class="fan-legal-link" id="fanGuidelinesLink">Community Guidelines</button>.</span>
           </label>
 
           <button class="fan-account-primary" type="submit">CREATE ACCOUNT</button>
@@ -7209,6 +7210,45 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </main>
 
+
+
+  <!-- NAL APP COMMUNITY GUIDELINES -->
+  <main id="fanGuidelinesPage" class="app-page fan-legal-page">
+    <div class="fan-legal-shell">
+      <button type="button" class="fan-legal-back" id="fanGuidelinesBack">‹ BACK TO CREATE ACCOUNT</button>
+      <article class="fan-legal-card">
+        <header class="fan-legal-head"><div class="fan-legal-kicker">NAL APP</div><h1>COMMUNITY GUIDELINES</h1><p class="fan-legal-meta">Version 1.0 · Effective September 21, 2026</p></header>
+        <div class="fan-legal-body">
+          <p>The National Arena League community is built for fans to follow the league, support their teams, debate the game, share content, and interact with other fans.</p>
+          <p>These Community Guidelines (“Guidelines”) apply to community and interactive features available through the NAL App, including forums, comments, replies, display names, fan submissions, photos, videos, polls, and other areas where users may contribute or interact with content.</p>
+          <p>The NAL App is operated by <strong>MNTR Inc.</strong> in connection with the National Arena League (“NAL”).</p>
+          <p>By creating an NAL Fan Account and participating in community features, you agree to follow these Guidelines in addition to the NAL App Terms of Use.</p>
+          <h2>1. Keep It Respectful</h2><p>Passionate sports discussion is welcome. Disrespectful treatment of other people is not. Users may disagree with one another, debate teams and games, and express strong opinions, but discussions must remain respectful.</p><p><strong>Bullying is prohibited.</strong> This includes repeated personal attacks, intimidation, humiliation, targeted abuse, or attempts to encourage others to attack another user.</p>
+          <h2>2. No Profanity</h2><p><strong>Profanity is not permitted in NAL App community areas.</strong></p><p>This applies to posts, comments, replies, display names, captions, images containing text, and other user-submitted content. Content may be removed when it contains profanity, including attempts to bypass filters through intentional misspellings, symbols, spacing, or similar methods.</p>
+          <h2>3. Sports Debate and Criticism Are Welcome</h2><p>Fans are allowed to criticize and debate teams, players, coaches, owners and organizations, roster decisions, trades and transactions, game strategy, player performance, coaching decisions, officiating decisions, league decisions, and other legitimate football topics.</p><p>Disagreement and criticism <strong>do not violate these Guidelines simply because they are negative</strong>.</p><p>For example, saying that you believe a player had a bad game, disagreeing with a coaching decision, criticizing an officiating call, or believing your team should make a roster change is permitted.</p><p>Criticism becomes unacceptable when it turns into prohibited personal abuse, bullying, threats, discriminatory attacks, or harassment.</p>
+          <h2>4. No Harassment or Personal Attacks</h2><p>Do not target another person with abusive or degrading behavior. This applies whether the person is another fan, player, coach, official, team employee, league employee, broadcaster, owner, or other individual.</p><p>Users should address the <strong>topic, decision, play, or performance</strong> rather than attacking someone's personal characteristics.</p>
+          <h2>5. No Hate or Discriminatory Content</h2><p>Content attacking or degrading people based on protected characteristics is prohibited. This includes content targeting a person's race, color, ethnicity, national origin, religion, sex, sexual orientation, gender identity, disability, or other status protected by applicable law.</p><p>Slurs and discriminatory insults are not permitted.</p>
+          <h2>6. No Threats or Promotion of Violence</h2><p>Threats of violence or physical harm are prohibited. Users may not encourage, celebrate, request, or coordinate violence against another person.</p><p>Credible threats or content presenting an immediate safety concern may result in immediate account action and may be reported to appropriate authorities when warranted.</p>
+          <h2>7. Protect Personal Information</h2><p>Do not post another person's private or sensitive information without authorization. Examples include private addresses, personal phone numbers, private email addresses, financial information, account credentials, identification documents, or other information that could reasonably create a privacy or safety risk.</p><p>Attempts to expose or solicit someone's private information are also prohibited.</p>
+          <h2>8. No Sexually Explicit or Graphic Content</h2><p>Pornographic, sexually explicit, or excessively graphic content is prohibited. Content depicting or promoting sexual exploitation—particularly involving minors—is strictly prohibited and may be reported as required by law.</p>
+          <h2>9. No Illegal or Dangerous Content</h2><p>Do not use NAL community features to promote, coordinate, or facilitate illegal activity. Content that creates a credible safety threat to fans, teams, players, venues, league personnel, or the public may result in immediate removal and account action.</p>
+          <h2>10. No Spam or Unauthorized Advertising</h2><p>Community features should not be used primarily to advertise unrelated businesses, products, services, websites, referral programs, or repetitive promotional material.</p><p>Repeated posts, irrelevant links, scams, deceptive promotions, and other spam are prohibited. NAL or MNTR may authorize particular promotional activity or designated promotional areas separately.</p>
+          <h2>11. No Impersonation</h2><p>Do not impersonate another person or falsely represent yourself as an NAL player, coach, team employee, league employee, official, broadcaster, team or league account, or another fan.</p><p>Parody or fan accounts must not intentionally mislead users regarding their identity or affiliation.</p>
+          <h2>12. Display Names</h2><p>Display names must comply with these Guidelines. Display names may not contain profanity, hate speech, threats, sexually explicit language, impersonation, or other prohibited content.</p><p>MNTR may require a display name to be changed if it violates these Guidelines or creates confusion about whether an account is officially associated with the NAL or one of its teams.</p>
+          <h2>13. Fan Photos and Videos</h2><p>Users may have opportunities to submit photographs, videos, captions, or other fan media. Only submit content you have the right and permission to provide.</p><p>Do not submit content that violates another person's privacy, intellectual-property rights, or these Guidelines. Additional permissions presented during a particular media-submission process may also apply.</p><p>Submission of content does not guarantee that it will be published, featured, or retained by the NAL App.</p>
+          <h2>14. Don't Manipulate Fan Features</h2><p>Do not attempt to artificially manipulate polls, fan voting, Pick ’Em, leaderboards, reactions, rankings, contests, or other interactive features.</p><p>Creating multiple accounts, using automated systems, exploiting technical errors, or coordinating fraudulent activity to gain an unfair advantage is prohibited.</p>
+          <h2>15. Reporting Content</h2><p>Users may be provided tools to report content or behavior they believe violates these Guidelines. Reports should be made in good faith.</p><p>Abusing reporting systems to target another user, retaliate against someone, or intentionally submit false reports may itself violate these Guidelines.</p><p>Reporting content does not guarantee that the content will be removed. MNTR will determine what action, if any, is appropriate based on the circumstances and these Guidelines.</p>
+          <h2>16. Moderation</h2><p>MNTR may moderate NAL App community features to enforce these Guidelines and the Terms of Use.</p><p>Moderation actions may include: <strong>Warning → Temporary Suspension → Permanent Ban</strong>.</p><p>The appropriate action will depend on the nature, severity, frequency, and circumstances of the violation. MNTR is not required to issue every level of enforcement before taking stronger action.</p>
+          <h2>17. Serious Violations</h2><p>Certain conduct may result in <strong>immediate suspension or permanent banning without a prior warning</strong>.</p><p>This may include credible threats, serious harassment, hate or discriminatory attacks, sexual exploitation, attempts to compromise another user's account, dangerous conduct, illegal activity, or other serious violations.</p><p>Where appropriate or legally required, information may also be preserved or provided to appropriate authorities.</p>
+          <h2>18. Content Removal</h2><p>MNTR may remove or restrict access to content that violates these Guidelines, the Terms of Use, applicable law, or the rights or safety of others.</p><p>Removal of content does not necessarily result in suspension or termination of the user's account. Likewise, account action may be appropriate even when particular content has already been deleted.</p>
+          <h2>19. Moderation Decisions</h2><p>MNTR will make reasonable efforts to apply these Guidelines consistently. However, context matters. Similar words or conduct may require different moderation decisions depending on how they are used and the circumstances surrounding them.</p><p>The existence of content elsewhere in the NAL App does not mean similar content is necessarily permitted.</p>
+          <h2>20. Changes to These Guidelines</h2><p>These Guidelines may be updated as the NAL App and its community features evolve. The current version and effective date will be displayed within the NAL App.</p><p>For material changes, users may be asked to review and accept an updated version before continuing to use certain community features.</p>
+          <h2>21. Contact</h2><p>Questions concerning these Community Guidelines or NAL App moderation may be directed to:</p><div class="fan-legal-contact">MNTR Inc.<br>NAL App Support<br>appsupport@thenationalarenaleague.com</div>
+          <button type="button" class="fan-account-primary fan-legal-return" id="fanGuidelinesReturn">BACK TO CREATE ACCOUNT</button>
+        </div>
+      </article>
+    </div>
+  </main>
 
   <!-- =====================================================
        BOTTOM NAV
@@ -10565,6 +10605,23 @@ function closeFanTerms(){
   window.scrollTo(0,0);
 }
 
+function openFanGuidelines(){
+  const accountPage = document.getElementById("fanAccountPage");
+  const guidelinesPage = document.getElementById("fanGuidelinesPage");
+  if (accountPage){ accountPage.classList.remove("active"); accountPage.style.display = "none"; }
+  if (guidelinesPage){ guidelinesPage.style.display = "block"; guidelinesPage.classList.add("active"); }
+  window.scrollTo(0,0);
+}
+
+function closeFanGuidelines(){
+  const guidelinesPage = document.getElementById("fanGuidelinesPage");
+  const accountPage = document.getElementById("fanAccountPage");
+  if (guidelinesPage){ guidelinesPage.classList.remove("active"); guidelinesPage.style.display = "none"; }
+  if (accountPage){ accountPage.style.display = "block"; accountPage.classList.add("active"); }
+  setFanAccountView("signup");
+  window.scrollTo(0,0);
+}
+
 async function loadNalFanProfile(user){
   if (!user) return null;
 
@@ -10705,6 +10762,22 @@ document.addEventListener("click", function(event){
     event.preventDefault();
     event.stopImmediatePropagation();
     closeFanTerms();
+    return;
+  }
+
+  const guidelinesLink = event.target.closest("#fanGuidelinesLink");
+  if (guidelinesLink){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    openFanGuidelines();
+    return;
+  }
+
+  const guidelinesBack = event.target.closest("#fanGuidelinesBack, #fanGuidelinesReturn");
+  if (guidelinesBack){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    closeFanGuidelines();
     return;
   }
 
