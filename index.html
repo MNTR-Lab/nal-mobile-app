@@ -3509,7 +3509,7 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
           <span>Scores</span>
         </button>
 
-        <button class="home-quick-button" type="button" data-home-action="teams">
+        <button class="home-quick-button" type="button" data-home-action="teams" onclick="openTeamsPage(); return false;">
           <svg viewBox="0 0 24 24">
             <circle cx="9" cy="8" r="3"></circle>
             <circle cx="17" cy="9" r="2"></circle>
@@ -6364,11 +6364,17 @@ function closeTeamHome() {
 loadNALTeams();
 
 function openTeamsPage(){
+  ["homePage","scoresPage","watchPage","fanZonePage","shopPage","teamPage","articlePage"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = "none";
+  });
   document.querySelectorAll(".app-page").forEach(page => page.style.display = "none");
   const page = document.getElementById("teamsPage");
-  if (page) page.style.display = "block";
-  renderTeamsDirectory();
-  window.scrollTo({ top: 0, behavior: "instant" });
+  if (page) {
+    page.style.display = "block";
+    renderTeamsDirectory();
+    window.scrollTo(0, 0);
+  }
 }
 
 function renderTeamsDirectory(){
@@ -6392,6 +6398,18 @@ function renderTeamsDirectory(){
     });
   });
 }
+
+
+/* Teams quick-access routing — dedicated Teams directory */
+document.addEventListener("click", function(event){
+  const control = event.target.closest(
+    '[data-action="teams"], [data-page="teams"], [data-target="teams"], .quick-teams, #teamsQuickAction'
+  );
+  if (!control) return;
+  event.preventDefault();
+  event.stopPropagation();
+  openTeamsPage();
+}, true);
 
 </script>
 
