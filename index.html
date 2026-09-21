@@ -4519,7 +4519,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* =========================================================
-   FAN PHOTO OF THE WEEK
+   FAN PHOTOS
 ========================================================= */
 .fan-photo-week{
   margin-top:14px;
@@ -5399,9 +5399,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="fan-photo-week-heading">
           <div>
             <span>FROM THE NAL COMMUNITY</span>
-            <h2>FAN PHOTO OF THE WEEK</h2>
+            <h2>FAN PHOTOS</h2>
           </div>
-          <span class="fan-photo-week-badge">FEATURED FAN</span>
+          <span class="fan-photo-week-badge">NAL FANS</span>
         </div>
 
         <div class="fan-photo-week-card">
@@ -5409,14 +5409,14 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="fan-photo-week-placeholder">
               <span class="fan-photo-camera">▣</span>
               <strong>FAN PHOTO</strong>
-              <small>WEEKLY FEATURE IMAGE</small>
+              <small>FROM THE NAL COMMUNITY</small>
             </div>
           </div>
 
           <div class="fan-photo-week-info">
             <span class="fan-photo-week-team" id="fanPhotoWeekTeam">NAL FAN</span>
             <h3 id="fanPhotoWeekName">FAN NAME</h3>
-            <p id="fanPhotoWeekCaption">Your Fan Photo of the Week caption will appear here.</p>
+            <p id="fanPhotoWeekCaption">Your Fan Photos caption will appear here.</p>
             <button type="button" class="fan-photo-submit-button" onclick="openFanZoneFeature('media')">
               SUBMIT YOUR PHOTO <b>›</b>
             </button>
@@ -5435,7 +5435,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('media')">
           <span class="fan-zone-icon">▣</span>
           <h3>SHARE YOUR NAL MOMENT</h3>
-          <p>Your submission could become the next Fan Photo of the Week.</p>
+          <p>Your submission could become the next Fan Photos.</p>
           <span class="fan-zone-link">SUBMIT MEDIA <b>›</b></span>
         </button>
       </div>
@@ -7993,7 +7993,7 @@ function closeFanMediaUpload(){
 
 
 /* =========================================================
-   FAN PHOTO OF THE WEEK
+   FAN PHOTOS
    Data source: data/fan-media.json
    The page keeps its built-in placeholder if the feed is
    unavailable or there is not yet an approved feature.
@@ -8019,25 +8019,11 @@ function normalizeFanMediaFeed(payload){
   return [];
 }
 
-function chooseFanPhotoOfWeek(items){
-  if (!items.length) return null;
+let fanPhotos = [];
+let fanPhotoIndex = 0;
+let fanPhotoTimer = null;
 
-  const approved = items.filter(item => {
-    const status = getFanMediaValue(item, ["status", "approvalStatus", "approval_status"]).toLowerCase();
-    return !status || ["approved", "published", "featured", "live"].includes(status);
-  });
-
-  const pool = approved.length ? approved : items;
-
-  return pool.find(item =>
-    item?.featured === true ||
-    item?.fanPhotoOfWeek === true ||
-    item?.fan_photo_of_week === true ||
-    getFanMediaValue(item, ["featured", "fanPhotoOfWeek", "fan_photo_of_week"]).toLowerCase() === "true"
-  ) || pool[0];
-}
-
-function renderFanPhotoOfWeek(item){
+function renderFanPhoto(item){
   if (!item) return;
 
   const imageHost = document.getElementById("fanPhotoWeekImage");
@@ -8045,46 +8031,50 @@ function renderFanPhotoOfWeek(item){
   const team = document.getElementById("fanPhotoWeekTeam");
   const caption = document.getElementById("fanPhotoWeekCaption");
 
-  const fanName = getFanMediaValue(
+  const fanName = getFanMediaValue(item, ["name", "fanName", "fan_name"], "NAL FAN");
+  const fanCaption = getFanMediaValue(item, ["caption", "story", "description"], "");
+  const mediaUrl = getFanMediaValue(
     item,
-    ["fanName", "fan_name", "name", "submittedBy", "submitted_by"],
-    "NAL FAN"
+    ["media", "imageUrl", "image_url", "photoUrl", "photo_url", "url", "image"]
   );
-
-  const favoriteTeam = getFanMediaValue(
-    item,
-    ["team", "favoriteTeam", "favorite_team"],
-    "NAL FAN"
-  );
-
-  const fanCaption = getFanMediaValue(
-    item,
-    ["caption", "story", "description"],
-    ""
-  );
-
-  const imageUrl = getFanMediaValue(
-    item,
-    ["imageUrl", "image_url", "photoUrl", "photo_url", "url", "image"]
-  );
+  const mediaType = getFanMediaValue(item, ["type", "mediaType", "media_type"], "Photo/Image").toLowerCase();
 
   if (name) name.textContent = fanName;
-  if (team) team.textContent = favoriteTeam;
-  if (caption && fanCaption) caption.textContent = fanCaption;
+  if (team) team.textContent = fanPhotos.length > 1
+    ? `${fanPhotoIndex + 1} OF ${fanPhotos.length}`
+    : "NAL FAN";
+  if (caption) caption.textContent = fanCaption;
 
-  if (imageHost && imageUrl){
-    imageHost.innerHTML = "";
+  if (!imageHost || !mediaUrl) return;
 
+  imageHost.innerHTML = "";
+
+  if (mediaType.includes("video")) {
+    const video = document.createElement("video");
+    video.src = mediaUrl;
+    video.controls = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.style.width = "100%";
+    video.style.height = "100%";
+    video.style.objectFit = "contain";
+    video.style.background = "#07172b";
+    imageHost.appendChild(video);
+  } else {
     const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = fanName + " — Fan Photo of the Week";
-    img.loading = "lazy";
+    img.src = mediaUrl;
+    img.alt = `${fanName} — NAL Fan Photo`;
+    img.loading = "eager";
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "contain";
+    img.style.background = "#07172b";
 
     img.addEventListener("error", () => {
       imageHost.innerHTML = `
         <div class="fan-photo-placeholder-icon">▣</div>
         <div class="fan-photo-placeholder-title">FAN PHOTO</div>
-        <div class="fan-photo-placeholder-subtitle">WEEKLY FEATURE IMAGE</div>
+        <div class="fan-photo-placeholder-subtitle">FROM THE NAL COMMUNITY</div>
       `;
     });
 
@@ -8092,22 +8082,40 @@ function renderFanPhotoOfWeek(item){
   }
 }
 
-async function loadFanPhotoOfWeek(){
+function showNextFanPhoto(){
+  if (fanPhotos.length < 2) return;
+  fanPhotoIndex = (fanPhotoIndex + 1) % fanPhotos.length;
+  renderFanPhoto(fanPhotos[fanPhotoIndex]);
+}
+
+function startFanPhotoRotation(){
+  if (fanPhotoTimer) clearInterval(fanPhotoTimer);
+  if (fanPhotos.length > 1) {
+    fanPhotoTimer = setInterval(showNextFanPhoto, 6000);
+  }
+}
+
+async function loadFanPhotos(){
   try {
     const response = await fetch(FAN_MEDIA_FEED, { cache: "no-store" });
     if (!response.ok) throw new Error("Fan media feed unavailable");
 
     const payload = await response.json();
-    const items = normalizeFanMediaFeed(payload);
-    const featured = chooseFanPhotoOfWeek(items);
+    fanPhotos = normalizeFanMediaFeed(payload).filter(item =>
+      getFanMediaValue(item, ["media", "imageUrl", "image_url", "photoUrl", "photo_url", "url", "image"])
+    );
 
-    if (featured) renderFanPhotoOfWeek(featured);
+    if (!fanPhotos.length) return;
+
+    fanPhotoIndex = 0;
+    renderFanPhoto(fanPhotos[0]);
+    startFanPhotoRotation();
   } catch (error) {
-    console.warn("Fan Photo of the Week is using the built-in placeholder.", error);
+    console.warn("Fan Photos is using the built-in placeholder.", error);
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadFanPhotoOfWeek);
+document.addEventListener("DOMContentLoaded", loadFanPhotos);
 
 </script>
 </body>
