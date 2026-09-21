@@ -6022,7 +6022,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-admin-detail-row span{display:block;color:#78879a;font-size:8px;font-weight:1000;letter-spacing:.8px}.fan-admin-detail-row strong{display:block;margin-top:4px;color:#07172b;font-size:12px;overflow-wrap:anywhere}
 .fan-admin-actions-preview{margin-top:9px;background:#fff;border:1px solid #dfe4eb;border-radius:15px;padding:13px 14px}
 .fan-admin-actions-preview h4{margin:0 0 8px;font-size:10px;letter-spacing:1px}.fan-admin-actions-preview p{margin:0;color:#78879a;font-size:9px;line-height:1.45}
-.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-role{background:#102b4e;color:#fff}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-delete{background:#3b0b0e;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}
+.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-role{background:#102b4e;color:#fff}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-delete{background:#3b0b0e;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}.fan-admin-log-list{display:grid;gap:8px}.fan-admin-log-item{background:#fff;border:1px solid #dfe4eb;border-radius:13px;padding:12px 13px}.fan-admin-log-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.fan-admin-log-action{font-size:9px;font-weight:1000;letter-spacing:.55px;color:#07172b}.fan-admin-log-time{font-size:8px;color:#78879a;white-space:nowrap}.fan-admin-log-target{display:block;margin-top:5px;font-size:11px;font-weight:900;color:#07172b}.fan-admin-log-detail{display:block;margin-top:3px;font-size:9px;line-height:1.4;color:#6d7a8c}.fan-admin-log-change{font-weight:1000;color:#102b4e}.fan-admin-log-filter{width:100%;border:1px solid #d9e0e8;border-radius:10px;padding:12px;margin-bottom:10px;font:inherit;font-size:12px}
 
 </style>
 </head>
@@ -7238,6 +7238,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class="fan-admin-rowbtn" id="fanAdminUsersButton" type="button">
                   <div class="fan-member-row"><div class="fan-member-ico">👥</div><div class="fan-member-rowtext"><b>User Management</b><span>Search members, roles and account status</span></div><span class="fan-member-chev">›</span></div>
                 </button>
+                <button class="fan-admin-rowbtn" id="fanAdminActivityButton" type="button">
+                  <div class="fan-member-row"><div class="fan-member-ico">🕘</div><div class="fan-member-rowtext"><b>Activity Log</b><span>Review administrator account actions</span></div><span class="fan-member-chev">›</span></div>
+                </button>
                 <div class="fan-member-row"><div class="fan-member-ico">🚩</div><div class="fan-member-rowtext"><b>Moderation</b><span>Reports, forum posts and submitted content</span></div><span class="fan-member-badge">COMING SOON</span></div>
                 <div class="fan-member-row"><div class="fan-member-ico">✓</div><div class="fan-member-rowtext"><b>Poll Management</b><span>Create, activate and close fan polls</span></div><span class="fan-member-badge">COMING SOON</span></div>
                 <div class="fan-member-row"><div class="fan-member-ico">🏈</div><div class="fan-member-rowtext"><b>Pick ’Em Management</b><span>Games, deadlines and leaderboard controls</span></div><span class="fan-member-badge">COMING SOON</span></div>
@@ -7277,6 +7280,13 @@ document.addEventListener("DOMContentLoaded", () => {
                   </div>
                 </div>
                 <p class="fan-admin-note">Member information is loaded through the secure admin-only Supabase function. Administrative actions will be added separately with server-side permission verification.</p>
+              </div>
+              <div class="fan-admin-panel" id="fanAdminActivityPanel">
+                <h3 class="fan-member-title">ACTIVITY LOG</h3>
+                <input class="fan-admin-log-filter" id="fanAdminActivitySearch" type="search" placeholder="Search member, email or action">
+                <div class="fan-admin-log-list" id="fanAdminActivityList">
+                  <div class="fan-admin-loading">Open Activity Log to load administrator actions.</div>
+                </div>
               </div>
             </section>
 
@@ -11414,6 +11424,59 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
 });
 
 
+/* NAL ADMIN — activity log. */
+(function(){
+  const button=document.getElementById("fanAdminActivityButton");
+  const panel=document.getElementById("fanAdminActivityPanel");
+  const list=document.getElementById("fanAdminActivityList");
+  const search=document.getElementById("fanAdminActivitySearch");
+  let entries=[];
+
+  function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+  function label(v){return ({role_changed:"ROLE CHANGED",account_suspended:"ACCOUNT SUSPENDED",account_restored:"ACCOUNT RESTORED",account_banned:"ACCOUNT BANNED",account_deleted:"ACCOUNT DELETED"})[v]||String(v||"ADMIN ACTION").replaceAll("_"," ").toUpperCase();}
+  function when(v){const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleString(undefined,{year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});}
+
+  function render(){
+    if(!list)return;
+    const q=(search?.value||"").trim().toLowerCase();
+    const rows=entries.filter(e=>!q||[e.target_display_name,e.target_email,e.action_type,e.old_value,e.new_value].some(v=>String(v||"").toLowerCase().includes(q)));
+    if(!rows.length){list.innerHTML='<div class="fan-admin-empty">'+(q?"No activity matches your search.":"No administrator activity has been recorded yet.")+'</div>';return;}
+    list.innerHTML=rows.map(e=>{
+      const target=e.target_display_name||e.target_email||"Deleted member";
+      const email=e.target_email&&e.target_email!==target?e.target_email:"";
+      const change=(e.old_value||e.new_value)?[e.old_value,e.new_value].filter(Boolean).map(v=>String(v).toUpperCase()).join(" → "):"";
+      const detail=[email,change].filter(Boolean).join(" • ");
+      return '<div class="fan-admin-log-item"><div class="fan-admin-log-top"><span class="fan-admin-log-action">'+esc(label(e.action_type))+'</span><span class="fan-admin-log-time">'+esc(when(e.created_at))+'</span></div><span class="fan-admin-log-target">'+esc(target)+'</span>'+(detail?'<span class="fan-admin-log-detail">'+esc(detail)+'</span>':"")+'</div>';
+    }).join("");
+  }
+
+  async function load(){
+    if(!list||nalAccountProfile?.role!=="admin")return;
+    list.innerHTML='<div class="fan-admin-loading">Loading administrator activity…</div>';
+    try{
+      const client=getNalAccountClient();
+      const {data,error}=await client.from("admin_activity_log").select("id,target_display_name,target_email,action_type,old_value,new_value,details,created_at").order("created_at",{ascending:false}).limit(100);
+      if(error)throw error;
+      entries=Array.isArray(data)?data:[];
+      render();
+    }catch(error){
+      console.error("NAL Admin activity log error:",error);
+      list.innerHTML='<div class="fan-admin-error">Activity Log could not be loaded. Please try again.</div>';
+    }
+  }
+
+  button?.addEventListener("click",async function(){
+    if(document.getElementById("fanAdminArea")?.hidden)return;
+    document.getElementById("fanAdminUsersPanel")?.classList.remove("show");
+    panel?.classList.toggle("show");
+    if(panel?.classList.contains("show")){
+      await load();
+      setTimeout(()=>panel.scrollIntoView({behavior:"smooth",block:"nearest"}),50);
+    }
+  });
+  search?.addEventListener("input",render);
+})();
+
 /* NAL ADMIN — real admin-only member list. */
 (function(){
   const button = document.getElementById("fanAdminUsersButton");
@@ -11831,6 +11894,7 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
 
   button?.addEventListener("click", async function(){
     if (document.getElementById("fanAdminArea")?.hidden) return;
+    document.getElementById("fanAdminActivityPanel")?.classList.remove("show");
     panel?.classList.toggle("show");
     if (panel?.classList.contains("show")){
       if (!loaded) await loadAdminMembers();
