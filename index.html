@@ -4322,6 +4322,50 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 }
 
 
+
+/* =========================================================
+   BOTTOM NAV — FINAL MOBILE ALIGNMENT
+   1) Raise the four standard destinations for balanced padding.
+   2) Keep NAL Network centered in its own 20% column.
+   3) Force NAL Network to two centered lines so it cannot
+      collide with Fan Zone.
+========================================================= */
+
+/* Raise HOME / SCORES / FAN ZONE / NAL SHOP as complete groups. */
+.bottom-nav .nav-button:not(.watch-button){
+  transform:translateY(-6px) !important;
+}
+
+/* Center the larger Network group in its own column. */
+.bottom-nav .watch-button{
+  transform:translateY(-6px) !important;
+  justify-content:center !important;
+  align-items:center !important;
+  text-align:center !important;
+}
+
+/* Two-line Network label stays inside the center 20% column. */
+.bottom-nav .watch-button > span.network-two-line{
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  white-space:normal !important;
+  text-align:center !important;
+  font-size:10.8px !important;
+  line-height:.92 !important;
+  font-weight:900 !important;
+  letter-spacing:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* Keep the TV/play artwork itself centered directly over its label. */
+.bottom-nav .watch-button .watch-icon{
+  margin-left:auto !important;
+  margin-right:auto !important;
+  align-self:center !important;
+}
+
 /* Shared Lightcast Featured Video — 16:9 responsive player */
 .shared-network-featured-embed{
   position:relative;
@@ -5592,7 +5636,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
       </div>
 
     
-      <span>NAL NETWORK</span>
+      <span class="network-two-line">NAL<br>NETWORK</span>
     </button>
 
 
