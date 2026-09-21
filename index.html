@@ -7996,6 +7996,106 @@ function renderFanPhotoOfWeek(){
 
 document.addEventListener("DOMContentLoaded", renderFanPhotoOfWeek);
 
+
+/* =========================================================
+   BOTTOM NAV — HARD ROUTING FIX
+   Keeps the five persistent navigation buttons usable from
+   Home, Team Directory, Team Home, Article Viewer and Network.
+   ========================================================= */
+document.addEventListener("click", function(event){
+  const button = event.target.closest(".bottom-nav .nav-button[data-page]");
+  if (!button) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+
+  const pageId = button.dataset.page;
+
+  /* Clear stale page display states created by special views. */
+  document.querySelectorAll(".app-page").forEach(page => {
+    page.classList.remove("active");
+    page.style.display = "none";
+  });
+
+  const teamsPage = document.getElementById("teamsPage");
+  if (teamsPage) {
+    teamsPage.classList.remove("active");
+    teamsPage.style.display = "none";
+  }
+
+  const teamPage = document.getElementById("teamPage");
+  if (teamPage) {
+    teamPage.classList.remove("active");
+    teamPage.style.display = "none";
+  }
+
+  /* Stop any FootballShift/news page that may still be loaded. */
+  if (typeof articleFrame !== "undefined" && articleFrame && articleFrame.src !== "about:blank") {
+    articleFrame.src = "about:blank";
+  }
+
+  /* Update persistent navigation highlight. */
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(nav => {
+    nav.classList.toggle("active", nav === button);
+  });
+
+  /* SCORES intentionally uses the existing in-app FootballShift viewer. */
+  if (pageId === "scoresPage") {
+    openArticle(
+      SCORES_URL,
+      {
+        mode: "team",
+        title: "NAL SCORES",
+        subtitle: "SEASON X",
+        loadingText: "LOADING NAL SCORES",
+        brand: {
+          primary: "#07172b",
+          accent: "#e31b23"
+        },
+        navPage: "scoresPage"
+      }
+    );
+    return;
+  }
+
+  const destination = document.getElementById(pageId);
+  if (!destination) {
+    console.warn("Bottom navigation destination not found:", pageId);
+    return;
+  }
+
+  destination.style.display = "block";
+  destination.classList.add("active");
+
+  /* Preserve existing Shop lazy-load behavior. */
+  if (
+    pageId === "shopPage" &&
+    typeof shopFrame !== "undefined" &&
+    shopFrame &&
+    shopFrame.src === "about:blank"
+  ) {
+    shopFrame.src = SHOP_URL;
+  }
+
+  /* Network always opens on its Home tab. */
+  if (pageId === "watchPage" && typeof switchNetworkTab === "function") {
+    switchNetworkTab("home");
+  }
+
+  if (pageId === "homePage") {
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        top: (typeof homeScrollPosition === "number" ? homeScrollPosition : 0),
+        left: 0,
+        behavior: "instant"
+      });
+    });
+  } else {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }
+}, true);
+
 </script>
 </body>
 </html>
