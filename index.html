@@ -4886,8 +4886,8 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
     <div class="network-tab-panel active" data-network-panel="home">
       <section class="network-hub-section network-feature-section">
         <div class="network-section-kicker">FEATURED</div>
-        <button class="network-feature-card" type="button" onclick="previewNetworkItem('Featured NAL Network Programming','Featured video and live programming will play here once connected.')">
-          <div class="network-feature-visual">
+        <div class="network-feature-card">
+          <div class="network-feature-visual" id="networkPageFeaturedVideo">
             <div class="network-feature-watermark">NAL NETWORK</div>
             <span class="network-feature-badge">FEATURED</span>
             <span class="network-circle-play">▶</span>
@@ -4896,7 +4896,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
             <strong>Featured NAL Network Programming</strong>
             <span>Live games, originals and featured league programming.</span>
           </div>
-        </button>
+        </div>
       </section>
 
       <section class="network-hub-section">
