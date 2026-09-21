@@ -4321,6 +4321,25 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   transform:translateY(-13px) !important;
 }
 
+
+/* Shared Lightcast Featured Video — 16:9 responsive player */
+.shared-network-featured-embed{
+  position:relative;
+  width:100%;
+  aspect-ratio:16 / 9;
+  overflow:hidden;
+  background:#000;
+}
+.shared-network-featured-embed iframe{
+  position:absolute;
+  inset:0;
+  width:100% !important;
+  height:100% !important;
+  min-width:100% !important;
+  min-height:100% !important;
+  border:0;
+}
+
 </style>
 </head>
 
@@ -4489,7 +4508,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 
       <div class="home-network-layout">
         <div>
-          <div class="media-placeholder home-network-main">
+          <div class="media-placeholder home-network-main" id="networkHomeFeaturedVideo">
             <div class="media-placeholder-label">
               FEATURED VIDEO IMAGE PLACEHOLDER<br>
               16:9 • RECOMMENDED 1200 × 675 PX
@@ -7471,6 +7490,48 @@ closeNetworkPreview = function(){
   }
   _originalCloseNetworkPreview();
 };
+
+
+/* =========================================================
+   NAL NETWORK — SHARED FEATURED VIDEO SOURCE
+   Home preview + Network Featured use this same source.
+========================================================= */
+const NETWORK_FEATURED = {
+  title: "NAL Network Featured",
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=819893&channelId=72114"
+};
+
+function createNetworkFeaturedEmbed() {
+  const wrap = document.createElement("div");
+  wrap.className = "shared-network-featured-embed";
+  wrap.innerHTML = `
+    <iframe
+      src="${NETWORK_FEATURED.embedUrl}"
+      title="${NETWORK_FEATURED.title}"
+      referrerpolicy="no-referrer-when-downgrade"
+      frameborder="0"
+      allow="fullscreen; picture-in-picture"
+      allowfullscreen
+      loading="lazy">
+    </iframe>`;
+  return wrap;
+}
+
+function mountSharedNetworkFeaturedVideo() {
+  const selectors = [
+    "#networkHomeFeaturedVideo",
+    "#networkPageFeaturedVideo"
+  ];
+
+  selectors.forEach(selector => {
+    const host = document.querySelector(selector);
+    if (!host) return;
+    host.innerHTML = "";
+    host.appendChild(createNetworkFeaturedEmbed());
+  });
+}
+
+document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
 
 </script>
 </body>
