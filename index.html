@@ -3394,6 +3394,29 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   letter-spacing: 1px;
 }
 
+
+/* =========================================================
+   TEAMS PAGE — START DIRECTLY BELOW APP HEADER
+========================================================= */
+#teamsPage{
+  position: relative !important;
+  top: auto !important;
+  margin-top: 0 !important;
+  padding-top: 14px !important;
+  min-height: calc(100vh - 130px) !important;
+  transform: none !important;
+}
+
+body:has(#teamsPage[style*="display: block"]) #homePage{
+  display: none !important;
+}
+
+/* Prevent any hidden viewer/page shell from reserving vertical space */
+body:has(#teamsPage[style*="display: block"]) .viewer-page:not(#teamsPage),
+body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
+  display: none !important;
+}
+
 </style>
 </head>
 
@@ -6381,6 +6404,9 @@ async function openTeamsPage(){
   });
 
   document.querySelectorAll(".app-page").forEach(page => page.style.display = "none");
+  document.querySelectorAll("main").forEach(main => {
+    if (main.id !== "teamsPage") main.style.display = "none";
+  });
 
   const page = document.getElementById("teamsPage");
   if (!page) return;
