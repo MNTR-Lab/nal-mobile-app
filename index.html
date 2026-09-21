@@ -6025,14 +6025,10 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-role{background:#102b4e;color:#fff}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-delete{background:#3b0b0e;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}.fan-admin-log-list{display:grid;gap:8px}.fan-admin-log-item{background:#fff;border:1px solid #dfe4eb;border-radius:13px;padding:12px 13px}.fan-admin-log-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.fan-admin-log-action{font-size:9px;font-weight:1000;letter-spacing:.55px;color:#07172b}.fan-admin-log-time{font-size:8px;color:#78879a;white-space:nowrap}.fan-admin-log-target{display:block;margin-top:5px;font-size:11px;font-weight:900;color:#07172b}.fan-admin-log-detail{display:block;margin-top:3px;font-size:9px;line-height:1.4;color:#6d7a8c}.fan-admin-log-change{font-weight:1000;color:#102b4e}.fan-admin-log-filter{width:100%;border:1px solid #d9e0e8;border-radius:10px;padding:12px;margin-bottom:10px;font:inherit;font-size:12px}
 
 
-/* TEAM FOOTBALL ICON VISIBILITY — final regression-safe override */
-#teamPage .team-menu-card .team-menu-icon{
-  color:#ffffff !important;
-  font-size:17px !important;
-}
+/* TEAM FOOTBALL ICON VISIBILITY — keep the existing blue circles, restore white symbols */
 #teamPage .team-menu-card .team-menu-icon svg{
-  width:21px !important;
-  height:21px !important;
+  width:22px !important;
+  height:22px !important;
   display:block !important;
   overflow:visible !important;
   color:#ffffff !important;
@@ -6467,7 +6463,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type="button"
         data-team-link="standings"
       >
-        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M12 12h28M12 24h28M12 36h28"/><circle cx="7" cy="12" r="1.5"/><circle cx="7" cy="24" r="1.5"/><circle cx="7" cy="36" r="1.5"/></svg></span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 12h28M10 24h28M10 36h28"/><circle cx="7" cy="12" r="1.5"/><circle cx="7" cy="24" r="1.5"/><circle cx="7" cy="36" r="1.5"/></svg></span>
         <span class="team-menu-title">STANDINGS</span>
       </button>
 
@@ -10696,9 +10692,37 @@ document.addEventListener("click", function(event){
   event.preventDefault();
   event.stopImmediatePropagation();
 
-  const team = activeTeam;
+  let team = activeTeam;
+
+  /* Team Home can remain visible after other app state changes.
+     If activeTeam is unavailable, resolve the displayed team back to the
+     existing FootballShift name/ID map so these buttons always remain live. */
+  if (!getTeamFootballShiftId(team)) {
+    const displayedName =
+      document.getElementById("teamName")?.textContent?.trim() ||
+      document.getElementById("teamFootballTitle")?.textContent
+        ?.replace(/\s+FOOTBALL\s*$/i, "")
+        ?.trim() ||
+      "";
+
+    const displayedKey = displayedName.toLowerCase();
+    const displayedId = TEAM_FOOTBALLSHIFT_NAME_IDS[displayedKey];
+
+    if (displayedId) {
+      team = {
+        name: displayedName,
+        slug: Object.keys(TEAM_FOOTBALLSHIFT_IDS)
+          .find(key => TEAM_FOOTBALLSHIFT_IDS[key] === displayedId) || "",
+        _appBrand: activeTeam?._appBrand
+      };
+    }
+  }
+
   const url = getTeamFootballShiftURL(team, destination);
-  if (!url) return;
+  if (!url) {
+    console.error("FootballShift route unavailable for", destination, team);
+    return;
+  }
 
   const titles = {
     schedule: "SCHEDULE",
@@ -11987,6 +12011,41 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
 })();
 
 document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
+
+
+/* TEAM FOOTBALL CLICK FIX — uses existing team IDs/URL builder only */
+document.addEventListener("click", function(event){
+  const button = event.target.closest("#teamPage [data-team-link]");
+  if (!button) return;
+
+  const destination = button.dataset.teamLink;
+  if (!["schedule","roster","stats","standings"].includes(destination)) return;
+
+  const team = activeTeam;
+  const url = getTeamFootballShiftURL(team, destination);
+  if (!url) return;
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+
+  const titles = {
+    schedule: "SCHEDULE",
+    roster: "ROSTER",
+    stats: "STATS",
+    standings: "STANDINGS"
+  };
+  const title = titles[destination];
+  const brand = team?._appBrand || {primary:"#07172b", accent:"#e31b23"};
+
+  openArticle(url, {
+    mode: "team",
+    title,
+    subtitle: team?.name || "NAL TEAM",
+    loadingText: "LOADING " + title,
+    brand,
+    navPage: "homePage"
+  });
+}, true);
 
 </script>
 </body>
