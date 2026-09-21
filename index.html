@@ -8572,10 +8572,14 @@ let selectedFanPollOption = null;
 
 function fanPollHeaders(extra = {}){
   return {
-    "apikey": NAL_POLL_SUPABASE_KEY,
     "Accept": "application/json",
     ...extra
   };
+}
+
+function fanPollApiUrl(pathAndQuery){
+  const separator = pathAndQuery.includes("?") ? "&" : "?";
+  return `${NAL_POLL_SUPABASE_URL}/rest/v1/${pathAndQuery}${separator}apikey=${encodeURIComponent(NAL_POLL_SUPABASE_KEY)}`;
 }
 
 function getFanPollVoterId(){
@@ -8667,7 +8671,7 @@ async function loadActiveFanPoll(){
 
   try{
     const pollResponse = await fetch(
-      `${NAL_POLL_SUPABASE_URL}/rest/v1/polls?status=eq.active&select=id,question&order=id.desc&limit=1`,
+      fanPollApiUrl("polls?status=eq.active&select=id,question&order=id.desc&limit=1"),
       { method:"GET", mode:"cors", headers: fanPollHeaders(), cache:"no-store" }
     );
     if (!pollResponse.ok) {
@@ -8681,7 +8685,7 @@ async function loadActiveFanPoll(){
     if (question) question.textContent = activeFanPoll.question;
 
     const optionResponse = await fetch(
-      `${NAL_POLL_SUPABASE_URL}/rest/v1/poll_options?poll_id=eq.${activeFanPoll.id}&select=id,poll_id,option_name,image_url,display_order&order=display_order.asc`,
+      fanPollApiUrl(`poll_options?poll_id=eq.${activeFanPoll.id}&select=id,poll_id,option_name,image_url,display_order&order=display_order.asc`),
       { method:"GET", mode:"cors", headers: fanPollHeaders(), cache:"no-store" }
     );
     if (!optionResponse.ok) throw new Error("Unable to load poll choices.");
@@ -8745,12 +8749,11 @@ async function submitFanPollVote(){
   }
 
   try{
-    const response = await fetch(`${NAL_POLL_SUPABASE_URL}/rest/v1/poll_votes`, {
+    const response = await fetch(fanPollApiUrl("poll_votes"), {
       method:"POST",
       mode:"cors",
       headers: fanPollHeaders({
-        "Content-Type":"application/json",
-        "Prefer":"return=minimal"
+        "Content-Type":"application/json"
       }),
       body:JSON.stringify({
         poll_id: activeFanPoll.id,
@@ -8789,7 +8792,7 @@ async function showFanPollResults(){
   const note = document.getElementById("fanPollResultsNote");
 
   const response = await fetch(
-    `${NAL_POLL_SUPABASE_URL}/rest/v1/poll_results?poll_id=eq.${activeFanPoll.id}&select=option_id,poll_id,option_name,image_url,display_order,votes&order=display_order.asc`,
+    fanPollApiUrl(`poll_results?poll_id=eq.${activeFanPoll.id}&select=option_id,poll_id,option_name,image_url,display_order,votes&order=display_order.asc`),
     { method:"GET", mode:"cors", headers: fanPollHeaders(), cache:"no-store" }
   );
   if (!response.ok) throw new Error("Unable to load live poll results.");
