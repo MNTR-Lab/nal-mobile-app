@@ -4646,6 +4646,34 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 .fan-photo-submit-button b{font-size:18px;}
 
+
+/* FAN ZONE — compact three-card row */
+.fan-zone-grid-three{grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+.fan-zone-grid-three .fan-zone-card{min-width:0;}
+.fan-zone-grid-three .fan-zone-card h3{font-size:clamp(18px,2.3vw,28px);}
+.fan-zone-grid-three .fan-zone-card p{font-size:clamp(13px,1.65vw,18px);}
+.fan-zone-grid-three .fan-zone-link{font-size:clamp(12px,1.5vw,16px);}
+@media(max-width:720px){
+ .fan-zone-grid-three{display:flex!important;overflow-x:auto;gap:12px;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:3px;}
+ .fan-zone-grid-three::-webkit-scrollbar{display:none}
+ .fan-zone-grid-three .fan-zone-card{flex:0 0 76%;scroll-snap-align:start;}
+}
+
+/* HEADER SOCIAL PANEL */
+.social-panel-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.2s;z-index:4900;}
+.social-panel-backdrop.active{opacity:1;pointer-events:auto;}
+.social-panel{position:fixed;left:50%;bottom:0;width:min(100%,560px);transform:translate(-50%,105%);background:#07172b;border:1px solid rgba(255,255,255,.14);border-radius:24px 24px 0 0;padding:10px 20px calc(28px + env(safe-area-inset-bottom));box-shadow:0 -18px 50px rgba(0,0,0,.4);transition:transform .24s ease;z-index:5000;}
+.social-panel.active{transform:translate(-50%,0);}
+.social-panel-handle{width:42px;height:4px;border-radius:99px;background:rgba(255,255,255,.28);margin:0 auto 18px;}
+.social-panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px;}
+.social-panel-head span{display:block;color:#9fb0c6;font-size:11px;font-weight:900;letter-spacing:2px;}
+.social-panel-head h2{margin:4px 0 0;color:#fff;font-size:25px;font-weight:950;font-style:italic;}
+.social-panel-close{border:0;background:rgba(255,255,255,.08);color:#fff;width:36px;height:36px;border-radius:50%;font-size:24px;cursor:pointer;}
+.social-links{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.social-link{border:1px solid rgba(255,255,255,.14);background:#102b4e;color:#fff;border-radius:16px;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;}
+.social-link strong{font-size:28px;line-height:1}.social-link span{font-size:11px;font-weight:900;}
+.social-panel-note{margin:14px 0 0;text-align:center;color:#91a2b8;font-size:10px;font-weight:800;letter-spacing:1px;}
+
 </style>
 </head>
 
@@ -4696,19 +4724,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     <div class="header-right">
-
-      <button
-        class="header-button"
-        aria-label="Settings"
-      >
-
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.1A1.7 1.7 0 0 0 8.2 19.3a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 3.8 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H2V9.6h.1A1.7 1.7 0 0 0 3.7 8.2a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 8 3.8a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V2h4v.1A1.7 1.7 0 0 0 14.8 3.7a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.2 8a1.7 1.7 0 0 0 .6 1 1.7 1.7 0 0 0 1.1.4h.1v4h-.1a1.7 1.7 0 0 0-1.5 1.6z"></path>
+      <button class="header-button social-follow-button" type="button" aria-label="Follow the NAL" onclick="openSocialPanel()">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <path d="M8.6 10.5 15.4 6.6M8.6 13.5l6.8 3.9"></path>
         </svg>
-
       </button>
-
     </div>
 
   </header>
@@ -5368,12 +5391,19 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="fan-zone-action red">VOTE NOW <b>›</b></span>
       </button>
 
-      <div class="fan-zone-grid">
+      <div class="fan-zone-grid fan-zone-grid-three">
         <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('pickem')">
           <span class="fan-zone-icon">✓</span>
           <h3>PICK 'EM</h3>
           <p>Make your weekly game picks and see how you stack up against NAL fans.</p>
           <span class="fan-zone-link">MAKE YOUR PICKS <b>›</b></span>
+        </button>
+
+        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('forum')">
+          <span class="fan-zone-icon">•••</span>
+          <h3>FAN FORUM</h3>
+          <p>Talk NAL football with fans across the league.</p>
+          <span class="fan-zone-link">JOIN THE CONVERSATION <b>›</b></span>
         </button>
 
         <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('media')">
@@ -5384,17 +5414,6 @@ document.addEventListener("DOMContentLoaded", () => {
         </button>
       </div>
 
-      <button class="fan-zone-forum" type="button" onclick="openFanZoneFeature('forum')">
-        <span class="fan-zone-forum-icon">•••</span>
-        <span class="fan-zone-forum-copy">
-          <small>NAL COMMUNITY</small>
-          <strong>FAN FORUM</strong>
-          <span>Talk NAL football with fans across the league. Game day discussion, team talk and more.</span>
-          <em>JOIN THE CONVERSATION ›</em>
-        </span>
-      </button>
-
-      
       <section class="fan-photo-week">
         <div class="fan-photo-week-heading">
           <div>
@@ -5423,23 +5442,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       </section>
-
-      <div class="fan-zone-grid fan-zone-secondary">
-        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('contests')">
-          <span class="fan-zone-icon">♛</span>
-          <h3>CONTESTS &amp; GIVEAWAYS</h3>
-          <p>Special promotions, prizes and exclusive experiences for NAL fans.</p>
-          <span class="fan-zone-link">COMING SOON</span>
-        </button>
-
-        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('media')">
-          <span class="fan-zone-icon">▣</span>
-          <h3>SHARE YOUR NAL MOMENT</h3>
-          <p>Your submission could become the next Fan Photos.</p>
-          <span class="fan-zone-link">SUBMIT MEDIA <b>›</b></span>
-        </button>
-      </div>
-    </div>
+</div>
   </main>
 
 
@@ -5622,7 +5625,23 @@ document.addEventListener("DOMContentLoaded", () => {
     <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_3b6b2c6f-797b-4d5c-a870-65cdda47fba9.png?v=1782385986" alt="MNTR+">
   </div>
 
-  <nav class="bottom-nav">
+  <div class="social-panel-backdrop" id="socialPanelBackdrop" onclick="closeSocialPanel()" aria-hidden="true"></div>
+<aside class="social-panel" id="socialPanel" aria-hidden="true">
+  <div class="social-panel-handle"></div>
+  <div class="social-panel-head">
+    <div><span>STAY CONNECTED</span><h2>FOLLOW THE NAL</h2></div>
+    <button type="button" class="social-panel-close" onclick="closeSocialPanel()" aria-label="Close">×</button>
+  </div>
+  <div class="social-links">
+    <button type="button" class="social-link" onclick="openNALSocial('x')"><strong>𝕏</strong><span>X</span></button>
+    <button type="button" class="social-link" onclick="openNALSocial('facebook')"><strong>f</strong><span>Facebook</span></button>
+    <button type="button" class="social-link" onclick="openNALSocial('instagram')"><strong>◎</strong><span>Instagram</span></button>
+    <button type="button" class="social-link" onclick="openNALSocial('tiktok')"><strong>♪</strong><span>TikTok</span></button>
+  </div>
+  <p class="social-panel-note">OFFICIAL NAL SOCIAL CHANNELS</p>
+</aside>
+
+<nav class="bottom-nav">
 
 
     <!-- HOME -->
@@ -8116,6 +8135,24 @@ async function loadFanPhotos(){
 }
 
 document.addEventListener("DOMContentLoaded", loadFanPhotos);
+
+
+/* FOLLOW THE NAL — URLs can be added later */
+const NAL_SOCIAL_LINKS={x:"",facebook:"",instagram:"",tiktok:""};
+function openSocialPanel(){
+ document.getElementById("socialPanel")?.classList.add("active");
+ document.getElementById("socialPanelBackdrop")?.classList.add("active");
+ document.getElementById("socialPanel")?.setAttribute("aria-hidden","false");
+}
+function closeSocialPanel(){
+ document.getElementById("socialPanel")?.classList.remove("active");
+ document.getElementById("socialPanelBackdrop")?.classList.remove("active");
+ document.getElementById("socialPanel")?.setAttribute("aria-hidden","true");
+}
+function openNALSocial(network){
+ const url=NAL_SOCIAL_LINKS[network];
+ if(url) window.open(url,"_blank","noopener,noreferrer");
+}
 
 </script>
 </body>
