@@ -3570,6 +3570,77 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   white-space:nowrap !important;
 }
 
+
+/* =========================================================
+   BOTTOM NAV — TRUE OVERSIZED NAL NETWORK CIRCLE
+========================================================= */
+
+/* Let the center control physically rise above the nav bar */
+.bottom-nav{
+  overflow:visible !important;
+}
+
+.bottom-nav .nav-item,
+.bottom-nav .center-nav,
+.bottom-nav [data-page="watch"],
+.bottom-nav [data-page="network"]{
+  overflow:visible !important;
+}
+
+/* The actual red play control: fixed square dimensions = guaranteed circle */
+.bottom-nav .watch-button,
+.bottom-nav .network-button,
+.bottom-nav [data-page="watch"] .nav-icon,
+.bottom-nav [data-page="network"] .nav-icon,
+.bottom-nav .center-nav .nav-icon{
+  position:relative !important;
+  width:68px !important;
+  height:68px !important;
+  min-width:68px !important;
+  min-height:68px !important;
+  max-width:68px !important;
+  max-height:68px !important;
+  flex:0 0 68px !important;
+  aspect-ratio:1 / 1 !important;
+  border-radius:9999px !important;
+  box-sizing:border-box !important;
+  padding:0 !important;
+  margin-top:-28px !important;
+  overflow:hidden !important;
+  transform:none !important;
+}
+
+/* Keep the play triangle centered in the larger circle */
+.bottom-nav [data-page="watch"] .nav-icon svg,
+.bottom-nav [data-page="network"] .nav-icon svg,
+.bottom-nav .center-nav .nav-icon svg{
+  width:29px !important;
+  height:29px !important;
+  max-width:29px !important;
+  max-height:29px !important;
+}
+
+/* Give the circle a clean white separation ring while it overlaps content */
+.bottom-nav [data-page="watch"] .nav-icon,
+.bottom-nav [data-page="network"] .nav-icon,
+.bottom-nav .center-nav .nav-icon{
+  border:7px solid #fff !important;
+  box-shadow:0 5px 16px rgba(227,27,35,.22) !important;
+}
+
+/* Keep the larger label visually attached to the raised button */
+.bottom-nav [data-page="watch"] .nav-label,
+.bottom-nav [data-page="network"] .nav-label,
+.bottom-nav .center-nav .nav-label,
+.bottom-nav .watch-label,
+.bottom-nav .network-label{
+  margin-top:3px !important;
+  font-size:11px !important;
+  line-height:1 !important;
+  font-weight:950 !important;
+  white-space:nowrap !important;
+}
+
 </style>
 </head>
 
