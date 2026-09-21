@@ -5945,6 +5945,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
+
+/* =========================================================
+   NAL MEMBER ACCOUNT — PROFILE DASHBOARD
+   Added only for the authenticated member account view.
+========================================================= */
+.fan-member-dashboard{padding:0;text-align:left}
+.fan-member-hero{background:linear-gradient(135deg,#07172b,#102b4e);padding:22px 18px;color:#fff;display:flex;align-items:center;gap:15px}
+.fan-member-avatar{width:76px;height:76px;border-radius:50%;background:#e31b23;border:3px solid #fff;display:grid;place-items:center;position:relative;overflow:hidden;cursor:pointer;flex:0 0 auto;color:#fff;font-size:29px;font-weight:1000}
+.fan-member-avatar img{width:100%;height:100%;object-fit:cover;display:none}
+.fan-member-avatar-edit{position:absolute;right:0;bottom:0;width:25px;height:25px;border-radius:50%;background:#fff;color:#07172b;border:2px solid #07172b;display:grid;place-items:center;font-size:12px;font-weight:1000}
+.fan-member-hero-copy{min-width:0}
+.fan-member-kicker{font-size:10px;letter-spacing:1.7px;font-weight:900;color:#b8c5d7}
+.fan-member-hero h2{margin:4px 0 3px;color:#fff;font-size:25px;line-height:1.05}
+.fan-member-hero p{margin:0;color:#d6deea;font-size:12px}
+.fan-member-avatar-help{margin-top:6px!important;color:#b8c5d7!important;font-size:9px!important}
+.fan-member-body{padding:17px 16px 20px;background:#f3f5f8}
+.fan-member-section{margin-top:17px}
+.fan-member-section:first-child{margin-top:0}
+.fan-member-title{margin:0 3px 8px;color:#07172b;font-size:12px;font-weight:1000;letter-spacing:1.2px}
+.fan-member-card{background:#fff;border:1px solid #dfe4eb;border-radius:15px;overflow:hidden;box-shadow:0 3px 12px rgba(7,23,43,.05)}
+.fan-member-row{min-height:62px;padding:13px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #edf0f4}
+.fan-member-row:last-child{border-bottom:0}
+.fan-member-ico{width:38px;height:38px;border-radius:10px;background:#edf2f8;display:grid;place-items:center;font-size:18px;flex:0 0 auto}
+.fan-member-rowtext{min-width:0;flex:1}
+.fan-member-rowtext b{display:block;color:#07172b;font-size:13px}
+.fan-member-rowtext span{display:block;margin-top:3px;color:#68778b;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fan-member-edit{border:0;background:transparent;color:#e31b23;font:inherit;font-size:10px;font-weight:1000;cursor:pointer}
+.fan-member-chev{color:#a2adba;font-size:21px}
+.fan-member-badge{font-size:9px;font-weight:1000;background:#eef1f5;color:#68778b;border-radius:20px;padding:5px 8px}
+.fan-member-vote-empty{padding:13px 14px;color:#68778b;font-size:11px;line-height:1.4}
+.fan-member-legal-button{width:100%;border:0;background:transparent;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.fan-member-signout{width:100%;min-height:50px;margin-top:17px;border:0;border-radius:10px;background:#07172b;color:#fff;font:inherit;font-size:13px;font-weight:1000;letter-spacing:.7px;cursor:pointer}
+.fan-member-delete{width:100%;min-height:46px;margin-top:9px;border:1px solid #e1c8ca;border-radius:10px;background:#fff;color:#b41d24;font:inherit;font-size:11px;font-weight:1000;cursor:pointer}
+.fan-member-avatar-actions{display:none;position:fixed;inset:0;background:rgba(7,23,43,.62);z-index:10000;align-items:flex-end;justify-content:center;padding:16px}
+.fan-member-avatar-actions.open{display:flex}
+.fan-member-avatar-sheet{width:min(100%,520px);background:#fff;border-radius:18px;padding:18px;color:#07172b;text-align:left}
+.fan-member-avatar-sheet h3{margin:0 0 5px;font-size:18px}
+.fan-member-avatar-sheet p{margin:0 0 15px;color:#6d7a8c;font-size:11px;line-height:1.4}
+.fan-member-avatar-btn{width:100%;border:0;border-radius:11px;padding:13px;margin-top:8px;font:inherit;font-weight:1000;font-size:12px;cursor:pointer}
+.fan-member-avatar-upload{background:#e31b23;color:#fff}
+.fan-member-avatar-remove{background:#eef2f6;color:#07172b}
+.fan-member-avatar-cancel{background:#fff;color:#6b7888;border:1px solid #dce2e9}
 </style>
 </head>
 
@@ -7066,19 +7108,111 @@ document.addEventListener("DOMContentLoaded", () => {
           <button class="fan-account-primary" type="button" data-account-view="signin">BACK TO SIGN IN</button>
         </div>
 
-        <!-- LOGGED IN -->
-        <div id="fanLoggedInView" class="fan-account-state fan-profile-view" hidden>
-          <div class="fan-profile-avatar" id="fanProfileInitial">N</div>
-          <div class="fan-profile-label">NAL FAN</div>
-          <h2 id="fanProfileDisplayName">NAL FAN</h2>
-          <p id="fanProfileEmail"></p>
+        <!-- LOGGED IN / MEMBER ACCOUNT -->
+        <div id="fanLoggedInView" class="fan-member-dashboard" hidden>
+          <section class="fan-member-hero">
+            <button type="button" class="fan-member-avatar" id="fanMemberAvatarButton" aria-label="Change profile photo">
+              <span id="fanProfileInitial">N</span>
+              <img id="fanMemberAvatarImage" alt="NAL Fan profile avatar">
+              <span class="fan-member-avatar-edit">✎</span>
+            </button>
+            <div class="fan-member-hero-copy">
+              <div class="fan-member-kicker">NAL FAN ACCOUNT</div>
+              <h2 id="fanProfileDisplayName">NAL FAN</h2>
+              <p>Favorite Team: <span id="fanProfileFavoriteTeam">NOT SELECTED</span></p>
+              <p class="fan-member-avatar-help">Tap your avatar to add or change your photo</p>
+            </div>
+          </section>
 
-          <div class="fan-profile-row">
-            <span>FAVORITE TEAM</span>
-            <strong id="fanProfileFavoriteTeam">NOT SELECTED</strong>
+          <div class="fan-member-body">
+            <section class="fan-member-section">
+              <h3 class="fan-member-title">ACCOUNT INFORMATION</h3>
+              <div class="fan-member-card">
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">👤</div>
+                  <div class="fan-member-rowtext"><b>Display Name</b><span id="fanMemberDisplayNameValue">NAL FAN</span></div>
+                  <span class="fan-member-edit">EDIT</span>
+                </div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">✉</div>
+                  <div class="fan-member-rowtext"><b>Email Address</b><span id="fanProfileEmail"></span></div>
+                  <span class="fan-member-edit">EDIT</span>
+                </div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">★</div>
+                  <div class="fan-member-rowtext"><b>Favorite Team</b><span id="fanMemberFavoriteTeamValue">NOT SELECTED</span></div>
+                  <span class="fan-member-edit">EDIT</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="fan-member-section">
+              <h3 class="fan-member-title">SECURITY</h3>
+              <div class="fan-member-card">
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">🔒</div>
+                  <div class="fan-member-rowtext"><b>Change Password</b><span>Update your account password</span></div>
+                  <span class="fan-member-chev">›</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="fan-member-section">
+              <h3 class="fan-member-title">MY NAL</h3>
+              <div class="fan-member-card">
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">✓</div>
+                  <div class="fan-member-rowtext"><b>My Voting Activity</b><span>Polls you've voted in</span></div>
+                  <span class="fan-member-chev">›</span>
+                </div>
+                <div class="fan-member-vote-empty" id="fanMemberVotingActivity">Your voting history will appear here as account voting is connected.</div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">🏈</div>
+                  <div class="fan-member-rowtext"><b>My Pick ’Em</b><span>Your picks, record and leaderboard position</span></div>
+                  <span class="fan-member-badge">COMING SOON</span>
+                </div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">💬</div>
+                  <div class="fan-member-rowtext"><b>Forum Activity</b><span>Your posts and replies</span></div>
+                  <span class="fan-member-badge">COMING SOON</span>
+                </div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">🔔</div>
+                  <div class="fan-member-rowtext"><b>Notification Preferences</b><span>Choose the NAL updates you want</span></div>
+                  <span class="fan-member-badge">COMING SOON</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="fan-member-section">
+              <h3 class="fan-member-title">LEGAL &amp; PRIVACY</h3>
+              <div class="fan-member-card">
+                <button type="button" class="fan-member-legal-button" id="fanMemberTerms">
+                  <div class="fan-member-row"><div class="fan-member-ico">§</div><div class="fan-member-rowtext"><b>Terms of Use</b><span>NAL App Terms of Use</span></div><span class="fan-member-chev">›</span></div>
+                </button>
+                <button type="button" class="fan-member-legal-button" id="fanMemberGuidelines">
+                  <div class="fan-member-row"><div class="fan-member-ico">✓</div><div class="fan-member-rowtext"><b>Community Guidelines</b><span>NAL fan community standards</span></div><span class="fan-member-chev">›</span></div>
+                </button>
+                <button type="button" class="fan-member-legal-button" id="fanMemberPrivacy">
+                  <div class="fan-member-row"><div class="fan-member-ico">◉</div><div class="fan-member-rowtext"><b>Privacy Policy</b><span>How account information is handled</span></div><span class="fan-member-chev">›</span></div>
+                </button>
+              </div>
+            </section>
+
+            <button class="fan-member-signout" id="fanSignOutButton" type="button">SIGN OUT</button>
+            <button class="fan-member-delete" type="button">DELETE MY ACCOUNT</button>
           </div>
+        </div>
 
-          <button class="fan-account-secondary" id="fanSignOutButton" type="button">SIGN OUT</button>
+        <div class="fan-member-avatar-actions" id="fanMemberAvatarActions">
+          <div class="fan-member-avatar-sheet">
+            <h3>Profile Photo</h3>
+            <p>Your avatar can appear with your NAL Fan Account and future Forum activity.</p>
+            <button class="fan-member-avatar-btn fan-member-avatar-upload" id="fanMemberChooseAvatar" type="button">UPLOAD PHOTO</button>
+            <button class="fan-member-avatar-btn fan-member-avatar-remove" id="fanMemberRemoveAvatar" type="button">USE INITIALS</button>
+            <button class="fan-member-avatar-btn fan-member-avatar-cancel" id="fanMemberCancelAvatar" type="button">CANCEL</button>
+            <input id="fanMemberAvatarFile" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+          </div>
         </div>
       </section>
 
@@ -10815,6 +10949,21 @@ function renderNalFanProfile(){
   if (email) email.textContent = nalAccountUser.email || "";
   if (favorite) favorite.textContent = favoriteTeam || "NOT SELECTED";
   if (initial) initial.textContent = (displayName.trim().charAt(0) || "N").toUpperCase();
+
+  const memberDisplay = document.getElementById("fanMemberDisplayNameValue");
+  const memberFavorite = document.getElementById("fanMemberFavoriteTeamValue");
+  const avatarImage = document.getElementById("fanMemberAvatarImage");
+  if (memberDisplay) memberDisplay.textContent = displayName;
+  if (memberFavorite) memberFavorite.textContent = favoriteTeam || "NOT SELECTED";
+  if (avatarImage && nalAccountProfile?.avatar_url){
+    avatarImage.src = nalAccountProfile.avatar_url;
+    avatarImage.style.display = "block";
+    if (initial) initial.style.display = "none";
+  } else if (avatarImage){
+    avatarImage.removeAttribute("src");
+    avatarImage.style.display = "none";
+    if (initial) initial.style.display = "";
+  }
 }
 
 function updateHeaderAccountState(){
@@ -11075,6 +11224,58 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     this.textContent = "SIGN OUT";
   }
 });
+
+
+/* NAL MEMBER ACCOUNT — avatar preview and legal-page shortcuts.
+   Avatar selection is local preview only until Supabase Storage is connected. */
+(function(){
+  const avatarButton = document.getElementById("fanMemberAvatarButton");
+  const actions = document.getElementById("fanMemberAvatarActions");
+  const fileInput = document.getElementById("fanMemberAvatarFile");
+  const avatarImage = document.getElementById("fanMemberAvatarImage");
+  const initial = document.getElementById("fanProfileInitial");
+
+  avatarButton?.addEventListener("click", function(){
+    actions?.classList.add("open");
+  });
+
+  document.getElementById("fanMemberChooseAvatar")?.addEventListener("click", function(){
+    fileInput?.click();
+  });
+
+  document.getElementById("fanMemberCancelAvatar")?.addEventListener("click", function(){
+    actions?.classList.remove("open");
+  });
+
+  document.getElementById("fanMemberRemoveAvatar")?.addEventListener("click", function(){
+    if (avatarImage){
+      avatarImage.removeAttribute("src");
+      avatarImage.style.display = "none";
+    }
+    if (initial) initial.style.display = "";
+    if (fileInput) fileInput.value = "";
+    actions?.classList.remove("open");
+  });
+
+  fileInput?.addEventListener("change", function(){
+    const file = this.files && this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event){
+      if (avatarImage){
+        avatarImage.src = event.target.result;
+        avatarImage.style.display = "block";
+      }
+      if (initial) initial.style.display = "none";
+      actions?.classList.remove("open");
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById("fanMemberTerms")?.addEventListener("click", openFanTerms);
+  document.getElementById("fanMemberGuidelines")?.addEventListener("click", openFanGuidelines);
+  document.getElementById("fanMemberPrivacy")?.addEventListener("click", openFanPrivacy);
+})();
 
 document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 
