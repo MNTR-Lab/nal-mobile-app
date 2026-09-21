@@ -5275,6 +5275,37 @@ document.addEventListener("DOMContentLoaded", () => {
   overflow: hidden !important;
 }
 
+
+
+/* =========================================================
+   NAL FAN ACCOUNT
+========================================================= */
+#fanAccountPage{background:#07172b;color:#fff;min-height:100vh;padding-bottom:110px;}
+.fan-account-shell{width:min(720px,100%);margin:0 auto;padding:18px 16px 38px;}
+.fan-account-back{border:0;background:transparent;color:#fff;padding:8px 0 14px;font-size:11px;font-weight:950;letter-spacing:.7px;cursor:pointer;}
+.fan-account-hero{border-bottom:3px solid #e31b23;padding:5px 0 18px;margin-bottom:18px;}
+.fan-account-kicker{color:#e31b23;font-size:10px;font-weight:1000;letter-spacing:1.6px;}
+.fan-account-hero h1{margin:4px 0 7px;font-size:34px;line-height:1;font-weight:1000;letter-spacing:-1px;}
+.fan-account-hero p{margin:0;color:#cbd7e4;font-size:13px;line-height:1.45;font-weight:700;}
+.fan-account-panel{background:#fff;color:#07172b;border-radius:16px;padding:18px;box-shadow:0 12px 32px rgba(0,0,0,.22);}
+.fan-account-tabs{display:grid;grid-template-columns:1fr 1fr;background:#edf1f5;border-radius:10px;padding:4px;margin-bottom:18px;}
+.fan-account-tab{border:0;background:transparent;color:#52657a;border-radius:8px;padding:11px 8px;font-size:11px;font-weight:1000;letter-spacing:.5px;cursor:pointer;}
+.fan-account-tab.active{background:#07172b;color:#fff;}
+.fan-account-form{display:grid;gap:12px;}
+.fan-account-field label{display:block;margin:0 0 5px;font-size:10px;font-weight:1000;letter-spacing:.7px;color:#07172b;}
+.fan-account-field input,.fan-account-field select{box-sizing:border-box;width:100%;height:46px;border:1px solid #cbd4df;border-radius:9px;background:#fff;color:#07172b;padding:0 12px;font:inherit;font-size:14px;outline:none;}
+.fan-account-field input:focus,.fan-account-field select:focus{border-color:#07172b;box-shadow:0 0 0 2px rgba(7,23,43,.08);}
+.fan-account-check{display:flex;align-items:flex-start;gap:9px;color:#52657a;font-size:11px;line-height:1.35;font-weight:750;}
+.fan-account-check input{margin-top:2px;accent-color:#e31b23;}
+.fan-account-primary{width:100%;border:0;border-radius:9px;background:#e31b23;color:#fff;padding:13px 14px;font-size:11px;font-weight:1000;letter-spacing:.8px;cursor:pointer;}
+.fan-account-primary:disabled{opacity:.55;cursor:not-allowed;}
+.fan-account-secondary{width:100%;border:2px solid #07172b;border-radius:9px;background:#fff;color:#07172b;padding:11px 14px;font-size:11px;font-weight:1000;letter-spacing:.7px;cursor:pointer;}
+.fan-account-status{min-height:18px;margin:2px 0 0;color:#52657a;font-size:11px;line-height:1.4;font-weight:800;}
+.fan-account-status.error{color:#c5161d;}.fan-account-status.success{color:#18733c;}
+.fan-account-confirm{text-align:center;padding:12px 2px 4px;}.fan-account-confirm-icon{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;background:#e31b23;color:#fff;font-size:25px;font-weight:1000;}.fan-account-confirm h2{margin:0 0 8px;font-size:25px;font-weight:1000;}.fan-account-confirm p{margin:0 0 16px;color:#52657a;font-size:13px;line-height:1.5;}
+.fan-account-profile-head{display:flex;align-items:center;gap:13px;padding-bottom:16px;border-bottom:1px solid #e2e7ec;margin-bottom:16px;}.fan-account-avatar{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#07172b;color:#fff;font-size:20px;font-weight:1000;}.fan-account-profile-head small{display:block;color:#e31b23;font-size:9px;font-weight:1000;letter-spacing:1px;}.fan-account-profile-head h2{margin:2px 0 0;font-size:23px;line-height:1;font-weight:1000;}.fan-account-profile-team{margin:0 0 16px;padding:12px;border-radius:9px;background:#edf1f5;font-size:11px;font-weight:900;color:#52657a;}.fan-account-profile-team strong{display:block;margin-top:2px;color:#07172b;font-size:15px;}
+.fan-account-entry{width:100%;margin:0 0 16px;border:1px solid rgba(255,255,255,.16);border-radius:13px;background:#102b4e;color:#fff;padding:14px 15px;display:flex;align-items:center;justify-content:space-between;text-align:left;cursor:pointer;}.fan-account-entry small{display:block;color:#9fb1c5;font-size:9px;font-weight:1000;letter-spacing:1px;}.fan-account-entry strong{display:block;margin-top:2px;font-size:17px;font-weight:1000;}.fan-account-entry b{color:#e31b23;font-size:24px;}.fan-account-entry.signed-in{border-color:rgba(227,27,35,.65);}
+
 </style>
 </head>
 
@@ -5989,6 +6020,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>REAL FANS. REAL PASSION. ONE LEAGUE.</p>
       </header>
 
+
+      <button id="fanAccountEntry" class="fan-account-entry" type="button" onclick="openFanAccount()">
+        <span><small id="fanAccountEntrySmall">NAL COMMUNITY</small><strong id="fanAccountEntryStrong">SIGN IN OR CREATE ACCOUNT</strong></span><b>›</b>
+      </button>
+
       <section class="fan-photo-week">
         <div class="fan-photo-week-heading">
           <div>
@@ -6053,6 +6089,68 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
   </main>
 
+
+
+
+
+  <!-- =====================================================
+       NAL FAN ACCOUNT
+  ====================================================== -->
+  <main id="fanAccountPage" class="app-page" style="display:none;">
+    <div class="fan-account-shell">
+      <button class="fan-account-back" type="button" onclick="closeFanAccount()">‹ BACK TO FAN ZONE</button>
+      <header class="fan-account-hero">
+        <div class="fan-account-kicker">NATIONAL ARENA LEAGUE</div>
+        <h1>FAN ACCOUNT</h1>
+        <p>One account for NAL Pick 'Em, the Fan Forum and your fan profile.</p>
+      </header>
+
+      <div class="fan-account-panel">
+        <div id="fanAccountLoggedOut">
+          <div class="fan-account-tabs">
+            <button id="fanAccountSignInTab" class="fan-account-tab active" type="button" onclick="showFanAccountMode('signin')">SIGN IN</button>
+            <button id="fanAccountCreateTab" class="fan-account-tab" type="button" onclick="showFanAccountMode('create')">CREATE ACCOUNT</button>
+          </div>
+
+          <form id="fanAccountSignInForm" class="fan-account-form" onsubmit="submitFanAccountSignIn(event)">
+            <div class="fan-account-field"><label>EMAIL</label><input id="fanSignInEmail" type="email" autocomplete="email" required></div>
+            <div class="fan-account-field"><label>PASSWORD</label><input id="fanSignInPassword" type="password" autocomplete="current-password" required></div>
+            <button id="fanSignInButton" class="fan-account-primary" type="submit">SIGN IN</button>
+            <div id="fanSignInStatus" class="fan-account-status" aria-live="polite"></div>
+          </form>
+
+          <form id="fanAccountCreateForm" class="fan-account-form" style="display:none;" onsubmit="submitFanAccountCreate(event)">
+            <div class="fan-account-field"><label>DISPLAY NAME</label><input id="fanCreateDisplayName" type="text" minlength="3" maxlength="30" autocomplete="nickname" required></div>
+            <div class="fan-account-field"><label>EMAIL</label><input id="fanCreateEmail" type="email" autocomplete="email" required></div>
+            <div class="fan-account-field"><label>PASSWORD</label><input id="fanCreatePassword" type="password" minlength="6" autocomplete="new-password" required></div>
+            <div class="fan-account-field"><label>CONFIRM PASSWORD</label><input id="fanCreatePasswordConfirm" type="password" minlength="6" autocomplete="new-password" required></div>
+            <div class="fan-account-field"><label>FAVORITE TEAM <span style="font-weight:700;color:#7b8998;">(OPTIONAL)</span></label>
+              <select id="fanCreateFavoriteTeam">
+                <option value="">No favorite team selected</option>
+                <option>Amarillo Warbirds</option><option>Colorado Spartans</option><option>Dallas Apex</option><option>Louisiana Rouxgaroux</option><option>Omaha Beef</option><option>Pueblo Punishers</option><option>Salina Liberty</option><option>Sioux City Bandits</option><option>Southwest Kansas Storm</option><option>Wheeling Miners</option>
+              </select>
+            </div>
+            <label class="fan-account-check"><input id="fanCreateTerms" type="checkbox" required><span>I agree to the NAL Terms of Use.</span></label>
+            <label class="fan-account-check"><input id="fanCreateGuidelines" type="checkbox" required><span>I agree to follow the NAL Community Guidelines.</span></label>
+            <button id="fanCreateButton" class="fan-account-primary" type="submit">CREATE ACCOUNT</button>
+            <div id="fanCreateStatus" class="fan-account-status" aria-live="polite"></div>
+          </form>
+        </div>
+
+        <div id="fanAccountConfirmation" class="fan-account-confirm" style="display:none;">
+          <div class="fan-account-confirm-icon">✓</div><h2>CHECK YOUR EMAIL</h2>
+          <p>We sent a confirmation link to <strong id="fanAccountConfirmationEmail"></strong>. Confirm your email, then return here and sign in.</p>
+          <button class="fan-account-secondary" type="button" onclick="showFanAccountMode('signin')">BACK TO SIGN IN</button>
+        </div>
+
+        <div id="fanAccountLoggedIn" style="display:none;">
+          <div class="fan-account-profile-head"><div id="fanAccountAvatar" class="fan-account-avatar">N</div><div><small>NAL FAN</small><h2 id="fanAccountDisplayName">NAL FAN</h2></div></div>
+          <div class="fan-account-profile-team">FAVORITE TEAM<strong id="fanAccountFavoriteTeam">NOT SELECTED</strong></div>
+          <button class="fan-account-secondary" type="button" onclick="fanAccountSignOut()">SIGN OUT</button>
+        </div>
+      </div>
+    </div>
+  </main>
 
 
   <!-- =====================================================
@@ -8876,13 +8974,17 @@ function openFanZoneFeature(feature){
     return;
   }
 
-  const labels={
-    poll:"Fan Poll",
-    pickem:"Pick 'Em",
-    forum:"Fan Forum",
-    fanweek:"Fan of the Week",
-    contests:"Contests & Giveaways"
-  };
+  if (feature === "pickem" || feature === "forum") {
+    if (!nalFanSession?.access_token || !nalFanProfile) {
+      openFanAccount("signin");
+      fanAccountSetStatus("fanSignInStatus", feature === "pickem"
+        ? "Sign in to make and track your Pick 'Em selections."
+        : "Sign in to join the NAL Fan Forum.");
+      return;
+    }
+  }
+
+  const labels={poll:"Fan Poll",pickem:"Pick 'Em",forum:"Fan Forum",fanweek:"Fan of the Week",contests:"Contests & Giveaways"};
   alert((labels[feature] || "Fan Zone") + " — feature setup is next.");
 }
 
@@ -9461,6 +9563,88 @@ document.addEventListener("click", function(event){
   const url = NAL_HEADER_SOCIAL_LINKS[social.dataset.social];
   if (url) window.open(url, "_blank", "noopener,noreferrer");
 }, true);
+
+
+
+/* =========================================================
+   NAL FAN ACCOUNT — SUPABASE AUTH
+========================================================= */
+const NAL_AUTH_SUPABASE_URL = NAL_POLL_SUPABASE_URL;
+const NAL_AUTH_SUPABASE_KEY = NAL_POLL_SUPABASE_KEY;
+const NAL_FAN_SESSION_KEY = "nal_fan_account_session";
+let nalFanSession = null;
+let nalFanProfile = null;
+
+function fanAuthHeaders(extra={}){ return {"apikey":NAL_AUTH_SUPABASE_KEY,"Content-Type":"application/json",...extra}; }
+function saveFanSession(session){ nalFanSession=session||null; if(session) localStorage.setItem(NAL_FAN_SESSION_KEY,JSON.stringify(session)); else localStorage.removeItem(NAL_FAN_SESSION_KEY); }
+function loadSavedFanSession(){ try{return JSON.parse(localStorage.getItem(NAL_FAN_SESSION_KEY)||"null");}catch(_){return null;} }
+function fanAccountSetStatus(id,message="",kind=""){const el=document.getElementById(id);if(!el)return;el.textContent=message;el.classList.remove("error","success");if(kind)el.classList.add(kind);}
+
+function showFanAccountMode(mode){
+  const out=document.getElementById("fanAccountLoggedOut"), confirm=document.getElementById("fanAccountConfirmation");
+  if(out) out.style.display="block"; if(confirm) confirm.style.display="none";
+  const sign=document.getElementById("fanAccountSignInForm"), create=document.getElementById("fanAccountCreateForm");
+  const st=document.getElementById("fanAccountSignInTab"), ct=document.getElementById("fanAccountCreateTab");
+  const creating=mode==="create"; if(sign)sign.style.display=creating?"none":"grid"; if(create)create.style.display=creating?"grid":"none";
+  if(st)st.classList.toggle("active",!creating); if(ct)ct.classList.toggle("active",creating);
+}
+
+function openFanAccount(mode="signin"){
+  document.querySelectorAll(".app-page").forEach(p=>{p.classList.remove("active");p.style.display="none";});
+  const page=document.getElementById("fanAccountPage"); if(page){page.style.display="block";page.classList.add("active");}
+  setFanZoneNavActive(); window.scrollTo(0,0); renderFanAccount(); if(!nalFanSession) showFanAccountMode(mode);
+}
+function closeFanAccount(){showPage("fanPage");setFanZoneNavActive();window.scrollTo(0,0);}
+
+async function submitFanAccountCreate(event){
+  event.preventDefault(); const button=document.getElementById("fanCreateButton");
+  const displayName=document.getElementById("fanCreateDisplayName").value.trim(), email=document.getElementById("fanCreateEmail").value.trim();
+  const password=document.getElementById("fanCreatePassword").value, confirm=document.getElementById("fanCreatePasswordConfirm").value;
+  const favoriteTeam=document.getElementById("fanCreateFavoriteTeam").value;
+  if(password!==confirm){fanAccountSetStatus("fanCreateStatus","Passwords do not match.","error");return;}
+  if(!document.getElementById("fanCreateTerms").checked||!document.getElementById("fanCreateGuidelines").checked){fanAccountSetStatus("fanCreateStatus","You must accept both agreements to create an account.","error");return;}
+  button.disabled=true;button.textContent="CREATING ACCOUNT...";fanAccountSetStatus("fanCreateStatus","");
+  try{
+    const response=await fetch(`${NAL_AUTH_SUPABASE_URL}/auth/v1/signup`,{method:"POST",headers:fanAuthHeaders(),body:JSON.stringify({email,password,data:{display_name:displayName,favorite_team:favoriteTeam,terms_accepted:true,community_guidelines_accepted:true}})});
+    const data=await response.json(); if(!response.ok) throw new Error(data.msg||data.message||data.error_description||"Unable to create account.");
+    document.getElementById("fanAccountLoggedOut").style.display="none";document.getElementById("fanAccountConfirmation").style.display="block";document.getElementById("fanAccountConfirmationEmail").textContent=email;
+  }catch(error){fanAccountSetStatus("fanCreateStatus",error.message||"Unable to create account.","error");}
+  finally{button.disabled=false;button.textContent="CREATE ACCOUNT";}
+}
+
+async function submitFanAccountSignIn(event){
+  event.preventDefault();const button=document.getElementById("fanSignInButton");const email=document.getElementById("fanSignInEmail").value.trim(),password=document.getElementById("fanSignInPassword").value;
+  button.disabled=true;button.textContent="SIGNING IN...";fanAccountSetStatus("fanSignInStatus","");
+  try{
+    const response=await fetch(`${NAL_AUTH_SUPABASE_URL}/auth/v1/token?grant_type=password`,{method:"POST",headers:fanAuthHeaders(),body:JSON.stringify({email,password})});
+    const data=await response.json();if(!response.ok)throw new Error(data.error_description||data.msg||data.message||"Unable to sign in.");
+    saveFanSession(data);await loadFanAccountProfile();renderFanAccount();
+  }catch(error){fanAccountSetStatus("fanSignInStatus",error.message||"Unable to sign in.","error");}
+  finally{button.disabled=false;button.textContent="SIGN IN";}
+}
+
+async function loadFanAccountProfile(){
+  if(!nalFanSession?.access_token||!nalFanSession?.user?.id)return null;
+  try{const response=await fetch(`${NAL_AUTH_SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(nalFanSession.user.id)}&select=id,display_name,favorite_team,avatar_url,account_status,role`,{headers:{"apikey":NAL_AUTH_SUPABASE_KEY,"Authorization":`Bearer ${nalFanSession.access_token}`,"Accept":"application/json"}});if(!response.ok)throw new Error("Profile unavailable");const rows=await response.json();nalFanProfile=rows[0]||null;return nalFanProfile;}catch(_){nalFanProfile=null;return null;}
+}
+
+function renderFanAccount(){
+  const loggedIn=!!(nalFanSession?.access_token&&nalFanProfile); const out=document.getElementById("fanAccountLoggedOut"), inside=document.getElementById("fanAccountLoggedIn"), confirm=document.getElementById("fanAccountConfirmation");
+  if(out)out.style.display=loggedIn?"none":"block";if(inside)inside.style.display=loggedIn?"block":"none";if(confirm&&loggedIn)confirm.style.display="none";
+  if(loggedIn){const name=nalFanProfile.display_name||"NAL FAN";document.getElementById("fanAccountDisplayName").textContent=name;document.getElementById("fanAccountFavoriteTeam").textContent=nalFanProfile.favorite_team||"NOT SELECTED";document.getElementById("fanAccountAvatar").textContent=name.slice(0,1).toUpperCase();}
+  updateFanAccountEntry();
+}
+function updateFanAccountEntry(){const entry=document.getElementById("fanAccountEntry"),small=document.getElementById("fanAccountEntrySmall"),strong=document.getElementById("fanAccountEntryStrong");if(!entry)return;const logged=!!(nalFanSession?.access_token&&nalFanProfile);entry.classList.toggle("signed-in",logged);if(small)small.textContent=logged?"SIGNED IN":"NAL COMMUNITY";if(strong)strong.textContent=logged?(nalFanProfile.display_name||"MY FAN ACCOUNT"):"SIGN IN OR CREATE ACCOUNT";}
+async function fanAccountSignOut(){try{if(nalFanSession?.access_token)await fetch(`${NAL_AUTH_SUPABASE_URL}/auth/v1/logout`,{method:"POST",headers:fanAuthHeaders({"Authorization":`Bearer ${nalFanSession.access_token}`})});}catch(_){}nalFanProfile=null;saveFanSession(null);renderFanAccount();showFanAccountMode("signin");}
+
+async function restoreFanAccountSession(){
+  const saved=loadSavedFanSession(); if(!saved?.access_token){updateFanAccountEntry();return;}
+  nalFanSession=saved; const exp=saved.expires_at?Number(saved.expires_at)*1000:0;
+  if(exp&&Date.now()>exp&&saved.refresh_token){try{const response=await fetch(`${NAL_AUTH_SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`,{method:"POST",headers:fanAuthHeaders(),body:JSON.stringify({refresh_token:saved.refresh_token})});const data=await response.json();if(!response.ok)throw new Error();saveFanSession(data);}catch(_){saveFanSession(null);nalFanProfile=null;updateFanAccountEntry();return;}}
+  await loadFanAccountProfile();renderFanAccount();
+}
+
+document.addEventListener("DOMContentLoaded",restoreFanAccountSession);
 
 </script>
 </body>
