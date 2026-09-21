@@ -3641,6 +3641,17 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   white-space:nowrap !important;
 }
 
+
+/* NAL NETWORK VIDEO PLAYER — USER-CONTROLLED PLAYBACK */
+#watchPage .network-preview-player video{
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  object-fit:contain !important;
+  background:#000 !important;
+  border-radius:12px !important;
+}
+
 </style>
 </head>
 
@@ -4227,21 +4238,33 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 
       <section class="network-hub-section">
         <div class="network-section-header">
-          <div class="network-section-title">Latest Episodes</div>
+          <div class="network-section-title">Latest Content</div>
           <button class="network-view-all" type="button" onclick="switchNetworkTab('shows')">VIEW ALL ›</button>
         </div>
         <div class="network-card-scroll">
-          <button class="network-show-card" type="button" onclick="previewNetworkItem('Latest Episode','Episode content placeholder')">
-            <div class="network-show-art network-episode-art"><span class="network-mini-play">▶</span></div>
-            <div class="network-show-title">Latest Episode</div><div class="network-show-meta">Coming soon</div>
+          <button class="network-show-card network-video-card" type="button"
+            onclick="openNetworkVideo('Salina vs. Southwest Kansas', 'https://www.dropbox.com/scl/fi/s92dq3gea55mmhad9d6dw/Salina-vs-SW-Kansas.mp4?rlkey=nild9783sb3kje6ai1io85gzo&st=erp6uchx&raw=1')">
+            <div class="network-show-art network-episode-art">
+              <span class="network-mini-play">▶</span>
+            </div>
+            <div class="network-show-title">Salina vs. Southwest Kansas</div>
+            <div class="network-show-meta">WATCH NOW</div>
           </button>
-          <button class="network-show-card" type="button" onclick="previewNetworkItem('Latest Episode','Episode content placeholder')">
-            <div class="network-show-art network-episode-art"><span class="network-mini-play">▶</span></div>
-            <div class="network-show-title">Latest Episode</div><div class="network-show-meta">Coming soon</div>
+          <button class="network-show-card network-video-card" type="button"
+            onclick="openNetworkVideo('Semifinals: Omaha vs. Southwest Kansas', 'https://www.dropbox.com/scl/fi/v1udmxxacoi0cceov549p/Semifinals-Omaha-vs-SW-Kansas.mp4?rlkey=dzck8xvcgrt6252wxo8e6mesy&st=miipl2di&raw=1')">
+            <div class="network-show-art network-episode-art">
+              <span class="network-mini-play">▶</span>
+            </div>
+            <div class="network-show-title">Semifinals: Omaha vs. Southwest Kansas</div>
+            <div class="network-show-meta">WATCH NOW</div>
           </button>
-          <button class="network-show-card" type="button" onclick="previewNetworkItem('Latest Episode','Episode content placeholder')">
-            <div class="network-show-art network-episode-art"><span class="network-mini-play">▶</span></div>
-            <div class="network-show-title">Latest Episode</div><div class="network-show-meta">Coming soon</div>
+          <button class="network-show-card network-video-card" type="button"
+            onclick="openNetworkVideo('Semifinals: Salina vs. Pueblo', 'https://www.dropbox.com/scl/fi/2krgif7xgdkfar9z6a71j/Semifinals-Salina-vs-Pueblo.mp4?rlkey=ozlwdzasuwlmvj4k7ki04pzlu&st=jtsr93fr&raw=1')">
+            <div class="network-show-art network-episode-art">
+              <span class="network-mini-play">▶</span>
+            </div>
+            <div class="network-show-title">Semifinals: Salina vs. Pueblo</div>
+            <div class="network-show-meta">WATCH NOW</div>
           </button>
         </div>
       </section>
@@ -4324,7 +4347,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
       <button class="network-preview-backdrop" type="button" aria-label="Close preview" onclick="closeNetworkPreview()"></button>
       <div class="network-preview-sheet">
         <button class="network-preview-close" type="button" onclick="closeNetworkPreview()">×</button>
-        <div class="network-preview-player"><span>▶</span></div>
+        <div class="network-preview-player" id="networkPreviewPlayer"><span>▶</span></div>
         <h3 id="networkPreviewTitle">NAL Network</h3>
         <p id="networkPreviewText">Programming preview.</p>
         <button class="network-preview-action" type="button" onclick="closeNetworkPreview()">DONE</button>
@@ -6736,6 +6759,48 @@ function openNetworkTeamChannel(slug){
 }
 setTimeout(populateNetworkTeamChannels,300);
 setTimeout(populateNetworkTeamChannels,1200);
+
+
+function openNetworkVideo(title, videoUrl){
+  const modal = document.getElementById("networkPreviewModal");
+  const titleEl = document.getElementById("networkPreviewTitle");
+  const textEl = document.getElementById("networkPreviewText");
+  const player = document.getElementById("networkPreviewPlayer");
+  if(titleEl) titleEl.textContent = title;
+  if(textEl) textEl.textContent = "NAL Network";
+  if(player){
+    player.innerHTML = "";
+    const video = document.createElement("video");
+    video.src = videoUrl;
+    video.controls = true;
+    video.autoplay = false;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.setAttribute("controls", "");
+    video.removeAttribute("autoplay");
+    video.style.width = "100%";
+    video.style.height = "100%";
+    video.style.objectFit = "contain";
+    video.style.background = "#000";
+    player.appendChild(video);
+  }
+  if(modal){
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+  }
+}
+
+/* Stop playback and restore the normal preview icon when the sheet closes. */
+const _originalCloseNetworkPreview = closeNetworkPreview;
+closeNetworkPreview = function(){
+  const player = document.getElementById("networkPreviewPlayer");
+  if(player){
+    const video = player.querySelector("video");
+    if(video) video.pause();
+    player.innerHTML = "<span>▶</span>";
+  }
+  _originalCloseNetworkPreview();
+};
 
 </script>
 </body>
