@@ -3071,6 +3071,49 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   background-repeat:no-repeat !important;
 }
 
+
+/* =========================================================
+   STANDARDIZED TEAM LOGOS
+   Artwork is now normalized; no artificial zoom required.
+========================================================= */
+#homePage .team-home-card{
+  padding: 5px 5px 6px !important;
+  overflow: hidden !important;
+}
+
+#homePage .team-home-logo-wrap{
+  width: 100% !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#homePage .team-home-logo{
+  width: 92% !important;
+  height: 92% !important;
+  max-width: 92% !important;
+  max-height: 92% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  display: block !important;
+}
+
+#homePage .team-home-name{
+  width: 100% !important;
+  flex: 0 0 25px !important;
+  min-height: 25px !important;
+  margin: 0 !important;
+  padding: 4px 2px 1px !important;
+  background: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
 </style>
 </head>
 
@@ -5062,6 +5105,13 @@ loadNews();
    NAL TEAMS — LOAD FROM data/teams.json
    ========================================================= */
 
+const TEAM_LOGO_OVERRIDES = {"amarillo-warbirds": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_a128f3cf-899a-46b0-bdd3-ffd3bca366c8.png?v=1789955611", "colorado-spartans": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_8c765296-4cfb-4d2a-8d12-4375ea78f9a1.png?v=1789955611", "dallas-apex": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_5c9b7f9e-43dd-4fea-b657-5920fddf02a4.png?v=1789955611", "louisiana-rouxgaroux": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux_ffcb6a76-e99a-44f9-84ea-43413766e680.png?v=1789955612", "salina-liberty": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_c16c5863-7ef0-4450-8cd2-6423c7756782.png?v=1789955615", "omaha-beef": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_3eaf7c46-25de-4e41-b9cc-f6f51eb80222.png?v=1789955615", "sioux-city-bandits": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_9ad58783-587a-40ea-a795-ac55cb10e1c6.png?v=1789955615", "wheeling-miners": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_a3760e90-5bf2-4046-8f05-bd3ba8e509d3.png?v=1789955616", "southwest-kansas-storm": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_0e545c56-3741-42ab-a201-fe9cb56ff38f.png?v=1789955616", "pueblo-punishers": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_a8d37f12-b58c-4a1a-9233-1276ff2832c1.png?v=1789955616"};
+
+function getTeamLogo(team) {
+  if (!team) return NAL_LOGO;
+  return TEAM_LOGO_OVERRIDES[team.slug] || getTeamLogo(team);
+}
+
 async function loadNALTeams() {
   const teamsContainer = document.getElementById("teamsScroll");
 
@@ -5089,7 +5139,7 @@ async function loadNALTeams() {
         <div class="team-home-logo-area">
           <img
             class="team-home-logo"
-            src="${team.logo}"
+            src="${getTeamLogo(team)}"
             alt="${team.name}"
             loading="lazy"
           >
@@ -5183,7 +5233,7 @@ function renderTeamNews(team, articles) {
   const lead = articles[0];
   const additional = articles.slice(1, 5);
   const fallbackLogo =
-    team.logo || NAL_LOGO;
+    getTeamLogo(team);
 
   let html = `
     <a
@@ -5319,14 +5369,14 @@ async function loadTeamNews(team) {
 
   if (loadingLogo) {
     loadingLogo.src =
-      team.logo || NAL_LOGO;
+      getTeamLogo(team);
   }
 
   content.innerHTML = `
     <div class="team-news-loading">
       <img
         class="team-news-loading-logo"
-        src="${escapeHTML(team.logo || NAL_LOGO)}"
+        src="${escapeHTML(getTeamLogo(team))}"
         alt=""
       >
       <div class="team-news-spinner"></div>
