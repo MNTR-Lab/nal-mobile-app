@@ -4993,6 +4993,197 @@ document.addEventListener("DOMContentLoaded", () => {
   .header-social-link svg{width:17px !important;height:17px !important;}
 }
 
+
+/* =========================================================
+   LIVE FAN POLL
+========================================================= */
+#fanPollPage{
+  background:#07172b;
+  color:#fff;
+  min-height:calc(100vh - var(--header-height));
+  padding-bottom:100px;
+}
+.fan-poll-shell{
+  width:min(760px,100%);
+  margin:0 auto;
+  padding:18px 16px 36px;
+}
+.fan-poll-head{
+  padding:12px 0 18px;
+  border-bottom:3px solid #e31b23;
+  margin-bottom:18px;
+}
+.fan-poll-kicker{
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:1.7px;
+  color:#e31b23;
+}
+.fan-poll-head h1{
+  margin:4px 0 8px;
+  font-size:34px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-1px;
+}
+.fan-poll-head p{
+  margin:0;
+  color:#dbe4ee;
+  font-size:16px;
+  line-height:1.35;
+  font-weight:800;
+}
+.fan-poll-status{
+  min-height:22px;
+  margin:0 0 10px;
+  font-size:13px;
+  font-weight:800;
+  color:#dbe4ee;
+}
+.fan-poll-status.error{color:#ff8b8f;}
+.fan-poll-options{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.fan-poll-option{
+  position:relative;
+  border:2px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  background:#fff;
+  color:#07172b;
+  overflow:hidden;
+  padding:0;
+  text-align:left;
+  cursor:pointer;
+  min-width:0;
+  box-shadow:0 7px 18px rgba(0,0,0,.18);
+}
+.fan-poll-option.selected{
+  border-color:#e31b23;
+  box-shadow:0 0 0 2px #e31b23,0 7px 18px rgba(0,0,0,.22);
+}
+.fan-poll-option-media{
+  height:112px;
+  background:#f2f4f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.fan-poll-option-media img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.fan-poll-option-name{
+  display:block;
+  padding:10px 10px 9px;
+  text-align:center;
+  font-size:13px;
+  line-height:1.15;
+  font-weight:1000;
+  min-height:43px;
+}
+.fan-poll-check{
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  background:#e31b23;
+  color:#fff;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  font-weight:1000;
+}
+.fan-poll-option.selected .fan-poll-check{display:flex;}
+.fan-poll-submit{
+  width:100%;
+  margin-top:16px;
+  min-height:52px;
+  border:0;
+  border-radius:9px;
+  background:#e31b23;
+  color:#fff;
+  font-size:15px;
+  font-weight:1000;
+  letter-spacing:.5px;
+  cursor:pointer;
+}
+.fan-poll-submit:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+.fan-poll-results-note{
+  margin-top:16px;
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:1.5px;
+  color:#e31b23;
+}
+.fan-poll-result{
+  background:#fff;
+  color:#07172b;
+  border-radius:13px;
+  overflow:hidden;
+  box-shadow:0 7px 18px rgba(0,0,0,.18);
+}
+.fan-poll-result-top{
+  display:grid;
+  grid-template-columns:62px minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  padding:9px 10px;
+}
+.fan-poll-result-logo{
+  width:62px;
+  height:54px;
+  object-fit:contain;
+}
+.fan-poll-result-name{
+  font-size:13px;
+  line-height:1.15;
+  font-weight:1000;
+}
+.fan-poll-result-count{
+  text-align:right;
+  font-size:11px;
+  font-weight:800;
+  color:#607086;
+}
+.fan-poll-result-count strong{
+  display:block;
+  color:#07172b;
+  font-size:20px;
+  line-height:1;
+}
+.fan-poll-result-bar{
+  height:7px;
+  background:#e8edf2;
+}
+.fan-poll-result-bar span{
+  display:block;
+  height:100%;
+  background:#e31b23;
+}
+.fan-poll-loading{
+  grid-column:1/-1;
+  padding:35px 12px;
+  text-align:center;
+  font-weight:900;
+  color:#dbe4ee;
+}
+@media(max-width:390px){
+  .fan-poll-shell{padding-left:12px;padding-right:12px;}
+  .fan-poll-options{gap:9px;}
+  .fan-poll-option-media{height:96px;}
+  .fan-poll-option-name{font-size:12px;}
+}
+
 </style>
 </head>
 
@@ -5752,7 +5943,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </button>
       </div>
 
-      <button class="fan-zone-poll-card" type="button" onclick="openFanZoneFeature('poll')">
+      <button class="fan-zone-poll-card" type="button" onclick="openFanPoll()">
         <span class="fan-zone-tag">FAN POLL</span>
         <h2>WHO ARE YOU MOST LOOKING FORWARD TO SEEING THIS SEASON?</h2>
         <p>Cast your vote and see how NAL fans are responding.</p>
@@ -5769,6 +5960,36 @@ document.addEventListener("DOMContentLoaded", () => {
         </span>
       </button>
 </div>
+  </main>
+
+
+
+  <!-- =====================================================
+       LIVE FAN POLL
+  ====================================================== -->
+  <main id="fanPollPage" class="app-page fan-poll-page" style="display:none;">
+    <div class="fan-poll-shell">
+      <button class="fan-upload-back" type="button" onclick="closeFanPoll()">‹ BACK TO FAN ZONE</button>
+
+      <header class="fan-poll-head">
+        <div class="fan-poll-kicker">NAL FAN ZONE</div>
+        <h1>FAN POLL</h1>
+        <p id="fanPollQuestion">Loading the current NAL fan poll...</p>
+      </header>
+
+      <div id="fanPollStatus" class="fan-poll-status" aria-live="polite"></div>
+      <div id="fanPollOptions" class="fan-poll-options">
+        <div class="fan-poll-loading">LOADING POLL...</div>
+      </div>
+
+      <button id="fanPollSubmit" class="fan-poll-submit" type="button" onclick="submitFanPollVote()" disabled>
+        SUBMIT VOTE
+      </button>
+
+      <div id="fanPollResultsNote" class="fan-poll-results-note" hidden>
+        LIVE FAN RESULTS
+      </div>
+    </div>
   </main>
 
 
@@ -8291,6 +8512,260 @@ function mountSharedNetworkFeaturedVideo() {
 
 document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
 
+
+
+
+/* =========================================================
+   LIVE NAL FAN POLL — SUPABASE
+========================================================= */
+const NAL_POLL_SUPABASE_URL = "https://rcoaprzmutcwlpuogbry.supabase.co";
+const NAL_POLL_SUPABASE_KEY = "sb_publishable_tHzWH6oFoUemOrdLs_h9bw_UOLBP-yb";
+
+let activeFanPoll = null;
+let fanPollOptions = [];
+let selectedFanPollOption = null;
+
+function fanPollHeaders(extra = {}){
+  return {
+    "apikey": NAL_POLL_SUPABASE_KEY,
+    "Authorization": "Bearer " + NAL_POLL_SUPABASE_KEY,
+    ...extra
+  };
+}
+
+function getFanPollVoterId(){
+  const key = "nal_fan_poll_voter_id";
+  let voterId = localStorage.getItem(key);
+  if (!voterId){
+    voterId = (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : "nal-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+    localStorage.setItem(key, voterId);
+  }
+  return voterId;
+}
+
+function fanPollVoteStorageKey(pollId){
+  return "nal_fan_poll_voted_" + pollId;
+}
+
+function hasLocalFanPollVote(pollId){
+  return !!localStorage.getItem(fanPollVoteStorageKey(pollId));
+}
+
+function rememberLocalFanPollVote(pollId, optionId){
+  localStorage.setItem(fanPollVoteStorageKey(pollId), String(optionId));
+}
+
+function setFanPollStatus(message = "", isError = false){
+  const status = document.getElementById("fanPollStatus");
+  if (!status) return;
+  status.textContent = message;
+  status.classList.toggle("error", !!isError);
+}
+
+function setFanZoneNavActive(){
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
+  const fanNav = document.querySelector('.bottom-nav .nav-button[data-page="fanPage"]');
+  if (fanNav) fanNav.classList.add("active");
+}
+
+async function openFanPoll(){
+  document.querySelectorAll(".app-page").forEach(page => {
+    page.classList.remove("active");
+    page.style.display = "none";
+  });
+
+  const page = document.getElementById("fanPollPage");
+  if (page){
+    page.style.display = "block";
+    page.classList.add("active");
+  }
+
+  setFanZoneNavActive();
+  window.scrollTo(0,0);
+  await loadActiveFanPoll();
+}
+
+function closeFanPoll(){
+  const pollPage = document.getElementById("fanPollPage");
+  if (pollPage){
+    pollPage.classList.remove("active");
+    pollPage.style.display = "none";
+  }
+
+  const fanPage = document.getElementById("fanPage");
+  if (fanPage){
+    fanPage.style.display = "block";
+    fanPage.classList.add("active");
+  }
+
+  setFanZoneNavActive();
+  window.scrollTo(0,0);
+}
+
+async function loadActiveFanPoll(){
+  const optionsHost = document.getElementById("fanPollOptions");
+  const submit = document.getElementById("fanPollSubmit");
+  const note = document.getElementById("fanPollResultsNote");
+  const question = document.getElementById("fanPollQuestion");
+
+  selectedFanPollOption = null;
+  if (submit){
+    submit.disabled = true;
+    submit.hidden = false;
+    submit.textContent = "SUBMIT VOTE";
+  }
+  if (note) note.hidden = true;
+  if (optionsHost) optionsHost.innerHTML = '<div class="fan-poll-loading">LOADING POLL...</div>';
+  setFanPollStatus("");
+
+  try{
+    const pollResponse = await fetch(
+      `${NAL_POLL_SUPABASE_URL}/rest/v1/polls?status=eq.active&select=id,question&order=id.desc&limit=1`,
+      { headers: fanPollHeaders(), cache:"no-store" }
+    );
+    if (!pollResponse.ok) throw new Error("Unable to load active poll.");
+    const polls = await pollResponse.json();
+    if (!polls.length) throw new Error("There is no active fan poll right now.");
+
+    activeFanPoll = polls[0];
+    if (question) question.textContent = activeFanPoll.question;
+
+    const optionResponse = await fetch(
+      `${NAL_POLL_SUPABASE_URL}/rest/v1/poll_options?poll_id=eq.${activeFanPoll.id}&select=id,poll_id,option_name,image_url,display_order&order=display_order.asc`,
+      { headers: fanPollHeaders(), cache:"no-store" }
+    );
+    if (!optionResponse.ok) throw new Error("Unable to load poll choices.");
+    fanPollOptions = await optionResponse.json();
+
+    if (hasLocalFanPollVote(activeFanPoll.id)){
+      await showFanPollResults();
+    } else {
+      renderFanPollChoices();
+    }
+  }catch(error){
+    if (optionsHost) optionsHost.innerHTML = '<div class="fan-poll-loading">FAN POLL UNAVAILABLE</div>';
+    if (submit) submit.hidden = true;
+    setFanPollStatus(error.message || "Unable to load the fan poll.", true);
+  }
+}
+
+function renderFanPollChoices(){
+  const host = document.getElementById("fanPollOptions");
+  const submit = document.getElementById("fanPollSubmit");
+  if (!host) return;
+
+  host.innerHTML = fanPollOptions.map(option => `
+    <button class="fan-poll-option" type="button" data-poll-option="${option.id}" onclick="selectFanPollOption(${option.id})">
+      <span class="fan-poll-option-media">
+        <img src="${option.image_url || ""}" alt="${option.option_name}" loading="lazy">
+      </span>
+      <span class="fan-poll-option-name">${option.option_name}</span>
+      <span class="fan-poll-check">✓</span>
+    </button>
+  `).join("");
+
+  if (submit){
+    submit.hidden = false;
+    submit.disabled = true;
+    submit.textContent = "SUBMIT VOTE";
+  }
+  setFanPollStatus("SELECT ONE TEAM TO CAST YOUR VOTE.");
+}
+
+function selectFanPollOption(optionId){
+  selectedFanPollOption = Number(optionId);
+  document.querySelectorAll("#fanPollOptions .fan-poll-option").forEach(button => {
+    button.classList.toggle("selected", Number(button.dataset.pollOption) === selectedFanPollOption);
+  });
+  const submit = document.getElementById("fanPollSubmit");
+  if (submit) submit.disabled = false;
+  setFanPollStatus("");
+}
+
+async function submitFanPollVote(){
+  if (!activeFanPoll || !selectedFanPollOption) return;
+
+  const submit = document.getElementById("fanPollSubmit");
+  if (submit){
+    submit.disabled = true;
+    submit.textContent = "SUBMITTING...";
+  }
+
+  try{
+    const response = await fetch(`${NAL_POLL_SUPABASE_URL}/rest/v1/poll_votes`, {
+      method:"POST",
+      headers: fanPollHeaders({
+        "Content-Type":"application/json",
+        "Prefer":"return=minimal"
+      }),
+      body:JSON.stringify({
+        poll_id: activeFanPoll.id,
+        option_id: selectedFanPollOption,
+        voter_id: getFanPollVoterId()
+      })
+    });
+
+    if (!response.ok){
+      const body = await response.text();
+      if (response.status === 409 || body.includes("one_vote_per_poll_per_device")){
+        rememberLocalFanPollVote(activeFanPoll.id, selectedFanPollOption);
+        await showFanPollResults();
+        setFanPollStatus("A vote from this device has already been recorded.");
+        return;
+      }
+      throw new Error("Your vote could not be submitted. Please try again.");
+    }
+
+    rememberLocalFanPollVote(activeFanPoll.id, selectedFanPollOption);
+    await showFanPollResults();
+    setFanPollStatus("VOTE COUNTED — THANK YOU FOR VOTING!");
+  }catch(error){
+    if (submit){
+      submit.disabled = false;
+      submit.textContent = "SUBMIT VOTE";
+    }
+    setFanPollStatus(error.message || "Unable to submit vote.", true);
+  }
+}
+
+async function showFanPollResults(){
+  if (!activeFanPoll) return;
+  const host = document.getElementById("fanPollOptions");
+  const submit = document.getElementById("fanPollSubmit");
+  const note = document.getElementById("fanPollResultsNote");
+
+  const response = await fetch(
+    `${NAL_POLL_SUPABASE_URL}/rest/v1/poll_results?poll_id=eq.${activeFanPoll.id}&select=option_id,poll_id,option_name,image_url,display_order,votes&order=display_order.asc`,
+    { headers: fanPollHeaders(), cache:"no-store" }
+  );
+  if (!response.ok) throw new Error("Unable to load live poll results.");
+
+  const results = await response.json();
+  const totalVotes = results.reduce((sum,item) => sum + Number(item.votes || 0), 0);
+
+  host.innerHTML = results.map(item => {
+    const votes = Number(item.votes || 0);
+    const percent = totalVotes ? Math.round((votes / totalVotes) * 100) : 0;
+    return `
+      <div class="fan-poll-result">
+        <div class="fan-poll-result-top">
+          <img class="fan-poll-result-logo" src="${item.image_url || ""}" alt="${item.option_name}" loading="lazy">
+          <div class="fan-poll-result-name">${item.option_name}</div>
+          <div class="fan-poll-result-count"><strong>${percent}%</strong>${votes} ${votes === 1 ? "VOTE" : "VOTES"}</div>
+        </div>
+        <div class="fan-poll-result-bar"><span style="width:${percent}%"></span></div>
+      </div>
+    `;
+  }).join("");
+
+  if (submit) submit.hidden = true;
+  if (note){
+    note.hidden = false;
+    note.textContent = `LIVE FAN RESULTS • ${totalVotes} ${totalVotes === 1 ? "VOTE" : "VOTES"}`;
+  }
+}
 
 
 /* Fan Zone feature placeholders — each becomes a real module next. */
