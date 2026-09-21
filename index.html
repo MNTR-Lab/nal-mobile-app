@@ -2196,6 +2196,693 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   text-transform: uppercase;
 }
 
+
+/* =========================================================
+   2027 APP HOME + NAL NETWORK HUB
+   Image slots are intentionally placeholders until artwork
+   URLs are supplied.
+   ========================================================= */
+
+.home-dark {
+  background: #06172b;
+  color: #ffffff;
+}
+
+.home-dark .season-x-hero {
+  margin-bottom: 0;
+}
+
+.home-dark-section {
+  padding: 20px 16px;
+  background: #06172b;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.home-dark-section + .home-dark-section {
+  border-top: 0;
+}
+
+.home-dark-section .section-title {
+  color: #ffffff;
+  font-size: 17px;
+}
+
+.home-dark-section .section-link {
+  color: #b9c8dc;
+}
+
+.home-section-subtitle {
+  margin-top: -9px;
+  margin-bottom: 13px;
+  color: rgba(255,255,255,.70);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.home-game-placeholder {
+  min-height: 126px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 13px;
+  background: linear-gradient(135deg,#122a46,#0b1d32);
+  display: grid;
+  grid-template-columns: 72px 1fr 72px;
+  align-items: center;
+  gap: 12px;
+}
+
+.home-game-team {
+  text-align: center;
+}
+
+.home-game-logo-slot {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 7px;
+  border: 1px dashed rgba(255,255,255,.42);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,.55);
+  font-size: 7px;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.home-game-team-name {
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.home-game-center {
+  text-align: center;
+}
+
+.home-game-date {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.home-game-location {
+  margin-top: 7px;
+  color: rgba(255,255,255,.52);
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.home-quick-grid {
+  margin-top: 13px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 8px;
+}
+
+.home-quick-button {
+  min-width: 0;
+  min-height: 72px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 8px;
+  background: rgba(255,255,255,.025);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.home-quick-button svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home-quick-button span {
+  font-size: 8px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.home-network-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(92px, 1fr);
+  gap: 8px;
+}
+
+.media-placeholder {
+  position: relative;
+  overflow: hidden;
+  border: 1px dashed rgba(255,255,255,.30);
+  background:
+    linear-gradient(135deg,rgba(22,49,78,.96),rgba(5,17,31,.98));
+  color: rgba(255,255,255,.72);
+}
+
+.media-placeholder-label {
+  position: absolute;
+  inset: 0;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1.35;
+  letter-spacing: .5px;
+}
+
+.home-network-main {
+  min-height: 185px;
+  border-radius: 10px;
+}
+
+.home-network-side {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+}
+
+.home-network-small {
+  min-height: 88px;
+  border-radius: 9px;
+}
+
+.home-network-caption {
+  margin-top: 10px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.home-network-caption-small {
+  margin-top: 3px;
+  color: rgba(255,255,255,.65);
+  font-size: 9px;
+}
+
+.home-dark .news-section,
+.home-dark .future-section {
+  background: #06172b;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.home-dark .news-section .section-title,
+.home-dark .future-section .section-title {
+  color: #ffffff;
+}
+
+.home-dark .teams-swipe-hint,
+.home-dark .swipe-hint {
+  color: rgba(255,255,255,.48);
+}
+
+.home-dark .team-home-card {
+  border-color: rgba(255,255,255,.13);
+}
+
+.home-dark .future-placeholder {
+  border-color: rgba(255,255,255,.18);
+  color: rgba(255,255,255,.48);
+  background: rgba(255,255,255,.025);
+}
+
+/* NAL NETWORK full hub */
+.network-page {
+  min-height: calc(100dvh - var(--header-height) - var(--nav-height));
+  background:
+    radial-gradient(circle at 80% 0%, rgba(31,82,128,.30), transparent 34%),
+    #06172b;
+  color: #ffffff;
+  padding-bottom: 28px;
+}
+
+.network-hub-header {
+  padding: 24px 16px 14px;
+  text-align: center;
+}
+
+.network-hub-wordmark {
+  font-size: 29px;
+  line-height: 1;
+  font-weight: 950;
+  font-style: italic;
+  letter-spacing: -.8px;
+  text-transform: uppercase;
+}
+
+.network-hub-wordmark span {
+  color: var(--nal-red);
+}
+
+.network-hub-tagline {
+  margin-top: 7px;
+  color: rgba(255,255,255,.76);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.network-tabs {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 20;
+  padding: 0 12px;
+  background: rgba(6,23,43,.97);
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.network-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.network-tab {
+  flex: 0 0 auto;
+  padding: 13px 13px 11px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #b8c6d7;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .35px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.network-tab.active {
+  color: #ffffff;
+  border-bottom-color: var(--nal-red);
+}
+
+.network-hub-section {
+  padding: 18px 16px 3px;
+}
+
+.network-section-header {
+  margin-bottom: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.network-section-title {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.network-view-all {
+  border: 0;
+  background: transparent;
+  color: #a9bed6;
+  font-size: 8px;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.network-feature-placeholder {
+  aspect-ratio: 16 / 9;
+  min-height: 205px;
+  border-radius: 12px;
+}
+
+.network-live-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  padding: 6px 9px;
+  border-radius: 4px;
+  background: var(--nal-red);
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 950;
+}
+
+.network-feature-copy {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 3;
+}
+
+.network-feature-title {
+  font-size: 17px;
+  font-weight: 950;
+}
+
+.network-feature-subtitle {
+  margin-top: 4px;
+  color: rgba(255,255,255,.72);
+  font-size: 9px;
+}
+
+.network-play-button {
+  margin-top: 10px;
+  min-width: 112px;
+  min-height: 34px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--nal-red);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 950;
+}
+
+.network-card-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+.network-card-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.network-show-card {
+  flex: 0 0 138px;
+  scroll-snap-align: start;
+}
+
+.network-show-art {
+  aspect-ratio: 16 / 9;
+  border-radius: 9px;
+}
+
+.network-show-title {
+  margin-top: 7px;
+  color: #ffffff;
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 900;
+}
+
+.network-show-meta {
+  margin-top: 3px;
+  color: rgba(255,255,255,.52);
+  font-size: 8px;
+}
+
+.network-team-scroll {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: none;
+}
+
+.network-team-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.network-team-placeholder {
+  flex: 0 0 92px;
+  min-height: 94px;
+  padding: 9px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 9px;
+  background: rgba(255,255,255,.025);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.network-team-logo-slot {
+  width: 52px;
+  height: 52px;
+  border: 1px dashed rgba(255,255,255,.30);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,.45);
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.network-team-name {
+  margin-top: 7px;
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+@media (max-width: 380px) {
+  .home-quick-grid {
+    gap: 5px;
+  }
+
+  .home-quick-button span {
+    font-size: 7px;
+  }
+
+  .network-hub-wordmark {
+    font-size: 25px;
+  }
+}
+
+
+/* =========================================================
+   FINAL HOME VISUAL TARGET — MOCKUP MATCH
+   ========================================================= */
+:root{
+  --mock-navy:#03182d;
+  --mock-card:#14283d;
+  --mock-line:#29445f;
+  --mock-red:#ed1c2e;
+  --mock-muted:#aebdcb;
+}
+#appHeader{
+  height:108px !important;
+  background:linear-gradient(180deg,#03182d 0%,#061d34 100%) !important;
+  border-bottom:1px solid rgba(255,255,255,.08) !important;
+  display:grid !important;
+  grid-template-columns:64px 1fr 64px !important;
+  align-items:center !important;
+  padding:0 14px !important;
+}
+#headerHome{
+  grid-column:2 !important;
+  justify-self:center !important;
+}
+#headerHome img{
+  width:138px !important;
+  max-height:78px !important;
+  object-fit:contain !important;
+}
+.header-left{
+  grid-column:3 !important;
+  grid-row:1 !important;
+  justify-self:end !important;
+}
+.header-right{display:none !important;}
+#homePage{
+  padding-top:0 !important;
+  background:
+    radial-gradient(circle at 50% 30%,rgba(7,45,75,.30),transparent 40%),
+    var(--mock-navy) !important;
+}
+#homePage .season-x-hero{
+  min-height:235px !important;
+  height:235px !important;
+  margin:0 !important;
+  border-radius:0 !important;
+  background:
+    linear-gradient(90deg,rgba(2,18,34,.18),rgba(2,18,34,.48)),
+    url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Game_Image_2.jpg?v=1789843442") center 35%/cover no-repeat !important;
+  border-bottom:1px solid rgba(255,255,255,.08) !important;
+}
+#homePage .season-x-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:82px;
+  background:linear-gradient(transparent,var(--mock-navy));
+  pointer-events:none;
+}
+#homePage .hero-content{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:2 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  padding:0 20px 29px !important;
+}
+#homePage .hero-eyebrow{display:none !important;}
+#homePage .national-bowl-logo{
+  width:min(78%,330px) !important;
+  max-height:118px !important;
+  object-fit:contain !important;
+  filter:drop-shadow(0 5px 12px rgba(0,0,0,.5));
+}
+#homePage .hero-tagline{
+  margin-top:2px !important;
+  color:#fff !important;
+  font-size:11px !important;
+  font-weight:950 !important;
+  letter-spacing:.4px !important;
+}
+#homePage .hero-accent-line{display:none !important;}
+
+#homePage .home-dark-section,
+#homePage .news-section,
+#homePage .future-section{
+  padding:18px 16px !important;
+  background:transparent !important;
+  border:0 !important;
+}
+#homePage .section-header{
+  margin-bottom:11px !important;
+}
+#homePage .section-title{
+  color:#fff !important;
+  font-size:20px !important;
+  line-height:1 !important;
+  font-weight:950 !important;
+  font-style:italic;
+  letter-spacing:-.35px !important;
+  text-transform:uppercase !important;
+}
+#homePage .section-link,
+#homePage .network-view-all{
+  color:#bcd2ea !important;
+  font-size:9px !important;
+  font-weight:900 !important;
+}
+#homePage .home-game-placeholder{
+  min-height:118px !important;
+  padding:14px 13px !important;
+  border:0 !important;
+  border-radius:9px !important;
+  background:linear-gradient(135deg,#162b41,#1a2d41) !important;
+  box-shadow:0 8px 18px rgba(0,0,0,.16);
+}
+#homePage .home-game-logo-slot{
+  width:52px !important;
+  height:52px !important;
+  border-color:rgba(255,255,255,.22) !important;
+}
+#homePage .home-game-date{
+  font-size:13px !important;
+  line-height:1.35 !important;
+}
+#homePage .home-game-location{
+  font-size:8px !important;
+}
+#homePage .home-quick-grid{
+  margin-top:12px !important;
+  gap:7px !important;
+}
+#homePage .home-quick-button{
+  height:69px !important;
+  min-height:69px !important;
+  border:1px solid #29445f !important;
+  border-radius:5px !important;
+  background:rgba(3,24,45,.62) !important;
+}
+#homePage .home-quick-button svg{
+  width:25px !important;
+  height:25px !important;
+}
+#homePage .home-quick-button span{
+  font-size:8px !important;
+}
+#homePage .home-section-subtitle{
+  margin:-6px 0 10px !important;
+  color:#fff !important;
+  font-size:12px !important;
+}
+#homePage .home-network-layout{
+  grid-template-columns:minmax(0,2.15fr) minmax(105px,1fr) !important;
+  gap:8px !important;
+}
+#homePage .home-network-main{
+  min-height:174px !important;
+  border-radius:7px !important;
+}
+#homePage .home-network-small{
+  min-height:83px !important;
+  border-radius:6px !important;
+}
+#homePage .media-placeholder{
+  border:1px solid #29445f !important;
+  background:linear-gradient(135deg,#102b49,#071a2e) !important;
+}
+#homePage .home-network-caption{
+  margin-top:7px !important;
+  font-size:13px !important;
+}
+#homePage .home-network-caption-small{
+  font-size:9px !important;
+}
+#homePage #newsSection{
+  padding-top:14px !important;
+}
+#homePage .news-feature,
+#homePage .news-card{
+  border-radius:7px !important;
+}
+#homePage #homeTeamsSection{
+  padding-top:12px !important;
+}
+#homePage .team-home-card{
+  background:#fff !important;
+  border-radius:7px !important;
+}
+#bottomNav{
+  background:rgba(3,24,45,.985) !important;
+  border-top:1px solid #29445f !important;
+}
+#bottomNav .nav-item{
+  color:#aebdcb !important;
+}
+#bottomNav .nav-item.active{
+  color:#fff !important;
+}
+#bottomNav .nav-item.active:not(.nav-watch){
+  color:var(--mock-red) !important;
+}
+#bottomNav .nav-watch .nav-icon-wrap{
+  background:var(--mock-red) !important;
+  box-shadow:0 0 0 7px rgba(237,28,46,.12),0 6px 16px rgba(0,0,0,.35) !important;
+}
+@media (max-width:420px){
+  #appHeader{height:92px !important;}
+  #headerHome img{width:118px !important;max-height:66px !important;}
+  #homePage .season-x-hero{height:210px !important;min-height:210px !important;}
+  #homePage .section-title{font-size:18px !important;}
+}
+
 </style>
 </head>
 
@@ -2270,197 +2957,193 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
 
   <main
     id="homePage"
-    class="app-page active"
+    class="app-page active home-dark"
   >
 
-
-    <!-- SEASON X HERO -->
-
+    <!-- SEASON X HERO — existing approved artwork -->
     <section class="season-x-hero">
-
       <div class="hero-red-glow"></div>
-
       <div class="hero-content">
-
         <div class="hero-eyebrow">
           NATIONAL ARENA LEAGUE • SEASON X
         </div>
-
         <img
           src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/National_Bowl_Logo_X.png?v=1789933997"
           alt="National Bowl X"
           class="national-bowl-logo"
         >
-
         <div class="hero-tagline">
           WHERE CHAMPIONS ARE CROWNED
         </div>
-
       </div>
-
       <div class="hero-accent-line"></div>
-
     </section>
 
-
-    <!-- NEXT GAMES -->
-
-    <section class="section">
-
+    <!-- NEXT GAMES + QUICK ACCESS -->
+    <section class="home-dark-section">
       <div class="section-header">
-
-        <div class="section-title">
-          Next Games
-        </div>
-
+        <div class="section-title">Next Games</div>
+        <button class="network-view-all" type="button" data-home-action="scores">
+          VIEW ALL →
+        </button>
       </div>
 
-      <div class="schedule-placeholder">
-
-        <div>
-
-          <div class="schedule-placeholder-title">
-            Season X
+      <div class="home-game-placeholder">
+        <div class="home-game-team">
+          <div class="home-game-logo-slot">
+            TEAM LOGO<br>56 × 56
           </div>
-
-          <div class="schedule-placeholder-text">
-            Upcoming games will appear here after the official schedule release.
-          </div>
-
+          <div class="home-game-team-name">HOME TEAM</div>
         </div>
 
+        <div class="home-game-center">
+          <div class="home-game-date">SEASON X</div>
+          <div class="home-game-location">
+            Game information will populate after schedule release.
+          </div>
+        </div>
+
+        <div class="home-game-team">
+          <div class="home-game-logo-slot">
+            TEAM LOGO<br>56 × 56
+          </div>
+          <div class="home-game-team-name">AWAY TEAM</div>
+        </div>
       </div>
 
+      <div class="home-quick-grid">
+        <button class="home-quick-button" type="button" data-home-action="scores">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="M8 9h2M14 9h2M8 14h2M14 14h2"></path>
+          </svg>
+          <span>Scores</span>
+        </button>
+
+        <button class="home-quick-button" type="button" data-home-action="teams">
+          <svg viewBox="0 0 24 24">
+            <circle cx="9" cy="8" r="3"></circle>
+            <circle cx="17" cy="9" r="2"></circle>
+            <path d="M3 20c0-4 2.5-6 6-6s6 2 6 6"></path>
+            <path d="M14 15c3 0 5 1.6 5 5"></path>
+          </svg>
+          <span>Teams</span>
+        </button>
+
+        <button class="home-quick-button" type="button" data-home-action="news">
+          <svg viewBox="0 0 24 24">
+            <path d="M5 4h14v16H5z"></path>
+            <path d="M8 8h8M8 12h8M8 16h5"></path>
+          </svg>
+          <span>News</span>
+        </button>
+
+        <button class="home-quick-button" type="button" data-home-action="schedule">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+            <path d="M7 3v4M17 3v4M3 10h18M7 14h3M14 14h3M7 18h3"></path>
+          </svg>
+          <span>Schedule</span>
+        </button>
+      </div>
     </section>
 
-
-    <!-- NAL NETWORK -->
-
-    <section class="section">
-
+    <!-- NAL NETWORK HOME PREVIEW -->
+    <section class="home-dark-section">
       <div class="section-header">
-
-        <div class="section-title">
-          NAL Network
-        </div>
-
+        <div class="section-title">NAL Network</div>
+        <button class="network-view-all" type="button" data-home-action="network">
+          VIEW ALL →
+        </button>
+      </div>
+      <div class="home-section-subtitle">
+        THE GAME. THE LEAGUE. THE NETWORK.
       </div>
 
-      <div class="network-placeholder">
-
+      <div class="home-network-layout">
         <div>
-
-          <div class="network-placeholder-title">
-            NAL NETWORK
+          <div class="media-placeholder home-network-main">
+            <div class="media-placeholder-label">
+              FEATURED VIDEO IMAGE PLACEHOLDER<br>
+              16:9 • RECOMMENDED 1200 × 675 PX
+            </div>
           </div>
-
-          <div class="network-placeholder-text">
-            THE GAME. THE LEAGUE. THE NETWORK.
+          <div class="home-network-caption">
+            Featured NAL Network Program
           </div>
-
+          <div class="home-network-caption-small">
+            Program title and episode information will appear here.
+          </div>
         </div>
 
+        <div class="home-network-side">
+          <div class="media-placeholder home-network-small">
+            <div class="media-placeholder-label">
+              VIDEO<br>16:9
+            </div>
+          </div>
+          <div class="media-placeholder home-network-small">
+            <div class="media-placeholder-label">
+              VIDEO<br>16:9
+            </div>
+          </div>
+        </div>
       </div>
-
     </section>
 
-
-    <!-- =================================================
-         LIVE NEWS
-    ================================================== -->
-
+    <!-- LIVE NEWS — existing automated feed -->
     <section
       class="section news-section"
       id="newsSection"
     >
-
       <div class="section-header">
-
-        <div class="section-title">
-          Latest From The NAL
-        </div>
-
+        <div class="section-title">Latest News</div>
         <a
           class="section-link"
           href="https://www.thenationalarenaleague.com/"
           target="_blank"
           rel="noopener"
         >
-          ALL NEWS →
+          VIEW ALL →
         </a>
-
       </div>
 
-
       <div id="newsContent">
-
         <div class="news-loading">
-
           <img
             class="news-loading-logo"
             src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
             alt=""
           >
-
           <div class="news-spinner"></div>
-
-          <div>
-            Loading NAL News
-          </div>
-
+          <div>Loading NAL News</div>
         </div>
-
       </div>
-
     </section>
 
-
-
-
-
-    <!-- TEAMS -->
-
-    <section class="future-section">
-
+    <!-- TEAMS — existing automated data -->
+    <section class="future-section" id="homeTeamsSection">
       <div class="section-header">
-
-        <div class="section-title">
-          NAL Teams
-        </div>
-
+        <div class="section-title">NAL Teams</div>
       </div>
-
       <div class="teams-scroll-wrap">
-
-  <div class="teams-scroll" id="teamsScroll">
-    <!-- Teams are loaded automatically from data/teams.json -->
-  </div>
-
-  <div class="teams-swipe-hint">
-    SWIPE TO EXPLORE →
-  </div>
-
-</div>
-
+        <div class="teams-scroll" id="teamsScroll">
+          <!-- Teams load automatically from data/teams.json -->
+        </div>
+        <div class="teams-swipe-hint">
+          SWIPE TO EXPLORE →
+        </div>
+      </div>
     </section>
-
 
     <!-- PARTNERS -->
-
     <section class="future-section">
-
       <div class="section-header">
-
-        <div class="section-title">
-          Official Partners
-        </div>
-
+        <div class="section-title">Official Partners</div>
       </div>
-
       <div class="future-placeholder">
         OFFICIAL NATIONAL ARENA LEAGUE PARTNERS
       </div>
-
     </section>
 
   </main>
@@ -2731,23 +3414,175 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
 
 
   <!-- =====================================================
-       WATCH
+       NAL NETWORK HUB
   ====================================================== -->
 
   <main
     id="watchPage"
-    class="app-page placeholder-page"
+    class="app-page network-page"
   >
 
-    <div class="placeholder-card">
-
-      <h2>Watch</h2>
-
-      <p>
-        NAL Network and MNTR+ viewing options will appear here.
-      </p>
-
+    <div class="network-hub-header">
+      <div class="network-hub-wordmark">
+        NAL <span>NETWORK</span>
+      </div>
+      <div class="network-hub-tagline">
+        The Game. The League. The Network.
+      </div>
     </div>
+
+    <div class="network-tabs">
+      <button class="network-tab active" type="button">HOME</button>
+      <button class="network-tab" type="button">LIVE</button>
+      <button class="network-tab" type="button">SHOWS</button>
+      <button class="network-tab" type="button">HIGHLIGHTS</button>
+      <button class="network-tab" type="button">ARCHIVES</button>
+    </div>
+
+    <!-- FEATURED / LIVE -->
+    <section class="network-hub-section">
+      <div class="media-placeholder network-feature-placeholder">
+        <div class="media-placeholder-label">
+          LIVE / FEATURED HERO IMAGE PLACEHOLDER<br>
+          16:9 • RECOMMENDED 1200 × 675 PX
+        </div>
+        <div class="network-live-badge">FEATURED</div>
+        <div class="network-feature-copy">
+          <div class="network-feature-title">
+            Featured NAL Network Programming
+          </div>
+          <div class="network-feature-subtitle">
+            Live games and featured programming will appear here.
+          </div>
+          <button class="network-play-button" type="button">
+            WATCH
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORIGINALS -->
+    <section class="network-hub-section">
+      <div class="network-section-header">
+        <div class="network-section-title">
+          NAL Network Originals
+        </div>
+        <button class="network-view-all" type="button">
+          VIEW ALL →
+        </button>
+      </div>
+
+      <div class="network-card-scroll">
+        <article class="network-show-card">
+          <div class="media-placeholder network-show-art">
+            <div class="media-placeholder-label">
+              AROUND THE NAL<br>1200 × 675
+            </div>
+          </div>
+          <div class="network-show-title">Around the NAL</div>
+          <div class="network-show-meta">Original Series</div>
+        </article>
+
+        <article class="network-show-card">
+          <div class="media-placeholder network-show-art">
+            <div class="media-placeholder-label">
+              5 IN 5<br>1200 × 675
+            </div>
+          </div>
+          <div class="network-show-title">5 in 5</div>
+          <div class="network-show-meta">Weekly Highlights</div>
+        </article>
+
+        <article class="network-show-card">
+          <div class="media-placeholder network-show-art">
+            <div class="media-placeholder-label">
+              COACHES' SHOWS<br>1200 × 675
+            </div>
+          </div>
+          <div class="network-show-title">Coaches' Shows</div>
+          <div class="network-show-meta">Team Programming</div>
+        </article>
+
+        <article class="network-show-card">
+          <div class="media-placeholder network-show-art">
+            <div class="media-placeholder-label">
+              NAL GAMEDAY<br>1200 × 675
+            </div>
+          </div>
+          <div class="network-show-title">NAL Gameday</div>
+          <div class="network-show-meta">Gameday Coverage</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- LATEST EPISODES -->
+    <section class="network-hub-section">
+      <div class="network-section-header">
+        <div class="network-section-title">
+          Latest Episodes
+        </div>
+        <button class="network-view-all" type="button">
+          VIEW ALL →
+        </button>
+      </div>
+
+      <div class="network-card-scroll">
+        <article class="network-show-card">
+          <div class="media-placeholder network-show-art">
+            <div class="media-placeholder-label">EPISODE IMAGE<br>1200 × 675</div>
+          </div>
+          <div class="network-show-title">Latest Episode</div>
+          <div class="network-show-meta">Episode details</div>
+        </article>
+
+        <article class="network-show-card">
+          <div class="media-placeholder network-show-art">
+            <div class="media-placeholder-label">EPISODE IMAGE<br>1200 × 675</div>
+          </div>
+          <div class="network-show-title">Latest Episode</div>
+          <div class="network-show-meta">Episode details</div>
+        </article>
+
+        <article class="network-show-card">
+          <div class="media-placeholder network-show-art">
+            <div class="media-placeholder-label">EPISODE IMAGE<br>1200 × 675</div>
+          </div>
+          <div class="network-show-title">Latest Episode</div>
+          <div class="network-show-meta">Episode details</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- TEAM CONTENT -->
+    <section class="network-hub-section">
+      <div class="network-section-header">
+        <div class="network-section-title">
+          Teams on NAL Network
+        </div>
+        <button class="network-view-all" type="button">
+          VIEW ALL →
+        </button>
+      </div>
+
+      <div class="network-team-scroll">
+        <div class="network-team-placeholder">
+          <div class="network-team-logo-slot">TEAM<br>LOGO</div>
+          <div class="network-team-name">Team</div>
+        </div>
+        <div class="network-team-placeholder">
+          <div class="network-team-logo-slot">TEAM<br>LOGO</div>
+          <div class="network-team-name">Team</div>
+        </div>
+        <div class="network-team-placeholder">
+          <div class="network-team-logo-slot">TEAM<br>LOGO</div>
+          <div class="network-team-name">Team</div>
+        </div>
+        <div class="network-team-placeholder">
+          <div class="network-team-logo-slot">TEAM<br>LOGO</div>
+          <div class="network-team-name">Team</div>
+        </div>
+      </div>
+    </section>
 
   </main>
 
@@ -2965,12 +3800,12 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
     </button>
 
 
-    <!-- WATCH -->
+    <!-- NAL NETWORK -->
 
     <button
       class="nav-button watch-button"
       data-page="watchPage"
-      aria-label="Watch"
+      aria-label="NAL Network"
     >
 
       <div class="watch-icon">
@@ -3043,6 +3878,9 @@ const SHOP_URL =
 
 const SCORES_URL =
   "https://www.thenationalarenaleague.com/stats#/1200/scores?division_id=41958";
+
+const LEAGUE_SCHEDULE_URL =
+  "https://www.thenationalarenaleague.com/stats#/1200/schedule?division_id=41958";
 
 const WATCH_URL =
   "https://www.thenationalarenaleague.com/nal-network";
@@ -3216,22 +4054,10 @@ navButtons.forEach(button => {
       }
 
       if (pageId === "watchPage") {
-
-        openArticle(
-          WATCH_URL,
-          {
-            mode: "team",
-            title: "NAL NETWORK",
-            subtitle: "THE GAME. THE LEAGUE. THE NETWORK.",
-            loadingText: "LOADING NAL NETWORK",
-            brand: {
-              primary: "#07172b",
-              accent: "#e31b23"
-            },
-            navPage: "watchPage"
-          }
-        );
-
+        if (articleFrame.src !== "about:blank") {
+          articleFrame.src = "about:blank";
+        }
+        showPage("watchPage");
         return;
       }
 
@@ -3271,6 +4097,102 @@ headerHome.addEventListener(
 
   }
 );
+
+
+/* =========================================================
+   HOME QUICK ACTIONS
+========================================================= */
+
+document.addEventListener("click", event => {
+  const actionButton =
+    event.target.closest("[data-home-action]");
+
+  if (!actionButton) {
+    return;
+  }
+
+  const action =
+    actionButton.dataset.homeAction;
+
+  if (action === "scores") {
+    openArticle(
+      SCORES_URL,
+      {
+        mode: "team",
+        title: "NAL SCORES",
+        subtitle: "SEASON X",
+        loadingText: "LOADING NAL SCORES",
+        brand: {
+          primary: "#07172b",
+          accent: "#e31b23"
+        },
+        navPage: "scoresPage"
+      }
+    );
+    return;
+  }
+
+
+  if (action === "schedule") {
+    openArticle(
+      LEAGUE_SCHEDULE_URL,
+      {
+        mode: "team",
+        title: "NAL SCHEDULE",
+        subtitle: "SEASON X",
+        loadingText: "LOADING NAL SCHEDULE",
+        brand: {
+          primary: "#07172b",
+          accent: "#e31b23"
+        },
+        navPage: "homePage"
+      }
+    );
+    return;
+  }
+
+  if (action === "standings") {
+    openArticle(
+      "https://www.thenationalarenaleague.com/stats#/1200/standings?render=division&division_id=41958",
+      {
+        mode: "team",
+        title: "NAL STANDINGS",
+        subtitle: "SEASON X",
+        loadingText: "LOADING NAL STANDINGS",
+        brand: {
+          primary: "#07172b",
+          accent: "#e31b23"
+        },
+        navPage: "homePage"
+      }
+    );
+    return;
+  }
+
+  if (action === "network") {
+    showPage("watchPage");
+    return;
+  }
+
+  if (action === "teams") {
+    document
+      .getElementById("homeTeamsSection")
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    return;
+  }
+
+  if (action === "news") {
+    document
+      .getElementById("newsSection")
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+  }
+});
 
 
 /* =========================================================
