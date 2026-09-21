@@ -5474,6 +5474,105 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================================
+   NAL LEGAL — TERMS OF USE
+========================================================= */
+#fanTermsPage{
+  display:none;
+  min-height:calc(100vh - var(--header-height));
+  padding-bottom:100px;
+  background:#f3f5f8;
+  color:#07172b;
+}
+.fan-legal-shell{
+  width:min(760px,100%);
+  margin:0 auto;
+  padding:18px 16px 36px;
+  box-sizing:border-box;
+}
+.fan-legal-back{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:#07172b;
+  padding:7px 0 14px;
+  font:inherit;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+.fan-legal-card{
+  overflow:hidden;
+  border:1px solid #dbe1e8;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 12px 32px rgba(7,23,43,.10);
+}
+.fan-legal-head{
+  padding:24px 22px 20px;
+  color:#fff;
+  background:linear-gradient(145deg,#07172b,#102b4e);
+  border-bottom:4px solid #e31b23;
+}
+.fan-legal-kicker{
+  color:#aebdcd;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+.fan-legal-head h1{
+  margin:7px 0 7px;
+  font-size:28px;
+  line-height:1;
+  font-weight:1000;
+  font-style:italic;
+}
+.fan-legal-meta{
+  margin:0;
+  color:#dbe4ee;
+  font-size:12px;
+  font-weight:800;
+}
+.fan-legal-body{
+  padding:22px;
+  font-size:14px;
+  line-height:1.65;
+}
+.fan-legal-body h2{
+  margin:24px 0 8px;
+  color:#07172b;
+  font-size:17px;
+  line-height:1.25;
+  font-weight:1000;
+}
+.fan-legal-body h2:first-child{margin-top:0;}
+.fan-legal-body p{margin:0 0 12px;}
+.fan-legal-body ul{margin:8px 0 14px;padding-left:21px;}
+.fan-legal-body li{margin:5px 0;}
+.fan-legal-contact{
+  margin-top:24px;
+  padding:16px;
+  border-radius:12px;
+  background:#f3f5f8;
+  font-weight:800;
+}
+.fan-legal-return{
+  width:100%;
+  margin-top:20px;
+}
+.fan-legal-link{
+  appearance:none;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#0b5cad;
+  font:inherit;
+  font-weight:900;
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+/* =========================================================
    NAL FAN ACCOUNT — SIGN IN / CREATE ACCOUNT
 ========================================================= */
 #fanAccountPage{
@@ -6937,7 +7036,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           <label class="fan-account-check">
             <input id="fanTermsAccepted" type="checkbox" required>
-            <span>I agree to the NAL Terms of Use.</span>
+            <span>I agree to the NAL <button type="button" class="fan-legal-link" id="fanTermsLink">Terms of Use</button>.</span>
           </label>
 
           <label class="fan-account-check">
@@ -6979,6 +7078,134 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="fan-account-footnote">
         One account for Pick 'Em, Fan Forum and future NAL fan features.
       </div>
+    </div>
+  </main>
+
+
+  <!-- =====================================================
+       NAL APP TERMS OF USE
+  ====================================================== -->
+  <main id="fanTermsPage" class="app-page fan-legal-page">
+    <div class="fan-legal-shell">
+      <button type="button" class="fan-legal-back" id="fanTermsBack">‹ BACK TO CREATE ACCOUNT</button>
+
+      <article class="fan-legal-card">
+        <header class="fan-legal-head">
+          <div class="fan-legal-kicker">NAL APP</div>
+          <h1>TERMS OF USE</h1>
+          <p class="fan-legal-meta">Version 1.0 · Effective September 21, 2026</p>
+        </header>
+
+        <div class="fan-legal-body">
+          <h2>1. Acceptance of These Terms</h2>
+          <p>These Terms of Use (“Terms”) govern your access to and use of the National Arena League mobile application, related web-based application services, and features made available through the application (collectively, the “NAL App” or “Service”).</p>
+          <p>The NAL App is operated by <strong>MNTR Inc.</strong> (“MNTR,” “we,” “us,” or “our”) in connection with the National Arena League (“NAL”).</p>
+          <p>By creating an account, accessing the NAL App, or using the Service, you agree to be bound by these Terms. You also agree to comply with the NAL App Community Guidelines and acknowledge the NAL App Privacy Policy, each as presented to you during account registration.</p>
+          <p>If you do not agree to these Terms, you should not create an account or use features of the Service that require acceptance of these Terms.</p>
+
+          <h2>2. Eligibility and Age Requirements</h2>
+          <p>You must be at least <strong>13 years old</strong> to create an NAL Fan Account.</p>
+          <p>If you are under 18 years old, you represent that you have permission from your parent or legal guardian to use the Service and create an account.</p>
+          <p>By creating an account, you represent that you meet these eligibility requirements. We may restrict or terminate access to an account if we reasonably determine that the account was created or is being used in violation of these age requirements.</p>
+
+          <h2>3. NAL Fan Accounts</h2>
+          <p>Certain features of the NAL App may require an NAL Fan Account. When creating an account, you agree to provide accurate information and to maintain the security of your login credentials. You are responsible for activity conducted through your account.</p>
+          <p>Your account may include information such as your display name, email address, favorite NAL team, Pick ’Em selections and results, Fan Forum activity, poll participation, fan submissions, and other preferences, activity, or features added to the Service.</p>
+          <p>You may not impersonate another person or organization, misrepresent your identity, or create an account for fraudulent, abusive, or disruptive purposes.</p>
+
+          <h2>4. Account Names and Display Names</h2>
+          <p>Display names must comply with the NAL Community Guidelines. We reserve the right to reject, modify, or require the modification of a display name that is misleading, impersonates another person or organization, infringes intellectual-property rights, contains prohibited material, or otherwise violates these Terms or the Community Guidelines.</p>
+          <p>Use of a particular display name does not grant ownership or trademark rights in that name.</p>
+
+          <h2>5. Use of the NAL App</h2>
+          <p>The NAL App is intended to provide fans with access to NAL-related content, information, entertainment, and interactive features.</p>
+          <p>Features may include NAL news, scores, schedules, statistics, standings, team information, NAL Network programming, video content, polls, Pick ’Em contests or games, leaderboards, fan forums, fan-submitted media, notifications, ticket information, merchandise links, and other fan experiences.</p>
+          <p>Features may be added, changed, suspended, or discontinued at any time. We do not guarantee that every feature will always be available or that every feature will be available on every device or platform.</p>
+
+          <h2>6. Acceptable Use</h2>
+          <p>You agree not to use the NAL App to:</p>
+          <ul><li>Violate any applicable law or regulation;</li><li>Harass, threaten, abuse, or impersonate another person;</li><li>Attempt to gain unauthorized access to another user's account;</li><li>Interfere with the operation or security of the Service;</li><li>Introduce malicious software or code;</li><li>Manipulate polls, Pick ’Em results, leaderboards, or other interactive features;</li><li>Use automated systems, bots, scripts, or similar methods to improperly access or manipulate the Service;</li><li>Scrape, reproduce, or commercially exploit Service content without authorization;</li><li>Infringe intellectual-property or other rights belonging to MNTR, NAL, NAL teams, partners, users, or third parties; or</li><li>Use the Service in a manner prohibited by the Community Guidelines.</li></ul>
+          <p>Additional rules governing posts, comments, photos, videos, and other user-submitted material are contained in the <strong>NAL App Community Guidelines</strong>.</p>
+
+          <h2>7. Pick ’Em, Polls and Interactive Features</h2>
+          <p>The NAL App may provide prediction games, Pick ’Em features, polls, voting, rankings, leaderboards, and similar interactive experiences. Unless expressly stated otherwise, these features are provided for <strong>entertainment and fan-engagement purposes only</strong>.</p>
+          <p>Participation does not guarantee any prize, compensation, award, or other benefit. If MNTR or NAL conducts a promotion, sweepstakes, contest, or other activity involving prizes, additional official rules may apply. Those rules will control if they conflict with these Terms regarding that particular promotion.</p>
+          <p>Users may not manipulate voting, create multiple accounts for the purpose of gaining an unfair advantage, exploit technical errors, or otherwise interfere with the integrity of an interactive feature. We reserve the right to invalidate activity reasonably determined to violate these requirements.</p>
+
+          <h2>8. Fan Forum and Community Features</h2>
+          <p>The Service may allow users to post, comment, reply, participate in discussions, or otherwise interact with other fans. Use of these features is subject to the <strong>NAL App Community Guidelines</strong>.</p>
+          <p>MNTR may moderate community areas and may remove content, restrict participation, suspend accounts, or take other reasonable action to enforce these Terms and the Community Guidelines. The availability of moderation tools does not mean that MNTR reviews or approves every user submission before it appears.</p>
+
+          <h2>9. User-Submitted Content</h2>
+          <p>The NAL App may allow you to submit photographs, videos, comments, posts, captions, messages, or other content (“User Content”). You retain any ownership rights you otherwise have in your User Content.</p>
+          <p>By submitting User Content through a feature intended for publication, display, promotion, or sharing, you grant MNTR and the National Arena League a non-exclusive, worldwide, royalty-free license to host, store, reproduce, display, distribute, adapt for formatting, and use that content as reasonably necessary to operate, promote, and provide the NAL App and related NAL digital services.</p>
+          <p>Additional permissions may be requested for particular fan-media submissions, promotions, or commercial uses. You represent that you have the rights and permissions necessary to submit the content you provide. Detailed requirements concerning User Content are contained in the Community Guidelines.</p>
+
+          <h2>10. NAL and Third-Party Intellectual Property</h2>
+          <p>The NAL App and its content may contain trademarks, logos, photographs, graphics, video, audio, statistics, designs, software, and other materials owned or licensed by MNTR Inc., the National Arena League, NAL member teams, sponsors, partners, broadcasters, licensors, or other parties.</p>
+          <p>Nothing in these Terms transfers ownership of that intellectual property to you. You may use the Service and its content for personal, non-commercial purposes as permitted through the normal functionality of the NAL App.</p>
+          <p>You may not reproduce, distribute, sell, commercially exploit, modify, or create unauthorized derivative works from protected Service content without the appropriate owner's permission.</p>
+
+          <h2>11. Scores, Statistics and Other Information</h2>
+          <p>The NAL App may display schedules, scores, standings, statistics, rosters, game information, and other data obtained from NAL systems or third-party providers. We work to provide useful and timely information, but we do not guarantee that all information will always be complete, current, or error-free.</p>
+          <p>Official league determinations and records control in the event of a discrepancy.</p>
+
+          <h2>12. Video, Streaming and NAL Network Content</h2>
+          <p>The NAL App may provide access to live or on-demand video, NAL Network programming, highlights, archived games, or other media. Availability may depend on geographic location, device compatibility, rights restrictions, technical conditions, subscriptions, or other requirements.</p>
+          <p>Unauthorized recording, redistribution, retransmission, or commercial use of protected programming is prohibited.</p>
+
+          <h2>13. Tickets, Merchandise and External Services</h2>
+          <p>The NAL App may provide links to tickets, merchandise, team websites, sponsors, partners, social-media platforms, or other third-party services. Transactions conducted through third-party services may be subject to the third party's own terms, policies, refund rules, and privacy practices.</p>
+          <p>Unless expressly stated otherwise, MNTR is not responsible for products, services, transactions, content, or practices provided by independent third parties.</p>
+
+          <h2>14. Privacy</h2>
+          <p>Information collected through the NAL App is handled as described in the <strong>NAL App Privacy Policy</strong>. The Privacy Policy explains the categories of information we collect, how information may be used, service providers that may process information on our behalf, user choices, and other privacy-related matters.</p>
+          <p>By creating an account, you acknowledge that you have been provided access to the Privacy Policy.</p>
+
+          <h2>15. Account Suspension and Termination</h2>
+          <p>MNTR may restrict, suspend, or terminate an account when reasonably necessary to enforce these Terms or the Community Guidelines; protect other users; protect the NAL, its teams, MNTR, or their systems; investigate suspected abuse, fraud, manipulation, or security incidents; comply with applicable law; or address conduct that materially disrupts the Service.</p>
+          <p>Depending on the circumstances, enforcement may include content removal, feature restrictions, temporary suspension, or permanent account termination.</p>
+
+          <h2>16. Account Deletion</h2>
+          <p>Users may request deletion of their NAL Fan Account through functionality provided in the NAL App or by contacting <strong>appsupport@thenationalarenaleague.com</strong>.</p>
+          <p>Account deletion may result in loss of account history, selections, records, posts, preferences, and other account-related information. Certain information may be retained when reasonably necessary for legal, security, fraud-prevention, recordkeeping, or other purposes described in the Privacy Policy.</p>
+
+          <h2>17. Service Availability and Changes</h2>
+          <p>We may modify, update, maintain, suspend, or discontinue all or part of the NAL App. The Service may occasionally be unavailable because of maintenance, technical issues, network failures, third-party service interruptions, events beyond our reasonable control, or other circumstances.</p>
+          <p>We do not guarantee uninterrupted or error-free operation.</p>
+
+          <h2>18. Disclaimer of Warranties</h2>
+          <p>To the fullest extent permitted by applicable law, the NAL App and its content and services are provided on an <strong>“as is” and “as available” basis</strong>.</p>
+          <p>MNTR does not make warranties that the Service will always be available, uninterrupted, secure, or error-free or that information provided through the Service will always be complete or current. Nothing in these Terms excludes warranties or rights that cannot legally be excluded.</p>
+
+          <h2>19. Limitation of Liability</h2>
+          <p>To the fullest extent permitted by applicable law, MNTR Inc. and its affiliates, licensors, service providers, and related parties will not be liable for indirect, incidental, special, consequential, or punitive damages arising from or relating to your use of or inability to use the Service.</p>
+          <p>Nothing in these Terms limits liability that cannot legally be limited or excluded.</p>
+
+          <h2>20. Changes to These Terms</h2>
+          <p>We may update these Terms as the NAL App develops or when legal, operational, security, or product requirements change. The current version and effective date will be displayed with the Terms.</p>
+          <p>If we make a material change, we may provide notice through the NAL App or require users to review and accept the updated Terms before continuing to use certain account features.</p>
+
+          <h2>21. Governing Law</h2>
+          <p>These Terms are governed by the laws of the <strong>State of North Carolina</strong>, without regard to conflict-of-law principles, except where applicable law requires otherwise.</p>
+
+          <h2>22. Disputes and Venue</h2>
+          <p>Any legal action or proceeding arising out of or relating to these Terms or use of the NAL App shall be brought in an appropriate <strong>state or federal court located in North Carolina</strong>, subject to applicable jurisdiction and venue requirements.</p>
+          <p>You and MNTR Inc. consent to the jurisdiction of such courts to the extent permitted by applicable law.</p>
+
+          <h2>23. Severability</h2>
+          <p>If any provision of these Terms is determined to be unlawful, invalid, or unenforceable, that provision will be enforced to the maximum extent permitted by law, and the remaining provisions will remain in effect.</p>
+
+          <h2>24. Entire Agreement</h2>
+          <p>These Terms, together with the <strong>NAL App Privacy Policy</strong>, <strong>NAL App Community Guidelines</strong>, and any additional terms expressly applicable to a particular feature, constitute the applicable agreement between you and MNTR concerning your use of the NAL App.</p>
+
+          <h2>25. Contact Us</h2>
+          <p>Questions concerning these Terms or the NAL App may be directed to:</p>
+          <div class="fan-legal-contact">MNTR Inc.<br>NAL App Support<br>appsupport@thenationalarenaleague.com</div>
+
+          <button type="button" class="fan-account-primary fan-legal-return" id="fanTermsReturn">BACK TO CREATE ACCOUNT</button>
+        </div>
+      </article>
     </div>
   </main>
 
@@ -10303,6 +10530,41 @@ function closeFanAccount(){
   window.scrollTo(0,0);
 }
 
+function openFanTerms(){
+  const accountPage = document.getElementById("fanAccountPage");
+  const termsPage = document.getElementById("fanTermsPage");
+
+  if (accountPage){
+    accountPage.classList.remove("active");
+    accountPage.style.display = "none";
+  }
+
+  if (termsPage){
+    termsPage.style.display = "block";
+    termsPage.classList.add("active");
+  }
+
+  window.scrollTo(0,0);
+}
+
+function closeFanTerms(){
+  const termsPage = document.getElementById("fanTermsPage");
+  const accountPage = document.getElementById("fanAccountPage");
+
+  if (termsPage){
+    termsPage.classList.remove("active");
+    termsPage.style.display = "none";
+  }
+
+  if (accountPage){
+    accountPage.style.display = "block";
+    accountPage.classList.add("active");
+  }
+
+  setFanAccountView("signup");
+  window.scrollTo(0,0);
+}
+
 async function loadNalFanProfile(user){
   if (!user) return null;
 
@@ -10427,6 +10689,22 @@ document.addEventListener("click", function(event){
   if (backButton){
     event.preventDefault();
     closeFanAccount();
+    return;
+  }
+
+  const termsLink = event.target.closest("#fanTermsLink");
+  if (termsLink){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    openFanTerms();
+    return;
+  }
+
+  const termsBack = event.target.closest("#fanTermsBack, #fanTermsReturn");
+  if (termsBack){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    closeFanTerms();
     return;
   }
 
