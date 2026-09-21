@@ -1830,6 +1830,8 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   font-weight: 900;
 }
 
+.team-menu-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.team-menu-icon svg text{fill:currentColor;stroke:none;font-size:15px;font-weight:900;font-family:Arial,sans-serif}
+
 .team-menu-title {
   font-size: 8px;
   line-height: 1;
@@ -6426,7 +6428,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type="button"
         data-team-link="stats"
       >
-        <span class="team-menu-icon">▥</span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M9 39V25h7v14H9ZM21 39V16h7v23h-7ZM33 39V8h7v31h-7Z"/><path d="M7 40h35"/></svg></span>
         <span class="team-menu-title">STATS</span>
       </button>
 
@@ -6435,7 +6437,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type="button"
         data-team-link="standings"
       >
-        <span class="team-menu-icon">≡</span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 12h28M10 24h28M10 36h28"/><circle cx="7" cy="12" r="1.5"/><circle cx="7" cy="24" r="1.5"/><circle cx="7" cy="36" r="1.5"/></svg></span>
         <span class="team-menu-title">STANDINGS</span>
       </button>
 
