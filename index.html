@@ -3831,6 +3831,496 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   z-index:30 !important;
 }
 
+
+/* =========================================================
+   BOTTOM NAV — TRUE STANDALONE NAL NETWORK LABEL
+========================================================= */
+.bottom-nav{position:fixed !important;overflow:visible !important;}
+
+/* Circle/button has NO text inside it now. */
+.bottom-nav .watch-button{
+  position:relative !important;
+  overflow:visible !important;
+}
+.bottom-nav .watch-button .watch-icon{
+  position:absolute !important;
+  left:50% !important;
+  top:-38px !important;
+  transform:translateX(-50%) !important;
+  width:68px !important;
+  height:68px !important;
+  min-width:68px !important;
+  min-height:68px !important;
+  max-width:68px !important;
+  max-height:68px !important;
+  border-radius:50% !important;
+  margin:0 !important;
+  box-sizing:border-box !important;
+  z-index:20 !important;
+}
+
+/* Completely separate sibling element under the circle. */
+.bottom-nav > .network-nav-standalone-label{
+  position:absolute !important;
+  left:50% !important;
+  top:48px !important;
+  transform:translateX(-50%) !important;
+  width:120px !important;
+  display:block !important;
+  color:#07172b !important;
+  font-size:11px !important;
+  line-height:12px !important;
+  font-weight:950 !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+  overflow:visible !important;
+  pointer-events:none !important;
+  z-index:100 !important;
+}
+
+
+/* =========================================================
+   BOTTOM NAV — CENTER NAL NETWORK BUTTON DIRECTLY OVER LABEL
+========================================================= */
+
+/* Treat the center button and its separate label as one centered visual group. */
+.bottom-nav .watch-button{
+  position:absolute !important;
+  left:50% !important;
+  top:0 !important;
+  transform:translateX(-50%) !important;
+  width:120px !important;
+  height:82px !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:visible !important;
+  z-index:40 !important;
+}
+
+/* Center the red circle on the exact same 50% axis as the label. */
+.bottom-nav .watch-button .watch-icon{
+  position:absolute !important;
+  left:50% !important;
+  top:-38px !important;
+  transform:translateX(-50%) !important;
+  width:68px !important;
+  height:68px !important;
+  min-width:68px !important;
+  min-height:68px !important;
+  max-width:68px !important;
+  max-height:68px !important;
+  margin:0 !important;
+  border-radius:50% !important;
+  box-sizing:border-box !important;
+}
+
+/* Separate text, but locked to the same center axis directly beneath the circle. */
+.bottom-nav > .network-nav-standalone-label{
+  position:absolute !important;
+  left:50% !important;
+  top:43px !important;
+  transform:translateX(-50%) !important;
+  width:120px !important;
+  margin:0 !important;
+  padding:0 !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+  pointer-events:none !important;
+  z-index:50 !important;
+}
+
+
+/* =========================================================
+   BOTTOM NAV — STANDARD 5-ITEM LAYOUT
+   NAL Network now uses a TV/play icon like the other nav items.
+========================================================= */
+.bottom-nav{
+  height:82px !important;
+  min-height:82px !important;
+  display:grid !important;
+  grid-template-columns:repeat(5,1fr) !important;
+  align-items:stretch !important;
+  overflow:hidden !important;
+}
+
+.bottom-nav .nav-button,
+.bottom-nav .watch-button{
+  position:relative !important;
+  left:auto !important;
+  top:auto !important;
+  transform:none !important;
+  width:auto !important;
+  height:82px !important;
+  min-height:82px !important;
+  margin:0 !important;
+  padding:11px 4px 8px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  overflow:visible !important;
+}
+
+/* Remove every raised-circle behavior from the Network icon. */
+.bottom-nav .watch-button .watch-icon{
+  position:relative !important;
+  left:auto !important;
+  top:auto !important;
+  transform:none !important;
+  width:31px !important;
+  height:31px !important;
+  min-width:31px !important;
+  min-height:31px !important;
+  max-width:31px !important;
+  max-height:31px !important;
+  flex:0 0 31px !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  color:#747d87 !important;
+  overflow:visible !important;
+  font-size:initial !important;
+  line-height:normal !important;
+}
+
+.bottom-nav .watch-button .watch-icon svg{
+  display:block !important;
+  width:31px !important;
+  height:31px !important;
+  max-width:31px !important;
+  max-height:31px !important;
+}
+
+/* Restore the normal label inside the button. */
+.bottom-nav .watch-button > span{
+  display:block !important;
+  position:relative !important;
+  left:auto !important;
+  top:auto !important;
+  transform:none !important;
+  width:auto !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+  color:#747d87 !important;
+  font-size:9px !important;
+  line-height:1 !important;
+  font-weight:900 !important;
+  letter-spacing:0 !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+}
+
+/* Selected Network state matches the red active treatment used by Home. */
+.bottom-nav .watch-button.active .watch-icon,
+.bottom-nav .watch-button.active > span{
+  color:#e31b23 !important;
+}
+
+.bottom-nav .network-nav-standalone-label{
+  display:none !important;
+}
+
+
+/* =========================================================
+   BOTTOM NAV — EQUAL SPACING + LARGER NAL NETWORK
+========================================================= */
+
+/* Five identical columns across the full app width. */
+.bottom-nav{
+  display:grid !important;
+  grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+  align-items:center !important;
+  justify-items:stretch !important;
+  width:100% !important;
+  padding-left:0 !important;
+  padding-right:0 !important;
+}
+
+/* Every destination is centered inside its own 20% column. */
+.bottom-nav .nav-button,
+.bottom-nav .watch-button{
+  width:100% !important;
+  min-width:0 !important;
+  max-width:none !important;
+  justify-self:stretch !important;
+  align-self:stretch !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  margin:0 !important;
+  left:auto !important;
+  right:auto !important;
+  transform:none !important;
+}
+
+/* NAL Network TV is ~33% larger than the standard 31px icons. */
+.bottom-nav .watch-button .watch-icon,
+.bottom-nav .watch-button .watch-icon svg{
+  width:41px !important;
+  height:41px !important;
+  min-width:41px !important;
+  min-height:41px !important;
+  max-width:41px !important;
+  max-height:41px !important;
+  flex:0 0 41px !important;
+}
+
+/* TV outline follows normal nav state; play triangle is always NAL red. */
+.bottom-nav .watch-button .watch-icon{
+  color:#747d87 !important;
+}
+.bottom-nav .watch-button .watch-icon svg path:first-of-type{
+  fill:#e31b23 !important;
+  stroke:#e31b23 !important;
+}
+
+/* Keep the larger icon from pushing its label out of alignment. */
+.bottom-nav .watch-button{
+  gap:3px !important;
+}
+.bottom-nav .watch-button > span{
+  font-size:9px !important;
+  line-height:1 !important;
+}
+
+/* When Network is active, the TV outline and label also become red. */
+.bottom-nav .watch-button.active .watch-icon,
+.bottom-nav .watch-button.active > span{
+  color:#e31b23 !important;
+}
+
+
+/* =========================================================
+   BOTTOM NAV — 20% LARGER ICONS + WORDS ONLY
+========================================================= */
+
+/* Standard bottom-nav icons: 31px -> 37.2px */
+.bottom-nav .nav-button:not(.watch-button) .nav-icon,
+.bottom-nav .nav-button:not(.watch-button) .nav-icon svg,
+.bottom-nav .nav-button:not(.watch-button) img{
+  width:37.2px !important;
+  height:37.2px !important;
+  min-width:37.2px !important;
+  min-height:37.2px !important;
+  max-width:37.2px !important;
+  max-height:37.2px !important;
+}
+
+/* NAL Network TV: 41px -> 49.2px */
+.bottom-nav .watch-button .watch-icon,
+.bottom-nav .watch-button .watch-icon svg{
+  width:49.2px !important;
+  height:49.2px !important;
+  min-width:49.2px !important;
+  min-height:49.2px !important;
+  max-width:49.2px !important;
+  max-height:49.2px !important;
+  flex:0 0 49.2px !important;
+}
+
+/* All bottom-nav wording: 20% larger */
+.bottom-nav .nav-button > span,
+.bottom-nav .watch-button > span{
+  font-size:10.8px !important;
+}
+
+
+/* =========================================================
+   BOTTOM NAV — VERTICALLY CENTER ICON + LABEL GROUPS
+   Keeps existing icon/word gap and sizing unchanged.
+========================================================= */
+.bottom-nav .nav-button,
+.bottom-nav .watch-button{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  height:82px !important;
+  min-height:82px !important;
+}
+
+
+/* =========================================================
+   NAL NETWORK NAV ONLY — TOP ALIGN + ANOTHER 20% LARGER
+   Other four bottom-nav items remain unchanged.
+========================================================= */
+
+/* Network TV: 49.2px -> 59.04px */
+.bottom-nav .watch-button .watch-icon,
+.bottom-nav .watch-button .watch-icon svg{
+  width:59.04px !important;
+  height:59.04px !important;
+  min-width:59.04px !important;
+  min-height:59.04px !important;
+  max-width:59.04px !important;
+  max-height:59.04px !important;
+  flex:0 0 59.04px !important;
+}
+
+/* Network wording: 10.8px -> 12.96px */
+.bottom-nav .watch-button > span{
+  font-size:12.96px !important;
+}
+
+/* Move the Network icon + wording group to the top of the bottom nav.
+   Existing gap between the TV and wording is preserved. */
+.bottom-nav .watch-button{
+  justify-content:flex-start !important;
+  padding-top:2px !important;
+}
+
+
+/* =========================================================
+   NAL NETWORK NAV — FLUSH TO TOP EDGE
+   Size remains exactly as currently approved.
+========================================================= */
+.bottom-nav .watch-button{
+  justify-content:flex-start !important;
+  padding-top:0 !important;
+  margin-top:0 !important;
+}
+
+.bottom-nav .watch-button .watch-icon{
+  margin-top:0 !important;
+}
+
+
+/* =========================================================
+   NAL NETWORK NAV — ZERO TOP BUFFER
+   No size or other nav changes.
+========================================================= */
+.bottom-nav .watch-button{
+  padding-top:0 !important;
+  margin-top:0 !important;
+  top:0 !important;
+  align-self:start !important;
+  justify-content:flex-start !important;
+}
+
+.bottom-nav .watch-button .watch-icon{
+  padding-top:0 !important;
+  margin-top:0 !important;
+  top:0 !important;
+}
+
+
+/* =========================================================
+   NAL NETWORK NAV — RAISED INTO FORMER CIRCLE POSITION
+   Keeps the current TV icon, wording, and approved sizing.
+========================================================= */
+.bottom-nav{
+  overflow:visible !important;
+}
+
+.bottom-nav .watch-button{
+  position:relative !important;
+  top:-28px !important;
+  padding-top:0 !important;
+  margin-top:0 !important;
+  justify-content:flex-start !important;
+  overflow:visible !important;
+  z-index:30 !important;
+}
+
+
+/* =========================================================
+   BOTTOM NAV — TRUE VERTICAL CENTERING
+   Center every complete icon + label group in the white bar.
+========================================================= */
+.bottom-nav{
+  align-items:center !important;
+}
+
+/* All five nav items occupy the full bar height and center their
+   complete icon + label group with equal space above and below. */
+.bottom-nav .nav-button,
+.bottom-nav .watch-button{
+  position:relative !important;
+  top:auto !important;
+  bottom:auto !important;
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+  height:100% !important;
+  min-height:82px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+/* Preserve the existing icon-to-word spacing. */
+.bottom-nav .nav-button{
+  gap:7px !important;
+}
+.bottom-nav .watch-button{
+  gap:3px !important;
+}
+
+
+/* =========================================================
+   NAL NETWORK — TRUE VERTICAL CENTER FIX
+   Center the larger TV + label as one complete group.
+========================================================= */
+.bottom-nav .watch-button{
+  position:relative !important;
+  top:auto !important;
+  bottom:auto !important;
+  height:82px !important;
+  min-height:82px !important;
+  margin:0 !important;
+  padding:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:3px !important;
+  overflow:visible !important;
+}
+
+/* Cancel earlier positioning rules so the TV participates in flex centering. */
+.bottom-nav .watch-button .watch-icon{
+  position:relative !important;
+  left:auto !important;
+  right:auto !important;
+  top:auto !important;
+  bottom:auto !important;
+  transform:none !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* Cancel earlier absolute label positioning too. */
+.bottom-nav .watch-button > span{
+  position:relative !important;
+  left:auto !important;
+  right:auto !important;
+  top:auto !important;
+  bottom:auto !important;
+  transform:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  width:auto !important;
+}
+
+
+/* =========================================================
+   NAL NETWORK — MOVE COMPLETE GROUP UP
+   Keep approved size and spacing; only change vertical location.
+========================================================= */
+.bottom-nav .watch-button{
+  transform:translateY(-13px) !important;
+}
+
 </style>
 </head>
 
@@ -4765,16 +5255,17 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
       aria-label="NAL Network"
     >
 
-      <div class="watch-icon">
-
-        <svg viewBox="0 0 24 24">
-          <path d="M8 5l11 7-11 7z"></path>
+      <div class="watch-icon" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3.5" y="6.5" width="25" height="18" rx="3"></rect>
+          <path d="M13.5 12.2L20.5 15.5L13.5 18.8Z"></path>
+          <path d="M12 28h8"></path>
+          <path d="M16 24.5V28"></path>
         </svg>
-
       </div>
 
+    
       <span>NAL NETWORK</span>
-
     </button>
 
 
