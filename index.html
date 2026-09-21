@@ -7653,6 +7653,18 @@ function closeTeamHome() {
     "active"
   );
 
+  /* Team directory/team routing uses inline display states.
+     Explicitly restore Home when the NAL HOME button is pressed. */
+  teamPage.style.display = "none";
+
+  document.querySelectorAll(".app-page").forEach(page => {
+    if (page !== homePage) {
+      page.classList.remove("active");
+      page.style.display = "none";
+    }
+  });
+
+  homePage.style.display = "block";
   homePage.classList.add(
     "active"
   );
