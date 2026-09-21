@@ -5244,6 +5244,37 @@ document.addEventListener("DOMContentLoaded", () => {
   object-fit: contain !important;
 }
 
+
+/* =========================================================
+   FAN POLL — ENTIRE TEAM CARD PURE WHITE
+   ========================================================= */
+#fanPollPage .fan-poll-choice,
+#fanPollPage .fan-poll-choice-card,
+#fanPollPage .fan-poll-choice-image,
+#fanPollPage .fan-poll-choice-image-wrap,
+#fanPollPage .fan-poll-choice-logo,
+#fanPollPage .fan-poll-choice-name,
+#fanPollPage .fan-poll-choice-label,
+#fanPollPage .fan-poll-choice > div,
+#fanPollPage .fan-poll-choice-card > div {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+#fanPollPage .fan-poll-choice img,
+#fanPollPage .fan-poll-choice-card img {
+  background: transparent !important;
+  background-color: transparent !important;
+  object-fit: contain !important;
+}
+
+/* Keep the outside rounded corners clean while making all internal areas white. */
+#fanPollPage .fan-poll-choice,
+#fanPollPage .fan-poll-choice-card {
+  overflow: hidden !important;
+}
+
 </style>
 </head>
 
