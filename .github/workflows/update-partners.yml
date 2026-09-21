@@ -1,0 +1,40 @@
+name: Update NAL Partners
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "17 10 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-partners:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Update partners
+        run: python scripts/update_partners.py
+
+      - name: Commit partner updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet data/partners.json; then
+            echo "No partner changes found."
+            exit 0
+          fi
+
+          git add data/partners.json
+          git commit -m "Update NAL partners"
+          git push
