@@ -6022,7 +6022,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-admin-detail-row span{display:block;color:#78879a;font-size:8px;font-weight:1000;letter-spacing:.8px}.fan-admin-detail-row strong{display:block;margin-top:4px;color:#07172b;font-size:12px;overflow-wrap:anywhere}
 .fan-admin-actions-preview{margin-top:9px;background:#fff;border:1px solid #dfe4eb;border-radius:15px;padding:13px 14px}
 .fan-admin-actions-preview h4{margin:0 0 8px;font-size:10px;letter-spacing:1px}.fan-admin-actions-preview p{margin:0;color:#78879a;font-size:9px;line-height:1.45}
-.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}
+.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-delete{background:#3b0b0e;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}
 
 </style>
 </head>
@@ -7271,7 +7271,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       <span class="fan-admin-action-chip">CHANGE ROLE</span>
                       <button class="fan-admin-action-button fan-admin-action-suspend" id="fanAdminStatusAction" type="button">SUSPEND ACCOUNT</button>
                       <button class="fan-admin-action-button fan-admin-action-ban" id="fanAdminBanAction" type="button">BAN ACCOUNT</button>
-                      <span class="fan-admin-action-chip">DELETE ACCOUNT</span>
+                      <button class="fan-admin-action-button fan-admin-action-delete" id="fanAdminDeleteAction" type="button">DELETE ACCOUNT</button>
                     </div>
                     <p class="fan-admin-action-message" id="fanAdminActionMessage" aria-live="polite"></p>
                   </div>
@@ -11517,6 +11517,7 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
 
     const statusButton = document.getElementById("fanAdminStatusAction");
     const banButton = document.getElementById("fanAdminBanAction");
+    const deleteButton = document.getElementById("fanAdminDeleteAction");
     const actionHelp = document.getElementById("fanAdminActionHelp");
     const actionMessage = document.getElementById("fanAdminActionMessage");
     if (actionMessage){ actionMessage.textContent = ""; actionMessage.className = "fan-admin-action-message"; }
@@ -11538,6 +11539,11 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
       banButton.disabled = isSelf || normalizedStatus === "banned";
       banButton.style.display = normalizedStatus === "banned" ? "none" : "";
     }
+    if (deleteButton){
+      const targetIsAdmin = String(member.role || "").toLowerCase() === "admin";
+      deleteButton.disabled = isSelf || targetIsAdmin;
+      deleteButton.style.display = (isSelf || targetIsAdmin) ? "none" : "";
+    }
     if (actionHelp){
       actionHelp.textContent = isSelf
         ? "Your own administrator account cannot be suspended or banned from these controls."
@@ -11557,6 +11563,89 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     if(!row) return;
     const member=adminMembers.find(function(item){return String(item.id)===String(row.dataset.memberId);});
     openAdminMemberDetail(member);
+  });
+
+  document.getElementById("fanAdminDeleteAction")?.addEventListener("click", async function(){
+    if (!selectedAdminMember || nalAccountProfile?.role !== "admin") return;
+    if (String(selectedAdminMember.id) === String(nalAccountUser?.id || "")) return;
+    if (String(selectedAdminMember.role || "").toLowerCase() === "admin") return;
+
+    const member = selectedAdminMember;
+    const name = member.display_name || "this member";
+    const email = member.email || "";
+
+    const firstConfirm = window.confirm(
+      "Permanently delete " + name + "?\n\n" +
+      "This will permanently delete the member's NAL Fan Account and authentication record. " +
+      "This action cannot be undone."
+    );
+    if (!firstConfirm) return;
+
+    const typed = window.prompt(
+      "FINAL CONFIRMATION\n\nType DELETE to permanently delete " +
+      name + (email ? " (" + email + ")" : "") + "."
+    );
+    if (typed !== "DELETE") return;
+
+    const button = this;
+    const message = document.getElementById("fanAdminActionMessage");
+    button.disabled = true;
+    if (message){
+      message.textContent = "Permanently deleting account…";
+      message.className = "fan-admin-action-message";
+    }
+
+    try{
+      const client = getNalAccountClient();
+      const { data: sessionData, error: sessionError } = await client.auth.getSession();
+      if (sessionError) throw sessionError;
+
+      const accessToken = sessionData?.session?.access_token;
+      if (!accessToken) throw new Error("Administrator session not available.");
+
+      const response = await fetch(
+        NAL_ACCOUNT_SUPABASE_URL + "/functions/v1/admin-delete-user",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": NAL_ACCOUNT_SUPABASE_KEY,
+            "Authorization": "Bearer " + accessToken
+          },
+          body: JSON.stringify({ target_user_id: member.id })
+        }
+      );
+
+      let result = {};
+      try{ result = await response.json(); }catch(_){}
+
+      if (!response.ok || result?.success !== true){
+        throw new Error(result?.error || "Account deletion failed.");
+      }
+
+      adminMembers = adminMembers.filter(function(item){
+        return String(item.id) !== String(member.id);
+      });
+      selectedAdminMember = null;
+      renderAdminMembers();
+
+      const detail = document.getElementById("fanAdminMemberDetail");
+      detail?.classList.remove("show");
+
+      const listMessage = document.getElementById("fanAdminUsersList");
+      if (listMessage && adminMembers.length === 0){
+        listMessage.innerHTML = '<div class="fan-admin-empty">No registered members found.</div>';
+      }
+
+      window.alert(name + " has been permanently deleted.");
+    }catch(error){
+      console.error("NAL Admin permanent deletion error:", error);
+      button.disabled = false;
+      if (message){
+        message.textContent = error?.message || "Account could not be deleted. Please try again.";
+        message.className = "fan-admin-action-message error";
+      }
+    }
   });
 
   document.getElementById("fanAdminBanAction")?.addEventListener("click", async function(){
