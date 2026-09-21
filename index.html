@@ -4322,6 +4322,25 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 }
 
 
+
+/* =========================================================
+   NAL NETWORK — LOCK LABEL TO TWO LINES
+   Preserve approved icon size, spacing and vertical position.
+========================================================= */
+.bottom-nav .watch-button > span.network-two-line{
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  white-space:normal !important;
+  text-align:center !important;
+  font-size:10.8px !important;
+  line-height:.92 !important;
+  font-weight:900 !important;
+  letter-spacing:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
 /* Shared Lightcast Featured Video — 16:9 responsive player */
 .shared-network-featured-embed{
   position:relative;
@@ -4468,6 +4487,36 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 .fan-upload-note{padding:13px 8px 0;color:#94a6b8;text-align:center;font-size:9px;line-height:1.45;}
 @media(max-width:520px){.fan-upload-shell{padding:14px 10px 24px}.fan-upload-head h1{font-size:28px}.fan-upload-form-card iframe{height:780px;}}
 
+
+
+/* =========================================================
+   NEXT GAMES — VIEW ALL SCHEDULE
+   Opens the full NAL schedule inside the existing in-app
+   FootballShift viewer.
+========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const viewAllScheduleButton = document.getElementById("viewAllScheduleButton");
+  if (!viewAllScheduleButton) return;
+
+  viewAllScheduleButton.addEventListener("click", event => {
+    event.preventDefault();
+
+    openArticle(
+      "https://www.thenationalarenaleague.com/stats#/1200/schedule?all&division_id=41958",
+      {
+        mode: "team",
+        title: "NAL SCHEDULE",
+        subtitle: "SEASON X",
+        loadingText: "LOADING NAL SCHEDULE",
+        brand: {
+          primary: "#07172b",
+          accent: "#e31b23"
+        },
+        navPage: "homePage"
+      }
+    );
+  });
+});
 
 /* =========================================================
    FAN PHOTO OF THE WEEK
@@ -4686,7 +4735,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
     <section class="home-dark-section">
       <div class="section-header">
         <div class="section-title">Next Games</div>
-        <button class="network-view-all" type="button" data-home-action="scores">
+        <button class="network-view-all" type="button" data-home-action="scores" id="viewAllScheduleButton">
           VIEW ALL →
         </button>
       </div>
@@ -5634,7 +5683,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
       </div>
 
     
-      <span>NAL NETWORK</span>
+      <span class="network-two-line">NAL<br>NETWORK</span>
     </button>
 
 
@@ -7945,36 +7994,120 @@ function closeFanMediaUpload(){
 
 /* =========================================================
    FAN PHOTO OF THE WEEK
-   Temporary placeholder configuration.
-   Later this can be fed from the approved Monday workflow.
+   Data source: data/fan-media.json
+   The page keeps its built-in placeholder if the feed is
+   unavailable or there is not yet an approved feature.
 ========================================================= */
-const FAN_PHOTO_OF_WEEK = {
-  imageUrl: "",
-  fanName: "FAN NAME",
-  team: "NAL FAN",
-  caption: "Your Fan Photo of the Week caption will appear here."
-};
+const FAN_MEDIA_FEED = "data/fan-media.json";
 
-function renderFanPhotoOfWeek(){
+function getFanMediaValue(item, keys, fallback = ""){
+  for (const key of keys){
+    const value = item?.[key];
+    if (value !== undefined && value !== null && String(value).trim() !== ""){
+      return String(value).trim();
+    }
+  }
+  return fallback;
+}
+
+function normalizeFanMediaFeed(payload){
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.items)) return payload.items;
+  if (Array.isArray(payload?.media)) return payload.media;
+  if (Array.isArray(payload?.submissions)) return payload.submissions;
+  if (payload?.featured && typeof payload.featured === "object") return [payload.featured];
+  return [];
+}
+
+function chooseFanPhotoOfWeek(items){
+  if (!items.length) return null;
+
+  const approved = items.filter(item => {
+    const status = getFanMediaValue(item, ["status", "approvalStatus", "approval_status"]).toLowerCase();
+    return !status || ["approved", "published", "featured", "live"].includes(status);
+  });
+
+  const pool = approved.length ? approved : items;
+
+  return pool.find(item =>
+    item?.featured === true ||
+    item?.fanPhotoOfWeek === true ||
+    item?.fan_photo_of_week === true ||
+    getFanMediaValue(item, ["featured", "fanPhotoOfWeek", "fan_photo_of_week"]).toLowerCase() === "true"
+  ) || pool[0];
+}
+
+function renderFanPhotoOfWeek(item){
+  if (!item) return;
+
   const imageHost = document.getElementById("fanPhotoWeekImage");
   const name = document.getElementById("fanPhotoWeekName");
   const team = document.getElementById("fanPhotoWeekTeam");
   const caption = document.getElementById("fanPhotoWeekCaption");
 
-  if (name) name.textContent = FAN_PHOTO_OF_WEEK.fanName;
-  if (team) team.textContent = FAN_PHOTO_OF_WEEK.team;
-  if (caption) caption.textContent = FAN_PHOTO_OF_WEEK.caption;
+  const fanName = getFanMediaValue(
+    item,
+    ["fanName", "fan_name", "name", "submittedBy", "submitted_by"],
+    "NAL FAN"
+  );
 
-  if (imageHost && FAN_PHOTO_OF_WEEK.imageUrl){
+  const favoriteTeam = getFanMediaValue(
+    item,
+    ["team", "favoriteTeam", "favorite_team"],
+    "NAL FAN"
+  );
+
+  const fanCaption = getFanMediaValue(
+    item,
+    ["caption", "story", "description"],
+    ""
+  );
+
+  const imageUrl = getFanMediaValue(
+    item,
+    ["imageUrl", "image_url", "photoUrl", "photo_url", "url", "image"]
+  );
+
+  if (name) name.textContent = fanName;
+  if (team) team.textContent = favoriteTeam;
+  if (caption && fanCaption) caption.textContent = fanCaption;
+
+  if (imageHost && imageUrl){
     imageHost.innerHTML = "";
+
     const img = document.createElement("img");
-    img.src = FAN_PHOTO_OF_WEEK.imageUrl;
-    img.alt = FAN_PHOTO_OF_WEEK.fanName + " — Fan Photo of the Week";
+    img.src = imageUrl;
+    img.alt = fanName + " — Fan Photo of the Week";
+    img.loading = "lazy";
+
+    img.addEventListener("error", () => {
+      imageHost.innerHTML = `
+        <div class="fan-photo-placeholder-icon">▣</div>
+        <div class="fan-photo-placeholder-title">FAN PHOTO</div>
+        <div class="fan-photo-placeholder-subtitle">WEEKLY FEATURE IMAGE</div>
+      `;
+    });
+
     imageHost.appendChild(img);
   }
 }
 
-document.addEventListener("DOMContentLoaded", renderFanPhotoOfWeek);
+async function loadFanPhotoOfWeek(){
+  try {
+    const response = await fetch(FAN_MEDIA_FEED, { cache: "no-store" });
+    if (!response.ok) throw new Error("Fan media feed unavailable");
+
+    const payload = await response.json();
+    const items = normalizeFanMediaFeed(payload);
+    const featured = chooseFanPhotoOfWeek(items);
+
+    if (featured) renderFanPhotoOfWeek(featured);
+  } catch (error) {
+    console.warn("Fan Photo of the Week is using the built-in placeholder.", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadFanPhotoOfWeek);
 
 </script>
 </body>
