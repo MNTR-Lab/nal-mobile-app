@@ -30,7 +30,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          if git diff --quiet data/partners.json; then
+          if [ -z "$(git status --porcelain data/partners.json)" ]; then
             echo "No partner changes found."
             exit 0
           fi
