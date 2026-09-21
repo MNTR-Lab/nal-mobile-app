@@ -2955,6 +2955,35 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   #homePage .hero-season-x{font-size:61px;}
 }
 
+
+/* TEAM CARDS — LARGE LOGOS / MINIMAL WHITE SPACE */
+#homePage .team-home-card{
+  padding:4px 4px 5px !important;
+}
+#homePage .team-home-logo-wrap{
+  width:100% !important;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+}
+#homePage .team-home-logo{
+  width:96% !important;
+  height:96% !important;
+  max-width:none !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  display:block !important;
+}
+#homePage .team-home-name{
+  flex:0 0 auto !important;
+  min-height:22px !important;
+  margin-top:1px !important;
+  padding:0 2px !important;
+}
+
 </style>
 </head>
 
@@ -4040,7 +4069,7 @@ const headerHome =
 /* =========================================================
    ROTATING SEASON X HOME HERO
 ========================================================= */
-const SEASON_X_HERO_IMAGES = ['https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas.png?v=1789953099', 'https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado.png?v=1789953405', 'https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City.png?v=1789953509'];
+const SEASON_X_HERO_IMAGES = ["https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_-_Updated.png?v=1789954175"];
 let lastSeasonXHeroIndex = -1;
 
 function rotateSeasonXHero() {
