@@ -4674,6 +4674,80 @@ document.addEventListener("DOMContentLoaded", () => {
 .social-link strong{font-size:28px;line-height:1}.social-link span{font-size:11px;font-weight:900;}
 .social-panel-note{margin:14px 0 0;text-align:center;color:#91a2b8;font-size:10px;font-weight:800;letter-spacing:1px;}
 
+
+/* =========================================================
+   FAN PHOTOS & VIDEOS — APPROVED MEDIA GALLERY
+========================================================= */
+.fan-media-gallery{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:18px;
+}
+.fan-media-item{
+  overflow:hidden;
+  border-radius:14px;
+  background:#07172b;
+  border:1px solid rgba(255,255,255,.10);
+}
+.fan-media-item-media{
+  aspect-ratio:1/1;
+  background:#061426;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.fan-media-item-media img,
+.fan-media-item-media video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.fan-media-item-copy{
+  padding:11px 12px 13px;
+  color:#fff;
+}
+.fan-media-item-copy strong{
+  display:block;
+  font-size:13px;
+  font-weight:950;
+}
+.fan-media-item-copy p{
+  margin:4px 0 0;
+  color:#c7d1df;
+  font-size:11px;
+  line-height:1.35;
+}
+.fan-gallery-empty{
+  grid-column:1/-1;
+  padding:30px 18px;
+  border-radius:14px;
+  background:#07172b;
+  color:#c7d1df;
+  text-align:center;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.7px;
+}
+.fan-gallery-submit{
+  width:100%;
+  margin-top:14px;
+  padding:14px 16px;
+  border:0;
+  border-radius:10px;
+  background:#e31b23;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:12px;
+  font-weight:950;
+  cursor:pointer;
+}
+.fan-gallery-submit b{font-size:20px;}
+
 </style>
 </head>
 
@@ -5391,7 +5465,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="fan-zone-action red">VOTE NOW <b>›</b></span>
       </button>
 
-      <div class="fan-zone-grid fan-zone-grid-three">
+      <div class="fan-zone-grid">
         <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('pickem')">
           <span class="fan-zone-icon">✓</span>
           <h3>PICK 'EM</h3>
@@ -5399,18 +5473,11 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="fan-zone-link">MAKE YOUR PICKS <b>›</b></span>
         </button>
 
-        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('forum')">
-          <span class="fan-zone-icon">•••</span>
-          <h3>FAN FORUM</h3>
-          <p>Talk NAL football with fans across the league.</p>
-          <span class="fan-zone-link">JOIN THE CONVERSATION <b>›</b></span>
-        </button>
-
-        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('media')">
+        <button class="fan-zone-card" type="button" onclick="openFanPhotosGallery()">
           <span class="fan-zone-icon">▣</span>
           <h3>FAN PHOTOS &amp; VIDEOS</h3>
-          <p>Share your NAL experience. Submit photos and videos for a chance to be featured.</p>
-          <span class="fan-zone-link">UPLOAD MEDIA <b>›</b></span>
+          <p>See approved photos and videos submitted by NAL fans across the league.</p>
+          <span class="fan-zone-link">VIEW FAN MEDIA <b>›</b></span>
         </button>
       </div>
 
@@ -5418,9 +5485,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="fan-photo-week-heading">
           <div>
             <span>FROM THE NAL COMMUNITY</span>
-            <h2>FAN PHOTOS</h2>
+            <h2>FAN PHOTO OF THE WEEK</h2>
           </div>
-          <span class="fan-photo-week-badge">NAL FANS</span>
+          <span class="fan-photo-week-badge">FEATURED FAN</span>
         </div>
 
         <div class="fan-photo-week-card">
@@ -5442,7 +5509,40 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       </section>
+
+      <button class="fan-zone-forum" type="button" onclick="openFanZoneFeature('forum')">
+        <span class="fan-zone-forum-icon">•••</span>
+        <span class="fan-zone-forum-copy">
+          <small>NAL COMMUNITY</small>
+          <strong>FAN FORUM</strong>
+          <span>Talk NAL football with fans across the league. Game day discussion, team talk and more.</span>
+          <em>JOIN THE CONVERSATION ›</em>
+        </span>
+      </button>
 </div>
+  </main>
+
+
+  <!-- =====================================================
+       FAN PHOTOS & VIDEOS GALLERY
+  ====================================================== -->
+  <main id="fanGalleryPage" class="app-page" style="display:none;">
+    <div class="fan-upload-shell">
+      <button class="fan-upload-back" type="button" onclick="closeFanPhotosGallery()">‹ BACK TO FAN ZONE</button>
+      <header class="fan-upload-head">
+        <div class="fan-upload-kicker">NAL COMMUNITY</div>
+        <h1>FAN PHOTOS &amp; VIDEOS</h1>
+        <p>Approved photos and videos submitted by NAL fans across the league.</p>
+      </header>
+
+      <div id="fanMediaGallery" class="fan-media-gallery">
+        <div class="fan-gallery-empty">LOADING FAN MEDIA...</div>
+      </div>
+
+      <button type="button" class="fan-gallery-submit" onclick="openFanZoneFeature('media')">
+        SHARE YOUR NAL MOMENT <b>›</b>
+      </button>
+    </div>
   </main>
 
 
@@ -8152,6 +8252,92 @@ function closeSocialPanel(){
 function openNALSocial(network){
  const url=NAL_SOCIAL_LINKS[network];
  if(url) window.open(url,"_blank","noopener,noreferrer");
+}
+
+
+/* =========================================================
+   FAN PHOTOS & VIDEOS
+   Uses the existing approved Monday -> GitHub fan-media feed.
+========================================================= */
+let nalFanMediaItems = [];
+
+async function loadFanMediaGallery(){
+  const gallery = document.getElementById("fanMediaGallery");
+  if(!gallery) return;
+
+  try{
+    const response = await fetch("data/fan-media.json?ts=" + Date.now(), {cache:"no-store"});
+    if(!response.ok) throw new Error("Fan media feed unavailable");
+
+    const items = await response.json();
+    nalFanMediaItems = Array.isArray(items) ? items : [];
+
+    if(!nalFanMediaItems.length){
+      gallery.innerHTML = '<div class="fan-gallery-empty">NO APPROVED FAN MEDIA YET.</div>';
+      return;
+    }
+
+    gallery.innerHTML = nalFanMediaItems.map(item => {
+      const media = String(item.media || "");
+      const type = String(item.type || "").toLowerCase();
+      const isVideo = type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(media);
+      const safeName = escapeFanGalleryHTML(item.name || "NAL Fan");
+      const safeCaption = escapeFanGalleryHTML(item.caption || "");
+      const safeMedia = escapeFanGalleryHTML(media);
+
+      const mediaHTML = isVideo
+        ? `<video src="${safeMedia}" controls preload="metadata" playsinline></video>`
+        : `<img src="${safeMedia}" alt="Fan submission from ${safeName}" loading="lazy">`;
+
+      return `
+        <article class="fan-media-item">
+          <div class="fan-media-item-media">${mediaHTML}</div>
+          <div class="fan-media-item-copy">
+            <strong>${safeName}</strong>
+            ${safeCaption ? `<p>${safeCaption}</p>` : ""}
+          </div>
+        </article>`;
+    }).join("");
+  }catch(error){
+    gallery.innerHTML = '<div class="fan-gallery-empty">FAN MEDIA IS TEMPORARILY UNAVAILABLE.</div>';
+  }
+}
+
+function escapeFanGalleryHTML(value){
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function openFanPhotosGallery(){
+  document.querySelectorAll(".app-page").forEach(page => {
+    page.classList.remove("active");
+    page.style.display = "none";
+  });
+  const page = document.getElementById("fanGalleryPage");
+  if(page){
+    page.style.display = "block";
+    page.classList.add("active");
+  }
+  window.scrollTo(0,0);
+  loadFanMediaGallery();
+}
+
+function closeFanPhotosGallery(){
+  const gallery = document.getElementById("fanGalleryPage");
+  if(gallery){
+    gallery.classList.remove("active");
+    gallery.style.display = "none";
+  }
+  const fanZone = document.getElementById("fanZonePage");
+  if(fanZone){
+    fanZone.style.display = "block";
+    fanZone.classList.add("active");
+  }
+  window.scrollTo(0,0);
 }
 
 </script>
