@@ -10680,71 +10680,7 @@ function getTeamFootballShiftURL(team, destination){
   return "";
 }
 
-/* Authoritative Team Home menu routing.
-   Capture phase prevents older missing teams.json URLs from swallowing clicks. */
-document.addEventListener("click", function(event){
-  const button = event.target.closest("#teamPage [data-team-link]");
-  if (!button) return;
-
-  const destination = button.dataset.teamLink;
-
-  /* Staff/Tickets keep their existing handlers/data until their destinations are supplied. */
-  if (destination === "staff" || destination === "tickets") return;
-
-  event.preventDefault();
-  event.stopImmediatePropagation();
-
-  let team = activeTeam;
-
-  /* Team Home can remain visible after other app state changes.
-     If activeTeam is unavailable, resolve the displayed team back to the
-     existing FootballShift name/ID map so these buttons always remain live. */
-  if (!getTeamFootballShiftId(team)) {
-    const displayedName =
-      document.getElementById("teamName")?.textContent?.trim() ||
-      document.getElementById("teamFootballTitle")?.textContent
-        ?.replace(/\s+FOOTBALL\s*$/i, "")
-        ?.trim() ||
-      "";
-
-    const displayedKey = displayedName.toLowerCase();
-    const displayedId = TEAM_FOOTBALLSHIFT_NAME_IDS[displayedKey];
-
-    if (displayedId) {
-      team = {
-        name: displayedName,
-        slug: Object.keys(TEAM_FOOTBALLSHIFT_IDS)
-          .find(key => TEAM_FOOTBALLSHIFT_IDS[key] === displayedId) || "",
-        _appBrand: activeTeam?._appBrand
-      };
-    }
-  }
-
-  const url = getTeamFootballShiftURL(team, destination);
-  if (!url) {
-    console.error("FootballShift route unavailable for", destination, team);
-    return;
-  }
-
-  const titles = {
-    schedule: "SCHEDULE",
-    roster: "ROSTER",
-    stats: "STATS",
-    standings: "STANDINGS"
-  };
-
-  const title = titles[destination] || destination.toUpperCase();
-  const brand = team?._appBrand || {primary:"#07172b", accent:"#e31b23"};
-
-  openArticle(url, {
-    mode: "team",
-    title: title,
-    subtitle: team?.name || "NAL TEAM",
-    loadingText: "LOADING " + title,
-    brand: brand,
-    navPage: "homePage"
-  });
-}, true);
+/* Team Home buttons use the original per-team footballShift URLs assigned in openTeamHome(). */
 
 /* Ensure Football section is visible for every FootballShift-supported team,
    even when teams.json does not contain the old footballShift property. */
@@ -12014,40 +11950,6 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
 
 document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 
-
-/* TEAM FOOTBALL CLICK FIX — uses existing team IDs/URL builder only */
-document.addEventListener("click", function(event){
-  const button = event.target.closest("#teamPage [data-team-link]");
-  if (!button) return;
-
-  const destination = button.dataset.teamLink;
-  if (!["schedule","roster","stats","standings"].includes(destination)) return;
-
-  const team = activeTeam;
-  const url = getTeamFootballShiftURL(team, destination);
-  if (!url) return;
-
-  event.preventDefault();
-  event.stopImmediatePropagation();
-
-  const titles = {
-    schedule: "SCHEDULE",
-    roster: "ROSTER",
-    stats: "STATS",
-    standings: "STANDINGS"
-  };
-  const title = titles[destination];
-  const brand = team?._appBrand || {primary:"#07172b", accent:"#e31b23"};
-
-  openArticle(url, {
-    mode: "team",
-    title,
-    subtitle: team?.name || "NAL TEAM",
-    loadingText: "LOADING " + title,
-    brand,
-    navPage: "homePage"
-  });
-}, true);
 
 </script>
 </body>
