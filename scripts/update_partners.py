@@ -1,12 +1,9 @@
-import json
 import re
-import sys
 from pathlib import Path
-from urllib.parse import urljoin
 from urllib.request import Request, urlopen
 
 PARTNERS_URL = "https://www.thenationalarenaleague.com/partners"
-OUTPUT_FILE = Path("data/partners.json")
+OUTPUT_FILE = Path("partners-debug.txt")
 
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -25,211 +22,106 @@ def download_page(url):
     )
 
     with urlopen(request, timeout=30) as response:
-        return response.read().decode("utf-8", errors="replace")
-
-
-def clean_text(value):
-    if not value:
-        return ""
-
-    value = re.sub(r"<[^>]+>", " ", value)
-    value = re.sub(r"\s+", " ", value)
-
-    return value.strip()
-
-
-def absolute_url(url):
-    if not url:
-        return ""
-
-    return urljoin(PARTNERS_URL, url.strip())
-
-
-def find_image(tag):
-    patterns = [
-        r'data-src=["\']([^"\']+)["\']',
-        r'data-lazy-src=["\']([^"\']+)["\']',
-        r'src=["\']([^"\']+)["\']',
-    ]
-
-    for pattern in patterns:
-        match = re.search(pattern, tag, re.I)
-
-        if match:
-            return absolute_url(match.group(1))
-
-    return ""
-
-
-def find_name(img_tag):
-    patterns = [
-        r'alt=["\']([^"\']+)["\']',
-        r'title=["\']([^"\']+)["\']',
-    ]
-
-    for pattern in patterns:
-        match = re.search(pattern, img_tag, re.I)
-
-        if match:
-            name = clean_text(match.group(1))
-
-            if name:
-                return name
-
-    return "NAL Partner"
-
-
-def extract_partners(html):
-    partners = []
-    seen = set()
-
-    # Locate the NAL Partners portion of the page.
-    marker = re.search(
-        r"NAL\s+Partners",
-        html,
-        re.I,
-    )
-
-    if not marker:
-        raise RuntimeError(
-            "Could not locate the NAL Partners section."
+        return response.read().decode(
+            "utf-8",
+            errors="replace",
         )
-
-    section = html[marker.start():]
-
-    # Stop before the site's footer/news navigation when possible.
-    stop_markers = [
-        r"News\s*&amp;\s*Events",
-        r"News\s*&\s*Events",
-        r"<footer",
-    ]
-
-    for stop_pattern in stop_markers:
-        stop = re.search(stop_pattern, section, re.I)
-
-        if stop:
-            section = section[:stop.start()]
-            break
-
-    # Partner logos should normally be clickable images.
-    link_pattern = re.compile(
-        r'<a\b([^>]*)href=["\']([^"\']+)["\']([^>]*)>'
-        r'([\s\S]*?)</a>',
-        re.I,
-    )
-
-    for link_match in link_pattern.finditer(section):
-        website = absolute_url(link_match.group(2))
-        inside = link_match.group(4)
-
-        img_match = re.search(
-            r"<img\b[^>]*>",
-            inside,
-            re.I,
-        )
-
-        if not img_match:
-            continue
-
-        img_tag = img_match.group(0)
-        logo = find_image(img_tag)
-
-        if not logo:
-            continue
-
-        name = find_name(img_tag)
-
-        # Ignore obvious site/navigation assets.
-        combined = f"{name} {logo}".lower()
-
-        ignored_terms = [
-            "nal-only",
-            "national arena league",
-            "menu",
-            "facebook",
-            "instagram",
-            "twitter",
-            "youtube",
-            "icon",
-        ]
-
-        if any(term in combined for term in ignored_terms):
-            continue
-
-        key = (website.lower(), logo.lower())
-
-        if key in seen:
-            continue
-
-        seen.add(key)
-
-        partners.append(
-            {
-                "name": name,
-                "logo": logo,
-                "url": website,
-            }
-        )
-
-    return partners
-
-
-def save_partners(partners):
-    if not partners:
-        raise RuntimeError(
-            "No partners were found. Existing partners.json "
-            "was NOT changed."
-        )
-
-    OUTPUT_FILE.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    temporary_file = OUTPUT_FILE.with_suffix(".json.tmp")
-
-    temporary_file.write_text(
-        json.dumps(
-            partners,
-            indent=2,
-            ensure_ascii=False,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-
-    temporary_file.replace(OUTPUT_FILE)
 
 
 def main():
-    print("Downloading NAL Partners page...")
+    print("Downloading raw NAL Partners page...")
 
     html = download_page(PARTNERS_URL)
 
-    print("Reading NAL Partners section...")
+    print(f"Downloaded {len(html):,} characters.")
 
-    partners = extract_partners(html)
+    checks = {
+        "ctrl.photos": "ctrl.photos" in html,
+        "sponsors-wrap": "sponsors-wrap" in html,
+        "ng-repeat entry in b": 'ng-repeat="entry in b"' in html,
+        "Pixellot URL": "pixellot.tv" in html.lower(),
+        "Vet Tix URL": "vettix.org" in html.lower(),
+        "SNHU URL": "snhu.edu" in html.lower(),
+        "Scripps URL": "scrippsnetworks.com" in html.lower(),
+        "DigitalShift CDN": "digitalshift-assets" in html.lower(),
+    }
 
-    print(
-        f"Found {len(partners)} potential partner(s)."
+    print("")
+    print("RAW HTML CHECKS")
+    print("----------------")
+
+    for name, found in checks.items():
+        print(f"{name}: {'YES' if found else 'NO'}")
+
+    print("")
+    print("Searching for useful sponsor-related fragments...")
+
+    patterns = [
+        r'.{0,500}ctrl\.photos.{0,3000}',
+        r'.{0,500}sponsors-wrap.{0,3000}',
+        r'.{0,500}pixellot\.tv.{0,1500}',
+        r'.{0,500}vettix\.org.{0,1500}',
+        r'.{0,500}snhu\.edu.{0,1500}',
+        r'.{0,500}scrippsnetworks\.com.{0,1500}',
+        r'.{0,500}digitalshift-assets.{0,3000}',
+    ]
+
+    fragments = []
+
+    for pattern in patterns:
+        matches = re.findall(
+            pattern,
+            html,
+            flags=re.I | re.S,
+        )
+
+        for match in matches[:3]:
+            fragments.append(match)
+
+    debug_text = (
+        "NAL PARTNERS RAW HTML DIAGNOSTIC\n"
+        "================================\n\n"
     )
 
-    if not partners:
-        print(
-            "ERROR: No partners found. "
-            "Existing data was preserved."
+    for name, found in checks.items():
+        debug_text += (
+            f"{name}: {'YES' if found else 'NO'}\n"
         )
-        sys.exit(1)
 
-    save_partners(partners)
+    debug_text += (
+        "\n\nMATCHED RAW HTML FRAGMENTS\n"
+        "==========================\n\n"
+    )
 
-    print(f"Saved partners to {OUTPUT_FILE}")
+    if fragments:
+        for number, fragment in enumerate(
+            fragments,
+            start=1,
+        ):
+            debug_text += (
+                f"\n--- FRAGMENT {number} ---\n"
+                f"{fragment}\n"
+            )
+    else:
+        debug_text += "NO USEFUL FRAGMENTS FOUND.\n"
 
-    for partner in partners:
-        print(
-            f"- {partner['name']} | "
-            f"{partner['url']}"
-        )
+    OUTPUT_FILE.write_text(
+        debug_text,
+        encoding="utf-8",
+    )
+
+    print("")
+    print(
+        f"Diagnostic information saved to "
+        f"{OUTPUT_FILE}"
+    )
+
+    print("")
+    print("IMPORTANT:")
+    print(
+        "This diagnostic does NOT change "
+        "data/partners.json."
+    )
 
 
 if __name__ == "__main__":
