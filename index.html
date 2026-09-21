@@ -7531,6 +7531,21 @@ function openTeamHome(team) {
   });
 
 
+  /* The Teams directory uses inline display states.
+     Clear them before showing the selected Team Home page. */
+  document.querySelectorAll(".app-page").forEach(page => {
+    if (page !== teamPage) {
+      page.classList.remove("active");
+      page.style.display = "none";
+    }
+  });
+
+  const teamsDirectoryPage = document.getElementById("teamsPage");
+  if (teamsDirectoryPage) {
+    teamsDirectoryPage.style.display = "none";
+  }
+
+  teamPage.style.display = "block";
   teamPage.classList.add(
     "active"
   );
