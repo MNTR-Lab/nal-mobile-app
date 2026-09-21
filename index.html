@@ -4340,6 +4340,17 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   border:0;
 }
 
+
+/* Native HLS featured video fills the same 16:9 shared player area. */
+.shared-network-featured-video{
+  position:absolute;
+  inset:0;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain;
+  background:#000;
+}
+
 </style>
 </head>
 
@@ -4931,7 +4942,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
         </div>
         <div class="network-card-scroll">
           <button class="network-show-card network-video-card" type="button"
-            onclick="openNetworkVideo('Salina vs. Southwest Kansas', 'https://www.dropbox.com/scl/fi/s92dq3gea55mmhad9d6dw/Salina-vs-SW-Kansas.mp4?rlkey=nild9783sb3kje6ai1io85gzo&st=erp6uchx&raw=1')">
+            onclick="openNetworkVideo('Salina vs. Southwest Kansas', 'https://d26sy7mkyef1xr.cloudfront.net/natfootball/6a34909df662a5ba885daa0c/cloud_hls/0_hd_hls.m3u8')">
             <div class="network-show-art network-episode-art">
               <span class="network-mini-play">▶</span>
             </div>
@@ -7493,41 +7504,42 @@ closeNetworkPreview = function(){
 
 
 /* =========================================================
-   NAL NETWORK — SHARED FEATURED VIDEO SOURCE
-   Home preview + Network Featured use this same source.
+   NAL NETWORK — SHARED FEATURED / LATEST CONTENT VIDEO
+   One source powers:
+   1) Home NAL Network Video 1
+   2) Network FEATURED
+   3) Newest item in LATEST CONTENT
 ========================================================= */
 const NETWORK_FEATURED = {
-  title: "NAL Network Featured",
-  embedUrl: "https://www.lightcast.com/embed/player.php?id=819893&channelId=72114"
+  title: "Latest NAL Network Content",
+  videoUrl: "https://d26sy7mkyef1xr.cloudfront.net/natfootball/6a34909df662a5ba885daa0c/cloud_hls/0_hd_hls.m3u8"
 };
 
-function createNetworkFeaturedEmbed() {
+function createNetworkFeaturedVideo() {
   const wrap = document.createElement("div");
   wrap.className = "shared-network-featured-embed";
-  wrap.innerHTML = `
-    <iframe
-      src="${NETWORK_FEATURED.embedUrl}"
-      title="${NETWORK_FEATURED.title}"
-      referrerpolicy="no-referrer-when-downgrade"
-      frameborder="0"
-      allow="fullscreen; picture-in-picture"
-      allowfullscreen
-      loading="lazy">
-    </iframe>`;
+
+  const video = document.createElement("video");
+  video.className = "shared-network-featured-video";
+  video.controls = true;
+  video.autoplay = false;
+  video.playsInline = true;
+  video.preload = "metadata";
+  video.src = NETWORK_FEATURED.videoUrl;
+
+  wrap.appendChild(video);
   return wrap;
 }
 
 function mountSharedNetworkFeaturedVideo() {
-  const selectors = [
+  [
     "#networkHomeFeaturedVideo",
     "#networkPageFeaturedVideo"
-  ];
-
-  selectors.forEach(selector => {
+  ].forEach(selector => {
     const host = document.querySelector(selector);
     if (!host) return;
     host.innerHTML = "";
-    host.appendChild(createNetworkFeaturedEmbed());
+    host.appendChild(createNetworkFeaturedVideo());
   });
 }
 
