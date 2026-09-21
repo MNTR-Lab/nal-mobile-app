@@ -3695,6 +3695,72 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   z-index:5 !important;
 }
 
+
+/* =========================================================
+   BOTTOM NAV — FINAL CENTER BUTTON / LABEL SPACING FIX
+   Screenshot showed the raised circle physically covering its label.
+========================================================= */
+
+/* Keep the circle raised, but reserve enough vertical room for its label. */
+.bottom-nav [data-page="watch"],
+.bottom-nav [data-page="network"],
+.bottom-nav .center-nav{
+  position:relative !important;
+  padding-top:0 !important;
+  overflow:visible !important;
+}
+
+/* Raised circle: icon only */
+.bottom-nav [data-page="watch"] .nav-icon,
+.bottom-nav [data-page="network"] .nav-icon,
+.bottom-nav .center-nav .nav-icon{
+  position:absolute !important;
+  left:50% !important;
+  top:-43px !important;
+  transform:translateX(-50%) !important;
+  margin:0 !important;
+  width:68px !important;
+  height:68px !important;
+  min-width:68px !important;
+  min-height:68px !important;
+  max-width:68px !important;
+  max-height:68px !important;
+  border-radius:50% !important;
+  box-sizing:border-box !important;
+  z-index:20 !important;
+}
+
+/* Label is independently positioned BELOW the complete circle. */
+.bottom-nav [data-page="watch"] .nav-label,
+.bottom-nav [data-page="network"] .nav-label,
+.bottom-nav .center-nav .nav-label,
+.bottom-nav .watch-label,
+.bottom-nav .network-label{
+  position:absolute !important;
+  left:50% !important;
+  top:35px !important;
+  transform:translateX(-50%) !important;
+  margin:0 !important;
+  width:max-content !important;
+  min-width:max-content !important;
+  max-width:none !important;
+  display:block !important;
+  overflow:visible !important;
+  clip:auto !important;
+  text-overflow:clip !important;
+  white-space:nowrap !important;
+  font-size:11px !important;
+  line-height:12px !important;
+  font-weight:950 !important;
+  z-index:30 !important;
+}
+
+/* Ensure bottom bar is tall enough for the separated label. */
+.bottom-nav{
+  min-height:82px !important;
+  overflow:visible !important;
+}
+
 </style>
 </head>
 
