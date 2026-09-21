@@ -2883,6 +2883,41 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   #homePage .section-title{font-size:18px !important;}
 }
 
+
+/* HOME TEAM CARDS — tighter, closer-to-square treatment */
+#homePage .team-home-card{
+  aspect-ratio: 1 / 1.08 !important;
+  min-height: 0 !important;
+  padding: 8px 6px 6px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+#homePage .team-home-logo-wrap{
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+#homePage .team-home-logo{
+  width: 74% !important;
+  height: 74% !important;
+  max-width: 78px !important;
+  max-height: 78px !important;
+  object-fit: contain !important;
+}
+#homePage .team-home-name{
+  min-height: 24px !important;
+  margin-top: 3px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1.05 !important;
+}
+
 </style>
 </head>
 
