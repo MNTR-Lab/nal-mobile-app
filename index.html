@@ -6345,7 +6345,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
 /* =========================================================
@@ -8564,7 +8563,7 @@ document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
 /* =========================================================
    LIVE NAL FAN POLL — SUPABASE
 ========================================================= */
-const NAL_POLL_SUPABASE_URL = "https://rcoaprzmutcwlpuogbry.supabase.co";
+const NAL_POLL_SUPABASE_URL = "https://rcoaprzmutcwlpugobry.supabase.co";
 const NAL_POLL_SUPABASE_KEY = "sb_publishable_tHzWH6oFoUemOrdLs_h9bw_UOLBP-yb";
 
 let activeFanPoll = null;
@@ -9353,100 +9352,6 @@ document.addEventListener("click", function(event){
   const url = NAL_HEADER_SOCIAL_LINKS[social.dataset.social];
   if (url) window.open(url, "_blank", "noopener,noreferrer");
 }, true);
-
-
-/* =========================================================
-   FAN POLL — OFFICIAL SUPABASE CLIENT OVERRIDE
-   ========================================================= */
-const nalPollClient = window.supabase.createClient(
-  NAL_POLL_SUPABASE_URL,
-  NAL_POLL_SUPABASE_KEY,
-  { auth:{ persistSession:false, autoRefreshToken:false, detectSessionInUrl:false } }
-);
-
-async function loadFanPoll(){
-  const questionEl=document.getElementById("fanPollQuestion");
-  const choicesEl=document.getElementById("fanPollChoices");
-  const resultsEl=document.getElementById("fanPollResults");
-  const submit=document.getElementById("fanPollSubmitButton");
-  if(questionEl) questionEl.textContent="Loading the current NAL fan poll…";
-  if(choicesEl) choicesEl.innerHTML="";
-  if(resultsEl) resultsEl.innerHTML="";
-  if(submit){ submit.disabled=true; submit.style.display=""; submit.textContent="SUBMIT VOTE"; }
-  try{
-    const p=await nalPollClient.from("polls").select("id,question").eq("status","active").order("id",{ascending:false}).limit(1);
-    if(p.error) throw p.error;
-    if(!p.data?.length) throw new Error("There is no active fan poll right now.");
-    activeFanPoll=p.data[0];
-
-    const o=await nalPollClient.from("poll_options")
-      .select("id,poll_id,option_name,image_url,display_order")
-      .eq("poll_id",activeFanPoll.id).order("display_order",{ascending:true});
-    if(o.error) throw o.error;
-    activeFanPollOptions=o.data||[];
-    selectedFanPollOptionId=null;
-    if(questionEl) questionEl.textContent=activeFanPoll.question;
-
-    if(localStorage.getItem(`nal_fan_poll_voted_${activeFanPoll.id}`)){
-      await renderFanPollResults();
-    }else{
-      renderFanPollChoices();
-    }
-  }catch(error){
-    console.error("NAL Fan Poll:",error);
-    if(questionEl) questionEl.textContent="Fan Poll";
-    if(choicesEl) choicesEl.innerHTML=`<div class="fan-poll-error">${String(error?.message||"Unable to load Fan Poll.")}</div>`;
-  }
-}
-
-async function submitFanPollVote(){
-  if(!activeFanPoll||!selectedFanPollOptionId)return;
-  const button=document.getElementById("fanPollSubmitButton");
-  if(button){button.disabled=true;button.textContent="SUBMITTING…";}
-  try{
-    const r=await nalPollClient.from("poll_votes").insert({
-      poll_id:activeFanPoll.id,
-      option_id:selectedFanPollOptionId,
-      voter_id:getFanPollVoterId()
-    });
-    if(r.error && r.error.code!=="23505") throw r.error;
-    localStorage.setItem(`nal_fan_poll_voted_${activeFanPoll.id}`,String(selectedFanPollOptionId));
-    await renderFanPollResults();
-  }catch(error){
-    console.error("NAL Fan Poll vote:",error);
-    if(button){button.disabled=false;button.textContent="SUBMIT VOTE";}
-    alert(error?.message||"Your vote could not be submitted.");
-  }
-}
-
-async function renderFanPollResults(){
-  const choices=document.getElementById("fanPollChoices");
-  const resultsEl=document.getElementById("fanPollResults");
-  const button=document.getElementById("fanPollSubmitButton");
-  if(choices)choices.innerHTML="";
-  if(button)button.style.display="none";
-  try{
-    const r=await nalPollClient.from("poll_results")
-      .select("option_id,poll_id,option_name,image_url,display_order,votes")
-      .eq("poll_id",activeFanPoll.id).order("display_order",{ascending:true});
-    if(r.error)throw r.error;
-    const rows=r.data||[];
-    const total=rows.reduce((n,x)=>n+Number(x.votes||0),0);
-    if(!resultsEl)return;
-    resultsEl.innerHTML=`<div class="fan-poll-total">${total} TOTAL VOTE${total===1?"":"S"}</div>`+
-      rows.map(x=>{
-        const v=Number(x.votes||0), pct=total?Math.round(v/total*100):0;
-        return `<div class="fan-poll-result-card">
-          <div class="fan-poll-result-team"><img src="${x.image_url||""}" alt=""><div>${x.option_name||""}</div></div>
-          <div class="fan-poll-result-numbers"><strong>${pct}%</strong><span>${v} vote${v===1?"":"s"}</span></div>
-          <div class="fan-poll-result-bar"><span style="width:${pct}%"></span></div>
-        </div>`;
-      }).join("");
-  }catch(error){
-    console.error("NAL Fan Poll results:",error);
-    if(resultsEl)resultsEl.innerHTML=`<div class="fan-poll-error">${String(error?.message||"Unable to load results.")}</div>`;
-  }
-}
 
 </script>
 </body>
