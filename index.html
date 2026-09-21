@@ -5194,6 +5194,41 @@ document.addEventListener("DOMContentLoaded", () => {
   color:currentColor;
 }
 
+
+/* TEAM HOME ICONS — locked sports icon set */
+#teamPage .team-menu-icon{
+  width:36px !important;
+  height:36px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  margin:0 auto 7px !important;
+  color:var(--team-primary,#07172b) !important;
+  font-size:0 !important;
+}
+#teamPage .team-menu-icon svg{
+  width:34px !important;
+  height:34px !important;
+  display:block !important;
+  overflow:visible !important;
+}
+#teamPage .team-menu-icon svg path,
+#teamPage .team-menu-icon svg rect,
+#teamPage .team-menu-icon svg circle{
+  fill:none !important;
+  stroke:currentColor !important;
+  stroke-width:3 !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+}
+#teamPage .team-menu-icon svg text{
+  fill:currentColor !important;
+  stroke:none !important;
+  font-family:Arial,sans-serif !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+}
+
 </style>
 </head>
 
@@ -5569,7 +5604,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type="button"
         data-team-link="schedule"
       >
-        <span class="team-menu-icon">▦</span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="7" y="11" width="34" height="30" rx="3"/><path d="M7 20h34M16 6v10M32 6v10M14 27h5M23 27h5M32 27h3M14 34h5M23 34h5M32 34h3"/></svg></span>
         <span class="team-menu-title">SCHEDULE</span>
       </button>
 
@@ -5578,7 +5613,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type="button"
         data-team-link="roster"
       >
-        <span class="team-menu-icon">♟</span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 8h20l7 8-6 25H13L7 16l7-8Z"/><path d="M18 8c1 5 11 5 12 0M7 16l9 5M41 16l-9 5"/><text x="24" y="32" text-anchor="middle">0</text></svg></span>
         <span class="team-menu-title">ROSTER</span>
       </button>
 
@@ -5605,7 +5640,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type="button"
         data-team-link="staff"
       >
-        <span class="team-menu-icon">●</span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 26v-4a14 14 0 0 1 28 0v4"/><rect x="6" y="23" width="8" height="14" rx="3"/><rect x="34" y="23" width="8" height="14" rx="3"/><path d="M38 37c0 4-4 5-9 5h-3"/><circle cx="24" cy="42" r="2"/></svg></span>
         <span class="team-menu-title">STAFF</span>
       </button>
 
@@ -5614,7 +5649,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type="button"
         data-team-link="tickets"
       >
-        <span class="team-menu-icon">▰</span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 14h32v8a5 5 0 0 0 0 10v8H8v-8a5 5 0 0 0 0-10v-8Z"/><path d="M25 14v5M25 24v5M25 34v6"/></svg></span>
         <span class="team-menu-title">TICKETS</span>
       </button>
 
@@ -7849,8 +7884,8 @@ function openTeamHome(team) {
       third: "#C0C0C0"
     },
     "salina-liberty": {
-      primary: "#3C3B6E",
-      accent: "#B22234",
+      primary: "#1b325a",
+      accent: "#e6252c",
       third: "#FFFFFF"
     },
     "sioux-city-bandits": {
@@ -7859,14 +7894,14 @@ function openTeamHome(team) {
       third: "#D4AF37"
     },
     "southwest-kansas-storm": {
-      primary: "#7FFF00",
-      accent: "#6F2DA8",
-      third: "#008C95"
+      primary: "#009eae",
+      accent: "#5fbb46",
+      third: "#6b2e8e"
     },
     "wheeling-miners": {
-      primary: "#C9D62E",
-      accent: "#2C2C2C",
-      third: "#F2E8D5"
+      primary: "#c7992c",
+      accent: "#020202",
+      third: "#8d8d8c"
     }
   };
 
@@ -8538,7 +8573,6 @@ let selectedFanPollOption = null;
 function fanPollHeaders(extra = {}){
   return {
     "apikey": NAL_POLL_SUPABASE_KEY,
-    "Authorization": "Bearer " + NAL_POLL_SUPABASE_KEY,
     "Accept": "application/json",
     ...extra
   };
@@ -8634,7 +8668,7 @@ async function loadActiveFanPoll(){
   try{
     const pollResponse = await fetch(
       `${NAL_POLL_SUPABASE_URL}/rest/v1/polls?status=eq.active&select=id,question&order=id.desc&limit=1`,
-      { headers: fanPollHeaders(), cache:"no-store" }
+      { method:"GET", mode:"cors", headers: fanPollHeaders(), cache:"no-store" }
     );
     if (!pollResponse.ok) {
       const detail = await pollResponse.text();
@@ -8648,7 +8682,7 @@ async function loadActiveFanPoll(){
 
     const optionResponse = await fetch(
       `${NAL_POLL_SUPABASE_URL}/rest/v1/poll_options?poll_id=eq.${activeFanPoll.id}&select=id,poll_id,option_name,image_url,display_order&order=display_order.asc`,
-      { headers: fanPollHeaders(), cache:"no-store" }
+      { method:"GET", mode:"cors", headers: fanPollHeaders(), cache:"no-store" }
     );
     if (!optionResponse.ok) throw new Error("Unable to load poll choices.");
     fanPollOptions = await optionResponse.json();
@@ -8661,7 +8695,10 @@ async function loadActiveFanPoll(){
   }catch(error){
     if (optionsHost) optionsHost.innerHTML = '<div class="fan-poll-loading">FAN POLL UNAVAILABLE</div>';
     if (submit) submit.hidden = true;
-    setFanPollStatus(error.message || "Unable to load the fan poll.", true);
+    const message = error && error.message ? error.message : "Unable to load the fan poll.";
+    setFanPollStatus(message === "Load failed" || message === "Failed to fetch"
+      ? "Unable to reach the Fan Poll server. Please refresh and try again."
+      : message, true);
   }
 }
 
@@ -8710,6 +8747,7 @@ async function submitFanPollVote(){
   try{
     const response = await fetch(`${NAL_POLL_SUPABASE_URL}/rest/v1/poll_votes`, {
       method:"POST",
+      mode:"cors",
       headers: fanPollHeaders({
         "Content-Type":"application/json",
         "Prefer":"return=minimal"
@@ -8752,7 +8790,7 @@ async function showFanPollResults(){
 
   const response = await fetch(
     `${NAL_POLL_SUPABASE_URL}/rest/v1/poll_results?poll_id=eq.${activeFanPoll.id}&select=option_id,poll_id,option_name,image_url,display_order,votes&order=display_order.asc`,
-    { headers: fanPollHeaders(), cache:"no-store" }
+    { method:"GET", mode:"cors", headers: fanPollHeaders(), cache:"no-store" }
   );
   if (!response.ok) throw new Error("Unable to load live poll results.");
 
