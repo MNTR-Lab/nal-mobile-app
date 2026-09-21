@@ -10692,9 +10692,37 @@ document.addEventListener("click", function(event){
   event.preventDefault();
   event.stopImmediatePropagation();
 
-  const team = activeTeam;
+  let team = activeTeam;
+
+  /* Team Home can remain visible after other app state changes.
+     If activeTeam is unavailable, resolve the displayed team back to the
+     existing FootballShift name/ID map so these buttons always remain live. */
+  if (!getTeamFootballShiftId(team)) {
+    const displayedName =
+      document.getElementById("teamName")?.textContent?.trim() ||
+      document.getElementById("teamFootballTitle")?.textContent
+        ?.replace(/\s+FOOTBALL\s*$/i, "")
+        ?.trim() ||
+      "";
+
+    const displayedKey = displayedName.toLowerCase();
+    const displayedId = TEAM_FOOTBALLSHIFT_NAME_IDS[displayedKey];
+
+    if (displayedId) {
+      team = {
+        name: displayedName,
+        slug: Object.keys(TEAM_FOOTBALLSHIFT_IDS)
+          .find(key => TEAM_FOOTBALLSHIFT_IDS[key] === displayedId) || "",
+        _appBrand: activeTeam?._appBrand
+      };
+    }
+  }
+
   const url = getTeamFootballShiftURL(team, destination);
-  if (!url) return;
+  if (!url) {
+    console.error("FootballShift route unavailable for", destination, team);
+    return;
+  }
 
   const titles = {
     schedule: "SCHEDULE",
