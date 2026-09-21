@@ -7296,7 +7296,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </section>
 
             <button class="fan-member-signout" id="fanSignOutButton" type="button">SIGN OUT</button>
-            <button class="fan-member-delete" type="button">DELETE MY ACCOUNT</button>
+            <button class="fan-member-delete" id="fanDeleteAccountButton" type="button">DELETE MY ACCOUNT</button>
           </div>
         </div>
 
@@ -11309,6 +11309,88 @@ document.getElementById("fanSignUpForm")?.addEventListener("submit", async funct
   } finally{
     submit.disabled = false;
     submit.textContent = "CREATE ACCOUNT";
+  }
+});
+
+document.getElementById("fanDeleteAccountButton")?.addEventListener("click", async function(){
+  if (!nalAccountUser){
+    setFanAccountMessage("Please sign in before requesting account deletion.", true);
+    return;
+  }
+
+  const displayName = nalAccountProfile?.display_name || "NAL Fan";
+  const accountEmail = nalAccountUser?.email || "";
+
+  const confirmed = window.confirm(
+    "Request deletion of your NAL Fan Account?\n\n" +
+    "This sends an account deletion request for review. Your account will NOT be deleted immediately. " +
+    "After the request is recorded, your email app will open with a prepared message to NAL App Support."
+  );
+  if (!confirmed) return;
+
+  const button = this;
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = "SUBMITTING REQUEST...";
+
+  try{
+    const client = getNalAccountClient();
+
+    const { data: existing, error: existingError } = await client
+      .from("account_deletion_requests")
+      .select("id,status,requested_at")
+      .eq("user_id", nalAccountUser.id)
+      .maybeSingle();
+
+    if (existingError) throw existingError;
+
+    if (!existing){
+      const { error: insertError } = await client
+        .from("account_deletion_requests")
+        .insert({
+          user_id: nalAccountUser.id,
+          status: "pending"
+        });
+
+      if (insertError) throw insertError;
+    } else if (existing.status !== "pending"){
+      throw new Error("A previous account deletion request already exists for this account.");
+    }
+
+    const subject = "NAL Fan Account Deletion Request";
+    const body = [
+      "NAL Fan Account Deletion Request",
+      "",
+      "Display Name: " + displayName,
+      "Account Email: " + accountEmail,
+      "",
+      "I am requesting deletion of my NAL Fan Account.",
+      "",
+      "This request was initiated while signed in to the account."
+    ].join("\n");
+
+    setFanAccountMessage(
+      existing
+        ? "Your account deletion request is already pending. Opening your email app so you can contact NAL App Support."
+        : "Your account deletion request has been recorded. Opening your email app so you can contact NAL App Support.",
+      false
+    );
+
+    window.location.href =
+      "mailto:appsupport@thenationalarenaleague.com?subject=" +
+      encodeURIComponent(subject) +
+      "&body=" +
+      encodeURIComponent(body);
+
+  } catch(error){
+    console.error("NAL account deletion request error:", error);
+    setFanAccountMessage(
+      "We could not submit your account deletion request. Please try again.",
+      true
+    );
+  } finally{
+    button.disabled = false;
+    button.textContent = originalText;
   }
 });
 
