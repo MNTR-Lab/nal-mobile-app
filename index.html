@@ -5458,29 +5458,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>REAL FANS. REAL PASSION. ONE LEAGUE.</p>
       </header>
 
-      <button class="fan-zone-poll-card" type="button" onclick="openFanZoneFeature('poll')">
-        <span class="fan-zone-tag">FAN POLL</span>
-        <h2>WHO ARE YOU MOST LOOKING FORWARD TO SEEING THIS SEASON?</h2>
-        <p>Cast your vote and see how NAL fans are responding.</p>
-        <span class="fan-zone-action red">VOTE NOW <b>›</b></span>
-      </button>
-
-      <div class="fan-zone-grid">
-        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('pickem')">
-          <span class="fan-zone-icon">✓</span>
-          <h3>PICK 'EM</h3>
-          <p>Make your weekly game picks and see how you stack up against NAL fans.</p>
-          <span class="fan-zone-link">MAKE YOUR PICKS <b>›</b></span>
-        </button>
-
-        <button class="fan-zone-card" type="button" onclick="openFanPhotosGallery()">
-          <span class="fan-zone-icon">▣</span>
-          <h3>FAN PHOTOS &amp; VIDEOS</h3>
-          <p>See approved photos and videos submitted by NAL fans across the league.</p>
-          <span class="fan-zone-link">VIEW FAN MEDIA <b>›</b></span>
-        </button>
-      </div>
-
       <section class="fan-photo-week">
         <div class="fan-photo-week-heading">
           <div>
@@ -5509,6 +5486,29 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       </section>
+
+      <div class="fan-zone-grid">
+        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('pickem')">
+          <span class="fan-zone-icon">✓</span>
+          <h3>PICK 'EM</h3>
+          <p>Make your weekly game picks and see how you stack up against NAL fans.</p>
+          <span class="fan-zone-link">MAKE YOUR PICKS <b>›</b></span>
+        </button>
+
+        <button class="fan-zone-card" type="button" onclick="openFanPhotosGallery()">
+          <span class="fan-zone-icon">▣</span>
+          <h3>FAN PHOTOS &amp; VIDEOS</h3>
+          <p>See approved photos and videos submitted by NAL fans across the league.</p>
+          <span class="fan-zone-link">VIEW FAN MEDIA <b>›</b></span>
+        </button>
+      </div>
+
+      <button class="fan-zone-poll-card" type="button" onclick="openFanZoneFeature('poll')">
+        <span class="fan-zone-tag">FAN POLL</span>
+        <h2>WHO ARE YOU MOST LOOKING FORWARD TO SEEING THIS SEASON?</h2>
+        <p>Cast your vote and see how NAL fans are responding.</p>
+        <span class="fan-zone-action red">VOTE NOW <b>›</b></span>
+      </button>
 
       <button class="fan-zone-forum" type="button" onclick="openFanZoneFeature('forum')">
         <span class="fan-zone-forum-icon">•••</span>
@@ -5960,6 +5960,7 @@ function showPage(pageId) {
 
   pages.forEach(page => {
     page.classList.remove("active");
+    page.style.display = "none";
   });
 
   const page =
@@ -5968,6 +5969,7 @@ function showPage(pageId) {
     );
 
   if (page) {
+    page.style.display = "block";
     page.classList.add("active");
   }
 
@@ -8322,6 +8324,10 @@ function openFanPhotosGallery(){
     page.style.display = "block";
     page.classList.add("active");
   }
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
+  const fanNav = document.querySelector('.bottom-nav .nav-button[data-page="fanPage"]');
+  if (fanNav) fanNav.classList.add("active");
+
   window.scrollTo(0,0);
   loadFanMediaGallery();
 }
@@ -8332,13 +8338,44 @@ function closeFanPhotosGallery(){
     gallery.classList.remove("active");
     gallery.style.display = "none";
   }
-  const fanZone = document.getElementById("fanZonePage");
+  const fanZone = document.getElementById("fanPage");
   if(fanZone){
     fanZone.style.display = "block";
     fanZone.classList.add("active");
   }
+
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
+  const fanNav = document.querySelector('.bottom-nav .nav-button[data-page="fanPage"]');
+  if (fanNav) fanNav.classList.add("active");
+
   window.scrollTo(0,0);
 }
+
+
+/* HOME NEXT GAMES — VIEW ALL
+   Uses the exact same NAL Schedule destination as the Schedule quick-action. */
+document.addEventListener("click", function(event){
+  const button = event.target.closest("#viewAllScheduleButton");
+  if (!button) return;
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+
+  openArticle(
+    LEAGUE_SCHEDULE_URL,
+    {
+      mode: "team",
+      title: "NAL SCHEDULE",
+      subtitle: "SEASON X",
+      loadingText: "LOADING NAL SCHEDULE",
+      brand: {
+        primary: "#07172b",
+        accent: "#e31b23"
+      },
+      navPage: "homePage"
+    }
+  );
+}, true);
 
 </script>
 </body>
