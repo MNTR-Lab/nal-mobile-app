@@ -5,8 +5,18 @@
     "type": "Photo/Image",
     "name": "Brandon",
     "caption": "MNTR+",
-    "featured": "Not Featured",
+    "featured": "Featured",
     "date": "2026-09-21",
     "media": "assets/fan-media/13091953205-3260855050.png"
+  },
+  {
+    "id": "13092599623",
+    "assetId": "3261093013",
+    "type": "Photo/Image",
+    "name": "JK Personal Touch",
+    "caption": "Colorado @ Omaha",
+    "featured": "Featured",
+    "date": "2026-09-21",
+    "media": "assets/fan-media/13092599623-3261093013.jpg"
   }
 ]
