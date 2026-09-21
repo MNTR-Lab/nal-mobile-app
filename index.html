@@ -3383,6 +3383,17 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   text-transform: uppercase !important;
 }
 
+
+#teamsPage .teams-load-message{
+  grid-column: 1 / -1;
+  padding: 28px 12px;
+  text-align: center;
+  color: rgba(255,255,255,.62);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
 </style>
 </head>
 
@@ -5383,70 +5394,70 @@ const TEAM_LOGO_OVERRIDES = {"amarillo-warbirds": "https://cdn.shopify.com/s/fil
 
 function getTeamLogo(team) {
   if (!team) return NAL_LOGO;
-  return TEAM_LOGO_OVERRIDES[team.slug] || getTeamLogo(team);
+  return TEAM_LOGO_OVERRIDES[team.slug] || team.logo || NAL_LOGO;
 }
 
+let nalTeams = [];
+
 async function loadNALTeams() {
-  const teamsContainer = document.getElementById("teamsScroll");
-
-  if (!teamsContainer) return;
-
   try {
-    const response = await fetch("data/teams.json");
+    const response = await fetch("data/teams.json", { cache: "no-store" });
 
     if (!response.ok) {
       throw new Error("Unable to load teams.json");
     }
 
     const teamData = await response.json();
-    const teams = teamData.teams || [];
+    nalTeams = Array.isArray(teamData) ? teamData : (teamData.teams || []);
 
-    teamsContainer.innerHTML = "";
+    /* Home carousel was intentionally removed.
+       If a teams container ever exists elsewhere, it can still render here. */
+    const teamsContainer = document.getElementById("teamsScroll");
 
-    teams.forEach((team) => {
-      const card = document.createElement("div");
+    if (teamsContainer) {
+      teamsContainer.innerHTML = "";
 
-      card.className = "team-home-card";
-      card.dataset.team = team.slug;
+      nalTeams.forEach((team) => {
+        const card = document.createElement("div");
+        card.className = "team-home-card";
+        card.dataset.team = team.slug;
 
-      card.innerHTML = `
-        <div class="team-home-logo-area">
-          <img
-            class="team-home-logo"
-            src="${getTeamLogo(team)}"
-            alt="${team.name}"
-            loading="lazy"
-          >
-        </div>
+        card.innerHTML = `
+          <div class="team-home-logo-area">
+            <img
+              class="team-home-logo"
+              src="${getTeamLogo(team)}"
+              alt="${escapeHTML(team.name || "")}"
+              loading="lazy"
+            >
+          </div>
+          <div class="team-home-name">${escapeHTML(team.name || "")}</div>
+        `;
 
-        <div class="team-home-name">
-          ${team.name}
-        </div>
-      `;
-
-      card.addEventListener("click", () => {
-        openTeam(team.slug);
+        card.addEventListener("click", () => openTeamHome(team));
+        teamsContainer.appendChild(card);
       });
+    }
 
-      teamsContainer.appendChild(card);
-    });
+    /* If the user is already on the Teams directory, populate it immediately. */
+    const teamsPage = document.getElementById("teamsPage");
+    if (teamsPage && teamsPage.style.display !== "none") {
+      renderTeamsDirectory();
+    }
 
   } catch (error) {
     console.error("NAL Teams could not be loaded:", error);
 
-    teamsContainer.innerHTML = `
-      <div style="
-        padding:20px;
-        color:#7b8490;
-        font-size:11px;
-        font-weight:800;
-      ">
-        TEAMS CURRENTLY UNAVAILABLE
-      </div>
-    `;
+    const grid = document.getElementById("teamsDirectoryGrid");
+    if (grid) {
+      grid.innerHTML = `
+        <div class="teams-load-message">
+          TEAMS CURRENTLY UNAVAILABLE
+        </div>
+      `;
+    }
   }
 }
-
 
 /* =========================================================
    TEAM NEWS — LOAD FROM data/team-news/[team-slug].json
@@ -6363,18 +6374,27 @@ function closeTeamHome() {
 /* Load teams when the app starts */
 loadNALTeams();
 
-function openTeamsPage(){
+async function openTeamsPage(){
   ["homePage","scoresPage","watchPage","fanZonePage","shopPage","teamPage","articlePage"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = "none";
   });
+
   document.querySelectorAll(".app-page").forEach(page => page.style.display = "none");
+
   const page = document.getElementById("teamsPage");
-  if (page) {
-    page.style.display = "block";
-    renderTeamsDirectory();
-    window.scrollTo(0, 0);
+  if (!page) return;
+
+  page.style.display = "block";
+  window.scrollTo(0, 0);
+
+  if (!Array.isArray(nalTeams) || nalTeams.length === 0) {
+    const grid = document.getElementById("teamsDirectoryGrid");
+    if (grid) grid.innerHTML = `<div class="teams-load-message">LOADING TEAMS…</div>`;
+    await loadNALTeams();
   }
+
+  renderTeamsDirectory();
 }
 
 function renderTeamsDirectory(){
