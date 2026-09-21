@@ -7766,6 +7766,8 @@ function openTeamHome(team) {
   });
 
 
+  /* Teams directory uses inline display states, so explicitly restore Team Home. */
+  teamPage.style.display = "block";
   teamPage.classList.add(
     "active"
   );
@@ -7828,7 +7830,9 @@ function closeTeamHome() {
   teamPage.classList.remove(
     "active"
   );
+  teamPage.style.display = "none";
 
+  homePage.style.display = "block";
   homePage.classList.add(
     "active"
   );
@@ -8425,6 +8429,98 @@ document.addEventListener("click", function(event){
   }
 
   openTeamHome(team);
+}, true);
+
+
+/* =========================================================
+   TEAM HOME — STABLE FOOTBALLSHIFT ROUTING
+   Do not depend on teams.json containing a footballShift object.
+========================================================= */
+const TEAM_FOOTBALLSHIFT_IDS = {
+  "amarillo-warbirds": "566773",
+  "dallas-apex": "680252",
+  "louisiana-rouxgaroux": "573852",
+  "omaha-beef": "566774",
+  "pueblo-punishers": "577047",
+  "salina-liberty": "600411",
+  "sioux-city-bandits": "570666",
+  "southwest-kansas-storm": "600414",
+  "wheeling-miners": "707897"
+};
+
+const NAL_STANDINGS_URL =
+  "https://www.thenationalarenaleague.com/stats#/1200/standings?render=division&division_id=41958";
+
+function getTeamFootballShiftURL(team, destination){
+  if (!team) return "";
+
+  const id = TEAM_FOOTBALLSHIFT_IDS[team.slug];
+  if (!id) return "";
+
+  const base = "https://www.thenationalarenaleague.com/stats#/1200/team/" + id;
+
+  if (destination === "schedule") return base + "/schedule";
+  if (destination === "roster") return base + "/roster";
+  if (destination === "stats") return base + "/stats";
+  if (destination === "standings") return NAL_STANDINGS_URL;
+
+  return "";
+}
+
+/* Authoritative Team Home menu routing.
+   Capture phase prevents older missing teams.json URLs from swallowing clicks. */
+document.addEventListener("click", function(event){
+  const button = event.target.closest("#teamPage [data-team-link]");
+  if (!button) return;
+
+  const destination = button.dataset.teamLink;
+
+  /* Staff/Tickets keep their existing handlers/data until their destinations are supplied. */
+  if (destination === "staff" || destination === "tickets") return;
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+
+  const team = activeTeam;
+  const url = getTeamFootballShiftURL(team, destination);
+  if (!url) return;
+
+  const titles = {
+    schedule: "SCHEDULE",
+    roster: "ROSTER",
+    stats: "STATS",
+    standings: "STANDINGS"
+  };
+
+  const title = titles[destination] || destination.toUpperCase();
+  const brand = team?._appBrand || {primary:"#07172b", accent:"#e31b23"};
+
+  openArticle(url, {
+    mode: "team",
+    title: title,
+    subtitle: team?.name || "NAL TEAM",
+    loadingText: "LOADING " + title,
+    brand: brand,
+    navPage: "homePage"
+  });
+}, true);
+
+/* Ensure Football section is visible for every FootballShift-supported team,
+   even when teams.json does not contain the old footballShift property. */
+document.addEventListener("click", function(event){
+  const card = event.target.closest("#teamsDirectoryGrid .teams-directory-card");
+  if (!card) return;
+
+  setTimeout(function(){
+    const team = activeTeam;
+    const grid = document.querySelector("#teamPage .team-menu-grid");
+    const section = grid?.closest(".team-section");
+    const nextGame = document.querySelector("#teamPage .team-coming-soon")?.closest(".team-section");
+    const supported = !!TEAM_FOOTBALLSHIFT_IDS[team?.slug];
+
+    if (section) section.style.display = supported ? "" : "none";
+    if (nextGame) nextGame.style.display = supported ? "" : "none";
+  }, 0);
 }, true);
 
 </script>
