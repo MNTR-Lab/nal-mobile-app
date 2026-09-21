@@ -4413,6 +4413,43 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   object-fit:contain;
 }
 
+
+/* =========================================================
+   FAN ZONE LANDING PAGE
+========================================================= */
+#fanPage{background:#07172b;min-height:100vh;padding-bottom:100px;}
+.fan-zone-shell{max-width:1200px;margin:0 auto;padding:22px 16px 28px;color:#fff;box-sizing:border-box;}
+.fan-zone-header{padding:4px 2px 18px;border-bottom:3px solid #e31b23;margin-bottom:16px;}
+.fan-zone-kicker{color:#9eb0c4;font-size:10px;font-weight:900;letter-spacing:2px;margin-bottom:5px;}
+.fan-zone-header h1{margin:0;font-size:38px;line-height:1;font-style:italic;font-weight:1000;}
+.fan-zone-header p{margin:8px 0 0;color:#d8e1ea;font-size:11px;font-weight:850;letter-spacing:1.7px;}
+.fan-zone-poll-card,.fan-zone-card,.fan-zone-forum{font:inherit;color:#fff;text-align:left;cursor:pointer;}
+.fan-zone-poll-card{position:relative;width:100%;min-height:270px;padding:22px;border:1px solid #31577f;border-radius:18px;overflow:hidden;background:radial-gradient(circle at 86% 30%,rgba(227,27,35,.38),transparent 28%),linear-gradient(125deg,#07172b 12%,#102b4e 72%,#07172b);box-shadow:0 14px 30px rgba(0,0,0,.22);}
+.fan-zone-poll-card:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,12,24,.2),transparent);pointer-events:none;}
+.fan-zone-poll-card>*{position:relative;z-index:1;}
+.fan-zone-tag{display:inline-block;padding:7px 12px;border-radius:7px;background:#e31b23;font-size:12px;font-weight:950;letter-spacing:.7px;}
+.fan-zone-poll-card h2{max-width:690px;margin:16px 0 8px;font-size:clamp(25px,5vw,42px);line-height:1;font-style:italic;font-weight:1000;}
+.fan-zone-poll-card p{margin:0 0 20px;color:#dbe5ef;font-size:14px;}
+.fan-zone-action{display:inline-flex;align-items:center;gap:18px;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:950;}
+.fan-zone-action.red{background:#e31b23;}
+.fan-zone-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px;}
+.fan-zone-card{min-height:210px;padding:18px;border:1px solid #31577f;border-radius:16px;background:linear-gradient(145deg,#102b4e,#081a30);display:flex;flex-direction:column;}
+.fan-zone-icon{width:44px;height:44px;border:2px solid rgba(255,255,255,.9);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:15px;font-size:23px;font-weight:950;}
+.fan-zone-card h3{margin:0 0 8px;font-size:19px;line-height:1;font-weight:1000;}
+.fan-zone-card p{margin:0;color:#cbd6e2;font-size:12px;line-height:1.45;}
+.fan-zone-link{margin-top:auto;padding-top:17px;color:#fff;font-size:10px;font-weight:950;letter-spacing:.5px;display:flex;justify-content:space-between;align-items:center;}
+.fan-zone-forum{width:100%;min-height:175px;margin-top:12px;padding:20px;border:1px solid #31577f;border-radius:16px;background:radial-gradient(circle at 90% 50%,rgba(227,27,35,.25),transparent 27%),linear-gradient(115deg,#07172b,#12345b);display:flex;gap:16px;align-items:flex-start;}
+.fan-zone-forum-icon{flex:0 0 54px;height:46px;border:2px solid #fff;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:950;}
+.fan-zone-forum-copy{display:flex;flex-direction:column;flex:1;}
+.fan-zone-forum-copy small{color:#e31b23;font-size:9px;font-weight:950;letter-spacing:1.4px;}
+.fan-zone-forum-copy strong{margin:3px 0 7px;font-size:25px;font-weight:1000;}
+.fan-zone-forum-copy>span{color:#cbd6e2;font-size:12px;line-height:1.45;}
+.fan-zone-forum-copy em{margin-top:16px;color:#fff;font-size:10px;font-style:normal;font-weight:950;letter-spacing:.5px;}
+.fan-zone-secondary .fan-zone-card{min-height:175px;background:linear-gradient(145deg,#0d2745,#07172b);}
+.fan-zone-powered{min-height:58px;margin-top:22px;padding-top:17px;border-top:1px solid #29496a;display:flex;align-items:center;justify-content:center;gap:9px;color:#94a6b8;font-size:9px;font-weight:900;letter-spacing:1px;}
+.fan-zone-powered img{height:23px;width:auto;max-width:100px;object-fit:contain;}
+@media(max-width:520px){.fan-zone-shell{padding:18px 12px 24px}.fan-zone-header h1{font-size:34px}.fan-zone-poll-card{min-height:290px;padding:19px}.fan-zone-grid{gap:9px}.fan-zone-card{min-height:220px;padding:15px}.fan-zone-card h3{font-size:16px}.fan-zone-forum{padding:17px;gap:12px}}
+
 </style>
 </head>
 
@@ -5117,25 +5154,71 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   </section>
 </main>
 
-  <!-- =====================================================
+<!-- =====================================================
        FAN ZONE
   ====================================================== -->
+  <main id="fanPage" class="app-page fan-zone-page">
+    <div class="fan-zone-shell">
+      <header class="fan-zone-header">
+        <div class="fan-zone-kicker">NATIONAL ARENA LEAGUE</div>
+        <h1>FAN ZONE</h1>
+        <p>REAL FANS. REAL PASSION. ONE LEAGUE.</p>
+      </header>
 
-  <main
-    id="fanPage"
-    class="app-page placeholder-page"
-  >
+      <button class="fan-zone-poll-card" type="button" onclick="openFanZoneFeature('poll')">
+        <span class="fan-zone-tag">FAN POLL</span>
+        <h2>WHO ARE YOU MOST LOOKING FORWARD TO SEEING THIS SEASON?</h2>
+        <p>Cast your vote and see how NAL fans are responding.</p>
+        <span class="fan-zone-action red">VOTE NOW <b>›</b></span>
+      </button>
 
-    <div class="placeholder-card">
+      <div class="fan-zone-grid">
+        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('pickem')">
+          <span class="fan-zone-icon">✓</span>
+          <h3>PICK 'EM</h3>
+          <p>Make your weekly game picks and see how you stack up against NAL fans.</p>
+          <span class="fan-zone-link">MAKE YOUR PICKS <b>›</b></span>
+        </button>
 
-      <h2>Fan Zone</h2>
+        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('media')">
+          <span class="fan-zone-icon">▣</span>
+          <h3>FAN PHOTOS &amp; VIDEOS</h3>
+          <p>Share your NAL experience. Submit photos and videos for a chance to be featured.</p>
+          <span class="fan-zone-link">UPLOAD MEDIA <b>›</b></span>
+        </button>
+      </div>
 
-      <p>
-        The NAL fan community, polls, discussions and gameday rooms are coming soon.
-      </p>
+      <button class="fan-zone-forum" type="button" onclick="openFanZoneFeature('forum')">
+        <span class="fan-zone-forum-icon">•••</span>
+        <span class="fan-zone-forum-copy">
+          <small>NAL COMMUNITY</small>
+          <strong>FAN FORUM</strong>
+          <span>Talk NAL football with fans across the league. Game day discussion, team talk and more.</span>
+          <em>JOIN THE CONVERSATION ›</em>
+        </span>
+      </button>
 
+      <div class="fan-zone-grid fan-zone-secondary">
+        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('fanweek')">
+          <span class="fan-zone-icon">★</span>
+          <h3>FAN OF THE WEEK</h3>
+          <p>Show us your NAL pride for a chance to be featured.</p>
+          <span class="fan-zone-link">LEARN MORE <b>›</b></span>
+        </button>
+
+        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('contests')">
+          <span class="fan-zone-icon">♛</span>
+          <h3>CONTESTS &amp; GIVEAWAYS</h3>
+          <p>Special promotions, prizes and exclusive experiences for NAL fans.</p>
+          <span class="fan-zone-link">COMING SOON</span>
+        </button>
+      </div>
+
+      <div class="fan-zone-powered">
+        <span>APP POWERED BY:</span>
+        <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_3b6b2c6f-797b-4d5c-a870-65cdda47fba9.png?v=1782385986" alt="MNTR+">
+      </div>
     </div>
-
   </main>
 
 
@@ -7605,6 +7688,20 @@ function mountSharedNetworkFeaturedVideo() {
 
 document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
 
+
+
+/* Fan Zone feature placeholders — each becomes a real module next. */
+function openFanZoneFeature(feature){
+  const labels={
+    poll:"Fan Poll",
+    pickem:"Pick 'Em",
+    media:"Fan Photos & Videos",
+    forum:"Fan Forum",
+    fanweek:"Fan of the Week",
+    contests:"Contests & Giveaways"
+  };
+  alert((labels[feature] || "Fan Zone") + " — feature setup is next.");
+}
 
 </script>
 </body>
