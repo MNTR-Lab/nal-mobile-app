@@ -3533,6 +3533,43 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   }
 }
 
+
+/* =========================================================
+   BOTTOM NAV — NAL NETWORK CENTER BUTTON REFINEMENT
+========================================================= */
+
+/* Force the red play control to remain a true circle */
+.bottom-nav .watch-button,
+.bottom-nav .network-button,
+.bottom-nav [data-page="watch"] .nav-icon,
+.bottom-nav [data-page="network"] .nav-icon,
+.bottom-nav .center-nav .nav-icon{
+  width:56px !important;
+  height:56px !important;
+  min-width:56px !important;
+  min-height:56px !important;
+  max-width:56px !important;
+  max-height:56px !important;
+  aspect-ratio:1 / 1 !important;
+  border-radius:50% !important;
+  padding:0 !important;
+  flex:0 0 56px !important;
+  box-sizing:border-box !important;
+}
+
+/* Make NAL NETWORK easier to read beneath the center play button */
+.bottom-nav .watch-label,
+.bottom-nav .network-label,
+.bottom-nav [data-page="watch"] .nav-label,
+.bottom-nav [data-page="network"] .nav-label,
+.bottom-nav .center-nav .nav-label{
+  font-size:10px !important;
+  line-height:1.05 !important;
+  font-weight:950 !important;
+  letter-spacing:.15px !important;
+  white-space:nowrap !important;
+}
+
 </style>
 </head>
 
