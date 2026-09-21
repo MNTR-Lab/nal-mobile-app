@@ -8523,6 +8523,73 @@ document.addEventListener("click", function(event){
   }, 0);
 }, true);
 
+
+/* =========================================================
+   GLOBAL BOTTOM NAV — WORKS FROM TEAM HOME + ALL SUBPAGES
+   This is the authoritative five-button router.
+========================================================= */
+document.addEventListener("click", function(event){
+  const button = event.target.closest(".bottom-nav .nav-button");
+  if (!button) return;
+
+  const pageId = button.dataset.page;
+  if (!pageId) return;
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+
+  /* Close Team Home and all app extension pages before routing. */
+  document.querySelectorAll(".app-page").forEach(page => {
+    page.classList.remove("active");
+    page.style.display = "none";
+  });
+
+  const teamPage = document.getElementById("teamPage");
+  if (teamPage) {
+    teamPage.classList.remove("active");
+    teamPage.style.display = "none";
+  }
+
+  if (articleFrame && articleFrame.src !== "about:blank") {
+    articleFrame.src = "about:blank";
+  }
+
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(nav => {
+    nav.classList.remove("active");
+  });
+  button.classList.add("active");
+
+  if (pageId === "scoresPage") {
+    openArticle(SCORES_URL, {
+      mode: "team",
+      title: "NAL SCORES",
+      subtitle: "SEASON X",
+      loadingText: "LOADING NAL SCORES",
+      brand: { primary:"#07172b", accent:"#e31b23" },
+      navPage: "scoresPage"
+    });
+    return;
+  }
+
+  if (pageId === "watchPage") {
+    showPage("watchPage");
+    return;
+  }
+
+  if (pageId === "fanPage") {
+    showPage("fanPage");
+    return;
+  }
+
+  if (pageId === "shopPage") {
+    showPage("shopPage");
+    return;
+  }
+
+  /* HOME */
+  showPage("homePage");
+}, true);
+
 </script>
 </body>
 </html>
