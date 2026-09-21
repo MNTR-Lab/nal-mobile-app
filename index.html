@@ -7490,16 +7490,23 @@ function openTeamHome(team) {
 
         if (team.website) {
 
-          openArticle(
+          /* Open the club's official website outside the NAL app page. */
+          const teamSiteWindow = window.open(
             team.website,
-            {
-              mode: "team",
-              title: "TEAM HOME",
-              subtitle: team.name || shortName,
-              loadingText: `LOADING ${team.name || shortName}`,
-              brand: brand
-            }
+            "_blank",
+            "noopener,noreferrer"
           );
+
+          /* Fallback for browsers/webviews that block window.open. */
+          if (!teamSiteWindow) {
+            const teamSiteLink = document.createElement("a");
+            teamSiteLink.href = team.website;
+            teamSiteLink.target = "_blank";
+            teamSiteLink.rel = "noopener noreferrer";
+            document.body.appendChild(teamSiteLink);
+            teamSiteLink.click();
+            teamSiteLink.remove();
+          }
 
         } else {
 
