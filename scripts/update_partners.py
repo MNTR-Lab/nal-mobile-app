@@ -9,6 +9,10 @@ from urllib.request import Request, urlopen
 PARTNERS_URL = "https://www.thenationalarenaleague.com/partners"
 OUTPUT_FILE = Path("data/partners.json")
 
+ASSET_BASE = (
+    "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/"
+)
+
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -33,11 +37,6 @@ def download_page(url):
 
 
 def find_sponsor_settings(source):
-    """
-    Find the widget-sponsors article and extract its
-    HTML-encoded data-settings attribute.
-    """
-
     pattern = re.compile(
         r'<article\b[^>]*class=["\'][^"\']*widget-sponsors[^"\']*["\']'
         r'[^>]*data-settings=["\'](.*?)["\']',
@@ -51,16 +50,10 @@ def find_sponsor_settings(source):
             "Could not locate the sponsor data-settings block."
         )
 
-    encoded_settings = match.group(1)
-
-    # Convert &quot; and other HTML entities back into
-    # normal JSON characters.
-    decoded_settings = html.unescape(encoded_settings)
-
-    return decoded_settings
+    return html.unescape(match.group(1))
 
 
-def parse_partner_entries(settings_text):
+def parse_settings(settings_text):
     try:
         settings = json.loads(settings_text)
     except json.JSONDecodeError as exc:
@@ -78,24 +71,56 @@ def parse_partner_entries(settings_text):
     return entries
 
 
-def build_logo_url(photo_id):
+def extract_photo_paths(source):
     """
-    DigitalShift sponsor images use the photo UUID in the
-    generated image path. The rendered site exposes the
-    final image as a grid.png asset.
+    The sponsor widget also contains ctrl.photos data.
+
+    Each photo record contains the real DigitalShift image
+    path, for example:
+
+    photo UUID -> p-OTHER-UUID/1755860346-grid.png
+
+    Capture those mappings directly from the page.
     """
 
+    decoded_source = html.unescape(source)
+
+    photo_paths = {}
+
+    pattern = re.compile(
+        r'"([0-9a-fA-F-]{36})"\s*:\s*\{'
+        r'.{0,500}?'
+        r'"path"\s*:\s*"([^"]+)"',
+        re.S,
+    )
+
+    for match in pattern.finditer(decoded_source):
+        photo_id = match.group(1)
+        path = match.group(2)
+
+        if path:
+            photo_paths[photo_id.lower()] = path
+
+    return photo_paths
+
+
+def build_logo_url(photo_id, photo_paths):
     if not photo_id:
         return ""
 
     photo_id = str(photo_id).strip()
 
-    return (
-        "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/"
-        f"pw/{photo_id}/"
-        f"p-{photo_id}/"
-        "1755860346-grid.png"
+    path = photo_paths.get(
+        photo_id.lower(),
+        "",
     )
+
+    if not path:
+        return ""
+
+    path = path.lstrip("/")
+
+    return ASSET_BASE + path
 
 
 def normalize_url(value):
@@ -110,9 +135,29 @@ def normalize_url(value):
     return urljoin(PARTNERS_URL, value)
 
 
+def clean_name(name):
+    if not name:
+        return "NAL Partner"
+
+    name = str(name).strip()
+
+    # Some records may contain a URL in the name field.
+    # We don't need that for the app.
+    if name.startswith("http://") or name.startswith("https://"):
+        return "NAL Partner"
+
+    return name or "NAL Partner"
+
+
 def extract_partners(source):
     settings_text = find_sponsor_settings(source)
-    entries = parse_partner_entries(settings_text)
+    entries = parse_settings(settings_text)
+
+    photo_paths = extract_photo_paths(source)
+
+    print(
+        f"Found {len(photo_paths)} DigitalShift photo path(s)."
+    )
 
     partners = []
     seen = set()
@@ -123,20 +168,21 @@ def extract_partners(source):
 
         photo_id = entry.get("photo_id")
         website = normalize_url(entry.get("url"))
-        name = entry.get("name")
+        name = clean_name(entry.get("name"))
 
         if not photo_id or not website:
             continue
 
-        logo = build_logo_url(photo_id)
+        logo = build_logo_url(
+            photo_id,
+            photo_paths,
+        )
 
-        # The NAL site's partner records often have name=null.
-        # We keep a clean fallback name so the app always has
-        # something usable for accessibility/debugging.
-        if name:
-            name = str(name).strip()
-        else:
-            name = "NAL Partner"
+        if not logo:
+            print(
+                f"WARNING: No image path found for {photo_id}"
+            )
+            continue
 
         key = (
             str(photo_id).lower(),
@@ -210,9 +256,6 @@ def main():
         f"Found {len(partners)} valid partner(s)."
     )
 
-    # Safety check:
-    # If the website structure changes or suddenly returns
-    # too few partners, do NOT destroy the last good feed.
     if len(partners) < 4:
         print("")
         print(
@@ -242,7 +285,7 @@ def main():
         print(
             f"{number}. "
             f"{partner['url']} | "
-            f"{partner['photo_id']}"
+            f"{partner['logo']}"
         )
 
 
