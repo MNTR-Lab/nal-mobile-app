@@ -6011,6 +6011,19 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-admin-error{color:#b31921}
 .fan-admin-meta{display:block!important;white-space:normal!important;line-height:1.35}
 .fan-admin-status-suspended,.fan-admin-status-banned{color:#b31921!important;font-weight:900}
+.fan-admin-user{cursor:pointer}
+.fan-admin-detail{display:none;margin-top:12px}.fan-admin-detail.show{display:block}
+.fan-admin-detail-head{background:linear-gradient(135deg,#07172b,#102b4e);color:#fff;border-radius:15px;padding:16px;display:flex;align-items:center;gap:12px}
+.fan-admin-detail-avatar{width:48px;height:48px;border-radius:50%;background:#e31b23;color:#fff;display:grid;place-items:center;font-size:19px;font-weight:1000;flex:0 0 auto}
+.fan-admin-detail-head b{display:block;font-size:15px}.fan-admin-detail-head span{display:block;color:#c6d1df;font-size:9px;margin-top:3px}
+.fan-admin-detail-close{margin-left:auto;border:0;background:transparent;color:#fff;font-size:23px;cursor:pointer;padding:4px}
+.fan-admin-detail-grid{margin-top:9px;background:#fff;border:1px solid #dfe4eb;border-radius:15px;overflow:hidden}
+.fan-admin-detail-row{padding:12px 14px;border-bottom:1px solid #edf0f4}.fan-admin-detail-row:last-child{border-bottom:0}
+.fan-admin-detail-row span{display:block;color:#78879a;font-size:8px;font-weight:1000;letter-spacing:.8px}.fan-admin-detail-row strong{display:block;margin-top:4px;color:#07172b;font-size:12px;overflow-wrap:anywhere}
+.fan-admin-actions-preview{margin-top:9px;background:#fff;border:1px solid #dfe4eb;border-radius:15px;padding:13px 14px}
+.fan-admin-actions-preview h4{margin:0 0 8px;font-size:10px;letter-spacing:1px}.fan-admin-actions-preview p{margin:0;color:#78879a;font-size:9px;line-height:1.45}
+.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}
+
 </style>
 </head>
 
@@ -7236,6 +7249,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 <input class="fan-admin-search" id="fanAdminUserSearch" type="search" placeholder="Search by display name or email">
                 <div id="fanAdminUsersList">
                   <div class="fan-admin-loading">Open User Management to load registered members.</div>
+                </div>
+                <div class="fan-admin-detail" id="fanAdminMemberDetail">
+                  <div class="fan-admin-detail-head">
+                    <div class="fan-admin-detail-avatar" id="fanAdminDetailInitial">N</div>
+                    <div><b id="fanAdminDetailName">NAL FAN</b><span id="fanAdminDetailSummary">MEMBER DETAILS</span></div>
+                    <button class="fan-admin-detail-close" id="fanAdminDetailClose" type="button" aria-label="Close member details">×</button>
+                  </div>
+                  <div class="fan-admin-detail-grid">
+                    <div class="fan-admin-detail-row"><span>DISPLAY NAME</span><strong id="fanAdminDetailDisplayName">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>EMAIL ADDRESS</span><strong id="fanAdminDetailEmail">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>FAVORITE TEAM</span><strong id="fanAdminDetailFavorite">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>ROLE</span><strong id="fanAdminDetailRole">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>ACCOUNT STATUS</span><strong id="fanAdminDetailStatus">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>JOIN DATE</span><strong id="fanAdminDetailJoined">—</strong></div>
+                  </div>
+                  <div class="fan-admin-actions-preview">
+                    <h4>ADMIN ACTIONS</h4>
+                    <p>Read-only for this step. Secure administrative actions will be connected separately after member details are verified.</p>
+                    <div class="fan-admin-action-chips">
+                      <span class="fan-admin-action-chip">CHANGE ROLE</span>
+                      <span class="fan-admin-action-chip">SUSPEND</span>
+                      <span class="fan-admin-action-chip">BAN</span>
+                      <span class="fan-admin-action-chip">RESTORE</span>
+                      <span class="fan-admin-action-chip">DELETE ACCOUNT</span>
+                    </div>
+                  </div>
                 </div>
                 <p class="fan-admin-note">Member information is loaded through the secure admin-only Supabase function. Administrative actions will be added separately with server-side permission verification.</p>
               </div>
@@ -11371,6 +11410,40 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
       list.innerHTML = '<div class="fan-admin-error">We could not load the member list. Please confirm you are signed in with an active Admin account.</div>';
     }
   }
+
+  function openAdminMemberDetail(member){
+    if (!member || nalAccountProfile?.role !== "admin") return;
+    const detail = document.getElementById("fanAdminMemberDetail");
+    const name = member.display_name || "NAL FAN";
+    const status = member.account_status || "active";
+    const role = member.role || "fan";
+    const set = function(id,value){
+      const el=document.getElementById(id);
+      if(el) el.textContent=value || "—";
+    };
+    set("fanAdminDetailInitial",(name.trim().charAt(0)||"N").toUpperCase());
+    set("fanAdminDetailName",name);
+    set("fanAdminDetailSummary",String(role).toUpperCase()+" • "+String(status).toUpperCase());
+    set("fanAdminDetailDisplayName",name);
+    set("fanAdminDetailEmail",member.email);
+    set("fanAdminDetailFavorite",member.favorite_team || "Not selected");
+    set("fanAdminDetailRole",String(role).toUpperCase());
+    set("fanAdminDetailStatus",String(status).toUpperCase());
+    set("fanAdminDetailJoined",formatAdminDate(member.created_at) || "—");
+    detail?.classList.add("show");
+    setTimeout(function(){detail?.scrollIntoView({behavior:"smooth",block:"nearest"});},30);
+  }
+
+  list?.addEventListener("click",function(event){
+    const row=event.target.closest(".fan-admin-user[data-member-id]");
+    if(!row) return;
+    const member=adminMembers.find(function(item){return String(item.id)===String(row.dataset.memberId);});
+    openAdminMemberDetail(member);
+  });
+
+  document.getElementById("fanAdminDetailClose")?.addEventListener("click",function(){
+    document.getElementById("fanAdminMemberDetail")?.classList.remove("show");
+  });
 
   search?.addEventListener("input", renderAdminMembers);
 
