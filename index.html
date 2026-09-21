@@ -4450,6 +4450,135 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 .fan-zone-powered img{height:23px;width:auto;max-width:100px;object-fit:contain;}
 @media(max-width:520px){.fan-zone-shell{padding:18px 12px 24px}.fan-zone-header h1{font-size:34px}.fan-zone-poll-card{min-height:290px;padding:19px}.fan-zone-grid{gap:9px}.fan-zone-card{min-height:220px;padding:15px}.fan-zone-card h3{font-size:16px}.fan-zone-forum{padding:17px;gap:12px}}
 
+
+/* =========================================================
+   FAN PHOTO OF THE WEEK
+========================================================= */
+.fan-photo-week{
+  margin-top:14px;
+  padding:18px;
+  border:1px solid #31577f;
+  border-radius:18px;
+  background:linear-gradient(145deg,#102b4e,#07172b);
+}
+.fan-photo-week-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+}
+.fan-photo-week-heading>div>span{
+  color:#9eb0c4;
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:1.4px;
+}
+.fan-photo-week-heading h2{
+  margin:3px 0 0;
+  color:#fff;
+  font-size:20px;
+  line-height:1;
+  font-style:italic;
+  font-weight:1000;
+}
+.fan-photo-week-badge{
+  flex:0 0 auto;
+  padding:6px 8px;
+  border-radius:6px;
+  background:#e31b23;
+  color:#fff;
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:.6px;
+}
+.fan-photo-week-card{
+  overflow:hidden;
+  border-radius:14px;
+  background:#fff;
+  color:#07172b;
+}
+.fan-photo-week-image{
+  position:relative;
+  width:100%;
+  aspect-ratio:16 / 9;
+  overflow:hidden;
+  background:linear-gradient(135deg,#142d4d,#07172b);
+}
+.fan-photo-week-image img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.fan-photo-week-placeholder{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  text-align:center;
+}
+.fan-photo-camera{
+  margin-bottom:7px;
+  font-size:34px;
+  opacity:.85;
+}
+.fan-photo-week-placeholder strong{
+  font-size:19px;
+  font-weight:1000;
+  letter-spacing:1px;
+}
+.fan-photo-week-placeholder small{
+  margin-top:3px;
+  color:#aebdcb;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.3px;
+}
+.fan-photo-week-info{
+  padding:15px;
+}
+.fan-photo-week-team{
+  display:inline-block;
+  margin-bottom:4px;
+  color:#e31b23;
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:1px;
+}
+.fan-photo-week-info h3{
+  margin:0;
+  color:#07172b;
+  font-size:22px;
+  line-height:1;
+  font-weight:1000;
+}
+.fan-photo-week-info p{
+  margin:8px 0 14px;
+  color:#52657a;
+  font-size:12px;
+  line-height:1.4;
+}
+.fan-photo-submit-button{
+  width:100%;
+  padding:11px 14px;
+  border:0;
+  border-radius:8px;
+  background:#e31b23;
+  color:#fff;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.6px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+}
+.fan-photo-submit-button b{font-size:18px;}
+
 </style>
 </head>
 
@@ -5198,21 +5327,52 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
         </span>
       </button>
 
-      <div class="fan-zone-grid fan-zone-secondary">
-        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('fanweek')">
-          <span class="fan-zone-icon">★</span>
-          <h3>FAN OF THE WEEK</h3>
-          <p>Show us your NAL pride for a chance to be featured.</p>
-          <span class="fan-zone-link">LEARN MORE <b>›</b></span>
-        </button>
+      
+      <section class="fan-photo-week">
+        <div class="fan-photo-week-heading">
+          <div>
+            <span>FROM THE NAL COMMUNITY</span>
+            <h2>FAN PHOTO OF THE WEEK</h2>
+          </div>
+          <span class="fan-photo-week-badge">FEATURED FAN</span>
+        </div>
 
+        <div class="fan-photo-week-card">
+          <div class="fan-photo-week-image" id="fanPhotoWeekImage">
+            <div class="fan-photo-week-placeholder">
+              <span class="fan-photo-camera">▣</span>
+              <strong>FAN PHOTO</strong>
+              <small>WEEKLY FEATURE IMAGE</small>
+            </div>
+          </div>
+
+          <div class="fan-photo-week-info">
+            <span class="fan-photo-week-team" id="fanPhotoWeekTeam">NAL FAN</span>
+            <h3 id="fanPhotoWeekName">FAN NAME</h3>
+            <p id="fanPhotoWeekCaption">Your Fan Photo of the Week caption will appear here.</p>
+            <button type="button" class="fan-photo-submit-button" onclick="openFanZoneFeature('media')">
+              SUBMIT YOUR PHOTO <b>›</b>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="fan-zone-grid fan-zone-secondary">
         <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('contests')">
           <span class="fan-zone-icon">♛</span>
           <h3>CONTESTS &amp; GIVEAWAYS</h3>
           <p>Special promotions, prizes and exclusive experiences for NAL fans.</p>
           <span class="fan-zone-link">COMING SOON</span>
         </button>
+
+        <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('media')">
+          <span class="fan-zone-icon">▣</span>
+          <h3>SHARE YOUR NAL MOMENT</h3>
+          <p>Your submission could become the next Fan Photo of the Week.</p>
+          <span class="fan-zone-link">SUBMIT MEDIA <b>›</b></span>
+        </button>
       </div>
+
 
       <div class="fan-zone-powered">
         <span>APP POWERED BY:</span>
@@ -7702,6 +7862,40 @@ function openFanZoneFeature(feature){
   };
   alert((labels[feature] || "Fan Zone") + " — feature setup is next.");
 }
+
+
+/* =========================================================
+   FAN PHOTO OF THE WEEK
+   Temporary placeholder configuration.
+   Later this can be fed from the approved Monday workflow.
+========================================================= */
+const FAN_PHOTO_OF_WEEK = {
+  imageUrl: "",
+  fanName: "FAN NAME",
+  team: "NAL FAN",
+  caption: "Your Fan Photo of the Week caption will appear here."
+};
+
+function renderFanPhotoOfWeek(){
+  const imageHost = document.getElementById("fanPhotoWeekImage");
+  const name = document.getElementById("fanPhotoWeekName");
+  const team = document.getElementById("fanPhotoWeekTeam");
+  const caption = document.getElementById("fanPhotoWeekCaption");
+
+  if (name) name.textContent = FAN_PHOTO_OF_WEEK.fanName;
+  if (team) team.textContent = FAN_PHOTO_OF_WEEK.team;
+  if (caption) caption.textContent = FAN_PHOTO_OF_WEEK.caption;
+
+  if (imageHost && FAN_PHOTO_OF_WEEK.imageUrl){
+    imageHost.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = FAN_PHOTO_OF_WEEK.imageUrl;
+    img.alt = FAN_PHOTO_OF_WEEK.fanName + " — Fan Photo of the Week";
+    imageHost.appendChild(img);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", renderFanPhotoOfWeek);
 
 </script>
 </body>
