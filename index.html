@@ -4322,67 +4322,6 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 }
 
 
-
-/* =========================================================
-   BOTTOM NAV — FINAL MOBILE ALIGNMENT
-   1) Raise the four standard destinations for balanced padding.
-   2) Keep NAL Network centered in its own 20% column.
-   3) Force NAL Network to two centered lines so it cannot
-      collide with Fan Zone.
-========================================================= */
-
-/* Raise HOME / SCORES / FAN ZONE / NAL SHOP as complete groups. */
-.bottom-nav .nav-button:not(.watch-button){
-  transform:translateY(-6px) !important;
-}
-
-/* Center the larger Network group in its own column. */
-.bottom-nav .watch-button{
-  transform:translateY(-6px) !important;
-  justify-content:center !important;
-  align-items:center !important;
-  text-align:center !important;
-}
-
-/* Two-line Network label stays inside the center 20% column. */
-.bottom-nav .watch-button > span.network-two-line{
-  display:block !important;
-  width:100% !important;
-  max-width:100% !important;
-  white-space:normal !important;
-  text-align:center !important;
-  font-size:10.8px !important;
-  line-height:.92 !important;
-  font-weight:900 !important;
-  letter-spacing:0 !important;
-  margin:0 !important;
-  padding:0 !important;
-}
-
-/* Keep the TV/play artwork itself centered directly over its label. */
-.bottom-nav .watch-button .watch-icon{
-  margin-left:auto !important;
-  margin-right:auto !important;
-  align-self:center !important;
-}
-
-
-/* FINAL NAL NETWORK VERTICAL SPACING
-   Raise the complete center item so its top/bottom white-space
-   visually matches the other four navigation destinations. */
-.bottom-nav .watch-button{
-  transform:translateY(-13px) !important;
-}
-
-
-/* TEAM MENU ICON SVGs */
-.team-menu-icon svg{
-  width:1em;
-  height:1em;
-  display:block;
-  margin:auto;
-  overflow:visible;
-}
 /* Shared Lightcast Featured Video — 16:9 responsive player */
 .shared-network-featured-embed{
   position:relative;
@@ -4510,6 +4449,24 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 .fan-zone-powered{min-height:58px;margin-top:22px;padding-top:17px;border-top:1px solid #29496a;display:flex;align-items:center;justify-content:center;gap:9px;color:#94a6b8;font-size:9px;font-weight:900;letter-spacing:1px;}
 .fan-zone-powered img{height:23px;width:auto;max-width:100px;object-fit:contain;}
 @media(max-width:520px){.fan-zone-shell{padding:18px 12px 24px}.fan-zone-header h1{font-size:34px}.fan-zone-poll-card{min-height:290px;padding:19px}.fan-zone-grid{gap:9px}.fan-zone-card{min-height:220px;padding:15px}.fan-zone-card h3{font-size:16px}.fan-zone-forum{padding:17px;gap:12px}}
+
+
+
+
+/* =========================================================
+   FAN MEDIA UPLOAD — MONDAY FORM
+========================================================= */
+#fanUploadPage{background:#07172b;min-height:100vh;padding-bottom:100px;color:#fff;}
+.fan-upload-shell{max-width:600px;margin:0 auto;padding:16px 12px 28px;}
+.fan-upload-back{border:0;background:transparent;color:#fff;font-size:11px;font-weight:950;letter-spacing:.7px;cursor:pointer;padding:8px 2px 14px;}
+.fan-upload-head{border-bottom:3px solid #e31b23;padding:0 2px 16px;margin-bottom:14px;}
+.fan-upload-kicker{color:#e31b23;font-size:9px;font-weight:950;letter-spacing:1.7px;margin-bottom:5px;}
+.fan-upload-head h1{margin:0;font-size:31px;line-height:.98;font-style:italic;font-weight:1000;}
+.fan-upload-head p{margin:8px 0 0;color:#cbd6e2;font-size:11px;line-height:1.45;}
+.fan-upload-form-card{overflow:hidden;border:1px solid #31577f;border-radius:18px;background:#fff;box-shadow:0 14px 30px rgba(0,0,0,.24);}
+.fan-upload-form-card iframe{display:block;width:100%;height:760px;border:0;background:#fff;}
+.fan-upload-note{padding:13px 8px 0;color:#94a6b8;text-align:center;font-size:9px;line-height:1.45;}
+@media(max-width:520px){.fan-upload-shell{padding:14px 10px 24px}.fan-upload-head h1{font-size:28px}.fan-upload-form-card iframe{height:780px;}}
 
 
 /* =========================================================
@@ -5016,7 +4973,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
         type="button"
         data-team-link="schedule"
       >
-        <span class="team-menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 3v4M17 3v4M3 9h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 13h2M11 13h2M15 13h2M7 17h2M11 17h2M15 17h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span class="team-menu-icon">▦</span>
         <span class="team-menu-title">SCHEDULE</span>
       </button>
 
@@ -5025,17 +4982,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
         type="button"
         data-team-link="roster"
       >
-        <span class="team-menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true">
-  <path d="M8 4 5 5.5 2.5 9 6 11v9h12v-9l3.5-2L19 5.5 16 4c-.8 1.5-2.2 2.3-4 2.3S8.8 5.5 8 4Z"
-        fill="none" stroke="currentColor" stroke-width="1.8"
-        stroke-linejoin="round"/>
-  <text x="12" y="16.2"
-        text-anchor="middle"
-        font-size="8.2"
-        font-weight="900"
-        font-family="Arial, sans-serif"
-        fill="currentColor">0</text>
-</svg></span>
+        <span class="team-menu-icon">♟</span>
         <span class="team-menu-title">ROSTER</span>
       </button>
 
@@ -5062,7 +5009,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
         type="button"
         data-team-link="staff"
       >
-        <span class="team-menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-2a8 8 0 0 1 16 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="3" y="12" width="4" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="17" y="12" width="4" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 19c0 2-2 2-4 2h-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span class="team-menu-icon">●</span>
         <span class="team-menu-title">STAFF</span>
       </button>
 
@@ -5071,7 +5018,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
         type="button"
         data-team-link="tickets"
       >
-        <span class="team-menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16a1 1 0 0 1 1 1v3a2.5 2.5 0 0 0 0 5v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2a2.5 2.5 0 0 0 0-5V7a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13 8v2M13 14v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span class="team-menu-icon">▰</span>
         <span class="team-menu-title">TICKETS</span>
       </button>
 
@@ -5448,6 +5395,30 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 
 
   <!-- =====================================================
+       FAN MEDIA UPLOAD
+  ====================================================== -->
+  <main id="fanUploadPage" class="app-page" style="display:none;">
+    <div class="fan-upload-shell">
+      <button class="fan-upload-back" type="button" onclick="closeFanMediaUpload()">‹ BACK TO FAN ZONE</button>
+      <header class="fan-upload-head">
+        <div class="fan-upload-kicker">NATIONAL ARENA LEAGUE</div>
+        <h1>SHARE YOUR NAL MOMENT</h1>
+        <p>Send us your favorite NAL photo or video for a chance to be featured across official league media.</p>
+      </header>
+      <div class="fan-upload-form-card">
+        <iframe
+          src="https://forms.monday.com/forms/embed/58441dee2709648b132d0e2c87242aea?r=use1"
+          title="NAL Fan Photo and Video Upload"
+          loading="lazy"
+          allow="camera; microphone"
+        ></iframe>
+      </div>
+      <p class="fan-upload-note">Submitted content is reviewed by the National Arena League before being featured.</p>
+    </div>
+  </main>
+
+
+  <!-- =====================================================
        SHOP
   ====================================================== -->
 
@@ -5663,7 +5634,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
       </div>
 
     
-      <span class="network-two-line">NAL<br>NETWORK</span>
+      <span>NAL NETWORK</span>
     </button>
 
 
@@ -7244,8 +7215,8 @@ function openTeamHome(team) {
       third: "#C0C0C0"
     },
     "salina-liberty": {
-      primary:"#1b325a",
-      accent:"#e6252c",
+      primary: "#3C3B6E",
+      accent: "#B22234",
       third: "#FFFFFF"
     },
     "sioux-city-bandits": {
@@ -7254,14 +7225,14 @@ function openTeamHome(team) {
       third: "#D4AF37"
     },
     "southwest-kansas-storm": {
-      primary:"#009eae",
-      accent:"#5fbb46",
-      third:"#6b2e8e"
+      primary: "#7FFF00",
+      accent: "#6F2DA8",
+      third: "#008C95"
     },
     "wheeling-miners": {
-      primary:"#c7992c",
-      accent:"#020202",
-      third:"#8d8d8c"
+      primary: "#C9D62E",
+      accent: "#2C2C2C",
+      third: "#F2E8D5"
     }
   };
 
@@ -7500,23 +7471,16 @@ function openTeamHome(team) {
 
         if (team.website) {
 
-          /* Open the club's official website outside the NAL app page. */
-          const teamSiteWindow = window.open(
+          openArticle(
             team.website,
-            "_blank",
-            "noopener,noreferrer"
+            {
+              mode: "team",
+              title: "TEAM HOME",
+              subtitle: team.name || shortName,
+              loadingText: `LOADING ${team.name || shortName}`,
+              brand: brand
+            }
           );
-
-          /* Fallback for browsers/webviews that block window.open. */
-          if (!teamSiteWindow) {
-            const teamSiteLink = document.createElement("a");
-            teamSiteLink.href = team.website;
-            teamSiteLink.target = "_blank";
-            teamSiteLink.rel = "noopener noreferrer";
-            document.body.appendChild(teamSiteLink);
-            teamSiteLink.click();
-            teamSiteLink.remove();
-          }
 
         } else {
 
@@ -7609,21 +7573,6 @@ function openTeamHome(team) {
   });
 
 
-  /* The Teams directory uses inline display states.
-     Clear them before showing the selected Team Home page. */
-  document.querySelectorAll(".app-page").forEach(page => {
-    if (page !== teamPage) {
-      page.classList.remove("active");
-      page.style.display = "none";
-    }
-  });
-
-  const teamsDirectoryPage = document.getElementById("teamsPage");
-  if (teamsDirectoryPage) {
-    teamsDirectoryPage.style.display = "none";
-  }
-
-  teamPage.style.display = "block";
   teamPage.classList.add(
     "active"
   );
@@ -7687,18 +7636,6 @@ function closeTeamHome() {
     "active"
   );
 
-  /* Team directory/team routing uses inline display states.
-     Explicitly restore Home when the NAL HOME button is pressed. */
-  teamPage.style.display = "none";
-
-  document.querySelectorAll(".app-page").forEach(page => {
-    if (page !== homePage) {
-      page.classList.remove("active");
-      page.style.display = "none";
-    }
-  });
-
-  homePage.style.display = "block";
   homePage.classList.add(
     "active"
   );
@@ -7951,15 +7888,58 @@ document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
 
 /* Fan Zone feature placeholders — each becomes a real module next. */
 function openFanZoneFeature(feature){
+  if (feature === "media") {
+    openFanMediaUpload();
+    return;
+  }
+
   const labels={
     poll:"Fan Poll",
     pickem:"Pick 'Em",
-    media:"Fan Photos & Videos",
     forum:"Fan Forum",
     fanweek:"Fan of the Week",
     contests:"Contests & Giveaways"
   };
   alert((labels[feature] || "Fan Zone") + " — feature setup is next.");
+}
+
+function openFanMediaUpload(){
+  document.querySelectorAll(".app-page").forEach(page => {
+    page.classList.remove("active");
+    page.style.display = "none";
+  });
+
+  const uploadPage = document.getElementById("fanUploadPage");
+  if (uploadPage) {
+    uploadPage.style.display = "block";
+    uploadPage.classList.add("active");
+  }
+
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
+  const fanNav = document.querySelector('.bottom-nav .nav-button[data-page="fanPage"]');
+  if (fanNav) fanNav.classList.add("active");
+
+  window.scrollTo(0, 0);
+}
+
+function closeFanMediaUpload(){
+  const uploadPage = document.getElementById("fanUploadPage");
+  if (uploadPage) {
+    uploadPage.classList.remove("active");
+    uploadPage.style.display = "none";
+  }
+
+  const fanPage = document.getElementById("fanPage");
+  if (fanPage) {
+    fanPage.style.display = "block";
+    fanPage.classList.add("active");
+  }
+
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
+  const fanNav = document.querySelector('.bottom-nav .nav-button[data-page="fanPage"]');
+  if (fanNav) fanNav.classList.add("active");
+
+  window.scrollTo(0, 0);
 }
 
 
@@ -7995,106 +7975,6 @@ function renderFanPhotoOfWeek(){
 }
 
 document.addEventListener("DOMContentLoaded", renderFanPhotoOfWeek);
-
-
-/* =========================================================
-   BOTTOM NAV — HARD ROUTING FIX
-   Keeps the five persistent navigation buttons usable from
-   Home, Team Directory, Team Home, Article Viewer and Network.
-   ========================================================= */
-document.addEventListener("click", function(event){
-  const button = event.target.closest(".bottom-nav .nav-button[data-page]");
-  if (!button) return;
-
-  event.preventDefault();
-  event.stopPropagation();
-  event.stopImmediatePropagation();
-
-  const pageId = button.dataset.page;
-
-  /* Clear stale page display states created by special views. */
-  document.querySelectorAll(".app-page").forEach(page => {
-    page.classList.remove("active");
-    page.style.display = "none";
-  });
-
-  const teamsPage = document.getElementById("teamsPage");
-  if (teamsPage) {
-    teamsPage.classList.remove("active");
-    teamsPage.style.display = "none";
-  }
-
-  const teamPage = document.getElementById("teamPage");
-  if (teamPage) {
-    teamPage.classList.remove("active");
-    teamPage.style.display = "none";
-  }
-
-  /* Stop any FootballShift/news page that may still be loaded. */
-  if (typeof articleFrame !== "undefined" && articleFrame && articleFrame.src !== "about:blank") {
-    articleFrame.src = "about:blank";
-  }
-
-  /* Update persistent navigation highlight. */
-  document.querySelectorAll(".bottom-nav .nav-button").forEach(nav => {
-    nav.classList.toggle("active", nav === button);
-  });
-
-  /* SCORES intentionally uses the existing in-app FootballShift viewer. */
-  if (pageId === "scoresPage") {
-    openArticle(
-      SCORES_URL,
-      {
-        mode: "team",
-        title: "NAL SCORES",
-        subtitle: "SEASON X",
-        loadingText: "LOADING NAL SCORES",
-        brand: {
-          primary: "#07172b",
-          accent: "#e31b23"
-        },
-        navPage: "scoresPage"
-      }
-    );
-    return;
-  }
-
-  const destination = document.getElementById(pageId);
-  if (!destination) {
-    console.warn("Bottom navigation destination not found:", pageId);
-    return;
-  }
-
-  destination.style.display = "block";
-  destination.classList.add("active");
-
-  /* Preserve existing Shop lazy-load behavior. */
-  if (
-    pageId === "shopPage" &&
-    typeof shopFrame !== "undefined" &&
-    shopFrame &&
-    shopFrame.src === "about:blank"
-  ) {
-    shopFrame.src = SHOP_URL;
-  }
-
-  /* Network always opens on its Home tab. */
-  if (pageId === "watchPage" && typeof switchNetworkTab === "function") {
-    switchNetworkTab("home");
-  }
-
-  if (pageId === "homePage") {
-    requestAnimationFrame(() => {
-      window.scrollTo({
-        top: (typeof homeScrollPosition === "number" ? homeScrollPosition : 0),
-        left: 0,
-        behavior: "instant"
-      });
-    });
-  } else {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }
-}, true);
 
 </script>
 </body>
