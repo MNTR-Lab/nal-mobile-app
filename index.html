@@ -3202,6 +3202,74 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   transform: none !important;
 }
 
+
+/* =========================================================
+   OFFICIAL PARTNERS — COMPACT 16:9 SWIPE RAIL
+========================================================= */
+#homePage .home-partners{
+  margin: 22px 0 8px !important;
+  padding: 0 !important;
+}
+
+#homePage .home-partners .home-section-heading{
+  padding: 0 16px 10px !important;
+}
+
+#homePage .home-partners .home-section-heading h2{
+  margin: 0 !important;
+}
+
+#homePage .partner-scroll{
+  display: flex !important;
+  gap: 10px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 0 16px 4px !important;
+  scroll-snap-type: x proximity !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+}
+
+#homePage .partner-scroll::-webkit-scrollbar{
+  display: none !important;
+}
+
+#homePage .partner-card{
+  flex: 0 0 40% !important;
+  aspect-ratio: 16 / 9 !important;
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+  scroll-snap-align: start !important;
+  text-decoration: none !important;
+}
+
+#homePage .partner-card img{
+  display: block !important;
+  width: 88% !important;
+  height: 78% !important;
+  max-width: 88% !important;
+  max-height: 78% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  margin: auto !important;
+}
+
+#homePage .partner-swipe-hint{
+  padding: 5px 16px 0 !important;
+  color: rgba(255,255,255,.58) !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.2px !important;
+  text-align: right !important;
+}
+
 </style>
 </head>
 
@@ -3445,14 +3513,31 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
     </section>
 
     <!-- PARTNERS -->
-    <section class="future-section">
-      <div class="section-header">
-        <div class="section-title">Official Partners</div>
-      </div>
-      <div class="future-placeholder">
-        OFFICIAL NATIONAL ARENA LEAGUE PARTNERS
-      </div>
-    </section>
+    
+<section class="home-partners" id="partnersSection">
+  <div class="home-section-heading">
+    <h2>OFFICIAL PARTNERS</h2>
+  </div>
+  <div class="partner-scroll" aria-label="Official National Arena League partners">
+    <a class="partner-card" href="https://www.snhu.edu/" target="_blank" rel="noopener noreferrer" aria-label="SNHU">
+  <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SNHU_Desktop_Header.svg?v=1789956389" alt="SNHU" loading="lazy">
+</a>
+<a class="partner-card" href="https://scrippsnetworks.com/" target="_blank" rel="noopener noreferrer" aria-label="Scripps Sports">
+  <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Scripp_Sports.png?v=1789956429" alt="Scripps Sports" loading="lazy">
+</a>
+<a class="partner-card" href="https://www.begoativated.com/" target="_blank" rel="noopener noreferrer" aria-label="GOAT Sports">
+  <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Primary_Watermark.png?v=1789956504" alt="GOAT Sports" loading="lazy">
+</a>
+<a class="partner-card" href="https://www.vetthevote.org/" target="_blank" rel="noopener noreferrer" aria-label="Vet the Vote">
+  <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/vet-the-vote.png?v=1789956650" alt="Vet the Vote" loading="lazy">
+</a>
+<a class="partner-card" href="https://www.vettix.org/visitor/home" target="_blank" rel="noopener noreferrer" aria-label="Vet Tix">
+  <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/VetTix-Logo.png?v=1789956733" alt="Vet Tix" loading="lazy">
+</a>
+  </div>
+  <div class="partner-swipe-hint">SWIPE TO EXPLORE →</div>
+</section>
+
 
   </main>
 
