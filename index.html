@@ -5474,6 +5474,107 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================================
+   NAL LEGAL — TERMS OF USE
+========================================================= */
+#fanTermsPage,
+#fanGuidelinesPage,
+#fanPrivacyPage{
+  display:none;
+  min-height:calc(100vh - var(--header-height));
+  padding-bottom:100px;
+  background:#f3f5f8;
+  color:#07172b;
+}
+.fan-legal-shell{
+  width:min(760px,100%);
+  margin:0 auto;
+  padding:18px 16px 36px;
+  box-sizing:border-box;
+}
+.fan-legal-back{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:#07172b;
+  padding:7px 0 14px;
+  font:inherit;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+.fan-legal-card{
+  overflow:hidden;
+  border:1px solid #dbe1e8;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 12px 32px rgba(7,23,43,.10);
+}
+.fan-legal-head{
+  padding:24px 22px 20px;
+  color:#fff;
+  background:linear-gradient(145deg,#07172b,#102b4e);
+  border-bottom:4px solid #e31b23;
+}
+.fan-legal-kicker{
+  color:#aebdcd;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+.fan-legal-head h1{
+  margin:7px 0 7px;
+  font-size:28px;
+  line-height:1;
+  font-weight:1000;
+  font-style:italic;
+}
+.fan-legal-meta{
+  margin:0;
+  color:#dbe4ee;
+  font-size:12px;
+  font-weight:800;
+}
+.fan-legal-body{
+  padding:22px;
+  font-size:14px;
+  line-height:1.65;
+}
+.fan-legal-body h2{
+  margin:24px 0 8px;
+  color:#07172b;
+  font-size:17px;
+  line-height:1.25;
+  font-weight:1000;
+}
+.fan-legal-body h2:first-child{margin-top:0;}
+.fan-legal-body p{margin:0 0 12px;}
+.fan-legal-body ul{margin:8px 0 14px;padding-left:21px;}
+.fan-legal-body li{margin:5px 0;}
+.fan-legal-contact{
+  margin-top:24px;
+  padding:16px;
+  border-radius:12px;
+  background:#f3f5f8;
+  font-weight:800;
+}
+.fan-legal-return{
+  width:100%;
+  margin-top:20px;
+}
+.fan-legal-link{
+  appearance:none;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#0b5cad;
+  font:inherit;
+  font-weight:900;
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+/* =========================================================
    NAL FAN ACCOUNT — SIGN IN / CREATE ACCOUNT
 ========================================================= */
 #fanAccountPage{
@@ -5842,6 +5943,117 @@ document.addEventListener("DOMContentLoaded", () => {
     font-size:8px !important;
     letter-spacing:0 !important;
   }
+}
+
+
+/* =========================================================
+   NAL MEMBER ACCOUNT — PROFILE DASHBOARD
+   Added only for the authenticated member account view.
+========================================================= */
+.fan-member-dashboard{padding:0;text-align:left}
+.fan-member-hero{background:linear-gradient(135deg,#07172b,#102b4e);padding:22px 18px;color:#fff;display:flex;align-items:center;gap:15px}
+.fan-member-avatar{width:76px;height:76px;border-radius:50%;background:#e31b23;border:3px solid #fff;display:grid;place-items:center;position:relative;overflow:hidden;cursor:pointer;flex:0 0 auto;color:#fff;font-size:29px;font-weight:1000}
+.fan-member-avatar img{width:100%;height:100%;object-fit:cover;display:none}
+.fan-member-avatar-edit{position:absolute;right:0;bottom:0;width:25px;height:25px;border-radius:50%;background:#fff;color:#07172b;border:2px solid #07172b;display:grid;place-items:center;font-size:12px;font-weight:1000}
+.fan-member-hero-copy{min-width:0}
+.fan-member-kicker{font-size:10px;letter-spacing:1.7px;font-weight:900;color:#b8c5d7}
+.fan-member-hero h2{margin:4px 0 3px;color:#fff;font-size:25px;line-height:1.05}
+.fan-member-hero p{margin:0;color:#d6deea;font-size:12px}
+.fan-member-avatar-help{margin-top:6px!important;color:#b8c5d7!important;font-size:9px!important}
+.fan-member-body{padding:17px 16px 20px;background:#f3f5f8}
+.fan-member-section{margin-top:17px}
+.fan-member-section:first-child{margin-top:0}
+.fan-member-title{margin:0 3px 8px;color:#07172b;font-size:12px;font-weight:1000;letter-spacing:1.2px}
+.fan-member-card{background:#fff;border:1px solid #dfe4eb;border-radius:15px;overflow:hidden;box-shadow:0 3px 12px rgba(7,23,43,.05)}
+.fan-member-row{min-height:62px;padding:13px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #edf0f4}
+.fan-member-row:last-child{border-bottom:0}
+.fan-member-ico{width:38px;height:38px;border-radius:10px;background:#edf2f8;display:grid;place-items:center;font-size:18px;flex:0 0 auto}
+.fan-member-rowtext{min-width:0;flex:1}
+.fan-member-rowtext b{display:block;color:#07172b;font-size:13px}
+.fan-member-rowtext span{display:block;margin-top:3px;color:#68778b;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fan-member-edit{border:0;background:transparent;color:#e31b23;font:inherit;font-size:10px;font-weight:1000;cursor:pointer}
+.fan-member-chev{color:#a2adba;font-size:21px}
+.fan-member-badge{font-size:9px;font-weight:1000;background:#eef1f5;color:#68778b;border-radius:20px;padding:5px 8px}
+.fan-member-vote-empty{padding:13px 14px;color:#68778b;font-size:11px;line-height:1.4}
+.fan-member-legal-button{width:100%;border:0;background:transparent;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.fan-member-signout{width:100%;min-height:50px;margin-top:17px;border:0;border-radius:10px;background:#07172b;color:#fff;font:inherit;font-size:13px;font-weight:1000;letter-spacing:.7px;cursor:pointer}
+.fan-member-delete{width:100%;min-height:46px;margin-top:9px;border:1px solid #e1c8ca;border-radius:10px;background:#fff;color:#b41d24;font:inherit;font-size:11px;font-weight:1000;cursor:pointer}
+.fan-member-avatar-actions{display:none;position:fixed;inset:0;background:rgba(7,23,43,.62);z-index:10000;align-items:flex-end;justify-content:center;padding:16px}
+.fan-member-avatar-actions.open{display:flex}
+.fan-member-avatar-sheet{width:min(100%,520px);background:#fff;border-radius:18px;padding:18px;color:#07172b;text-align:left}
+.fan-member-avatar-sheet h3{margin:0 0 5px;font-size:18px}
+.fan-member-avatar-sheet p{margin:0 0 15px;color:#6d7a8c;font-size:11px;line-height:1.4}
+.fan-member-avatar-btn{width:100%;border:0;border-radius:11px;padding:13px;margin-top:8px;font:inherit;font-weight:1000;font-size:12px;cursor:pointer}
+.fan-member-avatar-upload{background:#e31b23;color:#fff}
+.fan-member-avatar-remove{background:#eef2f6;color:#07172b}
+.fan-member-avatar-cancel{background:#fff;color:#6b7888;border:1px solid #dce2e9}
+
+/* =========================================================
+   NAL ADMIN — role-gated dashboard
+   Visible only when the loaded profile role is admin.
+========================================================= */
+.fan-admin-area[hidden]{display:none!important}
+.fan-admin-banner{background:#07172b;color:#fff;border-radius:15px;padding:16px;display:flex;align-items:center;gap:12px;border-left:5px solid #e31b23}
+.fan-admin-shield{width:42px;height:42px;border-radius:11px;background:#e31b23;display:grid;place-items:center;font-size:21px;flex:0 0 auto}
+.fan-admin-banner b{display:block;font-size:14px}.fan-admin-banner span{display:block;color:#b8c5d7;font-size:10px;margin-top:3px}
+.fan-admin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px}
+.fan-admin-stat{background:#fff;border:1px solid #dfe4eb;border-radius:13px;padding:13px 8px;text-align:center}
+.fan-admin-stat strong{display:block;font-size:21px;color:#07172b}.fan-admin-stat span{font-size:8px;color:#6c7989;font-weight:900;letter-spacing:.5px}
+.fan-admin-rowbtn{width:100%;border:0;background:transparent;text-align:left;color:inherit;font:inherit;cursor:pointer;padding:0}
+.fan-admin-panel{display:none;margin-top:10px}.fan-admin-panel.show{display:block}
+.fan-admin-search{width:100%;border:1px solid #d9e0e8;border-radius:10px;padding:12px;margin-bottom:10px;font:inherit;font-size:12px}
+.fan-admin-user{background:#fff;border:1px solid #dfe4eb;border-radius:13px;padding:12px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.fan-admin-uavatar{width:38px;height:38px;border-radius:50%;background:#07172b;color:#fff;display:grid;place-items:center;font-weight:1000;flex:0 0 auto}
+.fan-admin-uinfo{flex:1;min-width:0}.fan-admin-uinfo b{display:block;font-size:12px}.fan-admin-uinfo span{font-size:9px;color:#6d7a8c}
+.fan-admin-role{font-size:8px;font-weight:1000;border-radius:20px;padding:5px 7px;background:#eef1f5;color:#68778b}.fan-admin-role.admin{background:#fee7e8;color:#b31921}.fan-admin-role.moderator{background:#e8f0fb;color:#234d7d}
+.fan-admin-note{font-size:9px;color:#78879a;text-align:center;padding:10px 4px 0;line-height:1.4}
+.fan-admin-loading,.fan-admin-empty,.fan-admin-error{padding:16px 12px;text-align:center;font-size:10px;color:#78879a}
+.fan-admin-error{color:#b31921}
+.fan-admin-meta{display:block!important;white-space:normal!important;line-height:1.35}
+.fan-admin-status-suspended,.fan-admin-status-banned{color:#b31921!important;font-weight:900}
+.fan-admin-user{cursor:pointer}
+.fan-admin-detail{display:none;margin-top:12px}.fan-admin-detail.show{display:block}
+.fan-admin-detail-head{background:linear-gradient(135deg,#07172b,#102b4e);color:#fff;border-radius:15px;padding:16px;display:flex;align-items:center;gap:12px}
+.fan-admin-detail-avatar{width:48px;height:48px;border-radius:50%;background:#e31b23;color:#fff;display:grid;place-items:center;font-size:19px;font-weight:1000;flex:0 0 auto}
+.fan-admin-detail-head b{display:block;font-size:15px}.fan-admin-detail-head span{display:block;color:#c6d1df;font-size:9px;margin-top:3px}
+.fan-admin-detail-close{margin-left:auto;border:0;background:transparent;color:#fff;font-size:23px;cursor:pointer;padding:4px}
+.fan-admin-detail-grid{margin-top:9px;background:#fff;border:1px solid #dfe4eb;border-radius:15px;overflow:hidden}
+.fan-admin-detail-row{padding:12px 14px;border-bottom:1px solid #edf0f4}.fan-admin-detail-row:last-child{border-bottom:0}
+.fan-admin-detail-row span{display:block;color:#78879a;font-size:8px;font-weight:1000;letter-spacing:.8px}.fan-admin-detail-row strong{display:block;margin-top:4px;color:#07172b;font-size:12px;overflow-wrap:anywhere}
+.fan-admin-actions-preview{margin-top:9px;background:#fff;border:1px solid #dfe4eb;border-radius:15px;padding:13px 14px}
+.fan-admin-actions-preview h4{margin:0 0 8px;font-size:10px;letter-spacing:1px}.fan-admin-actions-preview p{margin:0;color:#78879a;font-size:9px;line-height:1.45}
+.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-role{background:#102b4e;color:#fff}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-delete{background:#3b0b0e;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}.fan-admin-log-list{display:grid;gap:8px}.fan-admin-log-item{background:#fff;border:1px solid #dfe4eb;border-radius:13px;padding:12px 13px}.fan-admin-log-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.fan-admin-log-action{font-size:9px;font-weight:1000;letter-spacing:.55px;color:#07172b}.fan-admin-log-time{font-size:8px;color:#78879a;white-space:nowrap}.fan-admin-log-target{display:block;margin-top:5px;font-size:11px;font-weight:900;color:#07172b}.fan-admin-log-detail{display:block;margin-top:3px;font-size:9px;line-height:1.4;color:#6d7a8c}.fan-admin-log-change{font-weight:1000;color:#102b4e}.fan-admin-log-filter{width:100%;border:1px solid #d9e0e8;border-radius:10px;padding:12px;margin-bottom:10px;font:inherit;font-size:12px}
+
+
+/* TEAM FOOTBALL ICON VISIBILITY — final regression-safe override */
+#teamPage .team-menu-card .team-menu-icon{
+  color:#ffffff !important;
+  font-size:17px !important;
+}
+#teamPage .team-menu-card .team-menu-icon svg{
+  width:21px !important;
+  height:21px !important;
+  display:block !important;
+  overflow:visible !important;
+  color:#ffffff !important;
+}
+#teamPage .team-menu-card .team-menu-icon svg path,
+#teamPage .team-menu-card .team-menu-icon svg rect,
+#teamPage .team-menu-card .team-menu-icon svg circle,
+#teamPage .team-menu-card .team-menu-icon svg line,
+#teamPage .team-menu-card .team-menu-icon svg polyline{
+  fill:none !important;
+  stroke:#ffffff !important;
+  stroke-width:2.7 !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+}
+#teamPage .team-menu-card .team-menu-icon svg text{
+  fill:#ffffff !important;
+  stroke:none !important;
+  font-size:15px !important;
+  font-weight:900 !important;
+  font-family:Arial,sans-serif !important;
 }
 
 </style>
@@ -6246,7 +6458,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type="button"
         data-team-link="stats"
       >
-        <span class="team-menu-icon">▥</span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M9 39V25h7v14H9ZM21 39V16h7v23h-7ZM33 39V8h7v31h-7Z"/><path d="M7 40h35"/></svg></span>
         <span class="team-menu-title">STATS</span>
       </button>
 
@@ -6255,7 +6467,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type="button"
         data-team-link="standings"
       >
-        <span class="team-menu-icon">≡</span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M12 12h28M12 24h28M12 36h28"/><circle cx="7" cy="12" r="1.5"/><circle cx="7" cy="24" r="1.5"/><circle cx="7" cy="36" r="1.5"/></svg></span>
         <span class="team-menu-title">STANDINGS</span>
       </button>
 
@@ -6937,12 +7149,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
           <label class="fan-account-check">
             <input id="fanTermsAccepted" type="checkbox" required>
-            <span>I agree to the NAL Terms of Use.</span>
+            <span>I agree to the NAL <button type="button" class="fan-legal-link" id="fanTermsLink">Terms of Use</button>.</span>
           </label>
 
           <label class="fan-account-check">
             <input id="fanGuidelinesAccepted" type="checkbox" required>
-            <span>I agree to the NAL Community Guidelines.</span>
+            <span>I agree to the NAL <button type="button" class="fan-legal-link" id="fanGuidelinesLink">Community Guidelines</button>.</span>
+          </label>
+
+          <label class="fan-account-check">
+            <input id="fanPrivacyAccepted" type="checkbox" required>
+            <span>I acknowledge the NAL <button type="button" class="fan-legal-link" id="fanPrivacyLink">Privacy Policy</button>.</span>
           </label>
 
           <button class="fan-account-primary" type="submit">CREATE ACCOUNT</button>
@@ -6960,19 +7177,180 @@ document.addEventListener("DOMContentLoaded", () => {
           <button class="fan-account-primary" type="button" data-account-view="signin">BACK TO SIGN IN</button>
         </div>
 
-        <!-- LOGGED IN -->
-        <div id="fanLoggedInView" class="fan-account-state fan-profile-view" hidden>
-          <div class="fan-profile-avatar" id="fanProfileInitial">N</div>
-          <div class="fan-profile-label">NAL FAN</div>
-          <h2 id="fanProfileDisplayName">NAL FAN</h2>
-          <p id="fanProfileEmail"></p>
+        <!-- LOGGED IN / MEMBER ACCOUNT -->
+        <div id="fanLoggedInView" class="fan-member-dashboard" hidden>
+          <section class="fan-member-hero">
+            <button type="button" class="fan-member-avatar" id="fanMemberAvatarButton" aria-label="Change profile photo">
+              <span id="fanProfileInitial">N</span>
+              <img id="fanMemberAvatarImage" alt="NAL Fan profile avatar">
+              <span class="fan-member-avatar-edit">✎</span>
+            </button>
+            <div class="fan-member-hero-copy">
+              <div class="fan-member-kicker">NAL FAN ACCOUNT</div>
+              <h2 id="fanProfileDisplayName">NAL FAN</h2>
+              <p>Favorite Team: <span id="fanProfileFavoriteTeam">NOT SELECTED</span></p>
+              <p class="fan-member-avatar-help">Tap your avatar to add or change your photo</p>
+            </div>
+          </section>
 
-          <div class="fan-profile-row">
-            <span>FAVORITE TEAM</span>
-            <strong id="fanProfileFavoriteTeam">NOT SELECTED</strong>
+          <div class="fan-member-body">
+            <section class="fan-member-section">
+              <h3 class="fan-member-title">ACCOUNT INFORMATION</h3>
+              <div class="fan-member-card">
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">👤</div>
+                  <div class="fan-member-rowtext"><b>Display Name</b><span id="fanMemberDisplayNameValue">NAL FAN</span></div>
+                  <span class="fan-member-edit">EDIT</span>
+                </div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">✉</div>
+                  <div class="fan-member-rowtext"><b>Email Address</b><span id="fanProfileEmail"></span></div>
+                  <span class="fan-member-edit">EDIT</span>
+                </div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">★</div>
+                  <div class="fan-member-rowtext"><b>Favorite Team</b><span id="fanMemberFavoriteTeamValue">NOT SELECTED</span></div>
+                  <span class="fan-member-edit">EDIT</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="fan-member-section">
+              <h3 class="fan-member-title">SECURITY</h3>
+              <div class="fan-member-card">
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">🔒</div>
+                  <div class="fan-member-rowtext"><b>Change Password</b><span>Update your account password</span></div>
+                  <span class="fan-member-chev">›</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="fan-member-section">
+              <h3 class="fan-member-title">MY NAL</h3>
+              <div class="fan-member-card">
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">✓</div>
+                  <div class="fan-member-rowtext"><b>My Voting Activity</b><span>Polls you've voted in</span></div>
+                  <span class="fan-member-chev">›</span>
+                </div>
+                <div class="fan-member-vote-empty" id="fanMemberVotingActivity">Your voting history will appear here as account voting is connected.</div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">🏈</div>
+                  <div class="fan-member-rowtext"><b>My Pick ’Em</b><span>Your picks, record and leaderboard position</span></div>
+                  <span class="fan-member-badge">COMING SOON</span>
+                </div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">💬</div>
+                  <div class="fan-member-rowtext"><b>Forum Activity</b><span>Your posts and replies</span></div>
+                  <span class="fan-member-badge">COMING SOON</span>
+                </div>
+                <div class="fan-member-row">
+                  <div class="fan-member-ico">🔔</div>
+                  <div class="fan-member-rowtext"><b>Notification Preferences</b><span>Choose the NAL updates you want</span></div>
+                  <span class="fan-member-badge">COMING SOON</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="fan-member-section fan-admin-area" id="fanAdminArea" hidden>
+              <div class="fan-admin-banner">
+                <div class="fan-admin-shield">◆</div>
+                <div><b>NAL ADMIN</b><span>Authorized league app management</span></div>
+              </div>
+
+              <div class="fan-admin-stats">
+                <div class="fan-admin-stat"><strong id="fanAdminMemberCount">—</strong><span>MEMBERS</span></div>
+                <div class="fan-admin-stat"><strong>—</strong><span>OPEN REPORTS</span></div>
+                <div class="fan-admin-stat"><strong>—</strong><span>ACTIVE POLLS</span></div>
+              </div>
+
+              <h3 class="fan-member-title" style="margin-top:17px">ADMIN DASHBOARD</h3>
+              <div class="fan-member-card">
+                <button class="fan-admin-rowbtn" id="fanAdminUsersButton" type="button">
+                  <div class="fan-member-row"><div class="fan-member-ico">👥</div><div class="fan-member-rowtext"><b>User Management</b><span>Search members, roles and account status</span></div><span class="fan-member-chev">›</span></div>
+                </button>
+                <button class="fan-admin-rowbtn" id="fanAdminActivityButton" type="button">
+                  <div class="fan-member-row"><div class="fan-member-ico">🕘</div><div class="fan-member-rowtext"><b>Activity Log</b><span>Review administrator account actions</span></div><span class="fan-member-chev">›</span></div>
+                </button>
+                <div class="fan-member-row"><div class="fan-member-ico">🚩</div><div class="fan-member-rowtext"><b>Moderation</b><span>Reports, forum posts and submitted content</span></div><span class="fan-member-badge">COMING SOON</span></div>
+                <div class="fan-member-row"><div class="fan-member-ico">✓</div><div class="fan-member-rowtext"><b>Poll Management</b><span>Create, activate and close fan polls</span></div><span class="fan-member-badge">COMING SOON</span></div>
+                <div class="fan-member-row"><div class="fan-member-ico">🏈</div><div class="fan-member-rowtext"><b>Pick ’Em Management</b><span>Games, deadlines and leaderboard controls</span></div><span class="fan-member-badge">COMING SOON</span></div>
+                <div class="fan-member-row"><div class="fan-member-ico">⚙</div><div class="fan-member-rowtext"><b>App Management</b><span>Future administrative app controls</span></div><span class="fan-member-badge">COMING SOON</span></div>
+              </div>
+
+              <div class="fan-admin-panel" id="fanAdminUsersPanel">
+                <h3 class="fan-member-title">USER MANAGEMENT</h3>
+                <input class="fan-admin-search" id="fanAdminUserSearch" type="search" placeholder="Search by display name or email">
+                <div id="fanAdminUsersList">
+                  <div class="fan-admin-loading">Open User Management to load registered members.</div>
+                </div>
+                <div class="fan-admin-detail" id="fanAdminMemberDetail">
+                  <div class="fan-admin-detail-head">
+                    <div class="fan-admin-detail-avatar" id="fanAdminDetailInitial">N</div>
+                    <div><b id="fanAdminDetailName">NAL FAN</b><span id="fanAdminDetailSummary">MEMBER DETAILS</span></div>
+                    <button class="fan-admin-detail-close" id="fanAdminDetailClose" type="button" aria-label="Close member details">×</button>
+                  </div>
+                  <div class="fan-admin-detail-grid">
+                    <div class="fan-admin-detail-row"><span>DISPLAY NAME</span><strong id="fanAdminDetailDisplayName">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>EMAIL ADDRESS</span><strong id="fanAdminDetailEmail">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>FAVORITE TEAM</span><strong id="fanAdminDetailFavorite">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>ROLE</span><strong id="fanAdminDetailRole">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>ACCOUNT STATUS</span><strong id="fanAdminDetailStatus">—</strong></div>
+                    <div class="fan-admin-detail-row"><span>JOIN DATE</span><strong id="fanAdminDetailJoined">—</strong></div>
+                  </div>
+                  <div class="fan-admin-actions-preview">
+                    <h4>ADMIN ACTIONS</h4>
+                    <p id="fanAdminActionHelp">Suspend or restore member access. Other administrative actions remain inactive.</p>
+                    <div class="fan-admin-action-chips">
+                      <button class="fan-admin-action-button fan-admin-action-role" id="fanAdminRoleAction" type="button">CHANGE ROLE</button>
+                      <button class="fan-admin-action-button fan-admin-action-suspend" id="fanAdminStatusAction" type="button">SUSPEND ACCOUNT</button>
+                      <button class="fan-admin-action-button fan-admin-action-ban" id="fanAdminBanAction" type="button">BAN ACCOUNT</button>
+                      <button class="fan-admin-action-button fan-admin-action-delete" id="fanAdminDeleteAction" type="button">DELETE ACCOUNT</button>
+                    </div>
+                    <p class="fan-admin-action-message" id="fanAdminActionMessage" aria-live="polite"></p>
+                  </div>
+                </div>
+                <p class="fan-admin-note">Member information is loaded through the secure admin-only Supabase function. Administrative actions will be added separately with server-side permission verification.</p>
+              </div>
+              <div class="fan-admin-panel" id="fanAdminActivityPanel">
+                <h3 class="fan-member-title">ACTIVITY LOG</h3>
+                <input class="fan-admin-log-filter" id="fanAdminActivitySearch" type="search" placeholder="Search member, email or action">
+                <div class="fan-admin-log-list" id="fanAdminActivityList">
+                  <div class="fan-admin-loading">Open Activity Log to load administrator actions.</div>
+                </div>
+              </div>
+            </section>
+
+            <section class="fan-member-section">
+              <h3 class="fan-member-title">LEGAL &amp; PRIVACY</h3>
+              <div class="fan-member-card">
+                <button type="button" class="fan-member-legal-button" id="fanMemberTerms">
+                  <div class="fan-member-row"><div class="fan-member-ico">§</div><div class="fan-member-rowtext"><b>Terms of Use</b><span>NAL App Terms of Use</span></div><span class="fan-member-chev">›</span></div>
+                </button>
+                <button type="button" class="fan-member-legal-button" id="fanMemberGuidelines">
+                  <div class="fan-member-row"><div class="fan-member-ico">✓</div><div class="fan-member-rowtext"><b>Community Guidelines</b><span>NAL fan community standards</span></div><span class="fan-member-chev">›</span></div>
+                </button>
+                <button type="button" class="fan-member-legal-button" id="fanMemberPrivacy">
+                  <div class="fan-member-row"><div class="fan-member-ico">◉</div><div class="fan-member-rowtext"><b>Privacy Policy</b><span>How account information is handled</span></div><span class="fan-member-chev">›</span></div>
+                </button>
+              </div>
+            </section>
+
+            <button class="fan-member-signout" id="fanSignOutButton" type="button">SIGN OUT</button>
+            <button class="fan-member-delete" id="fanDeleteAccountButton" type="button">DELETE MY ACCOUNT</button>
           </div>
+        </div>
 
-          <button class="fan-account-secondary" id="fanSignOutButton" type="button">SIGN OUT</button>
+        <div class="fan-member-avatar-actions" id="fanMemberAvatarActions">
+          <div class="fan-member-avatar-sheet">
+            <h3>Profile Photo</h3>
+            <p>Your avatar can appear with your NAL Fan Account and future Forum activity.</p>
+            <button class="fan-member-avatar-btn fan-member-avatar-upload" id="fanMemberChooseAvatar" type="button">UPLOAD PHOTO</button>
+            <button class="fan-member-avatar-btn fan-member-avatar-remove" id="fanMemberRemoveAvatar" type="button">USE INITIALS</button>
+            <button class="fan-member-avatar-btn fan-member-avatar-cancel" id="fanMemberCancelAvatar" type="button">CANCEL</button>
+            <input id="fanMemberAvatarFile" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+          </div>
         </div>
       </section>
 
@@ -6982,6 +7360,284 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </main>
 
+
+  <!-- =====================================================
+       NAL APP TERMS OF USE
+  ====================================================== -->
+  <main id="fanTermsPage" class="app-page fan-legal-page">
+    <div class="fan-legal-shell">
+      <button type="button" class="fan-legal-back" id="fanTermsBack">‹ BACK TO CREATE ACCOUNT</button>
+
+      <article class="fan-legal-card">
+        <header class="fan-legal-head">
+          <div class="fan-legal-kicker">NAL APP</div>
+          <h1>TERMS OF USE</h1>
+          <p class="fan-legal-meta">Version 1.0 · Effective September 21, 2026</p>
+        </header>
+
+        <div class="fan-legal-body">
+          <h2>1. Acceptance of These Terms</h2>
+          <p>These Terms of Use (“Terms”) govern your access to and use of the National Arena League mobile application, related web-based application services, and features made available through the application (collectively, the “NAL App” or “Service”).</p>
+          <p>The NAL App is operated by <strong>MNTR Inc.</strong> (“MNTR,” “we,” “us,” or “our”) in connection with the National Arena League (“NAL”).</p>
+          <p>By creating an account, accessing the NAL App, or using the Service, you agree to be bound by these Terms. You also agree to comply with the NAL App Community Guidelines and acknowledge the NAL App Privacy Policy, each as presented to you during account registration.</p>
+          <p>If you do not agree to these Terms, you should not create an account or use features of the Service that require acceptance of these Terms.</p>
+
+          <h2>2. Eligibility and Age Requirements</h2>
+          <p>You must be at least <strong>13 years old</strong> to create an NAL Fan Account.</p>
+          <p>If you are under 18 years old, you represent that you have permission from your parent or legal guardian to use the Service and create an account.</p>
+          <p>By creating an account, you represent that you meet these eligibility requirements. We may restrict or terminate access to an account if we reasonably determine that the account was created or is being used in violation of these age requirements.</p>
+
+          <h2>3. NAL Fan Accounts</h2>
+          <p>Certain features of the NAL App may require an NAL Fan Account. When creating an account, you agree to provide accurate information and to maintain the security of your login credentials. You are responsible for activity conducted through your account.</p>
+          <p>Your account may include information such as your display name, email address, favorite NAL team, Pick ’Em selections and results, Fan Forum activity, poll participation, fan submissions, and other preferences, activity, or features added to the Service.</p>
+          <p>You may not impersonate another person or organization, misrepresent your identity, or create an account for fraudulent, abusive, or disruptive purposes.</p>
+
+          <h2>4. Account Names and Display Names</h2>
+          <p>Display names must comply with the NAL Community Guidelines. We reserve the right to reject, modify, or require the modification of a display name that is misleading, impersonates another person or organization, infringes intellectual-property rights, contains prohibited material, or otherwise violates these Terms or the Community Guidelines.</p>
+          <p>Use of a particular display name does not grant ownership or trademark rights in that name.</p>
+
+          <h2>5. Use of the NAL App</h2>
+          <p>The NAL App is intended to provide fans with access to NAL-related content, information, entertainment, and interactive features.</p>
+          <p>Features may include NAL news, scores, schedules, statistics, standings, team information, NAL Network programming, video content, polls, Pick ’Em contests or games, leaderboards, fan forums, fan-submitted media, notifications, ticket information, merchandise links, and other fan experiences.</p>
+          <p>Features may be added, changed, suspended, or discontinued at any time. We do not guarantee that every feature will always be available or that every feature will be available on every device or platform.</p>
+
+          <h2>6. Acceptable Use</h2>
+          <p>You agree not to use the NAL App to:</p>
+          <ul><li>Violate any applicable law or regulation;</li><li>Harass, threaten, abuse, or impersonate another person;</li><li>Attempt to gain unauthorized access to another user's account;</li><li>Interfere with the operation or security of the Service;</li><li>Introduce malicious software or code;</li><li>Manipulate polls, Pick ’Em results, leaderboards, or other interactive features;</li><li>Use automated systems, bots, scripts, or similar methods to improperly access or manipulate the Service;</li><li>Scrape, reproduce, or commercially exploit Service content without authorization;</li><li>Infringe intellectual-property or other rights belonging to MNTR, NAL, NAL teams, partners, users, or third parties; or</li><li>Use the Service in a manner prohibited by the Community Guidelines.</li></ul>
+          <p>Additional rules governing posts, comments, photos, videos, and other user-submitted material are contained in the <strong>NAL App Community Guidelines</strong>.</p>
+
+          <h2>7. Pick ’Em, Polls and Interactive Features</h2>
+          <p>The NAL App may provide prediction games, Pick ’Em features, polls, voting, rankings, leaderboards, and similar interactive experiences. Unless expressly stated otherwise, these features are provided for <strong>entertainment and fan-engagement purposes only</strong>.</p>
+          <p>Participation does not guarantee any prize, compensation, award, or other benefit. If MNTR or NAL conducts a promotion, sweepstakes, contest, or other activity involving prizes, additional official rules may apply. Those rules will control if they conflict with these Terms regarding that particular promotion.</p>
+          <p>Users may not manipulate voting, create multiple accounts for the purpose of gaining an unfair advantage, exploit technical errors, or otherwise interfere with the integrity of an interactive feature. We reserve the right to invalidate activity reasonably determined to violate these requirements.</p>
+
+          <h2>8. Fan Forum and Community Features</h2>
+          <p>The Service may allow users to post, comment, reply, participate in discussions, or otherwise interact with other fans. Use of these features is subject to the <strong>NAL App Community Guidelines</strong>.</p>
+          <p>MNTR may moderate community areas and may remove content, restrict participation, suspend accounts, or take other reasonable action to enforce these Terms and the Community Guidelines. The availability of moderation tools does not mean that MNTR reviews or approves every user submission before it appears.</p>
+
+          <h2>9. User-Submitted Content</h2>
+          <p>The NAL App may allow you to submit photographs, videos, comments, posts, captions, messages, or other content (“User Content”). You retain any ownership rights you otherwise have in your User Content.</p>
+          <p>By submitting User Content through a feature intended for publication, display, promotion, or sharing, you grant MNTR and the National Arena League a non-exclusive, worldwide, royalty-free license to host, store, reproduce, display, distribute, adapt for formatting, and use that content as reasonably necessary to operate, promote, and provide the NAL App and related NAL digital services.</p>
+          <p>Additional permissions may be requested for particular fan-media submissions, promotions, or commercial uses. You represent that you have the rights and permissions necessary to submit the content you provide. Detailed requirements concerning User Content are contained in the Community Guidelines.</p>
+
+          <h2>10. NAL and Third-Party Intellectual Property</h2>
+          <p>The NAL App and its content may contain trademarks, logos, photographs, graphics, video, audio, statistics, designs, software, and other materials owned or licensed by MNTR Inc., the National Arena League, NAL member teams, sponsors, partners, broadcasters, licensors, or other parties.</p>
+          <p>Nothing in these Terms transfers ownership of that intellectual property to you. You may use the Service and its content for personal, non-commercial purposes as permitted through the normal functionality of the NAL App.</p>
+          <p>You may not reproduce, distribute, sell, commercially exploit, modify, or create unauthorized derivative works from protected Service content without the appropriate owner's permission.</p>
+
+          <h2>11. Scores, Statistics and Other Information</h2>
+          <p>The NAL App may display schedules, scores, standings, statistics, rosters, game information, and other data obtained from NAL systems or third-party providers. We work to provide useful and timely information, but we do not guarantee that all information will always be complete, current, or error-free.</p>
+          <p>Official league determinations and records control in the event of a discrepancy.</p>
+
+          <h2>12. Video, Streaming and NAL Network Content</h2>
+          <p>The NAL App may provide access to live or on-demand video, NAL Network programming, highlights, archived games, or other media. Availability may depend on geographic location, device compatibility, rights restrictions, technical conditions, subscriptions, or other requirements.</p>
+          <p>Unauthorized recording, redistribution, retransmission, or commercial use of protected programming is prohibited.</p>
+
+          <h2>13. Tickets, Merchandise and External Services</h2>
+          <p>The NAL App may provide links to tickets, merchandise, team websites, sponsors, partners, social-media platforms, or other third-party services. Transactions conducted through third-party services may be subject to the third party's own terms, policies, refund rules, and privacy practices.</p>
+          <p>Unless expressly stated otherwise, MNTR is not responsible for products, services, transactions, content, or practices provided by independent third parties.</p>
+
+          <h2>14. Privacy</h2>
+          <p>Information collected through the NAL App is handled as described in the <strong>NAL App Privacy Policy</strong>. The Privacy Policy explains the categories of information we collect, how information may be used, service providers that may process information on our behalf, user choices, and other privacy-related matters.</p>
+          <p>By creating an account, you acknowledge that you have been provided access to the Privacy Policy.</p>
+
+          <h2>15. Account Suspension and Termination</h2>
+          <p>MNTR may restrict, suspend, or terminate an account when reasonably necessary to enforce these Terms or the Community Guidelines; protect other users; protect the NAL, its teams, MNTR, or their systems; investigate suspected abuse, fraud, manipulation, or security incidents; comply with applicable law; or address conduct that materially disrupts the Service.</p>
+          <p>Depending on the circumstances, enforcement may include content removal, feature restrictions, temporary suspension, or permanent account termination.</p>
+
+          <h2>16. Account Deletion</h2>
+          <p>Users may request deletion of their NAL Fan Account through functionality provided in the NAL App or by contacting <strong>appsupport@thenationalarenaleague.com</strong>.</p>
+          <p>Account deletion may result in loss of account history, selections, records, posts, preferences, and other account-related information. Certain information may be retained when reasonably necessary for legal, security, fraud-prevention, recordkeeping, or other purposes described in the Privacy Policy.</p>
+
+          <h2>17. Service Availability and Changes</h2>
+          <p>We may modify, update, maintain, suspend, or discontinue all or part of the NAL App. The Service may occasionally be unavailable because of maintenance, technical issues, network failures, third-party service interruptions, events beyond our reasonable control, or other circumstances.</p>
+          <p>We do not guarantee uninterrupted or error-free operation.</p>
+
+          <h2>18. Disclaimer of Warranties</h2>
+          <p>To the fullest extent permitted by applicable law, the NAL App and its content and services are provided on an <strong>“as is” and “as available” basis</strong>.</p>
+          <p>MNTR does not make warranties that the Service will always be available, uninterrupted, secure, or error-free or that information provided through the Service will always be complete or current. Nothing in these Terms excludes warranties or rights that cannot legally be excluded.</p>
+
+          <h2>19. Limitation of Liability</h2>
+          <p>To the fullest extent permitted by applicable law, MNTR Inc. and its affiliates, licensors, service providers, and related parties will not be liable for indirect, incidental, special, consequential, or punitive damages arising from or relating to your use of or inability to use the Service.</p>
+          <p>Nothing in these Terms limits liability that cannot legally be limited or excluded.</p>
+
+          <h2>20. Changes to These Terms</h2>
+          <p>We may update these Terms as the NAL App develops or when legal, operational, security, or product requirements change. The current version and effective date will be displayed with the Terms.</p>
+          <p>If we make a material change, we may provide notice through the NAL App or require users to review and accept the updated Terms before continuing to use certain account features.</p>
+
+          <h2>21. Governing Law</h2>
+          <p>These Terms are governed by the laws of the <strong>State of North Carolina</strong>, without regard to conflict-of-law principles, except where applicable law requires otherwise.</p>
+
+          <h2>22. Disputes and Venue</h2>
+          <p>Any legal action or proceeding arising out of or relating to these Terms or use of the NAL App shall be brought in an appropriate <strong>state or federal court located in North Carolina</strong>, subject to applicable jurisdiction and venue requirements.</p>
+          <p>You and MNTR Inc. consent to the jurisdiction of such courts to the extent permitted by applicable law.</p>
+
+          <h2>23. Severability</h2>
+          <p>If any provision of these Terms is determined to be unlawful, invalid, or unenforceable, that provision will be enforced to the maximum extent permitted by law, and the remaining provisions will remain in effect.</p>
+
+          <h2>24. Entire Agreement</h2>
+          <p>These Terms, together with the <strong>NAL App Privacy Policy</strong>, <strong>NAL App Community Guidelines</strong>, and any additional terms expressly applicable to a particular feature, constitute the applicable agreement between you and MNTR concerning your use of the NAL App.</p>
+
+          <h2>25. Contact Us</h2>
+          <p>Questions concerning these Terms or the NAL App may be directed to:</p>
+          <div class="fan-legal-contact">MNTR Inc.<br>NAL App Support<br>appsupport@thenationalarenaleague.com</div>
+
+          <button type="button" class="fan-account-primary fan-legal-return" id="fanTermsReturn">BACK TO CREATE ACCOUNT</button>
+        </div>
+      </article>
+    </div>
+  </main>
+
+
+
+  <!-- NAL APP COMMUNITY GUIDELINES -->
+  <main id="fanGuidelinesPage" class="app-page fan-legal-page">
+    <div class="fan-legal-shell">
+      <button type="button" class="fan-legal-back" id="fanGuidelinesBack">‹ BACK TO CREATE ACCOUNT</button>
+      <article class="fan-legal-card">
+        <header class="fan-legal-head"><div class="fan-legal-kicker">NAL APP</div><h1>COMMUNITY GUIDELINES</h1><p class="fan-legal-meta">Version 1.0 · Effective September 21, 2026</p></header>
+        <div class="fan-legal-body">
+          <p>The National Arena League community is built for fans to follow the league, support their teams, debate the game, share content, and interact with other fans.</p>
+          <p>These Community Guidelines (“Guidelines”) apply to community and interactive features available through the NAL App, including forums, comments, replies, display names, fan submissions, photos, videos, polls, and other areas where users may contribute or interact with content.</p>
+          <p>The NAL App is operated by <strong>MNTR Inc.</strong> in connection with the National Arena League (“NAL”).</p>
+          <p>By creating an NAL Fan Account and participating in community features, you agree to follow these Guidelines in addition to the NAL App Terms of Use.</p>
+          <h2>1. Keep It Respectful</h2><p>Passionate sports discussion is welcome. Disrespectful treatment of other people is not. Users may disagree with one another, debate teams and games, and express strong opinions, but discussions must remain respectful.</p><p><strong>Bullying is prohibited.</strong> This includes repeated personal attacks, intimidation, humiliation, targeted abuse, or attempts to encourage others to attack another user.</p>
+          <h2>2. No Profanity</h2><p><strong>Profanity is not permitted in NAL App community areas.</strong></p><p>This applies to posts, comments, replies, display names, captions, images containing text, and other user-submitted content. Content may be removed when it contains profanity, including attempts to bypass filters through intentional misspellings, symbols, spacing, or similar methods.</p>
+          <h2>3. Sports Debate and Criticism Are Welcome</h2><p>Fans are allowed to criticize and debate teams, players, coaches, owners and organizations, roster decisions, trades and transactions, game strategy, player performance, coaching decisions, officiating decisions, league decisions, and other legitimate football topics.</p><p>Disagreement and criticism <strong>do not violate these Guidelines simply because they are negative</strong>.</p><p>For example, saying that you believe a player had a bad game, disagreeing with a coaching decision, criticizing an officiating call, or believing your team should make a roster change is permitted.</p><p>Criticism becomes unacceptable when it turns into prohibited personal abuse, bullying, threats, discriminatory attacks, or harassment.</p>
+          <h2>4. No Harassment or Personal Attacks</h2><p>Do not target another person with abusive or degrading behavior. This applies whether the person is another fan, player, coach, official, team employee, league employee, broadcaster, owner, or other individual.</p><p>Users should address the <strong>topic, decision, play, or performance</strong> rather than attacking someone's personal characteristics.</p>
+          <h2>5. No Hate or Discriminatory Content</h2><p>Content attacking or degrading people based on protected characteristics is prohibited. This includes content targeting a person's race, color, ethnicity, national origin, religion, sex, sexual orientation, gender identity, disability, or other status protected by applicable law.</p><p>Slurs and discriminatory insults are not permitted.</p>
+          <h2>6. No Threats or Promotion of Violence</h2><p>Threats of violence or physical harm are prohibited. Users may not encourage, celebrate, request, or coordinate violence against another person.</p><p>Credible threats or content presenting an immediate safety concern may result in immediate account action and may be reported to appropriate authorities when warranted.</p>
+          <h2>7. Protect Personal Information</h2><p>Do not post another person's private or sensitive information without authorization. Examples include private addresses, personal phone numbers, private email addresses, financial information, account credentials, identification documents, or other information that could reasonably create a privacy or safety risk.</p><p>Attempts to expose or solicit someone's private information are also prohibited.</p>
+          <h2>8. No Sexually Explicit or Graphic Content</h2><p>Pornographic, sexually explicit, or excessively graphic content is prohibited. Content depicting or promoting sexual exploitation—particularly involving minors—is strictly prohibited and may be reported as required by law.</p>
+          <h2>9. No Illegal or Dangerous Content</h2><p>Do not use NAL community features to promote, coordinate, or facilitate illegal activity. Content that creates a credible safety threat to fans, teams, players, venues, league personnel, or the public may result in immediate removal and account action.</p>
+          <h2>10. No Spam or Unauthorized Advertising</h2><p>Community features should not be used primarily to advertise unrelated businesses, products, services, websites, referral programs, or repetitive promotional material.</p><p>Repeated posts, irrelevant links, scams, deceptive promotions, and other spam are prohibited. NAL or MNTR may authorize particular promotional activity or designated promotional areas separately.</p>
+          <h2>11. No Impersonation</h2><p>Do not impersonate another person or falsely represent yourself as an NAL player, coach, team employee, league employee, official, broadcaster, team or league account, or another fan.</p><p>Parody or fan accounts must not intentionally mislead users regarding their identity or affiliation.</p>
+          <h2>12. Display Names</h2><p>Display names must comply with these Guidelines. Display names may not contain profanity, hate speech, threats, sexually explicit language, impersonation, or other prohibited content.</p><p>MNTR may require a display name to be changed if it violates these Guidelines or creates confusion about whether an account is officially associated with the NAL or one of its teams.</p>
+          <h2>13. Fan Photos and Videos</h2><p>Users may have opportunities to submit photographs, videos, captions, or other fan media. Only submit content you have the right and permission to provide.</p><p>Do not submit content that violates another person's privacy, intellectual-property rights, or these Guidelines. Additional permissions presented during a particular media-submission process may also apply.</p><p>Submission of content does not guarantee that it will be published, featured, or retained by the NAL App.</p>
+          <h2>14. Don't Manipulate Fan Features</h2><p>Do not attempt to artificially manipulate polls, fan voting, Pick ’Em, leaderboards, reactions, rankings, contests, or other interactive features.</p><p>Creating multiple accounts, using automated systems, exploiting technical errors, or coordinating fraudulent activity to gain an unfair advantage is prohibited.</p>
+          <h2>15. Reporting Content</h2><p>Users may be provided tools to report content or behavior they believe violates these Guidelines. Reports should be made in good faith.</p><p>Abusing reporting systems to target another user, retaliate against someone, or intentionally submit false reports may itself violate these Guidelines.</p><p>Reporting content does not guarantee that the content will be removed. MNTR will determine what action, if any, is appropriate based on the circumstances and these Guidelines.</p>
+          <h2>16. Moderation</h2><p>MNTR may moderate NAL App community features to enforce these Guidelines and the Terms of Use.</p><p>Moderation actions may include: <strong>Warning → Temporary Suspension → Permanent Ban</strong>.</p><p>The appropriate action will depend on the nature, severity, frequency, and circumstances of the violation. MNTR is not required to issue every level of enforcement before taking stronger action.</p>
+          <h2>17. Serious Violations</h2><p>Certain conduct may result in <strong>immediate suspension or permanent banning without a prior warning</strong>.</p><p>This may include credible threats, serious harassment, hate or discriminatory attacks, sexual exploitation, attempts to compromise another user's account, dangerous conduct, illegal activity, or other serious violations.</p><p>Where appropriate or legally required, information may also be preserved or provided to appropriate authorities.</p>
+          <h2>18. Content Removal</h2><p>MNTR may remove or restrict access to content that violates these Guidelines, the Terms of Use, applicable law, or the rights or safety of others.</p><p>Removal of content does not necessarily result in suspension or termination of the user's account. Likewise, account action may be appropriate even when particular content has already been deleted.</p>
+          <h2>19. Moderation Decisions</h2><p>MNTR will make reasonable efforts to apply these Guidelines consistently. However, context matters. Similar words or conduct may require different moderation decisions depending on how they are used and the circumstances surrounding them.</p><p>The existence of content elsewhere in the NAL App does not mean similar content is necessarily permitted.</p>
+          <h2>20. Changes to These Guidelines</h2><p>These Guidelines may be updated as the NAL App and its community features evolve. The current version and effective date will be displayed within the NAL App.</p><p>For material changes, users may be asked to review and accept an updated version before continuing to use certain community features.</p>
+          <h2>21. Contact</h2><p>Questions concerning these Community Guidelines or NAL App moderation may be directed to:</p><div class="fan-legal-contact">MNTR Inc.<br>NAL App Support<br>appsupport@thenationalarenaleague.com</div>
+          <button type="button" class="fan-account-primary fan-legal-return" id="fanGuidelinesReturn">BACK TO CREATE ACCOUNT</button>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- =====================================================
+       NAL APP PRIVACY POLICY
+  ====================================================== -->
+  <main id="fanPrivacyPage" class="app-page fan-legal-page">
+    <div class="fan-legal-shell">
+      <button type="button" class="fan-legal-back" id="fanPrivacyBack">‹ BACK TO CREATE ACCOUNT</button>
+      <article class="fan-legal-card">
+        <header class="fan-legal-head">
+          <div class="fan-legal-kicker">NAL APP</div>
+          <h1>PRIVACY POLICY</h1>
+          <p class="fan-legal-meta">Version 1.0 · Effective September 21, 2026</p>
+        </header>
+        <div class="fan-legal-body">
+          <p>This Privacy Policy explains how <strong>MNTR Inc.</strong> (“MNTR,” “we,” “us,” or “our”) collects, uses, discloses, and protects information in connection with the National Arena League mobile application, related web-based application services, and features (collectively, the “NAL App” or “Service”).</p>
+          <p>The NAL App is operated by MNTR Inc. in connection with the National Arena League (“NAL”). By using the NAL App, you acknowledge the practices described in this Privacy Policy.</p>
+
+          <h2>1. Information We Collect</h2>
+          <p>The information we collect depends on how you use the NAL App and which features you choose to use.</p>
+          <h3>Account Information</h3>
+          <p>When you create an NAL Fan Account, we may collect information including your email address, display name, favorite NAL team, account status and role, account creation information, and records showing acceptance of applicable Terms of Use, Community Guidelines, and Privacy Policy.</p>
+          <p>We do not require users to create an account merely to access every portion of the NAL App. Certain interactive features may require an account.</p>
+
+          <h2>2. Information From Your Activity</h2>
+          <p>When you use interactive features, we may collect information associated with that activity. This may include Pick ’Em selections, results and records, leaderboard information, poll participation, Fan Forum posts, comments and replies, reports or moderation activity, fan photo or video submissions, captions and other submitted information, feature preferences, notification preferences, and other interactions with NAL App features.</p>
+          <p>Some information you submit to community features may be visible to other users.</p>
+
+          <h2>3. Fan-Submitted Content</h2>
+          <p>If you submit photographs, videos, comments, posts, captions, or other content through the NAL App, we may collect and store that content along with information associated with the submission.</p>
+          <p>You should not submit personal information about another person without appropriate authorization. Use and moderation of submitted content are also governed by the NAL App Terms of Use and Community Guidelines.</p>
+
+          <h2>4. Device and Technical Information</h2>
+          <p>When you access or use the NAL App, certain technical information may be collected automatically. Depending on the technology used to provide the Service, this may include device type, operating system, browser type, Internet Protocol (IP) address, app or browser identifiers, pages or features accessed, dates and times of access, general usage information, referring information, crash reports, error logs, performance information, and security-related information.</p>
+          <p>We may use this information to operate, secure, maintain, analyze, and improve the NAL App.</p>
+
+          <h2>5. Location Information</h2>
+          <p>Certain present or future NAL App features may use location information. For example, location may eventually be used to provide location-relevant teams, games, venues, content, promotions, notifications, or other fan experiences.</p>
+          <p>Where required by the device or applicable law, the NAL App will request permission before accessing <strong>precise device location</strong>.</p>
+          <p>You may decline location permission or disable location access through your device settings. Certain location-dependent features may not function if location access is disabled.</p>
+          <p>The availability of this provision does not mean that precise location is collected when no location-enabled feature is active.</p>
+
+          <h2>6. Notifications</h2>
+          <p>If you enable notifications, the NAL App may process information necessary to deliver push notifications to your device. Notifications may include information concerning games, scores, league news, teams, NAL Network programming, fan features, account activity, or other NAL-related content.</p>
+          <p>You can generally manage notification permissions through your device settings and, where available, settings within the NAL App.</p>
+
+          <h2>7. How We Use Information</h2>
+          <p>We may use information collected through the NAL App to create and maintain NAL Fan Accounts; authenticate users; provide app features and services; maintain user preferences; operate Pick ’Em, leaderboards, polls and fan voting; operate community and forum features; display fan-submitted content; provide relevant notifications; develop location-based features where authorized; moderate community activity; investigate violations; prevent fraud, abuse and manipulation; protect users and the Service; diagnose technical problems; analyze performance and usage; improve and develop features; respond to support requests; comply with legal obligations; and protect the rights and safety of MNTR, NAL, NAL teams, users, and others.</p>
+
+          <h2>8. Marketing Communications</h2>
+          <p>Creating an NAL Fan Account does <strong>not automatically enroll you in marketing email communications solely by virtue of account creation</strong>.</p>
+          <p>Where marketing communications are offered, users may be provided a separate opportunity to opt in. Operational or transactional messages relating to your account, security, confirmations, policy changes, or use of the Service may still be sent when necessary to provide or administer your account.</p>
+
+          <h2>9. How Information May Be Disclosed</h2>
+          <p>We may disclose information when reasonably necessary to operate and support the NAL App. This may include disclosure to service providers that perform services on our behalf, such as account authentication and database providers, cloud hosting and infrastructure providers, email-delivery providers, app distribution or platform providers, analytics providers, technical-support providers, security and fraud-prevention providers, and other vendors necessary to operate or improve the Service.</p>
+          <p>These providers may process information in connection with the services they provide to us.</p>
+
+          <h2>10. National Arena League and Related Operations</h2>
+          <p>Because the NAL App operates in connection with the National Arena League, information may be used or disclosed as reasonably necessary to provide league-related features, administer fan programs, support participating NAL organizations, operate promotions, provide requested services, or administer league and app operations. Any use remains subject to this Privacy Policy and applicable law.</p>
+
+          <h2>11. Sale of Personal Information</h2>
+          <p><strong>MNTR does not sell personal information for monetary consideration.</strong></p>
+          <p>We may disclose information to service providers and other parties as described in this Privacy Policy in order to operate, secure, analyze, support, and improve the NAL App.</p>
+          <p>Certain privacy laws may define terms such as “sale,” “sharing,” or “targeted advertising” more broadly than an ordinary exchange of information for money. Where applicable law provides specific rights regarding such activities, MNTR will provide the rights and disclosures required by that law.</p>
+
+          <h2>12. Legal and Safety Disclosures</h2>
+          <p>We may preserve or disclose information when we reasonably believe doing so is necessary to comply with applicable law, legal process, or governmental requests; enforce the NAL App Terms of Use or Community Guidelines; investigate fraud, abuse, security incidents, or illegal activity; protect the rights or property of MNTR, NAL, NAL teams, users, or others; protect the safety of individuals or the public; or respond to an emergency involving potential harm.</p>
+
+          <h2>13. Data Security</h2>
+          <p>We use reasonable administrative, technical, and organizational measures intended to protect information associated with the NAL App. However, no online service, database, transmission method, or storage system can be guaranteed to be completely secure.</p>
+          <p>Users are responsible for maintaining the confidentiality of their account credentials and should notify us if they believe their account has been compromised.</p>
+
+          <h2>14. Data Retention</h2>
+          <p>We may retain information for as long as reasonably necessary to provide and maintain the Service; maintain an active account; fulfill the purposes described in this Privacy Policy; maintain security and prevent abuse; resolve disputes; enforce agreements; maintain appropriate business records; and comply with legal obligations.</p>
+          <p>Retention periods may vary depending on the type of information and the reason it was collected.</p>
+
+          <h2>15. Account and Data Deletion</h2>
+          <p>Users may request deletion of their NAL Fan Account through functionality provided in the NAL App, when available, or by contacting <strong>appsupport@thenationalarenaleague.com</strong>.</p>
+          <p>Deleting an account may result in deletion or de-identification of account information and associated activity, subject to applicable legal, security, fraud-prevention, backup, and recordkeeping requirements. Certain information may be retained when permitted or required by law.</p>
+
+          <h2>16. Children and Younger Users</h2>
+          <p>The NAL App is intended for users who are <strong>13 years of age or older</strong>. We do not knowingly permit children under 13 to create NAL Fan Accounts.</p>
+          <p>If we learn that an account belonging to a child under 13 has been created or that personal information was collected from a child under 13 in circumstances requiring parental consent, we may take steps to restrict or delete the account and associated information as appropriate.</p>
+          <p>Users between the ages of 13 and 17 should use the NAL App with the permission of a parent or legal guardian. A parent or guardian who believes a child under 13 has provided personal information through the NAL App may contact us at <strong>appsupport@thenationalarenaleague.com</strong>.</p>
+
+          <h2>17. Third-Party Services and Links</h2>
+          <p>The NAL App may contain links to or integrations with third-party websites and services, including ticket providers, merchandise providers, social-media services, video or streaming providers, sponsors, partners, and team websites.</p>
+          <p>Third-party services operate under their own privacy policies and practices. MNTR is not responsible for the privacy practices of independent third parties.</p>
+
+          <h2>18. Analytics and Service Improvement</h2>
+          <p>We may use analytics and similar technologies to understand how users interact with the NAL App, diagnose problems, measure feature usage, improve performance, and develop new features.</p>
+          <p>Depending on the technology used, these services may process technical information such as device identifiers, IP addresses, usage events, and similar information. We will provide additional disclosures or choices where required by applicable law.</p>
+
+          <h2>19. Your Choices</h2>
+          <p>Depending on the features available and your device, you may be able to control certain information and permissions by updating your NAL Fan Account information; changing notification permissions; changing location permissions; choosing whether to participate in optional features; opting in or out of marketing communications where offered; requesting account deletion; and adjusting applicable device or browser privacy settings.</p>
+
+          <h2>20. Privacy Rights</h2>
+          <p>Depending on where you live, applicable privacy laws may provide rights concerning your personal information. These may include rights to request access, correction, deletion, or information regarding how certain personal information is processed.</p>
+          <p>MNTR will respond to valid privacy requests as required by applicable law and may need to verify the identity of the person making the request. Requests may be sent to <strong>appsupport@thenationalarenaleague.com</strong>.</p>
+
+          <h2>21. Changes to This Privacy Policy</h2>
+          <p>We may update this Privacy Policy as the NAL App, our technology, or applicable legal requirements change. The current version and effective date will be displayed within the NAL App.</p>
+          <p>If we make material changes, we may provide additional notice through the NAL App or other appropriate means.</p>
+
+          <h2>22. Contact Us</h2>
+          <p>Questions, requests, or concerns regarding this Privacy Policy or privacy practices associated with the NAL App may be directed to:</p>
+          <div class="fan-legal-contact">MNTR Inc.<br>NAL App Support<br>appsupport@thenationalarenaleague.com</div>
+          <button type="button" class="fan-account-primary fan-legal-return" id="fanPrivacyReturn">BACK TO CREATE ACCOUNT</button>
+        </div>
+      </article>
+    </div>
+  </main>
 
   <!-- =====================================================
        BOTTOM NAV
@@ -8938,10 +9594,10 @@ function openTeamHome(team) {
             button.dataset.teamLink;
 
           const url =
-            getTeamFootballShiftURL(
-              team,
+            team.footballShift &&
+            team.footballShift[
               destination
-            );
+            ];
 
           if (!url) {
 
@@ -10026,9 +10682,43 @@ function getTeamFootballShiftURL(team, destination){
   return "";
 }
 
-/* Team Home FootballShift routing is handled by the button onclick
-   assignments inside openTeamHome(). Keeping a single routing path prevents
-   duplicate click handlers from overriding the team-specific destination. */
+/* Authoritative Team Home menu routing.
+   Capture phase prevents older missing teams.json URLs from swallowing clicks. */
+document.addEventListener("click", function(event){
+  const button = event.target.closest("#teamPage [data-team-link]");
+  if (!button) return;
+
+  const destination = button.dataset.teamLink;
+
+  /* Staff/Tickets keep their existing handlers/data until their destinations are supplied. */
+  if (destination === "staff" || destination === "tickets") return;
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+
+  const team = activeTeam;
+  const url = getTeamFootballShiftURL(team, destination);
+  if (!url) return;
+
+  const titles = {
+    schedule: "SCHEDULE",
+    roster: "ROSTER",
+    stats: "STATS",
+    standings: "STANDINGS"
+  };
+
+  const title = titles[destination] || destination.toUpperCase();
+  const brand = team?._appBrand || {primary:"#07172b", accent:"#e31b23"};
+
+  openArticle(url, {
+    mode: "team",
+    title: title,
+    subtitle: team?.name || "NAL TEAM",
+    loadingText: "LOADING " + title,
+    brand: brand,
+    navPage: "homePage"
+  });
+}, true);
 
 /* Ensure Football section is visible for every FootballShift-supported team,
    even when teams.json does not contain the old footballShift property. */
@@ -10269,6 +10959,75 @@ function closeFanAccount(){
   window.scrollTo(0,0);
 }
 
+function openFanTerms(){
+  const accountPage = document.getElementById("fanAccountPage");
+  const termsPage = document.getElementById("fanTermsPage");
+
+  if (accountPage){
+    accountPage.classList.remove("active");
+    accountPage.style.display = "none";
+  }
+
+  if (termsPage){
+    termsPage.style.display = "block";
+    termsPage.classList.add("active");
+  }
+
+  window.scrollTo(0,0);
+}
+
+function closeFanTerms(){
+  const termsPage = document.getElementById("fanTermsPage");
+  const accountPage = document.getElementById("fanAccountPage");
+
+  if (termsPage){
+    termsPage.classList.remove("active");
+    termsPage.style.display = "none";
+  }
+
+  if (accountPage){
+    accountPage.style.display = "block";
+    accountPage.classList.add("active");
+  }
+
+  setFanAccountView("signup");
+  window.scrollTo(0,0);
+}
+
+function openFanGuidelines(){
+  const accountPage = document.getElementById("fanAccountPage");
+  const guidelinesPage = document.getElementById("fanGuidelinesPage");
+  if (accountPage){ accountPage.classList.remove("active"); accountPage.style.display = "none"; }
+  if (guidelinesPage){ guidelinesPage.style.display = "block"; guidelinesPage.classList.add("active"); }
+  window.scrollTo(0,0);
+}
+
+function closeFanGuidelines(){
+  const guidelinesPage = document.getElementById("fanGuidelinesPage");
+  const accountPage = document.getElementById("fanAccountPage");
+  if (guidelinesPage){ guidelinesPage.classList.remove("active"); guidelinesPage.style.display = "none"; }
+  if (accountPage){ accountPage.style.display = "block"; accountPage.classList.add("active"); }
+  setFanAccountView("signup");
+  window.scrollTo(0,0);
+}
+
+function openFanPrivacy(){
+  const accountPage = document.getElementById("fanAccountPage");
+  const privacyPage = document.getElementById("fanPrivacyPage");
+  if (accountPage){ accountPage.classList.remove("active"); accountPage.style.display = "none"; }
+  if (privacyPage){ privacyPage.style.display = "block"; privacyPage.classList.add("active"); }
+  window.scrollTo(0,0);
+}
+
+function closeFanPrivacy(){
+  const privacyPage = document.getElementById("fanPrivacyPage");
+  const accountPage = document.getElementById("fanAccountPage");
+  if (privacyPage){ privacyPage.classList.remove("active"); privacyPage.style.display = "none"; }
+  if (accountPage){ accountPage.style.display = "block"; accountPage.classList.add("active"); }
+  setFanAccountView("signup");
+  window.scrollTo(0,0);
+}
+
 async function loadNalFanProfile(user){
   if (!user) return null;
 
@@ -10328,6 +11087,31 @@ function renderNalFanProfile(){
   if (email) email.textContent = nalAccountUser.email || "";
   if (favorite) favorite.textContent = favoriteTeam || "NOT SELECTED";
   if (initial) initial.textContent = (displayName.trim().charAt(0) || "N").toUpperCase();
+
+  const memberDisplay = document.getElementById("fanMemberDisplayNameValue");
+  const memberFavorite = document.getElementById("fanMemberFavoriteTeamValue");
+  const avatarImage = document.getElementById("fanMemberAvatarImage");
+  if (memberDisplay) memberDisplay.textContent = displayName;
+  if (memberFavorite) memberFavorite.textContent = favoriteTeam || "NOT SELECTED";
+
+  const adminArea = document.getElementById("fanAdminArea");
+  const isAdmin = nalAccountProfile?.role === "admin";
+  if (adminArea) adminArea.hidden = !isAdmin;
+  if (isAdmin){
+    const adminName = document.getElementById("fanAdminSelfName");
+    const adminInitial = document.getElementById("fanAdminSelfInitial");
+    if (adminName) adminName.textContent = displayName;
+    if (adminInitial) adminInitial.textContent = (displayName.trim().charAt(0) || "A").toUpperCase();
+  }
+  if (avatarImage && nalAccountProfile?.avatar_url){
+    avatarImage.src = nalAccountProfile.avatar_url;
+    avatarImage.style.display = "block";
+    if (initial) initial.style.display = "none";
+  } else if (avatarImage){
+    avatarImage.removeAttribute("src");
+    avatarImage.style.display = "none";
+    if (initial) initial.style.display = "";
+  }
 }
 
 function updateHeaderAccountState(){
@@ -10396,6 +11180,54 @@ document.addEventListener("click", function(event){
     return;
   }
 
+  const termsLink = event.target.closest("#fanTermsLink");
+  if (termsLink){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    openFanTerms();
+    return;
+  }
+
+  const termsBack = event.target.closest("#fanTermsBack, #fanTermsReturn");
+  if (termsBack){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    closeFanTerms();
+    return;
+  }
+
+  const guidelinesLink = event.target.closest("#fanGuidelinesLink");
+  if (guidelinesLink){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    openFanGuidelines();
+    return;
+  }
+
+  const guidelinesBack = event.target.closest("#fanGuidelinesBack, #fanGuidelinesReturn");
+  if (guidelinesBack){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    closeFanGuidelines();
+    return;
+  }
+
+  const privacyLink = event.target.closest("#fanPrivacyLink");
+  if (privacyLink){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    openFanPrivacy();
+    return;
+  }
+
+  const privacyBack = event.target.closest("#fanPrivacyBack, #fanPrivacyReturn");
+  if (privacyBack){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    closeFanPrivacy();
+    return;
+  }
+
   const switchButton = event.target.closest("[data-account-view]");
   if (switchButton){
     event.preventDefault();
@@ -10442,6 +11274,7 @@ document.getElementById("fanSignUpForm")?.addEventListener("submit", async funct
   const favoriteTeam = document.getElementById("fanSignUpFavoriteTeam").value;
   const termsAccepted = document.getElementById("fanTermsAccepted").checked;
   const guidelinesAccepted = document.getElementById("fanGuidelinesAccepted").checked;
+  const privacyAccepted = document.getElementById("fanPrivacyAccepted").checked;
   const submit = this.querySelector('button[type="submit"]');
 
   if (displayName.length < 3 || displayName.length > 30){
@@ -10459,8 +11292,8 @@ document.getElementById("fanSignUpForm")?.addEventListener("submit", async funct
     return;
   }
 
-  if (!termsAccepted || !guidelinesAccepted){
-    setFanAccountMessage("Please accept both the Terms of Use and Community Guidelines.", true);
+  if (!termsAccepted || !guidelinesAccepted || !privacyAccepted){
+    setFanAccountMessage("Please accept the Terms of Use, Community Guidelines, and Privacy Policy.", true);
     return;
   }
 
@@ -10487,11 +11320,13 @@ document.getElementById("fanSignUpForm")?.addEventListener("submit", async funct
       email,
       password,
       options:{
+        emailRedirectTo: "https://mntr-lab.github.io/nal-mobile-app/",
         data:{
           display_name: displayName,
           favorite_team: favoriteTeam,
           terms_accepted: true,
-          community_guidelines_accepted: true
+          community_guidelines_accepted: true,
+          privacy_policy_accepted: true
         }
       }
     });
@@ -10519,6 +11354,88 @@ document.getElementById("fanSignUpForm")?.addEventListener("submit", async funct
   }
 });
 
+document.getElementById("fanDeleteAccountButton")?.addEventListener("click", async function(){
+  if (!nalAccountUser){
+    setFanAccountMessage("Please sign in before requesting account deletion.", true);
+    return;
+  }
+
+  const displayName = nalAccountProfile?.display_name || "NAL Fan";
+  const accountEmail = nalAccountUser?.email || "";
+
+  const confirmed = window.confirm(
+    "Request deletion of your NAL Fan Account?\n\n" +
+    "This sends an account deletion request for review. Your account will NOT be deleted immediately. " +
+    "After the request is recorded, your email app will open with a prepared message to NAL App Support."
+  );
+  if (!confirmed) return;
+
+  const button = this;
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = "SUBMITTING REQUEST...";
+
+  try{
+    const client = getNalAccountClient();
+
+    const { data: existing, error: existingError } = await client
+      .from("account_deletion_requests")
+      .select("id,status,requested_at")
+      .eq("user_id", nalAccountUser.id)
+      .maybeSingle();
+
+    if (existingError) throw existingError;
+
+    if (!existing){
+      const { error: insertError } = await client
+        .from("account_deletion_requests")
+        .insert({
+          user_id: nalAccountUser.id,
+          status: "pending"
+        });
+
+      if (insertError) throw insertError;
+    } else if (existing.status !== "pending"){
+      throw new Error("A previous account deletion request already exists for this account.");
+    }
+
+    const subject = "NAL Fan Account Deletion Request";
+    const body = [
+      "NAL Fan Account Deletion Request",
+      "",
+      "Display Name: " + displayName,
+      "Account Email: " + accountEmail,
+      "",
+      "I am requesting deletion of my NAL Fan Account.",
+      "",
+      "This request was initiated while signed in to the account."
+    ].join("\n");
+
+    setFanAccountMessage(
+      existing
+        ? "Your account deletion request is already pending. Opening your email app so you can contact NAL App Support."
+        : "Your account deletion request has been recorded. Opening your email app so you can contact NAL App Support.",
+      false
+    );
+
+    window.location.href =
+      "mailto:appsupport@thenationalarenaleague.com?subject=" +
+      encodeURIComponent(subject) +
+      "&body=" +
+      encodeURIComponent(body);
+
+  } catch(error){
+    console.error("NAL account deletion request error:", error);
+    setFanAccountMessage(
+      "We could not submit your account deletion request. Please try again.",
+      true
+    );
+  } finally{
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+});
+
 document.getElementById("fanSignOutButton")?.addEventListener("click", async function(){
   this.disabled = true;
   this.textContent = "SIGNING OUT...";
@@ -10537,6 +11454,537 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     this.textContent = "SIGN OUT";
   }
 });
+
+
+/* NAL ADMIN — activity log. */
+(function(){
+  const button=document.getElementById("fanAdminActivityButton");
+  const panel=document.getElementById("fanAdminActivityPanel");
+  const list=document.getElementById("fanAdminActivityList");
+  const search=document.getElementById("fanAdminActivitySearch");
+  let entries=[];
+
+  function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+  function label(v){return ({role_changed:"ROLE CHANGED",account_suspended:"ACCOUNT SUSPENDED",account_restored:"ACCOUNT RESTORED",account_banned:"ACCOUNT BANNED",account_deleted:"ACCOUNT DELETED"})[v]||String(v||"ADMIN ACTION").replaceAll("_"," ").toUpperCase();}
+  function when(v){const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleString(undefined,{year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});}
+
+  function render(){
+    if(!list)return;
+    const q=(search?.value||"").trim().toLowerCase();
+    const rows=entries.filter(e=>!q||[e.target_display_name,e.target_email,e.action_type,e.old_value,e.new_value].some(v=>String(v||"").toLowerCase().includes(q)));
+    if(!rows.length){list.innerHTML='<div class="fan-admin-empty">'+(q?"No activity matches your search.":"No administrator activity has been recorded yet.")+'</div>';return;}
+    list.innerHTML=rows.map(e=>{
+      const target=e.target_display_name||e.target_email||"Deleted member";
+      const email=e.target_email&&e.target_email!==target?e.target_email:"";
+      const change=(e.old_value||e.new_value)?[e.old_value,e.new_value].filter(Boolean).map(v=>String(v).toUpperCase()).join(" → "):"";
+      const detail=[email,change].filter(Boolean).join(" • ");
+      return '<div class="fan-admin-log-item"><div class="fan-admin-log-top"><span class="fan-admin-log-action">'+esc(label(e.action_type))+'</span><span class="fan-admin-log-time">'+esc(when(e.created_at))+'</span></div><span class="fan-admin-log-target">'+esc(target)+'</span>'+(detail?'<span class="fan-admin-log-detail">'+esc(detail)+'</span>':"")+'</div>';
+    }).join("");
+  }
+
+  async function load(){
+    if(!list||nalAccountProfile?.role!=="admin")return;
+    list.innerHTML='<div class="fan-admin-loading">Loading administrator activity…</div>';
+    try{
+      const client=getNalAccountClient();
+      const {data,error}=await client.from("admin_activity_log").select("id,target_display_name,target_email,action_type,old_value,new_value,details,created_at").order("created_at",{ascending:false}).limit(100);
+      if(error)throw error;
+      entries=Array.isArray(data)?data:[];
+      render();
+    }catch(error){
+      console.error("NAL Admin activity log error:",error);
+      list.innerHTML='<div class="fan-admin-error">Activity Log could not be loaded. Please try again.</div>';
+    }
+  }
+
+  button?.addEventListener("click",async function(){
+    if(document.getElementById("fanAdminArea")?.hidden)return;
+    document.getElementById("fanAdminUsersPanel")?.classList.remove("show");
+    panel?.classList.toggle("show");
+    if(panel?.classList.contains("show")){
+      await load();
+      setTimeout(()=>panel.scrollIntoView({behavior:"smooth",block:"nearest"}),50);
+    }
+  });
+  search?.addEventListener("input",render);
+})();
+
+/* NAL ADMIN — real admin-only member list. */
+(function(){
+  const button = document.getElementById("fanAdminUsersButton");
+  const panel = document.getElementById("fanAdminUsersPanel");
+  const list = document.getElementById("fanAdminUsersList");
+  const search = document.getElementById("fanAdminUserSearch");
+  const memberCount = document.getElementById("fanAdminMemberCount");
+  let adminMembers = [];
+  let loaded = false;
+  let selectedAdminMember = null;
+
+  function escapeAdminText(value){
+    return String(value ?? "").replace(/[&<>"']/g, function(char){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char];
+    });
+  }
+
+  function formatAdminDate(value){
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+  }
+
+  function renderAdminMembers(){
+    if (!list) return;
+    const query = (search?.value || "").trim().toLowerCase();
+    const members = adminMembers.filter(function(member){
+      if (!query) return true;
+      return String(member.display_name || "").toLowerCase().includes(query) ||
+             String(member.email || "").toLowerCase().includes(query);
+    });
+
+    if (!members.length){
+      list.innerHTML = '<div class="fan-admin-empty">' +
+        (query ? "No members match your search." : "No registered members found.") +
+        '</div>';
+      return;
+    }
+
+    list.innerHTML = members.map(function(member){
+      const name = member.display_name || "NAL FAN";
+      const initial = (name.trim().charAt(0) || "N").toUpperCase();
+      const role = String(member.role || "fan").toLowerCase();
+      const status = String(member.account_status || "active").toLowerCase();
+      const favorite = member.favorite_team || "No favorite team";
+      const joined = formatAdminDate(member.created_at);
+      const meta = [member.email || "", status.charAt(0).toUpperCase()+status.slice(1), favorite, joined ? "Joined "+joined : ""]
+        .filter(Boolean).join(" • ");
+      return '<div class="fan-admin-user" data-member-id="'+escapeAdminText(member.id)+'">' +
+        '<div class="fan-admin-uavatar">'+escapeAdminText(initial)+'</div>' +
+        '<div class="fan-admin-uinfo"><b>'+escapeAdminText(name)+'</b><span class="fan-admin-meta fan-admin-status-'+escapeAdminText(status)+'">'+escapeAdminText(meta)+'</span></div>' +
+        '<span class="fan-admin-role '+escapeAdminText(role)+'">'+escapeAdminText(role.toUpperCase())+'</span>' +
+        '<span class="fan-member-chev">›</span></div>';
+    }).join("");
+  }
+
+  async function loadAdminMembers(){
+    if (!list) return;
+    if (nalAccountProfile?.role !== "admin"){
+      list.innerHTML = '<div class="fan-admin-error">Administrator access required.</div>';
+      return;
+    }
+
+    list.innerHTML = '<div class="fan-admin-loading">Loading registered members…</div>';
+
+    try{
+      const client = getNalAccountClient();
+      const { data, error } = await client.rpc("admin_list_members");
+      if (error) throw error;
+      adminMembers = Array.isArray(data) ? data : [];
+      loaded = true;
+      if (memberCount) memberCount.textContent = String(adminMembers.length);
+      renderAdminMembers();
+    } catch(error){
+      console.error("NAL Admin member list error:", error);
+      list.innerHTML = '<div class="fan-admin-error">We could not load the member list. Please confirm you are signed in with an active Admin account.</div>';
+    }
+  }
+
+  function openAdminMemberDetail(member){
+    if (!member || nalAccountProfile?.role !== "admin") return;
+    selectedAdminMember = member;
+    const detail = document.getElementById("fanAdminMemberDetail");
+    const name = member.display_name || "NAL FAN";
+    const status = member.account_status || "active";
+    const role = member.role || "fan";
+    const set = function(id,value){
+      const el=document.getElementById(id);
+      if(el) el.textContent=value || "—";
+    };
+    set("fanAdminDetailInitial",(name.trim().charAt(0)||"N").toUpperCase());
+    set("fanAdminDetailName",name);
+    set("fanAdminDetailSummary",String(role).toUpperCase()+" • "+String(status).toUpperCase());
+    set("fanAdminDetailDisplayName",name);
+    set("fanAdminDetailEmail",member.email);
+    set("fanAdminDetailFavorite",member.favorite_team || "Not selected");
+    set("fanAdminDetailRole",String(role).toUpperCase());
+    set("fanAdminDetailStatus",String(status).toUpperCase());
+    set("fanAdminDetailJoined",formatAdminDate(member.created_at) || "—");
+
+    const roleButton = document.getElementById("fanAdminRoleAction");
+    const statusButton = document.getElementById("fanAdminStatusAction");
+    const banButton = document.getElementById("fanAdminBanAction");
+    const deleteButton = document.getElementById("fanAdminDeleteAction");
+    const actionHelp = document.getElementById("fanAdminActionHelp");
+    const actionMessage = document.getElementById("fanAdminActionMessage");
+    if (actionMessage){ actionMessage.textContent = ""; actionMessage.className = "fan-admin-action-message"; }
+
+    const isSelf = String(member.id) === String(nalAccountUser?.id || "");
+    const normalizedStatus = String(status).toLowerCase();
+    if (roleButton){
+      roleButton.disabled = isSelf;
+    }
+    if (statusButton){
+      statusButton.disabled = isSelf;
+      statusButton.classList.remove("fan-admin-action-suspend","fan-admin-action-restore");
+      if (normalizedStatus === "suspended" || normalizedStatus === "banned"){
+        statusButton.textContent = "RESTORE ACCOUNT";
+        statusButton.classList.add("fan-admin-action-restore");
+      } else {
+        statusButton.textContent = "SUSPEND ACCOUNT";
+        statusButton.classList.add("fan-admin-action-suspend");
+      }
+    }
+    if (banButton){
+      banButton.disabled = isSelf || normalizedStatus === "banned";
+      banButton.style.display = normalizedStatus === "banned" ? "none" : "";
+    }
+    if (deleteButton){
+      const targetIsAdmin = String(member.role || "").toLowerCase() === "admin";
+      deleteButton.disabled = isSelf || targetIsAdmin;
+      deleteButton.style.display = (isSelf || targetIsAdmin) ? "none" : "";
+    }
+    if (actionHelp){
+      actionHelp.textContent = isSelf
+        ? "Your own administrator account cannot be suspended or banned from these controls."
+        : (normalizedStatus === "banned"
+            ? "This member is banned. Restore the account to return it to active status."
+            : (normalizedStatus === "suspended"
+                ? "Restore this member, or ban the account for a stronger restriction."
+                : "Suspend this member temporarily or ban the account."));
+    }
+
+    detail?.classList.add("show");
+    setTimeout(function(){detail?.scrollIntoView({behavior:"smooth",block:"nearest"});},30);
+  }
+
+  list?.addEventListener("click",function(event){
+    const row=event.target.closest(".fan-admin-user[data-member-id]");
+    if(!row) return;
+    const member=adminMembers.find(function(item){return String(item.id)===String(row.dataset.memberId);});
+    openAdminMemberDetail(member);
+  });
+
+  document.getElementById("fanAdminRoleAction")?.addEventListener("click", async function(){
+    if (!selectedAdminMember || nalAccountProfile?.role !== "admin") return;
+    if (String(selectedAdminMember.id) === String(nalAccountUser?.id || "")) return;
+
+    const member = selectedAdminMember;
+    const currentRole = String(member.role || "fan").toLowerCase();
+    const name = member.display_name || "this member";
+
+    const entered = window.prompt(
+      "CHANGE ROLE — " + name + "\n\n" +
+      "Current role: " + currentRole.toUpperCase() + "\n\n" +
+      "Enter one of the following:\n" +
+      "FAN\nALL-PRO\nMODERATOR\nADMIN"
+    );
+
+    if (entered === null) return;
+
+    const newRole = String(entered).trim().toLowerCase();
+    const allowedRoles = ["fan","all-pro","moderator","admin"];
+
+    if (!allowedRoles.includes(newRole)){
+      window.alert("Please enter FAN, ALL-PRO, MODERATOR, or ADMIN.");
+      return;
+    }
+
+    if (newRole === currentRole){
+      window.alert(name + " is already " + currentRole.toUpperCase() + ".");
+      return;
+    }
+
+    const warning = newRole === "admin"
+      ? "\n\nWARNING: Admin gives this member access to protected administrative controls."
+      : (newRole === "moderator"
+          ? "\n\nModerator is an elevated permission role."
+          : "");
+
+    if (!window.confirm(
+      "Change " + name + " from " + currentRole.toUpperCase() +
+      " to " + newRole.toUpperCase() + "?" + warning
+    )) return;
+
+    const button = this;
+    const message = document.getElementById("fanAdminActionMessage");
+    button.disabled = true;
+    if (message){
+      message.textContent = "Changing member role…";
+      message.className = "fan-admin-action-message";
+    }
+
+    try{
+      const client = getNalAccountClient();
+      const { error } = await client.rpc("admin_set_member_role", {
+        target_user_id: member.id,
+        new_role: newRole
+      });
+      if (error) throw error;
+
+      member.role = newRole;
+      const memberIndex = adminMembers.findIndex(function(item){
+        return String(item.id) === String(member.id);
+      });
+      if (memberIndex >= 0) adminMembers[memberIndex].role = newRole;
+
+      renderAdminMembers();
+      openAdminMemberDetail(member);
+
+      const refreshedMessage = document.getElementById("fanAdminActionMessage");
+      if (refreshedMessage){
+        refreshedMessage.textContent = "Role changed to " + newRole.toUpperCase() + " successfully.";
+        refreshedMessage.className = "fan-admin-action-message success";
+      }
+    } catch(error){
+      console.error("NAL Admin role update error:", error);
+      button.disabled = false;
+      if (message){
+        message.textContent = error?.message || "Member role could not be changed. Please try again.";
+        message.className = "fan-admin-action-message error";
+      }
+    }
+  });
+
+  document.getElementById("fanAdminDeleteAction")?.addEventListener("click", async function(){
+    if (!selectedAdminMember || nalAccountProfile?.role !== "admin") return;
+    if (String(selectedAdminMember.id) === String(nalAccountUser?.id || "")) return;
+    if (String(selectedAdminMember.role || "").toLowerCase() === "admin") return;
+
+    const member = selectedAdminMember;
+    const name = member.display_name || "this member";
+    const email = member.email || "";
+
+    const firstConfirm = window.confirm(
+      "Permanently delete " + name + "?\n\n" +
+      "This will permanently delete the member's NAL Fan Account and authentication record. " +
+      "This action cannot be undone."
+    );
+    if (!firstConfirm) return;
+
+    const typed = window.prompt(
+      "FINAL CONFIRMATION\n\nType DELETE to permanently delete " +
+      name + (email ? " (" + email + ")" : "") + "."
+    );
+    if (typed !== "DELETE") return;
+
+    const button = this;
+    const message = document.getElementById("fanAdminActionMessage");
+    button.disabled = true;
+    if (message){
+      message.textContent = "Permanently deleting account…";
+      message.className = "fan-admin-action-message";
+    }
+
+    try{
+      const client = getNalAccountClient();
+      const { data: sessionData, error: sessionError } = await client.auth.getSession();
+      if (sessionError) throw sessionError;
+
+      const accessToken = sessionData?.session?.access_token;
+      if (!accessToken) throw new Error("Administrator session not available.");
+
+      const response = await fetch(
+        NAL_ACCOUNT_SUPABASE_URL + "/functions/v1/admin-delete-user",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": NAL_ACCOUNT_SUPABASE_KEY,
+            "Authorization": "Bearer " + accessToken
+          },
+          body: JSON.stringify({ target_user_id: member.id })
+        }
+      );
+
+      let result = {};
+      try{ result = await response.json(); }catch(_){}
+
+      if (!response.ok || result?.success !== true){
+        throw new Error(result?.error || "Account deletion failed.");
+      }
+
+      adminMembers = adminMembers.filter(function(item){
+        return String(item.id) !== String(member.id);
+      });
+      selectedAdminMember = null;
+      renderAdminMembers();
+
+      const detail = document.getElementById("fanAdminMemberDetail");
+      detail?.classList.remove("show");
+
+      const listMessage = document.getElementById("fanAdminUsersList");
+      if (listMessage && adminMembers.length === 0){
+        listMessage.innerHTML = '<div class="fan-admin-empty">No registered members found.</div>';
+      }
+
+      window.alert(name + " has been permanently deleted.");
+    }catch(error){
+      console.error("NAL Admin permanent deletion error:", error);
+      button.disabled = false;
+      if (message){
+        message.textContent = error?.message || "Account could not be deleted. Please try again.";
+        message.className = "fan-admin-action-message error";
+      }
+    }
+  });
+
+  document.getElementById("fanAdminBanAction")?.addEventListener("click", async function(){
+    if (!selectedAdminMember || nalAccountProfile?.role !== "admin") return;
+    if (String(selectedAdminMember.id) === String(nalAccountUser?.id || "")) return;
+    if (String(selectedAdminMember.account_status || "").toLowerCase() === "banned") return;
+
+    const name = selectedAdminMember.display_name || "this member";
+    if (!window.confirm("Ban " + name + "?\n\nThis member will lose access to NAL Fan Account features. An administrator can restore the account later.")) return;
+
+    const button = this;
+    const message = document.getElementById("fanAdminActionMessage");
+    button.disabled = true;
+    if (message){ message.textContent = "Banning account…"; message.className = "fan-admin-action-message"; }
+
+    try{
+      const client = getNalAccountClient();
+      const { error } = await client.rpc("admin_set_account_status", {
+        target_user_id: selectedAdminMember.id,
+        new_status: "banned"
+      });
+      if (error) throw error;
+
+      selectedAdminMember.account_status = "banned";
+      const memberIndex = adminMembers.findIndex(function(item){ return String(item.id) === String(selectedAdminMember.id); });
+      if (memberIndex >= 0) adminMembers[memberIndex].account_status = "banned";
+
+      renderAdminMembers();
+      openAdminMemberDetail(selectedAdminMember);
+      const refreshedMessage = document.getElementById("fanAdminActionMessage");
+      if (refreshedMessage){
+        refreshedMessage.textContent = "Account banned successfully.";
+        refreshedMessage.className = "fan-admin-action-message success";
+      }
+    } catch(error){
+      console.error("NAL Admin ban error:", error);
+      button.disabled = false;
+      if (message){
+        message.textContent = "Account could not be banned. Please try again.";
+        message.className = "fan-admin-action-message error";
+      }
+    }
+  });
+
+  document.getElementById("fanAdminStatusAction")?.addEventListener("click", async function(){
+    if (!selectedAdminMember || nalAccountProfile?.role !== "admin") return;
+    if (String(selectedAdminMember.id) === String(nalAccountUser?.id || "")) return;
+
+    const currentStatus = String(selectedAdminMember.account_status || "active").toLowerCase();
+    const newStatus = currentStatus === "suspended" ? "active" : "suspended";
+    const verb = newStatus === "suspended" ? "suspend" : "restore";
+    const name = selectedAdminMember.display_name || "this member";
+
+    if (!window.confirm((verb === "suspend" ? "Suspend " : "Restore ") + name + "?" +
+      (verb === "suspend"
+        ? "\n\nThis member will lose access to NAL Fan Account features until an administrator restores the account."
+        : "\n\nThis member will regain access to NAL Fan Account features."))) return;
+
+    const button = this;
+    const message = document.getElementById("fanAdminActionMessage");
+    button.disabled = true;
+    if (message){ message.textContent = (verb === "suspend" ? "Suspending account…" : "Restoring account…"); message.className = "fan-admin-action-message"; }
+
+    try{
+      const client = getNalAccountClient();
+      const { error } = await client.rpc("admin_set_account_status", {
+        target_user_id: selectedAdminMember.id,
+        new_status: newStatus
+      });
+      if (error) throw error;
+
+      selectedAdminMember.account_status = newStatus;
+      const memberIndex = adminMembers.findIndex(function(item){ return String(item.id) === String(selectedAdminMember.id); });
+      if (memberIndex >= 0) adminMembers[memberIndex].account_status = newStatus;
+
+      renderAdminMembers();
+      openAdminMemberDetail(selectedAdminMember);
+      const refreshedMessage = document.getElementById("fanAdminActionMessage");
+      if (refreshedMessage){
+        refreshedMessage.textContent = newStatus === "suspended" ? "Account suspended successfully." : "Account restored successfully.";
+        refreshedMessage.className = "fan-admin-action-message success";
+      }
+    } catch(error){
+      console.error("NAL Admin status update error:", error);
+      button.disabled = false;
+      if (message){
+        message.textContent = "Account status could not be updated. Please try again.";
+        message.className = "fan-admin-action-message error";
+      }
+    }
+  });
+
+  document.getElementById("fanAdminDetailClose")?.addEventListener("click",function(){
+    document.getElementById("fanAdminMemberDetail")?.classList.remove("show");
+  });
+
+  search?.addEventListener("input", renderAdminMembers);
+
+  button?.addEventListener("click", async function(){
+    if (document.getElementById("fanAdminArea")?.hidden) return;
+    document.getElementById("fanAdminActivityPanel")?.classList.remove("show");
+    panel?.classList.toggle("show");
+    if (panel?.classList.contains("show")){
+      if (!loaded) await loadAdminMembers();
+      setTimeout(function(){ panel.scrollIntoView({behavior:"smooth",block:"nearest"}); }, 50);
+    }
+  });
+})();
+
+/* NAL MEMBER ACCOUNT — avatar preview and legal-page shortcuts.
+   Avatar selection is local preview only until Supabase Storage is connected. */
+(function(){
+  const avatarButton = document.getElementById("fanMemberAvatarButton");
+  const actions = document.getElementById("fanMemberAvatarActions");
+  const fileInput = document.getElementById("fanMemberAvatarFile");
+  const avatarImage = document.getElementById("fanMemberAvatarImage");
+  const initial = document.getElementById("fanProfileInitial");
+
+  avatarButton?.addEventListener("click", function(){
+    actions?.classList.add("open");
+  });
+
+  document.getElementById("fanMemberChooseAvatar")?.addEventListener("click", function(){
+    fileInput?.click();
+  });
+
+  document.getElementById("fanMemberCancelAvatar")?.addEventListener("click", function(){
+    actions?.classList.remove("open");
+  });
+
+  document.getElementById("fanMemberRemoveAvatar")?.addEventListener("click", function(){
+    if (avatarImage){
+      avatarImage.removeAttribute("src");
+      avatarImage.style.display = "none";
+    }
+    if (initial) initial.style.display = "";
+    if (fileInput) fileInput.value = "";
+    actions?.classList.remove("open");
+  });
+
+  fileInput?.addEventListener("change", function(){
+    const file = this.files && this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event){
+      if (avatarImage){
+        avatarImage.src = event.target.result;
+        avatarImage.style.display = "block";
+      }
+      if (initial) initial.style.display = "none";
+      actions?.classList.remove("open");
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById("fanMemberTerms")?.addEventListener("click", openFanTerms);
+  document.getElementById("fanMemberGuidelines")?.addEventListener("click", openFanGuidelines);
+  document.getElementById("fanMemberPrivacy")?.addEventListener("click", openFanPrivacy);
+})();
 
 document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 
