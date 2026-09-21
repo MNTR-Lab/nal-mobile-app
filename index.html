@@ -2716,8 +2716,10 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   margin:0 !important;
   border-radius:0 !important;
   background:
-    linear-gradient(90deg,rgba(2,18,34,.18),rgba(2,18,34,.48)),
-    url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Game_Image_2.jpg?v=1789843442") center 35%/cover no-repeat !important;
+    linear-gradient(90deg,rgba(1,13,26,.34),rgba(1,13,26,.58)) !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
   border-bottom:1px solid rgba(255,255,255,.08) !important;
 }
 #homePage .season-x-hero::after{
@@ -2918,6 +2920,41 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   line-height: 1.05 !important;
 }
 
+
+/* ROTATING SEASON X HERO */
+#homePage .season-x-hero{isolation:isolate;overflow:hidden !important;}
+#homePage .season-x-hero::before{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(90deg,rgba(0,15,31,.18) 0%,rgba(0,15,31,.04) 43%,rgba(126,0,16,.25) 100%),
+    linear-gradient(0deg,rgba(3,24,45,.70) 0%,transparent 50%,rgba(3,24,45,.16) 100%);
+  pointer-events:none;
+}
+#homePage .season-x-hero::after{z-index:1 !important;}
+#homePage .hero-content{z-index:3 !important;}
+#homePage .hero-season-lockup{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  margin-bottom:1px;transform:skew(-7deg);
+  filter:drop-shadow(0 5px 9px rgba(0,0,0,.55));
+}
+#homePage .hero-season-word{
+  color:#fff;font-size:47px;line-height:.86;font-weight:1000;
+  letter-spacing:-3px;text-transform:uppercase;
+}
+#homePage .hero-season-x{
+  color:#ed1c2e;font-size:73px;line-height:.70;font-weight:1000;
+  letter-spacing:-6px;text-transform:uppercase;
+  text-shadow:0 0 24px rgba(237,28,46,.32);
+}
+#homePage .hero-tagline{
+  position:relative;z-index:4;margin-top:8px !important;
+  text-shadow:0 2px 7px rgba(0,0,0,.78);
+}
+@media(max-width:420px){
+  #homePage .hero-season-word{font-size:39px;}
+  #homePage .hero-season-x{font-size:61px;}
+}
+
 </style>
 </head>
 
@@ -2999,18 +3036,12 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
     <section class="season-x-hero">
       <div class="hero-red-glow"></div>
       <div class="hero-content">
-        <div class="hero-eyebrow">
-          NATIONAL ARENA LEAGUE • SEASON X
-        </div>
-        <img
-          src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/National_Bowl_Logo_X.png?v=1789933997"
-          alt="National Bowl X"
-          class="national-bowl-logo"
-        >
-        <div class="hero-tagline">
-          WHERE CHAMPIONS ARE CROWNED
-        </div>
+      <div class="hero-season-lockup" aria-label="Season X">
+        <span class="hero-season-word">SEASON</span>
+        <span class="hero-season-x">X</span>
       </div>
+      <div class="hero-tagline">WHERE CHAMPIONS ARE CROWNED.</div>
+</div>
       <div class="hero-accent-line"></div>
     </section>
 
@@ -4005,7 +4036,35 @@ const headerHome =
    PAGE NAVIGATION
 ========================================================= */
 
+
+/* =========================================================
+   ROTATING SEASON X HOME HERO
+========================================================= */
+const SEASON_X_HERO_IMAGES = ['https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas.png?v=1789953099', 'https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado.png?v=1789953405', 'https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City.png?v=1789953509'];
+let lastSeasonXHeroIndex = -1;
+
+function rotateSeasonXHero() {
+  const hero = document.querySelector("#homePage .season-x-hero");
+  if (!hero || !SEASON_X_HERO_IMAGES.length) return;
+
+  let nextIndex = 0;
+  if (SEASON_X_HERO_IMAGES.length > 1) {
+    do {
+      nextIndex = Math.floor(Math.random() * SEASON_X_HERO_IMAGES.length);
+    } while (nextIndex === lastSeasonXHeroIndex);
+  }
+
+  lastSeasonXHeroIndex = nextIndex;
+  const imageUrl = SEASON_X_HERO_IMAGES[nextIndex];
+  hero.style.backgroundImage =
+    `linear-gradient(90deg, rgba(1,13,26,.34), rgba(1,13,26,.58)), url("${imageUrl}")`;
+}
+
 function showPage(pageId) {
+
+  if (pageId === "homePage") {
+    rotateSeasonXHero();
+  }
 
   pages.forEach(page => {
     page.classList.remove("active");
@@ -4913,6 +4972,8 @@ newsSection.addEventListener(
 /* =========================================================
    START APP
 ========================================================= */
+
+rotateSeasonXHero();
 
 loadNews();
 /* =========================================================
