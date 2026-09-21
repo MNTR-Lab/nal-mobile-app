@@ -3417,6 +3417,58 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   display: none !important;
 }
 
+
+/* =========================================================
+   NAL NETWORK — INTERACTIVE PREVIEW BUILD
+========================================================= */
+#watchPage{background:#06172b!important;color:#fff!important;padding-bottom:100px!important;}
+#watchPage .network-hub-header{padding:20px 16px 13px!important;}
+#watchPage .network-hub-wordmark{font-size:30px!important;}
+#watchPage .network-tabs{top:var(--header-height);justify-content:space-between;padding:0 8px!important;}
+#watchPage .network-tab{padding:12px 8px 10px!important;font-size:8px!important;}
+#watchPage .network-tab-panel{display:none;}
+#watchPage .network-tab-panel.active{display:block;}
+#watchPage .network-section-kicker{margin-bottom:9px;font-size:10px;font-weight:950;letter-spacing:.8px;color:#fff;}
+#watchPage button{font-family:inherit;}
+#watchPage .network-feature-card{width:100%;padding:0;border:0;background:transparent;text-align:left;color:#fff;cursor:pointer;}
+#watchPage .network-feature-visual{position:relative;aspect-ratio:16/9;border-radius:13px;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.12),transparent 18%),linear-gradient(135deg,#102f53 0%,#07172b 48%,#210b17 100%);border:1px solid rgba(255,255,255,.10);display:flex;align-items:center;justify-content:center;}
+#watchPage .network-feature-watermark{font-size:26px;font-style:italic;font-weight:1000;letter-spacing:-1px;color:rgba(255,255,255,.13);}
+#watchPage .network-feature-badge{position:absolute;left:12px;top:12px;padding:5px 8px;border-radius:5px;background:#ed1c2e;color:#fff;font-size:8px;font-weight:950;}
+#watchPage .network-circle-play{position:absolute;width:50px;height:50px;border:2px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;padding-left:3px;background:rgba(0,0,0,.34);font-size:18px;}
+#watchPage .network-feature-info{padding:10px 2px 0;display:flex;flex-direction:column;gap:3px;}
+#watchPage .network-feature-info strong{font-size:14px;}
+#watchPage .network-feature-info span{font-size:9px;color:rgba(255,255,255,.60);}
+#watchPage .network-show-card{border:0;background:transparent;padding:0;text-align:left;cursor:pointer;color:#fff;}
+#watchPage .network-show-art{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#0d2744;color:#fff;font-weight:1000;font-style:italic;text-align:center;}
+#watchPage .network-show-art span{position:relative;z-index:2;line-height:.9;}
+#watchPage .network-art-around{background:linear-gradient(145deg,#142e4c,#07172b 55%,#49101a);}
+#watchPage .network-art-five{background:linear-gradient(145deg,#07172b,#152f50 60%,#8c101d);}
+#watchPage .network-art-five span{font-size:29px}.network-art-five small{font-size:8px;}
+#watchPage .network-art-coaches{background:linear-gradient(145deg,#0c223b,#07172b 58%,#242b36);}
+#watchPage .network-art-gameday{background:linear-gradient(145deg,#172e49,#07172b 60%,#83101c);}
+#watchPage .network-episode-art,#watchPage .network-highlight-art{background:linear-gradient(145deg,#102f53,#07172b 62%,#111);}
+#watchPage .network-mini-play{width:31px;height:31px;border-radius:50%;background:#ed1c2e;display:flex!important;align-items:center;justify-content:center;padding-left:2px;font-style:normal;}
+#watchPage .network-library-head{padding:25px 16px 15px;}
+#watchPage .network-library-head h2{margin:0;font-size:23px;font-weight:1000;}
+#watchPage .network-library-head p{margin:5px 0 0;font-size:9px;color:rgba(255,255,255,.58);}
+#watchPage .network-library-grid{padding:0 16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px;}
+#watchPage .network-library-grid button{border:0;background:transparent;color:#fff;padding:0;text-align:left;}
+#watchPage .network-library-grid .network-show-art{aspect-ratio:16/9;border-radius:10px;}
+#watchPage .network-library-grid strong{display:block;margin-top:7px;font-size:10px;}
+#watchPage .network-empty-state{margin:0 16px;padding:42px 18px;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.025);display:flex;flex-direction:column;align-items:center;text-align:center;}
+#watchPage .network-empty-icon{width:48px;height:48px;border-radius:50%;background:#ed1c2e;display:flex;align-items:center;justify-content:center;margin-bottom:13px;}
+#watchPage .network-empty-state strong{font-size:12px;}
+#watchPage .network-empty-state small{margin-top:5px;color:rgba(255,255,255,.54);font-size:9px;}
+#watchPage .network-preview-modal{position:fixed;inset:0;z-index:2000;display:none;align-items:flex-end;justify-content:center;}
+#watchPage .network-preview-modal.open{display:flex;}
+#watchPage .network-preview-backdrop{position:absolute;inset:0;border:0;background:rgba(0,0,0,.72);}
+#watchPage .network-preview-sheet{position:relative;width:min(100%,520px);padding:16px 16px 24px;background:#07172b;border-radius:20px 20px 0 0;border-top:1px solid rgba(255,255,255,.15);box-shadow:0 -20px 60px rgba(0,0,0,.45);}
+#watchPage .network-preview-close{position:absolute;right:14px;top:10px;z-index:3;width:32px;height:32px;border:0;border-radius:50%;background:rgba(0,0,0,.58);color:#fff;font-size:23px;}
+#watchPage .network-preview-player{aspect-ratio:16/9;border-radius:12px;background:linear-gradient(145deg,#102f53,#07172b 55%,#42101a);display:flex;align-items:center;justify-content:center;font-size:30px;}
+#watchPage .network-preview-sheet h3{margin:14px 0 4px;font-size:18px;}
+#watchPage .network-preview-sheet p{margin:0;color:rgba(255,255,255,.62);font-size:10px;}
+#watchPage .network-preview-action{margin-top:15px;width:100%;height:40px;border:0;border-radius:7px;background:#ed1c2e;color:#fff;font-size:10px;font-weight:950;}
+
 </style>
 </head>
 
@@ -3945,175 +3997,141 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
        NAL NETWORK HUB
   ====================================================== -->
 
-  <main
-    id="watchPage"
-    class="app-page network-page"
-  >
+  <main id="watchPage" class="app-page network-page">
 
     <div class="network-hub-header">
-      <div class="network-hub-wordmark">
-        NAL <span>NETWORK</span>
-      </div>
-      <div class="network-hub-tagline">
-        The Game. The League. The Network.
-      </div>
+      <div class="network-hub-wordmark">NAL <span>NETWORK</span></div>
+      <div class="network-hub-tagline">The Game. The League. The Network.</div>
     </div>
 
-    <div class="network-tabs">
-      <button class="network-tab active" type="button">HOME</button>
-      <button class="network-tab" type="button">LIVE</button>
-      <button class="network-tab" type="button">SHOWS</button>
-      <button class="network-tab" type="button">HIGHLIGHTS</button>
-      <button class="network-tab" type="button">ARCHIVES</button>
+    <div class="network-tabs" role="tablist" aria-label="NAL Network sections">
+      <button class="network-tab active" type="button" data-network-tab="home">HOME</button>
+      <button class="network-tab" type="button" data-network-tab="live">LIVE</button>
+      <button class="network-tab" type="button" data-network-tab="shows">SHOWS</button>
+      <button class="network-tab" type="button" data-network-tab="highlights">HIGHLIGHTS</button>
+      <button class="network-tab" type="button" data-network-tab="archives">ARCHIVES</button>
     </div>
 
-    <!-- FEATURED / LIVE -->
-    <section class="network-hub-section">
-      <div class="media-placeholder network-feature-placeholder">
-        <div class="media-placeholder-label">
-          LIVE / FEATURED HERO IMAGE PLACEHOLDER<br>
-          16:9 • RECOMMENDED 1200 × 675 PX
+    <div class="network-tab-panel active" data-network-panel="home">
+      <section class="network-hub-section network-feature-section">
+        <div class="network-section-kicker">FEATURED</div>
+        <button class="network-feature-card" type="button" onclick="previewNetworkItem('Featured NAL Network Programming','Featured video and live programming will play here once connected.')">
+          <div class="network-feature-visual">
+            <div class="network-feature-watermark">NAL NETWORK</div>
+            <span class="network-feature-badge">FEATURED</span>
+            <span class="network-circle-play">▶</span>
+          </div>
+          <div class="network-feature-info">
+            <strong>Featured NAL Network Programming</strong>
+            <span>Live games, originals and featured league programming.</span>
+          </div>
+        </button>
+      </section>
+
+      <section class="network-hub-section">
+        <div class="network-section-header">
+          <div class="network-section-title">NAL Network Originals</div>
+          <button class="network-view-all" type="button" onclick="switchNetworkTab('shows')">VIEW ALL ›</button>
         </div>
-        <div class="network-live-badge">FEATURED</div>
-        <div class="network-feature-copy">
-          <div class="network-feature-title">
-            Featured NAL Network Programming
-          </div>
-          <div class="network-feature-subtitle">
-            Live games and featured programming will appear here.
-          </div>
-          <button class="network-play-button" type="button">
-            WATCH
+        <div class="network-card-scroll">
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('Around the NAL','NAL Network Original Series')">
+            <div class="network-show-art network-art-around"><span>AROUND<br>THE NAL</span></div>
+            <div class="network-show-title">Around the NAL</div><div class="network-show-meta">Original Series</div>
+          </button>
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('5 in 5','Five-minute league highlight show')">
+            <div class="network-show-art network-art-five"><span>5 <small>IN</small> 5</span></div>
+            <div class="network-show-title">5 in 5</div><div class="network-show-meta">Weekly Highlights</div>
+          </button>
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('Coaches’ Shows','Team coaches and weekly programming')">
+            <div class="network-show-art network-art-coaches"><span>COACHES’<br>SHOWS</span></div>
+            <div class="network-show-title">Coaches’ Shows</div><div class="network-show-meta">Team Programming</div>
+          </button>
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('NAL Gameday','The gameday starts here.')">
+            <div class="network-show-art network-art-gameday"><span>NAL<br>GAMEDAY</span></div>
+            <div class="network-show-title">NAL Gameday</div><div class="network-show-meta">Gameday Coverage</div>
           </button>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ORIGINALS -->
-    <section class="network-hub-section">
-      <div class="network-section-header">
-        <div class="network-section-title">
-          NAL Network Originals
+      <section class="network-hub-section">
+        <div class="network-section-header">
+          <div class="network-section-title">Latest Episodes</div>
+          <button class="network-view-all" type="button" onclick="switchNetworkTab('shows')">VIEW ALL ›</button>
         </div>
-        <button class="network-view-all" type="button">
-          VIEW ALL →
-        </button>
-      </div>
-
-      <div class="network-card-scroll">
-        <article class="network-show-card">
-          <div class="media-placeholder network-show-art">
-            <div class="media-placeholder-label">
-              AROUND THE NAL<br>1200 × 675
-            </div>
-          </div>
-          <div class="network-show-title">Around the NAL</div>
-          <div class="network-show-meta">Original Series</div>
-        </article>
-
-        <article class="network-show-card">
-          <div class="media-placeholder network-show-art">
-            <div class="media-placeholder-label">
-              5 IN 5<br>1200 × 675
-            </div>
-          </div>
-          <div class="network-show-title">5 in 5</div>
-          <div class="network-show-meta">Weekly Highlights</div>
-        </article>
-
-        <article class="network-show-card">
-          <div class="media-placeholder network-show-art">
-            <div class="media-placeholder-label">
-              COACHES' SHOWS<br>1200 × 675
-            </div>
-          </div>
-          <div class="network-show-title">Coaches' Shows</div>
-          <div class="network-show-meta">Team Programming</div>
-        </article>
-
-        <article class="network-show-card">
-          <div class="media-placeholder network-show-art">
-            <div class="media-placeholder-label">
-              NAL GAMEDAY<br>1200 × 675
-            </div>
-          </div>
-          <div class="network-show-title">NAL Gameday</div>
-          <div class="network-show-meta">Gameday Coverage</div>
-        </article>
-      </div>
-    </section>
-
-    <!-- LATEST EPISODES -->
-    <section class="network-hub-section">
-      <div class="network-section-header">
-        <div class="network-section-title">
-          Latest Episodes
+        <div class="network-card-scroll">
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('Latest Episode','Episode content placeholder')">
+            <div class="network-show-art network-episode-art"><span class="network-mini-play">▶</span></div>
+            <div class="network-show-title">Latest Episode</div><div class="network-show-meta">Coming soon</div>
+          </button>
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('Latest Episode','Episode content placeholder')">
+            <div class="network-show-art network-episode-art"><span class="network-mini-play">▶</span></div>
+            <div class="network-show-title">Latest Episode</div><div class="network-show-meta">Coming soon</div>
+          </button>
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('Latest Episode','Episode content placeholder')">
+            <div class="network-show-art network-episode-art"><span class="network-mini-play">▶</span></div>
+            <div class="network-show-title">Latest Episode</div><div class="network-show-meta">Coming soon</div>
+          </button>
         </div>
-        <button class="network-view-all" type="button">
-          VIEW ALL →
-        </button>
+      </section>
+
+      <section class="network-hub-section">
+        <div class="network-section-header">
+          <div class="network-section-title">Latest Highlights</div>
+          <button class="network-view-all" type="button" onclick="switchNetworkTab('highlights')">VIEW ALL ›</button>
+        </div>
+        <div class="network-card-scroll">
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('NAL Highlight','Highlight content placeholder')">
+            <div class="network-show-art network-highlight-art"><span class="network-mini-play">▶</span></div>
+            <div class="network-show-title">NAL Highlight</div><div class="network-show-meta">Coming soon</div>
+          </button>
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('NAL Highlight','Highlight content placeholder')">
+            <div class="network-show-art network-highlight-art"><span class="network-mini-play">▶</span></div>
+            <div class="network-show-title">NAL Highlight</div><div class="network-show-meta">Coming soon</div>
+          </button>
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('NAL Highlight','Highlight content placeholder')">
+            <div class="network-show-art network-highlight-art"><span class="network-mini-play">▶</span></div>
+            <div class="network-show-title">NAL Highlight</div><div class="network-show-meta">Coming soon</div>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <div class="network-tab-panel" data-network-panel="live">
+      <section class="network-library-head"><h2>LIVE</h2><p>Live NAL Network programming and upcoming broadcasts.</p></section>
+      <section class="network-empty-state"><span class="network-empty-icon">▶</span><strong>NO LIVE EVENT RIGHT NOW</strong><small>Live broadcasts will appear here when available.</small></section>
+    </div>
+
+    <div class="network-tab-panel" data-network-panel="shows">
+      <section class="network-library-head"><h2>SHOWS</h2><p>NAL Network Originals and recurring programming.</p></section>
+      <section class="network-library-grid">
+        <button type="button" onclick="previewNetworkItem('Around the NAL','NAL Network Original Series')"><div class="network-show-art network-art-around"><span>AROUND<br>THE NAL</span></div><strong>Around the NAL</strong></button>
+        <button type="button" onclick="previewNetworkItem('5 in 5','Five-minute league highlight show')"><div class="network-show-art network-art-five"><span>5 <small>IN</small> 5</span></div><strong>5 in 5</strong></button>
+        <button type="button" onclick="previewNetworkItem('Coaches’ Shows','Team coaches and weekly programming')"><div class="network-show-art network-art-coaches"><span>COACHES’<br>SHOWS</span></div><strong>Coaches’ Shows</strong></button>
+        <button type="button" onclick="previewNetworkItem('NAL Gameday','The gameday starts here.')"><div class="network-show-art network-art-gameday"><span>NAL<br>GAMEDAY</span></div><strong>NAL Gameday</strong></button>
+      </section>
+    </div>
+
+    <div class="network-tab-panel" data-network-panel="highlights">
+      <section class="network-library-head"><h2>HIGHLIGHTS</h2><p>Game highlights and quick-hit NAL video.</p></section>
+      <section class="network-empty-state"><span class="network-empty-icon">▶</span><strong>HIGHLIGHT LIBRARY</strong><small>Highlight videos will populate this section.</small></section>
+    </div>
+
+    <div class="network-tab-panel" data-network-panel="archives">
+      <section class="network-library-head"><h2>ARCHIVES</h2><p>Past games and NAL Network programming.</p></section>
+      <section class="network-empty-state"><span class="network-empty-icon">▣</span><strong>NAL ARCHIVES</strong><small>Archived games and programs will populate this section.</small></section>
+    </div>
+
+    <div id="networkPreviewModal" class="network-preview-modal" aria-hidden="true">
+      <button class="network-preview-backdrop" type="button" aria-label="Close preview" onclick="closeNetworkPreview()"></button>
+      <div class="network-preview-sheet">
+        <button class="network-preview-close" type="button" onclick="closeNetworkPreview()">×</button>
+        <div class="network-preview-player"><span>▶</span></div>
+        <h3 id="networkPreviewTitle">NAL Network</h3>
+        <p id="networkPreviewText">Programming preview.</p>
+        <button class="network-preview-action" type="button" onclick="closeNetworkPreview()">DONE</button>
       </div>
-
-      <div class="network-card-scroll">
-        <article class="network-show-card">
-          <div class="media-placeholder network-show-art">
-            <div class="media-placeholder-label">EPISODE IMAGE<br>1200 × 675</div>
-          </div>
-          <div class="network-show-title">Latest Episode</div>
-          <div class="network-show-meta">Episode details</div>
-        </article>
-
-        <article class="network-show-card">
-          <div class="media-placeholder network-show-art">
-            <div class="media-placeholder-label">EPISODE IMAGE<br>1200 × 675</div>
-          </div>
-          <div class="network-show-title">Latest Episode</div>
-          <div class="network-show-meta">Episode details</div>
-        </article>
-
-        <article class="network-show-card">
-          <div class="media-placeholder network-show-art">
-            <div class="media-placeholder-label">EPISODE IMAGE<br>1200 × 675</div>
-          </div>
-          <div class="network-show-title">Latest Episode</div>
-          <div class="network-show-meta">Episode details</div>
-        </article>
-      </div>
-    </section>
-
-    <!-- TEAM CONTENT -->
-    <section class="network-hub-section">
-      <div class="network-section-header">
-        <div class="network-section-title">
-          Teams on NAL Network
-        </div>
-        <button class="network-view-all" type="button">
-          VIEW ALL →
-        </button>
-      </div>
-
-      <div class="network-team-scroll">
-        <div class="network-team-placeholder">
-          <div class="network-team-logo-slot">TEAM<br>LOGO</div>
-          <div class="network-team-name">Team</div>
-        </div>
-        <div class="network-team-placeholder">
-          <div class="network-team-logo-slot">TEAM<br>LOGO</div>
-          <div class="network-team-name">Team</div>
-        </div>
-        <div class="network-team-placeholder">
-          <div class="network-team-logo-slot">TEAM<br>LOGO</div>
-          <div class="network-team-name">Team</div>
-        </div>
-        <div class="network-team-placeholder">
-          <div class="network-team-logo-slot">TEAM<br>LOGO</div>
-          <div class="network-team-name">Team</div>
-        </div>
-      </div>
-    </section>
-
+    </div>
   </main>
-
 
   <!-- =====================================================
        FAN ZONE
@@ -6456,6 +6474,41 @@ document.addEventListener("click", function(event){
   event.stopPropagation();
   openTeamsPage();
 }, true);
+
+
+function switchNetworkTab(tabName){
+  document.querySelectorAll("#watchPage .network-tab").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.networkTab === tabName);
+  });
+  document.querySelectorAll("#watchPage .network-tab-panel").forEach(panel => {
+    panel.classList.toggle("active", panel.dataset.networkPanel === tabName);
+  });
+  window.scrollTo({top:0, behavior:"instant"});
+}
+
+document.querySelectorAll("#watchPage .network-tab").forEach(btn => {
+  btn.addEventListener("click", () => switchNetworkTab(btn.dataset.networkTab));
+});
+
+function previewNetworkItem(title, description){
+  const modal = document.getElementById("networkPreviewModal");
+  const titleEl = document.getElementById("networkPreviewTitle");
+  const textEl = document.getElementById("networkPreviewText");
+  if(titleEl) titleEl.textContent = title;
+  if(textEl) textEl.textContent = description;
+  if(modal){
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden","false");
+  }
+}
+
+function closeNetworkPreview(){
+  const modal = document.getElementById("networkPreviewModal");
+  if(modal){
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden","true");
+  }
+}
 
 </script>
 
