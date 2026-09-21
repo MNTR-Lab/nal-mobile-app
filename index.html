@@ -3652,6 +3652,49 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   border-radius:12px !important;
 }
 
+
+/* =========================================================
+   BOTTOM NAV — NAL NETWORK LABEL BELOW CIRCLE
+========================================================= */
+.bottom-nav [data-page="watch"],
+.bottom-nav [data-page="network"],
+.bottom-nav .center-nav{
+  overflow:visible !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+}
+
+/* Circle contains only the play icon */
+.bottom-nav [data-page="watch"] .nav-icon,
+.bottom-nav [data-page="network"] .nav-icon,
+.bottom-nav .center-nav .nav-icon{
+  font-size:0 !important;
+  line-height:0 !important;
+}
+
+/* Full NAL NETWORK wording sits below the circle */
+.bottom-nav [data-page="watch"] .nav-label,
+.bottom-nav [data-page="network"] .nav-label,
+.bottom-nav .center-nav .nav-label,
+.bottom-nav .watch-label,
+.bottom-nav .network-label{
+  position:relative !important;
+  display:block !important;
+  width:max-content !important;
+  max-width:none !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+  white-space:nowrap !important;
+  margin-top:5px !important;
+  font-size:11px !important;
+  line-height:1 !important;
+  font-weight:950 !important;
+  letter-spacing:.1px !important;
+  z-index:5 !important;
+}
+
 </style>
 </head>
 
