@@ -8400,6 +8400,33 @@ document.addEventListener("click", function(event){
   );
 }, true);
 
+
+/* =========================================================
+   TEAMS DIRECTORY — AUTHORITATIVE TEAM CARD ROUTING
+   Keeps every Teams-page card linked to its reusable Team Home page.
+========================================================= */
+document.addEventListener("click", function(event){
+  const card = event.target.closest("#teamsDirectoryGrid .teams-directory-card");
+  if (!card) return;
+
+  event.preventDefault();
+  event.stopImmediatePropagation();
+
+  const index = Number(card.dataset.teamIndex);
+  const team = Array.isArray(nalTeams) ? nalTeams[index] : null;
+
+  if (!team) return;
+
+  /* Clear directory/extension display states before opening Team Home. */
+  const teamsPage = document.getElementById("teamsPage");
+  if (teamsPage) {
+    teamsPage.classList.remove("active");
+    teamsPage.style.display = "none";
+  }
+
+  openTeamHome(team);
+}, true);
+
 </script>
 </body>
 </html>
