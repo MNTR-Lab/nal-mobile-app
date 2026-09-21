@@ -3469,6 +3469,17 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 #watchPage .network-preview-sheet p{margin:0;color:rgba(255,255,255,.62);font-size:10px;}
 #watchPage .network-preview-action{margin-top:15px;width:100%;height:40px;border:0;border-radius:7px;background:#ed1c2e;color:#fff;font-size:10px;font-weight:950;}
 
+
+/* TEAMS PAGE — NORMAL APP-SHELL POSITION */
+#teamsPage{
+  width: 100% !important;
+  margin: 0 !important;
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  transform: none !important;
+}
+
 </style>
 </head>
 
@@ -4132,6 +4143,16 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
       </div>
     </div>
   </main>
+
+  <main id="teamsPage" class="app-page teams-page" style="display:none;">
+  <section class="teams-directory">
+    <div class="teams-directory-head">
+      <h1>TEAMS</h1>
+      <p>NATIONAL ARENA LEAGUE</p>
+    </div>
+    <div id="teamsDirectoryGrid" class="teams-directory-grid"></div>
+  </section>
+</main>
 
   <!-- =====================================================
        FAN ZONE
@@ -6511,17 +6532,5 @@ function closeNetworkPreview(){
 }
 
 </script>
-
-
-<main id="teamsPage" class="app-page teams-page" style="display:none;">
-  <section class="teams-directory">
-    <div class="teams-directory-head">
-      <h1>TEAMS</h1>
-      <p>NATIONAL ARENA LEAGUE</p>
-    </div>
-    <div id="teamsDirectoryGrid" class="teams-directory-grid"></div>
-  </section>
-</main>
-
 </body>
 </html>
