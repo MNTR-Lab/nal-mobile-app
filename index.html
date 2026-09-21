@@ -6005,8 +6005,12 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-admin-user{background:#fff;border:1px solid #dfe4eb;border-radius:13px;padding:12px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .fan-admin-uavatar{width:38px;height:38px;border-radius:50%;background:#07172b;color:#fff;display:grid;place-items:center;font-weight:1000;flex:0 0 auto}
 .fan-admin-uinfo{flex:1;min-width:0}.fan-admin-uinfo b{display:block;font-size:12px}.fan-admin-uinfo span{font-size:9px;color:#6d7a8c}
-.fan-admin-role{font-size:8px;font-weight:1000;border-radius:20px;padding:5px 7px;background:#eef1f5;color:#68778b}.fan-admin-role.admin{background:#fee7e8;color:#b31921}
+.fan-admin-role{font-size:8px;font-weight:1000;border-radius:20px;padding:5px 7px;background:#eef1f5;color:#68778b}.fan-admin-role.admin{background:#fee7e8;color:#b31921}.fan-admin-role.moderator{background:#e8f0fb;color:#234d7d}
 .fan-admin-note{font-size:9px;color:#78879a;text-align:center;padding:10px 4px 0;line-height:1.4}
+.fan-admin-loading,.fan-admin-empty,.fan-admin-error{padding:16px 12px;text-align:center;font-size:10px;color:#78879a}
+.fan-admin-error{color:#b31921}
+.fan-admin-meta{display:block!important;white-space:normal!important;line-height:1.35}
+.fan-admin-status-suspended,.fan-admin-status-banned{color:#b31921!important;font-weight:900}
 </style>
 </head>
 
@@ -7211,7 +7215,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
 
               <div class="fan-admin-stats">
-                <div class="fan-admin-stat"><strong>—</strong><span>MEMBERS</span></div>
+                <div class="fan-admin-stat"><strong id="fanAdminMemberCount">—</strong><span>MEMBERS</span></div>
                 <div class="fan-admin-stat"><strong>—</strong><span>OPEN REPORTS</span></div>
                 <div class="fan-admin-stat"><strong>—</strong><span>ACTIVE POLLS</span></div>
               </div>
@@ -7229,9 +7233,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
               <div class="fan-admin-panel" id="fanAdminUsersPanel">
                 <h3 class="fan-member-title">USER MANAGEMENT</h3>
-                <input class="fan-admin-search" type="search" placeholder="Search by display name or email" disabled>
-                <div class="fan-admin-user"><div class="fan-admin-uavatar" id="fanAdminSelfInitial">M</div><div class="fan-admin-uinfo"><b id="fanAdminSelfName">ADMIN</b><span>Active account</span></div><span class="fan-admin-role admin">ADMIN</span></div>
-                <p class="fan-admin-note">User-management controls will be connected securely to Supabase. Administrative actions will require server-side permission verification.</p>
+                <input class="fan-admin-search" id="fanAdminUserSearch" type="search" placeholder="Search by display name or email">
+                <div id="fanAdminUsersList">
+                  <div class="fan-admin-loading">Open User Management to load registered members.</div>
+                </div>
+                <p class="fan-admin-note">Member information is loaded through the secure admin-only Supabase function. Administrative actions will be added separately with server-side permission verification.</p>
               </div>
             </section>
 
@@ -11287,14 +11293,92 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
 });
 
 
-/* NAL ADMIN — role-gated dashboard interaction. */
+/* NAL ADMIN — real admin-only member list. */
 (function(){
   const button = document.getElementById("fanAdminUsersButton");
   const panel = document.getElementById("fanAdminUsersPanel");
-  button?.addEventListener("click", function(){
+  const list = document.getElementById("fanAdminUsersList");
+  const search = document.getElementById("fanAdminUserSearch");
+  const memberCount = document.getElementById("fanAdminMemberCount");
+  let adminMembers = [];
+  let loaded = false;
+
+  function escapeAdminText(value){
+    return String(value ?? "").replace(/[&<>"']/g, function(char){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char];
+    });
+  }
+
+  function formatAdminDate(value){
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+  }
+
+  function renderAdminMembers(){
+    if (!list) return;
+    const query = (search?.value || "").trim().toLowerCase();
+    const members = adminMembers.filter(function(member){
+      if (!query) return true;
+      return String(member.display_name || "").toLowerCase().includes(query) ||
+             String(member.email || "").toLowerCase().includes(query);
+    });
+
+    if (!members.length){
+      list.innerHTML = '<div class="fan-admin-empty">' +
+        (query ? "No members match your search." : "No registered members found.") +
+        '</div>';
+      return;
+    }
+
+    list.innerHTML = members.map(function(member){
+      const name = member.display_name || "NAL FAN";
+      const initial = (name.trim().charAt(0) || "N").toUpperCase();
+      const role = String(member.role || "fan").toLowerCase();
+      const status = String(member.account_status || "active").toLowerCase();
+      const favorite = member.favorite_team || "No favorite team";
+      const joined = formatAdminDate(member.created_at);
+      const meta = [member.email || "", status.charAt(0).toUpperCase()+status.slice(1), favorite, joined ? "Joined "+joined : ""]
+        .filter(Boolean).join(" • ");
+      return '<div class="fan-admin-user" data-member-id="'+escapeAdminText(member.id)+'">' +
+        '<div class="fan-admin-uavatar">'+escapeAdminText(initial)+'</div>' +
+        '<div class="fan-admin-uinfo"><b>'+escapeAdminText(name)+'</b><span class="fan-admin-meta fan-admin-status-'+escapeAdminText(status)+'">'+escapeAdminText(meta)+'</span></div>' +
+        '<span class="fan-admin-role '+escapeAdminText(role)+'">'+escapeAdminText(role.toUpperCase())+'</span>' +
+        '<span class="fan-member-chev">›</span></div>';
+    }).join("");
+  }
+
+  async function loadAdminMembers(){
+    if (!list) return;
+    if (nalAccountProfile?.role !== "admin"){
+      list.innerHTML = '<div class="fan-admin-error">Administrator access required.</div>';
+      return;
+    }
+
+    list.innerHTML = '<div class="fan-admin-loading">Loading registered members…</div>';
+
+    try{
+      const client = getNalAccountClient();
+      const { data, error } = await client.rpc("admin_list_members");
+      if (error) throw error;
+      adminMembers = Array.isArray(data) ? data : [];
+      loaded = true;
+      if (memberCount) memberCount.textContent = String(adminMembers.length);
+      renderAdminMembers();
+    } catch(error){
+      console.error("NAL Admin member list error:", error);
+      list.innerHTML = '<div class="fan-admin-error">We could not load the member list. Please confirm you are signed in with an active Admin account.</div>';
+    }
+  }
+
+  search?.addEventListener("input", renderAdminMembers);
+
+  button?.addEventListener("click", async function(){
     if (document.getElementById("fanAdminArea")?.hidden) return;
     panel?.classList.toggle("show");
     if (panel?.classList.contains("show")){
+      if (!loaded) await loadAdminMembers();
       setTimeout(function(){ panel.scrollIntoView({behavior:"smooth",block:"nearest"}); }, 50);
     }
   });
