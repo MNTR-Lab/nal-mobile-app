@@ -8957,8 +8957,32 @@ let fanPhotos = [];
 let fanPhotoIndex = 0;
 let fanPhotoTimer = null;
 
+function renderFanPhotoPlaceholder(){
+  const imageHost = document.getElementById("fanPhotoWeekImage");
+  const name = document.getElementById("fanPhotoWeekName");
+  const team = document.getElementById("fanPhotoWeekTeam");
+  const caption = document.getElementById("fanPhotoWeekCaption");
+
+  if (team) team.textContent = "NAL FAN";
+  if (name) name.textContent = "FAN PHOTO OF THE WEEK";
+  if (caption) caption.textContent = "Submit your NAL fan photo for a chance to be featured.";
+
+  if (imageHost) {
+    imageHost.innerHTML = `
+      <div class="fan-photo-placeholder">
+        <div class="fan-photo-placeholder-icon">▣</div>
+        <div class="fan-photo-placeholder-title">FAN PHOTO</div>
+        <div class="fan-photo-placeholder-subtitle">FROM THE NAL COMMUNITY</div>
+      </div>
+    `;
+  }
+}
+
 function renderFanPhoto(item){
-  if (!item) return;
+  if (!item) {
+    renderFanPhotoPlaceholder();
+    return;
+  }
 
   const imageHost = document.getElementById("fanPhotoWeekImage");
   const name = document.getElementById("fanPhotoWeekName");
@@ -8974,12 +8998,13 @@ function renderFanPhoto(item){
   const mediaType = getFanMediaValue(item, ["type", "mediaType", "media_type"], "Photo/Image").toLowerCase();
 
   if (name) name.textContent = fanName;
-  if (team) team.textContent = fanPhotos.length > 1
-    ? `${fanPhotoIndex + 1} OF ${fanPhotos.length}`
-    : "NAL FAN";
-  if (caption) caption.textContent = fanCaption;
+  if (team) team.textContent = "FAN PHOTO OF THE WEEK";
+  if (caption) caption.textContent = fanCaption || "Featured from the NAL community.";
 
-  if (!imageHost || !mediaUrl) return;
+  if (!imageHost || !mediaUrl) {
+    renderFanPhotoPlaceholder();
+    return;
+  }
 
   imageHost.innerHTML = "";
 
@@ -8993,59 +9018,59 @@ function renderFanPhoto(item){
     video.style.height = "100%";
     video.style.objectFit = "contain";
     video.style.background = "#07172b";
+    video.addEventListener("error", renderFanPhotoPlaceholder);
     imageHost.appendChild(video);
   } else {
     const img = document.createElement("img");
     img.src = mediaUrl;
-    img.alt = `${fanName} — NAL Fan Photo`;
+    img.alt = `${fanName} — NAL Fan Photo of the Week`;
     img.loading = "eager";
     img.style.width = "100%";
     img.style.height = "100%";
     img.style.objectFit = "contain";
     img.style.background = "#07172b";
-
-    img.addEventListener("error", () => {
-      imageHost.innerHTML = `
-        <div class="fan-photo-placeholder-icon">▣</div>
-        <div class="fan-photo-placeholder-title">FAN PHOTO</div>
-        <div class="fan-photo-placeholder-subtitle">FROM THE NAL COMMUNITY</div>
-      `;
-    });
-
+    img.addEventListener("error", renderFanPhotoPlaceholder);
     imageHost.appendChild(img);
   }
 }
 
-function showNextFanPhoto(){
-  if (fanPhotos.length < 2) return;
-  fanPhotoIndex = (fanPhotoIndex + 1) % fanPhotos.length;
-  renderFanPhoto(fanPhotos[fanPhotoIndex]);
-}
-
-function startFanPhotoRotation(){
-  if (fanPhotoTimer) clearInterval(fanPhotoTimer);
-  if (fanPhotos.length > 1) {
-    fanPhotoTimer = setInterval(showNextFanPhoto, 6000);
-  }
+function isFanPhotoOfTheWeek(item){
+  const featured = getFanMediaValue(item, ["featured"], "").trim().toLowerCase();
+  return featured === "fan photo of the week";
 }
 
 async function loadFanPhotos(){
   try {
-    const response = await fetch(FAN_MEDIA_FEED, { cache: "no-store" });
+    const response = await fetch(`${FAN_MEDIA_FEED}?ts=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) throw new Error("Fan media feed unavailable");
 
     const payload = await response.json();
-    fanPhotos = normalizeFanMediaFeed(payload).filter(item =>
+    const approvedMedia = normalizeFanMediaFeed(payload).filter(item =>
       getFanMediaValue(item, ["media", "imageUrl", "image_url", "photoUrl", "photo_url", "url", "image"])
     );
 
-    if (!fanPhotos.length) return;
+    /* Exactly ONE weekly feature:
+       only an approved item whose Monday "Featured" value is
+       "Fan Photo of the Week" can appear here. No rotation. */
+    const featuredItems = approvedMedia
+      .filter(isFanPhotoOfTheWeek)
+      .sort((a,b) => {
+        const ad = Date.parse(getFanMediaValue(a, ["date"], "")) || 0;
+        const bd = Date.parse(getFanMediaValue(b, ["date"], "")) || 0;
+        return bd - ad;
+      });
 
-    fanPhotoIndex = 0;
-    renderFanPhoto(fanPhotos[0]);
-    startFanPhotoRotation();
+    fanPhotos = featuredItems;
+
+    if (!featuredItems.length) {
+      renderFanPhotoPlaceholder();
+      return;
+    }
+
+    renderFanPhoto(featuredItems[0]);
   } catch (error) {
-    console.warn("Fan Photos is using the built-in placeholder.", error);
+    console.warn("Fan Photo of the Week is using the built-in placeholder.", error);
+    renderFanPhotoPlaceholder();
   }
 }
 
