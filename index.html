@@ -2984,6 +2984,93 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   padding:0 2px !important;
 }
 
+
+/* =========================================================
+   FINAL HOME HERO + TEAM LOGO FIX
+========================================================= */
+
+/* One fixed Season X hero image — no JS rotation */
+#homePage .season-x-hero {
+  background-image:
+    linear-gradient(90deg, rgba(1,13,26,.26), rgba(1,13,26,.50)),
+    url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_-_Updated.png?v=1789954175") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Keep cinematic overlay while allowing the photo to remain visible */
+#homePage .season-x-hero::before {
+  background:
+    linear-gradient(90deg,
+      rgba(0,15,31,.12) 0%,
+      rgba(0,15,31,.02) 44%,
+      rgba(126,0,16,.18) 100%),
+    linear-gradient(0deg,
+      rgba(3,24,45,.50) 0%,
+      transparent 52%,
+      rgba(3,24,45,.08) 100%) !important;
+}
+
+/* Team cards: let the actual visible marks dominate the white boxes */
+#homePage .team-home-card {
+  overflow: hidden !important;
+  padding: 0 0 5px !important;
+}
+
+#homePage .team-home-logo-wrap {
+  position: relative !important;
+  width: 100% !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#homePage .team-home-logo {
+  width: 140% !important;
+  height: 140% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  transform: scale(1.28) !important;
+  transform-origin: center center !important;
+  display: block !important;
+}
+
+#homePage .team-home-name {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  flex: 0 0 25px !important;
+  min-height: 25px !important;
+  margin: 0 !important;
+  padding: 5px 3px 2px !important;
+  background: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+
+/* HERO ARTWORK NOW CONTAINS THE SEASON X CREATIVE */
+#homePage .season-x-hero .hero-content,
+#homePage .season-x-hero .hero-accent-line{
+  display:none !important;
+}
+#homePage .season-x-hero::before,
+#homePage .season-x-hero::after{
+  display:none !important;
+}
+#homePage .season-x-hero{
+  background-image:url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_-_Updated.png?v=1789954175") !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
+}
+
 </style>
 </head>
 
@@ -3065,11 +3152,6 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
     <section class="season-x-hero">
       <div class="hero-red-glow"></div>
       <div class="hero-content">
-      <div class="hero-season-lockup" aria-label="Season X">
-        <span class="hero-season-word">SEASON</span>
-        <span class="hero-season-x">X</span>
-      </div>
-      <div class="hero-tagline">WHERE CHAMPIONS ARE CROWNED.</div>
 </div>
       <div class="hero-accent-line"></div>
     </section>
@@ -4066,34 +4148,7 @@ const headerHome =
 ========================================================= */
 
 
-/* =========================================================
-   ROTATING SEASON X HOME HERO
-========================================================= */
-const SEASON_X_HERO_IMAGES = ["https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_-_Updated.png?v=1789954175"];
-let lastSeasonXHeroIndex = -1;
-
-function rotateSeasonXHero() {
-  const hero = document.querySelector("#homePage .season-x-hero");
-  if (!hero || !SEASON_X_HERO_IMAGES.length) return;
-
-  let nextIndex = 0;
-  if (SEASON_X_HERO_IMAGES.length > 1) {
-    do {
-      nextIndex = Math.floor(Math.random() * SEASON_X_HERO_IMAGES.length);
-    } while (nextIndex === lastSeasonXHeroIndex);
-  }
-
-  lastSeasonXHeroIndex = nextIndex;
-  const imageUrl = SEASON_X_HERO_IMAGES[nextIndex];
-  hero.style.backgroundImage =
-    `linear-gradient(90deg, rgba(1,13,26,.34), rgba(1,13,26,.58)), url("${imageUrl}")`;
-}
-
 function showPage(pageId) {
-
-  if (pageId === "homePage") {
-    rotateSeasonXHero();
-  }
 
   pages.forEach(page => {
     page.classList.remove("active");
@@ -5001,8 +5056,6 @@ newsSection.addEventListener(
 /* =========================================================
    START APP
 ========================================================= */
-
-rotateSeasonXHero();
 
 loadNews();
 /* =========================================================
