@@ -3,20 +3,20 @@ import json
 import re
 import sys
 from pathlib import Path
+from urllib.parse import urljoin
 from urllib.request import Request, urlopen
 
 PARTNERS_URL = "https://www.thenationalarenaleague.com/partners"
 OUTPUT_FILE = Path("data/partners.json")
 
-CDN_BASE = (
-    "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/"
-    "pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/"
-)
-
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/152.0 Safari/537.36"
+)
+
+CDN_PREFIX = (
+    "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/"
 )
 
 
@@ -37,13 +37,6 @@ def download_page(url):
 
 
 def partner_name_from_url(url):
-    """
-    Creates a readable fallback name from the partner URL.
-
-    The app primarily displays the logo, so this name is mainly
-    for accessibility and debugging.
-    """
-
     known_names = {
         "pixellot.tv": "Pixellot",
         "mybookie.ag": "MyBookie",
@@ -66,69 +59,48 @@ def partner_name_from_url(url):
         if domain in lower_url:
             return name
 
-    domain_match = re.search(
+    match = re.search(
         r"https?://(?:www\.)?([^/]+)",
         url,
         re.I,
     )
 
-    if domain_match:
-        domain = domain_match.group(1)
-        return domain.split(".")[0].replace("-", " ").title()
+    if match:
+        domain = match.group(1)
+        return (
+            domain.split(".")[0]
+            .replace("-", " ")
+            .title()
+        )
 
     return "NAL Partner"
 
 
-def extract_photos(raw_html):
+def clean_url(value):
+    if not value:
+        return ""
+
+    value = html.unescape(value).strip()
+
+    if value.startswith("//"):
+        value = "https:" + value
+
+    return value
+
+
+def extract_partners(raw_html):
     """
-    Extract the ctrl.photos JSON object embedded in the
-    sponsors-wrap ng-init attribute.
-    """
+    Extract the partner cards from the raw NAL Partners page.
 
-    decoded = html.unescape(raw_html)
-
-    match = re.search(
-        r'ctrl\.photos\s*=\s*(\{.*?\})\s*["\']',
-        decoded,
-        re.I | re.S,
-    )
-
-    if not match:
-        raise RuntimeError(
-            "Could not locate ctrl.photos data."
-        )
-
-    photos_text = match.group(1)
-
-    try:
-        photos = json.loads(photos_text)
-    except json.JSONDecodeError as error:
-        raise RuntimeError(
-            f"Could not decode ctrl.photos JSON: {error}"
-        )
-
-    if not photos:
-        raise RuntimeError(
-            "ctrl.photos was found but contained no photos."
-        )
-
-    return photos
-
-
-def extract_partner_entries(raw_html):
-    """
-    Extract partner URL + photo_id pairs from the raw Angular
-    partner data.
-
-    The raw page contains entry records before Angular renders
-    the visible sponsor grid.
+    The raw page contains Angular markup where the real href and
+    image values are already present alongside the template
+    attributes.
     """
 
     decoded = html.unescape(raw_html)
 
-    # Restrict our search to the NAL Partners area when possible.
     marker = re.search(
-        r"NAL\s+Partners",
+        r'aria-label=["\']NAL Partners["\']',
         decoded,
         re.I,
     )
@@ -136,89 +108,101 @@ def extract_partner_entries(raw_html):
     if marker:
         section = decoded[marker.start():]
     else:
-        section = decoded
+        marker = re.search(
+            r"NAL\s+Partners",
+            decoded,
+            re.I,
+        )
 
-    entries = []
+        section = (
+            decoded[marker.start():]
+            if marker
+            else decoded
+        )
 
-    # Partner records contain both a photo_id and a URL.
-    # Their property order can vary, so check both directions.
-    patterns = [
-        re.compile(
-            r'"photo_id"\s*:\s*"([^"]+)"'
-            r'.{0,1200}?'
-            r'"url"\s*:\s*"([^"]*)"',
-            re.I | re.S,
-        ),
-        re.compile(
-            r'"url"\s*:\s*"([^"]*)"'
-            r'.{0,1200}?'
-            r'"photo_id"\s*:\s*"([^"]+)"',
-            re.I | re.S,
-        ),
-    ]
-
+    partners = []
     seen = set()
 
-    for pattern_number, pattern in enumerate(patterns):
-        for match in pattern.finditer(section):
-
-            if pattern_number == 0:
-                photo_id = match.group(1).strip()
-                url = match.group(2).strip()
-            else:
-                url = match.group(1).strip()
-                photo_id = match.group(2).strip()
-
-            key = (photo_id, url)
-
-            if key in seen:
-                continue
-
-            seen.add(key)
-
-            entries.append(
-                {
-                    "photo_id": photo_id,
-                    "url": url,
-                }
-            )
-
-    return entries
-
-
-def extract_rendered_fallback(raw_html):
-    """
-    Fallback extraction.
-
-    The diagnostic confirmed the raw page also contains partner
-    URLs and DigitalShift references. If structured entry parsing
-    changes, this provides a second extraction route.
-    """
-
-    decoded = html.unescape(raw_html)
-
-    pattern = re.compile(
-        r'<a\b[^>]*'
-        r'(?:ng-href|href)="(https?://[^"]*)"'
-        r'[^>]*>'
-        r'.{0,1200}?'
-        r'<img\b[^>]*'
-        r'(?:ng-src|src)="'
-        r'(https://digitalshift-assets[^"]+)"',
+    # Locate anchor blocks associated with the sponsor grid.
+    anchor_pattern = re.compile(
+        r"<a\b([^>]*)>(.*?)</a>",
         re.I | re.S,
     )
 
-    partners = []
-    seen = set()
+    for anchor_match in anchor_pattern.finditer(section):
+        attrs = anchor_match.group(1)
+        inside = anchor_match.group(2)
 
-    for match in pattern.finditer(decoded):
-        url = match.group(1).strip()
-        logo = match.group(2).strip()
-
-        if "{{" in url or "{{" in logo:
+        # We only want sponsor-grid Angular entries.
+        if (
+            'ng-repeat="entry in b"' not in attrs
+            and "ng-repeat='entry in b'" not in attrs
+        ):
             continue
 
-        key = (url.lower(), logo.lower())
+        href_matches = re.findall(
+            r'(?:ng-href|href)=["\']([^"\']*)["\']',
+            attrs,
+            re.I,
+        )
+
+        website = ""
+
+        for candidate in href_matches:
+            candidate = clean_url(candidate)
+
+            if (
+                candidate
+                and "{{" not in candidate
+                and candidate.lower().startswith(
+                    ("http://", "https://")
+                )
+            ):
+                website = candidate
+                break
+
+        if not website:
+            # The website currently has at least one logo with no
+            # outbound URL. We intentionally omit it from the
+            # clickable app feed.
+            continue
+
+        img_match = re.search(
+            r"<img\b([^>]*)>",
+            inside,
+            re.I | re.S,
+        )
+
+        if not img_match:
+            continue
+
+        img_attrs = img_match.group(1)
+
+        image_matches = re.findall(
+            r'(?:ng-src|src)=["\']([^"\']+)["\']',
+            img_attrs,
+            re.I,
+        )
+
+        logo = ""
+
+        for candidate in image_matches:
+            candidate = clean_url(candidate)
+
+            if (
+                CDN_PREFIX in candidate
+                and "{{" not in candidate
+            ):
+                logo = candidate
+                break
+
+        if not logo:
+            continue
+
+        key = (
+            website.lower(),
+            logo.lower(),
+        )
 
         if key in seen:
             continue
@@ -227,83 +211,28 @@ def extract_rendered_fallback(raw_html):
 
         partners.append(
             {
-                "name": partner_name_from_url(url),
+                "name": partner_name_from_url(
+                    website
+                ),
                 "logo": logo,
-                "url": url,
+                "url": website,
             }
         )
-
-    return partners
-
-
-def build_partners(raw_html):
-    photos = extract_photos(raw_html)
-    entries = extract_partner_entries(raw_html)
-
-    partners = []
-    seen = set()
-
-    for entry in entries:
-        photo_id = entry["photo_id"]
-        url = entry["url"]
-
-        if not url:
-            # Keep logos with no destination out of the clickable
-            # app partner rail until the website supplies a URL.
-            continue
-
-        if "{{" in url:
-            continue
-
-        photo = photos.get(photo_id)
-
-        if not photo:
-            continue
-
-        path = photo.get("path", "").strip()
-
-        if not path:
-            continue
-
-        logo = CDN_BASE + path
-
-        key = (url.lower(), logo.lower())
-
-        if key in seen:
-            continue
-
-        seen.add(key)
-
-        partners.append(
-            {
-                "name": partner_name_from_url(url),
-                "logo": logo,
-                "url": url,
-            }
-        )
-
-    # If structured parsing fails, try the rendered/raw markup.
-    if not partners:
-        print(
-            "Structured partner parsing returned no results. "
-            "Trying fallback extraction..."
-        )
-
-        partners = extract_rendered_fallback(raw_html)
 
     return partners
 
 
 def save_partners(partners):
     """
-    Only replace partners.json after we have a believable result.
-    This protects the last good data if the NAL website changes.
+    Replace partners.json only after a believable partner set
+    has been found.
     """
 
     if len(partners) < 5:
         raise RuntimeError(
-            f"Only {len(partners)} partner(s) found. "
-            "Existing partners.json was NOT changed."
+            f"Only {len(partners)} valid partner(s) "
+            "were found. Existing partners.json "
+            "was NOT changed."
         )
 
     OUTPUT_FILE.parent.mkdir(
@@ -311,11 +240,11 @@ def save_partners(partners):
         exist_ok=True,
     )
 
-    temporary_file = OUTPUT_FILE.with_suffix(
+    temp_file = OUTPUT_FILE.with_suffix(
         ".json.tmp"
     )
 
-    temporary_file.write_text(
+    temp_file.write_text(
         json.dumps(
             partners,
             indent=2,
@@ -325,21 +254,28 @@ def save_partners(partners):
         encoding="utf-8",
     )
 
-    temporary_file.replace(OUTPUT_FILE)
+    temp_file.replace(OUTPUT_FILE)
 
 
 def main():
     print("Downloading NAL Partners page...")
 
-    raw_html = download_page(PARTNERS_URL)
+    raw_html = download_page(
+        PARTNERS_URL
+    )
 
     print(
         f"Downloaded {len(raw_html):,} characters."
     )
 
-    print("Extracting NAL partner data...")
+    print(
+        "Extracting rendered partner records "
+        "from raw page..."
+    )
 
-    partners = build_partners(raw_html)
+    partners = extract_partners(
+        raw_html
+    )
 
     print(
         f"Found {len(partners)} valid partner(s)."
@@ -348,10 +284,12 @@ def main():
     if len(partners) < 5:
         print("")
         print(
-            "ERROR: Partner count is suspiciously low."
+            "ERROR: Partner count is "
+            "suspiciously low."
         )
         print(
-            "Existing data/partners.json was preserved."
+            "Existing data/partners.json "
+            "was preserved."
         )
         sys.exit(1)
 
@@ -368,7 +306,8 @@ def main():
         start=1,
     ):
         print(
-            f"{number}. {partner['name']} | "
+            f"{number}. "
+            f"{partner['name']} | "
             f"{partner['url']} | "
             f"{partner['logo']}"
         )
