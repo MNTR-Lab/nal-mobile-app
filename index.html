@@ -6022,7 +6022,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-admin-detail-row span{display:block;color:#78879a;font-size:8px;font-weight:1000;letter-spacing:.8px}.fan-admin-detail-row strong{display:block;margin-top:4px;color:#07172b;font-size:12px;overflow-wrap:anywhere}
 .fan-admin-actions-preview{margin-top:9px;background:#fff;border:1px solid #dfe4eb;border-radius:15px;padding:13px 14px}
 .fan-admin-actions-preview h4{margin:0 0 8px;font-size:10px;letter-spacing:1px}.fan-admin-actions-preview p{margin:0;color:#78879a;font-size:9px;line-height:1.45}
-.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}
+.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}
 
 </style>
 </head>
@@ -7270,7 +7270,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="fan-admin-action-chips">
                       <span class="fan-admin-action-chip">CHANGE ROLE</span>
                       <button class="fan-admin-action-button fan-admin-action-suspend" id="fanAdminStatusAction" type="button">SUSPEND ACCOUNT</button>
-                      <span class="fan-admin-action-chip">BAN</span>
+                      <button class="fan-admin-action-button fan-admin-action-ban" id="fanAdminBanAction" type="button">BAN ACCOUNT</button>
                       <span class="fan-admin-action-chip">DELETE ACCOUNT</span>
                     </div>
                     <p class="fan-admin-action-message" id="fanAdminActionMessage" aria-live="polite"></p>
@@ -11434,15 +11434,17 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     set("fanAdminDetailJoined",formatAdminDate(member.created_at) || "—");
 
     const statusButton = document.getElementById("fanAdminStatusAction");
+    const banButton = document.getElementById("fanAdminBanAction");
     const actionHelp = document.getElementById("fanAdminActionHelp");
     const actionMessage = document.getElementById("fanAdminActionMessage");
     if (actionMessage){ actionMessage.textContent = ""; actionMessage.className = "fan-admin-action-message"; }
 
     const isSelf = String(member.id) === String(nalAccountUser?.id || "");
+    const normalizedStatus = String(status).toLowerCase();
     if (statusButton){
       statusButton.disabled = isSelf;
       statusButton.classList.remove("fan-admin-action-suspend","fan-admin-action-restore");
-      if (String(status).toLowerCase() === "suspended"){
+      if (normalizedStatus === "suspended" || normalizedStatus === "banned"){
         statusButton.textContent = "RESTORE ACCOUNT";
         statusButton.classList.add("fan-admin-action-restore");
       } else {
@@ -11450,12 +11452,18 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
         statusButton.classList.add("fan-admin-action-suspend");
       }
     }
+    if (banButton){
+      banButton.disabled = isSelf || normalizedStatus === "banned";
+      banButton.style.display = normalizedStatus === "banned" ? "none" : "";
+    }
     if (actionHelp){
       actionHelp.textContent = isSelf
-        ? "Your own administrator account cannot be suspended from this control."
-        : (String(status).toLowerCase() === "suspended"
-            ? "Restore this member's access to NAL Fan Account features."
-            : "Suspend this member's access until an administrator restores the account.");
+        ? "Your own administrator account cannot be suspended or banned from these controls."
+        : (normalizedStatus === "banned"
+            ? "This member is banned. Restore the account to return it to active status."
+            : (normalizedStatus === "suspended"
+                ? "Restore this member, or ban the account for a stronger restriction."
+                : "Suspend this member temporarily or ban the account."));
     }
 
     detail?.classList.add("show");
@@ -11467,6 +11475,48 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     if(!row) return;
     const member=adminMembers.find(function(item){return String(item.id)===String(row.dataset.memberId);});
     openAdminMemberDetail(member);
+  });
+
+  document.getElementById("fanAdminBanAction")?.addEventListener("click", async function(){
+    if (!selectedAdminMember || nalAccountProfile?.role !== "admin") return;
+    if (String(selectedAdminMember.id) === String(nalAccountUser?.id || "")) return;
+    if (String(selectedAdminMember.account_status || "").toLowerCase() === "banned") return;
+
+    const name = selectedAdminMember.display_name || "this member";
+    if (!window.confirm("Ban " + name + "?\n\nThis member will lose access to NAL Fan Account features. An administrator can restore the account later.")) return;
+
+    const button = this;
+    const message = document.getElementById("fanAdminActionMessage");
+    button.disabled = true;
+    if (message){ message.textContent = "Banning account…"; message.className = "fan-admin-action-message"; }
+
+    try{
+      const client = getNalAccountClient();
+      const { error } = await client.rpc("admin_set_account_status", {
+        target_user_id: selectedAdminMember.id,
+        new_status: "banned"
+      });
+      if (error) throw error;
+
+      selectedAdminMember.account_status = "banned";
+      const memberIndex = adminMembers.findIndex(function(item){ return String(item.id) === String(selectedAdminMember.id); });
+      if (memberIndex >= 0) adminMembers[memberIndex].account_status = "banned";
+
+      renderAdminMembers();
+      openAdminMemberDetail(selectedAdminMember);
+      const refreshedMessage = document.getElementById("fanAdminActionMessage");
+      if (refreshedMessage){
+        refreshedMessage.textContent = "Account banned successfully.";
+        refreshedMessage.className = "fan-admin-action-message success";
+      }
+    } catch(error){
+      console.error("NAL Admin ban error:", error);
+      button.disabled = false;
+      if (message){
+        message.textContent = "Account could not be banned. Please try again.";
+        message.className = "fan-admin-action-message error";
+      }
+    }
   });
 
   document.getElementById("fanAdminStatusAction")?.addEventListener("click", async function(){
