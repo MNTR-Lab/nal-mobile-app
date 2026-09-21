@@ -6022,7 +6022,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-admin-detail-row span{display:block;color:#78879a;font-size:8px;font-weight:1000;letter-spacing:.8px}.fan-admin-detail-row strong{display:block;margin-top:4px;color:#07172b;font-size:12px;overflow-wrap:anywhere}
 .fan-admin-actions-preview{margin-top:9px;background:#fff;border:1px solid #dfe4eb;border-radius:15px;padding:13px 14px}
 .fan-admin-actions-preview h4{margin:0 0 8px;font-size:10px;letter-spacing:1px}.fan-admin-actions-preview p{margin:0;color:#78879a;font-size:9px;line-height:1.45}
-.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-delete{background:#3b0b0e;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}
+.fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-role{background:#102b4e;color:#fff}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-delete{background:#3b0b0e;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}
 
 </style>
 </head>
@@ -7268,7 +7268,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h4>ADMIN ACTIONS</h4>
                     <p id="fanAdminActionHelp">Suspend or restore member access. Other administrative actions remain inactive.</p>
                     <div class="fan-admin-action-chips">
-                      <span class="fan-admin-action-chip">CHANGE ROLE</span>
+                      <button class="fan-admin-action-button fan-admin-action-role" id="fanAdminRoleAction" type="button">CHANGE ROLE</button>
                       <button class="fan-admin-action-button fan-admin-action-suspend" id="fanAdminStatusAction" type="button">SUSPEND ACCOUNT</button>
                       <button class="fan-admin-action-button fan-admin-action-ban" id="fanAdminBanAction" type="button">BAN ACCOUNT</button>
                       <button class="fan-admin-action-button fan-admin-action-delete" id="fanAdminDeleteAction" type="button">DELETE ACCOUNT</button>
@@ -11515,6 +11515,7 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     set("fanAdminDetailStatus",String(status).toUpperCase());
     set("fanAdminDetailJoined",formatAdminDate(member.created_at) || "—");
 
+    const roleButton = document.getElementById("fanAdminRoleAction");
     const statusButton = document.getElementById("fanAdminStatusAction");
     const banButton = document.getElementById("fanAdminBanAction");
     const deleteButton = document.getElementById("fanAdminDeleteAction");
@@ -11524,6 +11525,9 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
 
     const isSelf = String(member.id) === String(nalAccountUser?.id || "");
     const normalizedStatus = String(status).toLowerCase();
+    if (roleButton){
+      roleButton.disabled = isSelf;
+    }
     if (statusButton){
       statusButton.disabled = isSelf;
       statusButton.classList.remove("fan-admin-action-suspend","fan-admin-action-restore");
@@ -11563,6 +11567,87 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     if(!row) return;
     const member=adminMembers.find(function(item){return String(item.id)===String(row.dataset.memberId);});
     openAdminMemberDetail(member);
+  });
+
+  document.getElementById("fanAdminRoleAction")?.addEventListener("click", async function(){
+    if (!selectedAdminMember || nalAccountProfile?.role !== "admin") return;
+    if (String(selectedAdminMember.id) === String(nalAccountUser?.id || "")) return;
+
+    const member = selectedAdminMember;
+    const currentRole = String(member.role || "fan").toLowerCase();
+    const name = member.display_name || "this member";
+
+    const entered = window.prompt(
+      "CHANGE ROLE — " + name + "\n\n" +
+      "Current role: " + currentRole.toUpperCase() + "\n\n" +
+      "Enter one of the following:\n" +
+      "FAN\nALL-PRO\nMODERATOR\nADMIN"
+    );
+
+    if (entered === null) return;
+
+    const newRole = String(entered).trim().toLowerCase();
+    const allowedRoles = ["fan","all-pro","moderator","admin"];
+
+    if (!allowedRoles.includes(newRole)){
+      window.alert("Please enter FAN, ALL-PRO, MODERATOR, or ADMIN.");
+      return;
+    }
+
+    if (newRole === currentRole){
+      window.alert(name + " is already " + currentRole.toUpperCase() + ".");
+      return;
+    }
+
+    const warning = newRole === "admin"
+      ? "\n\nWARNING: Admin gives this member access to protected administrative controls."
+      : (newRole === "moderator"
+          ? "\n\nModerator is an elevated permission role."
+          : "");
+
+    if (!window.confirm(
+      "Change " + name + " from " + currentRole.toUpperCase() +
+      " to " + newRole.toUpperCase() + "?" + warning
+    )) return;
+
+    const button = this;
+    const message = document.getElementById("fanAdminActionMessage");
+    button.disabled = true;
+    if (message){
+      message.textContent = "Changing member role…";
+      message.className = "fan-admin-action-message";
+    }
+
+    try{
+      const client = getNalAccountClient();
+      const { error } = await client.rpc("admin_set_member_role", {
+        target_user_id: member.id,
+        new_role: newRole
+      });
+      if (error) throw error;
+
+      member.role = newRole;
+      const memberIndex = adminMembers.findIndex(function(item){
+        return String(item.id) === String(member.id);
+      });
+      if (memberIndex >= 0) adminMembers[memberIndex].role = newRole;
+
+      renderAdminMembers();
+      openAdminMemberDetail(member);
+
+      const refreshedMessage = document.getElementById("fanAdminActionMessage");
+      if (refreshedMessage){
+        refreshedMessage.textContent = "Role changed to " + newRole.toUpperCase() + " successfully.";
+        refreshedMessage.className = "fan-admin-action-message success";
+      }
+    } catch(error){
+      console.error("NAL Admin role update error:", error);
+      button.disabled = false;
+      if (message){
+        message.textContent = error?.message || "Member role could not be changed. Please try again.";
+        message.className = "fan-admin-action-message error";
+      }
+    }
   });
 
   document.getElementById("fanAdminDeleteAction")?.addEventListener("click", async function(){
