@@ -5835,6 +5835,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
+
+/* Header account label — Login / Sign Up */
+@media(max-width:430px){
+  .header-login-button span{
+    font-size:8px !important;
+    letter-spacing:0 !important;
+  }
+}
+
 </style>
 </head>
 
@@ -5875,7 +5884,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <circle cx="12" cy="8" r="3.5"></circle>
           <path d="M5.5 20c.6-4 3-6 6.5-6s5.9 2 6.5 6"></path>
         </svg>
-        <span>LOG IN</span>
+        <span>LOGIN / SIGN UP</span>
       </button>
 
     </div>
@@ -10363,7 +10372,7 @@ function updateHeaderAccountState(){
   if (!label) return;
 
   if (!nalAccountUser){
-    label.textContent = "LOG IN";
+    label.textContent = "LOGIN / SIGN UP";
     button.setAttribute("aria-label","Log in to your NAL Fan Account");
     return;
   }
