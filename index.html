@@ -13386,7 +13386,13 @@ function nalNotificationMatchesFan(notification){
     return !!targetTeam && !!favoriteTeam && targetTeam === favoriteTeam;
   }
 
-  return true;
+  if (targetType === "user"){
+    const targetUserId = String(notification.target_user_id || "").trim();
+    const currentUserId = String(nalAccountUser?.id || "").trim();
+    return !!targetUserId && !!currentUserId && targetUserId === currentUserId;
+  }
+
+  return false;
 }
 
 function renderNalAlerts(){
