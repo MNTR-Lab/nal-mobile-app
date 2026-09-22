@@ -6417,6 +6417,98 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-report-status{min-height:16px;margin-top:9px;color:#6d7b89;font-size:9px;font-weight:800;}
 .fan-forum-report-status.error{color:#c81820;}
 .fan-forum-report-status.success{color:#147a45;}
+
+
+/* =========================================================
+   HEADER + BOTTOM NAV — FINAL POSITIONING ADJUSTMENT
+   Keeps all existing behavior; visual positioning only.
+========================================================= */
+
+/* Header: bell + compact stacked account label on the left,
+   NAL logo centered, social icons on the right. */
+.topbar{
+  grid-template-columns:minmax(96px,1fr) auto minmax(96px,1fr) !important;
+}
+.topbar .header-left{
+  grid-column:1 !important;
+  grid-row:1 !important;
+  justify-self:start !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:5px !important;
+  min-width:0 !important;
+}
+.topbar .header-right.header-socials{
+  grid-column:3 !important;
+  grid-row:1 !important;
+  justify-self:end !important;
+  display:flex !important;
+}
+.topbar #headerHome{
+  grid-column:2 !important;
+  grid-row:1 !important;
+  justify-self:center !important;
+}
+.header-login-button{
+  gap:4px !important;
+  width:auto !important;
+  min-width:0 !important;
+}
+.header-login-button > .header-login-copy{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  justify-content:center !important;
+  gap:2px !important;
+  white-space:normal !important;
+  line-height:1 !important;
+}
+.header-login-button > .header-login-copy > span{
+  display:block !important;
+  margin:0 !important;
+  padding:0 !important;
+  white-space:nowrap !important;
+  font-size:8px !important;
+  line-height:8px !important;
+  font-weight:900 !important;
+  letter-spacing:.2px !important;
+}
+
+/* Bottom navigation: keep the center NAL NETWORK control unchanged,
+   but raise the four standard menu items to match the reference. */
+#bottomNav .nav-button:not(.watch-button),
+.bottom-nav .nav-button:not(.watch-button){
+  position:relative !important;
+  top:-8px !important;
+  transform:none !important;
+}
+
+@media(max-width:430px){
+  .topbar{
+    grid-template-columns:minmax(92px,1fr) auto minmax(92px,1fr) !important;
+  }
+  .header-login-button > .header-login-copy > span{
+    font-size:7.5px !important;
+    line-height:8px !important;
+    letter-spacing:0 !important;
+  }
+  #bottomNav .nav-button:not(.watch-button),
+  .bottom-nav .nav-button:not(.watch-button){
+    top:-8px !important;
+  }
+}
+
+@media(max-width:360px){
+  /* Override the older rule that hid the account wording on small phones. */
+  .header-login-button > .header-login-copy{
+    display:flex !important;
+  }
+  .header-login-button > .header-login-copy > span{
+    display:block !important;
+    font-size:7px !important;
+  }
+}
+
 </style>
 </head>
 
@@ -6500,7 +6592,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <circle cx="12" cy="8" r="3.5"></circle>
           <path d="M5.5 20c.6-4 3-6 6.5-6s5.9 2 6.5 6"></path>
         </svg>
-        <span>LOGIN / SIGN UP</span>
+        <span class="header-login-copy"><span>LOGIN</span><span>SIGN UP</span></span>
       </button>
 
     </div>
