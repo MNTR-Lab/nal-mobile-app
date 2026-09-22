@@ -3487,6 +3487,10 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 @media(min-width:1000px){#watchPage .network-archive-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 /* CURRENT NAL TEAMS — three across so team artwork stays larger */
 #watchPage .network-archive-current-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:16px 12px}
+/* PREVIOUS ORGANIZATIONS — same card width as current teams, centered as a pair */
+#watchPage .network-archive-previous-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:16px 12px}
+#watchPage .network-archive-previous-grid .network-archive-card:first-child{grid-column:1;transform:translateX(50%)}
+#watchPage .network-archive-previous-grid .network-archive-card:nth-child(2){grid-column:2;transform:translateX(50%)}
 #networkArchiveDetailPage{min-height:calc(100vh - var(--header-height));padding:0 0 100px;background:#06172b;color:#fff}
 .network-archive-detail-head{padding:16px;border-bottom:1px solid rgba(255,255,255,.10)}
 .network-archive-back{padding:0;border:0;background:transparent;color:#fff;font:inherit;font-size:10px;font-weight:950;letter-spacing:.6px;cursor:pointer}
@@ -7495,7 +7499,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>
       <section class="network-archive-section">
         <h3 class="network-archive-section-title">Previous Organizations</h3>
-        <div class="network-archive-grid">
+        <div class="network-archive-grid network-archive-previous-grid">
           <button class="network-archive-card is-placeholder" type="button" onclick="openNetworkArchive('previous-organization-1','Previous Organization')">
             <div class="network-archive-card-art">ORGANIZATION<br>COMING SOON</div><strong>Previous Organization</strong><small>ARCHIVE PLACEHOLDER</small>
           </button>
