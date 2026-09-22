@@ -6304,6 +6304,7 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-category{width:100%;border:1px solid #dbe3eb;border-radius:14px;background:#fff;padding:15px 14px;display:flex;align-items:center;gap:12px;text-align:left;color:#07172b;cursor:pointer;box-shadow:0 4px 12px rgba(7,23,43,.04);font:inherit;}
 .fan-forum-category:active{transform:scale(.995);}
 .fan-forum-category-icon{flex:0 0 39px;height:39px;border-radius:11px;background:#07172b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:1000;}
+.fan-forum-category-icon img{width:31px;height:31px;object-fit:contain;display:block;}
 .fan-forum-category-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;}
 .fan-forum-category-copy strong{font-size:14px;font-weight:1000;line-height:1.15;}
 .fan-forum-category-copy small{color:#778596;font-size:10px;font-weight:700;line-height:1.3;}
@@ -10727,6 +10728,28 @@ async function loadNalForumCategories(){
   }
 }
 
+function nalForumCategoryIcon(category){
+  const section = String(category?.section || "");
+  if (section === "team-zone") {
+    const directSlug = String(category?.slug || "").trim().toLowerCase();
+    const nameSlug = String(category?.name || "")
+      .trim()
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    const teamSlug = TEAM_LOGO_OVERRIDES[directSlug] ? directSlug : nameSlug;
+    const logo = TEAM_LOGO_OVERRIDES[teamSlug];
+    if (logo) {
+      return `<img src="${escapeHTML(logo)}" alt="${escapeHTML(category?.name || "Team")} logo" loading="lazy">`;
+    }
+    return "T";
+  }
+  if (section === "ask-the-nal") return "?";
+  if (section === "locker-room") return "#";
+  return "NAL";
+}
+
 function renderNalForumCategories(){
   const host = document.getElementById("fanForumSections");
   if (!host) return;
@@ -10754,7 +10777,7 @@ function renderNalForumCategories(){
       <div class="fan-forum-list">
         ${group.categories.map(category => `
           <button class="fan-forum-category" type="button" data-forum-category="${escapeHTML(String(category.slug || category.id || ""))}">
-            <span class="fan-forum-category-icon">${group.section === "team-zone" ? "T" : group.section === "ask-the-nal" ? "?" : group.section === "locker-room" ? "#" : "NAL"}</span>
+            <span class="fan-forum-category-icon">${nalForumCategoryIcon(category)}</span>
             <span class="fan-forum-category-copy">
               <strong>${escapeHTML(category.name || "NAL Community")}</strong>
               <small>${escapeHTML(nalForumCategoryDescription(category))}</small>
@@ -12883,4 +12906,3 @@ document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 </script>
 </body>
 </html>
-
