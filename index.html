@@ -6324,6 +6324,35 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-next span{display:block;margin-top:4px;color:#7a8796;font-size:10px;line-height:1.4;}
 @media(max-width:520px){.fan-forum-shell{padding:14px 12px 24px}.fan-forum-hero{padding:22px 17px}.fan-forum-hero h1{font-size:31px}.fan-forum-category{padding:13px 12px}}
 
+
+/* =========================================================
+   NAL FAN FORUM — TOPIC LIST + CREATE CONVERSATION
+   ========================================================= */
+.fan-forum-topic-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;}
+.fan-forum-topic-heading{font-size:13px;font-weight:1000;letter-spacing:.35px;color:#07172b;}
+.fan-forum-start{border:0;border-radius:10px;background:#e31b23;color:#fff;padding:11px 13px;font-size:10px;font-weight:1000;letter-spacing:.55px;cursor:pointer;box-shadow:0 5px 12px rgba(227,27,35,.18);}
+.fan-forum-start[hidden]{display:none!important;}
+.fan-forum-topics{display:grid;gap:9px;margin-top:10px;}
+.fan-forum-topic-card{width:100%;border:1px solid #dbe3eb;border-radius:14px;background:#fff;padding:14px;text-align:left;color:#07172b;box-shadow:0 4px 12px rgba(7,23,43,.04);font:inherit;}
+.fan-forum-topic-flags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;}
+.fan-forum-topic-flag{display:inline-flex;border-radius:999px;background:#eef3f7;color:#526274;padding:4px 7px;font-size:8px;font-weight:1000;letter-spacing:.55px;}
+.fan-forum-topic-flag.red{background:#fff0f1;color:#c81820;}
+.fan-forum-topic-card h3{margin:0;color:#07172b;font-size:14px;line-height:1.25;font-weight:1000;}
+.fan-forum-topic-meta{margin-top:7px;color:#748293;font-size:9px;font-weight:750;line-height:1.4;}
+.fan-forum-topic-preview{margin:7px 0 0;color:#526274;font-size:10px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.fan-forum-compose{margin-top:12px;border:1px solid #dbe3eb;border-radius:14px;background:#fff;padding:15px;box-shadow:0 5px 16px rgba(7,23,43,.05);}
+.fan-forum-compose[hidden]{display:none!important;}
+.fan-forum-compose h3{margin:0 0 4px;font-size:15px;font-weight:1000;color:#07172b;}
+.fan-forum-compose p{margin:0 0 12px;color:#748293;font-size:10px;line-height:1.45;}
+.fan-forum-field{display:grid;gap:5px;margin-top:10px;}
+.fan-forum-field label{font-size:9px;font-weight:1000;letter-spacing:.55px;color:#526274;}
+.fan-forum-field input,.fan-forum-field textarea{width:100%;box-sizing:border-box;border:1px solid #ccd6e0;border-radius:10px;background:#fff;color:#07172b;padding:11px 12px;font:inherit;font-size:12px;outline:none;}
+.fan-forum-field textarea{min-height:125px;resize:vertical;line-height:1.45;}
+.fan-forum-compose-actions{display:flex;gap:8px;margin-top:12px;}
+.fan-forum-compose-actions button{flex:1;border:0;border-radius:10px;padding:11px 10px;font-size:10px;font-weight:1000;letter-spacing:.5px;cursor:pointer;}
+.fan-forum-compose-cancel{background:#e8edf2;color:#07172b;}.fan-forum-compose-submit{background:#e31b23;color:#fff;}
+.fan-forum-compose-status{min-height:16px;margin-top:8px;color:#6d7b89;font-size:9px;font-weight:800;}.fan-forum-compose-status.error{color:#c81820;}.fan-forum-compose-status.success{color:#147a45;}
+
 </style>
 </head>
 
@@ -7143,9 +7172,31 @@ document.addEventListener("DOMContentLoaded", () => {
         <h1 id="fanForumCategoryName">COMMUNITY</h1>
         <p id="fanForumCategoryDescription">NAL fan discussion.</p>
       </header>
-      <div class="fan-forum-next">
-        <strong>COMMUNITY READY</strong>
-        <span>Topic and reply controls will be connected in the next Forum step.</span>
+      <div class="fan-forum-topic-toolbar">
+        <div class="fan-forum-topic-heading">CONVERSATIONS</div>
+        <button id="fanForumStartButton" class="fan-forum-start" type="button" onclick="openNalForumComposer()">+ START A CONVERSATION</button>
+      </div>
+
+      <section id="fanForumComposer" class="fan-forum-compose" hidden>
+        <h3>START A CONVERSATION</h3>
+        <p>Post to this NAL community. Keep the conversation focused on football and follow the Community Guidelines.</p>
+        <div class="fan-forum-field">
+          <label for="fanForumTopicTitle">TOPIC TITLE</label>
+          <input id="fanForumTopicTitle" type="text" maxlength="120" placeholder="What do you want to talk about?">
+        </div>
+        <div class="fan-forum-field">
+          <label for="fanForumTopicBody">YOUR POST</label>
+          <textarea id="fanForumTopicBody" maxlength="4000" placeholder="Start the conversation..."></textarea>
+        </div>
+        <div class="fan-forum-compose-actions">
+          <button class="fan-forum-compose-cancel" type="button" onclick="closeNalForumComposer()">CANCEL</button>
+          <button id="fanForumTopicSubmit" class="fan-forum-compose-submit" type="button" onclick="submitNalForumTopic()">POST CONVERSATION</button>
+        </div>
+        <div id="fanForumComposeStatus" class="fan-forum-compose-status" aria-live="polite"></div>
+      </section>
+
+      <div id="fanForumTopics" class="fan-forum-topics">
+        <div class="fan-forum-loading">LOADING CONVERSATIONS…</div>
       </div>
     </div>
   </main>
@@ -10657,6 +10708,7 @@ async function showFanPollResults(){
    ========================================================= */
 let nalForumCategories = [];
 let activeNalForumCategory = null;
+let nalForumTopics = [];
 
 const NAL_FORUM_SECTION_LABELS = {
   "the-league":"THE LEAGUE",
@@ -10791,7 +10843,7 @@ function renderNalForumCategories(){
   });
 }
 
-function openNalForumCategory(slug){
+async function openNalForumCategory(slug){
   const category = nalForumCategories.find(item => String(item.slug || item.id || "") === String(slug));
   if (!category) return;
   activeNalForumCategory = category;
@@ -10802,7 +10854,133 @@ function openNalForumCategory(slug){
   if (section) section.textContent = nalForumSectionLabel(category.section);
   if (name) name.textContent = category.name || "NAL COMMUNITY";
   if (description) description.textContent = nalForumCategoryDescription(category);
+  closeNalForumComposer();
   showNalForumPage("fanForumCategoryPage");
+  updateNalForumStartButton();
+  await loadNalForumTopics();
+}
+
+function updateNalForumStartButton(){
+  const button = document.getElementById("fanForumStartButton");
+  if (!button) return;
+  const role = String(nalAccountProfile?.role || "fan").toLowerCase();
+  const restricted = activeNalForumCategory?.section === "ask-the-nal" && !["moderator","admin"].includes(role);
+  button.hidden = restricted;
+}
+
+function forumTopicValue(topic, names, fallback=""){
+  for (const name of names){
+    if (topic && topic[name] !== undefined && topic[name] !== null) return topic[name];
+  }
+  return fallback;
+}
+
+function formatNalForumTime(value){
+  if (!value) return "";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
+}
+
+async function loadNalForumTopics(){
+  const host = document.getElementById("fanForumTopics");
+  if (!host || !activeNalForumCategory) return;
+  host.innerHTML = '<div class="fan-forum-loading">LOADING CONVERSATIONS…</div>';
+  try{
+    const client = getNalAccountClient();
+    if (!client) throw new Error("NAL community connection unavailable.");
+    const { data, error } = await client
+      .from("forum_topics")
+      .select("*")
+      .eq("category_id", activeNalForumCategory.id)
+      .order("is_pinned", { ascending:false })
+      .order("created_at", { ascending:false });
+    if (error) throw error;
+    nalForumTopics = Array.isArray(data) ? data : [];
+    renderNalForumTopics();
+  }catch(error){
+    console.error("Unable to load NAL Forum topics:", error);
+    host.innerHTML = '<div class="fan-forum-empty">Conversations are temporarily unavailable. Please try again.</div>';
+  }
+}
+
+function renderNalForumTopics(){
+  const host = document.getElementById("fanForumTopics");
+  if (!host) return;
+  const visible = nalForumTopics.filter(topic => !forumTopicValue(topic,["is_hidden","hidden"],false));
+  if (!visible.length){
+    host.innerHTML = '<div class="fan-forum-empty"><strong style="display:block;color:#07172b;margin-bottom:4px;">NO CONVERSATIONS YET</strong>Be the first to start one.</div>';
+    return;
+  }
+  host.innerHTML = visible.map(topic => {
+    const title = forumTopicValue(topic,["title","topic_title"],"NAL Conversation");
+    const body = forumTopicValue(topic,["body","content","message"],"");
+    const author = forumTopicValue(topic,["author_display_name","display_name","author_name"],"NAL Fan");
+    const replies = Number(forumTopicValue(topic,["reply_count","replies_count"],0)) || 0;
+    const created = formatNalForumTime(forumTopicValue(topic,["created_at","posted_at"],""));
+    const tag = forumTopicValue(topic,["tag","tag_name","topic_tag"],"");
+    const pinned = !!forumTopicValue(topic,["is_pinned","pinned"],false);
+    const locked = !!forumTopicValue(topic,["is_locked","locked"],false);
+    return `<article class="fan-forum-topic-card">
+      ${(pinned || locked || tag) ? `<div class="fan-forum-topic-flags">${pinned?'<span class="fan-forum-topic-flag red">PINNED</span>':''}${locked?'<span class="fan-forum-topic-flag">LOCKED</span>':''}${tag?`<span class="fan-forum-topic-flag">${escapeHTML(String(tag).toUpperCase())}</span>`:''}</div>` : ''}
+      <h3>${escapeHTML(title)}</h3>
+      ${body ? `<p class="fan-forum-topic-preview">${escapeHTML(body)}</p>` : ''}
+      <div class="fan-forum-topic-meta">${escapeHTML(author)}${created ? ` • ${escapeHTML(created)}` : ''} • ${replies} ${replies===1?'REPLY':'REPLIES'}</div>
+    </article>`;
+  }).join("");
+}
+
+async function openNalForumComposer(){
+  if (!nalAccountUser){
+    await openFanAccount();
+    return;
+  }
+  const role = String(nalAccountProfile?.role || "fan").toLowerCase();
+  if (activeNalForumCategory?.section === "ask-the-nal" && !["moderator","admin"].includes(role)){
+    window.alert("Ask the NAL conversations are opened by NAL moderators and administrators.");
+    return;
+  }
+  const composer = document.getElementById("fanForumComposer");
+  if (composer){ composer.hidden = false; composer.scrollIntoView({behavior:"smooth",block:"nearest"}); }
+}
+
+function closeNalForumComposer(){
+  const composer = document.getElementById("fanForumComposer");
+  if (composer) composer.hidden = true;
+  const status = document.getElementById("fanForumComposeStatus");
+  if (status){ status.textContent=""; status.className="fan-forum-compose-status"; }
+}
+
+async function submitNalForumTopic(){
+  if (!nalAccountUser || !activeNalForumCategory) return;
+  const titleInput = document.getElementById("fanForumTopicTitle");
+  const bodyInput = document.getElementById("fanForumTopicBody");
+  const submit = document.getElementById("fanForumTopicSubmit");
+  const status = document.getElementById("fanForumComposeStatus");
+  const title = String(titleInput?.value || "").trim();
+  const body = String(bodyInput?.value || "").trim();
+  if (title.length < 4 || body.length < 2){
+    if (status){ status.textContent="Add a topic title and post before submitting."; status.className="fan-forum-compose-status error"; }
+    return;
+  }
+  if (submit) submit.disabled = true;
+  if (status){ status.textContent="Posting conversation…"; status.className="fan-forum-compose-status"; }
+  try{
+    const client = getNalAccountClient();
+    const payload = { category_id:activeNalForumCategory.id, author_id:nalAccountUser.id, title, body };
+    const { error } = await client.from("forum_topics").insert(payload);
+    if (error) throw error;
+    if (titleInput) titleInput.value="";
+    if (bodyInput) bodyInput.value="";
+    if (status){ status.textContent="Conversation posted."; status.className="fan-forum-compose-status success"; }
+    await loadNalForumTopics();
+    setTimeout(closeNalForumComposer,500);
+  }catch(error){
+    console.error("Unable to create NAL Forum topic:", error);
+    if (status){ status.textContent=error?.message || "Conversation could not be posted. Please try again."; status.className="fan-forum-compose-status error"; }
+  }finally{
+    if (submit) submit.disabled = false;
+  }
 }
 
 
