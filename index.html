@@ -5975,6 +5975,12 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-member-chev{color:#a2adba;font-size:21px}
 .fan-member-badge{font-size:9px;font-weight:1000;background:#eef1f5;color:#68778b;border-radius:20px;padding:5px 8px}
 .fan-member-vote-empty{padding:13px 14px;color:#68778b;font-size:11px;line-height:1.4}
+.fan-member-vote-item{padding:13px 14px;border-top:1px solid #e6ebf0}
+.fan-member-vote-item:first-child{border-top:0}
+.fan-member-vote-question{color:#07172b;font-size:12px;line-height:1.35;font-weight:900}
+.fan-member-vote-pick{margin-top:5px;color:#102b4e;font-size:11px;line-height:1.35;font-weight:800}
+.fan-member-vote-pick b{color:#e31b23}
+.fan-member-vote-date{margin-top:4px;color:#7b8999;font-size:10px;font-weight:800}
 .fan-member-legal-button{width:100%;border:0;background:transparent;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
 .fan-member-signout{width:100%;min-height:50px;margin-top:17px;border:0;border-radius:10px;background:#07172b;color:#fff;font:inherit;font-size:13px;font-weight:1000;letter-spacing:.7px;cursor:pointer}
 .fan-member-delete{width:100%;min-height:46px;margin-top:9px;border:1px solid #e1c8ca;border-radius:10px;background:#fff;color:#b41d24;font:inherit;font-size:11px;font-weight:1000;cursor:pointer}
@@ -6276,91 +6282,6 @@ document.addEventListener("DOMContentLoaded", () => {
   font-weight:800;
   line-height:1.5;
 }
-
-
-
-/* =========================================================
-   NAL FAN ACCOUNT — NOTIFICATION PREFERENCES
-========================================================= */
-.fan-notification-preferences{
-  border-top:1px solid #e3e8ee;
-  background:#f8fafc;
-}
-.fan-notification-pref-row{
-  min-height:68px;
-  padding:12px 14px;
-  box-sizing:border-box;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  border-bottom:1px solid #e3e8ee;
-}
-.fan-notification-pref-row:last-child{border-bottom:0;}
-.fan-notification-pref-copy{min-width:0;}
-.fan-notification-pref-copy b{
-  display:block;
-  color:#07172b;
-  font-size:12px;
-  line-height:1.2;
-  font-weight:1000;
-}
-.fan-notification-pref-copy span{
-  display:block;
-  margin-top:3px;
-  color:#738296;
-  font-size:10px;
-  line-height:1.3;
-  font-weight:700;
-}
-.fan-notification-toggle{
-  position:relative;
-  width:46px;
-  height:26px;
-  flex:0 0 46px;
-  display:inline-block;
-}
-.fan-notification-toggle input{
-  position:absolute;
-  opacity:0;
-  pointer-events:none;
-}
-.fan-notification-toggle-track{
-  position:absolute;
-  inset:0;
-  border-radius:999px;
-  background:#b8c1cb;
-  box-shadow:inset 0 0 0 1px rgba(7,23,43,.08);
-  transition:background .18s ease;
-  cursor:pointer;
-}
-.fan-notification-toggle-track::after{
-  content:"";
-  position:absolute;
-  width:20px;
-  height:20px;
-  left:3px;
-  top:3px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 1px 4px rgba(0,0,0,.28);
-  transition:transform .18s ease;
-}
-.fan-notification-toggle input:checked + .fan-notification-toggle-track{background:#e31b23;}
-.fan-notification-toggle input:checked + .fan-notification-toggle-track::after{transform:translateX(20px);}
-.fan-notification-toggle input:focus-visible + .fan-notification-toggle-track{outline:2px solid #102b4e;outline-offset:2px;}
-.fan-notification-toggle input:disabled + .fan-notification-toggle-track{opacity:.55;cursor:wait;}
-.fan-notification-pref-status{
-  min-height:16px;
-  padding:8px 14px 10px;
-  color:#607286;
-  background:#f8fafc;
-  font-size:9px;
-  line-height:1.3;
-  font-weight:900;
-  letter-spacing:.35px;
-}
-.fan-notification-pref-status.error{color:#a20f17;}
 
 </style>
 </head>
@@ -7579,37 +7500,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="fan-member-row">
                   <div class="fan-member-ico">🔔</div>
                   <div class="fan-member-rowtext"><b>Notification Preferences</b><span>Choose the NAL updates you want</span></div>
-                </div>
-                <div class="fan-notification-preferences" id="fanNotificationPreferences">
-                  <div class="fan-notification-pref-row">
-                    <div class="fan-notification-pref-copy"><b>League News &amp; Announcements</b><span>League news, announcements and NAL Network updates</span></div>
-                    <label class="fan-notification-toggle" aria-label="League News and Announcements">
-                      <input type="checkbox" id="fanPrefLeagueNews" data-notification-preference="league_news" checked>
-                      <span class="fan-notification-toggle-track"></span>
-                    </label>
-                  </div>
-                  <div class="fan-notification-pref-row">
-                    <div class="fan-notification-pref-copy"><b>Game &amp; Score Updates</b><span>Game-day and score alerts from around the NAL</span></div>
-                    <label class="fan-notification-toggle" aria-label="Game and Score Updates">
-                      <input type="checkbox" id="fanPrefGameUpdates" data-notification-preference="game_updates" checked>
-                      <span class="fan-notification-toggle-track"></span>
-                    </label>
-                  </div>
-                  <div class="fan-notification-pref-row">
-                    <div class="fan-notification-pref-copy"><b>Schedule Updates</b><span>Schedule releases, changes and important game information</span></div>
-                    <label class="fan-notification-toggle" aria-label="Schedule Updates">
-                      <input type="checkbox" id="fanPrefScheduleUpdates" data-notification-preference="schedule_updates" checked>
-                      <span class="fan-notification-toggle-track"></span>
-                    </label>
-                  </div>
-                  <div class="fan-notification-pref-row">
-                    <div class="fan-notification-pref-copy"><b>Favorite Team Updates</b><span>Alerts specifically sent for your selected favorite team</span></div>
-                    <label class="fan-notification-toggle" aria-label="Favorite Team Updates">
-                      <input type="checkbox" id="fanPrefFavoriteTeam" data-notification-preference="favorite_team_updates" checked>
-                      <span class="fan-notification-toggle-track"></span>
-                    </label>
-                  </div>
-                  <div class="fan-notification-pref-status" id="fanNotificationPreferenceStatus" aria-live="polite"></div>
+                  <span class="fan-member-badge">COMING SOON</span>
                 </div>
               </div>
             </section>
@@ -7718,9 +7609,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <textarea id="fanAdminNotificationMessage" maxlength="500" placeholder="Write the alert message fans will see." required></textarea>
                   </div>
                   <div class="fan-admin-notify-field">
-                    <label for="fanAdminNotificationUrl">LINK / DESTINATION (OPTIONAL)</label>
+                    <label for="fanAdminNotificationUrl">ACTION LINK — OPTIONAL</label>
                     <input id="fanAdminNotificationUrl" type="url" placeholder="https://...">
-                    <p class="fan-admin-notify-help">Where should the fan go when they tap “VIEW DETAILS”?</p>
                   </div>
                   <p class="fan-admin-notify-help">Notifications publish immediately. Team alerts are shown only to signed-in fans whose Favorite Team matches the selected team.</p>
                   <div class="fan-admin-notify-actions">
@@ -10583,17 +10473,41 @@ async function submitFanPollVote(){
   }
 
   try{
+    let signedInUserId = null;
+    let accessToken = null;
+
+    try{
+      const client = getNalAccountClient();
+      const { data } = await client.auth.getSession();
+      signedInUserId = data?.session?.user?.id || null;
+      accessToken = data?.session?.access_token || null;
+    }catch(accountError){
+      signedInUserId = null;
+      accessToken = null;
+    }
+
+    const votePayload = {
+      poll_id: activeFanPoll.id,
+      option_id: selectedFanPollOption,
+      voter_id: getFanPollVoterId()
+    };
+
+    if (signedInUserId){
+      votePayload.user_id = signedInUserId;
+    }
+
+    const requestHeaders = fanPollHeaders({
+      "Content-Type":"application/json"
+    });
+    if (accessToken){
+      requestHeaders.Authorization = `Bearer ${accessToken}`;
+    }
+
     const response = await fetch(fanPollApiUrl("poll_votes"), {
       method:"POST",
       mode:"cors",
-      headers: fanPollHeaders({
-        "Content-Type":"application/json"
-      }),
-      body:JSON.stringify({
-        poll_id: activeFanPoll.id,
-        option_id: selectedFanPollOption,
-        voter_id: getFanPollVoterId()
-      })
+      headers: requestHeaders,
+      body:JSON.stringify(votePayload)
     });
 
     if (!response.ok){
@@ -10609,6 +10523,7 @@ async function submitFanPollVote(){
 
     rememberLocalFanPollVote(activeFanPoll.id, selectedFanPollOption);
     await showFanPollResults();
+    if (signedInUserId) await loadNalVotingActivity();
     setFanPollStatus("VOTE COUNTED — THANK YOU FOR VOTING!");
   }catch(error){
     if (submit){
@@ -11225,7 +11140,6 @@ const NAL_ACCOUNT_SUPABASE_KEY = "sb_publishable_tHzWH6oFoUemOrdLs_h9bw_UOLBP-yb
 let nalAccountClient = null;
 let nalAccountUser = null;
 let nalAccountProfile = null;
-let nalNotificationPreferences = null;
 let nalAccountReturnPageId = "homePage";
 
 function getNalAccountClient(){
@@ -11441,8 +11355,8 @@ async function loadNalFanProfile(user){
     }
 
     renderNalFanProfile();
+    await loadNalVotingActivity();
     updateHeaderAccountState();
-    await loadNalNotificationPreferences();
     return data;
   } catch(error){
     console.error("NAL profile load error:", error);
@@ -11450,6 +11364,72 @@ async function loadNalFanProfile(user){
     renderNalFanProfile();
     updateHeaderAccountState();
     return null;
+  }
+}
+
+async function loadNalVotingActivity(){
+  const host = document.getElementById("fanMemberVotingActivity");
+  if (!host) return;
+
+  if (!nalAccountUser){
+    host.className = "fan-member-vote-empty";
+    host.textContent = "Your voting history will appear here after you sign in and vote.";
+    return;
+  }
+
+  host.className = "fan-member-vote-empty";
+  host.textContent = "Loading your voting activity...";
+
+  try{
+    const client = getNalAccountClient();
+    const { data: votes, error: voteError } = await client
+      .from("poll_votes")
+      .select("poll_id,option_id,created_at")
+      .eq("user_id", nalAccountUser.id)
+      .order("created_at", { ascending:false });
+
+    if (voteError) throw voteError;
+
+    if (!votes || !votes.length){
+      host.className = "fan-member-vote-empty";
+      host.textContent = "You haven't voted in an account-linked fan poll yet.";
+      return;
+    }
+
+    const pollIds = [...new Set(votes.map(vote => vote.poll_id).filter(Boolean))];
+    const optionIds = [...new Set(votes.map(vote => vote.option_id).filter(Boolean))];
+
+    const [{ data: polls, error: pollError }, { data: options, error: optionError }] = await Promise.all([
+      client.from("polls").select("id,question").in("id", pollIds),
+      client.from("poll_options").select("id,option_name").in("id", optionIds)
+    ]);
+
+    if (pollError) throw pollError;
+    if (optionError) throw optionError;
+
+    const pollMap = new Map((polls || []).map(poll => [String(poll.id), poll.question]));
+    const optionMap = new Map((options || []).map(option => [String(option.id), option.option_name]));
+
+    host.className = "";
+    host.innerHTML = votes.map(vote => {
+      const question = pollMap.get(String(vote.poll_id)) || "NAL Fan Poll";
+      const pick = optionMap.get(String(vote.option_id)) || "Your selection";
+      const votedDate = vote.created_at
+        ? new Date(vote.created_at).toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" })
+        : "";
+
+      return `
+        <div class="fan-member-vote-item">
+          <div class="fan-member-vote-question">${escapeNalAdminHtml(question)}</div>
+          <div class="fan-member-vote-pick"><b>YOUR PICK:</b> ${escapeNalAdminHtml(pick)}</div>
+          ${votedDate ? `<div class="fan-member-vote-date">VOTED ${escapeNalAdminHtml(votedDate.toUpperCase())}</div>` : ""}
+        </div>
+      `;
+    }).join("");
+  }catch(error){
+    console.error("NAL voting activity load error:", error);
+    host.className = "fan-member-vote-empty";
+    host.textContent = "Voting activity is temporarily unavailable.";
   }
 }
 
@@ -12468,114 +12448,6 @@ function setNalNotificationBadge(count){
   badge.hidden = safeCount === 0;
 }
 
-
-/* =========================================================
-   NAL FAN ACCOUNT — NOTIFICATION PREFERENCES
-========================================================= */
-const NAL_NOTIFICATION_DEFAULTS = {
-  league_news:true,
-  game_updates:true,
-  schedule_updates:true,
-  favorite_team_updates:true
-};
-
-function setNalNotificationPreferenceStatus(message = "", isError = false){
-  const status = document.getElementById("fanNotificationPreferenceStatus");
-  if (!status) return;
-  status.textContent = message;
-  status.classList.toggle("error", !!isError);
-}
-
-function renderNalNotificationPreferences(){
-  const values = nalNotificationPreferences || NAL_NOTIFICATION_DEFAULTS;
-  document.querySelectorAll("[data-notification-preference]").forEach(input => {
-    const key = input.dataset.notificationPreference;
-    input.checked = values[key] !== false;
-    input.disabled = !nalAccountUser;
-  });
-}
-
-async function loadNalNotificationPreferences(){
-  if (!nalAccountUser){
-    nalNotificationPreferences = null;
-    renderNalNotificationPreferences();
-    return;
-  }
-
-  try{
-    const client = getNalAccountClient();
-    let { data, error } = await client
-      .from("notification_preferences")
-      .select("user_id,league_news,game_updates,schedule_updates,favorite_team_updates")
-      .eq("user_id", nalAccountUser.id)
-      .maybeSingle();
-
-    if (error) throw error;
-
-    if (!data){
-      const created = { user_id:nalAccountUser.id, ...NAL_NOTIFICATION_DEFAULTS };
-      const result = await client
-        .from("notification_preferences")
-        .insert(created)
-        .select("user_id,league_news,game_updates,schedule_updates,favorite_team_updates")
-        .single();
-      if (result.error) throw result.error;
-      data = result.data;
-    }
-
-    nalNotificationPreferences = data;
-    renderNalNotificationPreferences();
-    setNalNotificationPreferenceStatus("");
-  } catch(error){
-    console.error("Notification preferences load error:", error);
-    nalNotificationPreferences = { ...NAL_NOTIFICATION_DEFAULTS };
-    renderNalNotificationPreferences();
-    setNalNotificationPreferenceStatus("Unable to load notification preferences.", true);
-  }
-}
-
-async function saveNalNotificationPreference(input){
-  if (!nalAccountUser || !input) return;
-  const key = input.dataset.notificationPreference;
-  if (!Object.prototype.hasOwnProperty.call(NAL_NOTIFICATION_DEFAULTS,key)) return;
-
-  const previous = nalNotificationPreferences?.[key] !== false;
-  const nextValue = !!input.checked;
-  input.disabled = true;
-  setNalNotificationPreferenceStatus("SAVING...");
-
-  try{
-    const client = getNalAccountClient();
-    const { error } = await client
-      .from("notification_preferences")
-      .update({ [key]:nextValue, updated_at:new Date().toISOString() })
-      .eq("user_id", nalAccountUser.id);
-    if (error) throw error;
-
-    nalNotificationPreferences = {
-      ...(nalNotificationPreferences || NAL_NOTIFICATION_DEFAULTS),
-      [key]:nextValue
-    };
-    setNalNotificationPreferenceStatus("PREFERENCE SAVED");
-    renderNalAlerts();
-    window.setTimeout(() => {
-      if (document.getElementById("fanNotificationPreferenceStatus")?.textContent === "PREFERENCE SAVED")
-        setNalNotificationPreferenceStatus("");
-    },1400);
-  } catch(error){
-    console.error("Notification preference save error:", error);
-    input.checked = previous;
-    setNalNotificationPreferenceStatus("Unable to save preference. Please try again.", true);
-  } finally {
-    input.disabled = false;
-  }
-}
-
-document.addEventListener("change", event => {
-  const input = event.target.closest("[data-notification-preference]");
-  if (input) saveNalNotificationPreference(input);
-});
-
 function formatNalAlertDate(value){
   if (!value) return "";
   const date = new Date(value);
@@ -12598,18 +12470,6 @@ function nalNotificationMatchesFan(notification){
   if (!notification || notification.is_active === false) return false;
 
   const targetType = String(notification.target_type || "all").toLowerCase();
-
-  /* Personal onboarding/system messages (including Welcome) always remain visible. */
-  if (targetType === "user") return true;
-
-  const prefs = nalNotificationPreferences || NAL_NOTIFICATION_DEFAULTS;
-  if (targetType === "team" && prefs.favorite_team_updates === false) return false;
-
-  const notificationType = String(notification.notification_type || "league").toLowerCase();
-  if (notificationType === "game" && prefs.game_updates === false) return false;
-  if (notificationType === "schedule" && prefs.schedule_updates === false) return false;
-  if (["league","news","nal-network"].includes(notificationType) && prefs.league_news === false) return false;
-
   if (targetType === "all" || targetType === "league" || !targetType) return true;
 
   if (targetType === "team"){
@@ -12647,7 +12507,7 @@ function renderNalAlerts(){
     const type = escapeHTML(getNalAlertTypeLabel(item));
     const date = escapeHTML(formatNalAlertDate(item.created_at));
     const actionUrl = String(item.action_url || "").trim();
-    const actionText = actionUrl ? '<span class="nal-alert-action">VIEW DETAILS →</span>' : "";
+    const actionText = actionUrl ? '<span class="nal-alert-action">VIEW UPDATE →</span>' : "";
 
     return `
       <article class="nal-alert-card${unread ? " unread" : ""}" data-notification-id="${escapeHTML(id)}">
