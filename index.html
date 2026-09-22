@@ -7605,7 +7605,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   <div class="fan-admin-notify-field">
                     <label for="fanAdminNotificationUrl">LINK / DESTINATION (OPTIONAL)</label>
                     <input id="fanAdminNotificationUrl" type="url" placeholder="https://...">
-                    <p class="fan-admin-notify-help">Where should the fan go when they tap “VIEW UPDATE”?</p>
+                    <p class="fan-admin-notify-help">Where should the fan go when they tap “VIEW DETAILS”?</p>
                   </div>
                   <p class="fan-admin-notify-help">Notifications publish immediately. Team alerts are shown only to signed-in fans whose Favorite Team matches the selected team.</p>
                   <div class="fan-admin-notify-actions">
@@ -12410,7 +12410,7 @@ function renderNalAlerts(){
     const type = escapeHTML(getNalAlertTypeLabel(item));
     const date = escapeHTML(formatNalAlertDate(item.created_at));
     const actionUrl = String(item.action_url || "").trim();
-    const actionText = actionUrl ? '<span class="nal-alert-action">VIEW UPDATE →</span>' : "";
+    const actionText = actionUrl ? '<span class="nal-alert-action">VIEW DETAILS →</span>' : "";
 
     return `
       <article class="nal-alert-card${unread ? " unread" : ""}" data-notification-id="${escapeHTML(id)}">
