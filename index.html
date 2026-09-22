@@ -6384,6 +6384,34 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-compose-cancel{background:#e8edf2;color:#07172b;}.fan-forum-compose-submit{background:#e31b23;color:#fff;}
 .fan-forum-compose-status{min-height:16px;margin-top:8px;color:#6d7b89;font-size:9px;font-weight:800;}.fan-forum-compose-status.error{color:#c81820;}.fan-forum-compose-status.success{color:#147a45;}
 
+
+/* =========================================================
+   HOME — LIGHTCAST NAL NETWORK PLAYER
+   Replaces only the existing featured-video placeholder.
+========================================================= */
+#homePage .home-lightcast-player{
+  position:relative !important;
+  width:100% !important;
+  min-height:0 !important;
+  aspect-ratio:16 / 9 !important;
+  overflow:hidden !important;
+  border:0 !important;
+  border-radius:7px !important;
+  background:#000 !important;
+}
+
+#homePage .home-lightcast-player iframe{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:100% !important;
+  min-height:100% !important;
+  border:0 !important;
+  display:block !important;
+  background:#000 !important;
+}
+
 </style>
 
 <style>
@@ -6880,11 +6908,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="home-network-layout">
         <div>
-          <div class="media-placeholder home-network-main" id="networkHomeFeaturedVideo">
-            <div class="media-placeholder-label">
-              FEATURED VIDEO IMAGE PLACEHOLDER<br>
-              16:9 • RECOMMENDED 1200 × 675 PX
-            </div>
+          <div class="home-network-main home-lightcast-player" id="networkHomeFeaturedVideo">
+            <iframe
+              src="https://www.lightcast.com/embed/player.php?id=72119&type=vod"
+              title="NAL Network"
+              referrerpolicy="no-referrer-when-downgrade"
+              frameborder="0"
+              allow="fullscreen; picture-in-picture"
+              allowfullscreen
+            ></iframe>
           </div>
           <div class="home-network-caption">
             Featured NAL Network Program
