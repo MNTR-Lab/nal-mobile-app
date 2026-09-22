@@ -3485,6 +3485,8 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 #watchPage .network-archive-card.is-placeholder .network-archive-card-art{padding:10px;color:rgba(255,255,255,.45);font-size:11px;font-weight:950;letter-spacing:.8px;text-align:center}
 @media(min-width:700px){#watchPage .network-archive-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 14px}}
 @media(min-width:1000px){#watchPage .network-archive-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+/* CURRENT NAL TEAMS — three across so team artwork stays larger */
+#watchPage .network-archive-current-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:16px 12px}
 #networkArchiveDetailPage{min-height:calc(100vh - var(--header-height));padding:0 0 100px;background:#06172b;color:#fff}
 .network-archive-detail-head{padding:16px;border-bottom:1px solid rgba(255,255,255,.10)}
 .network-archive-back{padding:0;border:0;background:transparent;color:#fff;font:inherit;font-size:10px;font-weight:950;letter-spacing:.6px;cursor:pointer}
@@ -7452,7 +7454,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <section class="network-library-head"><h2>ARCHIVES</h2><p>Past games and programming from NAL organizations.</p></section>
       <section class="network-archive-section">
         <h3 class="network-archive-section-title">Current NAL Teams</h3>
-        <div class="network-archive-grid">
+        <div class="network-archive-grid network-archive-current-grid">
           <button class="network-archive-card" type="button" onclick="openNetworkArchive('amarillo-warbirds','Amarillo Warbirds')">
             <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"></div>
             <strong>Amarillo Warbirds</strong><small>TEAM ARCHIVE</small>
