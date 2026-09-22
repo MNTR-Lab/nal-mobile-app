@@ -8186,17 +8186,10 @@ function openArticle(url, options = {}) {
 
   pages.forEach(page => {
     page.classList.remove("active");
+    page.style.display = "none";
   });
 
-  /* Team Home can carry an inline display state, so explicitly hide it
-     before opening the article/team-content viewer. */
-  const openTeamPage = document.getElementById("teamPage");
-  if (openTeamPage) {
-    openTeamPage.classList.remove("active");
-    openTeamPage.style.display = "none";
-  }
-
-  /* Restore the in-app viewer after global navigation may have hidden it inline. */
+  /* Keep the active page class and inline display state in sync. */
   articlePage.style.display = "block";
   articlePage.classList.add("active");
 
@@ -8280,6 +8273,7 @@ articleBack.addEventListener(
       page.classList.remove(
         "active"
       );
+      page.style.display = "none";
     });
 
 
@@ -8290,8 +8284,7 @@ articleBack.addEventListener(
 
 
     if (previous) {
-      /* Restore pages that may have been hidden inline by openArticle(). */
-      previous.style.display = "";
+      previous.style.display = "block";
       previous.classList.add(
         "active"
       );
