@@ -7575,7 +7575,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         <option value="news">News</option>
                         <option value="game">Game Update</option>
                         <option value="team">Team Update</option>
-                        <option value="system">App / System</option>
+                        <option value="schedule">Schedule</option>
+                        <option value="nal-network">NAL Network</option>
                       </select>
                     </div>
                     <div class="fan-admin-notify-field">
@@ -11731,7 +11732,71 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     this.textContent = "SIGN OUT";
   }
 });
-\n\n/* NAL ADMIN — send league/team notifications. */\n(function(){\n  const openButton=document.getElementById("fanAdminNotificationButton");\n  const panel=document.getElementById("fanAdminNotificationPanel");\n  const form=document.getElementById("fanAdminNotificationForm");\n  const type=document.getElementById("fanAdminNotificationType");\n  const audience=document.getElementById("fanAdminNotificationAudience");\n  const teamField=document.getElementById("fanAdminNotificationTeamField");\n  const team=document.getElementById("fanAdminNotificationTeam");\n  const title=document.getElementById("fanAdminNotificationTitle");\n  const message=document.getElementById("fanAdminNotificationMessage");\n  const url=document.getElementById("fanAdminNotificationUrl");\n  const previewButton=document.getElementById("fanAdminNotificationPreview");\n  const previewBox=document.getElementById("fanAdminNotificationPreviewBox");\n  const sendButton=document.getElementById("fanAdminNotificationSend");\n  const status=document.getElementById("fanAdminNotificationMessageStatus");\n\n  function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}\n  function setStatus(text,isError=false){if(!status)return;status.textContent=text||"";status.className="fan-admin-notify-message"+(text?(isError?" error":" success"):"");}\n  function syncAudience(){if(teamField)teamField.hidden=audience?.value!=="team";}\n  function values(){return {notificationType:type?.value||"league",targetType:audience?.value||"all",targetTeam:audience?.value==="team"?(team?.value||"").trim():null,title:(title?.value||"").trim(),message:(message?.value||"").trim(),actionUrl:(url?.value||"").trim()||null};}\n  function validate(v){if(!v.title)return "Enter a notification title.";if(!v.message)return "Enter a notification message.";if(v.targetType==="team"&&!v.targetTeam)return "Select the team that should receive this alert.";if(v.actionUrl){try{const parsed=new URL(v.actionUrl);if(!/^https?:$/.test(parsed.protocol))throw new Error();}catch(e){return "Enter a valid http:// or https:// action link.";}}return "";}\n  function renderPreview(){const v=values(),problem=validate(v);if(problem){setStatus(problem,true);previewBox?.classList.remove("show");return false;}setStatus("");const audienceText=v.targetType==="all"?"EVERYONE":"FANS OF "+v.targetTeam.toUpperCase();previewBox.innerHTML='<small>'+esc(v.notificationType.toUpperCase())+' • '+esc(audienceText)+'</small><b>'+esc(v.title)+'</b><p>'+esc(v.message)+'</p>'+(v.actionUrl?'<span>ACTION LINK: '+esc(v.actionUrl)+'</span>':'');previewBox.classList.add("show");return true;}\n\n  audience?.addEventListener("change",syncAudience);\n  previewButton?.addEventListener("click",renderPreview);\n  [type,audience,team,title,message,url].forEach(el=>el?.addEventListener("input",()=>{setStatus("");previewBox?.classList.remove("show");}));\n\n  openButton?.addEventListener("click",function(){\n    if(document.getElementById("fanAdminArea")?.hidden||nalAccountProfile?.role!=="admin")return;\n    document.getElementById("fanAdminUsersPanel")?.classList.remove("show");\n    document.getElementById("fanAdminActivityPanel")?.classList.remove("show");\n    panel?.classList.toggle("show");\n    syncAudience();\n    if(panel?.classList.contains("show"))setTimeout(()=>panel.scrollIntoView({behavior:"smooth",block:"nearest"}),50);\n  });\n\n  form?.addEventListener("submit",async function(event){\n    event.preventDefault();\n    if(nalAccountProfile?.role!=="admin"){setStatus("Only an active NAL Admin can send notifications.",true);return;}\n    const v=values(),problem=validate(v);if(problem){setStatus(problem,true);return;}\n    const audienceText=v.targetType==="all"?"ALL NAL App users":"fans of "+v.targetTeam;\n    if(!window.confirm('Send this alert to '+audienceText+'?\\n\\n"'+v.title+'"\\n\\nThis notification will publish immediately.'))return;\n    const original=sendButton.textContent;sendButton.disabled=true;sendButton.textContent="SENDING...";setStatus("");\n    try{\n      const client=getNalAccountClient();\n      const {error}=await client.rpc("admin_create_notification",{p_title:v.title,p_message:v.message,p_notification_type:v.notificationType,p_target_type:v.targetType,p_target_team:v.targetTeam,p_action_url:v.actionUrl});\n      if(error)throw error;\n      setStatus("Notification sent successfully.");\n      form.reset();syncAudience();previewBox?.classList.remove("show");\n      if(typeof loadNalAlerts==="function")await loadNalAlerts();\n    }catch(error){\n      console.error("NAL Admin notification error:",error);\n      setStatus(error?.message?"Notification was not sent: "+error.message:"Notification was not sent. Please try again.",true);\n    }finally{sendButton.disabled=false;sendButton.textContent=original;}\n  });\n  syncAudience();\n})();\n
+
+
+/* NAL ADMIN — send league/team notifications. */
+(function(){
+  const openButton=document.getElementById("fanAdminNotificationButton");
+  const panel=document.getElementById("fanAdminNotificationPanel");
+  const form=document.getElementById("fanAdminNotificationForm");
+  const type=document.getElementById("fanAdminNotificationType");
+  const audience=document.getElementById("fanAdminNotificationAudience");
+  const teamField=document.getElementById("fanAdminNotificationTeamField");
+  const team=document.getElementById("fanAdminNotificationTeam");
+  const title=document.getElementById("fanAdminNotificationTitle");
+  const message=document.getElementById("fanAdminNotificationMessage");
+  const url=document.getElementById("fanAdminNotificationUrl");
+  const previewButton=document.getElementById("fanAdminNotificationPreview");
+  const previewBox=document.getElementById("fanAdminNotificationPreviewBox");
+  const sendButton=document.getElementById("fanAdminNotificationSend");
+  const status=document.getElementById("fanAdminNotificationMessageStatus");
+
+  function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+  function setStatus(text,isError=false){if(!status)return;status.textContent=text||"";status.className="fan-admin-notify-message"+(text?(isError?" error":" success"):"");}
+  function syncAudience(){if(teamField)teamField.hidden=audience?.value!=="team";}
+  function values(){return {notificationType:type?.value||"league",targetType:audience?.value||"all",targetTeam:audience?.value==="team"?(team?.value||"").trim():null,title:(title?.value||"").trim(),message:(message?.value||"").trim(),actionUrl:(url?.value||"").trim()||null};}
+  function validate(v){if(!v.title)return "Enter a notification title.";if(!v.message)return "Enter a notification message.";if(v.targetType==="team"&&!v.targetTeam)return "Select the team that should receive this alert.";if(v.actionUrl){try{const parsed=new URL(v.actionUrl);if(!/^https?:$/.test(parsed.protocol))throw new Error();}catch(e){return "Enter a valid http:// or https:// action link.";}}return "";}
+  function renderPreview(){const v=values(),problem=validate(v);if(problem){setStatus(problem,true);previewBox?.classList.remove("show");return false;}setStatus("");const audienceText=v.targetType==="all"?"EVERYONE":"FANS OF "+v.targetTeam.toUpperCase();previewBox.innerHTML='<small>'+esc(v.notificationType.toUpperCase())+' • '+esc(audienceText)+'</small><b>'+esc(v.title)+'</b><p>'+esc(v.message)+'</p>'+(v.actionUrl?'<span>ACTION LINK: '+esc(v.actionUrl)+'</span>':'');previewBox.classList.add("show");return true;}
+
+  audience?.addEventListener("change",syncAudience);
+  previewButton?.addEventListener("click",renderPreview);
+  [type,audience,team,title,message,url].forEach(el=>el?.addEventListener("input",()=>{setStatus("");previewBox?.classList.remove("show");}));
+
+  openButton?.addEventListener("click",function(){
+    if(document.getElementById("fanAdminArea")?.hidden||nalAccountProfile?.role!=="admin")return;
+    document.getElementById("fanAdminUsersPanel")?.classList.remove("show");
+    document.getElementById("fanAdminActivityPanel")?.classList.remove("show");
+    panel?.classList.toggle("show");
+    syncAudience();
+    if(panel?.classList.contains("show"))setTimeout(()=>panel.scrollIntoView({behavior:"smooth",block:"nearest"}),50);
+  });
+
+  form?.addEventListener("submit",async function(event){
+    event.preventDefault();
+    if(nalAccountProfile?.role!=="admin"){setStatus("Only an active NAL Admin can send notifications.",true);return;}
+    const v=values(),problem=validate(v);if(problem){setStatus(problem,true);return;}
+    const audienceText=v.targetType==="all"?"ALL NAL App users":"fans of "+v.targetTeam;
+    if(!window.confirm('Send this alert to '+audienceText+'?\
+\
+"'+v.title+'"\
+\
+This notification will publish immediately.'))return;
+    const original=sendButton.textContent;sendButton.disabled=true;sendButton.textContent="SENDING...";setStatus("");
+    try{
+      const client=getNalAccountClient();
+      const {error}=await client.rpc("admin_create_notification",{p_title:v.title,p_message:v.message,p_notification_type:v.notificationType,p_target_type:v.targetType,p_target_team:v.targetTeam,p_action_url:v.actionUrl});
+      if(error)throw error;
+      setStatus("Notification sent successfully.");
+      form.reset();syncAudience();previewBox?.classList.remove("show");
+      if(typeof loadNalAlerts==="function")await loadNalAlerts();
+    }catch(error){
+      console.error("NAL Admin notification error:",error);
+      setStatus(error?.message?"Notification was not sent: "+error.message:"Notification was not sent. Please try again.",true);
+    }finally{sendButton.disabled=false;sendButton.textContent=original;}
+  });
+  syncAudience();
+})();
+
 
 /* NAL ADMIN — activity log. */
 (function(){
