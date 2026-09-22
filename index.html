@@ -7672,7 +7672,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <iframe
       id="shopFrame"
       class="shop-frame"
-      src="https://nalshop.com/"
+      src="about:blank"
       title="NAL Shop"
     ></iframe>
 
@@ -8686,17 +8686,6 @@ function showPage(pageId) {
   }
 
 
-  if (
-    pageId === "shopPage" &&
-    shopFrame.src === "about:blank"
-  ) {
-
-    shopFrame.src =
-      SHOP_URL;
-
-  }
-
-
   window.scrollTo({
     top: 0,
     behavior: "instant"
@@ -8735,6 +8724,11 @@ navButtons.forEach(button => {
           }
         );
 
+        return;
+      }
+
+      if (pageId === "shopPage") {
+        window.location.href = SHOP_URL;
         return;
       }
 
