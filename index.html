@@ -6398,6 +6398,25 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-like:disabled{opacity:.55;cursor:wait;}
 .fan-forum-like-icon{font-size:13px;line-height:1;}
 .fan-forum-like-count{min-width:8px;text-align:center;}
+.fan-forum-report{display:inline-flex;align-items:center;gap:6px;border:1px solid #dbe3eb;border-radius:999px;background:#fff;color:#526274;padding:7px 11px;font:inherit;font-size:9px;font-weight:1000;letter-spacing:.35px;cursor:pointer;transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease;}
+.fan-forum-report:hover{border-color:#b8c5d2;background:#f8fafc;color:#07172b;}
+.fan-forum-report:active{transform:scale(.97);}
+.fan-forum-report:disabled{opacity:.55;cursor:wait;}
+.fan-forum-report-icon{font-size:13px;line-height:1;}
+.fan-forum-report-modal{position:fixed;inset:0;z-index:99999;background:rgba(7,23,43,.64);display:flex;align-items:center;justify-content:center;padding:20px;}
+.fan-forum-report-modal[hidden]{display:none!important;}
+.fan-forum-report-dialog{width:min(420px,100%);box-sizing:border-box;border-radius:16px;background:#fff;padding:20px;box-shadow:0 18px 60px rgba(0,0,0,.28);}
+.fan-forum-report-dialog h3{margin:0;color:#07172b;font-size:18px;font-weight:1000;}
+.fan-forum-report-dialog p{margin:6px 0 14px;color:#748293;font-size:10px;line-height:1.5;}
+.fan-forum-report-dialog label{display:block;margin-bottom:6px;color:#526274;font-size:9px;font-weight:1000;letter-spacing:.55px;}
+.fan-forum-report-dialog select{width:100%;box-sizing:border-box;border:1px solid #ccd6e0;border-radius:10px;background:#fff;color:#07172b;padding:11px 12px;font:inherit;font-size:12px;outline:none;}
+.fan-forum-report-actions{display:flex;gap:8px;margin-top:14px;}
+.fan-forum-report-actions button{flex:1;border:0;border-radius:10px;padding:11px 10px;font-size:10px;font-weight:1000;letter-spacing:.5px;cursor:pointer;}
+.fan-forum-report-cancel{background:#e8edf2;color:#07172b;}
+.fan-forum-report-submit{background:#e31b23;color:#fff;}
+.fan-forum-report-status{min-height:16px;margin-top:9px;color:#6d7b89;font-size:9px;font-weight:800;}
+.fan-forum-report-status.error{color:#c81820;}
+.fan-forum-report-status.success{color:#147a45;}
 </style>
 </head>
 
@@ -11168,7 +11187,7 @@ function nalForumReactionHTML(type,id){
   const rows = nalForumReactionRows(type,id);
   const liked = !!nalAccountUser && rows.some(row => String(row.user_id) === String(nalAccountUser.id));
   const pendingKey = `${type}:${id}`;
-  return `<div class="fan-forum-reactions"><button type="button" class="fan-forum-like${liked ? " liked" : ""}" data-forum-reaction-type="${type}" data-forum-reaction-id="${escapeHTML(String(id))}" aria-pressed="${liked ? "true" : "false"}"${nalForumReactionPending.has(pendingKey) ? " disabled" : ""}><span class="fan-forum-like-icon" aria-hidden="true">👍</span><span>${liked ? "LIKED" : "LIKE"}</span><span class="fan-forum-like-count">${rows.length}</span></button></div>`;
+  return `<div class="fan-forum-reactions"><button type="button" class="fan-forum-like${liked ? " liked" : ""}" data-forum-reaction-type="${type}" data-forum-reaction-id="${escapeHTML(String(id))}" aria-pressed="${liked ? "true" : "false"}"${nalForumReactionPending.has(pendingKey) ? " disabled" : ""}><span class="fan-forum-like-icon" aria-hidden="true">👍</span><span>${liked ? "LIKED" : "LIKE"}</span><span class="fan-forum-like-count">${rows.length}</span></button><button type="button" class="fan-forum-report" data-forum-report-type="${type}" data-forum-report-id="${escapeHTML(String(id))}"><span class="fan-forum-report-icon" aria-hidden="true">⚑</span><span>REPORT</span></button></div>`;
 }
 
 function bindNalForumReactionButtons(root){
@@ -11180,6 +11199,102 @@ function bindNalForumReactionButtons(root){
       toggleNalForumReaction(button.dataset.forumReactionType,button.dataset.forumReactionId);
     });
   });
+  root.querySelectorAll("[data-forum-report-type][data-forum-report-id]").forEach(button => {
+    button.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      openNalForumReport(button.dataset.forumReportType,button.dataset.forumReportId);
+    });
+  });
+}
+
+let nalForumReportTarget = null;
+
+async function openNalForumReport(type,id){
+  if (!nalAccountUser){ await openFanAccount(); return; }
+  if (type !== "topic" && type !== "reply") return;
+  nalForumReportTarget = {type,id};
+  let modal = document.getElementById("fanForumReportModal");
+  if (!modal){
+    modal = document.createElement("div");
+    modal.id = "fanForumReportModal";
+    modal.className = "fan-forum-report-modal";
+    modal.hidden = true;
+    modal.innerHTML = `<div class="fan-forum-report-dialog" role="dialog" aria-modal="true" aria-labelledby="fanForumReportTitle">
+      <h3 id="fanForumReportTitle">REPORT CONTENT</h3>
+      <p>Tell the NAL moderation team why this content should be reviewed. Reporting does not automatically remove the content.</p>
+      <label for="fanForumReportReason">REASON FOR REPORT</label>
+      <select id="fanForumReportReason">
+        <option value="">Select a reason...</option>
+        <option value="Spam">Spam</option>
+        <option value="Harassment / Inappropriate Content">Harassment / Inappropriate Content</option>
+        <option value="Offensive Language">Offensive Language</option>
+        <option value="Impersonation">Impersonation</option>
+        <option value="Other">Other</option>
+      </select>
+      <div class="fan-forum-report-actions">
+        <button type="button" class="fan-forum-report-cancel" onclick="closeNalForumReport()">CANCEL</button>
+        <button id="fanForumReportSubmit" type="button" class="fan-forum-report-submit" onclick="submitNalForumReport()">SUBMIT REPORT</button>
+      </div>
+      <div id="fanForumReportStatus" class="fan-forum-report-status" aria-live="polite"></div>
+    </div>`;
+    modal.addEventListener("click", event => { if (event.target === modal) closeNalForumReport(); });
+    document.body.appendChild(modal);
+  }
+  const reason = document.getElementById("fanForumReportReason");
+  const status = document.getElementById("fanForumReportStatus");
+  const submit = document.getElementById("fanForumReportSubmit");
+  if (reason) reason.value = "";
+  if (status){ status.textContent = ""; status.className = "fan-forum-report-status"; }
+  if (submit) submit.disabled = false;
+  modal.hidden = false;
+  setTimeout(() => reason?.focus(),0);
+}
+
+function closeNalForumReport(){
+  const modal = document.getElementById("fanForumReportModal");
+  if (modal) modal.hidden = true;
+  nalForumReportTarget = null;
+}
+
+async function submitNalForumReport(){
+  if (!nalAccountUser){ closeNalForumReport(); await openFanAccount(); return; }
+  if (!nalForumReportTarget) return;
+  const reason = String(document.getElementById("fanForumReportReason")?.value || "").trim();
+  const status = document.getElementById("fanForumReportStatus");
+  const submit = document.getElementById("fanForumReportSubmit");
+  if (!reason){
+    if (status){ status.textContent = "Please select a reason for the report."; status.className = "fan-forum-report-status error"; }
+    return;
+  }
+  if (submit) submit.disabled = true;
+  if (status){ status.textContent = "Submitting report…"; status.className = "fan-forum-report-status"; }
+  try{
+    const client = getNalAccountClient();
+    if (!client) throw new Error("NAL community connection unavailable.");
+    const {type,id} = nalForumReportTarget;
+    let check = client.from("forum_reports").select("id").eq("reporter_user_id",nalAccountUser.id);
+    check = type === "topic" ? check.eq("topic_id",id) : check.eq("reply_id",id);
+    const {data:existing,error:checkError} = await check.limit(1);
+    if (checkError) throw checkError;
+    if (Array.isArray(existing) && existing.length){
+      if (status){ status.textContent = "You have already reported this content. Our moderation team will review it."; status.className = "fan-forum-report-status success"; }
+      if (submit) submit.disabled = false;
+      return;
+    }
+    const payload = {reporter_user_id:nalAccountUser.id,topic_id:null,reply_id:null,reason};
+    if (type === "topic") payload.topic_id = id;
+    else payload.reply_id = id;
+    const {error} = await client.from("forum_reports").insert(payload);
+    if (error) throw error;
+    if (status){ status.textContent = "Report submitted. Our moderation team will review it."; status.className = "fan-forum-report-status success"; }
+    if (submit) submit.disabled = true;
+    setTimeout(closeNalForumReport,1200);
+  }catch(error){
+    console.error("Unable to submit NAL Forum report:",error);
+    if (status){ status.textContent = error?.message || "Your report could not be submitted. Please try again."; status.className = "fan-forum-report-status error"; }
+    if (submit) submit.disabled = false;
+  }
 }
 
 async function loadNalForumReactions(){
