@@ -8188,6 +8188,14 @@ function openArticle(url, options = {}) {
     page.classList.remove("active");
   });
 
+  /* Team Home can carry an inline display state, so explicitly hide it
+     before opening the article/team-content viewer. */
+  const openTeamPage = document.getElementById("teamPage");
+  if (openTeamPage) {
+    openTeamPage.classList.remove("active");
+    openTeamPage.style.display = "none";
+  }
+
   /* Restore the in-app viewer after global navigation may have hidden it inline. */
   articlePage.style.display = "block";
   articlePage.classList.add("active");
@@ -8282,6 +8290,8 @@ articleBack.addEventListener(
 
 
     if (previous) {
+      /* Restore pages that may have been hidden inline by openArticle(). */
+      previous.style.display = "";
       previous.classList.add(
         "active"
       );
