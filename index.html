@@ -6024,6 +6024,23 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-admin-actions-preview h4{margin:0 0 8px;font-size:10px;letter-spacing:1px}.fan-admin-actions-preview p{margin:0;color:#78879a;font-size:9px;line-height:1.45}
 .fan-admin-action-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fan-admin-action-chip{border:1px solid #dfe4eb;border-radius:20px;background:#f4f6f9;color:#7b8796;padding:6px 8px;font-size:8px;font-weight:1000}.fan-admin-action-button{border:0;border-radius:20px;padding:8px 10px;font:inherit;font-size:8px;font-weight:1000;cursor:pointer}.fan-admin-action-role{background:#102b4e;color:#fff}.fan-admin-action-suspend{background:#e31b23;color:#fff}.fan-admin-action-ban{background:#7a1016;color:#fff}.fan-admin-action-delete{background:#3b0b0e;color:#fff}.fan-admin-action-restore{background:#07172b;color:#fff}.fan-admin-action-button:disabled{opacity:.55;cursor:not-allowed}.fan-admin-action-message{margin-top:9px!important;font-weight:900}.fan-admin-action-message.success{color:#19713b}.fan-admin-action-message.error{color:#b31921}.fan-admin-log-list{display:grid;gap:8px}.fan-admin-log-item{background:#fff;border:1px solid #dfe4eb;border-radius:13px;padding:12px 13px}.fan-admin-log-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.fan-admin-log-action{font-size:9px;font-weight:1000;letter-spacing:.55px;color:#07172b}.fan-admin-log-time{font-size:8px;color:#78879a;white-space:nowrap}.fan-admin-log-target{display:block;margin-top:5px;font-size:11px;font-weight:900;color:#07172b}.fan-admin-log-detail{display:block;margin-top:3px;font-size:9px;line-height:1.4;color:#6d7a8c}.fan-admin-log-change{font-weight:1000;color:#102b4e}.fan-admin-log-filter{width:100%;border:1px solid #d9e0e8;border-radius:10px;padding:12px;margin-bottom:10px;font:inherit;font-size:12px}
 
+/* NAL ADMIN — send notification */
+.fan-admin-notify-form{background:#fff;border:1px solid #dfe4eb;border-radius:15px;padding:14px}
+.fan-admin-notify-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fan-admin-notify-field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.fan-admin-notify-field label{font-size:8px;font-weight:1000;letter-spacing:.8px;color:#6d7a8c}
+.fan-admin-notify-field input,.fan-admin-notify-field select,.fan-admin-notify-field textarea{width:100%;box-sizing:border-box;border:1px solid #d9e0e8;border-radius:10px;padding:11px 12px;background:#fff;color:#07172b;font:inherit;font-size:12px;outline:none}
+.fan-admin-notify-field textarea{min-height:100px;resize:vertical;line-height:1.45}
+.fan-admin-notify-field input:focus,.fan-admin-notify-field select:focus,.fan-admin-notify-field textarea:focus{border-color:#102b4e}
+.fan-admin-notify-help{margin:-2px 0 10px;color:#78879a;font-size:9px;line-height:1.45}
+.fan-admin-notify-actions{display:flex;gap:8px;margin-top:4px}
+.fan-admin-notify-preview,.fan-admin-notify-send{flex:1;border:0;border-radius:10px;padding:12px 10px;font:inherit;font-size:9px;font-weight:1000;cursor:pointer}
+.fan-admin-notify-preview{background:#eef2f6;color:#07172b}.fan-admin-notify-send{background:#e31b23;color:#fff}
+.fan-admin-notify-send:disabled{opacity:.55;cursor:not-allowed}
+.fan-admin-notify-message{min-height:16px;margin:9px 2px 0;font-size:9px;font-weight:900;line-height:1.4}.fan-admin-notify-message.success{color:#19713b}.fan-admin-notify-message.error{color:#b31921}
+.fan-admin-notify-previewbox{display:none;margin-bottom:10px;border-radius:13px;padding:13px 14px;background:#07172b;color:#fff;border-left:5px solid #e31b23}.fan-admin-notify-previewbox.show{display:block}.fan-admin-notify-previewbox small{display:block;color:#b8c5d7;font-size:8px;font-weight:900;letter-spacing:.7px}.fan-admin-notify-previewbox b{display:block;margin-top:5px;font-size:13px}.fan-admin-notify-previewbox p{margin:5px 0 0;font-size:10px;line-height:1.45;color:#e5ebf2}.fan-admin-notify-previewbox span{display:block;margin-top:7px;font-size:8px;color:#b8c5d7}
+@media(max-width:430px){.fan-admin-notify-grid{grid-template-columns:1fr}}
+
 
 /* TEAM FOOTBALL ICON VISIBILITY — keep the existing blue circles, restore white symbols */
 #teamPage .team-menu-card .team-menu-icon svg{
@@ -7502,6 +7519,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class="fan-admin-rowbtn" id="fanAdminActivityButton" type="button">
                   <div class="fan-member-row"><div class="fan-member-ico">🕘</div><div class="fan-member-rowtext"><b>Activity Log</b><span>Review administrator account actions</span></div><span class="fan-member-chev">›</span></div>
                 </button>
+                <button class="fan-admin-rowbtn" id="fanAdminNotificationButton" type="button">
+                  <div class="fan-member-row"><div class="fan-member-ico">🔔</div><div class="fan-member-rowtext"><b>Send Notification</b><span>Publish league or team alerts to NAL Fan Accounts</span></div><span class="fan-member-chev">›</span></div>
+                </button>
                 <div class="fan-member-row"><div class="fan-member-ico">🚩</div><div class="fan-member-rowtext"><b>Moderation</b><span>Reports, forum posts and submitted content</span></div><span class="fan-member-badge">COMING SOON</span></div>
                 <div class="fan-member-row"><div class="fan-member-ico">✓</div><div class="fan-member-rowtext"><b>Poll Management</b><span>Create, activate and close fan polls</span></div><span class="fan-member-badge">COMING SOON</span></div>
                 <div class="fan-member-row"><div class="fan-member-ico">🏈</div><div class="fan-member-rowtext"><b>Pick ’Em Management</b><span>Games, deadlines and leaderboard controls</span></div><span class="fan-member-badge">COMING SOON</span></div>
@@ -7541,6 +7561,57 @@ document.addEventListener("DOMContentLoaded", () => {
                   </div>
                 </div>
                 <p class="fan-admin-note">Member information is loaded through the secure admin-only Supabase function. Administrative actions will be added separately with server-side permission verification.</p>
+              </div>
+
+              <div class="fan-admin-panel" id="fanAdminNotificationPanel">
+                <h3 class="fan-member-title">SEND NOTIFICATION</h3>
+                <div class="fan-admin-notify-previewbox" id="fanAdminNotificationPreviewBox"></div>
+                <form class="fan-admin-notify-form" id="fanAdminNotificationForm">
+                  <div class="fan-admin-notify-grid">
+                    <div class="fan-admin-notify-field">
+                      <label for="fanAdminNotificationType">ALERT TYPE</label>
+                      <select id="fanAdminNotificationType">
+                        <option value="league">League Update</option>
+                        <option value="news">News</option>
+                        <option value="game">Game Update</option>
+                        <option value="team">Team Update</option>
+                        <option value="system">App / System</option>
+                      </select>
+                    </div>
+                    <div class="fan-admin-notify-field">
+                      <label for="fanAdminNotificationAudience">SEND TO</label>
+                      <select id="fanAdminNotificationAudience">
+                        <option value="all">Everyone</option>
+                        <option value="team">Specific Team Fans</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="fan-admin-notify-field" id="fanAdminNotificationTeamField" hidden>
+                    <label for="fanAdminNotificationTeam">TEAM</label>
+                    <select id="fanAdminNotificationTeam">
+                      <option value="">Select a team</option>
+                      <option>Amarillo Warbirds</option><option>Colorado Spartans</option><option>Dallas Apex</option><option>Louisiana Rouxgaroux</option><option>Omaha Beef</option><option>Pueblo Punishers</option><option>Salina Liberty</option><option>Sioux City Bandits</option><option>Southwest Kansas Storm</option><option>Wheeling Miners</option>
+                    </select>
+                  </div>
+                  <div class="fan-admin-notify-field">
+                    <label for="fanAdminNotificationTitle">TITLE</label>
+                    <input id="fanAdminNotificationTitle" maxlength="90" placeholder="Example: Season X Schedule Released" required>
+                  </div>
+                  <div class="fan-admin-notify-field">
+                    <label for="fanAdminNotificationMessage">MESSAGE</label>
+                    <textarea id="fanAdminNotificationMessage" maxlength="500" placeholder="Write the alert message fans will see." required></textarea>
+                  </div>
+                  <div class="fan-admin-notify-field">
+                    <label for="fanAdminNotificationUrl">ACTION LINK — OPTIONAL</label>
+                    <input id="fanAdminNotificationUrl" type="url" placeholder="https://...">
+                  </div>
+                  <p class="fan-admin-notify-help">Notifications publish immediately. Team alerts are shown only to signed-in fans whose Favorite Team matches the selected team.</p>
+                  <div class="fan-admin-notify-actions">
+                    <button class="fan-admin-notify-preview" id="fanAdminNotificationPreview" type="button">PREVIEW</button>
+                    <button class="fan-admin-notify-send" id="fanAdminNotificationSend" type="submit">SEND ALERT</button>
+                  </div>
+                  <p class="fan-admin-notify-message" id="fanAdminNotificationMessageStatus" aria-live="polite"></p>
+                </form>
               </div>
               <div class="fan-admin-panel" id="fanAdminActivityPanel">
                 <h3 class="fan-member-title">ACTIVITY LOG</h3>
@@ -11660,7 +11731,7 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     this.textContent = "SIGN OUT";
   }
 });
-
+\n\n/* NAL ADMIN — send league/team notifications. */\n(function(){\n  const openButton=document.getElementById("fanAdminNotificationButton");\n  const panel=document.getElementById("fanAdminNotificationPanel");\n  const form=document.getElementById("fanAdminNotificationForm");\n  const type=document.getElementById("fanAdminNotificationType");\n  const audience=document.getElementById("fanAdminNotificationAudience");\n  const teamField=document.getElementById("fanAdminNotificationTeamField");\n  const team=document.getElementById("fanAdminNotificationTeam");\n  const title=document.getElementById("fanAdminNotificationTitle");\n  const message=document.getElementById("fanAdminNotificationMessage");\n  const url=document.getElementById("fanAdminNotificationUrl");\n  const previewButton=document.getElementById("fanAdminNotificationPreview");\n  const previewBox=document.getElementById("fanAdminNotificationPreviewBox");\n  const sendButton=document.getElementById("fanAdminNotificationSend");\n  const status=document.getElementById("fanAdminNotificationMessageStatus");\n\n  function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}\n  function setStatus(text,isError=false){if(!status)return;status.textContent=text||"";status.className="fan-admin-notify-message"+(text?(isError?" error":" success"):"");}\n  function syncAudience(){if(teamField)teamField.hidden=audience?.value!=="team";}\n  function values(){return {notificationType:type?.value||"league",targetType:audience?.value||"all",targetTeam:audience?.value==="team"?(team?.value||"").trim():null,title:(title?.value||"").trim(),message:(message?.value||"").trim(),actionUrl:(url?.value||"").trim()||null};}\n  function validate(v){if(!v.title)return "Enter a notification title.";if(!v.message)return "Enter a notification message.";if(v.targetType==="team"&&!v.targetTeam)return "Select the team that should receive this alert.";if(v.actionUrl){try{const parsed=new URL(v.actionUrl);if(!/^https?:$/.test(parsed.protocol))throw new Error();}catch(e){return "Enter a valid http:// or https:// action link.";}}return "";}\n  function renderPreview(){const v=values(),problem=validate(v);if(problem){setStatus(problem,true);previewBox?.classList.remove("show");return false;}setStatus("");const audienceText=v.targetType==="all"?"EVERYONE":"FANS OF "+v.targetTeam.toUpperCase();previewBox.innerHTML='<small>'+esc(v.notificationType.toUpperCase())+' • '+esc(audienceText)+'</small><b>'+esc(v.title)+'</b><p>'+esc(v.message)+'</p>'+(v.actionUrl?'<span>ACTION LINK: '+esc(v.actionUrl)+'</span>':'');previewBox.classList.add("show");return true;}\n\n  audience?.addEventListener("change",syncAudience);\n  previewButton?.addEventListener("click",renderPreview);\n  [type,audience,team,title,message,url].forEach(el=>el?.addEventListener("input",()=>{setStatus("");previewBox?.classList.remove("show");}));\n\n  openButton?.addEventListener("click",function(){\n    if(document.getElementById("fanAdminArea")?.hidden||nalAccountProfile?.role!=="admin")return;\n    document.getElementById("fanAdminUsersPanel")?.classList.remove("show");\n    document.getElementById("fanAdminActivityPanel")?.classList.remove("show");\n    panel?.classList.toggle("show");\n    syncAudience();\n    if(panel?.classList.contains("show"))setTimeout(()=>panel.scrollIntoView({behavior:"smooth",block:"nearest"}),50);\n  });\n\n  form?.addEventListener("submit",async function(event){\n    event.preventDefault();\n    if(nalAccountProfile?.role!=="admin"){setStatus("Only an active NAL Admin can send notifications.",true);return;}\n    const v=values(),problem=validate(v);if(problem){setStatus(problem,true);return;}\n    const audienceText=v.targetType==="all"?"ALL NAL App users":"fans of "+v.targetTeam;\n    if(!window.confirm('Send this alert to '+audienceText+'?\\n\\n"'+v.title+'"\\n\\nThis notification will publish immediately.'))return;\n    const original=sendButton.textContent;sendButton.disabled=true;sendButton.textContent="SENDING...";setStatus("");\n    try{\n      const client=getNalAccountClient();\n      const {error}=await client.rpc("admin_create_notification",{p_title:v.title,p_message:v.message,p_notification_type:v.notificationType,p_target_type:v.targetType,p_target_team:v.targetTeam,p_action_url:v.actionUrl});\n      if(error)throw error;\n      setStatus("Notification sent successfully.");\n      form.reset();syncAudience();previewBox?.classList.remove("show");\n      if(typeof loadNalAlerts==="function")await loadNalAlerts();\n    }catch(error){\n      console.error("NAL Admin notification error:",error);\n      setStatus(error?.message?"Notification was not sent: "+error.message:"Notification was not sent. Please try again.",true);\n    }finally{sendButton.disabled=false;sendButton.textContent=original;}\n  });\n  syncAudience();\n})();\n
 
 /* NAL ADMIN — activity log. */
 (function(){
@@ -11706,6 +11777,7 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
   button?.addEventListener("click",async function(){
     if(document.getElementById("fanAdminArea")?.hidden)return;
     document.getElementById("fanAdminUsersPanel")?.classList.remove("show");
+    document.getElementById("fanAdminNotificationPanel")?.classList.remove("show");
     panel?.classList.toggle("show");
     if(panel?.classList.contains("show")){
       await load();
@@ -12133,6 +12205,7 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
   button?.addEventListener("click", async function(){
     if (document.getElementById("fanAdminArea")?.hidden) return;
     document.getElementById("fanAdminActivityPanel")?.classList.remove("show");
+    document.getElementById("fanAdminNotificationPanel")?.classList.remove("show");
     panel?.classList.toggle("show");
     if (panel?.classList.contains("show")){
       if (!loaded) await loadAdminMembers();
