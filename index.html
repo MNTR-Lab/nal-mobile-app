@@ -6283,6 +6283,50 @@ document.addEventListener("DOMContentLoaded", () => {
   line-height:1.5;
 }
 
+
+
+/* =========================================================
+   NAL FAN FORUM — HOME + CATEGORY NAVIGATION
+========================================================= */
+#fanForumPage,
+#fanForumCategoryPage{
+  display:none;
+  min-height:100vh;
+  padding-bottom:100px;
+  background:#f2f4f7;
+  color:#07172b;
+}
+.fan-forum-shell{width:min(920px,100%);margin:0 auto;padding:18px 14px 34px;box-sizing:border-box;}
+.fan-forum-back{appearance:none;border:0;background:transparent;color:#07172b;padding:6px 0 14px;font:inherit;font-size:11px;font-weight:950;letter-spacing:.8px;cursor:pointer;}
+.fan-forum-hero{position:relative;overflow:hidden;border-radius:18px;padding:24px 20px 22px;background:radial-gradient(circle at 90% 18%,rgba(227,27,35,.45),transparent 30%),linear-gradient(135deg,#07172b,#102b4e);color:#fff;border-bottom:4px solid #e31b23;box-shadow:0 12px 28px rgba(7,23,43,.16);}
+.fan-forum-hero-kicker{color:#aebdcd;font-size:9px;font-weight:950;letter-spacing:1.8px;}
+.fan-forum-hero h1{margin:7px 0 7px;font-size:34px;line-height:1;font-style:italic;font-weight:1000;}
+.fan-forum-hero p{max-width:620px;margin:0;color:#dbe4ee;font-size:13px;line-height:1.45;font-weight:700;}
+.fan-forum-status{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px;}
+.fan-forum-status span{padding:7px 10px;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(255,255,255,.08);font-size:9px;font-weight:900;letter-spacing:.6px;}
+.fan-forum-section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:22px 2px 10px;}
+.fan-forum-section-head h2{margin:0;font-size:18px;font-weight:1000;}
+.fan-forum-section-head span{color:#66778a;font-size:9px;font-weight:900;letter-spacing:.8px;}
+.fan-forum-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.fan-forum-category{appearance:none;width:100%;min-height:142px;border:1px solid #d8e0e8;border-radius:15px;background:#fff;padding:17px;text-align:left;color:#07172b;font:inherit;cursor:pointer;box-shadow:0 5px 16px rgba(7,23,43,.06);display:flex;flex-direction:column;transition:transform .12s ease,border-color .12s ease;}
+.fan-forum-category:active{transform:scale(.985);}
+.fan-forum-category-top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.fan-forum-category-icon{width:39px;height:39px;border-radius:11px;background:#07172b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:1000;}
+.fan-forum-category-arrow{color:#e31b23;font-size:23px;font-weight:1000;}
+.fan-forum-category h3{margin:13px 0 5px;font-size:17px;line-height:1.05;font-weight:1000;}
+.fan-forum-category p{margin:0;color:#6c7c8d;font-size:11px;line-height:1.4;font-weight:700;}
+.fan-forum-community-note{margin-top:13px;padding:14px 15px;border-radius:13px;background:#e7ebf0;color:#526477;font-size:10px;line-height:1.5;font-weight:800;}
+.fan-forum-community-note strong{color:#07172b;}
+.fan-forum-category-head{margin-bottom:12px;padding:19px;border-radius:16px;background:linear-gradient(135deg,#07172b,#102b4e);color:#fff;border-bottom:4px solid #e31b23;}
+.fan-forum-category-head small{color:#aebdcd;font-size:9px;font-weight:950;letter-spacing:1.5px;}
+.fan-forum-category-head h1{margin:6px 0 5px;font-size:29px;line-height:1;font-style:italic;font-weight:1000;}
+.fan-forum-category-head p{margin:0;color:#dbe4ee;font-size:12px;line-height:1.45;}
+.fan-forum-empty{padding:32px 20px;border:1px solid #d8e0e8;border-radius:15px;background:#fff;text-align:center;box-shadow:0 5px 16px rgba(7,23,43,.05);}
+.fan-forum-empty-icon{width:52px;height:52px;margin:0 auto 13px;border-radius:50%;background:#eef1f5;color:#07172b;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:1000;}
+.fan-forum-empty h2{margin:0 0 7px;font-size:18px;font-weight:1000;}
+.fan-forum-empty p{max-width:500px;margin:0 auto;color:#6c7c8d;font-size:12px;line-height:1.5;}
+@media(max-width:560px){.fan-forum-categories{grid-template-columns:1fr}.fan-forum-category{min-height:126px}.fan-forum-hero h1{font-size:31px}}
+
 </style>
 </head>
 
@@ -7071,6 +7115,75 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
   </main>
 
+
+
+  <!-- =====================================================
+       NAL FAN FORUM — HOME + CATEGORY NAVIGATION
+  ====================================================== -->
+  <main id="fanForumPage" class="app-page fan-forum-page" style="display:none;">
+    <div class="fan-forum-shell">
+      <button class="fan-forum-back" type="button" onclick="closeFanForum()">‹ BACK TO FAN ZONE</button>
+
+      <section class="fan-forum-hero">
+        <div class="fan-forum-hero-kicker">NAL COMMUNITY</div>
+        <h1>FAN FORUM</h1>
+        <p>One place for NAL fans to talk league football, follow their teams and join the conversation throughout Season X.</p>
+        <div class="fan-forum-status">
+          <span>NAL FAN ACCOUNT</span>
+          <span>COMMUNITY GUIDELINES APPLY</span>
+        </div>
+      </section>
+
+      <div class="fan-forum-section-head">
+        <h2>FORUM CATEGORIES</h2>
+        <span>CHOOSE A CONVERSATION</span>
+      </div>
+
+      <section class="fan-forum-categories" aria-label="Fan Forum categories">
+        <button class="fan-forum-category" type="button" onclick="openFanForumCategory('league')">
+          <span class="fan-forum-category-top"><span class="fan-forum-category-icon">NAL</span><span class="fan-forum-category-arrow">›</span></span>
+          <h3>LEAGUE TALK</h3>
+          <p>General NAL discussion, league news, storylines and Season X conversation.</p>
+        </button>
+
+        <button class="fan-forum-category" type="button" onclick="openFanForumCategory('teams')">
+          <span class="fan-forum-category-top"><span class="fan-forum-category-icon">T</span><span class="fan-forum-category-arrow">›</span></span>
+          <h3>TEAM TALK</h3>
+          <p>Connect with fans and talk about the teams across the National Arena League.</p>
+        </button>
+
+        <button class="fan-forum-category" type="button" onclick="openFanForumCategory('gameday')">
+          <span class="fan-forum-category-top"><span class="fan-forum-category-icon">G</span><span class="fan-forum-category-arrow">›</span></span>
+          <h3>GAME DAY</h3>
+          <p>Pre-game, live game and post-game conversation from around the league.</p>
+        </button>
+
+        <button class="fan-forum-category" type="button" onclick="openFanForumCategory('community')">
+          <span class="fan-forum-category-top"><span class="fan-forum-category-icon">•••</span><span class="fan-forum-category-arrow">›</span></span>
+          <h3>FAN COMMUNITY</h3>
+          <p>Fan experiences, road trips, arena talk and the community around NAL football.</p>
+        </button>
+      </section>
+
+      <div class="fan-forum-community-note"><strong>KEEP IT ABOUT THE GAME.</strong> Forum participation will use your NAL Fan Account and is governed by the NAL App Community Guidelines.</div>
+    </div>
+  </main>
+
+  <main id="fanForumCategoryPage" class="app-page fan-forum-page" style="display:none;">
+    <div class="fan-forum-shell">
+      <button class="fan-forum-back" type="button" onclick="backToFanForum()">‹ BACK TO FAN FORUM</button>
+      <section class="fan-forum-category-head">
+        <small>NAL FAN FORUM</small>
+        <h1 id="fanForumCategoryTitle">LEAGUE TALK</h1>
+        <p id="fanForumCategoryDescription">General NAL discussion, league news and Season X conversation.</p>
+      </section>
+      <section class="fan-forum-empty">
+        <div class="fan-forum-empty-icon">•••</div>
+        <h2>CONVERSATIONS COMING NEXT</h2>
+        <p>This category is ready. Topics, replies and posting controls will be connected in the next Forum build step.</p>
+      </section>
+    </div>
+  </main>
 
 
   <!-- =====================================================
@@ -10572,8 +10685,69 @@ async function showFanPollResults(){
 }
 
 
+
+
+function openFanForum(){
+  document.querySelectorAll(".app-page").forEach(page => {
+    page.classList.remove("active");
+    page.style.display = "none";
+  });
+  const page = document.getElementById("fanForumPage");
+  if (page){
+    page.style.display = "block";
+    page.classList.add("active");
+  }
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
+  const fanNav = document.querySelector('.bottom-nav .nav-button[data-page="fanPage"]');
+  if (fanNav) fanNav.classList.add("active");
+  window.scrollTo(0,0);
+}
+
+function closeFanForum(){
+  showPage("fanPage");
+}
+
+const NAL_FORUM_CATEGORIES = {
+  league:{title:"LEAGUE TALK",description:"General NAL discussion, league news, storylines and Season X conversation."},
+  teams:{title:"TEAM TALK",description:"Connect with fans and talk about the teams across the National Arena League."},
+  gameday:{title:"GAME DAY",description:"Pre-game, live game and post-game conversation from around the league."},
+  community:{title:"FAN COMMUNITY",description:"Fan experiences, road trips, arena talk and the community around NAL football."}
+};
+
+function openFanForumCategory(categoryKey){
+  const category = NAL_FORUM_CATEGORIES[categoryKey] || NAL_FORUM_CATEGORIES.league;
+  const title = document.getElementById("fanForumCategoryTitle");
+  const description = document.getElementById("fanForumCategoryDescription");
+  if (title) title.textContent = category.title;
+  if (description) description.textContent = category.description;
+
+  document.querySelectorAll(".app-page").forEach(page => {
+    page.classList.remove("active");
+    page.style.display = "none";
+  });
+  const page = document.getElementById("fanForumCategoryPage");
+  if (page){
+    page.style.display = "block";
+    page.classList.add("active");
+  }
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
+  const fanNav = document.querySelector('.bottom-nav .nav-button[data-page="fanPage"]');
+  if (fanNav) fanNav.classList.add("active");
+  window.scrollTo(0,0);
+}
+
+function backToFanForum(){
+  openFanForum();
+}
+
+
 /* Fan Zone feature placeholders — each becomes a real module next. */
 function openFanZoneFeature(feature){
+  if (feature === "forum") {
+    openFanForum();
+    return;
+  }
+
   if (feature === "media") {
     openFanMediaUpload();
     return;
