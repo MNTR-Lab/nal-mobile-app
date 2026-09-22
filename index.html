@@ -11102,7 +11102,7 @@ async function submitNalForumReply(){
   if (status){status.textContent="Posting reply…";status.className="fan-forum-compose-status";}
   try{
     const client = getNalAccountClient();
-    const { error } = await client.from("forum_replies").insert({topic_id:activeNalForumTopic.id,author_id:nalAccountUser.id,body});
+    const { error } = await client.from("forum_replies").insert({topic_id:activeNalForumTopic.id,user_id:nalAccountUser.id,body});
     if (error) throw error;
     if (input) input.value="";
     if (status){status.textContent="Reply posted.";status.className="fan-forum-compose-status success";}
