@@ -6679,6 +6679,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
+
+/* =========================================================
+   BOTTOM NAV — WHITE / NAVY FINAL COLOR OVERRIDE
+   Background = white | Icons and labels = NAL navy
+   NAL Network play triangle remains red.
+========================================================= */
+.bottom-nav{
+  background:#fff !important;
+  border-top:1px solid #d7dce2 !important;
+  box-shadow:0 -4px 16px rgba(0,0,0,.08) !important;
+}
+.bottom-nav .nav-button,
+.bottom-nav .nav-button.active,
+.bottom-nav .nav-button:hover,
+.bottom-nav .nav-button:focus-visible{
+  color:var(--nal-blue) !important;
+}
+.bottom-nav .nav-button svg,
+.bottom-nav .nav-button.active svg,
+.bottom-nav .nav-button:hover svg,
+.bottom-nav .nav-button:focus-visible svg{
+  color:var(--nal-blue) !important;
+  stroke:var(--nal-blue) !important;
+}
+.bottom-nav .nav-button span{
+  color:inherit !important;
+}
+/* NAL Network: navy TV icon with a red play triangle at all times. */
+.bottom-nav .watch-button .watch-icon,
+.bottom-nav .watch-button .watch-icon svg{
+  color:var(--nal-blue) !important;
+  stroke:var(--nal-blue) !important;
+}
+.bottom-nav .watch-button .watch-icon svg path:first-of-type{
+  fill:var(--nal-red) !important;
+  stroke:var(--nal-red) !important;
+}
+
 </style>
 </head>
 
