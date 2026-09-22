@@ -6384,34 +6384,6 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-compose-cancel{background:#e8edf2;color:#07172b;}.fan-forum-compose-submit{background:#e31b23;color:#fff;}
 .fan-forum-compose-status{min-height:16px;margin-top:8px;color:#6d7b89;font-size:9px;font-weight:800;}.fan-forum-compose-status.error{color:#c81820;}.fan-forum-compose-status.success{color:#147a45;}
 
-
-/* =========================================================
-   HOME — LIGHTCAST NAL NETWORK PLAYER
-   Replaces only the existing featured-video placeholder.
-========================================================= */
-#homePage .home-lightcast-player{
-  position:relative !important;
-  width:100% !important;
-  min-height:0 !important;
-  aspect-ratio:16 / 9 !important;
-  overflow:hidden !important;
-  border:0 !important;
-  border-radius:7px !important;
-  background:#000 !important;
-}
-
-#homePage .home-lightcast-player iframe{
-  position:absolute !important;
-  inset:0 !important;
-  width:100% !important;
-  height:100% !important;
-  min-width:100% !important;
-  min-height:100% !important;
-  border:0 !important;
-  display:block !important;
-  background:#000 !important;
-}
-
 </style>
 
 <style>
@@ -6707,6 +6679,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
+
+/* =========================================================
+   BOTTOM NAV — WHITE / NAVY FINAL COLOR OVERRIDE
+   Background = white | Icons and labels = NAL navy
+   NAL Network play triangle remains red.
+========================================================= */
+.bottom-nav{
+  background:#fff !important;
+  border-top:1px solid #d7dce2 !important;
+  box-shadow:0 -4px 16px rgba(0,0,0,.08) !important;
+}
+.bottom-nav .nav-button,
+.bottom-nav .nav-button.active,
+.bottom-nav .nav-button:hover,
+.bottom-nav .nav-button:focus-visible{
+  color:var(--nal-blue) !important;
+}
+.bottom-nav .nav-button svg,
+.bottom-nav .nav-button.active svg,
+.bottom-nav .nav-button:hover svg,
+.bottom-nav .nav-button:focus-visible svg{
+  color:var(--nal-blue) !important;
+  stroke:var(--nal-blue) !important;
+}
+.bottom-nav .nav-button span{
+  color:inherit !important;
+}
+/* NAL Network: navy TV icon with a red play triangle at all times. */
+.bottom-nav .watch-button .watch-icon,
+.bottom-nav .watch-button .watch-icon svg{
+  color:var(--nal-blue) !important;
+  stroke:var(--nal-blue) !important;
+}
+.bottom-nav .watch-button .watch-icon svg path:first-of-type{
+  fill:var(--nal-red) !important;
+  stroke:var(--nal-red) !important;
+}
+
 </style>
 </head>
 
@@ -6908,15 +6918,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="home-network-layout">
         <div>
-          <div class="home-network-main home-lightcast-player" id="networkHomeFeaturedVideo">
-            <iframe
-              src="https://www.lightcast.com/embed/player.php?id=72119&type=vod"
-              title="NAL Network"
-              referrerpolicy="no-referrer-when-downgrade"
-              frameborder="0"
-              allow="fullscreen; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+          <div class="media-placeholder home-network-main" id="networkHomeFeaturedVideo">
+            <div class="media-placeholder-label">
+              FEATURED VIDEO IMAGE PLACEHOLDER<br>
+              16:9 • RECOMMENDED 1200 × 675 PX
+            </div>
           </div>
           <div class="home-network-caption">
             Featured NAL Network Program
@@ -8718,6 +8724,17 @@ function showPage(pageId) {
   }
 
 
+  if (
+    pageId === "shopPage" &&
+    shopFrame.src === "about:blank"
+  ) {
+
+    shopFrame.src =
+      SHOP_URL;
+
+  }
+
+
   window.scrollTo({
     top: 0,
     behavior: "instant"
@@ -8756,11 +8773,6 @@ navButtons.forEach(button => {
           }
         );
 
-        return;
-      }
-
-      if (pageId === "shopPage") {
-        window.location.href = SHOP_URL;
         return;
       }
 
@@ -10753,7 +10765,7 @@ closeNetworkPreview = function(){
 ========================================================= */
 const NETWORK_FEATURED = {
   title: "Latest NAL Network Content",
-  embedUrl: "https://www.lightcast.com/embed/player.php?id=819893&channelId=72114"
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=72119&subId=30715&type=vod"
 };
 
 function createNetworkFeaturedVideo() {
