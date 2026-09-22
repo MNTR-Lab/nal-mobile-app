@@ -10967,7 +10967,7 @@ async function submitNalForumTopic(){
   if (status){ status.textContent="Posting conversation…"; status.className="fan-forum-compose-status"; }
   try{
     const client = getNalAccountClient();
-    const payload = { category_id:activeNalForumCategory.id, author_id:nalAccountUser.id, title, body };
+    const payload = { category_id:activeNalForumCategory.id, user_id:nalAccountUser.id, title, body };
     const { error } = await client.from("forum_topics").insert(payload);
     if (error) throw error;
     if (titleInput) titleInput.value="";
@@ -13081,4 +13081,3 @@ document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 </script>
 </body>
 </html>
-
