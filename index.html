@@ -6303,8 +6303,13 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-list{display:grid;gap:8px;}
 .fan-forum-category{width:100%;border:1px solid #dbe3eb;border-radius:14px;background:#fff;padding:15px 14px;display:flex;align-items:center;gap:12px;text-align:left;color:#07172b;cursor:pointer;box-shadow:0 4px 12px rgba(7,23,43,.04);font:inherit;}
 .fan-forum-category:active{transform:scale(.995);}
-.fan-forum-category-icon{flex:0 0 39px;height:39px;border-radius:11px;background:#07172b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:1000;}
-.fan-forum-category-icon img{width:31px;height:31px;object-fit:contain;display:block;}
+.fan-forum-category-icon{flex:0 0 39px;height:39px;border-radius:11px;background:#fff;color:#07172b;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:1000;overflow:hidden;border:1px solid #e1e7ee;}
+.fan-forum-category-icon img{width:100%;height:100%;display:block;object-fit:contain;}
+.fan-forum-category-icon.team-logo img{object-fit:cover;}
+.fan-forum-category-icon svg{width:24px;height:24px;display:block;}
+.fan-forum-category-icon svg .forum-icon-navy{fill:#07172b;stroke:#07172b;}
+.fan-forum-category-icon svg .forum-icon-red{fill:#e31b23;stroke:#e31b23;}
+.fan-forum-category-icon svg .forum-icon-line{fill:none;stroke:#07172b;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .fan-forum-category-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;}
 .fan-forum-category-copy strong{font-size:14px;font-weight:1000;line-height:1.15;}
 .fan-forum-category-copy small{color:#778596;font-size:10px;font-weight:700;line-height:1.3;}
@@ -10728,26 +10733,18 @@ async function loadNalForumCategories(){
   }
 }
 
-function nalForumCategoryIcon(category){
-  const section = String(category?.section || "");
-  if (section === "team-zone") {
-    const directSlug = String(category?.slug || "").trim().toLowerCase();
-    const nameSlug = String(category?.name || "")
-      .trim()
-      .toLowerCase()
-      .replace(/&/g, "and")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-    const teamSlug = TEAM_LOGO_OVERRIDES[directSlug] ? directSlug : nameSlug;
-    const logo = TEAM_LOGO_OVERRIDES[teamSlug];
-    if (logo) {
-      return `<img src="${escapeHTML(logo)}" alt="${escapeHTML(category?.name || "Team")} logo" loading="lazy">`;
-    }
-    return "T";
+function nalForumCommunityIcon(category, section){
+  const slug = String(category?.slug || "").toLowerCase();
+  if (section === "team-zone"){
+    const logo = (typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[category.slug]) || NAL_LOGO;
+    return `<img src="${escapeHTML(logo)}" alt="" loading="lazy">`;
   }
-  if (section === "ask-the-nal") return "?";
-  if (section === "locker-room") return "#";
-  return `<img src="${escapeHTML(NAL_LOGO)}" alt="NAL logo" loading="lazy">`;
+  if (section !== "the-league" || slug === "nal-general") return `<img src="${escapeHTML(NAL_LOGO)}" alt="" loading="lazy">`;
+  if (slug === "game-day") return `<svg viewBox="0 0 32 32" aria-hidden="true"><path class="forum-icon-line" d="M7 8.5h18a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z"/><path class="forum-icon-red" d="M11 12.5h10v5H11z" stroke="none"/><path class="forum-icon-line" d="M9 21.5h5M18 21.5h5M10 5.5v3M22 5.5v3"/></svg>`;
+  if (slug === "news-rumors") return `<svg viewBox="0 0 32 32" aria-hidden="true"><path class="forum-icon-line" d="M7 7.5h15.5a2 2 0 0 1 2 2v15H8.5a2.5 2.5 0 0 1-2.5-2.5V9a1.5 1.5 0 0 1 1-1.5Z"/><path class="forum-icon-line" d="M24.5 12H27v10a2.5 2.5 0 0 1-2.5 2.5"/><path class="forum-icon-red" d="M10 11h8v4h-8z" stroke="none"/><path class="forum-icon-line" d="M10 18h10M10 21h10"/></svg>`;
+  if (slug === "fan-polls") return `<svg viewBox="0 0 32 32" aria-hidden="true"><path class="forum-icon-line" d="M6.5 25.5h19"/><path class="forum-icon-navy" d="M8 17h4v7H8z" stroke="none"/><path class="forum-icon-red" d="M14 10h4v14h-4z" stroke="none"/><path class="forum-icon-navy" d="M20 13h4v11h-4z" stroke="none"/></svg>`;
+  if (slug === "fantasy-pickem") return `<svg viewBox="0 0 32 32" aria-hidden="true"><rect class="forum-icon-line" x="6.5" y="6.5" width="19" height="19" rx="3"/><path class="forum-icon-red" d="M11.2 16.2 14.4 19.4 21.5 12.3 23.2 14 14.4 22.8 9.5 17.9z" stroke="none"/></svg>`;
+  return `<img src="${escapeHTML(NAL_LOGO)}" alt="" loading="lazy">`;
 }
 
 function renderNalForumCategories(){
@@ -10777,7 +10774,7 @@ function renderNalForumCategories(){
       <div class="fan-forum-list">
         ${group.categories.map(category => `
           <button class="fan-forum-category" type="button" data-forum-category="${escapeHTML(String(category.slug || category.id || ""))}">
-            <span class="fan-forum-category-icon">${nalForumCategoryIcon(category)}</span>
+            <span class="fan-forum-category-icon${group.section === "team-zone" ? " team-logo" : ""}">${nalForumCommunityIcon(category, group.section)}</span>
             <span class="fan-forum-category-copy">
               <strong>${escapeHTML(category.name || "NAL Community")}</strong>
               <small>${escapeHTML(nalForumCategoryDescription(category))}</small>
@@ -12906,3 +12903,4 @@ document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 </script>
 </body>
 </html>
+
