@@ -6717,6 +6717,25 @@ document.addEventListener("DOMContentLoaded", () => {
   stroke:var(--nal-red) !important;
 }
 
+
+/* =========================================================
+   NAL NETWORK — LIVE STATIONS PLACEHOLDER GRID
+========================================================= */
+.network-live-section{margin-top:18px;}
+.network-live-team-section{margin-top:28px;}
+.network-live-section-title{margin:0 0 12px;color:var(--nal-blue);font-size:15px;font-weight:900;letter-spacing:.8px;}
+.network-live-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 12px;}
+.network-live-card{appearance:none;border:0;background:transparent;padding:0;margin:0;text-align:left;color:var(--nal-blue);min-width:0;cursor:pointer;}
+.network-live-art{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:linear-gradient(145deg,#07172b,#172f4d);border:1px solid rgba(7,23,43,.14);box-shadow:0 4px 12px rgba(0,0,0,.10);display:flex;align-items:center;justify-content:center;}
+.network-live-placeholder{padding:12px;text-align:center;color:#fff;font-size:14px;font-weight:900;letter-spacing:.7px;line-height:1.15;}
+.network-live-card strong{display:block;margin-top:8px;font-size:13px;line-height:1.15;font-weight:900;color:var(--nal-blue);}
+.network-live-card small{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:10px;line-height:1;font-weight:800;letter-spacing:.35px;color:#697382;}
+.network-live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--nal-red);flex:0 0 7px;}
+@media(min-width:700px){.network-live-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 16px;}}
+@media(min-width:1000px){.network-live-grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
+.network-live-grid-nal{max-width:720px;margin-left:auto;margin-right:auto;}
+@media(min-width:700px){.network-live-grid-nal{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(min-width:1000px){.network-live-grid-nal{grid-template-columns:repeat(2,minmax(0,1fr));}}
 </style>
 </head>
 
@@ -7408,8 +7427,36 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
     <div class="network-tab-panel" data-network-panel="live">
-      <section class="network-library-head"><h2>LIVE</h2><p>Live NAL Network programming and upcoming broadcasts.</p></section>
-      <section class="network-empty-state"><span class="network-empty-icon">▶</span><strong>NO LIVE EVENT RIGHT NOW</strong><small>Live broadcasts will appear here when available.</small></section>
+      <section class="network-library-head"><h2>LIVE</h2><p>Watch NAL Network and team live stations.</p></section>
+
+      <section class="network-live-section">
+        <h3 class="network-live-section-title">NAL LIVE STATIONS</h3>
+        <div class="network-live-grid network-live-grid-nal">
+          <button class="network-live-card" type="button" data-live-station="nal-247">
+            <div class="network-live-art"><span class="network-live-placeholder">NAL 24/7</span></div>
+            <strong>NAL 24/7</strong><small><span class="network-live-dot"></span> LIVE STATION</small>
+          </button>
+          <button class="network-live-card" type="button" data-live-station="nal-originals">
+            <div class="network-live-art"><span class="network-live-placeholder">NAL ORIGINALS</span></div>
+            <strong>NAL ORIGINALS</strong><small><span class="network-live-dot"></span> LIVE STATION</small>
+          </button>
+        </div>
+      </section>
+
+      <section class="network-live-section network-live-team-section">
+        <h3 class="network-live-section-title">TEAM LIVE STATIONS</h3>
+        <div class="network-live-grid">
+          <button class="network-live-card" type="button" data-live-station="amarillo"><div class="network-live-art"><span class="network-live-placeholder">TEAM ARTWORK</span></div><strong>AMARILLO WARBIRDS</strong><small><span class="network-live-dot"></span> LIVE STATION</small></button>
+          <button class="network-live-card" type="button" data-live-station="colorado"><div class="network-live-art"><span class="network-live-placeholder">TEAM ARTWORK</span></div><strong>COLORADO SPARTANS</strong><small><span class="network-live-dot"></span> LIVE STATION</small></button>
+          <button class="network-live-card" type="button" data-live-station="dallas"><div class="network-live-art"><span class="network-live-placeholder">TEAM ARTWORK</span></div><strong>DALLAS APEX</strong><small><span class="network-live-dot"></span> LIVE STATION</small></button>
+          <button class="network-live-card" type="button" data-live-station="louisiana"><div class="network-live-art"><span class="network-live-placeholder">TEAM ARTWORK</span></div><strong>LOUISIANA ROUXGAROUX</strong><small><span class="network-live-dot"></span> LIVE STATION</small></button>
+          <button class="network-live-card" type="button" data-live-station="omaha"><div class="network-live-art"><span class="network-live-placeholder">TEAM ARTWORK</span></div><strong>OMAHA BEEF</strong><small><span class="network-live-dot"></span> LIVE STATION</small></button>
+          <button class="network-live-card" type="button" data-live-station="pueblo"><div class="network-live-art"><span class="network-live-placeholder">TEAM ARTWORK</span></div><strong>PUEBLO PUNISHERS</strong><small><span class="network-live-dot"></span> LIVE STATION</small></button>
+          <button class="network-live-card" type="button" data-live-station="salina"><div class="network-live-art"><span class="network-live-placeholder">TEAM ARTWORK</span></div><strong>SALINA LIBERTY</strong><small><span class="network-live-dot"></span> LIVE STATION</small></button>
+          <button class="network-live-card" type="button" data-live-station="southwest-kansas"><div class="network-live-art"><span class="network-live-placeholder">TEAM ARTWORK</span></div><strong>SOUTHWEST KANSAS STORM</strong><small><span class="network-live-dot"></span> LIVE STATION</small></button>
+          <button class="network-live-card" type="button" data-live-station="wheeling"><div class="network-live-art"><span class="network-live-placeholder">TEAM ARTWORK</span></div><strong>WHEELING MINERS</strong><small><span class="network-live-dot"></span> LIVE STATION</small></button>
+        </div>
+      </section>
     </div>
 
     <div class="network-tab-panel" data-network-panel="shows">
@@ -10765,7 +10812,7 @@ closeNetworkPreview = function(){
 ========================================================= */
 const NETWORK_FEATURED = {
   title: "Latest NAL Network Content",
-  embedUrl: "https://www.lightcast.com/embed/player.php?id=72119&subId=30715&type=vod"
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=819893&channelId=72114"
 };
 
 function createNetworkFeaturedVideo() {
