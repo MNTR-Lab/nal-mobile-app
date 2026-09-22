@@ -7489,26 +7489,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button type="button" onclick="openNetworkShow('nal-gameday')"><div class="network-show-art network-art-gameday"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164" alt="NAL Gameday" loading="lazy"></div><strong>NAL Gameday</strong></button>
       </section>
 
-      <section id="coachesShowsPage" class="coaches-shows-page" hidden>
-        <div class="coaches-shows-head">
-          <button class="coaches-shows-back" type="button" onclick="closeCoachesShowsPage()">‹ SHOWS</button>
-          <div>
-            <h2>COACHES’ SHOWS</h2>
-            <p>Team coaches and weekly programming from across the National Arena League.</p>
-          </div>
-        </div>
-        <div class="coaches-shows-grid">
-          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('amarillo-warbirds')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"></div><strong>AMARILLO WARBIRDS</strong><small>COACHES’ SHOW</small></button>
-          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('colorado-spartans')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784" alt="Colorado Spartans" loading="lazy"></div><strong>COLORADO SPARTANS</strong><small>COACHES’ SHOW</small></button>
-          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('dallas-apex')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784" alt="Dallas Apex" loading="lazy"></div><strong>DALLAS APEX</strong><small>COACHES’ SHOW</small></button>
-          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('louisiana-rouxgaroux')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784" alt="Louisiana Rouxgaroux" loading="lazy"></div><strong>LOUISIANA ROUXGAROUX</strong><small>COACHES’ SHOW</small></button>
-          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('omaha-beef')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792" alt="Omaha Beef" loading="lazy"></div><strong>OMAHA BEEF</strong><small>COACHES’ SHOW</small></button>
-          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('pueblo-punishers')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792" alt="Pueblo Punishers" loading="lazy"></div><strong>PUEBLO PUNISHERS</strong><small>COACHES’ SHOW</small></button>
-          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('salina-liberty')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792" alt="Salina Liberty" loading="lazy"></div><strong>SALINA LIBERTY</strong><small>COACHES’ SHOW</small></button>
-          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('southwest-kansas-storm')"><div class="coaches-show-team-art"><span>TEAM ARTWORK</span></div><strong>SOUTHWEST KANSAS STORM</strong><small>COACHES’ SHOW</small></button>
-          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('wheeling-miners')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div><strong>WHEELING MINERS</strong><small>COACHES’ SHOW</small></button>
-        </div>
-      </section>
+
     </div>
 
     <div class="network-tab-panel" data-network-panel="highlights">
@@ -7531,6 +7512,27 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="network-preview-action" type="button" onclick="closeNetworkPreview()">DONE</button>
       </div>
     </div>
+  </main>
+
+  <main id="coachesShowsPage" class="app-page coaches-shows-page" style="display:none;">
+        <div class="coaches-shows-head">
+          <button class="coaches-shows-back" type="button" onclick="closeCoachesShowsPage()">‹ SHOWS</button>
+          <div>
+            <h2>COACHES’ SHOWS</h2>
+            <p>Team coaches and weekly programming from across the National Arena League.</p>
+          </div>
+        </div>
+        <div class="coaches-shows-grid">
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('amarillo-warbirds')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"></div><strong>AMARILLO WARBIRDS</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('colorado-spartans')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784" alt="Colorado Spartans" loading="lazy"></div><strong>COLORADO SPARTANS</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('dallas-apex')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784" alt="Dallas Apex" loading="lazy"></div><strong>DALLAS APEX</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('louisiana-rouxgaroux')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784" alt="Louisiana Rouxgaroux" loading="lazy"></div><strong>LOUISIANA ROUXGAROUX</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('omaha-beef')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792" alt="Omaha Beef" loading="lazy"></div><strong>OMAHA BEEF</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('pueblo-punishers')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792" alt="Pueblo Punishers" loading="lazy"></div><strong>PUEBLO PUNISHERS</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('salina-liberty')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792" alt="Salina Liberty" loading="lazy"></div><strong>SALINA LIBERTY</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('southwest-kansas-storm')"><div class="coaches-show-team-art"><span>TEAM ARTWORK</span></div><strong>SOUTHWEST KANSAS STORM</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('wheeling-miners')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div><strong>WHEELING MINERS</strong><small>COACHES’ SHOW</small></button>
+        </div>
   </main>
 
   <main id="teamsPage" class="app-page teams-page" style="display:none;">
@@ -10810,22 +10812,13 @@ function openNetworkShow(showKey){
 }
 
 function openCoachesShowsPage(){
-  const page=document.getElementById("coachesShowsPage");
-  const grid=document.querySelector('[data-network-panel="shows"] .network-library-grid');
-  const head=document.querySelector('[data-network-panel="shows"] .network-library-head');
-  if(grid) grid.hidden=true;
-  if(head) head.hidden=true;
-  if(page) page.hidden=false;
+  showPage("coachesShowsPage");
   window.scrollTo({top:0,behavior:"instant"});
 }
 
 function closeCoachesShowsPage(){
-  const page=document.getElementById("coachesShowsPage");
-  const grid=document.querySelector('[data-network-panel="shows"] .network-library-grid');
-  const head=document.querySelector('[data-network-panel="shows"] .network-library-head');
-  if(page) page.hidden=true;
-  if(grid) grid.hidden=false;
-  if(head) head.hidden=false;
+  showPage("watchPage");
+  switchNetworkTab("shows");
   window.scrollTo({top:0,behavior:"instant"});
 }
 
