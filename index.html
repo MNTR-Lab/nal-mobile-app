@@ -6277,6 +6277,91 @@ document.addEventListener("DOMContentLoaded", () => {
   line-height:1.5;
 }
 
+
+
+/* =========================================================
+   NAL FAN ACCOUNT — NOTIFICATION PREFERENCES
+========================================================= */
+.fan-notification-preferences{
+  border-top:1px solid #e3e8ee;
+  background:#f8fafc;
+}
+.fan-notification-pref-row{
+  min-height:68px;
+  padding:12px 14px;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  border-bottom:1px solid #e3e8ee;
+}
+.fan-notification-pref-row:last-child{border-bottom:0;}
+.fan-notification-pref-copy{min-width:0;}
+.fan-notification-pref-copy b{
+  display:block;
+  color:#07172b;
+  font-size:12px;
+  line-height:1.2;
+  font-weight:1000;
+}
+.fan-notification-pref-copy span{
+  display:block;
+  margin-top:3px;
+  color:#738296;
+  font-size:10px;
+  line-height:1.3;
+  font-weight:700;
+}
+.fan-notification-toggle{
+  position:relative;
+  width:46px;
+  height:26px;
+  flex:0 0 46px;
+  display:inline-block;
+}
+.fan-notification-toggle input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.fan-notification-toggle-track{
+  position:absolute;
+  inset:0;
+  border-radius:999px;
+  background:#b8c1cb;
+  box-shadow:inset 0 0 0 1px rgba(7,23,43,.08);
+  transition:background .18s ease;
+  cursor:pointer;
+}
+.fan-notification-toggle-track::after{
+  content:"";
+  position:absolute;
+  width:20px;
+  height:20px;
+  left:3px;
+  top:3px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 1px 4px rgba(0,0,0,.28);
+  transition:transform .18s ease;
+}
+.fan-notification-toggle input:checked + .fan-notification-toggle-track{background:#e31b23;}
+.fan-notification-toggle input:checked + .fan-notification-toggle-track::after{transform:translateX(20px);}
+.fan-notification-toggle input:focus-visible + .fan-notification-toggle-track{outline:2px solid #102b4e;outline-offset:2px;}
+.fan-notification-toggle input:disabled + .fan-notification-toggle-track{opacity:.55;cursor:wait;}
+.fan-notification-pref-status{
+  min-height:16px;
+  padding:8px 14px 10px;
+  color:#607286;
+  background:#f8fafc;
+  font-size:9px;
+  line-height:1.3;
+  font-weight:900;
+  letter-spacing:.35px;
+}
+.fan-notification-pref-status.error{color:#a20f17;}
+
 </style>
 </head>
 
@@ -7494,7 +7579,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="fan-member-row">
                   <div class="fan-member-ico">🔔</div>
                   <div class="fan-member-rowtext"><b>Notification Preferences</b><span>Choose the NAL updates you want</span></div>
-                  <span class="fan-member-badge">COMING SOON</span>
+                </div>
+                <div class="fan-notification-preferences" id="fanNotificationPreferences">
+                  <div class="fan-notification-pref-row">
+                    <div class="fan-notification-pref-copy"><b>League News &amp; Announcements</b><span>League news, announcements and NAL Network updates</span></div>
+                    <label class="fan-notification-toggle" aria-label="League News and Announcements">
+                      <input type="checkbox" id="fanPrefLeagueNews" data-notification-preference="league_news" checked>
+                      <span class="fan-notification-toggle-track"></span>
+                    </label>
+                  </div>
+                  <div class="fan-notification-pref-row">
+                    <div class="fan-notification-pref-copy"><b>Game &amp; Score Updates</b><span>Game-day and score alerts from around the NAL</span></div>
+                    <label class="fan-notification-toggle" aria-label="Game and Score Updates">
+                      <input type="checkbox" id="fanPrefGameUpdates" data-notification-preference="game_updates" checked>
+                      <span class="fan-notification-toggle-track"></span>
+                    </label>
+                  </div>
+                  <div class="fan-notification-pref-row">
+                    <div class="fan-notification-pref-copy"><b>Schedule Updates</b><span>Schedule releases, changes and important game information</span></div>
+                    <label class="fan-notification-toggle" aria-label="Schedule Updates">
+                      <input type="checkbox" id="fanPrefScheduleUpdates" data-notification-preference="schedule_updates" checked>
+                      <span class="fan-notification-toggle-track"></span>
+                    </label>
+                  </div>
+                  <div class="fan-notification-pref-row">
+                    <div class="fan-notification-pref-copy"><b>Favorite Team Updates</b><span>Alerts specifically sent for your selected favorite team</span></div>
+                    <label class="fan-notification-toggle" aria-label="Favorite Team Updates">
+                      <input type="checkbox" id="fanPrefFavoriteTeam" data-notification-preference="favorite_team_updates" checked>
+                      <span class="fan-notification-toggle-track"></span>
+                    </label>
+                  </div>
+                  <div class="fan-notification-pref-status" id="fanNotificationPreferenceStatus" aria-live="polite"></div>
                 </div>
               </div>
             </section>
@@ -11110,6 +11225,7 @@ const NAL_ACCOUNT_SUPABASE_KEY = "sb_publishable_tHzWH6oFoUemOrdLs_h9bw_UOLBP-yb
 let nalAccountClient = null;
 let nalAccountUser = null;
 let nalAccountProfile = null;
+let nalNotificationPreferences = null;
 let nalAccountReturnPageId = "homePage";
 
 function getNalAccountClient(){
@@ -11326,6 +11442,7 @@ async function loadNalFanProfile(user){
 
     renderNalFanProfile();
     updateHeaderAccountState();
+    await loadNalNotificationPreferences();
     return data;
   } catch(error){
     console.error("NAL profile load error:", error);
@@ -12351,6 +12468,114 @@ function setNalNotificationBadge(count){
   badge.hidden = safeCount === 0;
 }
 
+
+/* =========================================================
+   NAL FAN ACCOUNT — NOTIFICATION PREFERENCES
+========================================================= */
+const NAL_NOTIFICATION_DEFAULTS = {
+  league_news:true,
+  game_updates:true,
+  schedule_updates:true,
+  favorite_team_updates:true
+};
+
+function setNalNotificationPreferenceStatus(message = "", isError = false){
+  const status = document.getElementById("fanNotificationPreferenceStatus");
+  if (!status) return;
+  status.textContent = message;
+  status.classList.toggle("error", !!isError);
+}
+
+function renderNalNotificationPreferences(){
+  const values = nalNotificationPreferences || NAL_NOTIFICATION_DEFAULTS;
+  document.querySelectorAll("[data-notification-preference]").forEach(input => {
+    const key = input.dataset.notificationPreference;
+    input.checked = values[key] !== false;
+    input.disabled = !nalAccountUser;
+  });
+}
+
+async function loadNalNotificationPreferences(){
+  if (!nalAccountUser){
+    nalNotificationPreferences = null;
+    renderNalNotificationPreferences();
+    return;
+  }
+
+  try{
+    const client = getNalAccountClient();
+    let { data, error } = await client
+      .from("notification_preferences")
+      .select("user_id,league_news,game_updates,schedule_updates,favorite_team_updates")
+      .eq("user_id", nalAccountUser.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (!data){
+      const created = { user_id:nalAccountUser.id, ...NAL_NOTIFICATION_DEFAULTS };
+      const result = await client
+        .from("notification_preferences")
+        .insert(created)
+        .select("user_id,league_news,game_updates,schedule_updates,favorite_team_updates")
+        .single();
+      if (result.error) throw result.error;
+      data = result.data;
+    }
+
+    nalNotificationPreferences = data;
+    renderNalNotificationPreferences();
+    setNalNotificationPreferenceStatus("");
+  } catch(error){
+    console.error("Notification preferences load error:", error);
+    nalNotificationPreferences = { ...NAL_NOTIFICATION_DEFAULTS };
+    renderNalNotificationPreferences();
+    setNalNotificationPreferenceStatus("Unable to load notification preferences.", true);
+  }
+}
+
+async function saveNalNotificationPreference(input){
+  if (!nalAccountUser || !input) return;
+  const key = input.dataset.notificationPreference;
+  if (!Object.prototype.hasOwnProperty.call(NAL_NOTIFICATION_DEFAULTS,key)) return;
+
+  const previous = nalNotificationPreferences?.[key] !== false;
+  const nextValue = !!input.checked;
+  input.disabled = true;
+  setNalNotificationPreferenceStatus("SAVING...");
+
+  try{
+    const client = getNalAccountClient();
+    const { error } = await client
+      .from("notification_preferences")
+      .update({ [key]:nextValue, updated_at:new Date().toISOString() })
+      .eq("user_id", nalAccountUser.id);
+    if (error) throw error;
+
+    nalNotificationPreferences = {
+      ...(nalNotificationPreferences || NAL_NOTIFICATION_DEFAULTS),
+      [key]:nextValue
+    };
+    setNalNotificationPreferenceStatus("PREFERENCE SAVED");
+    renderNalAlerts();
+    window.setTimeout(() => {
+      if (document.getElementById("fanNotificationPreferenceStatus")?.textContent === "PREFERENCE SAVED")
+        setNalNotificationPreferenceStatus("");
+    },1400);
+  } catch(error){
+    console.error("Notification preference save error:", error);
+    input.checked = previous;
+    setNalNotificationPreferenceStatus("Unable to save preference. Please try again.", true);
+  } finally {
+    input.disabled = false;
+  }
+}
+
+document.addEventListener("change", event => {
+  const input = event.target.closest("[data-notification-preference]");
+  if (input) saveNalNotificationPreference(input);
+});
+
 function formatNalAlertDate(value){
   if (!value) return "";
   const date = new Date(value);
@@ -12373,6 +12598,18 @@ function nalNotificationMatchesFan(notification){
   if (!notification || notification.is_active === false) return false;
 
   const targetType = String(notification.target_type || "all").toLowerCase();
+
+  /* Personal onboarding/system messages (including Welcome) always remain visible. */
+  if (targetType === "user") return true;
+
+  const prefs = nalNotificationPreferences || NAL_NOTIFICATION_DEFAULTS;
+  if (targetType === "team" && prefs.favorite_team_updates === false) return false;
+
+  const notificationType = String(notification.notification_type || "league").toLowerCase();
+  if (notificationType === "game" && prefs.game_updates === false) return false;
+  if (notificationType === "schedule" && prefs.schedule_updates === false) return false;
+  if (["league","news","nal-network"].includes(notificationType) && prefs.league_news === false) return false;
+
   if (targetType === "all" || targetType === "league" || !targetType) return true;
 
   if (targetType === "team"){
