@@ -6384,6 +6384,27 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-compose-cancel{background:#e8edf2;color:#07172b;}.fan-forum-compose-submit{background:#e31b23;color:#fff;}
 .fan-forum-compose-status{min-height:16px;margin-top:8px;color:#6d7b89;font-size:9px;font-weight:800;}.fan-forum-compose-status.error{color:#c81820;}.fan-forum-compose-status.success{color:#147a45;}
 
+
+/* =========================================================
+   NAL NETWORK — COACHES' SHOWS INTERNAL PAGE
+========================================================= */
+.coaches-shows-page{margin-top:18px;padding:0 0 24px;}
+.coaches-shows-page[hidden]{display:none !important;}
+.coaches-shows-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;padding:16px;border:1px solid #dce2e8;border-radius:14px;background:#fff;}
+.coaches-shows-head h2{margin:0 0 4px;color:var(--nal-blue);font-size:24px;line-height:1;}
+.coaches-shows-head p{margin:0;color:#5d6875;font-size:13px;line-height:1.4;}
+.coaches-shows-back{border:0;border-radius:999px;background:var(--nal-blue);color:#fff;font-weight:900;font-size:12px;padding:9px 12px;white-space:nowrap;}
+.coaches-shows-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.coaches-show-team-card{appearance:none;border:1px solid #dce2e8;border-radius:14px;background:#fff;padding:0 0 12px;overflow:hidden;text-align:left;box-shadow:0 4px 14px rgba(7,23,43,.08);}
+.coaches-show-team-art{aspect-ratio:16/9;background:linear-gradient(145deg,#07172b,#142d4b);display:flex;align-items:center;justify-content:center;padding:16px;}
+.coaches-show-team-art img{width:100%;height:100%;object-fit:contain;}
+.coaches-show-team-art span{color:#fff;font-weight:900;font-size:12px;letter-spacing:.08em;}
+.coaches-show-team-card strong,.coaches-show-team-card small{display:block;padding:0 10px;}
+.coaches-show-team-card strong{margin-top:10px;color:var(--nal-blue);font-size:12px;line-height:1.25;}
+.coaches-show-team-card small{margin-top:4px;color:var(--nal-red);font-size:10px;font-weight:900;letter-spacing:.06em;}
+@media(min-width:700px){.coaches-shows-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(min-width:1000px){.coaches-shows-grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
+
 </style>
 
 <style>
@@ -7462,10 +7483,31 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="network-tab-panel" data-network-panel="shows">
       <section class="network-library-head"><h2>SHOWS</h2><p>NAL Network Originals and recurring programming.</p></section>
       <section class="network-library-grid">
-        <button type="button" onclick="previewNetworkItem('Around the NAL','NAL Network Original Series')"><div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL" loading="lazy"></div><strong>Around the NAL</strong></button>
-        <button type="button" onclick="previewNetworkItem('5 in 5','Five-minute league highlight show')"><div class="network-show-art network-art-five"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_5_in_5.png?v=1789958471" alt="5 in 5" loading="lazy"></div><strong>5 in 5</strong></button>
-        <button type="button" onclick="previewNetworkItem('Coaches’ Shows','Team coaches and weekly programming')"><div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233" alt="Coaches Shows" loading="lazy"></div><strong>Coaches’ Shows</strong></button>
-        <button type="button" onclick="previewNetworkItem('NAL Gameday','The gameday starts here.')"><div class="network-show-art network-art-gameday"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164" alt="NAL Gameday" loading="lazy"></div><strong>NAL Gameday</strong></button>
+        <button type="button" onclick="openNetworkShow('around-the-nal')"><div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL" loading="lazy"></div><strong>Around the NAL</strong></button>
+        <button type="button" onclick="openNetworkShow('5-in-5')"><div class="network-show-art network-art-five"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_5_in_5.png?v=1789958471" alt="5 in 5" loading="lazy"></div><strong>5 in 5</strong></button>
+        <button type="button" onclick="openCoachesShowsPage()"><div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233" alt="Coaches Shows" loading="lazy"></div><strong>Coaches’ Shows</strong></button>
+        <button type="button" onclick="openNetworkShow('nal-gameday')"><div class="network-show-art network-art-gameday"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164" alt="NAL Gameday" loading="lazy"></div><strong>NAL Gameday</strong></button>
+      </section>
+
+      <section id="coachesShowsPage" class="coaches-shows-page" hidden>
+        <div class="coaches-shows-head">
+          <button class="coaches-shows-back" type="button" onclick="closeCoachesShowsPage()">‹ SHOWS</button>
+          <div>
+            <h2>COACHES’ SHOWS</h2>
+            <p>Team coaches and weekly programming from across the National Arena League.</p>
+          </div>
+        </div>
+        <div class="coaches-shows-grid">
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('amarillo-warbirds')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"></div><strong>AMARILLO WARBIRDS</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('colorado-spartans')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784" alt="Colorado Spartans" loading="lazy"></div><strong>COLORADO SPARTANS</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('dallas-apex')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784" alt="Dallas Apex" loading="lazy"></div><strong>DALLAS APEX</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('louisiana-rouxgaroux')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784" alt="Louisiana Rouxgaroux" loading="lazy"></div><strong>LOUISIANA ROUXGAROUX</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('omaha-beef')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792" alt="Omaha Beef" loading="lazy"></div><strong>OMAHA BEEF</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('pueblo-punishers')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792" alt="Pueblo Punishers" loading="lazy"></div><strong>PUEBLO PUNISHERS</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('salina-liberty')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792" alt="Salina Liberty" loading="lazy"></div><strong>SALINA LIBERTY</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('southwest-kansas-storm')"><div class="coaches-show-team-art"><span>TEAM ARTWORK</span></div><strong>SOUTHWEST KANSAS STORM</strong><small>COACHES’ SHOW</small></button>
+          <button class="coaches-show-team-card" type="button" onclick="openCoachShow('wheeling-miners')"><div class="coaches-show-team-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div><strong>WHEELING MINERS</strong><small>COACHES’ SHOW</small></button>
+        </div>
       </section>
     </div>
 
@@ -10721,6 +10763,75 @@ function switchNetworkTab(tabName){
 document.querySelectorAll("#watchPage .network-tab").forEach(btn => {
   btn.addEventListener("click", () => switchNetworkTab(btn.dataset.networkTab));
 });
+
+
+/* =========================================================
+   NAL NETWORK — SHOWS / COACHES' SHOWS ROUTING
+   Paste each Lightcast embed URL into the matching embedUrl.
+========================================================= */
+const NAL_NETWORK_SHOWS = {
+  "around-the-nal": { title:"Around the NAL", embedUrl:"" },
+  "5-in-5": { title:"5 in 5", embedUrl:"" },
+  "nal-gameday": { title:"NAL Gameday", embedUrl:"" }
+};
+
+const NAL_COACHES_SHOWS = {
+  "amarillo-warbirds": { title:"Amarillo Warbirds Coaches’ Show", embedUrl:"" },
+  "colorado-spartans": { title:"Colorado Spartans Coaches’ Show", embedUrl:"" },
+  "dallas-apex": { title:"Dallas Apex Coaches’ Show", embedUrl:"" },
+  "louisiana-rouxgaroux": { title:"Louisiana Rouxgaroux Coaches’ Show", embedUrl:"" },
+  "omaha-beef": { title:"Omaha Beef Coaches’ Show", embedUrl:"" },
+  "pueblo-punishers": { title:"Pueblo Punishers Coaches’ Show", embedUrl:"" },
+  "salina-liberty": { title:"Salina Liberty Coaches’ Show", embedUrl:"" },
+  "southwest-kansas-storm": { title:"Southwest Kansas Storm Coaches’ Show", embedUrl:"" },
+  "wheeling-miners": { title:"Wheeling Miners Coaches’ Show", embedUrl:"" }
+};
+
+function openLightcastNetworkPlayer(item, fallbackText){
+  if(!item) return;
+  const modal=document.getElementById("networkPreviewModal");
+  const titleEl=document.getElementById("networkPreviewTitle");
+  const textEl=document.getElementById("networkPreviewText");
+  const player=document.getElementById("networkPreviewPlayer");
+  if(titleEl) titleEl.textContent=item.title;
+  if(textEl) textEl.textContent=item.embedUrl ? "NAL Network" : (fallbackText || "Lightcast player will be connected here.");
+  if(player){
+    if(item.embedUrl){
+      player.innerHTML=`<iframe src="${item.embedUrl}" title="${item.title}" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy" style="width:100%;height:100%;border:0;"></iframe>`;
+    }else{
+      player.innerHTML='<span>▶</span>';
+    }
+  }
+  if(modal){modal.classList.add("open");modal.setAttribute("aria-hidden","false");}
+}
+
+function openNetworkShow(showKey){
+  openLightcastNetworkPlayer(NAL_NETWORK_SHOWS[showKey], "Lightcast show player placeholder — embed link ready to be added.");
+}
+
+function openCoachesShowsPage(){
+  const page=document.getElementById("coachesShowsPage");
+  const grid=document.querySelector('[data-network-panel="shows"] .network-library-grid');
+  const head=document.querySelector('[data-network-panel="shows"] .network-library-head');
+  if(grid) grid.hidden=true;
+  if(head) head.hidden=true;
+  if(page) page.hidden=false;
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+function closeCoachesShowsPage(){
+  const page=document.getElementById("coachesShowsPage");
+  const grid=document.querySelector('[data-network-panel="shows"] .network-library-grid');
+  const head=document.querySelector('[data-network-panel="shows"] .network-library-head');
+  if(page) page.hidden=true;
+  if(grid) grid.hidden=false;
+  if(head) head.hidden=false;
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+function openCoachShow(teamKey){
+  openLightcastNetworkPlayer(NAL_COACHES_SHOWS[teamKey], "Lightcast Coaches’ Show player placeholder — team embed link ready to be added.");
+}
 
 function previewNetworkItem(title, description){
   const modal = document.getElementById("networkPreviewModal");
