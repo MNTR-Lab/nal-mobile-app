@@ -6420,37 +6420,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================================
-   GLOBAL HEADER — ACCOUNT LEFT | SOCIALS + ALERTS RIGHT
-   Header-only layout adjustment.
+   HEADER + BOTTOM NAV — FINAL POSITIONING ADJUSTMENT
+   Keeps all existing behavior; visual positioning only.
 ========================================================= */
+
+/* Header: bell + compact stacked account label on the left,
+   NAL logo centered, social icons on the right. */
+.topbar{
+  grid-template-columns:minmax(96px,1fr) auto minmax(96px,1fr) !important;
+}
 .topbar .header-left{
-  gap:0 !important;
+  grid-column:1 !important;
+  grid-row:1 !important;
+  justify-self:start !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:5px !important;
+  min-width:0 !important;
 }
-
 .topbar .header-right.header-socials{
-  gap:8px !important;
+  grid-column:3 !important;
+  grid-row:1 !important;
+  justify-self:end !important;
+  display:flex !important;
+}
+.topbar #headerHome{
+  grid-column:2 !important;
+  grid-row:1 !important;
+  justify-self:center !important;
+}
+.header-login-button{
+  gap:4px !important;
+  width:auto !important;
+  min-width:0 !important;
+}
+.header-login-button > .header-login-copy{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  justify-content:center !important;
+  gap:2px !important;
+  white-space:normal !important;
+  line-height:1 !important;
+}
+.header-login-button > .header-login-copy > span{
+  display:block !important;
+  margin:0 !important;
+  padding:0 !important;
+  white-space:nowrap !important;
+  font-size:8px !important;
+  line-height:8px !important;
+  font-weight:900 !important;
+  letter-spacing:.2px !important;
 }
 
-.topbar .header-right.header-socials .header-left-divider{
-  display:block !important;
-  width:1px !important;
-  height:26px !important;
-  flex:0 0 1px !important;
-  background:rgba(255,255,255,.28) !important;
-  margin:0 1px !important;
+/* Bottom navigation: raise only the visible icon + label for the four
+   standard menu items. Keep the button hit areas and NAL NETWORK unchanged. */
+.bottom-nav .nav-button:not(.watch-button) > svg,
+.bottom-nav .nav-button:not(.watch-button) > span{
+  position:relative !important;
+  top:-8px !important;
 }
 
 @media(max-width:430px){
-  .topbar .header-left{
-    gap:0 !important;
+  .topbar{
+    grid-template-columns:minmax(92px,1fr) auto minmax(92px,1fr) !important;
   }
-  .topbar .header-right.header-socials{
-    gap:6px !important;
+  .header-login-button > .header-login-copy > span{
+    font-size:7.5px !important;
+    line-height:8px !important;
+    letter-spacing:0 !important;
   }
-  .topbar .header-right.header-socials .header-left-divider{
-    height:23px !important;
+  .bottom-nav .nav-button:not(.watch-button) > svg,
+  .bottom-nav .nav-button:not(.watch-button) > span{
+    top:-8px !important;
   }
 }
+
+@media(max-width:360px){
+  /* Override the older rule that hid the account wording on small phones. */
+  .header-login-button > .header-login-copy{
+    display:flex !important;
+  }
+  .header-login-button > .header-login-copy > span{
+    display:block !important;
+    font-size:7px !important;
+  }
+}
+
 </style>
 </head>
 
@@ -6510,6 +6567,21 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="header-left">
 
       <button
+        class="header-button notification-button"
+        id="nalNotificationButton"
+        type="button"
+        aria-label="NAL Alerts"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+          <path d="M10 21h4"></path>
+        </svg>
+        <span class="notification-dot" id="nalNotificationBadge" hidden>0</span>
+      </button>
+
+      <span class="header-left-divider" aria-hidden="true"></span>
+
+      <button
         class="header-login-button"
         id="headerLoginButton"
         type="button"
@@ -6519,7 +6591,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <circle cx="12" cy="8" r="3.5"></circle>
           <path d="M5.5 20c.6-4 3-6 6.5-6s5.9 2 6.5 6"></path>
         </svg>
-        <span>LOGIN / SIGN UP</span>
+        <span class="header-login-copy"><span>LOGIN</span><span>SIGN UP</span></span>
       </button>
 
     </div>
@@ -6549,21 +6621,6 @@ document.addEventListener("DOMContentLoaded", () => {
       </button>
       <button type="button" class="header-social-link" data-social="tiktok" aria-label="TikTok">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.3 3h3.1c.3 1.8 1.4 3.2 3.1 3.8v3.1a8 8 0 0 1-3.1-1.1v6.3a6.1 6.1 0 1 1-5.3-6v3.2a3 3 0 1 0 2.2 2.8V3Z"/></svg>
-      </button>
-
-      <span class="header-left-divider" aria-hidden="true"></span>
-
-      <button
-        class="header-button notification-button"
-        id="nalNotificationButton"
-        type="button"
-        aria-label="NAL Alerts"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
-          <path d="M10 21h4"></path>
-        </svg>
-        <span class="notification-dot" id="nalNotificationBadge" hidden>0</span>
       </button>
     </div>
 
@@ -13562,4 +13619,3 @@ document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 </script>
 </body>
 </html>
-
