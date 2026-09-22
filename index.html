@@ -11382,13 +11382,9 @@ async function loadNalVotingActivity(){
 
   try{
     const client = getNalAccountClient();
-    const { data: votes, error: voteError } = await client
-      .from("poll_votes")
-      .select("poll_id,option_id,created_at")
-      .eq("user_id", nalAccountUser.id)
-      .order("created_at", { ascending:false });
+    const { data: votes, error } = await client.rpc("get_my_voting_activity");
 
-    if (voteError) throw voteError;
+    if (error) throw error;
 
     if (!votes || !votes.length){
       host.className = "fan-member-vote-empty";
@@ -11396,26 +11392,12 @@ async function loadNalVotingActivity(){
       return;
     }
 
-    const pollIds = [...new Set(votes.map(vote => vote.poll_id).filter(Boolean))];
-    const optionIds = [...new Set(votes.map(vote => vote.option_id).filter(Boolean))];
-
-    const [{ data: polls, error: pollError }, { data: options, error: optionError }] = await Promise.all([
-      client.from("polls").select("id,question").in("id", pollIds),
-      client.from("poll_options").select("id,option_name").in("id", optionIds)
-    ]);
-
-    if (pollError) throw pollError;
-    if (optionError) throw optionError;
-
-    const pollMap = new Map((polls || []).map(poll => [String(poll.id), poll.question]));
-    const optionMap = new Map((options || []).map(option => [String(option.id), option.option_name]));
-
     host.className = "";
     host.innerHTML = votes.map(vote => {
-      const question = pollMap.get(String(vote.poll_id)) || "NAL Fan Poll";
-      const pick = optionMap.get(String(vote.option_id)) || "Your selection";
-      const votedDate = vote.created_at
-        ? new Date(vote.created_at).toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" })
+      const question = vote.question || "NAL Fan Poll";
+      const pick = vote.option_name || "Your selection";
+      const votedDate = vote.voted_at
+        ? new Date(vote.voted_at).toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" })
         : "";
 
       return `
