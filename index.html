@@ -6558,6 +6558,126 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
+
+
+/* =========================================================
+   HEADER — TRUE 3-ZONE FINAL OVERRIDE
+   Large bell left | centered NAL logo | large white account right
+========================================================= */
+.topbar{
+  box-sizing:border-box !important;
+  height:var(--header-height) !important;
+  min-height:var(--header-height) !important;
+  padding:max(4px, env(safe-area-inset-top)) 10px 4px !important;
+  display:grid !important;
+  grid-template-columns:56px minmax(0,1fr) 56px !important;
+  align-items:center !important;
+  column-gap:0 !important;
+}
+.topbar .header-left,
+.topbar .header-right{
+  width:56px !important;
+  min-width:56px !important;
+  height:100% !important;
+  display:flex !important;
+  align-items:center !important;
+}
+.topbar .header-left{
+  grid-column:1 !important;
+  grid-row:1 !important;
+  justify-self:start !important;
+  justify-content:flex-start !important;
+}
+.topbar #headerHome{
+  grid-column:2 !important;
+  grid-row:1 !important;
+  justify-self:center !important;
+  align-self:center !important;
+  width:auto !important;
+  min-width:0 !important;
+  height:100% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+.topbar #headerHome .nal-logo{
+  width:76px !important;
+  height:52px !important;
+  max-width:100% !important;
+  object-fit:contain !important;
+}
+.topbar .header-right{
+  grid-column:3 !important;
+  grid-row:1 !important;
+  justify-self:end !important;
+  justify-content:flex-end !important;
+}
+.topbar #nalNotificationButton,
+.topbar #headerLoginButton{
+  box-sizing:border-box !important;
+  width:56px !important;
+  min-width:56px !important;
+  height:56px !important;
+  min-height:56px !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  color:#fff !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+.topbar #nalNotificationButton svg,
+.topbar #headerLoginButton svg{
+  width:42px !important;
+  height:42px !important;
+  min-width:42px !important;
+  flex:0 0 42px !important;
+  display:block !important;
+  fill:none !important;
+  stroke:#fff !important;
+  stroke-width:1.9 !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+}
+.topbar #headerLoginButton span{
+  display:none !important;
+}
+.topbar #nalNotificationBadge{
+  top:4px !important;
+  right:3px !important;
+}
+@media(max-width:430px){
+  .topbar{
+    grid-template-columns:56px minmax(0,1fr) 56px !important;
+    padding-left:8px !important;
+    padding-right:8px !important;
+  }
+  .topbar .header-left,
+  .topbar .header-right{
+    width:56px !important;
+    min-width:56px !important;
+  }
+  .topbar #nalNotificationButton,
+  .topbar #headerLoginButton{
+    width:56px !important;
+    min-width:56px !important;
+    height:56px !important;
+  }
+  .topbar #nalNotificationButton svg,
+  .topbar #headerLoginButton svg{
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+    flex-basis:42px !important;
+  }
+  .topbar #headerHome .nal-logo{
+    width:72px !important;
+    height:50px !important;
+  }
+}
+
 </style>
 </head>
 
