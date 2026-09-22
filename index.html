@@ -6052,6 +6052,214 @@ document.addEventListener("DOMContentLoaded", () => {
   font-family:Arial,sans-serif !important;
 }
 
+
+/* =========================================================
+   NAL ALERTS / NOTIFICATION CENTER
+========================================================= */
+.notification-button .notification-dot{
+  width:auto !important;
+  min-width:17px !important;
+  height:17px !important;
+  padding:0 4px !important;
+  border:2px solid #07172b !important;
+  border-radius:999px !important;
+  top:0 !important;
+  right:-2px !important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  background:#e31b23 !important;
+  color:#fff;
+  font-size:9px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:0;
+}
+.notification-button .notification-dot[hidden]{
+  display:none !important;
+}
+#nalAlertsPage{
+  display:none;
+  min-height:calc(100vh - var(--header-height));
+  padding-bottom:110px;
+  background:#f2f4f7;
+  color:#07172b;
+}
+.nal-alerts-hero{
+  background:
+    radial-gradient(circle at 85% 0%,rgba(227,27,35,.24),transparent 35%),
+    linear-gradient(145deg,#07172b,#102b4e);
+  color:#fff;
+  border-bottom:4px solid #e31b23;
+}
+.nal-alerts-hero-inner{
+  width:min(720px,100%);
+  margin:0 auto;
+  padding:20px 17px 22px;
+  box-sizing:border-box;
+}
+.nal-alerts-back{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:#fff;
+  padding:4px 0 14px;
+  font:inherit;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+.nal-alerts-kicker{
+  color:#aebdcd;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.nal-alerts-title-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:5px;
+}
+.nal-alerts-title{
+  margin:0;
+  font-size:28px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:.3px;
+}
+.nal-alerts-unread{
+  flex:0 0 auto;
+  padding:6px 9px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.7px;
+}
+.nal-alerts-subtitle{
+  margin:9px 0 0;
+  color:#c6d0dc;
+  font-size:12px;
+  line-height:1.45;
+}
+.nal-alerts-shell{
+  width:min(720px,100%);
+  margin:0 auto;
+  padding:15px 13px 28px;
+  box-sizing:border-box;
+}
+.nal-alerts-list{
+  display:grid;
+  gap:10px;
+}
+.nal-alert-card{
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid #dce2e8;
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 4px 14px rgba(7,23,43,.06);
+}
+.nal-alert-card.unread{
+  border-color:#c7d2df;
+  box-shadow:0 6px 18px rgba(7,23,43,.10);
+}
+.nal-alert-card.unread::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:#e31b23;
+}
+.nal-alert-card-button{
+  appearance:none;
+  border:0;
+  width:100%;
+  padding:15px 15px 14px 17px;
+  background:transparent;
+  color:inherit;
+  text-align:left;
+  font:inherit;
+  cursor:pointer;
+}
+.nal-alert-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:7px;
+}
+.nal-alert-type{
+  color:#e31b23;
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:1.1px;
+  text-transform:uppercase;
+}
+.nal-alert-date{
+  color:#7a8795;
+  font-size:9px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.nal-alert-card-title{
+  margin:0 0 6px;
+  color:#07172b;
+  font-size:16px;
+  line-height:1.18;
+  font-weight:950;
+}
+.nal-alert-card.unread .nal-alert-card-title{
+  padding-right:14px;
+}
+.nal-alert-card.unread .nal-alert-card-title::after{
+  content:"";
+  position:absolute;
+  right:15px;
+  top:44px;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#e31b23;
+}
+.nal-alert-message{
+  margin:0;
+  color:#4d5b69;
+  font-size:12px;
+  line-height:1.48;
+}
+.nal-alert-action{
+  display:inline-block;
+  margin-top:10px;
+  color:#0b5cad;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.nal-alerts-state{
+  padding:34px 20px;
+  border:1px solid #dce2e8;
+  border-radius:14px;
+  background:#fff;
+  color:#687684;
+  text-align:center;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.5;
+}
+
 </style>
 </head>
 
@@ -6070,14 +6278,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <button
         class="header-button notification-button"
+        id="nalNotificationButton"
         type="button"
-        aria-label="Notifications"
+        aria-label="NAL Alerts"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
           <path d="M10 21h4"></path>
         </svg>
-        <span class="notification-dot"></span>
+        <span class="notification-dot" id="nalNotificationBadge" hidden>0</span>
       </button>
 
       <span class="header-left-divider" aria-hidden="true"></span>
@@ -7061,6 +7270,30 @@ document.addEventListener("DOMContentLoaded", () => {
   </main>
 
 
+
+
+  <!-- =====================================================
+       NAL ALERTS / NOTIFICATION CENTER
+  ====================================================== -->
+  <main id="nalAlertsPage" class="app-page">
+    <section class="nal-alerts-hero">
+      <div class="nal-alerts-hero-inner">
+        <button type="button" class="nal-alerts-back" id="nalAlertsBack">‹ BACK</button>
+        <div class="nal-alerts-kicker">NATIONAL ARENA LEAGUE</div>
+        <div class="nal-alerts-title-row">
+          <h1 class="nal-alerts-title">NAL ALERTS</h1>
+          <div class="nal-alerts-unread" id="nalAlertsUnreadLabel">0 UNREAD</div>
+        </div>
+        <p class="nal-alerts-subtitle">League news, team updates and important NAL App notifications.</p>
+      </div>
+    </section>
+
+    <div class="nal-alerts-shell">
+      <div class="nal-alerts-list" id="nalAlertsList">
+        <div class="nal-alerts-state">Loading NAL Alerts…</div>
+      </div>
+    </div>
+  </main>
 
   <!-- =====================================================
        NAL FAN ACCOUNT
@@ -11110,18 +11343,26 @@ async function initializeNalFanAccount(){
 
     if (nalAccountUser){
       await loadNalFanProfile(nalAccountUser);
+      await loadNalAlerts();
     } else {
       updateHeaderAccountState();
+      setNalNotificationBadge(0);
     }
 
     client.auth.onAuthStateChange(async (event, session) => {
       nalAccountUser = session?.user || null;
 
       if (nalAccountUser){
-        setTimeout(() => loadNalFanProfile(nalAccountUser), 0);
+        setTimeout(async () => {
+          await loadNalFanProfile(nalAccountUser);
+          await loadNalAlerts();
+        }, 0);
       } else {
         nalAccountProfile = null;
+        nalNotifications = [];
+        nalNotificationReadIds = new Set();
         updateHeaderAccountState();
+        setNalNotificationBadge(0);
       }
     });
   } catch(error){
@@ -11900,168 +12141,304 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
   });
 })();
 
-/* NAL MEMBER ACCOUNT — persistent Supabase Storage avatar management. */
+/* NAL MEMBER ACCOUNT — avatar preview and legal-page shortcuts.
+   Avatar selection is local preview only until Supabase Storage is connected. */
 (function(){
   const avatarButton = document.getElementById("fanMemberAvatarButton");
   const actions = document.getElementById("fanMemberAvatarActions");
   const fileInput = document.getElementById("fanMemberAvatarFile");
   const avatarImage = document.getElementById("fanMemberAvatarImage");
   const initial = document.getElementById("fanProfileInitial");
-  const chooseButton = document.getElementById("fanMemberChooseAvatar");
-  const removeButton = document.getElementById("fanMemberRemoveAvatar");
-  const cancelButton = document.getElementById("fanMemberCancelAvatar");
-  const AVATAR_BUCKET = "avatars";
-
-  function setAvatarBusy(isBusy){
-    if (chooseButton){
-      chooseButton.disabled = isBusy;
-      chooseButton.textContent = isBusy ? "SAVING PHOTO..." : "UPLOAD PHOTO";
-    }
-    if (removeButton) removeButton.disabled = isBusy;
-    if (cancelButton) cancelButton.disabled = isBusy;
-  }
-
-  function showAvatarError(message){
-    console.error(message);
-    alert(message);
-  }
 
   avatarButton?.addEventListener("click", function(){
     actions?.classList.add("open");
   });
 
-  chooseButton?.addEventListener("click", function(){
+  document.getElementById("fanMemberChooseAvatar")?.addEventListener("click", function(){
     fileInput?.click();
   });
 
-  cancelButton?.addEventListener("click", function(){
+  document.getElementById("fanMemberCancelAvatar")?.addEventListener("click", function(){
     actions?.classList.remove("open");
   });
 
-  removeButton?.addEventListener("click", async function(){
-    if (!nalAccountUser){
-      showAvatarError("Please sign in again before changing your profile photo.");
-      return;
+  document.getElementById("fanMemberRemoveAvatar")?.addEventListener("click", function(){
+    if (avatarImage){
+      avatarImage.removeAttribute("src");
+      avatarImage.style.display = "none";
     }
-
-    setAvatarBusy(true);
-    try{
-      const client = getNalAccountClient();
-      const folder = nalAccountUser.id + "/";
-      const { data: storedFiles, error: listError } = await client.storage
-        .from(AVATAR_BUCKET)
-        .list(nalAccountUser.id, { limit: 100 });
-
-      if (listError) throw listError;
-
-      const paths = (storedFiles || [])
-        .filter(item => item && item.name)
-        .map(item => folder + item.name);
-
-      if (paths.length){
-        const { error: removeError } = await client.storage
-          .from(AVATAR_BUCKET)
-          .remove(paths);
-        if (removeError) throw removeError;
-      }
-
-      const { error: profileError } = await client
-        .from("profiles")
-        .update({ avatar_url: null })
-        .eq("id", nalAccountUser.id);
-
-      if (profileError) throw profileError;
-
-      if (nalAccountProfile) nalAccountProfile.avatar_url = null;
-      if (avatarImage){
-        avatarImage.removeAttribute("src");
-        avatarImage.style.display = "none";
-      }
-      if (initial) initial.style.display = "";
-      if (fileInput) fileInput.value = "";
-      actions?.classList.remove("open");
-    } catch(error){
-      console.error("NAL avatar remove error:", error);
-      showAvatarError("We couldn't remove your profile photo. Please try again.");
-    } finally {
-      setAvatarBusy(false);
-    }
+    if (initial) initial.style.display = "";
+    if (fileInput) fileInput.value = "";
+    actions?.classList.remove("open");
   });
 
-  fileInput?.addEventListener("change", async function(){
+  fileInput?.addEventListener("change", function(){
     const file = this.files && this.files[0];
     if (!file) return;
-
-    if (!nalAccountUser){
-      this.value = "";
-      showAvatarError("Please sign in again before uploading a profile photo.");
-      return;
-    }
-
-    const allowedTypes = ["image/png","image/jpeg","image/webp"];
-    if (!allowedTypes.includes(file.type)){
-      this.value = "";
-      showAvatarError("Please choose a PNG, JPG, or WEBP image.");
-      return;
-    }
-
-    if (file.size > 5 * 1024 * 1024){
-      this.value = "";
-      showAvatarError("Please choose an image smaller than 5 MB.");
-      return;
-    }
-
-    setAvatarBusy(true);
-    try{
-      const client = getNalAccountClient();
-      const extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
-      const path = nalAccountUser.id + "/avatar." + extension;
-
-      const { error: uploadError } = await client.storage
-        .from(AVATAR_BUCKET)
-        .upload(path, file, {
-          cacheControl: "3600",
-          upsert: true,
-          contentType: file.type
-        });
-
-      if (uploadError) throw uploadError;
-
-      const { data: publicData } = client.storage
-        .from(AVATAR_BUCKET)
-        .getPublicUrl(path);
-
-      const publicUrl = publicData?.publicUrl;
-      if (!publicUrl) throw new Error("Avatar URL was not returned.");
-
-      const savedUrl = publicUrl + "?v=" + Date.now();
-      const { error: profileError } = await client
-        .from("profiles")
-        .update({ avatar_url: savedUrl })
-        .eq("id", nalAccountUser.id);
-
-      if (profileError) throw profileError;
-
-      if (nalAccountProfile) nalAccountProfile.avatar_url = savedUrl;
+    const reader = new FileReader();
+    reader.onload = function(event){
       if (avatarImage){
-        avatarImage.src = savedUrl;
+        avatarImage.src = event.target.result;
         avatarImage.style.display = "block";
       }
       if (initial) initial.style.display = "none";
       actions?.classList.remove("open");
-    } catch(error){
-      console.error("NAL avatar upload error:", error);
-      showAvatarError("We couldn't save your profile photo. Please try again.");
-    } finally {
-      setAvatarBusy(false);
-      if (fileInput) fileInput.value = "";
-    }
+    };
+    reader.readAsDataURL(file);
   });
 
   document.getElementById("fanMemberTerms")?.addEventListener("click", openFanTerms);
   document.getElementById("fanMemberGuidelines")?.addEventListener("click", openFanGuidelines);
   document.getElementById("fanMemberPrivacy")?.addEventListener("click", openFanPrivacy);
 })();
+
+
+/* =========================================================
+   NAL ALERTS / NOTIFICATION CENTER
+========================================================= */
+let nalNotifications = [];
+let nalNotificationReadIds = new Set();
+let nalAlertsReturnPageId = "homePage";
+
+function getNalNotificationBadge(){
+  return document.getElementById("nalNotificationBadge");
+}
+
+function setNalNotificationBadge(count){
+  const badge = getNalNotificationBadge();
+  if (!badge) return;
+  const safeCount = Math.max(0, Number(count) || 0);
+  badge.textContent = safeCount > 99 ? "99+" : String(safeCount);
+  badge.hidden = safeCount === 0;
+}
+
+function formatNalAlertDate(value){
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat(undefined,{
+    month:"short",
+    day:"numeric",
+    hour:"numeric",
+    minute:"2-digit"
+  }).format(date);
+}
+
+function getNalAlertTypeLabel(notification){
+  const raw = String(notification?.notification_type || "league").trim();
+  if (!raw) return "NAL ALERT";
+  return raw.replace(/[_-]+/g," ").toUpperCase();
+}
+
+function nalNotificationMatchesFan(notification){
+  if (!notification || notification.is_active === false) return false;
+
+  const targetType = String(notification.target_type || "all").toLowerCase();
+  if (targetType === "all" || targetType === "league" || !targetType) return true;
+
+  if (targetType === "team"){
+    const targetTeam = String(notification.target_team || "").trim().toLowerCase();
+    const favoriteTeam = String(nalAccountProfile?.favorite_team || "").trim().toLowerCase();
+    return !!targetTeam && !!favoriteTeam && targetTeam === favoriteTeam;
+  }
+
+  return true;
+}
+
+function renderNalAlerts(){
+  const list = document.getElementById("nalAlertsList");
+  const unreadLabel = document.getElementById("nalAlertsUnreadLabel");
+  if (!list) return;
+
+  const visibleNotifications = nalNotifications.filter(nalNotificationMatchesFan);
+  const unreadCount = visibleNotifications.filter(item => !nalNotificationReadIds.has(String(item.id))).length;
+
+  setNalNotificationBadge(unreadCount);
+  if (unreadLabel){
+    unreadLabel.textContent = `${unreadCount} UNREAD`;
+  }
+
+  if (!visibleNotifications.length){
+    list.innerHTML = '<div class="nal-alerts-state">You’re all caught up. New NAL Alerts will appear here.</div>';
+    return;
+  }
+
+  list.innerHTML = visibleNotifications.map(item => {
+    const id = String(item.id);
+    const unread = !nalNotificationReadIds.has(id);
+    const title = escapeHTML(item.title || "NAL Alert");
+    const message = escapeHTML(item.message || "");
+    const type = escapeHTML(getNalAlertTypeLabel(item));
+    const date = escapeHTML(formatNalAlertDate(item.created_at));
+    const actionUrl = String(item.action_url || "").trim();
+    const actionText = actionUrl ? '<span class="nal-alert-action">VIEW UPDATE →</span>' : "";
+
+    return `
+      <article class="nal-alert-card${unread ? " unread" : ""}" data-notification-id="${escapeHTML(id)}">
+        <button type="button" class="nal-alert-card-button" data-notification-id="${escapeHTML(id)}">
+          <div class="nal-alert-meta">
+            <span class="nal-alert-type">${type}</span>
+            <span class="nal-alert-date">${date}</span>
+          </div>
+          <h2 class="nal-alert-card-title">${title}</h2>
+          <p class="nal-alert-message">${message}</p>
+          ${actionText}
+        </button>
+      </article>
+    `;
+  }).join("");
+}
+
+async function loadNalAlerts(){
+  if (!nalAccountUser){
+    nalNotifications = [];
+    nalNotificationReadIds = new Set();
+    setNalNotificationBadge(0);
+    return;
+  }
+
+  try{
+    const client = getNalAccountClient();
+
+    const [{data: notifications, error: notificationError}, {data: reads, error: readsError}] =
+      await Promise.all([
+        client
+          .from("notifications")
+          .select("*")
+          .order("created_at",{ascending:false})
+          .limit(100),
+        client
+          .from("notification_reads")
+          .select("notification_id")
+          .eq("user_id", nalAccountUser.id)
+      ]);
+
+    if (notificationError) throw notificationError;
+    if (readsError) throw readsError;
+
+    nalNotifications = Array.isArray(notifications) ? notifications : [];
+    nalNotificationReadIds = new Set(
+      (Array.isArray(reads) ? reads : []).map(row => String(row.notification_id))
+    );
+
+    renderNalAlerts();
+  } catch(error){
+    console.error("NAL alerts load error:", error);
+    const list = document.getElementById("nalAlertsList");
+    if (list && document.getElementById("nalAlertsPage")?.classList.contains("active")){
+      list.innerHTML = '<div class="nal-alerts-state">NAL Alerts could not be loaded. Please try again.</div>';
+    }
+  }
+}
+
+async function markNalAlertRead(notificationId){
+  if (!nalAccountUser || !notificationId) return;
+
+  const id = String(notificationId);
+  if (nalNotificationReadIds.has(id)) return;
+
+  try{
+    const client = getNalAccountClient();
+    const { error } = await client
+      .from("notification_reads")
+      .insert({
+        user_id: nalAccountUser.id,
+        notification_id: notificationId
+      });
+
+    if (error && error.code !== "23505") throw error;
+
+    nalNotificationReadIds.add(id);
+    renderNalAlerts();
+  } catch(error){
+    console.error("NAL alert read error:", error);
+  }
+}
+
+async function openNalAlerts(){
+  if (!nalAccountUser){
+    await openFanAccount();
+    setFanAccountMessage("Sign in to view your NAL Alerts.");
+    return;
+  }
+
+  nalAlertsReturnPageId = getCurrentVisibleAppPageId();
+  if (nalAlertsReturnPageId === "nalAlertsPage") nalAlertsReturnPageId = "homePage";
+
+  document.querySelectorAll(".app-page").forEach(page => {
+    page.classList.remove("active");
+    page.style.display = "none";
+  });
+
+  const page = document.getElementById("nalAlertsPage");
+  if (page){
+    page.style.display = "block";
+    page.classList.add("active");
+  }
+
+  window.scrollTo(0,0);
+
+  const list = document.getElementById("nalAlertsList");
+  if (list) list.innerHTML = '<div class="nal-alerts-state">Loading NAL Alerts…</div>';
+  await loadNalAlerts();
+}
+
+function closeNalAlerts(){
+  const alertsPage = document.getElementById("nalAlertsPage");
+  if (alertsPage){
+    alertsPage.classList.remove("active");
+    alertsPage.style.display = "none";
+  }
+
+  const previous = document.getElementById(nalAlertsReturnPageId) || document.getElementById("homePage");
+  if (previous){
+    previous.style.display = "block";
+    previous.classList.add("active");
+  }
+
+  window.scrollTo(0,0);
+}
+
+document.addEventListener("click", async function(event){
+  const bell = event.target.closest("#nalNotificationButton");
+  if (bell){
+    event.preventDefault();
+    event.stopPropagation();
+    await openNalAlerts();
+    return;
+  }
+
+  const back = event.target.closest("#nalAlertsBack");
+  if (back){
+    event.preventDefault();
+    closeNalAlerts();
+    return;
+  }
+
+  const alertButton = event.target.closest(".nal-alert-card-button");
+  if (alertButton){
+    event.preventDefault();
+
+    const notificationId = alertButton.dataset.notificationId;
+    const notification = nalNotifications.find(item => String(item.id) === String(notificationId));
+
+    await markNalAlertRead(notificationId);
+
+    const actionUrl = String(notification?.action_url || "").trim();
+    if (actionUrl){
+      window.open(actionUrl,"_blank","noopener,noreferrer");
+    }
+  }
+});
+
+/* Keep the badge current after account initialization and auth changes. */
+document.addEventListener("DOMContentLoaded", function(){
+  setTimeout(() => {
+    if (nalAccountUser) loadNalAlerts();
+    else setNalNotificationBadge(0);
+  }, 700);
+});
+
 
 document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 
