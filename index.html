@@ -6343,11 +6343,6 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-author-name{color:#07172b;font-size:10px;font-weight:1000;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .fan-forum-author-time{color:#748293;font-size:9px;font-weight:800;line-height:1.15;}
 .fan-forum-thread-card .fan-forum-author-row{margin:8px 0 12px;}
-.fan-forum-mod-tools{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0;padding-top:12px;border-top:1px solid #e4e9ef;}
-.fan-forum-mod-button{appearance:none;border:1px solid #c9d3de;background:#f7f9fb;color:#07172b;border-radius:999px;padding:7px 10px;font:900 10px/1 Arial,sans-serif;letter-spacing:.45px;cursor:pointer;}
-.fan-forum-mod-button.danger{border-color:#d7a8ad;color:#a71925;background:#fff7f8;}
-.fan-forum-mod-button:disabled{opacity:.5;cursor:wait;}
-.fan-forum-reply.is-hidden,.fan-forum-topic-card.is-hidden{opacity:.68;border-style:dashed;}
 .fan-forum-reply .fan-forum-author-row{margin:0 0 9px;}
 .fan-forum-topic-card .fan-forum-author-row{margin:8px 0 0;}
 .fan-forum-topic-card .fan-forum-author-avatar{width:28px;height:28px;flex-basis:28px;font-size:11px;}
@@ -6389,6 +6384,20 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-compose-cancel{background:#e8edf2;color:#07172b;}.fan-forum-compose-submit{background:#e31b23;color:#fff;}
 .fan-forum-compose-status{min-height:16px;margin-top:8px;color:#6d7b89;font-size:9px;font-weight:800;}.fan-forum-compose-status.error{color:#c81820;}.fan-forum-compose-status.success{color:#147a45;}
 
+</style>
+
+<style>
+/* =========================================================
+   NAL FAN FORUM — LIKE REACTIONS
+   ========================================================= */
+.fan-forum-reactions{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid #edf1f5;}
+.fan-forum-like{display:inline-flex;align-items:center;gap:6px;border:1px solid #dbe3eb;border-radius:999px;background:#fff;color:#526274;padding:7px 11px;font:inherit;font-size:9px;font-weight:1000;letter-spacing:.35px;cursor:pointer;transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease;}
+.fan-forum-like:hover{border-color:#b8c5d2;background:#f8fafc;}
+.fan-forum-like:active{transform:scale(.97);}
+.fan-forum-like.liked{border-color:#e31b23;background:#fff0f1;color:#c81820;}
+.fan-forum-like:disabled{opacity:.55;cursor:wait;}
+.fan-forum-like-icon{font-size:13px;line-height:1;}
+.fan-forum-like-count{min-width:8px;text-align:center;}
 </style>
 </head>
 
@@ -10789,6 +10798,8 @@ let activeNalForumCategory = null;
 let nalForumTopics = [];
 let activeNalForumTopic = null;
 let nalForumReplies = [];
+let nalForumReactions = [];
+const nalForumReactionPending = new Set();
 
 const NAL_FORUM_SECTION_LABELS = {
   "the-league":"THE LEAGUE",
@@ -10955,67 +10966,6 @@ function forumTopicValue(topic, names, fallback=""){
   return fallback;
 }
 
-function nalForumCanModerate(){
-  const role = String(nalAccountProfile?.role || "fan").toLowerCase();
-  return ["moderator","admin"].includes(role);
-}
-
-function nalForumModerationHTML(type,item){
-  if (!nalForumCanModerate() || !item) return "";
-  const id = escapeHTML(String(forumTopicValue(item,["id"],"")));
-  const hidden = !!forumTopicValue(item,["is_hidden","hidden"],false);
-  if (type === "reply"){
-    return `<div class="fan-forum-mod-tools"><button class="fan-forum-mod-button danger" type="button" data-forum-mod-reply="${id}" data-forum-mod-action="hidden">${hidden?"RESTORE REPLY":"HIDE REPLY"}</button></div>`;
-  }
-  const pinned = !!forumTopicValue(item,["is_pinned","pinned"],false);
-  const locked = !!forumTopicValue(item,["is_locked","locked"],false);
-  return `<div class="fan-forum-mod-tools"><button class="fan-forum-mod-button" type="button" data-forum-mod-topic="${id}" data-forum-mod-action="pinned">${pinned?"UNPIN":"PIN"}</button><button class="fan-forum-mod-button" type="button" data-forum-mod-topic="${id}" data-forum-mod-action="locked">${locked?"UNLOCK":"LOCK"}</button><button class="fan-forum-mod-button danger" type="button" data-forum-mod-topic="${id}" data-forum-mod-action="hidden">${hidden?"RESTORE":"HIDE"}</button></div>`;
-}
-
-async function moderateNalForumTopic(topicId,action,button){
-  if (!nalForumCanModerate()) return;
-  const topic = nalForumTopics.find(item => String(item.id) === String(topicId));
-  if (!topic) return;
-  const field = action === "pinned" ? "is_pinned" : action === "locked" ? "is_locked" : action === "hidden" ? "is_hidden" : "";
-  if (!field) return;
-  const nextValue = !Boolean(topic[field]);
-  if (button) button.disabled = true;
-  try{
-    const client = getNalAccountClient();
-    const { error } = await client.from("forum_topics").update({[field]:nextValue}).eq("id",topic.id);
-    if (error) throw error;
-    topic[field] = nextValue;
-    if (activeNalForumTopic && String(activeNalForumTopic.id) === String(topic.id)) activeNalForumTopic[field] = nextValue;
-    renderNalForumTopics();
-    if (activeNalForumTopic && String(activeNalForumTopic.id) === String(topic.id)){
-      renderNalForumThreadPost();
-      updateNalForumReplyComposer();
-    }
-  }catch(error){
-    console.error("Unable to moderate NAL Forum conversation:",error);
-    window.alert(error?.message || "This moderation change could not be saved.");
-  }finally{ if (button) button.disabled = false; }
-}
-
-async function moderateNalForumReply(replyId,button){
-  if (!nalForumCanModerate()) return;
-  const reply = nalForumReplies.find(item => String(item.id) === String(replyId));
-  if (!reply) return;
-  const nextValue = !Boolean(reply.is_hidden);
-  if (button) button.disabled = true;
-  try{
-    const client = getNalAccountClient();
-    const { error } = await client.from("forum_replies").update({is_hidden:nextValue}).eq("id",reply.id);
-    if (error) throw error;
-    reply.is_hidden = nextValue;
-    renderNalForumReplies();
-    await loadNalForumTopics();
-  }catch(error){
-    console.error("Unable to moderate NAL Forum reply:",error);
-    window.alert(error?.message || "This moderation change could not be saved.");
-  }finally{ if (button) button.disabled = false; }
-}
-
 function formatNalForumTime(value){
   if (!value) return "";
   const d = new Date(value);
@@ -11077,18 +11027,6 @@ async function loadNalForumTopics(){
     if (error) throw error;
     nalForumTopics = Array.isArray(data) ? data : [];
     await enrichNalForumAuthors(nalForumTopics);
-    const topicIds = nalForumTopics.map(topic => topic.id).filter(id => id !== undefined && id !== null);
-    if (topicIds.length){
-      const { data: replyRows, error: replyError } = await client.from("forum_replies").select("topic_id,is_hidden").in("topic_id",topicIds);
-      if (replyError) throw replyError;
-      const counts = new Map();
-      (Array.isArray(replyRows)?replyRows:[]).forEach(reply => {
-        if (reply.is_hidden) return;
-        const key = String(reply.topic_id);
-        counts.set(key,(counts.get(key)||0)+1);
-      });
-      nalForumTopics.forEach(topic => { topic._forum_reply_count = counts.get(String(topic.id)) || 0; });
-    }
     renderNalForumTopics();
   }catch(error){
     console.error("Unable to load NAL Forum topics:", error);
@@ -11099,7 +11037,7 @@ async function loadNalForumTopics(){
 function renderNalForumTopics(){
   const host = document.getElementById("fanForumTopics");
   if (!host) return;
-  const visible = nalForumCanModerate() ? nalForumTopics : nalForumTopics.filter(topic => !forumTopicValue(topic,["is_hidden","hidden"],false));
+  const visible = nalForumTopics.filter(topic => !forumTopicValue(topic,["is_hidden","hidden"],false));
   if (!visible.length){
     host.innerHTML = '<div class="fan-forum-empty"><strong style="display:block;color:#07172b;margin-bottom:4px;">NO CONVERSATIONS YET</strong>Be the first to start one.</div>';
     return;
@@ -11107,29 +11045,21 @@ function renderNalForumTopics(){
   host.innerHTML = visible.map(topic => {
     const title = forumTopicValue(topic,["title","topic_title"],"NAL Conversation");
     const body = forumTopicValue(topic,["body","content","message"],"");
-    const replies = Number(topic._forum_reply_count ?? forumTopicValue(topic,["reply_count","replies_count"],0)) || 0;
+    const replies = Number(forumTopicValue(topic,["reply_count","replies_count"],0)) || 0;
     const created = formatNalForumTime(forumTopicValue(topic,["created_at","posted_at"],""));
     const tag = forumTopicValue(topic,["tag","tag_name","topic_tag"],"");
     const pinned = !!forumTopicValue(topic,["is_pinned","pinned"],false);
     const locked = !!forumTopicValue(topic,["is_locked","locked"],false);
-    const hidden = !!forumTopicValue(topic,["is_hidden","hidden"],false);
     const topicId = escapeHTML(String(forumTopicValue(topic,["id"],"")));
-    return `<article class="fan-forum-topic-card${hidden?" is-hidden":""}" role="button" tabindex="0" data-forum-topic="${topicId}">
-      ${(pinned || locked || hidden || tag) ? `<div class="fan-forum-topic-flags">${pinned?'<span class="fan-forum-topic-flag red">PINNED</span>':''}${locked?'<span class="fan-forum-topic-flag">LOCKED</span>':''}${hidden?'<span class="fan-forum-topic-flag">HIDDEN</span>':''}${tag?`<span class="fan-forum-topic-flag">${escapeHTML(String(tag).toUpperCase())}</span>`:''}</div>` : ''}
+    return `<article class="fan-forum-topic-card" role="button" tabindex="0" data-forum-topic="${topicId}">
+      ${(pinned || locked || tag) ? `<div class="fan-forum-topic-flags">${pinned?'<span class="fan-forum-topic-flag red">PINNED</span>':''}${locked?'<span class="fan-forum-topic-flag">LOCKED</span>':''}${tag?`<span class="fan-forum-topic-flag">${escapeHTML(String(tag).toUpperCase())}</span>`:''}</div>` : ''}
       <h3>${escapeHTML(title)}</h3>
       ${body ? `<p class="fan-forum-topic-preview">${escapeHTML(body)}</p>` : ''}
       ${nalForumAuthorHTML(topic,created)}
       <div class="fan-forum-topic-meta">${replies} ${replies===1?'REPLY':'REPLIES'}</div>
-      ${nalForumModerationHTML("topic",topic)}
     </article>`;
   }).join("");
 
-  host.querySelectorAll("[data-forum-mod-topic]").forEach(button => {
-    button.addEventListener("click", event => {
-      event.stopPropagation();
-      moderateNalForumTopic(button.dataset.forumModTopic,button.dataset.forumModAction,button);
-    });
-  });
   host.querySelectorAll("[data-forum-topic]").forEach(card => {
     const open = () => openNalForumThread(card.dataset.forumTopic);
     card.addEventListener("click", open);
@@ -11142,6 +11072,7 @@ function renderNalForumTopics(){
 function closeNalForumThread(){
   activeNalForumTopic = null;
   nalForumReplies = [];
+  nalForumReactions = [];
   showNalForumPage("fanForumCategoryPage");
 }
 
@@ -11176,9 +11107,11 @@ async function openNalForumThread(topicId){
   if (section) section.textContent = nalForumSectionLabel(activeNalForumCategory?.section);
   if (category) category.textContent = activeNalForumCategory?.name || "NAL COMMUNITY";
   showNalForumPage("fanForumThreadPage");
+  nalForumReactions = [];
   renderNalForumThreadPost();
   updateNalForumReplyComposer();
   await loadNalForumReplies();
+  await loadNalForumReactions();
 }
 
 function renderNalForumThreadPost(){
@@ -11189,11 +11122,8 @@ function renderNalForumThreadPost(){
   const created = formatNalForumTime(forumTopicValue(activeNalForumTopic,["created_at","posted_at"],""));
   const pinned = !!forumTopicValue(activeNalForumTopic,["is_pinned","pinned"],false);
   const locked = !!forumTopicValue(activeNalForumTopic,["is_locked","locked"],false);
-  const hidden = !!forumTopicValue(activeNalForumTopic,["is_hidden","hidden"],false);
-  host.innerHTML = `${(pinned || locked || hidden) ? `<div class="fan-forum-topic-flags">${pinned?'<span class="fan-forum-topic-flag red">PINNED</span>':''}${locked?'<span class="fan-forum-topic-flag">LOCKED</span>':''}${hidden?'<span class="fan-forum-topic-flag">HIDDEN</span>':''}</div>` : ''}<h1>${escapeHTML(title)}</h1>${nalForumAuthorHTML(activeNalForumTopic,created)}${body ? `<div class="fan-forum-thread-body">${escapeHTML(body)}</div>` : ''}${nalForumModerationHTML("topic",activeNalForumTopic)}`;
-  host.querySelectorAll("[data-forum-mod-topic]").forEach(button => {
-    button.addEventListener("click", () => moderateNalForumTopic(button.dataset.forumModTopic,button.dataset.forumModAction,button));
-  });
+  host.innerHTML = `${(pinned || locked) ? `<div class="fan-forum-topic-flags">${pinned?'<span class="fan-forum-topic-flag red">PINNED</span>':''}${locked?'<span class="fan-forum-topic-flag">LOCKED</span>':''}</div>` : ''}<h1>${escapeHTML(title)}</h1>${nalForumAuthorHTML(activeNalForumTopic,created)}${body ? `<div class="fan-forum-thread-body">${escapeHTML(body)}</div>` : ''}${nalForumReactionHTML("topic",activeNalForumTopic.id)}`;
+  bindNalForumReactionButtons(host);
 }
 
 async function loadNalForumReplies(){
@@ -11218,18 +11148,93 @@ function renderNalForumReplies(){
   const host = document.getElementById("fanForumReplies");
   const count = document.getElementById("fanForumReplyCount");
   if (!host) return;
-  const visible = nalForumCanModerate() ? nalForumReplies : nalForumReplies.filter(reply => !forumTopicValue(reply,["is_hidden","hidden"],false));
+  const visible = nalForumReplies.filter(reply => !forumTopicValue(reply,["is_hidden","hidden"],false));
   if (count) count.textContent = `${visible.length} ${visible.length===1?"REPLY":"REPLIES"}`;
   if (!visible.length){ host.innerHTML = '<div class="fan-forum-empty">No replies yet. Be the first to join the conversation.</div>'; return; }
   host.innerHTML = visible.map(reply => {
     const body = forumTopicValue(reply,["body","content","message"],"");
     const created = formatNalForumTime(forumTopicValue(reply,["created_at","posted_at"],""));
-    const hidden = !!forumTopicValue(reply,["is_hidden","hidden"],false);
-    return `<article class="fan-forum-reply${hidden?" is-hidden":""}">${hidden?'<div class="fan-forum-topic-flags"><span class="fan-forum-topic-flag">HIDDEN</span></div>':''}${nalForumAuthorHTML(reply,created)}<div class="fan-forum-reply-body">${escapeHTML(body)}</div>${nalForumModerationHTML("reply",reply)}</article>`;
+    return `<article class="fan-forum-reply">${nalForumAuthorHTML(reply,created)}<div class="fan-forum-reply-body">${escapeHTML(body)}</div>${nalForumReactionHTML("reply",reply.id)}</article>`;
   }).join("");
-  host.querySelectorAll("[data-forum-mod-reply]").forEach(button => {
-    button.addEventListener("click", () => moderateNalForumReply(button.dataset.forumModReply,button));
+  bindNalForumReactionButtons(host);
+}
+
+function nalForumReactionRows(type,id){
+  const key = type === "topic" ? "topic_id" : "reply_id";
+  return nalForumReactions.filter(row => String(row?.[key]) === String(id));
+}
+
+function nalForumReactionHTML(type,id){
+  const rows = nalForumReactionRows(type,id);
+  const liked = !!nalAccountUser && rows.some(row => String(row.user_id) === String(nalAccountUser.id));
+  const pendingKey = `${type}:${id}`;
+  return `<div class="fan-forum-reactions"><button type="button" class="fan-forum-like${liked ? " liked" : ""}" data-forum-reaction-type="${type}" data-forum-reaction-id="${escapeHTML(String(id))}" aria-pressed="${liked ? "true" : "false"}"${nalForumReactionPending.has(pendingKey) ? " disabled" : ""}><span class="fan-forum-like-icon" aria-hidden="true">👍</span><span>${liked ? "LIKED" : "LIKE"}</span><span class="fan-forum-like-count">${rows.length}</span></button></div>`;
+}
+
+function bindNalForumReactionButtons(root){
+  if (!root) return;
+  root.querySelectorAll("[data-forum-reaction-type][data-forum-reaction-id]").forEach(button => {
+    button.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleNalForumReaction(button.dataset.forumReactionType,button.dataset.forumReactionId);
+    });
   });
+}
+
+async function loadNalForumReactions(){
+  if (!activeNalForumTopic) return;
+  try{
+    const client = getNalAccountClient();
+    if (!client) throw new Error("NAL community connection unavailable.");
+    const replyIds = nalForumReplies.map(reply => reply.id).filter(id => id !== null && id !== undefined);
+    const topicRequest = client.from("forum_reactions").select("id,user_id,topic_id,reply_id").eq("topic_id",activeNalForumTopic.id);
+    const replyRequest = replyIds.length
+      ? client.from("forum_reactions").select("id,user_id,topic_id,reply_id").in("reply_id",replyIds)
+      : Promise.resolve({data:[],error:null});
+    const [topicResult,replyResult] = await Promise.all([topicRequest,replyRequest]);
+    if (topicResult.error) throw topicResult.error;
+    if (replyResult.error) throw replyResult.error;
+    nalForumReactions = [...(topicResult.data || []),...(replyResult.data || [])];
+    renderNalForumThreadPost();
+    renderNalForumReplies();
+  }catch(error){
+    console.error("Unable to load NAL Forum reactions:",error);
+  }
+}
+
+async function toggleNalForumReaction(type,id){
+  if (!nalAccountUser){ await openFanAccount(); return; }
+  if (type !== "topic" && type !== "reply") return;
+  const pendingKey = `${type}:${id}`;
+  if (nalForumReactionPending.has(pendingKey)) return;
+  nalForumReactionPending.add(pendingKey);
+  renderNalForumThreadPost();
+  renderNalForumReplies();
+  try{
+    const client = getNalAccountClient();
+    if (!client) throw new Error("NAL community connection unavailable.");
+    const rows = nalForumReactionRows(type,id);
+    const existing = rows.find(row => String(row.user_id) === String(nalAccountUser.id));
+    if (existing){
+      const { error } = await client.from("forum_reactions").delete().eq("id",existing.id).eq("user_id",nalAccountUser.id);
+      if (error) throw error;
+    }else{
+      const payload = {user_id:nalAccountUser.id,topic_id:null,reply_id:null};
+      if (type === "topic") payload.topic_id = id;
+      else payload.reply_id = id;
+      const { error } = await client.from("forum_reactions").insert(payload);
+      if (error && String(error.code || "") !== "23505") throw error;
+    }
+    await loadNalForumReactions();
+  }catch(error){
+    console.error("Unable to update NAL Forum reaction:",error);
+    window.alert("Your like could not be updated. Please try again.");
+  }finally{
+    nalForumReactionPending.delete(pendingKey);
+    renderNalForumThreadPost();
+    renderNalForumReplies();
+  }
 }
 
 async function submitNalForumReply(){
@@ -11249,6 +11254,7 @@ async function submitNalForumReply(){
     if (input) input.value="";
     if (status){status.textContent="Reply posted.";status.className="fan-forum-compose-status success";}
     await loadNalForumReplies();
+    await loadNalForumReactions();
     await loadNalForumTopics();
   }catch(error){
     console.error("Unable to post NAL Forum reply:",error);
