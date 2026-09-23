@@ -7416,7 +7416,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <button class="home-network-show-tile" type="button" onclick="openNALShowChannel('around-the-nal')" aria-label="Open Around the NAL">
             <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL">
           </button>
-          <button class="home-network-show-tile" type="button" onclick="openWatchPage(); setTimeout(() => switchNetworkTab('shows'), 50);" aria-label="Open Coaches Shows">
+          <button class="home-network-show-tile" type="button" onclick="openNALShowChannel('nal-coaches-shows')" aria-label="Open Coaches Shows">
             <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233" alt="Coaches' Shows">
           </button>
         </div>
@@ -7787,7 +7787,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL_Poster_8352963d-5e78-44ee-9aa5-cb742443e0bf.png?v=1790124876" alt="Around the NAL" loading="lazy"></div>
             <div class="network-show-title">Around the NAL</div><div class="network-show-meta">Original Series</div>
           </button>
-          <button class="network-show-card" type="button" onclick="previewNetworkItem('Coaches’ Shows','Team coaches and weekly programming')">
+          <button class="network-show-card" type="button" onclick="openNALShowChannel('nal-coaches-shows')">
             <div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows_Poster_ffbbc053-483a-4d1f-afa7-ce79bcd535f4.png?v=1790124876" alt="Coaches Shows" loading="lazy"></div>
             <div class="network-show-title">Coaches’ Shows</div><div class="network-show-meta">Team Programming</div>
           </button>
@@ -7855,7 +7855,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <section class="network-library-grid">
         <button type="button" onclick="openNALShowChannel('around-the-nal')"><div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL" loading="lazy"></div><strong>Around the NAL</strong></button>
         <button type="button" onclick="previewNetworkItem('5 in 5','Five-minute league highlight show')"><div class="network-show-art network-art-five"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_5_in_5.png?v=1789958471" alt="5 in 5" loading="lazy"></div><strong>5 in 5</strong></button>
-        <button type="button" onclick="previewNetworkItem('Coaches’ Shows','Team coaches and weekly programming')"><div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233" alt="Coaches Shows" loading="lazy"></div><strong>Coaches’ Shows</strong></button>
+        <button type="button" onclick="openNALShowChannel('nal-coaches-shows')"><div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233" alt="Coaches Shows" loading="lazy"></div><strong>Coaches’ Shows</strong></button>
         <button type="button" onclick="openNALShowChannel('nal-gameday')"><div class="network-show-art network-art-gameday"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164" alt="NAL Gameday" loading="lazy"></div><strong>NAL Gameday</strong></button>
       </section>
     </div>
@@ -17428,6 +17428,12 @@ const NAL_SHOW_CHANNELS = {
     name:"NAL GAMEDAY",
     subtitle:"NAL NETWORK ORIGINAL",
     artwork:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164",
+    source:{label:"EPISODES",channelId:null,subId:null}
+  },
+  "nal-coaches-shows": {
+    name:"NAL COACHES’ SHOWS",
+    subtitle:"NAL NETWORK ORIGINAL",
+    artwork:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233",
     source:{label:"EPISODES",channelId:null,subId:null}
   }
 };
