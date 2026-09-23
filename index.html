@@ -11098,8 +11098,8 @@ function openNetworkVodTeam(slug){
   previewNetworkItem(name+" Video-on-Demand","Team video-on-demand programming will be connected here.");
 }
 function openNetworkArchiveTeam(slug){
-  if(slug === "wheeling-miners" && typeof openWheelingMinersHub === "function"){
-    openWheelingMinersHub();
+  if(typeof openNALTeamHub === "function" && NAL_TEAM_CHANNELS?.[slug]){
+    openNALTeamHub(slug);
     return;
   }
   const team=Array.isArray(nalTeams)?nalTeams.find(t=>t.slug===slug):null;
@@ -14388,14 +14388,56 @@ function openLightcastVideo(index){
 }
 
 
-const WHEELING_MINERS_LOGO = "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792";
-const WHEELING_LIGHTCAST_SOURCES = {
-  latest: { label:"LATEST GAMES (V.O.D.)", channelId:"72115", subId:null },
-  archives: { label:"ARCHIVES", channelId:"72121", subId:"30658" },
-  coaches: { label:"COACHES' SHOW", channelId:"72123", subId:"30721" }
+const NAL_TEAM_CHANNELS = {
+  "amarillo-warbirds": {
+    name:"AMARILLO WARBIRDS",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776"
+  },
+  "colorado-spartans": {
+    name:"COLORADO SPARTANS",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784"
+  },
+  "dallas-apex": {
+    name:"DALLAS APEX",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784"
+  },
+  "louisiana-rouxgaroux": {
+    name:"LOUISIANA ROUXGAROUX",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784"
+  },
+  "omaha-beef": {
+    name:"OMAHA BEEF",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792"
+  },
+  "pueblo-punishers": {
+    name:"PUEBLO PUNISHERS",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792"
+  },
+  "salina-liberty": {
+    name:"SALINA LIBERTY",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792"
+  },
+  "sioux-city-bandits": {
+    name:"SIOUX CITY BANDITS",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792"
+  },
+  "southwest-kansas-storm": {
+    name:"SOUTHWEST KANSAS STORM",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792"
+  },
+  "wheeling-miners": {
+    name:"WHEELING MINERS",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792",
+    sources:{
+      latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:null},
+      archives:{label:"ARCHIVES",channelId:"72121",subId:"30658"},
+      coaches:{label:"COACHES' SHOW",channelId:"72123",subId:"30721"}
+    }
+  }
 };
-let wheelingHubMedia = { latest:[], archives:[], coaches:[] };
-let wheelingPlayerReturn = { view:"hub", sourceKey:null };
+let activeNALTeamSlug="wheeling-miners";
+let nalTeamHubMedia={};
+let nalTeamPlayerReturn={view:"hub",sourceKey:null};
 
 function setLightcastModalHeading(text, subtitle=""){
   const heading=document.getElementById("lightcastModalHeading");
@@ -14406,167 +14448,126 @@ function setLightcastModalHeading(text, subtitle=""){
 function setWheelingTeamView(enabled){
   document.getElementById("lightcastTestModal")?.classList.toggle("wheeling-team-view",!!enabled);
 }
-
-function wheelingPoster(item){
-  return item?.poster_image_16x9_640w || item?.poster_image_16x9_400w || item?.poster_image_16x9_200w || "";
+function activeNALTeam(){ return NAL_TEAM_CHANNELS[activeNALTeamSlug] || NAL_TEAM_CHANNELS["wheeling-miners"]; }
+function nalTeamPoster(item){ return item?.poster_image_16x9_640w || item?.poster_image_16x9_400w || item?.poster_image_16x9_200w || ""; }
+function nalTeamMediaBucket(slug){
+  if(!nalTeamHubMedia[slug]) nalTeamHubMedia[slug]={latest:[],archives:[],coaches:[]};
+  return nalTeamHubMedia[slug];
 }
 
-function renderWheelingRow(key){
-  const row=document.getElementById(`wheelingRow-${key}`);
+function renderNALTeamRow(key){
+  const team=activeNALTeam();
+  const bucket=nalTeamMediaBucket(activeNALTeamSlug);
+  const row=document.getElementById(`nalTeamRow-${key}`);
   if(!row) return;
-  const items=Array.isArray(wheelingHubMedia[key]) ? wheelingHubMedia[key] : [];
-  const viewAll=document.querySelector(`[data-wheeling-view-all="${key}"]`);
+  const items=Array.isArray(bucket[key]) ? bucket[key] : [];
+  const viewAll=document.querySelector(`[data-nal-team-view-all="${key}"]`);
   if(viewAll) viewAll.hidden=items.length===0;
-  if(!items.length){
-    row.innerHTML=`<div class="wheeling-empty-row">COMING SOON</div>`;
-    return;
-  }
-  const previewItems=items.slice(0,3);
-  row.innerHTML=previewItems.map((item,index)=>{
-    const image=wheelingPoster(item);
-    return `<button type="button" class="wheeling-video-card" data-wheeling-source="${lightcastEscape(key)}" data-wheeling-index="${index}">
-      ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(item.title || "Wheeling Miners video")}" loading="lazy">` : `<div class="wheeling-video-placeholder-art">WHEELING MINERS</div>`}
+  if(!items.length){ row.innerHTML=`<div class="wheeling-empty-row">COMING SOON</div>`; return; }
+  row.innerHTML=items.slice(0,3).map((item,index)=>{
+    const image=nalTeamPoster(item);
+    return `<button type="button" class="wheeling-video-card" data-nal-team-source="${lightcastEscape(key)}" data-nal-team-index="${index}">
+      ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(item.title || team.name+" video")}" loading="lazy">` : `<div class="wheeling-video-placeholder-art">${lightcastEscape(team.name)}</div>`}
       <strong>${lightcastEscape(item.title || "Untitled Video")}</strong>
     </button>`;
   }).join("");
-  row.querySelectorAll("[data-wheeling-index]").forEach(button=>{
-    button.addEventListener("click",()=>{
-      wheelingPlayerReturn={view:"hub",sourceKey:key};
-      openWheelingVideo(button.dataset.wheelingSource,Number(button.dataset.wheelingIndex));
-    });
-  });
+  row.querySelectorAll("[data-nal-team-index]").forEach(button=>button.addEventListener("click",()=>{
+    nalTeamPlayerReturn={view:"hub",sourceKey:key};
+    openNALTeamVideo(button.dataset.nalTeamSource,Number(button.dataset.nalTeamIndex));
+  }));
 }
 
-function renderWheelingCatalog(key){
-  const source=WHEELING_LIGHTCAST_SOURCES[key];
+function renderNALTeamCatalog(key){
+  const team=activeNALTeam();
+  const source=team.sources?.[key];
   const content=lightcastTestContent();
   if(!source || !content) return;
-  const items=Array.isArray(wheelingHubMedia[key]) ? wheelingHubMedia[key] : [];
+  const items=nalTeamMediaBucket(activeNALTeamSlug)[key] || [];
   setWheelingTeamView(true);
-  setLightcastModalHeading(`WHEELING MINERS — ${source.label}`);
+  setLightcastModalHeading(`${team.name} — ${source.label}`);
   content.innerHTML=`
     <div class="lightcast-test-view-head">
-      <button type="button" class="lightcast-test-back" id="wheelingCatalogBack">‹ WHEELING</button>
+      <button type="button" class="lightcast-test-back" id="nalTeamCatalogBack">‹ ${lightcastEscape(team.name)}</button>
       <div class="lightcast-test-view-title"><h2>${lightcastEscape(source.label)}</h2><p>Complete Catalog</p></div>
     </div>
     ${items.length ? `<div class="wheeling-catalog-grid">${items.map((item,index)=>{
-      const image=wheelingPoster(item);
-      return `<button type="button" class="wheeling-video-card" data-wheeling-catalog-index="${index}">
-        ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(item.title || "Wheeling Miners video")}" loading="lazy">` : `<div class="wheeling-video-placeholder-art">WHEELING MINERS</div>`}
+      const image=nalTeamPoster(item);
+      return `<button type="button" class="wheeling-video-card" data-nal-team-catalog-index="${index}">
+        ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(item.title || team.name+" video")}" loading="lazy">` : `<div class="wheeling-video-placeholder-art">${lightcastEscape(team.name)}</div>`}
         <strong>${lightcastEscape(item.title || "Untitled Video")}</strong>
       </button>`;
     }).join("")}</div>` : `<div class="wheeling-empty-row">COMING SOON</div>`}`;
-  document.getElementById("wheelingCatalogBack")?.addEventListener("click",renderWheelingMinersHub);
-  content.querySelectorAll("[data-wheeling-catalog-index]").forEach(button=>{
-    button.addEventListener("click",()=>{
-      wheelingPlayerReturn={view:"catalog",sourceKey:key};
-      openWheelingVideo(key,Number(button.dataset.wheelingCatalogIndex));
-    });
-  });
+  document.getElementById("nalTeamCatalogBack")?.addEventListener("click",renderNALTeamHub);
+  content.querySelectorAll("[data-nal-team-catalog-index]").forEach(button=>button.addEventListener("click",()=>{
+    nalTeamPlayerReturn={view:"catalog",sourceKey:key};
+    openNALTeamVideo(key,Number(button.dataset.nalTeamCatalogIndex));
+  }));
 }
 
-async function loadWheelingRow(key){
-  const source=WHEELING_LIGHTCAST_SOURCES[key];
-  if(!source) return;
-  const row=document.getElementById(`wheelingRow-${key}`);
+async function loadNALTeamRow(key){
+  const team=activeNALTeam();
+  const source=team.sources?.[key];
+  if(!source){ renderNALTeamRow(key); return; }
+  const row=document.getElementById(`nalTeamRow-${key}`);
   if(row) row.innerHTML=`<div class="wheeling-row-loading">Loading ${lightcastEscape(source.label.toLowerCase())}...</div>`;
   try{
     const params={view:"media",channelId:source.channelId};
     if(source.subId) params.subId=source.subId;
     const payload=await fetchLightcastCatalog(params);
-    wheelingHubMedia[key]=Array.isArray(payload.data) ? payload.data : [];
-    renderWheelingRow(key);
-  }catch(error){
-    if(row) row.innerHTML=`<div class="wheeling-empty-row">Unable to load this category right now.</div>`;
-  }
+    nalTeamMediaBucket(activeNALTeamSlug)[key]=Array.isArray(payload.data) ? payload.data : [];
+    renderNALTeamRow(key);
+  }catch(error){ if(row) row.innerHTML=`<div class="wheeling-empty-row">Unable to load this category right now.</div>`; }
 }
 
-function renderWheelingMinersHub(){
+function renderNALTeamHub(){
+  const team=activeNALTeam();
   const content=lightcastTestContent();
   if(!content) return;
   setWheelingTeamView(true);
-  setLightcastModalHeading("WHEELING MINERS", "Games, archives, highlights, coaches' shows and team features.");
+  setLightcastModalHeading(team.name,"Games, archives, highlights, coaches' shows and team features.");
   content.innerHTML=`
-    <section class="wheeling-hub-hero">
-      <img class="wheeling-hub-banner" src="${lightcastEscape(WHEELING_MINERS_LOGO)}" alt="Wheeling Miners">
-    </section>
-
-    <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>LATEST GAMES (V.O.D.)</h3><button type="button" class="wheeling-view-all" data-wheeling-view-all="latest" hidden>VIEW ALL ›</button></div>
-      <div class="wheeling-video-row" id="wheelingRow-latest"><div class="wheeling-row-loading">Loading latest games...</div></div>
-    </section>
-
-    <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-wheeling-view-all="archives" hidden>VIEW ALL ›</button></div>
-      <div class="wheeling-video-row" id="wheelingRow-archives"><div class="wheeling-row-loading">Loading archives...</div></div>
-    </section>
-
-    <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>COACHES' SHOW</h3><button type="button" class="wheeling-view-all" data-wheeling-view-all="coaches" hidden>VIEW ALL ›</button></div>
-      <div class="wheeling-video-row" id="wheelingRow-coaches"><div class="wheeling-row-loading">Loading coaches' show...</div></div>
-    </section>
-
-    <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>HIGHLIGHTS</h3></div>
-      <div class="wheeling-video-row">
-        <div class="wheeling-empty-row">COMING SOON</div>
-      </div>
-    </section>
-
-    <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3></div>
-      <div class="wheeling-video-row">
-        <div class="wheeling-empty-row">COMING SOON</div>
-      </div>
-    </section>`;
-
-  content.querySelectorAll("[data-wheeling-view-all]").forEach(button=>{
-    button.addEventListener("click",()=>renderWheelingCatalog(button.dataset.wheelingViewAll));
-  });
-
-  loadWheelingRow("latest");
-  loadWheelingRow("archives");
-  loadWheelingRow("coaches");
+    <section class="wheeling-hub-hero"><img class="wheeling-hub-banner" src="${lightcastEscape(team.banner)}" alt="${lightcastEscape(team.name)}"></section>
+    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>LATEST GAMES (V.O.D.)</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="latest" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-latest"><div class="wheeling-empty-row">COMING SOON</div></div></section>
+    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="archives" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-archives"><div class="wheeling-empty-row">COMING SOON</div></div></section>
+    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>COACHES' SHOW</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="coaches" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-coaches"><div class="wheeling-empty-row">COMING SOON</div></div></section>
+    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>HIGHLIGHTS</h3></div><div class="wheeling-video-row"><div class="wheeling-empty-row">COMING SOON</div></div></section>
+    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3></div><div class="wheeling-video-row"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
+  content.querySelectorAll("[data-nal-team-view-all]").forEach(button=>button.addEventListener("click",()=>renderNALTeamCatalog(button.dataset.nalTeamViewAll)));
+  ["latest","archives","coaches"].forEach(loadNALTeamRow);
 }
 
-function openWheelingMinersHub(){
+function openNALTeamHub(slug){
+  if(!NAL_TEAM_CHANNELS[slug]) return;
+  activeNALTeamSlug=slug;
   const modal=document.getElementById("lightcastTestModal");
   if(!modal) return;
   modal.hidden=false;
   document.body.style.overflow="hidden";
-  renderWheelingMinersHub();
+  renderNALTeamHub();
 }
+function openWheelingMinersHub(){ openNALTeamHub("wheeling-miners"); }
 
-function getWheelingEmbedSrc(item,channelId){
+function getNALTeamEmbedSrc(item,channelId){
   const mediaId=String(item?.media_id || item?.id || "").trim();
   if(!mediaId) return "";
   return `https://www.lightcast.com/embed/player.php?id=${encodeURIComponent(mediaId)}&channelId=${encodeURIComponent(channelId)}`;
 }
-
-function openWheelingVideo(sourceKey,index){
-  const source=WHEELING_LIGHTCAST_SOURCES[sourceKey];
-  const item=wheelingHubMedia[sourceKey]?.[index];
+function openNALTeamVideo(sourceKey,index){
+  const team=activeNALTeam();
+  const source=team.sources?.[sourceKey];
+  const item=nalTeamMediaBucket(activeNALTeamSlug)[sourceKey]?.[index];
   const content=lightcastTestContent();
   if(!source || !item || !content) return;
   setWheelingTeamView(false);
-  setLightcastModalHeading(`WHEELING MINERS — ${source.label}`);
-  const embedSrc=getWheelingEmbedSrc(item,source.channelId);
+  setLightcastModalHeading(`${team.name} — ${source.label}`);
+  const embedSrc=getNALTeamEmbedSrc(item,source.channelId);
   content.innerHTML=`
-    <div class="lightcast-test-view-head">
-      <button type="button" class="lightcast-test-back" id="wheelingBackToHub">‹ BACK</button>
-      <div class="lightcast-test-view-title"><h2>NOW PLAYING</h2><p>Wheeling Miners</p></div>
-    </div>
-    ${embedSrc ? `<div class="lightcast-video-wrap"><iframe title="${lightcastEscape(item.title || "Wheeling Miners Video")}" src="${lightcastEscape(embedSrc)}" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>` : `<div class="lightcast-test-status">A playable Lightcast media ID was not returned for this video.</div>`}
-    <div class="lightcast-video-meta">
-      <h2>${lightcastEscape(item.title || "Untitled Video")}</h2>
-      ${item.description ? `<p>${lightcastEscape(item.description)}</p>` : ""}
-    </div>`;
-  document.getElementById("wheelingBackToHub")?.addEventListener("click",()=>{
-    if(wheelingPlayerReturn.view==="catalog" && wheelingPlayerReturn.sourceKey){
-      renderWheelingCatalog(wheelingPlayerReturn.sourceKey);
-    }else{
-      renderWheelingMinersHub();
-    }
+    <div class="lightcast-test-view-head"><button type="button" class="lightcast-test-back" id="nalTeamBackToHub">‹ BACK</button><div class="lightcast-test-view-title"><h2>NOW PLAYING</h2><p>${lightcastEscape(team.name)}</p></div></div>
+    ${embedSrc ? `<div class="lightcast-video-wrap"><iframe title="${lightcastEscape(item.title || team.name+" Video")}" src="${lightcastEscape(embedSrc)}" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>` : `<div class="lightcast-test-status">A playable Lightcast media ID was not returned for this video.</div>`}
+    <div class="lightcast-video-meta"><h2>${lightcastEscape(item.title || "Untitled Video")}</h2>${item.description ? `<p>${lightcastEscape(item.description)}</p>` : ""}</div>`;
+  document.getElementById("nalTeamBackToHub")?.addEventListener("click",()=>{
+    if(nalTeamPlayerReturn.view==="catalog" && nalTeamPlayerReturn.sourceKey) renderNALTeamCatalog(nalTeamPlayerReturn.sourceKey);
+    else renderNALTeamHub();
   });
 }
 
