@@ -6828,28 +6828,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .wheeling-hub-hero-copy h2{font-size:20px;}
 }
 
-/* LIGHTCAST TEST SECTION START — safe to delete */
-#watchPage .lightcast-test-section{
-  margin-top:22px !important;
-  padding-top:18px !important;
-  border-top:1px solid rgba(0,0,0,.12) !important;
-}
-#watchPage .lightcast-test-copy{
-  margin:4px 0 14px !important;
-  font-size:13px !important;
-  line-height:1.45 !important;
-}
-#watchPage .lightcast-test-launch{
-  width:100% !important;
-  min-height:48px !important;
-  border:0 !important;
-  border-radius:8px !important;
-  background:var(--nal-blue) !important;
-  color:#fff !important;
-  font-weight:800 !important;
-  cursor:pointer !important;
-}
-/* LIGHTCAST TEST SECTION END */
+
 
 </style>
 
@@ -7846,15 +7825,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>
     </div>
 
-  <!-- LIGHTCAST TEST SECTION START — safe to delete as one block -->
-  <section id="lightcastTestSection" class="network-hub-section lightcast-test-section">
-    <div class="network-section-header">
-      <div class="network-section-title">LIGHTCAST TEST</div>
-    </div>
-    <p class="lightcast-test-copy">Temporary API-driven Lightcast catalog test. Browse subchannels and videos without leaving the NAL App.</p>
-    <button class="lightcast-test-launch" type="button" onclick="openLightcastTest()">OPEN LIGHTCAST TEST</button>
-  </section>
-  <!-- LIGHTCAST TEST SECTION END -->
+
 
 <div class="network-tab-panel" data-network-panel="vod">
       <section class="network-library-head"><h2>VIDEO-ON-DEMAND</h2><p>Choose a team to watch its on-demand programming.</p></section>
@@ -14553,7 +14524,7 @@ function renderWheelingRow(key){
   if(!row) return;
   const items=Array.isArray(wheelingHubMedia[key]) ? wheelingHubMedia[key] : [];
   const viewAll=document.querySelector(`[data-wheeling-view-all="${key}"]`);
-  if(viewAll) viewAll.hidden=items.length<=3;
+  if(viewAll) viewAll.hidden=items.length===0;
   if(!items.length){
     row.innerHTML=`<div class="wheeling-empty-row">No videos available yet.</div>`;
     return;
@@ -14709,17 +14680,8 @@ function openWheelingVideo(sourceKey,index){
   });
 }
 
-function openLightcastTest(){
-  setLightcastModalHeading("LIGHTCAST IN-APP TEST");
-  const modal=document.getElementById("lightcastTestModal");
-  if(!modal) return;
-  modal.hidden=false;
-  document.body.style.overflow="hidden";
-  loadLightcastChannels();
-}
-
 function closeLightcastTest(){
-  setLightcastModalHeading("LIGHTCAST IN-APP TEST");
+  setLightcastModalHeading("NAL NETWORK");
   const modal=document.getElementById("lightcastTestModal");
   if(modal) modal.hidden=true;
   const content=lightcastTestContent();
@@ -14731,12 +14693,12 @@ function closeLightcastTest(){
 
 </script>
 
-<!-- LIGHTCAST IN-APP TEST: temporary API-driven test layer -->
+<!-- NAL NETWORK VIDEO MODAL -->
 <div id="lightcastTestModal" class="lightcast-test-modal" hidden>
   <div class="lightcast-test-shell">
     <div class="lightcast-test-head">
-      <strong id="lightcastModalHeading">LIGHTCAST IN-APP TEST</strong>
-      <button type="button" onclick="closeLightcastTest()" aria-label="Close Lightcast test">×</button>
+      <strong id="lightcastModalHeading">NAL NETWORK</strong>
+      <button type="button" onclick="closeLightcastTest()" aria-label="Close video player">×</button>
     </div>
     <div id="lightcastTestContent" class="lightcast-test-content"></div>
   </div>
