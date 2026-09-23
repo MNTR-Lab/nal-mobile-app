@@ -14388,7 +14388,7 @@ function openLightcastVideo(index){
 
 const WHEELING_MINERS_LOGO = "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792";
 const WHEELING_LIGHTCAST_SOURCES = {
-  latest: { label:"LATEST GAMES", channelId:"72115", subId:null },
+  latest: { label:"LATEST GAMES (V.O.D.)", channelId:"72115", subId:null },
   archives: { label:"ARCHIVES", channelId:"72121", subId:"30658" },
   coaches: { label:"COACHES' SHOW", channelId:"72123", subId:"30721" }
 };
@@ -14416,7 +14416,7 @@ function renderWheelingRow(key){
   const viewAll=document.querySelector(`[data-wheeling-view-all="${key}"]`);
   if(viewAll) viewAll.hidden=items.length===0;
   if(!items.length){
-    row.innerHTML=`<div class="wheeling-empty-row">No videos available yet.</div>`;
+    row.innerHTML=`<div class="wheeling-empty-row">COMING SOON</div>`;
     return;
   }
   const previewItems=items.slice(0,3);
@@ -14453,7 +14453,7 @@ function renderWheelingCatalog(key){
         ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(item.title || "Wheeling Miners video")}" loading="lazy">` : `<div class="wheeling-video-placeholder-art">WHEELING MINERS</div>`}
         <strong>${lightcastEscape(item.title || "Untitled Video")}</strong>
       </button>`;
-    }).join("")}</div>` : `<div class="wheeling-empty-row">No videos available yet.</div>`}`;
+    }).join("")}</div>` : `<div class="wheeling-empty-row">COMING SOON</div>`}`;
   document.getElementById("wheelingCatalogBack")?.addEventListener("click",renderWheelingMinersHub);
   content.querySelectorAll("[data-wheeling-catalog-index]").forEach(button=>{
     button.addEventListener("click",()=>{
@@ -14490,7 +14490,7 @@ function renderWheelingMinersHub(){
     </section>
 
     <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>LATEST GAMES</h3><button type="button" class="wheeling-view-all" data-wheeling-view-all="latest" hidden>VIEW ALL ›</button></div>
+      <div class="wheeling-section-head"><h3>LATEST GAMES (V.O.D.)</h3><button type="button" class="wheeling-view-all" data-wheeling-view-all="latest" hidden>VIEW ALL ›</button></div>
       <div class="wheeling-video-row" id="wheelingRow-latest"><div class="wheeling-row-loading">Loading latest games...</div></div>
     </section>
 
@@ -14500,9 +14500,9 @@ function renderWheelingMinersHub(){
     </section>
 
     <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>HIGHLIGHTS</h3><span>COMING SOON</span></div>
+      <div class="wheeling-section-head"><h3>HIGHLIGHTS</h3></div>
       <div class="wheeling-video-row">
-        <div class="wheeling-video-card" aria-disabled="true"><div class="wheeling-video-placeholder-art">HIGHLIGHTS<br>COMING SOON</div><strong>Wheeling Miners Highlights</strong></div>
+        <div class="wheeling-empty-row">COMING SOON</div>
       </div>
     </section>
 
@@ -14512,9 +14512,9 @@ function renderWheelingMinersHub(){
     </section>
 
     <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3><span>COMING SOON</span></div>
+      <div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3></div>
       <div class="wheeling-video-row">
-        <div class="wheeling-video-card" aria-disabled="true"><div class="wheeling-video-placeholder-art">FEATURES &amp;<br>INTERVIEWS</div><strong>Content Coming Soon</strong></div>
+        <div class="wheeling-empty-row">COMING SOON</div>
       </div>
     </section>`;
 
