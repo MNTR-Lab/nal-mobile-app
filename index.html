@@ -6438,68 +6438,216 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 
-/* Temporary Lightcast in-app test */
+/* Temporary Lightcast API-driven in-app catalog test */
 .lightcast-test-modal{
   position:fixed;
   inset:0;
   z-index:99999;
-  background:#fff;
+  background:#f3f5f7;
   padding-top:var(--header-height,72px);
-  padding-bottom:76px;
+  padding-bottom:var(--nav-height,80px);
   box-sizing:border-box;
 }
 .lightcast-test-modal[hidden]{display:none !important;}
 .lightcast-test-shell{
   width:100%;
   height:100%;
-  max-width:none;
-  margin:0;
-  background:#fff;
+  max-width:600px;
+  margin:0 auto;
+  background:#f3f5f7;
   display:flex;
   flex-direction:column;
   min-height:0;
 }
 .lightcast-test-head{
-  flex:0 0 48px;
-  min-height:48px;
-  padding:4px 12px;
+  flex:0 0 50px;
+  min-height:50px;
+  padding:5px 12px 5px 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
   box-sizing:border-box;
   background:#fff;
-  border-bottom:1px solid rgba(0,0,0,.12);
+  border-bottom:3px solid var(--nal-red);
 }
-.lightcast-test-head strong{font-size:15px;}
+.lightcast-test-head strong{
+  color:var(--nal-blue);
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
 .lightcast-test-head button{
   width:40px;
   height:40px;
   border:0;
   background:transparent;
+  color:var(--nal-blue);
   font-size:30px;
   line-height:1;
   cursor:pointer;
 }
-.lightcast-test-player{
-  position:relative;
+.lightcast-test-content{
   flex:1 1 auto;
-  width:100%;
-  height:auto;
   min-height:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:16px;
+}
+.lightcast-test-status{
+  min-height:180px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:24px;
+  text-align:center;
+  color:#6d7682;
+  font-size:12px;
+  line-height:1.45;
+}
+.lightcast-test-spinner{
+  width:28px;
+  height:28px;
+  border:3px solid #dfe3e8;
+  border-top-color:var(--nal-red);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+.lightcast-test-error strong{
+  display:block;
+  margin-bottom:7px;
+  color:var(--nal-blue);
+  font-size:14px;
+}
+.lightcast-test-retry,
+.lightcast-test-back{
+  border:0;
+  border-radius:8px;
+  background:var(--nal-blue);
+  color:#fff;
+  min-height:42px;
+  padding:0 14px;
+  font-weight:900;
+  cursor:pointer;
+}
+.lightcast-test-view-head{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-bottom:14px;
+}
+.lightcast-test-view-head .lightcast-test-back{
+  flex:0 0 auto;
+}
+.lightcast-test-view-title{
+  min-width:0;
+  flex:1 1 auto;
+}
+.lightcast-test-view-title h2{
+  margin:0;
+  color:var(--nal-blue);
+  font-size:18px;
+  line-height:1.1;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.lightcast-test-view-title p{
+  margin:5px 0 0;
+  color:#6d7682;
+  font-size:11px;
+  line-height:1.4;
+}
+.lightcast-channel-grid,
+.lightcast-media-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.lightcast-channel-card,
+.lightcast-media-card{
+  width:100%;
   padding:0;
+  border:1px solid #dfe3e8;
+  border-radius:12px;
   overflow:hidden;
   background:#fff;
+  text-align:left;
+  cursor:pointer;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
 }
-.lightcast-test-player iframe{
-  position:absolute;
-  inset:0;
+.lightcast-channel-card img,
+.lightcast-media-card img{
+  width:100%;
+  aspect-ratio:16 / 9;
+  object-fit:cover;
+  display:block;
+  background:var(--nal-blue);
+}
+.lightcast-card-fallback{
+  width:100%;
+  aspect-ratio:16 / 9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px;
+  background:linear-gradient(135deg,#102b4e,#07172b);
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  text-align:center;
+}
+.lightcast-card-copy{
+  padding:10px;
+}
+.lightcast-card-copy strong{
+  display:block;
+  color:var(--nal-blue);
+  font-size:11px;
+  line-height:1.25;
+  font-weight:900;
+}
+.lightcast-card-copy span{
+  display:block;
+  margin-top:5px;
+  color:#6d7682;
+  font-size:9px;
+  line-height:1.35;
+}
+.lightcast-video-wrap{
+  width:100%;
+  aspect-ratio:16 / 9;
+  background:#000;
+  overflow:hidden;
+  border-radius:10px;
+  margin-bottom:14px;
+}
+.lightcast-video-wrap iframe{
   width:100%;
   height:100%;
-  min-width:100%;
-  min-height:100%;
   border:0;
+  display:block;
+  background:#000;
+}
+.lightcast-video-meta{
   background:#fff;
+  border-radius:10px;
+  padding:14px;
+  border:1px solid #dfe3e8;
+}
+.lightcast-video-meta h2{
+  margin:0;
+  color:var(--nal-blue);
+  font-size:17px;
+  line-height:1.2;
+  font-weight:900;
+}
+.lightcast-video-meta p{
+  margin:8px 0 0;
+  color:#596574;
+  font-size:11px;
+  line-height:1.5;
 }
 /* LIGHTCAST TEST SECTION START — safe to delete */
 #watchPage .lightcast-test-section{
@@ -6517,6 +6665,8 @@ document.addEventListener("DOMContentLoaded", () => {
   min-height:48px !important;
   border:0 !important;
   border-radius:8px !important;
+  background:var(--nal-blue) !important;
+  color:#fff !important;
   font-weight:800 !important;
   cursor:pointer !important;
 }
@@ -7522,7 +7672,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="network-section-header">
       <div class="network-section-title">LIGHTCAST TEST</div>
     </div>
-    <p class="lightcast-test-copy">Temporary Lightcast embed test. This section can be removed without affecting the regular Shows content.</p>
+    <p class="lightcast-test-copy">Temporary API-driven Lightcast catalog test. Browse subchannels and videos without leaving the NAL App.</p>
     <button class="lightcast-test-launch" type="button" onclick="openLightcastTest()">OPEN LIGHTCAST TEST</button>
   </section>
   <!-- LIGHTCAST TEST SECTION END -->
@@ -14029,46 +14179,201 @@ document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 
 
 
-// Temporary Lightcast in-app embed test.
+// Temporary Lightcast API-driven in-app catalog test.
+const LIGHTCAST_CATALOG_API = "https://qpavspvpdebtbbffdcmo.supabase.co/functions/v1/lightcast-catalog";
+let lightcastTestChannels = [];
+let lightcastTestMedia = [];
+let lightcastTestActiveChannel = null;
+
+function lightcastEscape(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function lightcastTestContent(){
+  return document.getElementById("lightcastTestContent");
+}
+
+function lightcastLoading(message){
+  const content=lightcastTestContent();
+  if(!content) return;
+  content.innerHTML=`
+    <div class="lightcast-test-status">
+      <div class="lightcast-test-spinner" aria-hidden="true"></div>
+      <div>${lightcastEscape(message || "Loading MNTR+ content...")}</div>
+    </div>`;
+}
+
+function lightcastError(message,retryFn){
+  const content=lightcastTestContent();
+  if(!content) return;
+  content.innerHTML=`
+    <div class="lightcast-test-status lightcast-test-error">
+      <div><strong>Unable to load content</strong>${lightcastEscape(message || "Please try again.")}</div>
+      <button type="button" class="lightcast-test-retry" id="lightcastRetryButton">TRY AGAIN</button>
+    </div>`;
+  const button=document.getElementById("lightcastRetryButton");
+  if(button && typeof retryFn === "function") button.onclick=retryFn;
+}
+
+async function fetchLightcastCatalog(params){
+  const url=new URL(LIGHTCAST_CATALOG_API);
+  Object.entries(params || {}).forEach(([key,value])=>{
+    if(value !== undefined && value !== null && value !== "") url.searchParams.set(key,String(value));
+  });
+  const response=await fetch(url.toString(),{method:"GET",headers:{Accept:"application/json"}});
+  const payload=await response.json().catch(()=>null);
+  if(!response.ok) throw new Error(payload?.error || `Request failed (${response.status}).`);
+  if(!payload || payload.success !== true) throw new Error(payload?.error || "Lightcast returned an invalid response.");
+  if(payload.data && !Array.isArray(payload.data) && payload.data.error) throw new Error(payload.data.error);
+  return payload;
+}
+
+function renderLightcastChannels(){
+  const content=lightcastTestContent();
+  if(!content) return;
+  if(!lightcastTestChannels.length){
+    lightcastError("No Lightcast subchannels were returned.",loadLightcastChannels);
+    return;
+  }
+  content.innerHTML=`
+    <div class="lightcast-test-view-head">
+      <div class="lightcast-test-view-title">
+        <h2>Indoor/Arena Football</h2>
+        <p>Select a Lightcast subchannel to browse its videos.</p>
+      </div>
+    </div>
+    <div class="lightcast-channel-grid">
+      ${lightcastTestChannels.map(channel=>{
+        const image=channel.thumb_image_16x9_640w || channel.thumb_image_16x9_400w || channel.thumb_image_16x9_200w || "";
+        return `<button type="button" class="lightcast-channel-card" data-lightcast-subid="${lightcastEscape(channel.id)}">
+          ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(channel.name)}" loading="lazy">` : `<div class="lightcast-card-fallback">${lightcastEscape(channel.name)}</div>`}
+          <div class="lightcast-card-copy"><strong>${lightcastEscape(channel.name)}</strong>${channel.description ? `<span>${lightcastEscape(channel.description)}</span>` : ""}</div>
+        </button>`;
+      }).join("")}
+    </div>`;
+  content.querySelectorAll("[data-lightcast-subid]").forEach(button=>{
+    button.addEventListener("click",()=>loadLightcastMedia(button.dataset.lightcastSubid));
+  });
+}
+
+async function loadLightcastChannels(){
+  lightcastLoading("Loading Lightcast subchannels...");
+  try{
+    const payload=await fetchLightcastCatalog({view:"channels"});
+    const channel=Array.isArray(payload.data) ? payload.data.find(item=>String(item.channel_id)==="72119") || payload.data[0] : null;
+    lightcastTestChannels=Array.isArray(channel?.subchannels) ? channel.subchannels : [];
+    renderLightcastChannels();
+  }catch(error){
+    lightcastError(error instanceof Error ? error.message : "Unable to load Lightcast subchannels.",loadLightcastChannels);
+  }
+}
+
+function formatLightcastDuration(seconds){
+  const total=Number(seconds);
+  if(!Number.isFinite(total) || total <= 0) return "";
+  const h=Math.floor(total/3600);
+  const m=Math.floor((total%3600)/60);
+  const s=Math.floor(total%60);
+  return h ? `${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}` : `${m}:${String(s).padStart(2,"0")}`;
+}
+
+function renderLightcastMedia(){
+  const content=lightcastTestContent();
+  if(!content) return;
+  const channelName=lightcastTestActiveChannel?.name || "Lightcast Videos";
+  content.innerHTML=`
+    <div class="lightcast-test-view-head">
+      <button type="button" class="lightcast-test-back" id="lightcastBackToChannels">‹ CHANNELS</button>
+      <div class="lightcast-test-view-title">
+        <h2>${lightcastEscape(channelName)}</h2>
+        <p>${lightcastTestMedia.length} video${lightcastTestMedia.length===1?"":"s"}</p>
+      </div>
+    </div>
+    ${lightcastTestMedia.length ? `<div class="lightcast-media-grid">
+      ${lightcastTestMedia.map((item,index)=>{
+        const image=item.poster_image_16x9_640w || item.poster_image_16x9_400w || item.poster_image_16x9_200w || "";
+        const duration=formatLightcastDuration(item.duration);
+        return `<button type="button" class="lightcast-media-card" data-lightcast-media-index="${index}">
+          ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(item.title)}" loading="lazy">` : `<div class="lightcast-card-fallback">NAL NETWORK</div>`}
+          <div class="lightcast-card-copy"><strong>${lightcastEscape(item.title || "Untitled Video")}</strong>${duration ? `<span>${lightcastEscape(duration)}</span>` : ""}</div>
+        </button>`;
+      }).join("")}
+    </div>` : `<div class="lightcast-test-status">No videos are currently assigned to this subchannel.</div>`}`;
+  document.getElementById("lightcastBackToChannels")?.addEventListener("click",renderLightcastChannels);
+  content.querySelectorAll("[data-lightcast-media-index]").forEach(button=>{
+    button.addEventListener("click",()=>openLightcastVideo(Number(button.dataset.lightcastMediaIndex)));
+  });
+}
+
+async function loadLightcastMedia(subId){
+  lightcastTestActiveChannel=lightcastTestChannels.find(channel=>String(channel.id)===String(subId)) || {id:subId,name:"Lightcast Videos"};
+  lightcastLoading(`Loading ${lightcastTestActiveChannel.name || "videos"}...`);
+  try{
+    const payload=await fetchLightcastCatalog({view:"media",subId});
+    lightcastTestMedia=Array.isArray(payload.data) ? payload.data : [];
+    renderLightcastMedia();
+  }catch(error){
+    lightcastError(error instanceof Error ? error.message : "Unable to load videos.",()=>loadLightcastMedia(subId));
+  }
+}
+
+function getLightcastEmbedSrc(item){
+  const code=String(item?.embed_code || "");
+  const match=code.match(/src=["']([^"']+)["']/i);
+  return match ? match[1].replaceAll("&amp;","&") : "";
+}
+
+function openLightcastVideo(index){
+  const item=lightcastTestMedia[index];
+  const content=lightcastTestContent();
+  if(!item || !content) return;
+  const embedSrc=getLightcastEmbedSrc(item);
+  content.innerHTML=`
+    <div class="lightcast-test-view-head">
+      <button type="button" class="lightcast-test-back" id="lightcastBackToMedia">‹ VIDEOS</button>
+      <div class="lightcast-test-view-title"><h2>NOW PLAYING</h2><p>${lightcastEscape(lightcastTestActiveChannel?.name || "NAL Network")}</p></div>
+    </div>
+    ${embedSrc ? `<div class="lightcast-video-wrap"><iframe title="${lightcastEscape(item.title || "Lightcast Video")}" src="${lightcastEscape(embedSrc)}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></div>` : `<div class="lightcast-test-status">A playable embed URL was not returned for this video.</div>`}
+    <div class="lightcast-video-meta">
+      <h2>${lightcastEscape(item.title || "Untitled Video")}</h2>
+      ${item.description ? `<p>${lightcastEscape(item.description)}</p>` : ""}
+    </div>`;
+  document.getElementById("lightcastBackToMedia")?.addEventListener("click",renderLightcastMedia);
+}
+
 function openLightcastTest(){
   const modal=document.getElementById("lightcastTestModal");
-  const frame=document.getElementById("lightcastTestFrame");
-  if(!modal || !frame) return;
-  if(!frame.src || frame.src==="about:blank"){
-    frame.src=frame.dataset.src;
-  }
+  if(!modal) return;
   modal.hidden=false;
   document.body.style.overflow="hidden";
+  loadLightcastChannels();
 }
+
 function closeLightcastTest(){
   const modal=document.getElementById("lightcastTestModal");
-  const frame=document.getElementById("lightcastTestFrame");
   if(modal) modal.hidden=true;
-  if(frame) frame.src="";
+  const content=lightcastTestContent();
+  if(content) content.innerHTML="";
+  lightcastTestMedia=[];
+  lightcastTestActiveChannel=null;
   document.body.style.overflow="";
 }
 
 </script>
 
-<!-- LIGHTCAST IN-APP TEST: temporary test layer -->
+<!-- LIGHTCAST IN-APP TEST: temporary API-driven test layer -->
 <div id="lightcastTestModal" class="lightcast-test-modal" hidden>
   <div class="lightcast-test-shell">
     <div class="lightcast-test-head">
       <strong>LIGHTCAST IN-APP TEST</strong>
       <button type="button" onclick="closeLightcastTest()" aria-label="Close Lightcast test">×</button>
     </div>
-    <div class="lightcast-test-player">
-      <iframe
-        id="lightcastTestFrame"
-        title="Lightcast VOD Test"
-        src=""
-        data-src="https://app.mntrlab.com/content/72119"
-        referrerpolicy="no-referrer-when-downgrade"
-        frameborder="0"
-        allow="fullscreen; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
+    <div id="lightcastTestContent" class="lightcast-test-content"></div>
   </div>
 </div>
 
