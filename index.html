@@ -7534,13 +7534,12 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>
     </div>
 
-    </div>
-
     <div class="network-tab-panel" data-network-panel="archives">
-      <section class="network-library-head"><h2>ARCHIVES</h2><p>Choose a team to explore its archived games and programming.</p></section>
+      <section class="network-library-head"><h2>ARCHIVES</h2><p>Explore archived NAL games and programming by organization.</p></section>
+
       <section class="network-hub-section network-team-channels-section">
         <div class="network-section-header">
-          <div class="network-section-title">Team Channels</div>
+          <div class="network-section-title">Current Organizations</div>
         </div>
         <div class="network-team-channel-grid">
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('amarillo-warbirds')">
@@ -7583,10 +7582,25 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="network-team-channel-art"><img data-network-team-logo="wheeling-miners" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div>
             <span>Wheeling Miners</span>
           </button>
+        
         </div>
       </section>
-    </div>
 
+      <section class="network-hub-section network-team-channels-section">
+        <div class="network-section-header">
+          <div class="network-section-title">Previous Organizations</div>
+        </div>
+        <div class="network-team-channel-grid">
+          <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('beaumont-renegades')">
+            <div class="network-team-channel-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055" alt="Beaumont Renegades" loading="lazy"></div>
+            <span>Beaumont Renegades</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('columbus-lions')">
+            <div class="network-team-channel-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055" alt="Columbus Lions" loading="lazy"></div>
+            <span>Columbus Lions</span>
+          </button>
+        </div>
+      </section>
     </div>
 
     <div id="networkPreviewModal" class="network-preview-modal" aria-hidden="true">
