@@ -17642,16 +17642,15 @@ function openNALShowChannel(slug){
   modal.hidden = false;
   document.body.style.overflow = "hidden";
   setWheelingTeamView(true);
-  setLightcastModalHeading(show.name);
+  setLightcastModalHeading(show.name, "NAL Network Original Series");
 
+  /* Show Channels intentionally use the EXACT established Team Channel
+     hero/content structure — not the archive-only previous-team layout. */
   content.innerHTML = `
-    <div class="wheeling-team-banner">
-      <img src="${lightcastEscape(show.artwork)}" alt="${lightcastEscape(show.name)}">
-    </div>
-    <div class="wheeling-team-title">
-      <h2>${lightcastEscape(show.name)}</h2>
-      <p>${lightcastEscape(show.subtitle)}</p>
-    </div>
+    <section class="wheeling-hub-hero">
+      <img class="wheeling-hub-banner" src="${lightcastEscape(show.artwork)}" alt="${lightcastEscape(show.name)}">
+    </section>
+
     <section class="wheeling-content-section">
       <div class="wheeling-section-head">
         <h3>EPISODES</h3>
@@ -17662,7 +17661,7 @@ function openNALShowChannel(slug){
       </div>
     </section>`;
 
-  /* Lightcast source can be connected later without changing the Show Channel template. */
+  /* The Lightcast source will plug into this same Episodes row later. */
 }
 
 function openNALTeamHub(slug){
