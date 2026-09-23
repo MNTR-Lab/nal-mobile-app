@@ -6707,6 +6707,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 }
 
+
+/* TEAM CHANNELS PAGE — TWO CARDS PER ROW */
+#watchPage .network-tab-panel[data-network-panel="team-channels"] .network-team-channel-grid{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  grid-template-rows:none !important;
+  grid-auto-flow:row !important;
+  grid-auto-columns:auto !important;
+  gap:14px 10px !important;
+  overflow:visible !important;
+  margin:0 !important;
+  padding:2px 0 8px !important;
+}
+#watchPage .network-tab-panel[data-network-panel="team-channels"] .network-team-channel-card:nth-child(n){
+  grid-row:auto !important;
+  grid-column:auto !important;
+}
 </style>
 </head>
 
