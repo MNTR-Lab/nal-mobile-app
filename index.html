@@ -6471,12 +6471,31 @@ document.addEventListener("DOMContentLoaded", () => {
   background:#fff;
   border-bottom:3px solid var(--nal-red);
 }
+.lightcast-test-head-title{min-width:0;}
 .lightcast-test-head strong{
+  display:block;
   color:var(--nal-blue);
   font-size:14px;
   font-weight:900;
   letter-spacing:.5px;
 }
+.lightcast-test-head-subtitle{
+  display:none;
+  margin:2px 0 0;
+  color:#66717f;
+  font-size:9px;
+  line-height:1.2;
+  font-weight:700;
+}
+.lightcast-test-modal.wheeling-team-view,
+.lightcast-test-modal.wheeling-team-view .lightcast-test-shell{
+  background:#07192d;
+}
+.lightcast-test-modal.wheeling-team-view .lightcast-test-head{
+  min-height:66px;
+  flex-basis:66px;
+}
+.lightcast-test-modal.wheeling-team-view .lightcast-test-head-subtitle{display:block;}
 .lightcast-test-head button{
   width:40px;
   height:40px;
@@ -6655,179 +6674,45 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 /* =========================================================
-   WHEELING MINERS CONTENT HUB — MASTER TEAM TEMPLATE V1
+   WHEELING MINERS CONTENT HUB — MASTER TEAM TEMPLATE V2
    ========================================================= */
 .wheeling-hub-hero{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:14px;
-  margin-bottom:18px;
-  border-radius:14px;
-  background:linear-gradient(135deg,#24272a,#111315);
-  border:1px solid rgba(201,154,46,.45);
-  box-shadow:0 6px 18px rgba(0,0,0,.10);
-}
-.wheeling-hub-logo{
-  width:82px;
-  height:82px;
-  flex:0 0 82px;
-  object-fit:contain;
+  width:100%;
+  margin:0 0 22px;
   border-radius:12px;
-  background:#fff;
-  padding:7px;
-  box-sizing:border-box;
-}
-.wheeling-hub-hero-copy{min-width:0;}
-.wheeling-hub-hero-copy small{
-  display:block;
-  margin-bottom:4px;
-  color:#c99a2e;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-.wheeling-hub-hero-copy h2{
-  margin:0;
-  color:#fff;
-  font-size:22px;
-  line-height:1.05;
-  font-weight:1000;
-}
-.wheeling-hub-hero-copy p{
-  margin:6px 0 0;
-  color:#d6d9dc;
-  font-size:10px;
-  line-height:1.35;
-}
-.wheeling-content-section{margin:0 0 22px;}
-.wheeling-content-section:last-child{margin-bottom:6px;}
-.wheeling-section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:9px;
-}
-.wheeling-section-head h3{
-  margin:0;
-  color:var(--nal-blue);
-  font-size:15px;
-  line-height:1.1;
-  font-weight:1000;
-  letter-spacing:.25px;
-}
-.wheeling-section-head span{
-  color:#89929d;
-  font-size:9px;
-  font-weight:800;
-}
-.wheeling-view-all{
-  border:0;
-  padding:4px 0;
-  background:transparent;
-  color:var(--nal-red);
-  font-size:10px;
-  font-weight:1000;
-  letter-spacing:.2px;
-  cursor:pointer;
-}
-.wheeling-catalog-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-  padding:2px 0 12px;
-}
-.wheeling-catalog-grid .wheeling-video-card{
-  width:100%;
-  min-width:0;
-  flex:none;
-}
-.wheeling-catalog-grid .wheeling-video-card strong{min-height:48px;}
-.wheeling-video-row{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  padding:1px 2px 9px;
-  scroll-snap-type:x proximity;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-}
-.wheeling-video-row::-webkit-scrollbar{display:none;}
-.wheeling-video-card{
-  flex:0 0 210px;
-  width:210px;
-  padding:0;
-  border:1px solid #dfe3e8;
-  border-radius:11px;
   overflow:hidden;
-  background:#fff;
-  text-align:left;
-  box-shadow:0 3px 10px rgba(0,0,0,.06);
-  cursor:pointer;
-  scroll-snap-align:start;
+  background:#111;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 6px 18px rgba(0,0,0,.24);
 }
-.wheeling-video-card img,
-.wheeling-video-placeholder-art{
+.wheeling-hub-banner{
   width:100%;
+  height:auto;
   aspect-ratio:16 / 9;
   display:block;
   object-fit:cover;
-  background:linear-gradient(135deg,#2c2c2c,#111);
 }
-.wheeling-video-placeholder-art{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:14px;
-  box-sizing:border-box;
-  color:#c99a2e;
-  font-size:12px;
-  font-weight:1000;
-  text-align:center;
-}
-.wheeling-video-card strong{
-  display:block;
-  min-height:42px;
-  padding:10px;
-  box-sizing:border-box;
-  color:var(--nal-blue);
-  font-size:11px;
-  line-height:1.25;
-  font-weight:900;
-}
-.wheeling-empty-row{
-  width:100%;
-  min-height:82px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-sizing:border-box;
-  padding:16px;
-  border:1px dashed #cfd5dc;
-  border-radius:11px;
-  background:#fff;
-  color:#7b8590;
-  font-size:10px;
-  font-weight:800;
-  text-align:center;
-}
-.wheeling-row-loading{
-  width:100%;
-  min-height:82px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#7b8590;
-  font-size:10px;
-  font-weight:800;
-}
-@media(max-width:430px){
-  .wheeling-video-card{flex-basis:190px;width:190px;}
-  .wheeling-hub-logo{width:72px;height:72px;flex-basis:72px;}
-  .wheeling-hub-hero-copy h2{font-size:20px;}
-}
-
+.wheeling-content-section{margin:0 0 22px;}
+.wheeling-content-section:last-child{margin-bottom:6px;}
+.wheeling-section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;}
+.wheeling-section-head h3{margin:0;color:#fff;font-size:15px;line-height:1.1;font-weight:1000;letter-spacing:.25px;}
+.wheeling-section-head span{color:#aeb9c6;font-size:9px;font-weight:800;}
+.wheeling-view-all{border:0;padding:4px 0;background:transparent;color:var(--nal-red);font-size:10px;font-weight:1000;letter-spacing:.2px;cursor:pointer;}
+.wheeling-catalog-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:2px 0 12px;}
+.wheeling-catalog-grid .wheeling-video-card{width:100%;min-width:0;flex:none;}
+.wheeling-catalog-grid .wheeling-video-card strong{min-height:48px;}
+.wheeling-video-row{display:flex;gap:10px;overflow-x:auto;padding:1px 2px 9px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.wheeling-video-row::-webkit-scrollbar{display:none;}
+.wheeling-video-card{flex:0 0 210px;width:210px;padding:0;border:1px solid rgba(255,255,255,.12);border-radius:11px;overflow:hidden;background:#10243a;text-align:left;box-shadow:0 3px 10px rgba(0,0,0,.20);cursor:pointer;scroll-snap-align:start;}
+.wheeling-video-card img,.wheeling-video-placeholder-art{width:100%;aspect-ratio:16 / 9;display:block;object-fit:cover;background:linear-gradient(135deg,#2c2c2c,#111);}
+.wheeling-video-placeholder-art{display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;color:#c99a2e;font-size:12px;font-weight:1000;text-align:center;}
+.wheeling-video-card strong{display:block;min-height:42px;padding:10px;box-sizing:border-box;color:#fff;font-size:11px;line-height:1.25;font-weight:900;}
+.wheeling-empty-row{width:100%;min-height:82px;display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:16px;border:1px dashed rgba(255,255,255,.22);border-radius:11px;background:#10243a;color:#aeb9c6;font-size:10px;font-weight:800;text-align:center;}
+.wheeling-row-loading{width:100%;min-height:82px;display:flex;align-items:center;justify-content:center;color:#aeb9c6;font-size:10px;font-weight:800;}
+.lightcast-test-modal.wheeling-team-view .lightcast-test-view-title h2{color:#fff;}
+.lightcast-test-modal.wheeling-team-view .lightcast-test-view-title p{color:#aeb9c6;}
+.lightcast-test-modal.wheeling-team-view .lightcast-test-back{color:#fff;border-color:rgba(255,255,255,.18);}
+@media(max-width:430px){.wheeling-video-card{flex-basis:190px;width:190px;}}
 
 
 </style>
@@ -14510,9 +14395,14 @@ const WHEELING_LIGHTCAST_SOURCES = {
 let wheelingHubMedia = { latest:[], archives:[], coaches:[] };
 let wheelingPlayerReturn = { view:"hub", sourceKey:null };
 
-function setLightcastModalHeading(text){
+function setLightcastModalHeading(text, subtitle=""){
   const heading=document.getElementById("lightcastModalHeading");
+  const sub=document.getElementById("lightcastModalSubtitle");
   if(heading) heading.textContent=text || "NAL NETWORK";
+  if(sub){ sub.textContent=subtitle || ""; sub.hidden=!subtitle; }
+}
+function setWheelingTeamView(enabled){
+  document.getElementById("lightcastTestModal")?.classList.toggle("wheeling-team-view",!!enabled);
 }
 
 function wheelingPoster(item){
@@ -14550,6 +14440,7 @@ function renderWheelingCatalog(key){
   const content=lightcastTestContent();
   if(!source || !content) return;
   const items=Array.isArray(wheelingHubMedia[key]) ? wheelingHubMedia[key] : [];
+  setWheelingTeamView(true);
   setLightcastModalHeading(`WHEELING MINERS — ${source.label}`);
   content.innerHTML=`
     <div class="lightcast-test-view-head">
@@ -14591,15 +14482,11 @@ async function loadWheelingRow(key){
 function renderWheelingMinersHub(){
   const content=lightcastTestContent();
   if(!content) return;
-  setLightcastModalHeading("WHEELING MINERS");
+  setWheelingTeamView(true);
+  setLightcastModalHeading("WHEELING MINERS", "Games, archives, highlights, coaches' shows and team features.");
   content.innerHTML=`
     <section class="wheeling-hub-hero">
-      <img class="wheeling-hub-logo" src="${lightcastEscape(WHEELING_MINERS_LOGO)}" alt="Wheeling Miners">
-      <div class="wheeling-hub-hero-copy">
-        <small>NAL NETWORK</small>
-        <h2>WHEELING MINERS</h2>
-        <p>Games, archives, highlights, coaches' shows and team features.</p>
-      </div>
+      <img class="wheeling-hub-banner" src="${lightcastEscape(WHEELING_MINERS_LOGO)}" alt="Wheeling Miners">
     </section>
 
     <section class="wheeling-content-section">
@@ -14659,6 +14546,7 @@ function openWheelingVideo(sourceKey,index){
   const item=wheelingHubMedia[sourceKey]?.[index];
   const content=lightcastTestContent();
   if(!source || !item || !content) return;
+  setWheelingTeamView(false);
   setLightcastModalHeading(`WHEELING MINERS — ${source.label}`);
   const embedSrc=getWheelingEmbedSrc(item,source.channelId);
   content.innerHTML=`
@@ -14697,7 +14585,10 @@ function closeLightcastTest(){
 <div id="lightcastTestModal" class="lightcast-test-modal" hidden>
   <div class="lightcast-test-shell">
     <div class="lightcast-test-head">
-      <strong id="lightcastModalHeading">NAL NETWORK</strong>
+      <div class="lightcast-test-head-title">
+        <strong id="lightcastModalHeading">NAL NETWORK</strong>
+        <p id="lightcastModalSubtitle" class="lightcast-test-head-subtitle" hidden></p>
+      </div>
       <button type="button" onclick="closeLightcastTest()" aria-label="Close video player">×</button>
     </div>
     <div id="lightcastTestContent" class="lightcast-test-content"></div>
