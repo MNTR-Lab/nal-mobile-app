@@ -6622,21 +6622,17 @@ document.addEventListener("DOMContentLoaded", () => {
   padding-bottom:56.25%;
   margin:0 0 14px;
   background:#000;
-  overflow:hidden;
-  border-radius:10px;
 }
 .lightcast-video-wrap iframe{
   position:absolute;
   inset:0;
-  width:100%;
-  height:100%;
+  width:0;
+  height:0;
   min-width:100%;
   max-width:100%;
   min-height:100%;
   max-height:100%;
   border:0;
-  display:block;
-  background:#000;
 }
 .lightcast-video-meta{
   background:#fff;
@@ -14331,9 +14327,9 @@ async function loadLightcastMedia(subId){
 }
 
 function getLightcastEmbedSrc(item){
-  const code=String(item?.embed_code || "");
-  const match=code.match(/src=["']([^"']+)["']/i);
-  return match ? match[1].replaceAll("&amp;","&") : "";
+  const mediaId=String(item?.media_id || item?.id || "").trim();
+  if(!mediaId) return "";
+  return `https://www.lightcast.com/embed/player.php?id=${encodeURIComponent(mediaId)}&channelId=72119`;
 }
 
 function openLightcastVideo(index){
@@ -14346,7 +14342,7 @@ function openLightcastVideo(index){
       <button type="button" class="lightcast-test-back" id="lightcastBackToMedia">‹ VIDEOS</button>
       <div class="lightcast-test-view-title"><h2>NOW PLAYING</h2><p>${lightcastEscape(lightcastTestActiveChannel?.name || "NAL Network")}</p></div>
     </div>
-    ${embedSrc ? `<div class="lightcast-video-wrap"><iframe title="${lightcastEscape(item.title || "Lightcast Video")}" src="${lightcastEscape(embedSrc)}" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></div>` : `<div class="lightcast-test-status">A playable embed URL was not returned for this video.</div>`}
+    ${embedSrc ? `<div class="lightcast-video-wrap"><iframe title="${lightcastEscape(item.title || "Lightcast Video")}" src="${lightcastEscape(embedSrc)}" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>` : `<div class="lightcast-test-status">A playable Lightcast media ID was not returned for this video.</div>`}
     <div class="lightcast-video-meta">
       <h2>${lightcastEscape(item.title || "Untitled Video")}</h2>
       ${item.description ? `<p>${lightcastEscape(item.description)}</p>` : ""}
