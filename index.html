@@ -6767,6 +6767,9 @@ document.addEventListener("DOMContentLoaded", () => {
   text-decoration:none !important;
 }
 
+/* Team Home Watch card is now an in-app channel link; visual design remains unchanged. */
+#teamPage .team-watch-card{cursor:pointer;}
+
 </style>
 
 <style>
@@ -7633,7 +7636,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </div>
 
-    <div class="team-watch-card">
+    <div class="team-watch-card" id="teamWatchCard" role="button" tabindex="0" aria-label="Open team channel">
 
       <div class="team-watch-play">
         ▶
@@ -13546,6 +13549,43 @@ function openTeamHome(team) {
   }
 
 
+  /* =====================================================
+     WATCH TEAM — DIRECT NAL NETWORK TEAM CHANNEL
+     The reusable Team Home routes each team's Watch card
+     to that team's existing NAL Network channel hub.
+     ===================================================== */
+
+  const teamWatchCard =
+    document.getElementById("teamWatchCard");
+
+  if (teamWatchCard) {
+
+    const openCurrentTeamChannel = () => {
+      if (
+        typeof openNALTeamHub === "function" &&
+        typeof NAL_TEAM_CHANNELS !== "undefined" &&
+        NAL_TEAM_CHANNELS[team.slug]
+      ) {
+        openNALTeamHub(team.slug);
+      }
+    };
+
+    teamWatchCard.onclick = openCurrentTeamChannel;
+
+    teamWatchCard.onkeydown = (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openCurrentTeamChannel();
+      }
+    };
+
+    teamWatchCard.setAttribute(
+      "aria-label",
+      `Watch ${team.name || shortName} on NAL Network`
+    );
+  }
+
+
   /* Load this team's live news feed */
   loadTeamNews(team);
 
@@ -14039,9 +14079,18 @@ function populateNetworkTeamChannels(){
   });
 }
 function openNetworkTeamChannel(slug){
+  if (
+    typeof openNALTeamHub === "function" &&
+    typeof NAL_TEAM_CHANNELS !== "undefined" &&
+    NAL_TEAM_CHANNELS[slug]
+  ){
+    openNALTeamHub(slug);
+    return;
+  }
+
   const team=Array.isArray(nalTeams)?nalTeams.find(t=>t.slug===slug):null;
   const name=team?.name||slug.split("-").map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(" ");
-  previewNetworkItem(name+" Channel","Team channel preview. The dedicated NAL Network channel link will be connected here.");
+  previewNetworkItem(name+" Channel","Team channel is currently unavailable.");
 }
 function openNetworkVodTeam(slug){
   const team=Array.isArray(nalTeams)?nalTeams.find(t=>t.slug===slug):null;
