@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lightcast Player Test</title>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+    }
+
+    .lightcast-player {
+      position: relative;
+      padding-bottom: 56.25%;
+      margin-top: 25px;
+      height: 0;
+    }
+
+    .lightcast-player iframe {
+      position: absolute;
+      height: 0;
+      width: 0;
+      min-width: 100%;
+      max-width: 100%;
+      min-height: 100%;
+      max-height: 100%;
+      border: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="lightcast-player">
+    <iframe
+      src="https://www.lightcast.com/embed/player.php?id=823337&channelId=72119"
+      referrerpolicy="no-referrer-when-downgrade"
+      frameborder="0"
+      allow="fullscreen; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+</body>
+</html>
