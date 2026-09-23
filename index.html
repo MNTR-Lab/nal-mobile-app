@@ -9011,6 +9011,7 @@ document.addEventListener("DOMContentLoaded", () => {
       class="nav-button"
       id="moreMenuButton"
       type="button"
+      onclick="toggleMoreMenu(event)"
       aria-label="More"
       aria-expanded="false"
       aria-controls="moreBottomSheet"
@@ -9288,15 +9289,19 @@ function setMoreMenu(open){
   // No full-screen backdrop: only the menu itself overlays the current page.
 }
 
-if (moreMenuButton) {
-  moreMenuButton.addEventListener("click", event => {
+function toggleMoreMenu(event){
+  if (event) {
     event.preventDefault();
     event.stopPropagation();
+  }
 
-    const isOpen = moreBottomSheet?.classList.contains("open");
-    setMoreMenu(!isOpen);
-  });
+  if (!moreBottomSheet) return;
+
+  const shouldOpen = !moreBottomSheet.classList.contains("open");
+  setMoreMenu(shouldOpen);
 }
+
+
 
 if (moreSheetBackdrop) {
   moreSheetBackdrop.addEventListener("click", () => setMoreMenu(false));
@@ -9304,14 +9309,18 @@ if (moreSheetBackdrop) {
 
 
 document.addEventListener("click", event => {
-  if (!moreBottomSheet?.classList.contains("open")) return;
+  if (!moreBottomSheet || !moreBottomSheet.classList.contains("open")) return;
   if (moreBottomSheet.contains(event.target)) return;
-  if (moreMenuButton?.contains(event.target)) return;
+  if (moreMenuButton && moreMenuButton.contains(event.target)) return;
   setMoreMenu(false);
 });
 
 document.addEventListener("keydown", event => {
-  if (event.key === "Escape" && moreBottomSheet?.classList.contains("open")) {
+  if (
+    event.key === "Escape" &&
+    moreBottomSheet &&
+    moreBottomSheet.classList.contains("open")
+  ) {
     setMoreMenu(false);
   }
 });
