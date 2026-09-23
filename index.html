@@ -2716,7 +2716,7 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   border-radius:0 !important;
   background:
     linear-gradient(90deg,rgba(1,13,26,.34),rgba(1,13,26,.58)) !important;
-  background-position:center center !important;
+  background-position:center 72% !important;
   background-size:cover !important;
   background-repeat:no-repeat !important;
   border-bottom:1px solid rgba(255,255,255,.08) !important;
@@ -5283,7 +5283,11 @@ document.addEventListener("DOMContentLoaded", () => {
 .topbar{
   height:var(--header-height) !important;
   padding:max(8px, env(safe-area-inset-top)) 14px 8px !important;
-  background:var(--nal-blue) !important;
+  background-color:var(--nal-blue) !important;
+  background-image:url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Header_Image.png?v=1790167051") !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
   border-bottom:3px solid var(--nal-red) !important;
   display:grid !important;
   grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
