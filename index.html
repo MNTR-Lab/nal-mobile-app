@@ -7066,35 +7066,6 @@ document.addEventListener("DOMContentLoaded", () => {
   grid-row:auto !important;
   grid-column:auto !important;
 }
-
-/* LIVE GAMES — VISUAL PLACEHOLDERS ONLY */
-#watchPage .nal-live-channels-section{padding-top:4px!important;}
-#watchPage .nal-live-primary-card,
-#watchPage .nal-live-placeholder-card,
-#watchPage .nal-live-team-card{cursor:default!important;}
-#watchPage .nal-live-primary-card{display:block;width:100%;padding:0;border:0;background:transparent;text-align:left;margin:0 0 24px;}
-#watchPage .nal-live-primary-card .nal-live-placeholder-art{aspect-ratio:16/9;min-height:0;border-radius:14px;}
-#watchPage .nal-live-placeholder-art{position:relative;overflow:hidden;background:linear-gradient(145deg,#07182c 0%,#102f52 55%,#06111f 100%);border:1px solid rgba(255,255,255,.14);box-shadow:0 8px 22px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;}
-#watchPage .nal-live-placeholder-art:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 12px);}
-#watchPage .nal-live-placeholder-badge{position:absolute;top:10px;left:10px;background:#d71920;color:#fff;border-radius:4px;padding:4px 8px;font-size:10px;font-weight:900;letter-spacing:1px;z-index:2;}
-#watchPage .nal-live-placeholder-play{width:48px;height:48px;border:2px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;padding-left:3px;z-index:2;opacity:.85;}
-#watchPage .nal-live-placeholder-copy{position:absolute;left:14px;right:14px;bottom:12px;z-index:2;color:#fff;display:flex;flex-direction:column;gap:2px;}
-#watchPage .nal-live-placeholder-copy strong{font-size:17px;line-height:1.1;letter-spacing:.3px;}
-#watchPage .nal-live-placeholder-copy span{font-size:9px;letter-spacing:1.2px;color:rgba(255,255,255,.7);font-weight:800;}
-#watchPage .nal-live-category-head{display:flex;align-items:center;gap:10px;margin:24px 0 12px;}
-#watchPage .nal-live-category-head h3{margin:0;color:#fff;font-size:17px;line-height:1;font-weight:900;letter-spacing:.7px;white-space:nowrap;}
-#watchPage .nal-live-category-head span{height:2px;flex:1;background:#d71920;display:block;}
-#watchPage .nal-live-two-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
-#watchPage .nal-live-placeholder-card{border:0;background:transparent;padding:0;text-align:left;color:#fff;min-width:0;}
-#watchPage .nal-live-placeholder-card .nal-live-placeholder-art{aspect-ratio:16/9;border-radius:10px;margin-bottom:7px;}
-#watchPage .nal-live-placeholder-card .nal-live-placeholder-play{width:32px;height:32px;font-size:12px;border-width:1.5px;}
-#watchPage .nal-live-placeholder-card strong{display:block;font-size:12px;line-height:1.15;font-weight:900;white-space:normal;}
-#watchPage .nal-live-placeholder-card small{display:block;margin-top:3px;font-size:8px;line-height:1.2;letter-spacing:.7px;color:rgba(255,255,255,.58);font-weight:800;}
-#watchPage .nal-live-team-head{margin-top:30px;}
-#watchPage .nal-live-team-card small{display:block;margin-top:3px;color:rgba(255,255,255,.55);font-size:8px;line-height:1.1;letter-spacing:.65px;font-weight:800;}
-#watchPage .nal-live-team-card .network-team-channel-art{position:relative;}
-#watchPage .nal-live-team-card .network-team-channel-art em{position:absolute;top:7px;left:7px;background:#d71920;color:#fff;font-style:normal;font-size:8px;font-weight:900;letter-spacing:.8px;border-radius:3px;padding:3px 6px;box-shadow:0 2px 6px rgba(0,0,0,.25);}
-
 </style>
 </head>
 
@@ -7722,41 +7693,50 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
     <div class="network-tab-panel" data-network-panel="team-channels">
-      <section class="network-library-head"><h2>LIVE GAMES</h2><p>Watch live NAL action from across the league.</p></section>
-
-      <section class="network-hub-section nal-live-channels-section">
-        <button class="nal-live-primary-card" type="button" aria-disabled="true">
-          <div class="nal-live-placeholder-art">
-            <div class="nal-live-placeholder-badge">LIVE</div>
-            <div class="nal-live-placeholder-play">▶</div>
-            <div class="nal-live-placeholder-copy"><strong>NAL PRIMARY LIVE</strong><span>LIVE CHANNEL PLACEHOLDER</span></div>
-          </div>
-        </button>
-
-        <div class="nal-live-category-head"><h3>LEAGUE LIVE</h3><span></span></div>
-        <div class="nal-live-two-grid nal-live-league-grid">
-          <button class="nal-live-placeholder-card" type="button" aria-disabled="true">
-            <div class="nal-live-placeholder-art"><div class="nal-live-placeholder-badge">LIVE</div><div class="nal-live-placeholder-play">▶</div></div>
-            <strong>LEAGUE LIVE 2</strong><small>LIVE CHANNEL PLACEHOLDER</small>
+      <section class="network-library-head"><h2>LIVE GAMES</h2><p>Watch live NAL action from every team.</p></section>
+      <section class="network-hub-section network-team-channels-section">
+        
+        <div class="network-team-channel-grid">
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('amarillo-warbirds')">
+            <div class="network-team-channel-art"><img data-network-team-logo="amarillo-warbirds" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"></div>
+            <span>Amarillo Warbirds</span>
           </button>
-          <button class="nal-live-placeholder-card" type="button" aria-disabled="true">
-            <div class="nal-live-placeholder-art"><div class="nal-live-placeholder-badge">LIVE</div><div class="nal-live-placeholder-play">▶</div></div>
-            <strong>LEAGUE LIVE 3</strong><small>LIVE CHANNEL PLACEHOLDER</small>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('colorado-spartans')">
+            <div class="network-team-channel-art"><img data-network-team-logo="colorado-spartans" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784" alt="Colorado Spartans" loading="lazy"></div>
+            <span>Colorado Spartans</span>
           </button>
-        </div>
-
-        <div class="nal-live-category-head nal-live-team-head"><h3>TEAM LIVE</h3><span></span></div>
-        <div class="network-team-channel-grid nal-live-team-grid">
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="amarillo-warbirds" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"><em>LIVE</em></div><span>Amarillo Warbirds</span><small>CHANNEL PLACEHOLDER</small></button>
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="colorado-spartans" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784" alt="Colorado Spartans" loading="lazy"><em>LIVE</em></div><span>Colorado Spartans</span><small>CHANNEL PLACEHOLDER</small></button>
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="dallas-apex" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784" alt="Dallas Apex" loading="lazy"><em>LIVE</em></div><span>Dallas Apex</span><small>CHANNEL PLACEHOLDER</small></button>
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="louisiana-rouxgaroux" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784" alt="Louisiana Rouxgaroux" loading="lazy"><em>LIVE</em></div><span>Louisiana Rouxgaroux</span><small>CHANNEL PLACEHOLDER</small></button>
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="omaha-beef" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792" alt="Omaha Beef" loading="lazy"><em>LIVE</em></div><span>Omaha Beef</span><small>CHANNEL PLACEHOLDER</small></button>
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="pueblo-punishers" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792" alt="Pueblo Punishers" loading="lazy"><em>LIVE</em></div><span>Pueblo Punishers</span><small>CHANNEL PLACEHOLDER</small></button>
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="salina-liberty" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792" alt="Salina Liberty" loading="lazy"><em>LIVE</em></div><span>Salina Liberty</span><small>CHANNEL PLACEHOLDER</small></button>
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="sioux-city-bandits" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792" alt="Sioux City Bandits" loading="lazy"><em>LIVE</em></div><span>Sioux City Bandits</span><small>CHANNEL PLACEHOLDER</small></button>
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="southwest-kansas-storm" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792" alt="Southwest Kansas Storm" loading="lazy"><em>LIVE</em></div><span>Southwest Kansas Storm</span><small>CHANNEL PLACEHOLDER</small></button>
-          <button class="network-team-channel-card nal-live-team-card" type="button" aria-disabled="true"><div class="network-team-channel-art"><img data-network-team-logo="wheeling-miners" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"><em>LIVE</em></div><span>Wheeling Miners</span><small>CHANNEL PLACEHOLDER</small></button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('dallas-apex')">
+            <div class="network-team-channel-art"><img data-network-team-logo="dallas-apex" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784" alt="Dallas Apex" loading="lazy"></div>
+            <span>Dallas Apex</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('louisiana-rouxgaroux')">
+            <div class="network-team-channel-art"><img data-network-team-logo="louisiana-rouxgaroux" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784" alt="Louisiana Rouxgaroux" loading="lazy"></div>
+            <span>Louisiana Rouxgaroux</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('omaha-beef')">
+            <div class="network-team-channel-art"><img data-network-team-logo="omaha-beef" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792" alt="Omaha Beef" loading="lazy"></div>
+            <span>Omaha Beef</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('pueblo-punishers')">
+            <div class="network-team-channel-art"><img data-network-team-logo="pueblo-punishers" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792" alt="Pueblo Punishers" loading="lazy"></div>
+            <span>Pueblo Punishers</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('salina-liberty')">
+            <div class="network-team-channel-art"><img data-network-team-logo="salina-liberty" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792" alt="Salina Liberty" loading="lazy"></div>
+            <span>Salina Liberty</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('sioux-city-bandits')">
+            <div class="network-team-channel-art"><img data-network-team-logo="sioux-city-bandits" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792" alt="Sioux City Bandits" loading="lazy"></div>
+            <span>Sioux City Bandits</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('southwest-kansas-storm')">
+            <div class="network-team-channel-art"><img data-network-team-logo="southwest-kansas-storm" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792" alt="Southwest Kansas Storm" loading="lazy"></div>
+            <span>Southwest Kansas Storm</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('wheeling-miners')">
+            <div class="network-team-channel-art"><img data-network-team-logo="wheeling-miners" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div>
+            <span>Wheeling Miners</span>
+          </button>
         </div>
       </section>
     </div>
@@ -11107,10 +11087,74 @@ function populateNetworkTeamChannels(){
     }
   });
 }
-function openNetworkTeamChannel(slug){
+const NAL_LIVE_CHANNEL_MATCH = {
+  "amarillo-warbirds": ["amarillo warbirds", "amarillo live"],
+  "colorado-spartans": ["colorado spartans", "colorado live"],
+  "dallas-apex": ["dallas apex", "dallas live"],
+  "louisiana-rouxgaroux": ["louisiana rouxgaroux", "louisiana live"],
+  "omaha-beef": ["omaha beef", "omaha live"],
+  "pueblo-punishers": ["pueblo punishers", "pueblo live"],
+  "salina-liberty": ["salina liberty", "salina live"],
+  "sioux-city-bandits": ["sioux city bandits", "sioux city live"],
+  "southwest-kansas-storm": ["southwest kansas storm", "southwest kansas live"],
+  "wheeling-miners": ["wheeling miners", "wheeling live"]
+};
+
+function normalizeNALChannelName(value){
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+}
+
+function findNALLiveChannel(slug,channels){
+  const needles=(NAL_LIVE_CHANNEL_MATCH[slug] || []).map(normalizeNALChannelName);
+  return (Array.isArray(channels) ? channels : []).find(channel=>{
+    const haystack=normalizeNALChannelName(channel?.channel_name || channel?.name || channel?.title || "");
+    return needles.some(needle=>needle && (haystack===needle || haystack.includes(needle)));
+  }) || null;
+}
+
+function getNALLiveEmbedSrc(channel){
+  const id=String(channel?.channel_id || channel?.id || "").trim();
+  if(!id) return "";
+  return `https://www.lightcast.com/embed/player.php?id=${encodeURIComponent(id)}&type=live`;
+}
+
+async function openNetworkTeamChannel(slug){
   const team=Array.isArray(nalTeams)?nalTeams.find(t=>t.slug===slug):null;
   const name=team?.name||slug.split("-").map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(" ");
-  previewNetworkItem(name+" Channel","Team channel preview. The dedicated NAL Network channel link will be connected here.");
+  const modal=document.getElementById("lightcastTestModal");
+  const content=lightcastTestContent();
+  if(!modal || !content) return;
+
+  modal.hidden=false;
+  document.body.style.overflow="hidden";
+  setWheelingTeamView(false);
+  setLightcastModalHeading(name.toUpperCase(),"LIVE ON NAL NETWORK");
+  content.innerHTML=`<div class="lightcast-test-status">Loading ${lightcastEscape(name)} live channel...</div>`;
+
+  try{
+    const payload=await fetchLightcastCatalog({view:"channels"});
+    const channels=Array.isArray(payload?.data) ? payload.data : [];
+    const channel=findNALLiveChannel(slug,channels);
+    const embedSrc=getNALLiveEmbedSrc(channel);
+
+    if(!channel || !embedSrc){
+      content.innerHTML=`<div class="wheeling-empty-row">LIVE STREAM COMING SOON</div>`;
+      return;
+    }
+
+    content.innerHTML=`
+      <div class="lightcast-test-view-head">
+        <button type="button" class="lightcast-test-back" id="nalLiveBack">‹ LIVE GAMES</button>
+        <div class="lightcast-test-view-title"><h2>WATCH LIVE</h2><p>${lightcastEscape(name)}</p></div>
+      </div>
+      <div class="lightcast-video-wrap">
+        <iframe title="${lightcastEscape(name)} Live" src="${lightcastEscape(embedSrc)}" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>`;
+
+    document.getElementById("nalLiveBack")?.addEventListener("click",closeLightcastTest);
+  }catch(error){
+    content.innerHTML=`<div class="wheeling-empty-row">LIVE STREAM COMING SOON</div>`;
+  }
 }
 function openNetworkVodTeam(slug){
   const team=Array.isArray(nalTeams)?nalTeams.find(t=>t.slug===slug):null;
