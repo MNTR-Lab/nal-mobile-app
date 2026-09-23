@@ -3470,39 +3470,6 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 #watchPage .network-preview-action{margin-top:15px;width:100%;height:40px;border:0;border-radius:7px;background:#ed1c2e;color:#fff;font-size:10px;font-weight:950;}
 
 
-/* =========================================================
-   NAL NETWORK — ARCHIVES
-========================================================= */
-#watchPage .network-archive-section{padding:0 16px 24px}
-#watchPage .network-archive-section+.network-archive-section{padding-top:8px}
-#watchPage .network-archive-section-title{margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #ed1c2e;color:#fff;font-size:16px;font-weight:1000;letter-spacing:.45px;text-transform:uppercase}
-#watchPage .network-archive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
-#watchPage .network-archive-card{min-width:0;padding:0;border:0;background:transparent;color:#fff;text-align:left;cursor:pointer}
-#watchPage .network-archive-card-art{aspect-ratio:1/1;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:linear-gradient(145deg,#102f53,#07172b 62%,#111);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:18px}
-#watchPage .network-archive-card-art img{width:100%;height:100%;object-fit:contain}
-#watchPage .network-archive-card strong{display:block;margin-top:7px;color:#fff;font-size:10px;font-weight:950;line-height:1.25}
-#watchPage .network-archive-card small{display:block;margin-top:2px;color:rgba(255,255,255,.52);font-size:8px;font-weight:800;letter-spacing:.35px}
-#watchPage .network-archive-card.is-placeholder .network-archive-card-art{padding:10px;color:rgba(255,255,255,.45);font-size:11px;font-weight:950;letter-spacing:.8px;text-align:center}
-@media(min-width:700px){#watchPage .network-archive-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 14px}}
-@media(min-width:1000px){#watchPage .network-archive-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
-/* CURRENT NAL TEAMS — three across so team artwork stays larger */
-#watchPage .network-archive-current-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:16px 12px}
-/* PREVIOUS ORGANIZATIONS — same card width as current teams, centered as a pair */
-#watchPage .network-archive-previous-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:16px 12px}
-#watchPage .network-archive-previous-grid .network-archive-card:first-child{grid-column:1;transform:translateX(50%)}
-#watchPage .network-archive-previous-grid .network-archive-card:nth-child(2){grid-column:2;transform:translateX(50%)}
-#networkArchiveDetailPage{min-height:calc(100vh - var(--header-height));padding:0 0 100px;background:#06172b;color:#fff}
-.network-archive-detail-head{padding:16px;border-bottom:1px solid rgba(255,255,255,.10)}
-.network-archive-back{padding:0;border:0;background:transparent;color:#fff;font:inherit;font-size:10px;font-weight:950;letter-spacing:.6px;cursor:pointer}
-.network-archive-detail-title{margin:14px 0 3px;font-size:24px;line-height:1;font-weight:1000;text-transform:uppercase}
-.network-archive-detail-subtitle{margin:0;color:rgba(255,255,255,.58);font-size:9px;font-weight:800}
-.network-archive-detail-body{padding:18px 16px}
-.network-archive-player-shell{aspect-ratio:16/9;border:1px solid rgba(255,255,255,.12);border-radius:13px;overflow:hidden;background:linear-gradient(145deg,#102f53,#07172b 58%,#210b17);display:flex;align-items:center;justify-content:center}
-.network-archive-player-shell iframe{width:100%;height:100%;border:0}
-.network-archive-player-placeholder{padding:20px;text-align:center}
-.network-archive-player-placeholder strong{display:block;font-size:12px;font-weight:1000}
-.network-archive-player-placeholder small{display:block;margin-top:5px;color:rgba(255,255,255,.55);font-size:9px}
-
 /* TEAMS PAGE — NORMAL APP-SHELL POSITION */
 #teamsPage{
   width: 100% !important;
@@ -7305,10 +7272,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     <div class="network-tabs" role="tablist" aria-label="NAL Network sections">
       <button class="network-tab active" type="button" data-network-tab="home">HOME</button>
-      <button class="network-tab" type="button" data-network-tab="live">LIVE</button>
-      <button class="network-tab" type="button" data-network-tab="shows">SHOWS</button>
-      <button class="network-tab" type="button" data-network-tab="highlights">HIGHLIGHTS</button>
+      <button class="network-tab" type="button" data-network-tab="team-channels">TEAM CHANNELS</button>
+      <button class="network-tab" type="button" data-network-tab="vod">VIDEO-ON-DEMAND</button>
       <button class="network-tab" type="button" data-network-tab="archives">ARCHIVES</button>
+      <button class="network-tab" type="button" data-network-tab="shows">SHOWS</button>
     </div>
 
     <div class="network-tab-panel active" data-network-panel="home">
@@ -7434,9 +7401,55 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>
     </div>
 
-    <div class="network-tab-panel" data-network-panel="live">
-      <section class="network-library-head"><h2>LIVE</h2><p>Live NAL Network programming and upcoming broadcasts.</p></section>
-      <section class="network-empty-state"><span class="network-empty-icon">▶</span><strong>NO LIVE EVENT RIGHT NOW</strong><small>Live broadcasts will appear here when available.</small></section>
+    <div class="network-tab-panel" data-network-panel="team-channels">
+      <section class="network-library-head"><h2>TEAM CHANNELS</h2><p>Watch and explore NAL team channels.</p></section>
+      <section class="network-hub-section network-team-channels-section">
+        <div class="network-section-header">
+          <div class="network-section-title">Team Channels</div>
+        </div>
+        <div class="network-team-channel-grid">
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('amarillo-warbirds')">
+            <div class="network-team-channel-art"><img data-network-team-logo="amarillo-warbirds" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"></div>
+            <span>Amarillo Warbirds</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('colorado-spartans')">
+            <div class="network-team-channel-art"><img data-network-team-logo="colorado-spartans" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784" alt="Colorado Spartans" loading="lazy"></div>
+            <span>Colorado Spartans</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('dallas-apex')">
+            <div class="network-team-channel-art"><img data-network-team-logo="dallas-apex" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784" alt="Dallas Apex" loading="lazy"></div>
+            <span>Dallas Apex</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('louisiana-rouxgaroux')">
+            <div class="network-team-channel-art"><img data-network-team-logo="louisiana-rouxgaroux" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784" alt="Louisiana Rouxgaroux" loading="lazy"></div>
+            <span>Louisiana Rouxgaroux</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('omaha-beef')">
+            <div class="network-team-channel-art"><img data-network-team-logo="omaha-beef" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792" alt="Omaha Beef" loading="lazy"></div>
+            <span>Omaha Beef</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('pueblo-punishers')">
+            <div class="network-team-channel-art"><img data-network-team-logo="pueblo-punishers" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792" alt="Pueblo Punishers" loading="lazy"></div>
+            <span>Pueblo Punishers</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('salina-liberty')">
+            <div class="network-team-channel-art"><img data-network-team-logo="salina-liberty" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792" alt="Salina Liberty" loading="lazy"></div>
+            <span>Salina Liberty</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('sioux-city-bandits')">
+            <div class="network-team-channel-art"><img data-network-team-logo="sioux-city-bandits" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792" alt="Sioux City Bandits" loading="lazy"></div>
+            <span>Sioux City Bandits</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('southwest-kansas-storm')">
+            <div class="network-team-channel-art"><img data-network-team-logo="southwest-kansas-storm" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792" alt="Southwest Kansas Storm" loading="lazy"></div>
+            <span>Southwest Kansas Storm</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('wheeling-miners')">
+            <div class="network-team-channel-art"><img data-network-team-logo="wheeling-miners" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div>
+            <span>Wheeling Miners</span>
+          </button>
+        </div>
+      </section>
     </div>
 
     <div class="network-tab-panel" data-network-panel="shows">
@@ -7449,65 +7462,14 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>
     </div>
 
-    <div class="network-tab-panel" data-network-panel="highlights">
-      <section class="network-library-head"><h2>HIGHLIGHTS</h2><p>Game highlights and quick-hit NAL video.</p></section>
-      <section class="network-empty-state"><span class="network-empty-icon">▶</span><strong>HIGHLIGHT LIBRARY</strong><small>Highlight videos will populate this section.</small></section>
+    <div class="network-tab-panel" data-network-panel="vod">
+      <section class="network-library-head"><h2>VIDEO-ON-DEMAND</h2><p>Watch NAL Network programming on demand.</p></section>
+      <section class="network-empty-state"><span class="network-empty-icon">▶</span><strong>VIDEO-ON-DEMAND</strong><small>On-demand programming will populate this section.</small></section>
     </div>
 
     <div class="network-tab-panel" data-network-panel="archives">
-      <section class="network-library-head"><h2>ARCHIVES</h2><p>Past games and programming from NAL organizations.</p></section>
-      <section class="network-archive-section">
-        <h3 class="network-archive-section-title">Current NAL Teams</h3>
-        <div class="network-archive-grid network-archive-current-grid">
-          <button class="network-archive-card" type="button" onclick="openNetworkArchive('amarillo-warbirds','Amarillo Warbirds')">
-            <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"></div>
-            <strong>Amarillo Warbirds</strong><small>TEAM ARCHIVE</small>
-          </button>
-          <button class="network-archive-card" type="button" onclick="openNetworkArchive('colorado-spartans','Colorado Spartans')">
-            <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784" alt="Colorado Spartans" loading="lazy"></div>
-            <strong>Colorado Spartans</strong><small>TEAM ARCHIVE</small>
-          </button>
-          <button class="network-archive-card" type="button" onclick="openNetworkArchive('dallas-apex','Dallas Apex')">
-            <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784" alt="Dallas Apex" loading="lazy"></div>
-            <strong>Dallas Apex</strong><small>TEAM ARCHIVE</small>
-          </button>
-          <button class="network-archive-card" type="button" onclick="openNetworkArchive('louisiana-rouxgaroux','Louisiana Rouxgaroux')">
-            <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784" alt="Louisiana Rouxgaroux" loading="lazy"></div>
-            <strong>Louisiana Rouxgaroux</strong><small>TEAM ARCHIVE</small>
-          </button>
-          <button class="network-archive-card" type="button" onclick="openNetworkArchive('omaha-beef','Omaha Beef')">
-            <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792" alt="Omaha Beef" loading="lazy"></div>
-            <strong>Omaha Beef</strong><small>TEAM ARCHIVE</small>
-          </button>
-          <button class="network-archive-card" type="button" onclick="openNetworkArchive('pueblo-punishers','Pueblo Punishers')">
-            <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792" alt="Pueblo Punishers" loading="lazy"></div>
-            <strong>Pueblo Punishers</strong><small>TEAM ARCHIVE</small>
-          </button>
-          <button class="network-archive-card" type="button" onclick="openNetworkArchive('salina-liberty','Salina Liberty')">
-            <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792" alt="Salina Liberty" loading="lazy"></div>
-            <strong>Salina Liberty</strong><small>TEAM ARCHIVE</small>
-          </button>
-          <button class="network-archive-card" type="button" onclick="openNetworkArchive('southwest-kansas-storm','Southwest Kansas Storm')">
-            <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792" alt="Southwest Kansas Storm" loading="lazy"></div>
-            <strong>Southwest Kansas Storm</strong><small>TEAM ARCHIVE</small>
-          </button>
-          <button class="network-archive-card" type="button" onclick="openNetworkArchive('wheeling-miners','Wheeling Miners')">
-            <div class="network-archive-card-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div>
-            <strong>Wheeling Miners</strong><small>TEAM ARCHIVE</small>
-          </button>
-        </div>
-      </section>
-      <section class="network-archive-section">
-        <h3 class="network-archive-section-title">Previous Organizations</h3>
-        <div class="network-archive-grid network-archive-previous-grid">
-          <button class="network-archive-card is-placeholder" type="button" onclick="openNetworkArchive('previous-organization-1','Previous Organization')">
-            <div class="network-archive-card-art">ORGANIZATION<br>COMING SOON</div><strong>Previous Organization</strong><small>ARCHIVE PLACEHOLDER</small>
-          </button>
-          <button class="network-archive-card is-placeholder" type="button" onclick="openNetworkArchive('previous-organization-2','Previous Organization')">
-            <div class="network-archive-card-art">ORGANIZATION<br>COMING SOON</div><strong>Previous Organization</strong><small>ARCHIVE PLACEHOLDER</small>
-          </button>
-        </div>
-      </section>
+      <section class="network-library-head"><h2>ARCHIVES</h2><p>Past games and NAL Network programming.</p></section>
+      <section class="network-empty-state"><span class="network-empty-icon">▣</span><strong>NAL ARCHIVES</strong><small>Archived games and programs will populate this section.</small></section>
     </div>
 
     <div id="networkPreviewModal" class="network-preview-modal" aria-hidden="true">
@@ -7518,22 +7480,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3 id="networkPreviewTitle">NAL Network</h3>
         <p id="networkPreviewText">Programming preview.</p>
         <button class="network-preview-action" type="button" onclick="closeNetworkPreview()">DONE</button>
-      </div>
-    </div>
-  </main>
-
-  <!-- =====================================================
-       NAL NETWORK — ORGANIZATION ARCHIVE PAGE
-  ====================================================== -->
-  <main id="networkArchiveDetailPage" class="app-page" style="display:none;">
-    <div class="network-archive-detail-head">
-      <button class="network-archive-back" type="button" onclick="closeNetworkArchive()">‹ ARCHIVES</button>
-      <h1 class="network-archive-detail-title" id="networkArchiveDetailTitle">TEAM ARCHIVE</h1>
-      <p class="network-archive-detail-subtitle">NAL NETWORK ARCHIVES</p>
-    </div>
-    <div class="network-archive-detail-body">
-      <div class="network-archive-player-shell" id="networkArchivePlayer">
-        <div class="network-archive-player-placeholder"><strong>ARCHIVE PLAYER</strong><small>Lightcast archive programming will appear here.</small></div>
       </div>
     </div>
   </main>
@@ -10762,48 +10708,6 @@ function switchNetworkTab(tabName){
 document.querySelectorAll("#watchPage .network-tab").forEach(btn => {
   btn.addEventListener("click", () => switchNetworkTab(btn.dataset.networkTab));
 });
-
-/* =========================================================
-   NAL NETWORK — ORGANIZATION ARCHIVE ROUTING
-========================================================= */
-const NETWORK_ARCHIVE_EMBEDS = {
-  "amarillo-warbirds": "",
-  "colorado-spartans": "",
-  "dallas-apex": "",
-  "louisiana-rouxgaroux": "",
-  "omaha-beef": "",
-  "pueblo-punishers": "",
-  "salina-liberty": "",
-  "southwest-kansas-storm": "",
-  "wheeling-miners": "",
-  "previous-organization-1": "",
-  "previous-organization-2": ""
-};
-
-function openNetworkArchive(slug, name){
-  const page=document.getElementById("networkArchiveDetailPage");
-  const title=document.getElementById("networkArchiveDetailTitle");
-  const player=document.getElementById("networkArchivePlayer");
-  if(!page||!player)return;
-  document.querySelectorAll(".app-page").forEach(item=>{item.classList.remove("active");item.style.display="none";});
-  if(title)title.textContent=name||"TEAM ARCHIVE";
-  const embedUrl=NETWORK_ARCHIVE_EMBEDS[slug]||"";
-  if(embedUrl){
-    player.innerHTML=`<iframe src="${embedUrl}" title="${escapeHTML(name||"NAL Archive")}" referrerpolicy="no-referrer-when-downgrade" allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
-  }else{
-    player.innerHTML=`<div class="network-archive-player-placeholder"><strong>${escapeHTML(name||"NAL Archive")}</strong><small>Lightcast archive programming will be connected here.</small></div>`;
-  }
-  page.style.display="block";
-  page.classList.add("active");
-  window.scrollTo({top:0,behavior:"instant"});
-}
-function closeNetworkArchive(){
-  const page=document.getElementById("networkArchiveDetailPage");
-  if(page){page.classList.remove("active");page.style.display="none";}
-  const watchPage=document.getElementById("watchPage");
-  if(watchPage){watchPage.style.display="block";watchPage.classList.add("active");}
-  switchNetworkTab("archives");
-}
 
 function previewNetworkItem(title, description){
   const modal = document.getElementById("networkPreviewModal");
