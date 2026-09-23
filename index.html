@@ -6770,6 +6770,13 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Team Home Watch card is now an in-app channel link; visual design remains unchanged. */
 #teamPage .team-watch-card{cursor:pointer;}
 
+
+/* Archive-only previous-organization Team Channel fallback header. */
+.wheeling-team-banner-fallback{
+  width:100%;min-height:150px;display:flex;align-items:center;justify-content:center;
+  padding:24px;box-sizing:border-box;background:linear-gradient(145deg,#07172b,#102f52);
+  color:#fff;font-size:22px;font-weight:950;text-align:center;letter-spacing:.5px;
+}
 </style>
 
 <style>
@@ -17428,6 +17435,18 @@ const NAL_TEAM_CHANNELS = {
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30658"},
       coaches:{label:"COACHES' SHOW",channelId:"72123",subId:"30721"}
     }
+  },
+  "beaumont-renegades": {
+    name:"BEAUMONT RENEGADES",
+    archiveOnly:true,
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Beaumont_Renegades_1ac8a42b-6cda-446f-8dae-d01323189786.png?v=1790188085",
+    sources:{archives:{label:"ARCHIVES",channelId:null,subId:null}}
+  },
+  "columbus-lions": {
+    name:"COLUMBUS LIONS",
+    archiveOnly:true,
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Columbus_Lions.png?v=1790188094",
+    sources:{archives:{label:"ARCHIVES",channelId:null,subId:null}}
   }
 };
 let activeNALTeamSlug="wheeling-miners";
@@ -17516,7 +17535,46 @@ async function loadNALTeamRow(key){
 
 function renderNALTeamHub(){
   const team=activeNALTeam();
-  const content=lightcastTestContent();
+  
+  /* Previous organizations use the same Team Channel shell,
+     with ARCHIVES as their only content section. */
+  if (team?.archiveOnly) {
+    const content = lightcastTestContent();
+    if (!content) return;
+
+    setWheelingTeamView(true);
+    setLightcastModalHeading(team.name);
+
+    const bannerMarkup = team.banner
+      ? `<div class="wheeling-team-banner"><img src="${lightcastEscape(team.banner)}" alt="${lightcastEscape(team.name)}"></div>`
+      : `<div class="wheeling-team-banner"><div class="wheeling-team-banner-fallback">${lightcastEscape(team.name)}</div></div>`;
+
+    content.innerHTML = `
+      ${bannerMarkup}
+      <div class="wheeling-team-title">
+        <h2>${lightcastEscape(team.name)}</h2>
+        <p>NAL NETWORK TEAM CHANNEL</p>
+      </div>
+      <section class="wheeling-content-section">
+        <div class="wheeling-section-head">
+          <h3>ARCHIVES</h3>
+          <button type="button" class="wheeling-view-all" data-nal-team-view-all="archives" hidden>VIEW ALL ›</button>
+        </div>
+        <div class="wheeling-video-row" id="nalTeamRow-archives">
+          <div class="wheeling-empty-row">COMING SOON</div>
+        </div>
+      </section>`;
+
+    content.querySelectorAll("[data-nal-team-view-all]").forEach(button =>
+      button.addEventListener("click", () => renderNALTeamCatalog(button.dataset.nalTeamViewAll))
+    );
+
+    const archiveSource = team.sources?.archives;
+    if (archiveSource?.channelId) loadNALTeamRow("archives");
+    return;
+  }
+
+const content=lightcastTestContent();
   if(!content) return;
   setWheelingTeamView(true);
   setLightcastModalHeading(team.name,"Games, archives, highlights, coaches' shows and team features.");
