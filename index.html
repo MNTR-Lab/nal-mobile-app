@@ -6902,6 +6902,13 @@ document.addEventListener("DOMContentLoaded", () => {
   object-position:center !important;
   display:block !important;
 }
+/* The yellow flag is intentionally twice the visual size of the normal 33px bell. */
+.topbar #nalNotificationButton .nal-notification-icon.has-notification{
+  width:66px !important;
+  height:66px !important;
+  min-width:66px !important;
+  flex-basis:66px !important;
+}
 /* The custom flag itself is the unread indicator, so the old number badge stays hidden. */
 .topbar #nalNotificationBadge{
   display:none !important;
@@ -13957,6 +13964,7 @@ function setNalNotificationBadge(count){
     const noNotificationSrc = icon.dataset.noNotificationSrc || icon.src;
     const hasNotificationSrc = icon.dataset.hasNotificationSrc || noNotificationSrc;
     icon.src = safeCount > 0 ? hasNotificationSrc : noNotificationSrc;
+    icon.classList.toggle("has-notification", safeCount > 0);
   }
 }
 
