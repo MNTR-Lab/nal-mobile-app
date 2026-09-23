@@ -13916,6 +13916,55 @@ document.addEventListener("click", function(event){
   openTeamsPage();
 }, true);
 
+
+/* HOME QUICK ACTION — TRANSACTIONS
+   Uses the same in-app FootballShift viewer architecture as Scores. */
+document.addEventListener("click", function(event){
+  const control = event.target.closest('[data-home-action="transactions"]');
+  if (!control) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+
+  openArticle(
+    "https://www.thenationalarenaleague.com/stats#/1200/transactions?division_id=41958",
+    {
+      mode: "team",
+      title: "TRANSACTIONS",
+      subtitle: "NATIONAL ARENA LEAGUE",
+      loadingText: "LOADING TRANSACTIONS",
+      brand: {
+        primary: "#07172b",
+        accent: "#e31b23"
+      }
+    }
+  );
+}, true);
+
+
+/* HOME QUICK ACTION — LEAGUE LEADERS
+   Uses the same in-app FootballShift viewer architecture as Scores. */
+document.addEventListener("click", function(event){
+  const control = event.target.closest('[data-home-action="league-leaders"]');
+  if (!control) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+
+  openArticle(
+    "https://www.thenationalarenaleague.com/stats#/1200/leaders/grid?game_type=Regular%20Season&division_id=41958",
+    {
+      mode: "team",
+      title: "LEAGUE LEADERS",
+      subtitle: "REGULAR SEASON",
+      loadingText: "LOADING LEAGUE LEADERS",
+      brand: {
+        primary: "#07172b",
+        accent: "#e31b23"
+      }
+    }
+  );
+}, true);
+
+
 /* NEWS footer routing — use the same proven in-app viewer as Scores/FootballShift pages */
 document.addEventListener("click", function(event){
   const control = event.target.closest('[data-footer-action="news"]');
