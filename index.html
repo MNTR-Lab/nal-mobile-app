@@ -6616,63 +6616,27 @@ document.addEventListener("DOMContentLoaded", () => {
   line-height:1.35;
 }
 .lightcast-video-wrap{
+  position:relative;
   width:100%;
-  aspect-ratio:16 / 9;
+  height:0;
+  padding-bottom:56.25%;
+  margin:0 0 14px;
   background:#000;
   overflow:hidden;
   border-radius:10px;
-  margin-bottom:14px;
 }
 .lightcast-video-wrap iframe{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
+  min-width:100%;
+  max-width:100%;
+  min-height:100%;
+  max-height:100%;
   border:0;
   display:block;
   background:#000;
-}
-
-.lightcast-player-actions{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin:-4px 0 14px;
-}
-.lightcast-player-hint{
-  color:#6d7682;
-  font-size:9px;
-  line-height:1.3;
-  font-weight:700;
-}
-.lightcast-fullscreen-button{
-  flex:0 0 auto;
-  border:0;
-  border-radius:8px;
-  background:var(--nal-blue);
-  color:#fff;
-  padding:10px 12px;
-  font-size:9px;
-  line-height:1;
-  font-weight:900;
-  letter-spacing:.45px;
-  cursor:pointer;
-}
-.lightcast-fullscreen-button:active{
-  transform:scale(.98);
-}
-.lightcast-video-wrap:fullscreen,
-.lightcast-video-wrap:-webkit-full-screen{
-  width:100vw;
-  height:100vh;
-  aspect-ratio:auto;
-  border-radius:0;
-  margin:0;
-  background:#000;
-}
-.lightcast-video-wrap:fullscreen iframe,
-.lightcast-video-wrap:-webkit-full-screen iframe{
-  width:100%;
-  height:100%;
 }
 .lightcast-video-meta{
   background:#fff;
@@ -14382,26 +14346,12 @@ function openLightcastVideo(index){
       <button type="button" class="lightcast-test-back" id="lightcastBackToMedia">‹ VIDEOS</button>
       <div class="lightcast-test-view-title"><h2>NOW PLAYING</h2><p>${lightcastEscape(lightcastTestActiveChannel?.name || "NAL Network")}</p></div>
     </div>
-    ${embedSrc ? `<div class="lightcast-video-wrap" id="lightcastVideoWrap"><iframe id="lightcastVideoFrame" title="${lightcastEscape(item.title || "Lightcast Video")}" src="${lightcastEscape(embedSrc)}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-    <div class="lightcast-player-actions">
-      <div class="lightcast-player-hint">Tap the Lightcast player to play or pause.</div>
-      <button type="button" class="lightcast-fullscreen-button" id="lightcastFullscreenButton" aria-label="Open video full screen">⛶ FULL SCREEN</button>
-    </div>` : `<div class="lightcast-test-status">A playable embed URL was not returned for this video.</div>`}
+    ${embedSrc ? `<div class="lightcast-video-wrap"><iframe title="${lightcastEscape(item.title || "Lightcast Video")}" src="${lightcastEscape(embedSrc)}" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></div>` : `<div class="lightcast-test-status">A playable embed URL was not returned for this video.</div>`}
     <div class="lightcast-video-meta">
       <h2>${lightcastEscape(item.title || "Untitled Video")}</h2>
       ${item.description ? `<p>${lightcastEscape(item.description)}</p>` : ""}
     </div>`;
   document.getElementById("lightcastBackToMedia")?.addEventListener("click",renderLightcastMedia);
-  document.getElementById("lightcastFullscreenButton")?.addEventListener("click",()=>{
-    const wrap=document.getElementById("lightcastVideoWrap");
-    const frame=document.getElementById("lightcastVideoFrame");
-    const target=wrap || frame;
-    if(!target) return;
-    const request=target.requestFullscreen || target.webkitRequestFullscreen || target.msRequestFullscreen;
-    if(request){
-      try{ request.call(target); }catch(error){ console.warn("Fullscreen request failed",error); }
-    }
-  });
 }
 
 function openLightcastTest(){
