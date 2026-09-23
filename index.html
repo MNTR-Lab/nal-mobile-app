@@ -7108,7 +7108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   left:auto;
   right:0;
   bottom:var(--bottom-nav-height);
-  z-index:1100;
+  z-index:2500;
   width:33.333vw;
   min-width:190px;
   max-width:240px;
@@ -9184,6 +9184,14 @@ navButtons.forEach(button => {
     "click",
     () => {
 
+      /*
+         MORE is an overlay menu, not a page.
+         Do not hide/change the page currently visible behind it.
+      */
+      if (button.id === "moreMenuButton") {
+        return;
+      }
+
       if (typeof setMoreMenu === "function") {
         setMoreMenu(false);
       }
@@ -9270,29 +9278,23 @@ const moreBottomSheet = document.getElementById("moreBottomSheet");
 const moreSheetBackdrop = document.getElementById("moreSheetBackdrop");
 
 function setMoreMenu(open){
-  if (!moreMenuButton || !moreBottomSheet || !moreSheetBackdrop) return;
+  if (!moreMenuButton || !moreBottomSheet) return;
 
   moreMenuButton.classList.toggle("active", open);
   moreMenuButton.setAttribute("aria-expanded", open ? "true" : "false");
   moreBottomSheet.classList.toggle("open", open);
   moreBottomSheet.setAttribute("aria-hidden", open ? "false" : "true");
 
-  if (open) {
-    moreSheetBackdrop.hidden = false;
-    requestAnimationFrame(() => moreSheetBackdrop.classList.add("open"));
-  } else {
-    moreSheetBackdrop.classList.remove("open");
-    window.setTimeout(() => {
-      if (!moreBottomSheet.classList.contains("open")) {
-        moreSheetBackdrop.hidden = true;
-      }
-    }, 220);
-  }
+  // No full-screen backdrop: only the menu itself overlays the current page.
 }
 
 if (moreMenuButton) {
-  moreMenuButton.addEventListener("click", () => {
-    setMoreMenu(!moreBottomSheet.classList.contains("open"));
+  moreMenuButton.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const isOpen = moreBottomSheet?.classList.contains("open");
+    setMoreMenu(!isOpen);
   });
 }
 
