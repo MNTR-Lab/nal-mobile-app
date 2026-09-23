@@ -7095,6 +7095,81 @@ document.addEventListener("DOMContentLoaded", () => {
 #watchPage .nal-live-team-card .network-team-channel-art{position:relative;}
 #watchPage .nal-live-team-card .network-team-channel-art em{position:absolute;top:7px;left:7px;background:#d71920;color:#fff;font-style:normal;font-size:8px;font-weight:900;letter-spacing:.8px;border-radius:3px;padding:3px 6px;box-shadow:0 2px 6px rgba(0,0,0,.25);}
 
+
+
+/* =========================================================
+   MORE — LOWER THIRD / BOTTOM SHEET
+========================================================= */
+.more-sheet-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:1090;
+  background:rgba(0,0,0,.48);
+  opacity:0;
+  transition:opacity .22s ease;
+}
+.more-sheet-backdrop.open{
+  opacity:1;
+}
+.more-bottom-sheet{
+  position:fixed;
+  left:auto;
+  right:0;
+  bottom:var(--bottom-nav-height);
+  z-index:1100;
+  width:33.333vw;
+  min-width:190px;
+  max-width:240px;
+  max-height:none;
+  padding:0 16px;
+  background:#07172b;
+  border-radius:14px 0 0 0;
+  box-shadow:0 -12px 32px rgba(0,0,0,.42);
+  transform:translateY(calc(100% + 24px));
+  visibility:hidden;
+  pointer-events:none;
+  transition:transform .26s ease, visibility 0s linear .26s;
+}
+.more-bottom-sheet.open{
+  transform:translateY(0);
+  visibility:visible;
+  pointer-events:auto;
+  transition:transform .26s ease;
+}
+.more-sheet-row{
+  width:100%;
+  min-height:58px;
+  padding:0 2px;
+  border:0;
+  border-top:1px solid rgba(255,255,255,.16);
+  border-radius:0;
+  background:transparent;
+  color:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  font:inherit;
+  font-size:15px;
+  font-weight:800;
+  text-align:left;
+  cursor:pointer;
+}
+.more-sheet-row:first-child{
+  border-top:0;
+}
+.more-sheet-chevron{
+  flex:0 0 auto;
+  color:#ffffff;
+  font-size:27px;
+  line-height:1;
+  font-weight:300;
+}
+#moreMenuButton.active svg,
+#moreMenuButton.active span{
+  color:var(--nal-red) !important;
+}
+
 </style>
 </head>
 
@@ -8073,57 +8148,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   <!-- =====================================================
-       SHOP
-  ====================================================== -->
-
-  <main
-    id="shopPage"
-    class="app-page shop-page"
-  >
-
-    <div class="shop-toolbar">
-
-      <div>
-
-        <div class="shop-title">
-          NAL SHOP
-        </div>
-
-        <div class="shop-subtitle">
-          OFFICIAL NATIONAL ARENA LEAGUE MERCHANDISE
-        </div>
-
-      </div>
-
-      <a
-        href="https://nalshop.com/"
-        target="_blank"
-        rel="noopener"
-        class="shop-external"
-        aria-label="Open NAL Shop"
-      >
-
-        <svg viewBox="0 0 24 24">
-          <path d="M14 3h7v7"></path>
-          <path d="M10 14L21 3"></path>
-          <path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"></path>
-        </svg>
-
-      </a>
-
-    </div>
-
-    <iframe
-      id="shopFrame"
-      class="shop-frame"
-      src="about:blank"
-      title="NAL Shop"
-    ></iframe>
-
-  </main>
-
-
-  <!-- =====================================================
        ARTICLE READER
   ====================================================== -->
 
@@ -8880,7 +8904,32 @@ document.addEventListener("DOMContentLoaded", () => {
     <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_3b6b2c6f-797b-4d5c-a870-65cdda47fba9.png?v=1782385986" alt="MNTR+">
   </div>
 
-  <nav class="bottom-nav">
+  <!-- =====================================================
+     MORE — LOWER THIRD MENU
+====================================================== -->
+<div class="more-sheet-backdrop" id="moreSheetBackdrop" hidden></div>
+
+<section
+  class="more-bottom-sheet"
+  id="moreBottomSheet"
+  aria-label="More menu"
+  aria-hidden="true"
+>
+  <button class="more-sheet-row" type="button" data-more-item="shop">
+    <span>NAL SHOP</span><span class="more-sheet-chevron">›</span>
+  </button>
+  <button class="more-sheet-row" type="button" data-more-item="nal-life">
+    <span>NAL LIFE</span><span class="more-sheet-chevron">›</span>
+  </button>
+  <button class="more-sheet-row" type="button" data-more-item="transactions">
+    <span>TRANSACTIONS</span><span class="more-sheet-chevron">›</span>
+  </button>
+  <button class="more-sheet-row" type="button" data-more-item="leaders">
+    <span>LEAGUE LEADERS</span><span class="more-sheet-chevron">›</span>
+  </button>
+</section>
+
+<nav class="bottom-nav">
 
 
     <!-- HOME -->
@@ -8962,21 +9011,24 @@ document.addEventListener("DOMContentLoaded", () => {
     </button>
 
 
-    <!-- SHOP -->
+    <!-- MORE -->
 
     <button
       class="nav-button"
-      data-page="shopPage"
-      aria-label="NAL Shop"
+      id="moreMenuButton"
+      type="button"
+      aria-label="More"
+      aria-expanded="false"
+      aria-controls="moreBottomSheet"
     >
 
-      <svg viewBox="0 0 24 24">
-        <path d="M3 9l2-5h14l2 5"></path>
-        <path d="M5 13v7h14v-7"></path>
-        <path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"></path>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7h16"></path>
+        <path d="M4 12h16"></path>
+        <path d="M4 17h16"></path>
       </svg>
 
-      <span>NAL SHOP</span>
+      <span>MORE</span>
 
     </button>
 
@@ -8999,8 +9051,6 @@ const NAL_LOGO =
 const NEWS_FEED =
   "data/news.json";
 
-const SHOP_URL =
-  "shop.html";
 
 const SCORES_URL =
   "https://www.thenationalarenaleague.com/stats#/1200/scores?division_id=41958";
@@ -9081,10 +9131,6 @@ const newsContent =
     "newsContent"
   );
 
-const shopFrame =
-  document.getElementById(
-    "shopFrame"
-  );
 
 const headerHome =
   document.getElementById(
@@ -9144,6 +9190,10 @@ navButtons.forEach(button => {
     "click",
     () => {
 
+      if (typeof setMoreMenu === "function") {
+        setMoreMenu(false);
+      }
+
       const pageId =
         button.dataset.page;
 
@@ -9168,11 +9218,6 @@ navButtons.forEach(button => {
           }
         );
 
-        return;
-      }
-
-      if (pageId === "shopPage") {
-        window.location.href = SHOP_URL;
         return;
       }
 
@@ -9220,6 +9265,61 @@ headerHome.addEventListener(
 
   }
 );
+
+
+/* =========================================================
+   MORE — LOWER THIRD / BOTTOM SHEET
+========================================================= */
+
+const moreMenuButton = document.getElementById("moreMenuButton");
+const moreBottomSheet = document.getElementById("moreBottomSheet");
+const moreSheetBackdrop = document.getElementById("moreSheetBackdrop");
+
+function setMoreMenu(open){
+  if (!moreMenuButton || !moreBottomSheet || !moreSheetBackdrop) return;
+
+  moreMenuButton.classList.toggle("active", open);
+  moreMenuButton.setAttribute("aria-expanded", open ? "true" : "false");
+  moreBottomSheet.classList.toggle("open", open);
+  moreBottomSheet.setAttribute("aria-hidden", open ? "false" : "true");
+
+  if (open) {
+    moreSheetBackdrop.hidden = false;
+    requestAnimationFrame(() => moreSheetBackdrop.classList.add("open"));
+  } else {
+    moreSheetBackdrop.classList.remove("open");
+    window.setTimeout(() => {
+      if (!moreBottomSheet.classList.contains("open")) {
+        moreSheetBackdrop.hidden = true;
+      }
+    }, 220);
+  }
+}
+
+if (moreMenuButton) {
+  moreMenuButton.addEventListener("click", () => {
+    setMoreMenu(!moreBottomSheet.classList.contains("open"));
+  });
+}
+
+if (moreSheetBackdrop) {
+  moreSheetBackdrop.addEventListener("click", () => setMoreMenu(false));
+}
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && moreBottomSheet?.classList.contains("open")) {
+    setMoreMenu(false);
+  }
+});
+
+document.addEventListener("click", event => {
+  const moreItem = event.target.closest("[data-more-item]");
+  if (!moreItem) return;
+
+  // Destinations intentionally remain unlinked for now.
+  // NAL SHOP, NAL LIFE, TRANSACTIONS and LEAGUE LEADERS
+  // will be connected individually later.
+});
 
 
 /* =========================================================
@@ -12656,11 +12756,6 @@ document.addEventListener("click", function(event){
     showPage("fanPage");
     return;
   }
-
-  if (pageId === "shopPage") {
-        window.location.href = "shop.html";
-        return;
-      }
 
   /* HOME */
   showPage("homePage");
