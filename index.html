@@ -6722,6 +6722,28 @@ document.addEventListener("DOMContentLoaded", () => {
   font-size:9px;
   font-weight:800;
 }
+.wheeling-view-all{
+  border:0;
+  padding:4px 0;
+  background:transparent;
+  color:var(--nal-red);
+  font-size:10px;
+  font-weight:1000;
+  letter-spacing:.2px;
+  cursor:pointer;
+}
+.wheeling-catalog-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  padding:2px 0 12px;
+}
+.wheeling-catalog-grid .wheeling-video-card{
+  width:100%;
+  min-width:0;
+  flex:none;
+}
+.wheeling-catalog-grid .wheeling-video-card strong{min-height:48px;}
 .wheeling-video-row{
   display:flex;
   gap:10px;
@@ -14515,6 +14537,7 @@ const WHEELING_LIGHTCAST_SOURCES = {
   coaches: { label:"COACHES' SHOW", channelId:"72123", subId:"30721" }
 };
 let wheelingHubMedia = { latest:[], archives:[], coaches:[] };
+let wheelingPlayerReturn = { view:"hub", sourceKey:null };
 
 function setLightcastModalHeading(text){
   const heading=document.getElementById("lightcastModalHeading");
@@ -14529,11 +14552,14 @@ function renderWheelingRow(key){
   const row=document.getElementById(`wheelingRow-${key}`);
   if(!row) return;
   const items=Array.isArray(wheelingHubMedia[key]) ? wheelingHubMedia[key] : [];
+  const viewAll=document.querySelector(`[data-wheeling-view-all="${key}"]`);
+  if(viewAll) viewAll.hidden=items.length<=3;
   if(!items.length){
     row.innerHTML=`<div class="wheeling-empty-row">No videos available yet.</div>`;
     return;
   }
-  row.innerHTML=items.map((item,index)=>{
+  const previewItems=items.slice(0,3);
+  row.innerHTML=previewItems.map((item,index)=>{
     const image=wheelingPoster(item);
     return `<button type="button" class="wheeling-video-card" data-wheeling-source="${lightcastEscape(key)}" data-wheeling-index="${index}">
       ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(item.title || "Wheeling Miners video")}" loading="lazy">` : `<div class="wheeling-video-placeholder-art">WHEELING MINERS</div>`}
@@ -14541,7 +14567,37 @@ function renderWheelingRow(key){
     </button>`;
   }).join("");
   row.querySelectorAll("[data-wheeling-index]").forEach(button=>{
-    button.addEventListener("click",()=>openWheelingVideo(button.dataset.wheelingSource,Number(button.dataset.wheelingIndex)));
+    button.addEventListener("click",()=>{
+      wheelingPlayerReturn={view:"hub",sourceKey:key};
+      openWheelingVideo(button.dataset.wheelingSource,Number(button.dataset.wheelingIndex));
+    });
+  });
+}
+
+function renderWheelingCatalog(key){
+  const source=WHEELING_LIGHTCAST_SOURCES[key];
+  const content=lightcastTestContent();
+  if(!source || !content) return;
+  const items=Array.isArray(wheelingHubMedia[key]) ? wheelingHubMedia[key] : [];
+  setLightcastModalHeading(`WHEELING MINERS — ${source.label}`);
+  content.innerHTML=`
+    <div class="lightcast-test-view-head">
+      <button type="button" class="lightcast-test-back" id="wheelingCatalogBack">‹ WHEELING</button>
+      <div class="lightcast-test-view-title"><h2>${lightcastEscape(source.label)}</h2><p>Complete Catalog</p></div>
+    </div>
+    ${items.length ? `<div class="wheeling-catalog-grid">${items.map((item,index)=>{
+      const image=wheelingPoster(item);
+      return `<button type="button" class="wheeling-video-card" data-wheeling-catalog-index="${index}">
+        ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(item.title || "Wheeling Miners video")}" loading="lazy">` : `<div class="wheeling-video-placeholder-art">WHEELING MINERS</div>`}
+        <strong>${lightcastEscape(item.title || "Untitled Video")}</strong>
+      </button>`;
+    }).join("")}</div>` : `<div class="wheeling-empty-row">No videos available yet.</div>`}`;
+  document.getElementById("wheelingCatalogBack")?.addEventListener("click",renderWheelingMinersHub);
+  content.querySelectorAll("[data-wheeling-catalog-index]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      wheelingPlayerReturn={view:"catalog",sourceKey:key};
+      openWheelingVideo(key,Number(button.dataset.wheelingCatalogIndex));
+    });
   });
 }
 
@@ -14576,12 +14632,12 @@ function renderWheelingMinersHub(){
     </section>
 
     <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>LATEST GAMES</h3><span>VIDEO LIBRARY</span></div>
+      <div class="wheeling-section-head"><h3>LATEST GAMES</h3><button type="button" class="wheeling-view-all" data-wheeling-view-all="latest" hidden>VIEW ALL ›</button></div>
       <div class="wheeling-video-row" id="wheelingRow-latest"><div class="wheeling-row-loading">Loading latest games...</div></div>
     </section>
 
     <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>ARCHIVES</h3><span>VIDEO LIBRARY</span></div>
+      <div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-wheeling-view-all="archives" hidden>VIEW ALL ›</button></div>
       <div class="wheeling-video-row" id="wheelingRow-archives"><div class="wheeling-row-loading">Loading archives...</div></div>
     </section>
 
@@ -14593,7 +14649,7 @@ function renderWheelingMinersHub(){
     </section>
 
     <section class="wheeling-content-section">
-      <div class="wheeling-section-head"><h3>COACHES' SHOW</h3><span>VIDEO LIBRARY</span></div>
+      <div class="wheeling-section-head"><h3>COACHES' SHOW</h3><button type="button" class="wheeling-view-all" data-wheeling-view-all="coaches" hidden>VIEW ALL ›</button></div>
       <div class="wheeling-video-row" id="wheelingRow-coaches"><div class="wheeling-row-loading">Loading coaches' show...</div></div>
     </section>
 
@@ -14603,6 +14659,10 @@ function renderWheelingMinersHub(){
         <div class="wheeling-video-card" aria-disabled="true"><div class="wheeling-video-placeholder-art">FEATURES &amp;<br>INTERVIEWS</div><strong>Content Coming Soon</strong></div>
       </div>
     </section>`;
+
+  content.querySelectorAll("[data-wheeling-view-all]").forEach(button=>{
+    button.addEventListener("click",()=>renderWheelingCatalog(button.dataset.wheelingViewAll));
+  });
 
   loadWheelingRow("latest");
   loadWheelingRow("archives");
@@ -14632,7 +14692,7 @@ function openWheelingVideo(sourceKey,index){
   const embedSrc=getWheelingEmbedSrc(item,source.channelId);
   content.innerHTML=`
     <div class="lightcast-test-view-head">
-      <button type="button" class="lightcast-test-back" id="wheelingBackToHub">‹ VIDEOS</button>
+      <button type="button" class="lightcast-test-back" id="wheelingBackToHub">‹ BACK</button>
       <div class="lightcast-test-view-title"><h2>NOW PLAYING</h2><p>Wheeling Miners</p></div>
     </div>
     ${embedSrc ? `<div class="lightcast-video-wrap"><iframe title="${lightcastEscape(item.title || "Wheeling Miners Video")}" src="${lightcastEscape(embedSrc)}" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>` : `<div class="lightcast-test-status">A playable Lightcast media ID was not returned for this video.</div>`}
@@ -14640,7 +14700,13 @@ function openWheelingVideo(sourceKey,index){
       <h2>${lightcastEscape(item.title || "Untitled Video")}</h2>
       ${item.description ? `<p>${lightcastEscape(item.description)}</p>` : ""}
     </div>`;
-  document.getElementById("wheelingBackToHub")?.addEventListener("click",renderWheelingMinersHub);
+  document.getElementById("wheelingBackToHub")?.addEventListener("click",()=>{
+    if(wheelingPlayerReturn.view==="catalog" && wheelingPlayerReturn.sourceKey){
+      renderWheelingCatalog(wheelingPlayerReturn.sourceKey);
+    }else{
+      renderWheelingMinersHub();
+    }
+  });
 }
 
 function openLightcastTest(){
