@@ -6761,6 +6761,12 @@ document.addEventListener("DOMContentLoaded", () => {
     drop-shadow(0 -0.55px 0 currentColor);
 }
 
+
+.bottom-nav a.nav-button,
+.bottom-nav .nav-button{
+  text-decoration:none !important;
+}
+
 </style>
 
 <style>
@@ -7897,8 +7903,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </div>
   </main>
-
-  <main id="teamsPage" class="app-page teams-page" style="display:none;">
+<main id="teamsPage" class="app-page teams-page" style="display:none;">
   <section class="teams-directory">
     <div class="teams-directory-head">
       <h1>TEAMS</h1>
@@ -9612,7 +9617,7 @@ iJhlDHdNqemGwTIQticExwj639T46jb/CtpbRovNAg==
 
     <!-- SCORES -->
 
-    <a class="nav-button" href="news.html" aria-label="News">
+    <button class="nav-button" data-footer-action="news" aria-label="News">
 
       <svg class="nal-custom-nav-art nal-scores-art" viewBox="0 0 1192 803" aria-hidden="true">
   
@@ -10342,7 +10347,7 @@ gAx/XAiDTAQPAPrvvPFMS24wAN30zxBDBQ==
 
       <span>NEWS</span>
 
-    </a>
+    </button>
 
 
     <!-- NAL NETWORK -->
@@ -11964,7 +11969,6 @@ navButtons.forEach(button => {
 
       const pageId =
         button.dataset.page;
-
       if (pageId === "teams") {
         openTeamsPage();
         return;
@@ -13818,6 +13822,7 @@ function closeTeamHome() {
 /* Load teams when the app starts */
 loadNALTeams();
 
+
 async function openTeamsPage(){
   ["homePage","scoresPage","watchPage","fanZonePage","shopPage","teamPage","articlePage"].forEach(id => {
     const el = document.getElementById(id);
@@ -13881,6 +13886,34 @@ document.addEventListener("click", function(event){
   event.stopPropagation();
   openTeamsPage();
 }, true);
+
+/* NEWS footer routing — use the same proven in-app viewer as Scores/FootballShift pages */
+document.addEventListener("click", function(event){
+  const control = event.target.closest('[data-footer-action="news"]');
+  if (!control) return;
+  event.preventDefault();
+  event.stopPropagation();
+
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => {
+    button.classList.remove("active");
+  });
+  control.classList.add("active");
+
+  openArticle(
+    "https://www.thenationalarenaleague.com/news",
+    {
+      mode: "team",
+      title: "NAL NEWS",
+      subtitle: "NATIONAL ARENA LEAGUE",
+      loadingText: "LOADING NAL NEWS",
+      brand: {
+        primary: "#07172b",
+        accent: "#e31b23"
+      }
+    }
+  );
+}, true);
+
 
 
 function switchNetworkTab(tabName){
