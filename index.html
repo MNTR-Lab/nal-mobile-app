@@ -7097,72 +7097,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-/* =========================================================
-   MORE — LOWER THIRD / BOTTOM SHEET
-========================================================= */
-.more-sheet-backdrop{
-  display:none !important;
-}
-.more-bottom-sheet{
-  position:fixed;
-  left:auto;
-  right:0;
-  bottom:var(--bottom-nav-height);
-  z-index:2500;
-  width:33.333vw;
-  min-width:190px;
-  max-width:240px;
-  max-height:none;
-  padding:0 14px;
-  background:#07172b;
-  border-radius:14px 0 0 0;
-  box-shadow:0 -12px 32px rgba(0,0,0,.42);
-  transform:translateY(calc(100% + 24px));
-  visibility:hidden;
-  pointer-events:none;
-  transition:transform .26s ease, visibility 0s linear .26s;
-}
-.more-bottom-sheet.open{
-  transform:translateY(0);
-  visibility:visible;
-  pointer-events:auto;
-  transition:transform .26s ease;
-}
-.more-sheet-row{
-  width:100%;
-  min-height:44px;
-  padding:0 2px;
-  border:0;
-  border-top:1px solid rgba(255,255,255,.16);
-  border-radius:0;
-  background:transparent;
-  color:#ffffff;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  font:inherit;
-  font-size:11px;
-  font-weight:800;
-  text-align:left;
-  cursor:pointer;
-}
-.more-sheet-row:first-child{
-  border-top:0;
-}
-.more-sheet-chevron{
-  flex:0 0 auto;
-  color:#ffffff;
-  font-size:27px;
-  line-height:1;
-  font-weight:300;
-}
-#moreMenuButton.active svg,
-#moreMenuButton.active span{
-  color:var(--nal-red) !important;
-}
-
-
 </style>
 </head>
 
@@ -8898,32 +8832,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_3b6b2c6f-797b-4d5c-a870-65cdda47fba9.png?v=1782385986" alt="MNTR+">
   </div>
 
-  <!-- =====================================================
-     MORE — LOWER THIRD MENU
-====================================================== -->
-<div class="more-sheet-backdrop" id="moreSheetBackdrop" hidden></div>
-
-<section
-  class="more-bottom-sheet"
-  id="moreBottomSheet"
-  aria-label="More menu"
-  aria-hidden="true"
->
-  <button class="more-sheet-row" type="button" data-more-item="shop">
-    <span>NAL SHOP</span><span class="more-sheet-chevron">›</span>
-  </button>
-  <button class="more-sheet-row" type="button" data-more-item="nal-life">
-    <span>NAL LIFE</span><span class="more-sheet-chevron">›</span>
-  </button>
-  <button class="more-sheet-row" type="button" data-more-item="transactions">
-    <span>TRANSACTIONS</span><span class="more-sheet-chevron">›</span>
-  </button>
-  <button class="more-sheet-row" type="button" data-more-item="leaders">
-    <span>LEAGUE LEADERS</span><span class="more-sheet-chevron">›</span>
-  </button>
-</section>
-
-<nav class="bottom-nav">
+  <nav class="bottom-nav">
 
 
     <!-- HOME -->
@@ -8988,6 +8897,33 @@ document.addEventListener("DOMContentLoaded", () => {
     </button>
 
 
+    <!-- TEAMS -->
+
+    <button
+      class="nav-button"
+      data-page="teams"
+      aria-label="Teams"
+    >
+
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M10 31C10 16.5 20.8 7 35.5 7c10.8 0 19.2 5.6 23.5 14.8"></path>
+        <path d="M11.5 38.5c1.3 6.8 4.6 12.4 9.6 16.1 2.2 1.6 4.8 2.4 7.5 2.2l7.2-.6c3.5-.3 6.6-2.2 8.5-5.1l4.1-6.3"></path>
+        <path d="M58.8 21.8c1.2 2.7.2 5.2-2.9 5.8l-13.2 2.6c-7.8 1.5-13.4 5.1-16.8 10.7"></path>
+        <circle cx="25.4" cy="43.2" r="4.6"></circle>
+        <path d="M29.8 44.3l11.5 7.5"></path>
+        <path d="M35.1 34.6c3.1 4.2 5.1 8.8 6.2 13.8"></path>
+        <path d="M40.8 31.1c1.1 8.3 3.8 14.8 8.1 19.5"></path>
+        <path d="M42.5 42.3c5.7 1.2 11.1 1.3 16.2.4"></path>
+        <path d="M47.2 50.6c3.4 1.4 7.1 1.8 11.2 1.1l1.4-13.2c.2-2.1-1.4-3.9-3.5-3.9h-9.1"></path>
+        <path d="M15.4 27.1c1.4-7.6 6.4-13.2 14.2-15.8"></path>
+        <path d="M36.1 8.1c8.2 2.2 14.5 7.1 18.8 14.6"></path>
+      </svg>
+
+      <span>TEAMS</span>
+
+    </button>
+
+
     <!-- FAN ZONE -->
 
     <button
@@ -8996,34 +8932,18 @@ document.addEventListener("DOMContentLoaded", () => {
       aria-label="Fan Zone"
     >
 
-      <svg viewBox="0 0 24 24">
-        <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path>
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M26.8 57.5h22.4l1.7-24.2c.2-2.8-1.7-5.3-4.5-5.8-2.2-.4-4.3.6-5.5 2.4v-19c0-3.1-2.3-5.6-5.2-5.6s-5.2 2.5-5.2 5.6v25.4l-3.7-5.6c-1.7-2.5-5.1-3.2-7.6-1.5-2.4 1.6-3.1 4.8-1.7 7.3l9.3 16.2z"></path>
+        <path d="M30.5 36.3l-2.7-4.1c-1.5-2.3-4.6-2.9-6.8-1.4"></path>
+        <path d="M40.9 30.1c1.4-2.1 4-3.1 6.4-2.2"></path>
+        <path d="M35.7 10.3v22"></path>
+        <path d="M31.2 43.4h16.3"></path>
+        <path d="M34.2 48.3h11"></path>
+        <path d="M36.5 40.5v13"></path>
+        <path d="M42.5 40.5v13"></path>
       </svg>
 
       <span>FAN ZONE</span>
-
-    </button>
-
-
-    <!-- MORE -->
-
-    <button
-      class="nav-button"
-      id="moreMenuButton"
-      type="button"
-      onclick="toggleMoreMenu(event)"
-      aria-label="More"
-      aria-expanded="false"
-      aria-controls="moreBottomSheet"
-    >
-
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 7h16"></path>
-        <path d="M4 12h16"></path>
-        <path d="M4 17h16"></path>
-      </svg>
-
-      <span>MORE</span>
 
     </button>
 
@@ -9066,10 +8986,9 @@ const pages =
     ".app-page"
   );
 
-const navButtons =
-  document.querySelectorAll(
-    ".nav-button"
-  );
+const navButtons = Array.from(
+  document.querySelectorAll(".nav-button")
+).filter(button => button.id !== "moreMenuButton");
 
 const homePage =
   document.getElementById(
@@ -9185,20 +9104,13 @@ navButtons.forEach(button => {
     "click",
     () => {
 
-      /*
-         MORE is an overlay menu, not a page.
-         Do not hide/change the page currently visible behind it.
-      */
-      if (button.id === "moreMenuButton") {
-        return;
-      }
-
-      if (typeof setMoreMenu === "function") {
-        setMoreMenu(false);
-      }
-
       const pageId =
         button.dataset.page;
+
+      if (pageId === "teams") {
+        openTeamsPage();
+        return;
+      }
 
       /*
          SCORES uses the same in-app FootballShift viewer
@@ -9268,111 +9180,6 @@ headerHome.addEventListener(
 
   }
 );
-
-
-/* =========================================================
-   MORE — LOWER THIRD / BOTTOM SHEET
-========================================================= */
-
-const moreMenuButton = document.getElementById("moreMenuButton");
-const moreBottomSheet = document.getElementById("moreBottomSheet");
-const moreSheetBackdrop = document.getElementById("moreSheetBackdrop");
-
-function setMoreMenu(open){
-  if (!moreMenuButton || !moreBottomSheet) return;
-
-  moreMenuButton.classList.toggle("active", open);
-  moreMenuButton.setAttribute("aria-expanded", open ? "true" : "false");
-  moreBottomSheet.classList.toggle("open", open);
-  moreBottomSheet.setAttribute("aria-hidden", open ? "false" : "true");
-
-  // No full-screen backdrop: only the menu itself overlays the current page.
-}
-
-function toggleMoreMenu(event){
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
-  if (!moreBottomSheet) return;
-
-  const shouldOpen = !moreBottomSheet.classList.contains("open");
-  setMoreMenu(shouldOpen);
-}
-
-
-
-if (moreSheetBackdrop) {
-  moreSheetBackdrop.addEventListener("click", () => setMoreMenu(false));
-}
-
-
-document.addEventListener("click", event => {
-  if (!moreBottomSheet || !moreBottomSheet.classList.contains("open")) return;
-  if (moreBottomSheet.contains(event.target)) return;
-  if (moreMenuButton && moreMenuButton.contains(event.target)) return;
-  setMoreMenu(false);
-});
-
-document.addEventListener("keydown", event => {
-  if (
-    event.key === "Escape" &&
-    moreBottomSheet &&
-    moreBottomSheet.classList.contains("open")
-  ) {
-    setMoreMenu(false);
-  }
-});
-
-document.addEventListener("click", event => {
-  const moreItem = event.target.closest("[data-more-item]");
-  if (!moreItem) return;
-
-  const item = moreItem.dataset.moreItem;
-
-  if (item === "transactions") {
-    setMoreMenu(false);
-    openArticle(
-      "https://www.thenationalarenaleague.com/stats#/1200/transactions?season_id=9264",
-      {
-        mode: "team",
-        title: "TRANSACTIONS",
-        subtitle: "SEASON X",
-        loadingText: "LOADING TRANSACTIONS",
-        brand: {
-          primary: "#07172b",
-          accent: "#e31b23"
-        },
-        navPage: "__more__"
-      }
-    );
-    if (moreMenuButton) moreMenuButton.classList.add("active");
-    return;
-  }
-
-  if (item === "leaders") {
-    setMoreMenu(false);
-    openArticle(
-      "https://www.thenationalarenaleague.com/stats#/1200/leaders/grid?game_type=Regular%20Season&division_id=41958",
-      {
-        mode: "team",
-        title: "LEAGUE LEADERS",
-        subtitle: "SEASON X",
-        loadingText: "LOADING LEAGUE LEADERS",
-        brand: {
-          primary: "#07172b",
-          accent: "#e31b23"
-        },
-        navPage: "__more__"
-      }
-    );
-    if (moreMenuButton) moreMenuButton.classList.add("active");
-    return;
-  }
-
-  // NAL SHOP and NAL LIFE intentionally remain inactive.
-});
 
 
 /* =========================================================
@@ -11177,6 +10984,10 @@ async function openTeamsPage(){
   }
 
   renderTeamsDirectory();
+
+  document.querySelectorAll(".nav-button").forEach(btn => btn.classList.remove("active"));
+  const teamsNavButton = document.querySelector('.bottom-nav [data-page="teams"]');
+  if (teamsNavButton) teamsNavButton.classList.add("active");
 }
 
 function renderTeamsDirectory(){
