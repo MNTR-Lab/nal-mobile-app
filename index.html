@@ -6437,6 +6437,71 @@ document.addEventListener("DOMContentLoaded", () => {
   display:block !important;
 }
 
+
+/* Temporary Lightcast in-app test */
+.lightcast-test-modal{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:#fff;
+  padding-top:var(--header-height,72px);
+  padding-bottom:76px;
+  box-sizing:border-box;
+  overflow:auto;
+}
+.lightcast-test-modal[hidden]{display:none !important;}
+.lightcast-test-shell{width:100%;max-width:900px;margin:0 auto;background:#fff;}
+.lightcast-test-head{
+  min-height:48px;
+  padding:8px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  box-sizing:border-box;
+}
+.lightcast-test-head strong{font-size:15px;}
+.lightcast-test-head button{
+  width:40px;height:40px;border:0;background:transparent;font-size:30px;line-height:1;cursor:pointer;
+}
+.lightcast-test-player{
+  position:relative;
+  width:100%;
+  padding-bottom:56.25%;
+  height:0;
+  overflow:hidden;
+  background:#000;
+}
+.lightcast-test-player iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+
+/* LIGHTCAST TEST SECTION START — safe to delete */
+#watchPage .lightcast-test-section{
+  margin-top:22px !important;
+  padding-top:18px !important;
+  border-top:1px solid rgba(0,0,0,.12) !important;
+}
+#watchPage .lightcast-test-copy{
+  margin:4px 0 14px !important;
+  font-size:13px !important;
+  line-height:1.45 !important;
+}
+#watchPage .lightcast-test-launch{
+  width:100% !important;
+  min-height:48px !important;
+  border:0 !important;
+  border-radius:8px !important;
+  font-weight:800 !important;
+  cursor:pointer !important;
+}
+/* LIGHTCAST TEST SECTION END */
+
 </style>
 
 <style>
@@ -7374,7 +7439,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
     <div class="network-tab-panel" data-network-panel="team-channels">
-      <section class="network-library-head"><h2>TEAM CHANNELS</h2><p>Watch and explore NAL team channels.</p></section>
+      <section class="network-library-head"><h2>LIVE GAME</h2><p>Watch live NAL action from every team.</p></section>
       <section class="network-hub-section network-team-channels-section">
         
         <div class="network-team-channel-grid">
@@ -7432,7 +7497,17 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>
     </div>
 
-    <div class="network-tab-panel" data-network-panel="vod">
+  <!-- LIGHTCAST TEST SECTION START — safe to delete as one block -->
+  <section id="lightcastTestSection" class="network-hub-section lightcast-test-section">
+    <div class="network-section-header">
+      <div class="network-section-title">LIGHTCAST TEST</div>
+    </div>
+    <p class="lightcast-test-copy">Temporary Lightcast embed test. This section can be removed without affecting the regular Shows content.</p>
+    <button class="lightcast-test-launch" type="button" onclick="openLightcastTest()">OPEN LIGHTCAST TEST</button>
+  </section>
+  <!-- LIGHTCAST TEST SECTION END -->
+
+<div class="network-tab-panel" data-network-panel="vod">
       <section class="network-library-head"><h2>VIDEO-ON-DEMAND</h2><p>Choose a team to watch its on-demand programming.</p></section>
       <section class="network-hub-section network-team-channels-section">
         
@@ -13933,6 +14008,49 @@ document.addEventListener("DOMContentLoaded", function(){
 document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 
 
+
+// Temporary Lightcast in-app embed test.
+function openLightcastTest(){
+  const modal=document.getElementById("lightcastTestModal");
+  const frame=document.getElementById("lightcastTestFrame");
+  if(!modal || !frame) return;
+  if(!frame.src || frame.src==="about:blank"){
+    frame.src=frame.dataset.src;
+  }
+  modal.hidden=false;
+  document.body.style.overflow="hidden";
+}
+function closeLightcastTest(){
+  const modal=document.getElementById("lightcastTestModal");
+  const frame=document.getElementById("lightcastTestFrame");
+  if(modal) modal.hidden=true;
+  if(frame) frame.src="";
+  document.body.style.overflow="";
+}
+
 </script>
+
+<!-- LIGHTCAST IN-APP TEST: temporary test layer -->
+<div id="lightcastTestModal" class="lightcast-test-modal" hidden>
+  <div class="lightcast-test-shell">
+    <div class="lightcast-test-head">
+      <strong>LIGHTCAST IN-APP TEST</strong>
+      <button type="button" onclick="closeLightcastTest()" aria-label="Close Lightcast test">×</button>
+    </div>
+    <div class="lightcast-test-player">
+      <iframe
+        id="lightcastTestFrame"
+        title="Lightcast VOD Test"
+        src=""
+        data-src="https://www.lightcast.com/embed/player.php?id=72119&subId=30715&type=vod"
+        referrerpolicy="no-referrer-when-downgrade"
+        frameborder="0"
+        allow="fullscreen; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
