@@ -6895,6 +6895,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+/* Global visual buffer between the photographic app header and page content. */
+.global-header-buffer{
+  height:12px !important;
+  min-height:12px !important;
+  background:var(--nal-blue) !important;
+  display:block !important;
+}
+
 /* Custom NAL notification-state icon.
    33px = 5px smaller than the previous 38px bell reference. */
 .topbar #nalNotificationButton .nal-notification-icon{
@@ -7162,6 +7170,8 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
   </header>
+
+  <div class="global-header-buffer" aria-hidden="true"></div>
 
 
   <!-- =====================================================
