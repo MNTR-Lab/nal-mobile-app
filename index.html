@@ -7163,47 +7163,6 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 
-/* =========================================================
-   MORE — FOOTBALLSHIFT READER
-========================================================= */
-.more-footballshift-page{
-  background:#ffffff !important;
-  padding:0 !important;
-  overflow:hidden !important;
-}
-.more-fs-toolbar{
-  height:42px;
-  padding:0 12px;
-  background:#07172b;
-  color:#ffffff;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  border-bottom:2px solid var(--nal-red);
-}
-.more-fs-toolbar button{
-  border:0;
-  padding:0;
-  background:transparent;
-  color:#ffffff;
-  font:inherit;
-  font-size:12px;
-  font-weight:900;
-  cursor:pointer;
-}
-.more-fs-toolbar strong{
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:.25px;
-}
-#moreFsFrame{
-  display:block;
-  width:100%;
-  height:calc(100vh - var(--header-height) - var(--bottom-nav-height) - 42px);
-  border:0;
-  background:#ffffff;
-}
-
 </style>
 </head>
 
@@ -8180,23 +8139,6 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </main>
 
-
-  <!-- =====================================================
-       MORE — FOOTBALLSHIFT READER
-  ====================================================== -->
-  <main id="moreFootballShiftPage" class="app-page more-footballshift-page">
-    <div class="more-fs-toolbar">
-      <button id="moreFsBackButton" type="button" aria-label="Back">‹ BACK</button>
-      <strong id="moreFsTitle"></strong>
-    </div>
-    <iframe
-      id="moreFsFrame"
-      title="NAL League Information"
-      src="about:blank"
-      frameborder="0"
-      allow="fullscreen"
-    ></iframe>
-  </main>
 
 
   <!-- =====================================================
@@ -9372,17 +9314,6 @@ document.addEventListener("keydown", event => {
   }
 });
 
-const moreFsFrame = document.getElementById("moreFsFrame");
-const moreFsTitle = document.getElementById("moreFsTitle");
-const moreFsBackButton = document.getElementById("moreFsBackButton");
-
-function openMoreFootballShift(title, url) {
-  setMoreMenu(false);
-  if (moreFsTitle) moreFsTitle.textContent = title;
-  if (moreFsFrame) moreFsFrame.src = url;
-  showPage("moreFootballShiftPage");
-}
-
 document.addEventListener("click", event => {
   const moreItem = event.target.closest("[data-more-item]");
   if (!moreItem) return;
@@ -9390,24 +9321,47 @@ document.addEventListener("click", event => {
   const item = moreItem.dataset.moreItem;
 
   if (item === "transactions") {
-    openMoreFootballShift("TRANSACTIONS", "https://www.thenationalarenaleague.com/stats#/1200/transactions?season_id=9264");
+    setMoreMenu(false);
+    openArticle(
+      "https://www.thenationalarenaleague.com/stats#/1200/transactions?season_id=9264",
+      {
+        mode: "team",
+        title: "TRANSACTIONS",
+        subtitle: "SEASON X",
+        loadingText: "LOADING TRANSACTIONS",
+        brand: {
+          primary: "#07172b",
+          accent: "#e31b23"
+        },
+        navPage: "__more__"
+      }
+    );
+    if (moreMenuButton) moreMenuButton.classList.add("active");
     return;
   }
 
   if (item === "leaders") {
-    openMoreFootballShift("LEAGUE LEADERS", "https://www.thenationalarenaleague.com/stats#/1200/leaders/grid?game_type=Regular%20Season&division_id=41958");
+    setMoreMenu(false);
+    openArticle(
+      "https://www.thenationalarenaleague.com/stats#/1200/leaders/grid?game_type=Regular%20Season&division_id=41958",
+      {
+        mode: "team",
+        title: "LEAGUE LEADERS",
+        subtitle: "SEASON X",
+        loadingText: "LOADING LEAGUE LEADERS",
+        brand: {
+          primary: "#07172b",
+          accent: "#e31b23"
+        },
+        navPage: "__more__"
+      }
+    );
+    if (moreMenuButton) moreMenuButton.classList.add("active");
     return;
   }
 
-  // NAL SHOP and NAL LIFE intentionally remain inactive for now.
+  // NAL SHOP and NAL LIFE intentionally remain inactive.
 });
-
-if (moreFsBackButton) {
-  moreFsBackButton.addEventListener("click", () => {
-    if (moreFsFrame) moreFsFrame.src = "about:blank";
-    showPage("homePage");
-  });
-}
 
 
 /* =========================================================
