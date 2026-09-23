@@ -7386,7 +7386,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
         <div class="home-network-side">
-          <button class="home-network-show-tile" type="button" onclick="openWatchPage(); setTimeout(() => switchNetworkTab('shows'), 50);" aria-label="Open Around the NAL">
+          <button class="home-network-show-tile" type="button" onclick="openNALShowChannel('around-the-nal')" aria-label="Open Around the NAL">
             <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL">
           </button>
           <button class="home-network-show-tile" type="button" onclick="openWatchPage(); setTimeout(() => switchNetworkTab('shows'), 50);" aria-label="Open Coaches Shows">
@@ -7756,7 +7756,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <button class="network-view-all" type="button" onclick="switchNetworkTab('shows')">VIEW ALL ›</button>
         </div>
         <div class="network-card-scroll">
-          <button class="network-show-card" type="button" onclick="previewNetworkItem('Around the NAL','NAL Network Original Series')">
+          <button class="network-show-card" type="button" onclick="openNALShowChannel('around-the-nal')">
             <div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL_Poster_8352963d-5e78-44ee-9aa5-cb742443e0bf.png?v=1790124876" alt="Around the NAL" loading="lazy"></div>
             <div class="network-show-title">Around the NAL</div><div class="network-show-meta">Original Series</div>
           </button>
@@ -7764,7 +7764,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows_Poster_ffbbc053-483a-4d1f-afa7-ce79bcd535f4.png?v=1790124876" alt="Coaches Shows" loading="lazy"></div>
             <div class="network-show-title">Coaches’ Shows</div><div class="network-show-meta">Team Programming</div>
           </button>
-          <button class="network-show-card" type="button" onclick="previewNetworkItem('NAL Gameday','The gameday starts here.')">
+          <button class="network-show-card" type="button" onclick="openNALShowChannel('nal-gameday')">
             <div class="network-show-art network-art-gameday"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_NAL_GAMEDAY_Poster_186b8209-957a-4a05-a25a-0ea795a11aa6.png?v=1790124876" alt="NAL Gameday" loading="lazy"></div>
             <div class="network-show-title">NAL Gameday</div><div class="network-show-meta">Gameday Coverage</div>
           </button>
@@ -7826,10 +7826,10 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="network-tab-panel" data-network-panel="shows">
       <section class="network-library-head"><h2>SHOWS</h2><p>NAL Network Originals and recurring programming.</p></section>
       <section class="network-library-grid">
-        <button type="button" onclick="previewNetworkItem('Around the NAL','NAL Network Original Series')"><div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL" loading="lazy"></div><strong>Around the NAL</strong></button>
+        <button type="button" onclick="openNALShowChannel('around-the-nal')"><div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL" loading="lazy"></div><strong>Around the NAL</strong></button>
         <button type="button" onclick="previewNetworkItem('5 in 5','Five-minute league highlight show')"><div class="network-show-art network-art-five"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_5_in_5.png?v=1789958471" alt="5 in 5" loading="lazy"></div><strong>5 in 5</strong></button>
         <button type="button" onclick="previewNetworkItem('Coaches’ Shows','Team coaches and weekly programming')"><div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233" alt="Coaches Shows" loading="lazy"></div><strong>Coaches’ Shows</strong></button>
-        <button type="button" onclick="previewNetworkItem('NAL Gameday','The gameday starts here.')"><div class="network-show-art network-art-gameday"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164" alt="NAL Gameday" loading="lazy"></div><strong>NAL Gameday</strong></button>
+        <button type="button" onclick="openNALShowChannel('nal-gameday')"><div class="network-show-art network-art-gameday"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164" alt="NAL Gameday" loading="lazy"></div><strong>NAL Gameday</strong></button>
       </section>
     </div>
 
@@ -17390,6 +17390,21 @@ function openLightcastVideo(index){
 }
 
 
+const NAL_SHOW_CHANNELS = {
+  "around-the-nal": {
+    name:"AROUND THE NAL",
+    subtitle:"NAL NETWORK ORIGINAL",
+    artwork:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164",
+    source:{label:"EPISODES",channelId:null,subId:null}
+  },
+  "nal-gameday": {
+    name:"NAL GAMEDAY",
+    subtitle:"NAL NETWORK ORIGINAL",
+    artwork:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164",
+    source:{label:"EPISODES",channelId:null,subId:null}
+  }
+};
+
 const NAL_TEAM_CHANNELS = {
   "amarillo-warbirds": {
     name:"AMARILLO WARBIRDS",
@@ -17587,6 +17602,40 @@ const content=lightcastTestContent();
     <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3></div><div class="wheeling-video-row"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
   content.querySelectorAll("[data-nal-team-view-all]").forEach(button=>button.addEventListener("click",()=>renderNALTeamCatalog(button.dataset.nalTeamViewAll)));
   ["latest","archives","coaches"].forEach(loadNALTeamRow);
+}
+
+function openNALShowChannel(slug){
+  const show = NAL_SHOW_CHANNELS?.[slug];
+  if(!show) return;
+
+  const modal = document.getElementById("lightcastTestModal");
+  const content = lightcastTestContent();
+  if(!modal || !content) return;
+
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+  setWheelingTeamView(true);
+  setLightcastModalHeading(show.name);
+
+  content.innerHTML = `
+    <div class="wheeling-team-banner">
+      <img src="${lightcastEscape(show.artwork)}" alt="${lightcastEscape(show.name)}">
+    </div>
+    <div class="wheeling-team-title">
+      <h2>${lightcastEscape(show.name)}</h2>
+      <p>${lightcastEscape(show.subtitle)}</p>
+    </div>
+    <section class="wheeling-content-section">
+      <div class="wheeling-section-head">
+        <h3>EPISODES</h3>
+        <button type="button" class="wheeling-view-all" data-nal-show-view-all hidden>VIEW ALL ›</button>
+      </div>
+      <div class="wheeling-video-row" id="nalShowEpisodesRow">
+        <div class="wheeling-empty-row">COMING SOON</div>
+      </div>
+    </section>`;
+
+  /* Lightcast source can be connected later without changing the Show Channel template. */
 }
 
 function openNALTeamHub(slug){
