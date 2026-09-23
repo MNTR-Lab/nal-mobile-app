@@ -10375,8 +10375,7 @@ gAx/XAiDTAQPAPrvvPFMS24wAN30zxBDBQ==
     <!-- TEAMS -->
 
     <button
-      class="nav-button"
-      data-page="teams"
+      class="nav-button" data-footer-action="teams"
       aria-label="Teams"
     >
 
@@ -12843,6 +12842,20 @@ function getTeamLogo(team) {
 
 let nalTeams = [];
 
+const NAL_TEAM_DIRECTORY_FALLBACK = [
+  { slug: "amarillo-warbirds", name: "Amarillo Warbirds" },
+  { slug: "colorado-spartans", name: "Colorado Spartans" },
+  { slug: "dallas-apex", name: "Dallas Apex" },
+  { slug: "louisiana-rouxgaroux", name: "Louisiana Rouxgaroux" },
+  { slug: "omaha-beef", name: "Omaha Beef" },
+  { slug: "pueblo-punishers", name: "Pueblo Punishers" },
+  { slug: "salina-liberty", name: "Salina Liberty" },
+  { slug: "sioux-city-bandits", name: "Sioux City Bandits" },
+  { slug: "southwest-kansas-storm", name: "Southwest Kansas Storm" },
+  { slug: "wheeling-miners", name: "Wheeling Miners" }
+];
+
+
 async function loadNALTeams() {
   try {
     const response = await fetch("data/teams.json", { cache: "no-store" });
@@ -12892,14 +12905,8 @@ async function loadNALTeams() {
   } catch (error) {
     console.error("NAL Teams could not be loaded:", error);
 
-    const grid = document.getElementById("teamsDirectoryGrid");
-    if (grid) {
-      grid.innerHTML = `
-        <div class="teams-load-message">
-          TEAMS CURRENTLY UNAVAILABLE
-        </div>
-      `;
-    }
+    /* Keep the built-in Teams directory visible even if the JSON request fails. */
+    renderTeamsDirectory();
   }
 }
 
@@ -13840,16 +13847,17 @@ async function openTeamsPage(){
   page.style.display = "block";
   window.scrollTo(0, 0);
 
-  if (!Array.isArray(nalTeams) || nalTeams.length === 0) {
-    const grid = document.getElementById("teamsDirectoryGrid");
-    if (grid) grid.innerHTML = `<div class="teams-load-message">LOADING TEAMS…</div>`;
-    await loadNALTeams();
-  }
-
+  /* Render the known team directory immediately, then refresh it with full
+     teams.json data when available. This prevents an empty Teams screen. */
   renderTeamsDirectory();
 
+  if (!Array.isArray(nalTeams) || nalTeams.length === 0) {
+    await loadNALTeams();
+    renderTeamsDirectory();
+  }
+
   document.querySelectorAll(".nav-button").forEach(btn => btn.classList.remove("active"));
-  const teamsNavButton = document.querySelector('.bottom-nav [data-page="teams"]');
+  const teamsNavButton = document.querySelector('.bottom-nav [data-footer-action="teams"]');
   if (teamsNavButton) teamsNavButton.classList.add("active");
 }
 
@@ -13857,7 +13865,13 @@ function renderTeamsDirectory(){
   const grid = document.getElementById("teamsDirectoryGrid");
   if (!grid) return;
 
-  const teams = (typeof nalTeams !== "undefined" && Array.isArray(nalTeams)) ? nalTeams : [];
+  const hasLoadedTeams =
+    typeof nalTeams !== "undefined" &&
+    Array.isArray(nalTeams) &&
+    nalTeams.length > 0;
+
+  const teams = hasLoadedTeams ? nalTeams : NAL_TEAM_DIRECTORY_FALLBACK;
+
   grid.innerHTML = teams.map((team, index) => `
     <button class="teams-directory-card" type="button" data-team-index="${index}" aria-label="Open ${escapeHTML(team.name || "team")}">
       <div class="teams-directory-logo">
@@ -13870,20 +13884,35 @@ function renderTeamsDirectory(){
   grid.querySelectorAll(".teams-directory-card").forEach(card => {
     card.addEventListener("click", () => {
       const team = teams[Number(card.dataset.teamIndex)];
-      if (team) openTeamHome(team);
+      if (!team) return;
+
+      if (hasLoadedTeams) {
+        openTeamHome(team);
+      } else {
+        openTeam(team.slug);
+      }
     });
   });
 }
 
 
-/* Teams quick-access routing — dedicated Teams directory */
+/* Teams routing — existing Teams directory, including bottom footer */
 document.addEventListener("click", function(event){
   const control = event.target.closest(
-    '[data-action="teams"], [data-page="teams"], [data-target="teams"], .quick-teams, #teamsQuickAction'
+    '[data-footer-action="teams"], [data-action="teams"], [data-page="teams"], [data-target="teams"], .quick-teams, #teamsQuickAction'
   );
   if (!control) return;
+
   event.preventDefault();
-  event.stopPropagation();
+  event.stopImmediatePropagation();
+
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => {
+    button.classList.remove("active");
+  });
+
+  const footerTeams = document.querySelector('.bottom-nav [data-footer-action="teams"]');
+  if (footerTeams) footerTeams.classList.add("active");
+
   openTeamsPage();
 }, true);
 
