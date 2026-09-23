@@ -7854,7 +7854,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <section class="network-library-head"><h2>SHOWS</h2><p>NAL Network Originals and recurring programming.</p></section>
       <section class="network-library-grid">
         <button type="button" onclick="openNALShowChannel('around-the-nal')"><div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL" loading="lazy"></div><strong>Around the NAL</strong></button>
-        <button type="button" onclick="previewNetworkItem('5 in 5','Five-minute league highlight show')"><div class="network-show-art network-art-five"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_5_in_5.png?v=1789958471" alt="5 in 5" loading="lazy"></div><strong>5 in 5</strong></button>
+        <button type="button" onclick="openNALShowChannel('5-in-5')"><div class="network-show-art network-art-five"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_5_in_5.png?v=1789958471" alt="5 in 5" loading="lazy"></div><strong>5 in 5</strong></button>
         <button type="button" onclick="openNALShowChannel('nal-coaches-shows')"><div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233" alt="Coaches Shows" loading="lazy"></div><strong>Coaches’ Shows</strong></button>
         <button type="button" onclick="openNALShowChannel('nal-gameday')"><div class="network-show-art network-art-gameday"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164" alt="NAL Gameday" loading="lazy"></div><strong>NAL Gameday</strong></button>
       </section>
@@ -17435,6 +17435,13 @@ const NAL_SHOW_CHANNELS = {
     subtitle:"NAL NETWORK ORIGINAL",
     artwork:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233",
     source:{label:"EPISODES",channelId:null,subId:null}
+  },
+  "5-in-5": {
+    name:"5 IN 5",
+    subtitle:"NAL NETWORK ORIGINAL",
+    artwork:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_5_in_5.png?v=1789958471",
+    sectionLabel:"HIGHLIGHTS",
+    source:{label:"HIGHLIGHTS",channelId:null,subId:null}
   }
 };
 
@@ -17659,7 +17666,7 @@ function openNALShowChannel(slug){
 
     <section class="wheeling-content-section">
       <div class="wheeling-section-head">
-        <h3>EPISODES</h3>
+        <h3>${lightcastEscape(show.sectionLabel || show.source?.label || "EPISODES")}</h3>
         <button type="button" class="wheeling-view-all" data-nal-show-view-all hidden>VIEW ALL ›</button>
       </div>
       <div class="wheeling-video-row" id="nalShowEpisodesRow">
