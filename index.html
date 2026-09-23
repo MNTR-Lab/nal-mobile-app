@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7325,6 +7324,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL" loading="lazy"></div>
             <div class="network-show-title">Around the NAL</div><div class="network-show-meta">Original Series</div>
           </button>
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('5 in 5','Five-minute league highlight show')">
+            <div class="network-show-art network-art-five"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_5_in_5.png?v=1789958471" alt="5 in 5" loading="lazy"></div>
+            <div class="network-show-title">5 in 5</div><div class="network-show-meta">Weekly Highlights</div>
+          </button>
           <button class="network-show-card" type="button" onclick="previewNetworkItem('Coaches’ Shows','Team coaches and weekly programming')">
             <div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233" alt="Coaches Shows" loading="lazy"></div>
             <div class="network-show-title">Coaches’ Shows</div><div class="network-show-meta">Team Programming</div>
@@ -7338,63 +7341,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="network-hub-section">
         <div class="network-section-header">
-          <div class="network-section-title">Highlights</div>
+          <div class="network-section-title">Latest Content</div>
+          <button class="network-view-all" type="button" onclick="switchNetworkTab('shows')">VIEW ALL ›</button>
         </div>
         <div class="network-card-scroll">
-          <button class="network-show-card" type="button" onclick="previewNetworkItem('5 in 5','Five-minute league highlight show')">
-            <div class="network-show-art network-art-five"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_5_in_5.png?v=1789958471" alt="5 in 5" loading="lazy"></div>
-            <div class="network-show-title">5 in 5</div><div class="network-show-meta">Weekly Highlights</div>
+          <button class="network-show-card network-video-card" type="button"
+            onclick="openNetworkVideo('Salina vs. Southwest Kansas', 'https://www.dropbox.com/scl/fi/s92dq3gea55mmhad9d6dw/Salina-vs-SW-Kansas.mp4?rlkey=nild9783sb3kje6ai1io85gzo&st=erp6uchx&raw=1')">
+            <div class="network-show-art network-episode-art">
+              <span class="network-mini-play">▶</span>
+            </div>
+            <div class="network-show-title">Salina vs. Southwest Kansas</div>
+            <div class="network-show-meta">WATCH NOW</div>
+          </button>
+          <button class="network-show-card network-video-card" type="button"
+            onclick="openNetworkVideo('Semifinals: Omaha vs. Southwest Kansas', 'https://d26sy7mkyef1xr.cloudfront.net/natfootball/6a2b13a9f12db51bf344611f/cloud_hls/0_hd_hls.m3u8')">
+            <div class="network-show-art network-episode-art">
+              <span class="network-mini-play">▶</span>
+            </div>
+            <div class="network-show-title">Semifinals: Omaha vs. Southwest Kansas</div>
+            <div class="network-show-meta">WATCH NOW</div>
+          </button>
+          <button class="network-show-card network-video-card" type="button"
+            onclick="openNetworkVideo('Semifinals: Salina vs. Pueblo', 'https://www.dropbox.com/scl/fi/2krgif7xgdkfar9z6a71j/Semifinals-Salina-vs-Pueblo.mp4?rlkey=ozlwdzasuwlmvj4k7ki04pzlu&st=jtsr93fr&raw=1')">
+            <div class="network-show-art network-episode-art">
+              <span class="network-mini-play">▶</span>
+            </div>
+            <div class="network-show-title">Semifinals: Salina vs. Pueblo</div>
+            <div class="network-show-meta">WATCH NOW</div>
           </button>
         </div>
       </section>
 
-      <section class="network-hub-section network-team-channels-section">
-        <div class="network-section-header">
-          <div class="network-section-title">Team Channels</div>
-        </div>
-        <div class="network-team-channel-grid">
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('amarillo-warbirds')">
-            <div class="network-team-channel-art"><img data-network-team-logo="amarillo-warbirds" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"></div>
-            <span>Amarillo Warbirds</span>
-          </button>
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('colorado-spartans')">
-            <div class="network-team-channel-art"><img data-network-team-logo="colorado-spartans" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784" alt="Colorado Spartans" loading="lazy"></div>
-            <span>Colorado Spartans</span>
-          </button>
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('dallas-apex')">
-            <div class="network-team-channel-art"><img data-network-team-logo="dallas-apex" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784" alt="Dallas Apex" loading="lazy"></div>
-            <span>Dallas Apex</span>
-          </button>
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('louisiana-rouxgaroux')">
-            <div class="network-team-channel-art"><img data-network-team-logo="louisiana-rouxgaroux" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784" alt="Louisiana Rouxgaroux" loading="lazy"></div>
-            <span>Louisiana Rouxgaroux</span>
-          </button>
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('omaha-beef')">
-            <div class="network-team-channel-art"><img data-network-team-logo="omaha-beef" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792" alt="Omaha Beef" loading="lazy"></div>
-            <span>Omaha Beef</span>
-          </button>
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('pueblo-punishers')">
-            <div class="network-team-channel-art"><img data-network-team-logo="pueblo-punishers" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792" alt="Pueblo Punishers" loading="lazy"></div>
-            <span>Pueblo Punishers</span>
-          </button>
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('salina-liberty')">
-            <div class="network-team-channel-art"><img data-network-team-logo="salina-liberty" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792" alt="Salina Liberty" loading="lazy"></div>
-            <span>Salina Liberty</span>
-          </button>
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('sioux-city-bandits')">
-            <div class="network-team-channel-art"><img data-network-team-logo="sioux-city-bandits" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792" alt="Sioux City Bandits" loading="lazy"></div>
-            <span>Sioux City Bandits</span>
-          </button>
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('southwest-kansas-storm')">
-            <div class="network-team-channel-art"><img data-network-team-logo="southwest-kansas-storm" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792" alt="Southwest Kansas Storm" loading="lazy"></div>
-            <span>Southwest Kansas Storm</span>
-          </button>
-          <button class="network-team-channel-card" type="button" onclick="openNetworkTeamChannel('wheeling-miners')">
-            <div class="network-team-channel-art"><img data-network-team-logo="wheeling-miners" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div>
-            <span>Wheeling Miners</span>
-          </button>
-        </div>
-      </section>
+      
     </div>
 
     <div class="network-tab-panel" data-network-panel="team-channels">
@@ -7509,13 +7487,12 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>
     </div>
 
-    </div>
-
     <div class="network-tab-panel" data-network-panel="archives">
-      <section class="network-library-head"><h2>ARCHIVES</h2><p>Choose a team to explore its archived games and programming.</p></section>
+      <section class="network-library-head"><h2>ARCHIVES</h2><p>Explore archived NAL games and programming by organization.</p></section>
+
       <section class="network-hub-section network-team-channels-section">
         <div class="network-section-header">
-          <div class="network-section-title">Team Channels</div>
+          <div class="network-section-title">Current Organizations</div>
         </div>
         <div class="network-team-channel-grid">
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('amarillo-warbirds')">
@@ -7558,10 +7535,25 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="network-team-channel-art"><img data-network-team-logo="wheeling-miners" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div>
             <span>Wheeling Miners</span>
           </button>
+        
         </div>
       </section>
-    </div>
 
+      <section class="network-hub-section network-team-channels-section">
+        <div class="network-section-header">
+          <div class="network-section-title">Previous Organizations</div>
+        </div>
+        <div class="network-team-channel-grid">
+          <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('beaumont-renegades')">
+            <div class="network-team-channel-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055" alt="Beaumont Renegades" loading="lazy"></div>
+            <span>Beaumont Renegades</span>
+          </button>
+          <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('columbus-lions')">
+            <div class="network-team-channel-art"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055" alt="Columbus Lions" loading="lazy"></div>
+            <span>Columbus Lions</span>
+          </button>
+        </div>
+      </section>
     </div>
 
     <div id="networkPreviewModal" class="network-preview-modal" aria-hidden="true">
