@@ -15500,15 +15500,11 @@ function openNetworkVodTeam(slug){
 }
 function openTeamHomeNetworkChannel(slug){
   if(!slug) return;
-  if(typeof showPage==="function") showPage("watchPage");
-  if(typeof switchNetworkTab==="function") switchNetworkTab("archives");
-  if(typeof populateNetworkTeamChannels==="function") populateNetworkTeamChannels();
-  window.scrollTo({top:0,left:0,behavior:"instant"});
-  setTimeout(()=>{
-    if(typeof openNALTeamHub==="function" && typeof NAL_TEAM_CHANNELS!=="undefined" && NAL_TEAM_CHANNELS?.[slug]){
-      openNALTeamHub(slug);
-    }
-  },80);
+  // Open the NAL Network Team Channel directly over the current Team Home.
+  // Do not navigate to watchPage first; closing the channel returns to the team.
+  if(typeof openNALTeamHub==="function" && typeof NAL_TEAM_CHANNELS!=="undefined" && NAL_TEAM_CHANNELS?.[slug]){
+    openNALTeamHub(slug);
+  }
 }
 
 function openNetworkArchiveTeam(slug){
@@ -18793,7 +18789,7 @@ function openLightcastVideo(index){
 const NAL_TEAM_CHANNELS = {
   "amarillo-warbirds": {
     name:"AMARILLO WARBIRDS",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds3.png?v=1790256854",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:"29680"},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30656"},
@@ -18802,7 +18798,7 @@ const NAL_TEAM_CHANNELS = {
   },
   "colorado-spartans": {
     name:"COLORADO SPARTANS",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_3c044d01-0658-40e9-be80-ce08e59945fc.png?v=1790208460",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:"29681"},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30657"},
@@ -18811,7 +18807,7 @@ const NAL_TEAM_CHANNELS = {
   },
   "dallas-apex": {
     name:"DALLAS APEX",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_da6cbdd6-f226-4a20-8e83-34317cd45e5e.png?v=1790208460",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:"30550"},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30665"},
@@ -18829,7 +18825,7 @@ const NAL_TEAM_CHANNELS = {
   },
   "omaha-beef": {
     name:"OMAHA BEEF",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_9853fbad-f3a0-49d6-9a8f-aaa1a85b28f8.png?v=1790208460",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:"29683"},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30663"},
@@ -18838,7 +18834,7 @@ const NAL_TEAM_CHANNELS = {
   },
   "pueblo-punishers": {
     name:"PUEBLO PUNISHERS",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_30eafc0a-763a-412b-838b-321dd9088d96.png?v=1790208460",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:"29684"},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30662"},
@@ -18847,7 +18843,7 @@ const NAL_TEAM_CHANNELS = {
   },
   "salina-liberty": {
     name:"SALINA LIBERTY",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_87f2d951-a969-4ce6-930b-1b0094c7bd4d.png?v=1790208460",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:"29685"},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30661"},
@@ -18856,7 +18852,7 @@ const NAL_TEAM_CHANNELS = {
   },
   "sioux-city-bandits": {
     name:"SIOUX CITY BANDITS",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_5e3eba6e-6998-4c9a-9b73-3999b5e5d875.png?v=1790208460",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:"29686"},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30660"},
@@ -18865,7 +18861,7 @@ const NAL_TEAM_CHANNELS = {
   },
   "southwest-kansas-storm": {
     name:"SOUTHWEST KANSAS STORM",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_3eff88a7-a61e-48bf-8673-7b03e554d827.png?v=1790208460",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:"29687"},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30659"},
@@ -18874,7 +18870,7 @@ const NAL_TEAM_CHANNELS = {
   },
   "wheeling-miners": {
     name:"WHEELING MINERS",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_a547bbd0-e575-4512-9ad6-47e081cb1fc3.png?v=1790208460",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:null},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30658"},
