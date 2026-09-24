@@ -8321,6 +8321,45 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 </style>
+
+<style id="nal-network-website-width-override">
+/* =========================================================
+   NAL NETWORK — WEBSITE WIDTH OVERRIDE
+   Layout width only. Existing Network content/functionality
+   remains unchanged.
+========================================================= */
+body{
+  background:#f3f5f7;
+}
+
+.app{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+}
+
+.topbar,
+.bottom-nav{
+  max-width:none !important;
+}
+
+/* Give the existing Network content room to behave as a website
+   while preserving its internal sections and responsive rules. */
+#watchPage{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+}
+
+@media (min-width: 900px){
+  #watchPage > .section,
+  #watchPage > .network-section,
+  #watchPage > section{
+    width:100%;
+  }
+}
+</style>
+
 </head>
 
 
