@@ -8140,6 +8140,155 @@ document.addEventListener("DOMContentLoaded", () => {
 #homePage .home-game-loading-center{width:100%;}
 @media (max-width:380px){#homePage .home-game-placeholder.home-game-slide{grid-template-columns:68px 1fr 68px;gap:7px !important;}#homePage .home-game-team-name{font-size:8px !important;}}
 </style>
+<style>
+
+/* =========================================================
+   TEAM HOME — APPROVED TEAM DESIGN ENVIRONMENT
+   Visual layer only. Existing Team Home markup, icons,
+   routes, data feeds and click handlers remain unchanged.
+   ========================================================= */
+#teamPage{
+  --team-primary-text:#ffffff;
+  --team-accent-text:#ffffff;
+  --team-third-text:#ffffff;
+  background:
+    radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--team-third, #ffffff) 30%, transparent) 0, transparent 32%),
+    radial-gradient(circle at 10% 38%, color-mix(in srgb, var(--team-accent, #e31b23) 18%, transparent) 0, transparent 30%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--team-primary, #07172b) 78%, #000000) 0%,
+      var(--team-primary, #07172b) 34%,
+      color-mix(in srgb, var(--team-primary, #07172b) 80%, #000000) 100%
+    );
+  min-height:calc(100dvh - var(--header-height));
+}
+
+#teamPage .team-hero{
+  min-height:315px;
+  background:
+    radial-gradient(circle at 50% 34%, rgba(255,255,255,.16) 0%, rgba(255,255,255,.04) 31%, transparent 55%),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--team-primary) 84%, #000000) 0%,
+      var(--team-primary) 58%,
+      color-mix(in srgb, var(--team-third) 28%, var(--team-primary)) 100%
+    );
+  border-bottom:4px solid var(--team-accent);
+}
+
+#teamPage .team-hero::before{
+  background:
+    radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--team-third) 32%, transparent), transparent 34%),
+    linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.12) 58%,rgba(0,0,0,.40) 100%);
+}
+
+#teamPage .team-section{
+  margin:12px 12px 0;
+  padding:22px 14px;
+  border:1px solid rgba(255,255,255,.16);
+  border-bottom:1px solid rgba(255,255,255,.16);
+  border-radius:16px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 8px 24px rgba(0,0,0,.13);
+}
+
+#teamPage .team-final-section{
+  margin-bottom:18px;
+}
+
+#teamPage .section-title{
+  color:var(--team-primary);
+}
+
+#teamPage .team-coming-soon,
+#teamPage #teamNextGameCard{
+  background:
+    radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--team-third) 28%, transparent), transparent 36%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--team-primary) 88%, #000000) 0%,
+      var(--team-primary) 72%,
+      color-mix(in srgb, var(--team-accent) 32%, var(--team-primary)) 100%
+    );
+  color:var(--team-primary-text);
+  border:1px solid color-mix(in srgb, var(--team-accent) 50%, rgba(255,255,255,.35));
+  box-shadow:0 7px 18px rgba(0,0,0,.18);
+}
+
+#teamPage .team-coming-soon::after{
+  background:var(--team-accent);
+}
+
+#teamPage .team-coming-soon-label{
+  color:var(--team-accent);
+}
+
+#teamPage .team-menu-card{
+  border-color:color-mix(in srgb, var(--team-primary) 18%, #dfe3e8);
+  background:rgba(255,255,255,.98);
+  color:var(--team-primary);
+  box-shadow:0 4px 11px rgba(0,0,0,.07);
+}
+
+#teamPage .team-menu-card:active{
+  background:color-mix(in srgb, var(--team-primary) 6%, #ffffff);
+}
+
+#teamPage .team-menu-icon{
+  background:var(--team-primary);
+  color:var(--team-primary-text);
+  box-shadow:inset 0 -3px 0 color-mix(in srgb, var(--team-accent) 75%, transparent);
+}
+
+#teamPage .team-watch-card{
+  background:
+    radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--team-third) 34%, transparent), transparent 38%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--team-primary) 86%, #000000) 0%,
+      var(--team-primary) 62%,
+      color-mix(in srgb, var(--team-accent) 28%, var(--team-primary)) 100%
+    );
+  border:1px solid color-mix(in srgb, var(--team-accent) 50%, rgba(255,255,255,.35));
+}
+
+#teamPage .team-watch-play{
+  background:var(--team-accent);
+  color:var(--team-accent-text);
+}
+
+#teamPage .team-watch-card::after{
+  background:var(--team-accent);
+  opacity:.18;
+}
+
+#teamPage .team-website-button{
+  background:var(--team-primary);
+  color:var(--team-primary-text);
+  box-shadow:inset 0 -4px 0 var(--team-accent);
+}
+
+#teamPage .team-news-loading,
+#teamPage .team-news-lead,
+#teamPage .team-news-card-image-wrap,
+#teamPage .team-news-card-fallback{
+  background-color:var(--team-primary);
+}
+
+#teamPage .team-news-category{
+  background:var(--team-accent);
+  color:var(--team-accent-text);
+}
+
+#teamPage .team-news-card-date{
+  color:var(--team-accent);
+}
+
+#teamPage .team-news-card-title{
+  color:var(--team-primary);
+}
+
+</style>
 </head>
 
 
@@ -8942,7 +9091,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         <div class="network-team-channel-grid">
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('amarillo-warbirds')">
-            <div class="network-team-channel-art"><img data-network-team-logo="amarillo-warbirds" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds2.png?v=1790208459" alt="Amarillo Warbirds" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="amarillo-warbirds" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds3.png?v=1790256854" alt="Amarillo Warbirds" loading="lazy"></div>
             <span>Amarillo Warbirds</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('colorado-spartans')">
@@ -14171,7 +14320,7 @@ loadNews();
    NAL TEAMS — LOAD FROM data/teams.json
    ========================================================= */
 
-const TEAM_LOGO_OVERRIDES = {"louisiana-rouxgaroux": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux_93be9d7e-ac73-4aae-8f1f-9784ebc62616.png?v=1790208585", "wheeling-miners": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_a547bbd0-e575-4512-9ad6-47e081cb1fc3.png?v=1790208460", "pueblo-punishers": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_30eafc0a-763a-412b-838b-321dd9088d96.png?v=1790208460", "dallas-apex": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_da6cbdd6-f226-4a20-8e83-34317cd45e5e.png?v=1790208460", "southwest-kansas-storm": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_3eff88a7-a61e-48bf-8673-7b03e554d827.png?v=1790208460", "omaha-beef": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_9853fbad-f3a0-49d6-9a8f-aaa1a85b28f8.png?v=1790208460", "salina-liberty": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_87f2d951-a969-4ce6-930b-1b0094c7bd4d.png?v=1790208460", "colorado-spartans": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_3c044d01-0658-40e9-be80-ce08e59945fc.png?v=1790208460", "sioux-city-bandits": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_5e3eba6e-6998-4c9a-9b73-3999b5e5d875.png?v=1790208460", "amarillo-warbirds": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds2.png?v=1790208459"};
+const TEAM_LOGO_OVERRIDES = {"louisiana-rouxgaroux": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux_93be9d7e-ac73-4aae-8f1f-9784ebc62616.png?v=1790208585", "wheeling-miners": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_a547bbd0-e575-4512-9ad6-47e081cb1fc3.png?v=1790208460", "pueblo-punishers": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_30eafc0a-763a-412b-838b-321dd9088d96.png?v=1790208460", "dallas-apex": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_da6cbdd6-f226-4a20-8e83-34317cd45e5e.png?v=1790208460", "southwest-kansas-storm": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_3eff88a7-a61e-48bf-8673-7b03e554d827.png?v=1790208460", "omaha-beef": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_9853fbad-f3a0-49d6-9a8f-aaa1a85b28f8.png?v=1790208460", "salina-liberty": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_87f2d951-a969-4ce6-930b-1b0094c7bd4d.png?v=1790208460", "colorado-spartans": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_3c044d01-0658-40e9-be80-ce08e59945fc.png?v=1790208460", "sioux-city-bandits": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_5e3eba6e-6998-4c9a-9b73-3999b5e5d875.png?v=1790208460", "amarillo-warbirds": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds3.png?v=1790256854"};
 
 function getTeamLogo(team) {
   if (!team) return NAL_LOGO;
@@ -14654,12 +14803,12 @@ function openTeamHome(team) {
 
   const teamBranding = {
     "amarillo-warbirds": {
-      primary: "#4169E1",
-      accent: "#D71920",
+      primary: "#0051BA",
+      accent: "#E8000D",
       third: "#07172B"
     },
     "colorado-spartans": {
-      primary: "#1F6FB2",
+      primary: "#2D8BCB",
       accent: "#000000",
       third: "#7A7D81"
     },
@@ -14684,8 +14833,8 @@ function openTeamHome(team) {
       third: "#C0C0C0"
     },
     "salina-liberty": {
-      primary: "#1b325a",
-      accent: "#e6252c",
+      primary: "#1B325A",
+      accent: "#E6252C",
       third: "#FFFFFF"
     },
     "sioux-city-bandits": {
@@ -14694,14 +14843,14 @@ function openTeamHome(team) {
       third: "#D4AF37"
     },
     "southwest-kansas-storm": {
-      primary: "#009eae",
-      accent: "#5fbb46",
-      third: "#6b2e8e"
+      primary: "#6B2E8E",
+      accent: "#5FBB46",
+      third: "#009EAE"
     },
     "wheeling-miners": {
-      primary: "#c7992c",
+      primary: "#C7992C",
       accent: "#020202",
-      third: "#8d8d8c"
+      third: "#8D8D8C"
     }
   };
 
@@ -14725,6 +14874,24 @@ function openTeamHome(team) {
     "--team-third",
     brand.third || "#ffffff"
   );
+
+  /* Approved preview contrast behavior: light team colors use dark copy. */
+  const teamContrast = (hex) => {
+    const raw = String(hex || "#000000").replace("#", "");
+    const h = raw.length === 3
+      ? raw.split("").map(c => c + c).join("")
+      : raw.padEnd(6, "0").slice(0, 6);
+    const n = parseInt(h, 16);
+    const r = (n >> 16) & 255;
+    const g = (n >> 8) & 255;
+    const b = n & 255;
+    const luminance = (0.299 * r) + (0.587 * g) + (0.114 * b);
+    return luminance > 165 ? "#07172b" : "#ffffff";
+  };
+
+  teamPage.style.setProperty("--team-primary-text", teamContrast(brand.primary));
+  teamPage.style.setProperty("--team-accent-text", teamContrast(brand.accent));
+  teamPage.style.setProperty("--team-third-text", teamContrast(brand.third || "#ffffff"));
 
   activeTeam._appBrand = brand;
 
@@ -18579,7 +18746,7 @@ function openLightcastVideo(index){
 const NAL_TEAM_CHANNELS = {
   "amarillo-warbirds": {
     name:"AMARILLO WARBIRDS",
-    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds2.png?v=1790208459",
+    banner:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds3.png?v=1790256854",
     sources:{
       latest:{label:"LATEST GAMES (V.O.D.)",channelId:"72115",subId:"29680"},
       archives:{label:"ARCHIVES",channelId:"72121",subId:"30656"},
