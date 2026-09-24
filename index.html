@@ -18197,11 +18197,30 @@ function closeLightcastTest(){
     return "upcoming";
   }
 
+  const TEAM_TIMEZONES = {
+    "pueblo punishers": "America/Denver",
+    "colorado spartans": "America/Denver",
+    "dallas apex": "America/Chicago",
+    "omaha beef": "America/Chicago",
+    "sioux city bandits": "America/Chicago",
+    "salina liberty": "America/Chicago",
+    "southwest kansas storm": "America/Chicago",
+    "amarillo warbirds": "America/Chicago",
+    "louisiana rouxgaroux": "America/Chicago",
+    "wheeling miners": "America/New_York"
+  };
+
+  function gameTimeZone(game){
+    const matchup = parseMatchup(game && game.title);
+    return TEAM_TIMEZONES[normalizeName(matchup.homeName)] || "America/New_York";
+  }
+
   function formatEventTime(game){
     const start = utcDate(game.start_time_utc);
     if (!start) return "NAL NETWORK";
     try {
       return start.toLocaleString("en-US", {
+        timeZone: gameTimeZone(game),
         month: "short",
         day: "numeric",
         hour: "numeric",
@@ -18303,7 +18322,7 @@ function closeLightcastTest(){
     const start = utcDate(game.start_time_utc);
     if (!start) return "TIME TBA";
     try {
-      return start.toLocaleString("en-US", {timeZone:"America/New_York", weekday:"short", month:"short", day:"numeric", hour:"numeric", minute:"2-digit", timeZoneName:"short"}).toUpperCase();
+      return start.toLocaleString("en-US", {timeZone:gameTimeZone(game), weekday:"short", month:"short", day:"numeric", hour:"numeric", minute:"2-digit", timeZoneName:"short"}).toUpperCase();
     } catch(e) { return formatEventTime(game); }
   }
 
