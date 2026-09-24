@@ -7154,6 +7154,25 @@ document.addEventListener("DOMContentLoaded", () => {
 .nal-schedule-opp small{font-size:8px;color:#89919a;font-weight:900}.nal-schedule-opp b{display:block;font-size:12px;color:#07172b;margin-top:2px}.nal-schedule-gt{font-size:10px;font-weight:900;text-align:right;color:#59636e}
 .nal-schedule-empty{background:#fff;border-radius:14px;padding:28px 18px;text-align:center;color:#727b86;font-size:12px;line-height:1.5}.nal-schedule-empty strong{display:block;color:#07172b;font-size:17px;margin-bottom:6px}
 
+
+/* =========================================================
+   NATIVE NAL STANDINGS
+========================================================= */
+#standingsPage{background:#f3f5f7;min-height:calc(100vh - var(--header-height) - var(--nav-height));padding-bottom:28px}
+.nal-standings-hero{background:linear-gradient(145deg,#07172b,#102b4e);color:#fff;padding:22px 18px;position:relative;overflow:hidden}
+.nal-standings-hero:after{content:"X";position:absolute;right:-8px;bottom:-48px;font-size:150px;font-weight:1000;color:rgba(227,27,35,.16)}
+.nal-standings-eyebrow{font-size:10px;font-weight:900;letter-spacing:2px;color:#b9c4d1}.nal-standings-hero h1{margin:5px 0 3px;font-size:29px;line-height:1;font-weight:1000}.nal-standings-hero h1 span{color:#e31b23}.nal-standings-hero p{margin:7px 0 0;color:#c8d0da;font-size:11px;font-weight:700}
+.nal-standings-tabs{display:flex;gap:7px;background:#fff;padding:13px;border-bottom:1px solid #e3e7eb}.nal-standings-tab{flex:1;border:1px solid #d5dbe1;background:#fff;border-radius:20px;padding:10px 3px;font-size:11px;font-weight:1000;color:#07172b}.nal-standings-tab.active{background:#e31b23;border-color:#e31b23;color:#fff}
+.nal-standings-content{padding:14px}.nal-standings-heading{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 12px}.nal-standings-heading b{font-size:18px}.nal-standings-heading span{font-size:10px;color:#7a8490;font-weight:800}
+.nal-standings-tablewrap{overflow-x:auto;border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(7,23,43,.07)}.nal-standings-table{width:100%;border-collapse:collapse;white-space:nowrap}.nal-standings-table th{background:#07172b;color:#fff;padding:13px 7px;font-size:10px;text-align:center}.nal-standings-table th:nth-child(2){text-align:left}.nal-standings-table td{border-bottom:1px solid #ebedf0;padding:11px 7px;text-align:center;font-weight:800;font-size:11px}.nal-standings-table td:nth-child(2){text-align:left}
+.nal-standings-teamcell{display:flex;align-items:center;gap:7px}.nal-standings-logo{width:34px;height:34px;border-radius:50%;border:1px solid #e7eaf0;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}.nal-standings-logo img{width:86%;height:86%;object-fit:contain}.nal-standings-teamname{font-size:11px;font-weight:900}.nal-standings-positive{color:#198452}.nal-standings-negative{color:#c54a50}
+.nal-standings-teamstrip{display:flex;gap:9px;overflow-x:auto;padding:2px 1px 14px}.nal-standings-pick{background:none;border:0;min-width:67px;text-align:center;color:#727c86;font-size:9px;font-weight:900}.nal-standings-pick .nal-standings-logo{width:54px;height:54px;margin:auto auto 6px}.nal-standings-pick.active .nal-standings-logo{border:3px solid #e31b23}.nal-standings-pick.active{color:#e31b23}
+.nal-standings-banner{background:#07172b;color:#fff;border-radius:14px;padding:17px;display:flex;align-items:center;gap:13px}.nal-standings-banner .nal-standings-logo{width:66px;height:66px}.nal-standings-banner b{display:block;font-size:20px}.nal-standings-banner span{color:#bdc9d5;font-size:10px}
+.nal-standings-record{background:#fff;border-radius:14px;margin:12px 0;padding:18px;text-align:center}.nal-standings-recordbig{font-size:43px;font-weight:1000;letter-spacing:-2px}.nal-standings-recordbig span{color:#aab0b8}.nal-standings-pct{font-size:12px;color:#687584;font-weight:900;margin-top:5px}
+.nal-standings-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.nal-standings-stat{background:#fff;border-radius:13px;padding:17px 12px;text-align:center}.nal-standings-stat small{display:block;font-size:10px;color:#818a94;font-weight:900}.nal-standings-stat b{display:block;font-size:25px;margin-top:6px}
+.nal-standings-results{background:#fff;border-radius:13px;margin-top:12px;padding:16px}.nal-standings-results>b{font-size:14px}.nal-standings-result{display:flex;justify-content:space-between;gap:8px;border-top:1px solid #e9edf1;padding:12px 0;font-size:12px;font-weight:bold}.nal-standings-pill{font-size:10px;padding:5px 8px;background:#edf7f1;color:#198452;border-radius:8px;white-space:nowrap}.nal-standings-pill.loss{background:#fceeee;color:#c54a50}
+.nal-standings-empty{background:#fff;border-radius:14px;padding:28px 18px;text-align:center;color:#727b86;font-size:12px;line-height:1.5}.nal-standings-empty strong{display:block;color:#07172b;font-size:17px;margin-bottom:6px}
+
 </style>
 
 <style>
@@ -7707,12 +7726,12 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
       <div class="home-quick-grid">
-        <button class="home-quick-button" type="button" data-home-action="scores">
+        <button class="home-quick-button" type="button" data-home-action="native-standings">
           <svg viewBox="0 0 24 24">
-            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-            <path d="M8 9h2M14 9h2M8 14h2M14 14h2"></path>
+            <path d="M5 20V10M12 20V4M19 20V7"></path>
+            <path d="M3 20h18"></path>
           </svg>
-          <span>Scores</span>
+          <span>Standings</span>
         </button>
 
         <button class="home-quick-button" type="button" data-home-action="schedule">
@@ -8118,6 +8137,24 @@ document.addEventListener("DOMContentLoaded", () => {
   <!-- =====================================================
        NATIVE NAL SCHEDULE
   ====================================================== -->
+
+  <!-- =====================================================
+       NATIVE NAL STANDINGS
+  ====================================================== -->
+  <main id="standingsPage" class="app-page" style="display:none">
+    <section class="nal-standings-hero">
+      <div class="nal-standings-eyebrow">NATIONAL ARENA LEAGUE</div>
+      <h1>2027 <span>STANDINGS</span></h1>
+      <p>SEASON X • THE ROAD TO THE NATIONAL BOWL</p>
+    </section>
+    <div class="nal-standings-tabs">
+      <button class="nal-standings-tab active" type="button" data-standings-view="league">LEAGUE STANDINGS</button>
+      <button class="nal-standings-tab" type="button" data-standings-view="team">BY TEAM</button>
+    </div>
+    <section class="nal-standings-content" id="nalStandingsContent"></section>
+  </main>
+
+
   <main id="schedulePage" class="app-page" style="display:none">
     <section class="nal-schedule-hero">
       <div class="nal-schedule-eyebrow">NATIONAL ARENA LEAGUE</div>
@@ -12620,6 +12657,12 @@ document.addEventListener("click", event => {
     return;
   }
 
+
+  if (action === "native-standings") {
+    showPage("standingsPage");
+    renderNalStandings();
+    return;
+  }
 
   if (action === "schedule") {
     showPage("schedulePage");
@@ -18477,6 +18520,71 @@ function closeLightcastTest(){
   }
 
 
+
+  /* =========================================================
+     NATIVE NAL STANDINGS
+     Calculates automatically when final score fields are available:
+     away_score, home_score, plus final/ended status.
+  ========================================================= */
+  let nalStandingsView="league";
+  let nalStandingsTeam="Pueblo Punishers";
+
+  function isFinalStandingsGame(game){
+    const state=eventState(game);
+    const status=String(game.status||game.game_status||"").toLowerCase();
+    const hasScores=game.away_score!==undefined&&game.away_score!==null&&game.home_score!==undefined&&game.home_score!==null;
+    return hasScores&&(state==="ended"||["final","ended","complete","completed"].includes(status));
+  }
+  function standingStreak(results){
+    if(!results.length)return "—";
+    const win=results[results.length-1].for>results[results.length-1].against;let n=0;
+    for(let i=results.length-1;i>=0;i--){if((results[i].for>results[i].against)===win)n++;else break;}
+    return `${win?"W":"L"}${n}`;
+  }
+  function calculateNalStandings(){
+    const rows={};
+    NAL_SCHEDULE_TEAMS.forEach(name=>rows[normalizeName(name)]={name,w:0,l:0,pf:0,pa:0,results:[]});
+    [...nalLiveGames].filter(isFinalStandingsGame).sort((a,b)=>utcDate(a.start_time_utc)-utcDate(b.start_time_utc)).forEach(game=>{
+      const m=parseMatchup(game.title),ak=normalizeName(m.awayName),hk=normalizeName(m.homeName);
+      if(!rows[ak]||!rows[hk])return;
+      const as=Number(game.away_score),hs=Number(game.home_score);if(!Number.isFinite(as)||!Number.isFinite(hs))return;
+      rows[ak].pf+=as;rows[ak].pa+=hs;rows[hk].pf+=hs;rows[hk].pa+=as;
+      if(as>hs){rows[ak].w++;rows[hk].l++;}else if(hs>as){rows[hk].w++;rows[ak].l++;}
+      rows[ak].results.push({opp:m.homeName,home:false,for:as,against:hs});
+      rows[hk].results.push({opp:m.awayName,home:true,for:hs,against:as});
+    });
+    return Object.values(rows).map(r=>({...r,gp:r.w+r.l,pct:(r.w+r.l)?r.w/(r.w+r.l):0,diff:r.pf-r.pa,streak:standingStreak(r.results)}))
+      .sort((a,b)=>b.pct-a.pct||b.w-a.w||b.diff-a.diff||a.name.localeCompare(b.name));
+  }
+  function standingsPct(n){return n.toFixed(3).replace(/^0/,"");}
+  function standingsLogo(name){return `<div class="nal-standings-logo"><img src="${liveEscape(logoForTeam(name))}" alt="${liveEscape(name)}"></div>`;}
+
+  function renderNalStandings(){
+    const root=document.getElementById("nalStandingsContent");if(!root)return;
+    document.querySelectorAll(".nal-standings-tab").forEach(b=>b.classList.toggle("active",b.dataset.standingsView===nalStandingsView));
+    const rows=calculateNalStandings(),completed=nalLiveGames.filter(isFinalStandingsGame).length;
+    if(nalStandingsView==="team"){renderNalTeamStanding(root,rows);return;}
+    root.innerHTML=`<div class="nal-standings-heading"><b>LEAGUE STANDINGS</b><span>REGULAR SEASON</span></div>
+    <div class="nal-standings-tablewrap"><table class="nal-standings-table"><thead><tr><th>#</th><th>TEAM</th><th>W</th><th>L</th><th>PCT</th><th>DIFF</th></tr></thead><tbody>
+    ${rows.map((r,i)=>`<tr data-standing-team="${liveEscape(r.name)}"><td style="color:#8b949e">${i+1}</td><td><div class="nal-standings-teamcell">${standingsLogo(r.name)}<span class="nal-standings-teamname">${liveEscape(r.name)}</span></div></td><td>${r.w}</td><td>${r.l}</td><td>${r.gp?standingsPct(r.pct):"—"}</td><td class="${r.diff>0?"nal-standings-positive":r.diff<0?"nal-standings-negative":""}">${r.gp?(r.diff>0?"+":"")+r.diff:"—"}</td></tr>`).join("")}
+    </tbody></table></div>${completed?"":`<div class="nal-standings-empty" style="margin-top:12px"><strong>SEASON X</strong>Records will update automatically as final scores become available.</div>`}`;
+  }
+  function renderNalTeamStanding(root,rows){
+    const r=rows.find(x=>normalizeName(x.name)===normalizeName(nalStandingsTeam))||rows[0];if(!r)return;
+    const picks=rows.map(x=>`<button class="nal-standings-pick ${x.name===r.name?"active":""}" type="button" data-standing-team="${liveEscape(x.name)}">${standingsLogo(x.name)}${liveEscape((x.name.split(" ")[0]||"").toUpperCase())}</button>`).join("");
+    const recent=[...r.results].reverse().slice(0,3);
+    root.innerHTML=`<div class="nal-standings-teamstrip">${picks}</div><div class="nal-standings-banner">${standingsLogo(r.name)}<div><b>${liveEscape(r.name)}</b><span>2027 REGULAR SEASON</span></div></div>
+    <div class="nal-standings-record"><div class="nal-standings-recordbig">${r.w}<span> – </span>${r.l}</div><div class="nal-standings-pct">${r.gp?standingsPct(r.pct):"—"} WINNING PERCENTAGE</div></div>
+    <div class="nal-standings-stats"><div class="nal-standings-stat"><small>POINTS FOR</small><b>${r.gp?r.pf:"—"}</b></div><div class="nal-standings-stat"><small>POINTS AGAINST</small><b>${r.gp?r.pa:"—"}</b></div><div class="nal-standings-stat"><small>POINT DIFFERENTIAL</small><b class="${r.diff>0?"nal-standings-positive":r.diff<0?"nal-standings-negative":""}">${r.gp?(r.diff>0?"+":"")+r.diff:"—"}</b></div><div class="nal-standings-stat"><small>CURRENT STREAK</small><b>${r.streak}</b></div></div>
+    <div class="nal-standings-results"><b>RECENT RESULTS</b>${recent.length?recent.map(x=>`<div class="nal-standings-result"><span>${x.home?"vs":"@"} ${liveEscape(x.opp)}</span><span class="nal-standings-pill ${x.for<x.against?"loss":""}">${x.for>x.against?"W":"L"} ${x.for}–${x.against}</span></div>`).join(""):`<div style="padding:16px 0 2px;color:#818a94;font-size:11px">No final results yet.</div>`}</div>`;
+  }
+  document.addEventListener("click",event=>{
+    const tab=event.target.closest("[data-standings-view]");
+    if(tab){nalStandingsView=tab.dataset.standingsView;renderNalStandings();return;}
+    const team=event.target.closest("[data-standing-team]");
+    if(team){nalStandingsTeam=team.dataset.standingTeam;nalStandingsView="team";renderNalStandings();}
+  });
+
   /* =========================================================
      NATIVE NAL SCHEDULE
      Uses the same Lightcast-fed game records as Live Games.
@@ -18624,6 +18732,7 @@ function closeLightcastTest(){
       renderLiveGames();
       renderHomeGameCarousel();
       renderNalSchedule();
+      renderNalStandings();
     } catch (error) {
       console.error("NAL Live Games could not be loaded:", error);
       if (count) count.textContent = "0 GAMES";
