@@ -8797,6 +8797,59 @@ header.topbar {
 }
 </style>
 
+
+<style id="nal-website-shrink-wrap-pages">
+/* Website-only: let every visible app page end with its actual content. */
+html, body {
+  min-height: 0 !important;
+  height: auto !important;
+}
+body {
+  overflow-y: auto !important;
+}
+.app {
+  min-height: 0 !important;
+  height: auto !important;
+}
+.app-page {
+  min-height: 0 !important;
+  height: auto !important;
+  padding-bottom: 24px !important;
+}
+#watchPage,
+#homePage,
+#teamsPage,
+#schedulePage,
+#standingsPage,
+#transactionsPage,
+#fanPage,
+#fanForumPage,
+#fanForumCategoryPage,
+#fanForumThreadPage,
+#fanPollPage,
+#fanGalleryPage,
+#fanUploadPage {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* Team-channel internal views/modals should also size to their content. */
+.network-team-hub,
+.network-team-hub-shell,
+.network-team-modal,
+.network-team-modal-card,
+.network-team-channel-modal,
+.network-team-channel-modal-card {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* Remove app-style viewport fillers that create blank blue space. */
+main.app-page {
+  flex: none !important;
+}
+</style>
+
 </head>
 
 
