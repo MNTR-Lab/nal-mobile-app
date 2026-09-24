@@ -1,5 +1,7 @@
+import html
 import json
 import os
+import re
 import time
 from pathlib import Path
 
@@ -59,9 +61,13 @@ session.headers.update(
 )
 
 
+# ============================================================
+# FETCH DIGITALSHIFT
+# ============================================================
+
 def fetch_transaction_page(start_id=None, offset=None):
     """
-    Fetch one page of NAL transactions from DigitalShift.
+    Fetch one DigitalShift transaction response.
     """
 
     params = {
@@ -97,10 +103,166 @@ def fetch_transaction_page(start_id=None, offset=None):
     return response.json()
 
 
+# ============================================================
+# EXTRACT TRANSACTIONS
+# ============================================================
+
+def extract_transactions(payload):
+    """
+    DigitalShift uses two response formats.
+
+    Initial request:
+        {
+            "content": "<HTML containing ng-init='ctrl.txns = [...]'>"
+        }
+
+    Infinite-scroll requests:
+        {
+            "transactions": [...]
+        }
+
+    This function handles both.
+    """
+
+    # --------------------------------------------------------
+    # FORMAT 1:
+    # Clean infinite-scroll JSON
+    # --------------------------------------------------------
+
+    transactions = payload.get("transactions")
+
+    if isinstance(transactions, list):
+        return transactions
+
+    # --------------------------------------------------------
+    # FORMAT 2:
+    # Initial page HTML inside "content"
+    # --------------------------------------------------------
+
+    content = payload.get("content")
+
+    if not isinstance(content, str):
+        return []
+
+    # Convert HTML entities such as &quot; back to quotes.
+    decoded = html.unescape(content)
+
+    # We previously confirmed DigitalShift initializes the
+    # transaction table using:
+    #
+    # ctrl.txns = [...]
+    #
+    # inside an ng-init attribute.
+    marker = "ctrl.txns"
+
+    marker_position = decoded.find(marker)
+
+    if marker_position == -1:
+        print(
+            "Could not locate ctrl.txns in "
+            "DigitalShift initial response."
+        )
+        return []
+
+    # Find the "=" following ctrl.txns
+    equals_position = decoded.find(
+        "=",
+        marker_position
+    )
+
+    if equals_position == -1:
+        return []
+
+    # Find beginning of JSON array.
+    array_start = decoded.find(
+        "[",
+        equals_position
+    )
+
+    if array_start == -1:
+        return []
+
+    # --------------------------------------------------------
+    # Locate the matching closing bracket.
+    #
+    # We cannot simply regex .*? because descriptions or
+    # embedded JSON may contain brackets or quoted text.
+    # --------------------------------------------------------
+
+    depth = 0
+    in_string = False
+    escape_next = False
+    array_end = None
+
+    for index in range(
+        array_start,
+        len(decoded)
+    ):
+
+        char = decoded[index]
+
+        if escape_next:
+            escape_next = False
+            continue
+
+        if char == "\\" and in_string:
+            escape_next = True
+            continue
+
+        if char == '"':
+            in_string = not in_string
+            continue
+
+        if in_string:
+            continue
+
+        if char == "[":
+            depth += 1
+
+        elif char == "]":
+            depth -= 1
+
+            if depth == 0:
+                array_end = index + 1
+                break
+
+    if array_end is None:
+        print(
+            "Could not locate end of "
+            "DigitalShift transaction array."
+        )
+        return []
+
+    raw_json = decoded[
+        array_start:array_end
+    ]
+
+    try:
+        transactions = json.loads(raw_json)
+
+    except json.JSONDecodeError as error:
+        print(
+            "Unable to decode initial "
+            "DigitalShift transaction JSON."
+        )
+        print(error)
+        print(raw_json[:1000])
+        return []
+
+    if not isinstance(transactions, list):
+        return []
+
+    return transactions
+
+
+# ============================================================
+# NORMALIZE TRANSACTION
+# ============================================================
+
 def normalize_transaction(txn):
     """
-    Preserve the useful DigitalShift fields while creating
-    a predictable structure for the NAL app.
+    Preserve DigitalShift data in a predictable structure
+    for the NAL app.
     """
 
     team = txn.get("team") or {}
@@ -108,7 +270,7 @@ def normalize_transaction(txn):
     coach = txn.get("coach") or {}
     traded_team = txn.get("traded_team") or {}
 
-    return {
+    normalized = {
         "id": txn.get("id"),
         "date": txn.get("date"),
         "description": txn.get("description"),
@@ -117,7 +279,7 @@ def normalize_transaction(txn):
             "id": team.get("id"),
             "name": team.get("name"),
             "logo": team.get("logo"),
-        },
+        } if team else None,
 
         "person": {
             "id": person.get("id"),
@@ -136,6 +298,12 @@ def normalize_transaction(txn):
         } if traded_team else None,
     }
 
+    return normalized
+
+
+# ============================================================
+# MAIN
+# ============================================================
 
 def main():
 
@@ -146,11 +314,71 @@ def main():
     all_transactions = []
     seen_ids = set()
 
-    start_id = None
-    offset = None
-    page_number = 1
+    # ========================================================
+    # PAGE 1
+    # ========================================================
 
-    while True:
+    print()
+    print("--- Initial Page ---")
+
+    payload = fetch_transaction_page()
+
+    transactions = extract_transactions(
+        payload
+    )
+
+    print(
+        f"Initial page returned "
+        f"{len(transactions)} transactions."
+    )
+
+    if not transactions:
+        raise RuntimeError(
+            "DigitalShift returned no transactions "
+            "from the initial transaction table."
+        )
+
+    for txn in transactions:
+
+        txn_id = txn.get("id")
+
+        if txn_id is None:
+            continue
+
+        if txn_id in seen_ids:
+            continue
+
+        seen_ids.add(txn_id)
+
+        all_transactions.append(
+            normalize_transaction(txn)
+        )
+
+    # ========================================================
+    # PAGINATION
+    # ========================================================
+
+    #
+    # DigitalShift's infinite-scroll request observed in
+    # DevTools uses:
+    #
+    # start_id=<transaction id>
+    # offset=<page offset>
+    # limit=25
+    #
+
+    last_transaction = transactions[-1]
+
+    start_id = last_transaction.get("id")
+
+    offset = 1
+
+    page_number = 2
+
+    while (
+        start_id is not None
+        and len(transactions) >= LIMIT
+    ):
 
         print()
         print(f"--- Page {page_number} ---")
@@ -160,9 +388,8 @@ def main():
             offset=offset,
         )
 
-        transactions = payload.get(
-            "transactions",
-            []
+        transactions = extract_transactions(
+            payload
         )
 
         if not transactions:
@@ -192,9 +419,26 @@ def main():
             new_count += 1
 
         print(
-            f"Received {len(transactions)} transactions "
+            f"Received {len(transactions)} "
+            f"transactions "
             f"({new_count} new)."
         )
+
+        # ----------------------------------------------------
+        # If the API gives us records but every record was
+        # already seen, stop rather than loop forever.
+        # ----------------------------------------------------
+
+        if new_count == 0:
+            print(
+                "No new transaction IDs returned. "
+                "Pagination complete."
+            )
+            break
+
+        # ----------------------------------------------------
+        # Fewer than 25 means final page.
+        # ----------------------------------------------------
 
         if len(transactions) < LIMIT:
             print(
@@ -202,23 +446,26 @@ def main():
             )
             break
 
-        last_transaction = transactions[-1]
+        next_start_id = (
+            transactions[-1].get("id")
+        )
 
-        next_start_id = last_transaction.get("id")
-
-        if not next_start_id:
+        if next_start_id is None:
             print(
                 "Unable to determine next start_id."
             )
             break
 
+        # Prevent accidental pagination loop.
+        if next_start_id == start_id:
+            print(
+                "DigitalShift returned the same "
+                "pagination anchor. Stopping."
+            )
+            break
+
         start_id = next_start_id
-
-        if offset is None:
-            offset = 1
-        else:
-            offset += 1
-
+        offset += 1
         page_number += 1
 
         time.sleep(0.25)
@@ -270,8 +517,8 @@ def main():
     print()
     print("==========================================")
     print(
-        f"Saved {len(all_transactions)} transactions "
-        f"to {OUTPUT_FILE}"
+        f"Saved {len(all_transactions)} "
+        f"transactions to {OUTPUT_FILE}"
     )
     print("==========================================")
 
