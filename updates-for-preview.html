@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NAL Team Home Preview Lab</title>
+<style>
+*{box-sizing:border-box}
+:root{--primary:#009eae;--accent:#5fbb46;--third:#6b2e8e;--dark:#07172b}
+body{margin:0;background:#0a0f17;font-family:Arial,Helvetica,sans-serif;color:#fff}
+button{font:inherit}
+.preview-shell{width:100%;max-width:600px;margin:0 auto;min-height:100vh;background:#111;box-shadow:0 0 45px #000}
+.lab-head{position:sticky;top:0;z-index:20;background:#07172b;border-bottom:3px solid #e31b23;padding:10px 12px 8px}
+.lab-title{font-weight:900;font-size:15px;letter-spacing:.8px}.lab-sub{font-size:10px;color:#b7c2d0;margin-top:2px}
+.team-strip{display:flex;gap:8px;overflow-x:auto;padding:9px 0 2px;scrollbar-width:none}.team-strip::-webkit-scrollbar{display:none}
+.team-pick{flex:0 0 58px;height:58px;border-radius:10px;border:2px solid #35445a;background:#fff;padding:5px;cursor:pointer}
+.team-pick.active{border:3px solid var(--accent);transform:translateY(-1px)}
+.team-pick img{width:100%;height:100%;object-fit:contain}
+.team-page{min-height:calc(100vh - 100px);background:
+radial-gradient(circle at 90% 8%,color-mix(in srgb,var(--third) 45%,transparent) 0,transparent 30%),
+radial-gradient(circle at 5% 43%,color-mix(in srgb,var(--accent) 25%,transparent) 0,transparent 29%),
+linear-gradient(180deg,color-mix(in srgb,var(--primary) 78%,#000) 0%,var(--primary) 36%,color-mix(in srgb,var(--primary) 72%,#000) 100%);
+transition:background .25s ease;padding-bottom:32px}
+.hero{padding:20px 18px 18px;background:linear-gradient(145deg,color-mix(in srgb,var(--primary) 68%,#000),var(--primary));border-bottom:4px solid var(--accent)}
+.hero-top{display:flex;align-items:center;gap:15px}.hero-logo{width:92px;height:92px;object-fit:contain;filter:drop-shadow(0 5px 7px rgba(0,0,0,.35))}
+.hero h1{font-size:25px;line-height:1;margin:0;text-transform:uppercase;font-weight:1000}.hero p{font-size:12px;margin:7px 0 0;font-weight:800;letter-spacing:1px}
+.content{padding:14px}.section-label{font-size:13px;font-weight:1000;letter-spacing:.8px;text-transform:uppercase;margin:13px 2px 8px;text-shadow:0 2px 3px rgba(0,0,0,.25)}
+.card{background:#fff;color:#07172b;border-radius:12px;box-shadow:0 8px 22px rgba(0,0,0,.22);overflow:hidden}
+.next{border-top:4px solid var(--accent);padding:13px;text-align:center}.eyebrow{color:var(--third);font-weight:1000;font-size:10px;letter-spacing:1px}
+.match{display:grid;grid-template-columns:1fr 70px 1fr;align-items:center;margin-top:10px}.match img{width:62px;height:62px;object-fit:contain}.match strong{display:block;font-size:11px;margin-top:4px}.versus{font-size:19px;font-weight:1000;color:#6b7280}
+.game-meta{font-size:11px;font-weight:800;margin-top:9px;color:#596273}
+.watch{display:flex;align-items:center;gap:12px;padding:14px;background:linear-gradient(135deg,var(--third),color-mix(in srgb,var(--third) 72%,#000));color:#fff;border-radius:12px;box-shadow:0 8px 22px rgba(0,0,0,.22)}
+.play{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:var(--accent);font-size:19px}.watch strong{font-size:14px}.watch span{display:block;font-size:10px;margin-top:3px;opacity:.9}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.menu{min-height:86px;border:1px solid color-mix(in srgb,var(--accent) 50%,#ddd);background:#fff;border-radius:11px;color:#07172b;padding:10px 5px;text-align:center;box-shadow:0 6px 17px rgba(0,0,0,.18)}
+.icon{font-size:23px;color:var(--third);height:31px}.menu strong{font-size:10px;text-transform:uppercase}
+.news{padding:12px}.news-row{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #e5e7eb}.news-row:last-child{border:0}.news-mark{width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,var(--primary),var(--third));display:grid;place-items:center;color:#fff;font-weight:1000}.news-copy strong{font-size:11px;display:block}.news-copy span{font-size:9px;color:#737b88}
+.colors{display:flex;gap:7px;margin-top:12px}.swatch{height:8px;flex:1;border-radius:8px;border:1px solid rgba(255,255,255,.4)}
+.note{font-size:10px;line-height:1.4;color:#dce4ed;margin:10px 2px 0}
+@media(max-width:420px){.hero h1{font-size:21px}.hero-logo{width:78px;height:78px}.team-pick{flex-basis:53px;height:53px}}
+</style>
+</head>
+<body>
+<div class="preview-shell">
+<header class="lab-head">
+  <div class="lab-title">NAL TEAM HOME — DESIGN PREVIEW LAB</div>
+  <div class="lab-sub">Tap any team logo to preview its branded Team Home environment.</div>
+  <div id="teamStrip" class="team-strip"></div>
+</header>
+<main id="teamPage" class="team-page">
+  <section class="hero">
+    <div class="hero-top">
+      <img id="heroLogo" class="hero-logo" alt="">
+      <div><h1 id="heroName"></h1><p id="heroLocation"></p></div>
+    </div>
+    <div class="colors"><div class="swatch" style="background:var(--primary)"></div><div class="swatch" style="background:var(--accent)"></div><div class="swatch" style="background:var(--third)"></div></div>
+  </section>
+  <div class="content">
+    <div class="section-label">Next Game</div>
+    <div class="card next">
+      <div class="eyebrow">SEASON X • UPCOMING</div>
+      <div class="match">
+        <div><img id="gameLogo"><strong id="gameTeam"></strong></div>
+        <div class="versus">VS</div>
+        <div><div style="width:62px;height:62px;margin:auto;border-radius:50%;background:#07172b;color:white;display:grid;place-items:center;font-weight:1000;font-size:13px">NAL</div><strong>OPPONENT</strong></div>
+      </div>
+      <div class="game-meta">2027 SCHEDULE PREVIEW • TEAM HOME</div>
+    </div>
+
+    <div class="section-label" id="watchLabel">Watch The Team</div>
+    <div class="watch">
+      <div class="play">▶</div>
+      <div><strong id="watchName">WATCH TEAM CHANNEL</strong><span>Games • Replays • Team Content • NAL Network</span></div>
+    </div>
+
+    <div class="section-label" id="footballLabel">Team Football</div>
+    <div class="grid">
+      <button class="menu"><div class="icon">▣</div><strong>Schedule</strong></button>
+      <button class="menu"><div class="icon">♙</div><strong>Roster</strong></button>
+      <button class="menu"><div class="icon">▥</div><strong>Stats</strong></button>
+      <button class="menu"><div class="icon">≡</div><strong>Standings</strong></button>
+      <button class="menu"><div class="icon">↔</div><strong>Transactions</strong></button>
+      <button class="menu"><div class="icon">▰</div><strong>Tickets</strong></button>
+    </div>
+
+    <div class="section-label" id="newsLabel">Latest From Team</div>
+    <div class="card news">
+      <div class="news-row"><div class="news-mark">NAL</div><div class="news-copy"><strong id="newsOne">TEAM NEWS & UPDATES</strong><span>Team-specific news will continue to display here.</span></div></div>
+      <div class="news-row"><div class="news-mark">X</div><div class="news-copy"><strong>BUILDING FOR SEASON X</strong><span>Official National Arena League team content.</span></div></div>
+    </div>
+    <div class="note">PREVIEW ONLY — this page does not change the production NAL app. It is for comparing team color environments before we apply the treatment to index.html.</div>
+  </div>
+</main>
+</div>
+<script>
+const teams = [
+{slug:"amarillo-warbirds",name:"Amarillo Warbirds",location:"AMARILLO, TEXAS",primary:"#4169E1",accent:"#D71920",third:"#07172B",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds2.png?v=1790208459"},
+{slug:"colorado-spartans",name:"Colorado Spartans",location:"COLORADO",primary:"#1F6FB2",accent:"#000000",third:"#7A7D81",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_3c044d01-0658-40e9-be80-ce08e59945fc.png?v=1790208460"},
+{slug:"dallas-apex",name:"Dallas Apex",location:"DALLAS, TEXAS",primary:"#C8102E",accent:"#E1AD01",third:"#000000",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_da6cbdd6-f226-4a20-8e83-34317cd45e5e.png?v=1790208460"},
+{slug:"louisiana-rouxgaroux",name:"Louisiana Rouxgaroux",location:"LOUISIANA",primary:"#CFB53B",accent:"#800000",third:"#000000",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux_93be9d7e-ac73-4aae-8f1f-9784ebc62616.png?v=1790208585"},
+{slug:"omaha-beef",name:"Omaha Beef",location:"OMAHA, NEBRASKA",primary:"#F47A20",accent:"#000000",third:"#808080",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_9853fbad-f3a0-49d6-9a8f-aaa1a85b28f8.png?v=1790208460"},
+{slug:"pueblo-punishers",name:"Pueblo Punishers",location:"PUEBLO, COLORADO",primary:"#6F2DA8",accent:"#000000",third:"#C0C0C0",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_30eafc0a-763a-412b-838b-321dd9088d96.png?v=1790208460"},
+{slug:"salina-liberty",name:"Salina Liberty",location:"SALINA, KANSAS",primary:"#1b325a",accent:"#e6252c",third:"#FFFFFF",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_87f2d951-a969-4ce6-930b-1b0094c7bd4d.png?v=1790208460"},
+{slug:"sioux-city-bandits",name:"Sioux City Bandits",location:"SIOUX CITY, IOWA",primary:"#000000",accent:"#C8102E",third:"#D4AF37",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_5e3eba6e-6998-4c9a-9b73-3999b5e5d875.png?v=1790208460"},
+{slug:"southwest-kansas-storm",name:"Southwest Kansas Storm",location:"DODGE CITY, KANSAS",primary:"#009eae",accent:"#5fbb46",third:"#6b2e8e",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_3eff88a7-a61e-48bf-8673-7b03e554d827.png?v=1790208460"},
+{slug:"wheeling-miners",name:"Wheeling Miners",location:"WHEELING, WEST VIRGINIA",primary:"#c7992c",accent:"#020202",third:"#8d8d8c",logo:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_a547bbd0-e575-4512-9ad6-47e081cb1fc3.png?v=1790208460"}
+];
+const strip=document.getElementById("teamStrip");
+strip.innerHTML=teams.map((t,i)=>`<button class="team-pick${i===8?" active":""}" data-team="${t.slug}" title="${t.name}"><img src="${t.logo}" alt="${t.name}"></button>`).join("");
+function showTeam(slug){
+ const t=teams.find(x=>x.slug===slug)||teams[8];
+ const root=document.documentElement;
+ root.style.setProperty("--primary",t.primary);root.style.setProperty("--accent",t.accent);root.style.setProperty("--third",t.third);
+ document.getElementById("heroLogo").src=t.logo;document.getElementById("heroName").textContent=t.name;document.getElementById("heroLocation").textContent=t.location;
+ document.getElementById("gameLogo").src=t.logo;document.getElementById("gameTeam").textContent=t.name.toUpperCase();
+ const short=t.name.split(" ").slice(-1)[0];
+ document.getElementById("watchLabel").textContent=`Watch The ${short}`;
+ document.getElementById("watchName").textContent=`WATCH ${t.name.toUpperCase()}`;
+ document.getElementById("footballLabel").textContent=`${t.name} Football`;
+ document.getElementById("newsLabel").textContent=`Latest From ${t.name}`;
+ document.getElementById("newsOne").textContent=`${t.name.toUpperCase()} NEWS & UPDATES`;
+ document.querySelectorAll(".team-pick").forEach(b=>b.classList.toggle("active",b.dataset.team===slug));
+}
+strip.addEventListener("click",e=>{const b=e.target.closest("[data-team]");if(b)showTeam(b.dataset.team)});
+showTeam("southwest-kansas-storm");
+</script>
+</body>
+</html>
