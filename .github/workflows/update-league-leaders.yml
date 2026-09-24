@@ -1,0 +1,48 @@
+name: Update League Leaders
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "22 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-league-leaders:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Fetch NAL 2026 League Leaders
+        env:
+          DIGITALSHIFT_AUTH_TICKET: ${{ secrets.DIGITALSHIFT_AUTH_TICKET }}
+        run: python scripts/update_league_leaders.py
+
+      - name: Show generated League Leaders
+        run: |
+          echo "----- data/stats/2026/leaders.json -----"
+          cat data/stats/2026/leaders.json
+
+      - name: Commit League Leaders
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/stats/2026/leaders.json
+
+          if git diff --cached --quiet; then
+            echo "No League Leaders changes to commit."
+          else
+            git commit -m "Update NAL 2026 League Leaders"
+            git push
+          fi
