@@ -1,0 +1,82 @@
+name: Update NAL Player Stats
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Run every 6 hours
+    - cron: "37 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-player-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4
+
+      - name: Update player stats
+        env:
+          DIGITALSHIFT_AUTH_TICKET: ${{ secrets.DIGITALSHIFT_AUTH_TICKET }}
+        run: python scripts/update_player_stats.py
+
+      - name: Show generated player stats summary
+        run: |
+          python - <<'PY'
+          import json
+
+          path = "data/stats/2026/players.json"
+
+          with open(path, "r", encoding="utf-8") as f:
+              data = json.load(f)
+
+          print("======================================")
+          print("NAL PLAYER STATS UPDATE")
+          print("======================================")
+          print(f"Year: {data.get('year')}")
+          print(f"Season: {data.get('season_label')}")
+          print(f"Teams: {data.get('team_count')}")
+          print(f"Players with stats: {data.get('player_count')}")
+          print()
+          print("Category counts:")
+
+          for category, count in data.get("category_counts", {}).items():
+              print(f"  {category}: {count}")
+
+          print()
+          print("Teams:")
+
+          for team in data.get("teams", []):
+              print(
+                  f"  {team.get('team')} - "
+                  f"{team.get('player_count')} players - "
+                  f"{', '.join(team.get('categories', []))}"
+              )
+          PY
+
+      - name: Commit updated player stats
+        run: |
+          if git diff --quiet -- data/stats/2026/players.json; then
+            echo "No player stats changes detected."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/stats/2026/players.json
+          git commit -m "Update NAL 2026 Player Stats"
+          git push
