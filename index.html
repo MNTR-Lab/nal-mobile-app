@@ -14925,6 +14925,17 @@ function openTeamHome(team) {
             return;
           }
 
+          if (destination === "standings") {
+            if (typeof openNalStandings === "function") {
+              openNalStandings();
+            } else if (typeof showPage === "function") {
+              showPage("standingsPage");
+              if (typeof renderNalStandings === "function") renderNalStandings();
+              window.scrollTo({top:0,left:0,behavior:"instant"});
+            }
+            return;
+          }
+
           const url =
             team.footballShift &&
             team.footballShift[
