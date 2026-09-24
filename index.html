@@ -7274,6 +7274,72 @@ document.addEventListener("DOMContentLoaded", () => {
   .native-news-card img{width:115px}
 }
 
+
+/* =========================================================
+   NAL NETWORK — UNIFIED APP HERO
+   Matches the News / Fan Forum visual family.
+   Header only; Network tabs and content remain unchanged.
+========================================================= */
+#watchPage .network-hub-header.network-unified-hero{
+  position:relative !important;
+  overflow:hidden !important;
+  margin:18px 14px 0 !important;
+  padding:25px 20px 23px !important;
+  border-radius:18px !important;
+  text-align:left !important;
+  background:
+    radial-gradient(circle at 92% 15%,rgba(227,27,35,.34),transparent 28%),
+    linear-gradient(125deg,#07172b,#12345b) !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.25) !important;
+}
+#watchPage .network-hub-header.network-unified-hero::after{
+  content:"▶";
+  position:absolute;
+  right:18px;
+  bottom:-23px;
+  color:rgba(255,255,255,.07);
+  font-size:100px;
+  line-height:1;
+  font-weight:900;
+  pointer-events:none;
+}
+#watchPage .network-unified-kicker{
+  position:relative;
+  z-index:1;
+  color:#e31b23;
+  font-size:9px;
+  line-height:1.2;
+  font-weight:1000;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+#watchPage .network-unified-title{
+  position:relative;
+  z-index:1;
+  margin:4px 0 7px;
+  color:#fff;
+  font-size:34px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-1.1px;
+  text-transform:uppercase;
+}
+#watchPage .network-unified-tagline{
+  position:relative;
+  z-index:1;
+  margin:0;
+  max-width:510px;
+  color:#d3deea;
+  font-size:12px;
+  line-height:1.5;
+  font-weight:700;
+  letter-spacing:.25px;
+  text-transform:uppercase;
+}
+#watchPage .network-tabs{
+  margin-top:14px;
+}
+
 </style>
 
 <style>
@@ -8352,9 +8418,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   <main id="watchPage" class="app-page network-page">
 
-    <div class="network-hub-header">
-      <div class="network-hub-wordmark">NAL <span>NETWORK</span></div>
-      <div class="network-hub-tagline">The Game. The League. The Network.</div>
+    <div class="network-hub-header network-unified-hero">
+      <div class="network-unified-kicker">NAL NETWORK</div>
+      <div class="network-unified-title">WATCH</div>
+      <div class="network-unified-tagline">THE GAME. THE LEAGUE. THE NETWORK.</div>
     </div>
 
     <div class="network-tabs" role="tablist" aria-label="NAL Network sections">
