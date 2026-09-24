@@ -6400,6 +6400,20 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-reply .fan-forum-author-row{margin:0 0 9px;}
 .fan-forum-topic-card .fan-forum-author-row{margin:8px 0 0;}
 .fan-forum-topic-card .fan-forum-author-avatar{width:28px;height:28px;flex-basis:28px;font-size:11px;}
+
+/* NAL MEMBER ROLE BADGES */
+.nal-member-badge{display:inline-flex;align-items:center;justify-content:center;vertical-align:-3px;margin-left:5px;flex:0 0 auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.18));}
+.nal-member-badge svg{display:block;width:15px;height:15px;overflow:visible;}
+.nal-member-badge-fan svg{width:16px;height:12px;fill:#8a4b24;stroke:#f4f5f7;stroke-width:1.1;}
+.nal-member-badge-fan .nal-football-lace{fill:none;stroke:#fff;stroke-width:1.25;stroke-linecap:round;}
+.nal-member-badge-verified{vertical-align:-4px;margin-left:4px;filter:drop-shadow(0 1px 2px rgba(29,155,240,.38));}
+.nal-member-badge-verified svg{width:18px;height:18px;fill:#1d9bf0;}
+.nal-member-badge-verified .nal-badge-check{fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;}
+.nal-member-badge-vip svg{width:18px;height:15px;fill:#171a1f;stroke:#e31b23;stroke-width:1.5;stroke-linejoin:round;}
+.nal-member-badge-vip .nal-helmet-mask{fill:none;stroke:#e31b23;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.nal-member-badge-moderator svg{width:16px;height:16px;fill:#171a1f;stroke:#e31b23;stroke-width:1.2;}
+.nal-member-badge-moderator .nal-mod-inner{fill:#2c3138;stroke:#c8cdd3;stroke-width:.9;}
+.nal-member-badge-moderator .nal-mod-m{fill:#fff;stroke:none;}
 .fan-forum-reply-compose{margin-top:14px;border:1px solid #dbe3eb;border-radius:14px;background:#fff;padding:15px;}
 .fan-forum-reply-compose h3{margin:0 0 4px;color:#07172b;font-size:14px;font-weight:1000;}
 .fan-forum-reply-compose p{margin:0 0 10px;color:#748293;font-size:10px;line-height:1.4;}
@@ -16449,11 +16463,36 @@ function formatNalForumTime(value){
   return `${date} at ${time}`;
 }
 
+function nalMemberRoleLabel(role){
+  const value = String(role || "fan").toLowerCase();
+  if (value === "verified") return "NAL Verified";
+  if (value === "vip") return "VIP";
+  if (value === "moderator") return "Moderator";
+  if (value === "admin") return "Admin";
+  return "Fan";
+}
+
+function nalMemberBadgeHTML(role){
+  const value = String(role || "fan").toLowerCase();
+  if (value === "admin") return ""; // Preserve existing Admin treatment.
+  if (value === "verified") {
+    return `<span class="nal-member-badge nal-member-badge-verified" title="NAL Verified" aria-label="NAL Verified"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.8l2.2 1.6 2.7-.2 1.1 2.5 2.4 1.3-.3 2.7 1.5 2.3-1.5 2.3.3 2.7-2.4 1.3-1.1 2.5-2.7-.2L12 22.2l-2.2-1.6-2.7.2L6 18.3 3.6 17l.3-2.7L2.4 12l1.5-2.3-.3-2.7L6 5.7l1.1-2.5 2.7.2L12 1.8z"/><path class="nal-badge-check" d="M7.4 12.2l2.8 2.8 6.4-6.4"/></svg></span>`;
+  }
+  if (value === "vip") {
+    return `<span class="nal-member-badge nal-member-badge-vip" title="VIP" aria-label="VIP"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M5.1 15.8V9.5C5.1 4.8 8.9 1.7 14.1 1.7h3.1c5.3 0 9.7 3.5 9.7 8.7v2.1h-4.2v-2.1c0-2.7-2.2-4.9-5-4.9h-3.8c-2.7 0-4.9 1.7-4.9 4.3v6z"/><path d="M8.8 15.8h11.4v2.8H8.8z"/><path class="nal-helmet-mask" d="M20.1 10.8h8.3v2.5h-5.8v2.2h7v2.5h-7v3.3h-2.5z"/><path class="nal-helmet-mask" d="M24.8 12.9v7.3"/></svg></span>`;
+  }
+  if (value === "moderator") {
+    return `<span class="nal-member-badge nal-member-badge-moderator" title="Moderator" aria-label="Moderator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.8l8 3.1v6.3c0 5.2-3.2 9.2-8 11-4.8-1.8-8-5.8-8-11V4.9z"/><path class="nal-mod-inner" d="M12 5.1l4.8 1.9v4.1c0 3.2-1.8 5.8-4.8 7.3-3-1.5-4.8-4.1-4.8-7.3V7z"/><path class="nal-mod-m" d="M8.9 14.9V9.2h1.7l1.4 2.3 1.4-2.3h1.7v5.7h-1.6v-3.2L12 14l-1.5-2.3v3.2z"/></svg></span>`;
+  }
+  return `<span class="nal-member-badge nal-member-badge-fan" title="Fan" aria-label="Fan"><svg viewBox="0 0 28 18" aria-hidden="true"><path d="M2.1 9c2.7-5.6 7.3-8 11.9-8s9.2 2.4 11.9 8c-2.7 5.6-7.3 8-11.9 8S4.8 14.6 2.1 9z"/><path class="nal-football-lace" d="M10.3 5.9l7.4 6.2M11.4 8.3l1.6-1.9M13.6 10.1l1.6-1.9M15.8 11.9l1.6-1.9"/></svg></span>`;
+}
+
 function nalForumAuthorData(item){
   const profile = item?._forum_author || {};
   const name = profile.display_name || forumTopicValue(item,["author_display_name","display_name","author_name"],"NAL Fan");
   const avatar = profile.avatar_url || forumTopicValue(item,["avatar_url","author_avatar_url"],"");
-  return { name:String(name || "NAL Fan"), avatar:String(avatar || "") };
+  const role = profile.role || forumTopicValue(item,["role","author_role"],"fan");
+  return { name:String(name || "NAL Fan"), avatar:String(avatar || ""), role:String(role || "fan").toLowerCase() };
 }
 
 function nalForumAuthorHTML(item,created){
@@ -16462,7 +16501,7 @@ function nalForumAuthorHTML(item,created){
   const avatar = author.avatar
     ? `<span class="fan-forum-author-avatar"><img src="${escapeHTML(author.avatar)}" alt="" loading="lazy"></span>`
     : `<span class="fan-forum-author-avatar" aria-hidden="true">${escapeHTML(initial)}</span>`;
-  return `<div class="fan-forum-author-row">${avatar}<div class="fan-forum-author-copy"><span class="fan-forum-author-name">${escapeHTML(author.name)}</span>${created ? `<span class="fan-forum-author-time">${escapeHTML(created)}</span>` : ""}</div></div>`;
+  return `<div class="fan-forum-author-row">${avatar}<div class="fan-forum-author-copy"><span class="fan-forum-author-name">${escapeHTML(author.name)}${nalMemberBadgeHTML(author.role)}</span>${created ? `<span class="fan-forum-author-time">${escapeHTML(created)}</span>` : ""}</div></div>`;
 }
 
 async function enrichNalForumAuthors(items){
@@ -16472,7 +16511,7 @@ async function enrichNalForumAuthors(items){
   try{
     const client = getNalAccountClient();
     if (!client) return rows;
-    const { data, error } = await client.from("profiles").select("id,display_name,avatar_url").in("id",ids);
+    const { data, error } = await client.from("profiles").select("id,display_name,avatar_url,role").in("id",ids);
     if (error) throw error;
     const profiles = new Map((Array.isArray(data)?data:[]).map(profile => [String(profile.id),profile]));
     rows.forEach(item => {
@@ -18375,7 +18414,7 @@ This notification will publish immediately.'))return;
       return '<div class="fan-admin-user" data-member-id="'+escapeAdminText(member.id)+'">' +
         '<div class="fan-admin-uavatar">'+escapeAdminText(initial)+'</div>' +
         '<div class="fan-admin-uinfo"><b>'+escapeAdminText(name)+'</b><span class="fan-admin-meta fan-admin-status-'+escapeAdminText(status)+'">'+escapeAdminText(meta)+'</span></div>' +
-        '<span class="fan-admin-role '+escapeAdminText(role)+'">'+escapeAdminText(role.toUpperCase())+'</span>' +
+        '<span class="fan-admin-role '+escapeAdminText(role)+'">'+escapeAdminText(nalMemberRoleLabel(role).toUpperCase())+'</span>' +
         '<span class="fan-member-chev">›</span></div>';
     }).join("");
   }
@@ -18416,11 +18455,11 @@ This notification will publish immediately.'))return;
     };
     set("fanAdminDetailInitial",(name.trim().charAt(0)||"N").toUpperCase());
     set("fanAdminDetailName",name);
-    set("fanAdminDetailSummary",String(role).toUpperCase()+" • "+String(status).toUpperCase());
+    set("fanAdminDetailSummary",nalMemberRoleLabel(role).toUpperCase()+" • "+String(status).toUpperCase());
     set("fanAdminDetailDisplayName",name);
     set("fanAdminDetailEmail",member.email);
     set("fanAdminDetailFavorite",member.favorite_team || "Not selected");
-    set("fanAdminDetailRole",String(role).toUpperCase());
+    set("fanAdminDetailRole",nalMemberRoleLabel(role).toUpperCase());
     set("fanAdminDetailStatus",String(status).toUpperCase());
     set("fanAdminDetailJoined",formatAdminDate(member.created_at) || "—");
 
@@ -18488,23 +18527,24 @@ This notification will publish immediately.'))return;
 
     const entered = window.prompt(
       "CHANGE ROLE — " + name + "\n\n" +
-      "Current role: " + currentRole.toUpperCase() + "\n\n" +
+      "Current role: " + nalMemberRoleLabel(currentRole).toUpperCase() + "\n\n" +
       "Enter one of the following:\n" +
-      "FAN\nALL-PRO\nMODERATOR\nADMIN"
+      "FAN\nNAL VERIFIED\nVIP\nMODERATOR\nADMIN"
     );
 
     if (entered === null) return;
 
-    const newRole = String(entered).trim().toLowerCase();
-    const allowedRoles = ["fan","all-pro","moderator","admin"];
+    let newRole = String(entered).trim().toLowerCase();
+    if (newRole === "nal verified") newRole = "verified";
+    const allowedRoles = ["fan","verified","vip","moderator","admin"];
 
     if (!allowedRoles.includes(newRole)){
-      window.alert("Please enter FAN, ALL-PRO, MODERATOR, or ADMIN.");
+      window.alert("Please enter FAN, NAL VERIFIED, VIP, MODERATOR, or ADMIN.");
       return;
     }
 
     if (newRole === currentRole){
-      window.alert(name + " is already " + currentRole.toUpperCase() + ".");
+      window.alert(name + " is already " + nalMemberRoleLabel(currentRole).toUpperCase() + ".");
       return;
     }
 
@@ -18515,8 +18555,8 @@ This notification will publish immediately.'))return;
           : "");
 
     if (!window.confirm(
-      "Change " + name + " from " + currentRole.toUpperCase() +
-      " to " + newRole.toUpperCase() + "?" + warning
+      "Change " + name + " from " + nalMemberRoleLabel(currentRole).toUpperCase() +
+      " to " + nalMemberRoleLabel(newRole).toUpperCase() + "?" + warning
     )) return;
 
     const button = this;
@@ -18546,7 +18586,7 @@ This notification will publish immediately.'))return;
 
       const refreshedMessage = document.getElementById("fanAdminActionMessage");
       if (refreshedMessage){
-        refreshedMessage.textContent = "Role changed to " + newRole.toUpperCase() + " successfully.";
+        refreshedMessage.textContent = "Role changed to " + nalMemberRoleLabel(newRole).toUpperCase() + " successfully.";
         refreshedMessage.className = "fan-admin-action-message success";
       }
     } catch(error){
