@@ -7403,9 +7403,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="section-title">Latest News</div>
         <a
           class="section-link"
-          href="https://www.thenationalarenaleague.com/"
-          target="_blank"
-          rel="noopener"
+          href="https://www.thenationalarenaleague.com/news"
+          data-news-navigation="true"
         >
           VIEW ALL →
         </a>
@@ -11883,8 +11882,9 @@ SvZH+Wqqe0pNjV3qlDfyAQ==
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
 /* SAFE RETROFIT: older footer destinations mapped onto CURRENT app routing. */
 document.addEventListener("click", function(event){
   const teamsControl = event.target.closest('.bottom-nav [data-footer-action="teams"]');
@@ -11896,13 +11896,7 @@ document.addEventListener("click", function(event){
   if (typeof openTeamsPage === "function") openTeamsPage();
 }, true);
 
-document.addEventListener("click", function(event){
-  const newsControl = event.target.closest('.bottom-nav [data-footer-action="news"]');
-  if (!newsControl) return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  document.querySelectorAll(".bottom-nav .nav-button").forEach(btn => btn.classList.remove("active"));
-  newsControl.classList.add("active");
+function openNalNewsInApp() {
   if (typeof openArticle === "function") {
     openArticle("https://www.thenationalarenaleague.com/news", {
       mode: "team",
@@ -11912,6 +11906,24 @@ document.addEventListener("click", function(event){
       brand: { primary: "#07172b", accent: "#e31b23" }
     });
   }
+}
+
+document.addEventListener("click", function(event){
+  const newsControl = event.target.closest('.bottom-nav [data-footer-action="news"]');
+  if (!newsControl) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  document.querySelectorAll(".bottom-nav .nav-button").forEach(btn => btn.classList.remove("active"));
+  newsControl.classList.add("active");
+  openNalNewsInApp();
+}, true);
+
+document.addEventListener("click", function(event){
+  const viewAllNews = event.target.closest('[data-news-navigation="true"]');
+  if (!viewAllNews) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  openNalNewsInApp();
 }, true);
 
 </script>
