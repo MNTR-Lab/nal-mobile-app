@@ -7114,6 +7114,46 @@ document.addEventListener("DOMContentLoaded", () => {
   white-space:pre-line;
 }
 
+
+/* =========================================================
+   NATIVE NAL SCHEDULE — SEASON X
+========================================================= */
+#schedulePage{background:#f3f5f7;min-height:calc(100vh - var(--header-height) - var(--nav-height));padding-bottom:28px}
+.nal-schedule-hero{background:linear-gradient(145deg,#07172b,#102b4e);color:#fff;padding:22px 18px;position:relative;overflow:hidden}
+.nal-schedule-hero:after{content:"X";position:absolute;right:-8px;bottom:-48px;font-size:150px;font-weight:1000;color:rgba(227,27,35,.16)}
+.nal-schedule-eyebrow{font-size:10px;font-weight:900;letter-spacing:2px;color:#b9c4d1}
+.nal-schedule-hero h1{margin:5px 0 3px;font-size:29px;line-height:1;font-weight:1000}
+.nal-schedule-hero h1 span{color:#e31b23}
+.nal-schedule-hero p{margin:7px 0 0;color:#c8d0da;font-size:11px;font-weight:700}
+.nal-schedule-tabs{display:flex;gap:7px;background:#fff;padding:13px;border-bottom:1px solid #e3e7eb}
+.nal-schedule-tab{flex:1;border:1px solid #d5dbe1;background:#fff;border-radius:20px;padding:10px 3px;font-size:11px;font-weight:1000;color:#07172b}
+.nal-schedule-tab.active{background:#e31b23;border-color:#e31b23;color:#fff}
+.nal-schedule-content{padding:14px}
+.nal-schedule-weekhead{display:flex;justify-content:space-between;align-items:end;margin:5px 2px 9px}
+.nal-schedule-weekhead b{font-size:18px;color:#07172b}.nal-schedule-weekhead span{font-size:10px;color:#727b86;font-weight:800}
+.nal-schedule-card{background:#fff;border:1px solid #e7eaee;border-radius:15px;overflow:hidden;margin-bottom:11px;box-shadow:0 2px 8px rgba(7,23,43,.06)}
+.nal-schedule-bar{height:5px;background:#07172b}.nal-schedule-bar.live{background:#e31b23}
+.nal-schedule-match{display:grid;grid-template-columns:1fr 42px 1fr;align-items:center;text-align:center;padding:13px 12px 9px}
+.nal-schedule-logo{width:58px;height:58px;border:2px solid #edf0f3;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;background:#fff;overflow:hidden}
+.nal-schedule-logo img{width:88%;height:88%;object-fit:contain}.nal-schedule-teamname{font-size:11px;font-weight:1000;line-height:1.15;margin-top:6px;color:#07172b}
+.nal-schedule-at{font-size:18px;font-weight:1000;color:#07172b}.nal-schedule-away{font-size:8px;color:#999;font-weight:900}
+.nal-schedule-meta{text-align:center;padding:0 10px 11px}.nal-schedule-time{font-size:12px;font-weight:1000;color:#07172b}.nal-schedule-place{font-size:9px;color:#818995;margin-top:3px}
+.nal-schedule-actions{border-top:1px solid #e3e7eb;display:flex;min-height:40px}.nal-schedule-status{flex:1;display:flex;align-items:center;padding:0 12px;font-size:10px;font-weight:1000;color:#6e7781}.nal-schedule-status.live{color:#e31b23}
+.nal-schedule-action{border:0;background:#f5f6f8;color:#07172b;font-size:10px;font-weight:1000;padding:0 13px}.nal-schedule-action.live{background:#e31b23;color:#fff}
+.nal-schedule-weekpicker{background:#fff;border-radius:15px;padding:13px;margin-bottom:14px;box-shadow:0 2px 8px rgba(7,23,43,.05)}
+.nal-schedule-weeknav{display:flex;align-items:center;justify-content:space-between}.nal-schedule-arrow{border:0;background:#eef1f4;border-radius:50%;width:36px;height:36px;font-size:18px;color:#07172b}
+.nal-schedule-center{text-align:center}.nal-schedule-center b{display:block;color:#07172b;font-size:20px}.nal-schedule-center span{font-size:10px;color:#727b86;font-weight:800}
+.nal-schedule-weeknums{display:flex;gap:6px;overflow:auto;padding-top:12px}.nal-schedule-wn{min-width:32px;height:32px;border:0;border-radius:8px;background:#eef1f4;font-weight:900;color:#59636e}.nal-schedule-wn.active{background:#e31b23;color:#fff}
+.nal-schedule-teamstrip{display:flex;gap:9px;overflow:auto;padding:2px 1px 13px}.nal-schedule-teamchoice{min-width:68px;text-align:center;border:0;background:transparent}
+.nal-schedule-mini{width:52px;height:52px;border-radius:50%;background:#fff;border:2px solid #e5e9ed;display:flex;align-items:center;justify-content:center;margin:auto;overflow:hidden}.nal-schedule-mini img{width:86%;height:86%;object-fit:contain}
+.nal-schedule-teamchoice small{display:block;margin-top:4px;font-size:8px;font-weight:900;color:#707984}.nal-schedule-teamchoice.active .nal-schedule-mini{border:3px solid #e31b23}.nal-schedule-teamchoice.active small{color:#e31b23}
+.nal-schedule-teamhero{background:#07172b;color:#fff;border-radius:14px;padding:14px;margin-bottom:12px;display:flex;align-items:center;gap:12px}.nal-schedule-big{width:58px;height:58px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden}.nal-schedule-big img{width:88%;height:88%;object-fit:contain}
+.nal-schedule-teamhero b{display:block;font-size:17px}.nal-schedule-teamhero span{font-size:10px;color:#c1cbd6}
+.nal-schedule-teamgame{background:#fff;border-radius:12px;border:1px solid #e5e8ec;margin-bottom:8px;padding:12px;display:grid;grid-template-columns:50px 1fr auto;gap:10px;align-items:center}
+.nal-schedule-datebox{text-align:center;border-right:1px solid #e3e7eb;padding-right:9px}.nal-schedule-datebox b{display:block;font-size:18px;color:#07172b}.nal-schedule-datebox span{font-size:8px;font-weight:900;color:#7c858f}
+.nal-schedule-opp small{font-size:8px;color:#89919a;font-weight:900}.nal-schedule-opp b{display:block;font-size:12px;color:#07172b;margin-top:2px}.nal-schedule-gt{font-size:10px;font-weight:900;text-align:right;color:#59636e}
+.nal-schedule-empty{background:#fff;border-radius:14px;padding:28px 18px;text-align:center;color:#727b86;font-size:12px;line-height:1.5}.nal-schedule-empty strong{display:block;color:#07172b;font-size:17px;margin-bottom:6px}
+
 </style>
 
 <style>
@@ -8074,6 +8114,27 @@ document.addEventListener("DOMContentLoaded", () => {
   <!-- =====================================================
        NAL NETWORK HUB
   ====================================================== -->
+
+  <!-- =====================================================
+       NATIVE NAL SCHEDULE
+  ====================================================== -->
+  <main id="schedulePage" class="app-page" style="display:none">
+    <section class="nal-schedule-hero">
+      <div class="nal-schedule-eyebrow">NATIONAL ARENA LEAGUE</div>
+      <h1>2027 <span>SCHEDULE</span></h1>
+      <p>SEASON X • THE ROAD TO THE NATIONAL BOWL</p>
+    </section>
+    <div class="nal-schedule-tabs" role="tablist" aria-label="Schedule views">
+      <button class="nal-schedule-tab active" type="button" data-schedule-view="all">ALL GAMES</button>
+      <button class="nal-schedule-tab" type="button" data-schedule-view="week">BY WEEK</button>
+      <button class="nal-schedule-tab" type="button" data-schedule-view="team">BY TEAM</button>
+    </div>
+    <section class="nal-schedule-content" id="nalScheduleContent">
+      <div class="nal-schedule-empty"><strong>LOADING SCHEDULE</strong>Connecting to NAL game data…</div>
+    </section>
+  </main>
+
+
 
   <main id="watchPage" class="app-page network-page">
 
@@ -12561,20 +12622,8 @@ document.addEventListener("click", event => {
 
 
   if (action === "schedule") {
-    openArticle(
-      LEAGUE_SCHEDULE_URL,
-      {
-        mode: "team",
-        title: "NAL SCHEDULE",
-        subtitle: "SEASON X",
-        loadingText: "LOADING NAL SCHEDULE",
-        brand: {
-          primary: "#07172b",
-          accent: "#e31b23"
-        },
-        navPage: "homePage"
-      }
-    );
+    showPage("schedulePage");
+    renderNalSchedule();
     return;
   }
 
@@ -18427,6 +18476,131 @@ function closeLightcastTest(){
     list.innerHTML = activeGames.map(gameCard).join("");
   }
 
+
+  /* =========================================================
+     NATIVE NAL SCHEDULE
+     Uses the same Lightcast-fed game records as Live Games.
+     Score fields are supported when a future score feed adds:
+     away_score, home_score, period, clock, status.
+  ========================================================= */
+
+  const NAL_SCHEDULE_TEAMS = [
+    "Amarillo Warbirds","Colorado Spartans","Dallas Apex","Louisiana Rouxgaroux",
+    "Omaha Beef","Pueblo Punishers","Salina Liberty","Sioux City Bandits",
+    "Southwest Kansas Storm","Wheeling Miners"
+  ];
+  let nalScheduleView = "all";
+  let nalScheduleWeekIndex = 0;
+  let nalScheduleTeam = "Pueblo Punishers";
+
+  function easternDateParts(date){
+    const parts = new Intl.DateTimeFormat("en-US",{
+      timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"
+    }).formatToParts(date).reduce((o,p)=>(o[p.type]=p.value,o),{});
+    return {year:+parts.year,month:+parts.month,day:+parts.day};
+  }
+
+  function easternWeekKey(game){
+    const d=utcDate(game.start_time_utc); if(!d) return "9999-99-99";
+    const p=easternDateParts(d);
+    const noonUTC=new Date(Date.UTC(p.year,p.month-1,p.day,12));
+    const weekday=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",weekday:"short"}).format(noonUTC);
+    const idx=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(weekday);
+    const mondayOffset=(idx+6)%7;
+    const monday=new Date(Date.UTC(p.year,p.month-1,p.day-mondayOffset,12));
+    return monday.toISOString().slice(0,10);
+  }
+
+  function scheduleWeekGroups(){
+    const sorted=[...nalLiveGames].filter(g=>utcDate(g.start_time_utc))
+      .sort((a,b)=>utcDate(a.start_time_utc)-utcDate(b.start_time_utc));
+    const map=new Map();
+    sorted.forEach(g=>{const k=easternWeekKey(g);if(!map.has(k))map.set(k,[]);map.get(k).push(g);});
+    return [...map.entries()].map(([key,games],i)=>({key,number:i+1,games}));
+  }
+
+  function scheduleDateLabel(game){
+    const d=utcDate(game.start_time_utc); if(!d)return "";
+    return d.toLocaleDateString("en-US",{timeZone:gameTimeZone(game),weekday:"long",month:"short",day:"numeric"}).toUpperCase();
+  }
+
+  function scheduleTimeOnly(game){
+    const d=utcDate(game.start_time_utc); if(!d)return "TBA";
+    return d.toLocaleTimeString("en-US",{timeZone:gameTimeZone(game),hour:"numeric",minute:"2-digit",timeZoneName:"short"}).toUpperCase();
+  }
+
+  function scheduleScoreMarkup(game){
+    const a=game.away_score, h=game.home_score;
+    if(a===undefined||a===null||h===undefined||h===null) return "";
+    const state=eventState(game);
+    const detail=state==="ended"?"FINAL":(game.period||"LIVE")+(game.clock?` • ${liveEscape(game.clock)}`:"");
+    return `<div style="font-size:20px;font-weight:1000;color:#07172b;margin-top:6px">${liveEscape(a)} <span style="font-size:9px;color:#89919a;margin:0 8px">${liveEscape(detail)}</span> ${liveEscape(h)}</div>`;
+  }
+
+  function scheduleCard(game){
+    const m=parseMatchup(game.title), state=eventState(game);
+    const awayLogo=logoForTeam(m.awayName), homeLogo=logoForTeam(m.homeName);
+    return `<article class="nal-schedule-card" data-schedule-event-id="${liveEscape(game.event_id)}">
+      <div class="nal-schedule-bar ${state==="live"?"live":""}"></div>
+      <div class="nal-schedule-match">
+        <div><div class="nal-schedule-logo"><img src="${liveEscape(awayLogo)}" alt="${liveEscape(m.awayName)}"></div><div class="nal-schedule-teamname">${liveEscape(m.awayName)}</div></div>
+        <div><div class="nal-schedule-at">@</div><div class="nal-schedule-away">AWAY</div></div>
+        <div><div class="nal-schedule-logo"><img src="${liveEscape(homeLogo)}" alt="${liveEscape(m.homeName)}"></div><div class="nal-schedule-teamname">${liveEscape(m.homeName)}</div></div>
+      </div>
+      <div class="nal-schedule-meta"><div class="nal-schedule-time">${liveEscape(scheduleDateLabel(game))} • ${liveEscape(scheduleTimeOnly(game))}</div>
+      <div class="nal-schedule-place">${liveEscape(game.description||"NAL FOOTBALL")}</div>${scheduleScoreMarkup(game)}</div>
+      <div class="nal-schedule-actions"><div class="nal-schedule-status ${state==="live"?"live":""}">${state==="live"?"● ":""}${statusText(state)}</div>
+      <button class="nal-schedule-action ${state==="live"?"live":""}" type="button" data-schedule-open="${liveEscape(game.event_id)}">${state==="live"?"▶ WATCH LIVE":state==="ended"?"GAME RECAP ›":"GAME DETAILS ›"}</button></div>
+    </article>`;
+  }
+
+  function scheduleTeamView(groups){
+    const teamButtons=NAL_SCHEDULE_TEAMS.map(name=>`<button class="nal-schedule-teamchoice ${name===nalScheduleTeam?"active":""}" type="button" data-schedule-team="${liveEscape(name)}">
+      <div class="nal-schedule-mini"><img src="${liveEscape(logoForTeam(name))}" alt="${liveEscape(name)}"></div><small>${liveEscape(name.split(" ")[0])}</small></button>`).join("");
+    const games=nalLiveGames.filter(g=>{const m=parseMatchup(g.title);return normalizeName(m.awayName)===normalizeName(nalScheduleTeam)||normalizeName(m.homeName)===normalizeName(nalScheduleTeam)})
+      .sort((a,b)=>utcDate(a.start_time_utc)-utcDate(b.start_time_utc));
+    const hero=`<div class="nal-schedule-teamstrip">${teamButtons}</div><div class="nal-schedule-teamhero"><div class="nal-schedule-big"><img src="${liveEscape(logoForTeam(nalScheduleTeam))}" alt=""></div><div><b>${liveEscape(nalScheduleTeam)}</b><span>2027 REGULAR SEASON SCHEDULE</span></div></div>`;
+    if(!games.length)return hero+`<div class="nal-schedule-empty"><strong>NO GAMES LOADED YET</strong>Games will appear here as they are added to the NAL schedule feed.</div>`;
+    return hero+games.map(g=>{const m=parseMatchup(g.title), home=normalizeName(m.homeName)===normalizeName(nalScheduleTeam), opp=home?m.awayName:m.homeName, d=utcDate(g.start_time_utc);
+      const day=d.toLocaleDateString("en-US",{timeZone:gameTimeZone(g),day:"2-digit"}), mon=d.toLocaleDateString("en-US",{timeZone:gameTimeZone(g),month:"short"}).toUpperCase();
+      return `<div class="nal-schedule-teamgame" data-schedule-event-id="${liveEscape(g.event_id)}"><div class="nal-schedule-datebox"><b>${day}</b><span>${mon}</span></div><div class="nal-schedule-opp"><small>${home?"HOME":"AWAY"}</small><b>${home?"vs":"@"} ${liveEscape(opp)}</b></div><div class="nal-schedule-gt">${liveEscape(scheduleTimeOnly(g))}</div></div>`}).join("");
+  }
+
+  function renderNalSchedule(){
+    const root=document.getElementById("nalScheduleContent"); if(!root)return;
+    document.querySelectorAll(".nal-schedule-tab").forEach(b=>b.classList.toggle("active",b.dataset.scheduleView===nalScheduleView));
+    const groups=scheduleWeekGroups();
+    if(!groups.length){root.innerHTML=`<div class="nal-schedule-empty"><strong>SCHEDULE COMING SOON</strong>Games will appear automatically as they are added to the connected NAL game feed.</div>`;return;}
+    if(nalScheduleView==="team"){root.innerHTML=scheduleTeamView(groups);return;}
+    if(nalScheduleView==="week"){
+      nalScheduleWeekIndex=Math.max(0,Math.min(nalScheduleWeekIndex,groups.length-1));
+      const group=groups[nalScheduleWeekIndex];
+      const nums=groups.map((g,i)=>`<button class="nal-schedule-wn ${i===nalScheduleWeekIndex?"active":""}" type="button" data-schedule-week="${i}">${g.number}</button>`).join("");
+      root.innerHTML=`<div class="nal-schedule-weekpicker"><div class="nal-schedule-weeknav"><button class="nal-schedule-arrow" type="button" data-schedule-step="-1">‹</button><div class="nal-schedule-center"><b>WEEK ${group.number}</b><span>${liveEscape(group.key)}</span></div><button class="nal-schedule-arrow" type="button" data-schedule-step="1">›</button></div><div class="nal-schedule-weeknums">${nums}</div></div>
+      <div class="nal-schedule-weekhead"><b>WEEK ${group.number} GAMES</b><span>${group.games.length} GAME${group.games.length===1?"":"S"}</span></div>${group.games.map(scheduleCard).join("")}`;
+      return;
+    }
+    root.innerHTML=groups.map(group=>`<div class="nal-schedule-weekhead"><b>WEEK ${group.number}</b><span>${liveEscape(group.key)}</span></div>${group.games.map(scheduleCard).join("")}`).join("");
+  }
+
+  document.addEventListener("click",event=>{
+    const tab=event.target.closest("[data-schedule-view]");
+    if(tab){nalScheduleView=tab.dataset.scheduleView;renderNalSchedule();return;}
+    const wk=event.target.closest("[data-schedule-week]");
+    if(wk){nalScheduleWeekIndex=Number(wk.dataset.scheduleWeek)||0;renderNalSchedule();return;}
+    const step=event.target.closest("[data-schedule-step]");
+    if(step){nalScheduleWeekIndex+=Number(step.dataset.scheduleStep)||0;renderNalSchedule();return;}
+    const team=event.target.closest("[data-schedule-team]");
+    if(team){nalScheduleTeam=team.dataset.scheduleTeam;renderNalSchedule();return;}
+    const open=event.target.closest("[data-schedule-open],[data-schedule-event-id]");
+    if(open){
+      const id=open.dataset.scheduleOpen||open.dataset.scheduleEventId;
+      const game=nalLiveGames.find(g=>String(g.event_id)===String(id));
+      if(game && eventState(game)==="live"){openLiveGame(game);}
+    }
+  });
+
+
   async function loadLiveGames(){
     const list = document.getElementById("nalLiveGamesList");
     const count = document.getElementById("nalLiveGameCount");
@@ -18439,6 +18613,7 @@ function closeLightcastTest(){
       nalLiveGames = Array.isArray(data) ? data : (Array.isArray(data.games) ? data.games : []);
       renderLiveGames();
       renderHomeGameCarousel();
+      renderNalSchedule();
     } catch (error) {
       console.error("NAL Live Games could not be loaded:", error);
       if (count) count.textContent = "0 GAMES";
