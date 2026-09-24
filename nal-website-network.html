@@ -8777,6 +8777,80 @@ header.topbar {
 }
 </style>
 
+
+<style id="nal-wide-blue-shell-centered-team-grid">
+/*
+  WEBSITE SHELL:
+  Widen only the blue outer presentation area.
+  Keep the actual NAL Network content locked at 1100px.
+*/
+@media (min-width:1200px){
+  body{
+    background:#071522 !important;
+  }
+
+  /* Outer Network/page presentation can visually extend wider */
+  #watchPage{
+    width:calc(100% - 32px) !important;
+    max-width:1400px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  /* Actual content remains exactly 1100px */
+  #watchPage > *{
+    width:100% !important;
+    max-width:1100px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+}
+
+/*
+  TEAM CHANNELS:
+  Exactly 4 cards per row on desktop.
+  Incomplete final rows are centered.
+*/
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid,
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid,
+#watchPage .network-tab-panel[data-network-panel="archives"] .team-grid{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  justify-content:center !important;
+  gap:12px !important;
+  align-items:flex-start !important;
+}
+
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid > *,
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid > *,
+#watchPage .network-tab-panel[data-network-panel="archives"] .team-grid > *{
+  flex:0 0 calc((100% - 36px) / 4) !important;
+  width:calc((100% - 36px) / 4) !important;
+  max-width:calc((100% - 36px) / 4) !important;
+  min-width:0 !important;
+}
+
+@media(max-width:850px){
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid > *,
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid > *,
+  #watchPage .network-tab-panel[data-network-panel="archives"] .team-grid > *{
+    flex-basis:calc((100% - 12px) / 2) !important;
+    width:calc((100% - 12px) / 2) !important;
+    max-width:calc((100% - 12px) / 2) !important;
+  }
+}
+
+@media(max-width:480px){
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid > *,
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid > *,
+  #watchPage .network-tab-panel[data-network-panel="archives"] .team-grid > *{
+    flex-basis:100% !important;
+    width:100% !important;
+    max-width:100% !important;
+  }
+}
+</style>
+
 </head>
 
 
