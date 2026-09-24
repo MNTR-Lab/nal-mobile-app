@@ -8488,107 +8488,6 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 </style>
-
-<style>
-/* =========================================================
-   FAN ZONE — FAN PHOTO SUBMISSION
-   Replaces the large Fan Photo of the Week feature on the
-   Fan Zone home page. Existing Monday submission form stays.
-   ========================================================= */
-#fanPage .fan-zone-grid{
-  grid-template-columns:1fr;
-}
-#fanPage .fan-zone-photo-submit-banner{
-  width:100%;
-  min-height:108px;
-  margin-top:12px;
-  padding:15px 17px;
-  border:1px solid #31577f;
-  border-radius:16px;
-  overflow:hidden;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  background:
-    radial-gradient(circle at 88% 50%,rgba(227,27,35,.34),transparent 32%),
-    linear-gradient(110deg,#07172b 0%,#102b4e 68%,#07172b 100%);
-  color:#fff;
-  text-align:left;
-  box-shadow:0 10px 24px rgba(0,0,0,.20);
-  cursor:pointer;
-  font:inherit;
-}
-#fanPage .fan-zone-photo-submit-banner:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,rgba(2,12,24,.12),transparent 65%);
-  pointer-events:none;
-}
-#fanPage .fan-zone-photo-submit-copy{
-  position:relative;
-  z-index:1;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-}
-#fanPage .fan-zone-photo-submit-kicker{
-  margin-bottom:4px;
-  color:#e31b23;
-  font-size:9px;
-  line-height:1;
-  font-weight:1000;
-  letter-spacing:1.35px;
-}
-#fanPage .fan-zone-photo-submit-copy strong{
-  color:#fff;
-  font-size:22px;
-  line-height:1;
-  font-weight:1000;
-  letter-spacing:-.35px;
-}
-#fanPage .fan-zone-photo-submit-copy small{
-  margin-top:6px;
-  color:#dbe5ef;
-  font-size:11px;
-  line-height:1.2;
-  font-weight:800;
-}
-#fanPage .fan-zone-photo-submit-action{
-  position:relative;
-  z-index:1;
-  flex:0 0 auto;
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  min-height:38px;
-  padding:0 12px;
-  border-radius:9px;
-  background:#e31b23;
-  color:#fff;
-  font-size:10px;
-  line-height:1;
-  font-weight:1000;
-  letter-spacing:.65px;
-}
-#fanPage .fan-zone-photo-submit-action b{
-  font-size:18px;
-  line-height:1;
-}
-@media(max-width:430px){
-  #fanPage .fan-zone-photo-submit-banner{
-    min-height:102px;
-    padding:14px 15px;
-  }
-  #fanPage .fan-zone-photo-submit-copy strong{
-    font-size:19px;
-  }
-}
-</style>
-
 </head>
 
 
@@ -9519,6 +9418,12 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="fan-zone-link">MAKE YOUR PICKS <b>›</b></span>
         </button>
 
+        <button class="fan-zone-card" type="button" onclick="openFanPhotosGallery()">
+          <span class="fan-zone-icon">▣</span>
+          <h3>FAN PHOTOS &amp; VIDEOS</h3>
+          <p>See approved photos and videos submitted by NAL fans across the league.</p>
+          <span class="fan-zone-link">VIEW FAN MEDIA <b>›</b></span>
+        </button>
       </div>
 
       <button class="fan-zone-poll-card fan-zone-polls-banner" type="button" onclick="openFanPoll()" aria-label="Open Fan Polls">
@@ -9528,15 +9433,6 @@ document.addEventListener("DOMContentLoaded", () => {
           <small>Your League. Your Voice.</small>
         </span>
         <span class="fan-zone-polls-banner-action">ENTER <b>›</b></span>
-      </button>
-
-      <button class="fan-zone-photo-submit-banner" type="button" onclick="openFanZoneFeature('media')" aria-label="Submit a fan photo or video">
-        <span class="fan-zone-photo-submit-copy">
-          <span class="fan-zone-photo-submit-kicker">NAL COMMUNITY</span>
-          <strong>FAN PHOTO SUBMISSION</strong>
-          <small>Share your NAL moment with the league.</small>
-        </span>
-        <span class="fan-zone-photo-submit-action">SUBMIT <b>›</b></span>
       </button>
 
 
