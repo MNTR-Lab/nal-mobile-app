@@ -8585,6 +8585,80 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 </style>
 
+
+<style>
+/* =========================================================
+   FAN ZONE — FAN MEDIA SLIDESHOW PREVIEW
+   Uses the existing approved data/fan-media.json feed.
+   ========================================================= */
+#fanPage .fan-media-slideshow-card{
+  padding:13px 12px 12px;
+  justify-content:flex-start;
+  gap:9px;
+  overflow:hidden;
+}
+#fanPage .fan-media-slideshow-card h3{
+  width:100%;
+  margin:0;
+  text-align:center;
+}
+#fanPage .fan-zone-media-slideshow{
+  position:relative;
+  width:100%;
+  aspect-ratio:1 / 1;
+  min-height:0;
+  overflow:hidden;
+  border-radius:10px;
+  background:#07172b;
+}
+#fanPage .fan-zone-media-slideshow img,
+#fanPage .fan-zone-media-slideshow video{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:#07172b;
+}
+#fanPage .fan-zone-media-slide-placeholder{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  color:rgba(255,255,255,.72);
+  background:linear-gradient(145deg,#102b4e,#07172b);
+}
+#fanPage .fan-zone-media-slide-placeholder span{
+  font-size:24px;
+}
+#fanPage .fan-zone-media-slide-placeholder small{
+  font-size:7px;
+  font-weight:950;
+  letter-spacing:.8px;
+}
+#fanPage .fan-zone-media-view-all{
+  width:100%;
+  min-height:31px;
+  padding:7px 5px;
+  border:0;
+  border-top:1px solid #e4e8ec;
+  background:transparent;
+  color:#e31b23;
+  font:inherit;
+  font-size:8px;
+  line-height:1.1;
+  font-weight:950;
+  letter-spacing:.45px;
+  text-align:center;
+  cursor:pointer;
+}
+#fanPage .fan-zone-media-view-all b{
+  font-size:13px;
+}
+</style>
+
 </head>
 
 
@@ -9515,12 +9589,18 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="fan-zone-link">MAKE YOUR PICKS <b>›</b></span>
         </button>
 
-        <button class="fan-zone-card" type="button" onclick="openFanPhotosGallery()">
-          <span class="fan-zone-icon">▣</span>
+        <div class="fan-zone-card fan-media-slideshow-card">
           <h3>FAN PHOTOS &amp; VIDEOS</h3>
-          <p>See approved photos and videos submitted by NAL fans across the league.</p>
-          <span class="fan-zone-link">VIEW FAN MEDIA <b>›</b></span>
-        </button>
+          <div id="fanZoneMediaSlideshow" class="fan-zone-media-slideshow" aria-label="Fan Photos and Videos slideshow">
+            <div class="fan-zone-media-slide-placeholder">
+              <span>▣</span>
+              <small>LOADING FAN MEDIA...</small>
+            </div>
+          </div>
+          <button class="fan-zone-media-view-all" type="button" onclick="openFanPhotosGallery()">
+            VIEW ALL FAN MEDIA <b>›</b>
+          </button>
+        </div>
       </div>
 
       <button class="fan-zone-poll-card fan-zone-polls-banner" type="button" onclick="openFanPoll()" aria-label="Open Fan Polls">
@@ -17033,6 +17113,90 @@ function openNALSocial(network){
  const url=NAL_SOCIAL_LINKS[network];
  if(url) window.open(url,"_blank","noopener,noreferrer");
 }
+
+
+
+/* =========================================================
+   FAN ZONE — FAN MEDIA SLIDESHOW PREVIEW
+   Rotates approved images from the same fan-media feed.
+========================================================= */
+let fanZoneMediaSlides = [];
+let fanZoneMediaSlideIndex = 0;
+let fanZoneMediaSlideTimer = null;
+
+function renderFanZoneMediaSlide(){
+  const host = document.getElementById("fanZoneMediaSlideshow");
+  if(!host || !fanZoneMediaSlides.length) return;
+
+  const item = fanZoneMediaSlides[fanZoneMediaSlideIndex % fanZoneMediaSlides.length];
+  const media = String(item?.media || item?.imageUrl || item?.image_url || item?.photoUrl || item?.photo_url || item?.url || item?.image || "").trim();
+
+  if(!media) return;
+
+  host.innerHTML = "";
+
+  const img = document.createElement("img");
+  img.src = media;
+  img.alt = "NAL fan submitted photo";
+  img.loading = "eager";
+  img.addEventListener("error", () => {
+    fanZoneMediaSlideIndex = (fanZoneMediaSlideIndex + 1) % fanZoneMediaSlides.length;
+    renderFanZoneMediaSlide();
+  });
+
+  host.appendChild(img);
+}
+
+async function loadFanZoneMediaSlideshow(){
+  const host = document.getElementById("fanZoneMediaSlideshow");
+  if(!host) return;
+
+  try{
+    const response = await fetch("data/fan-media.json?ts=" + Date.now(), {cache:"no-store"});
+    if(!response.ok) throw new Error("Fan media feed unavailable");
+
+    const payload = await response.json();
+    const items = Array.isArray(payload)
+      ? payload
+      : Array.isArray(payload?.items)
+        ? payload.items
+        : Array.isArray(payload?.media)
+          ? payload.media
+          : Array.isArray(payload?.submissions)
+            ? payload.submissions
+            : [];
+
+    /* Home preview is intentionally photo-only.
+       Videos remain available in VIEW ALL FAN MEDIA. */
+    fanZoneMediaSlides = items.filter(item => {
+      const media = String(item?.media || item?.imageUrl || item?.image_url || item?.photoUrl || item?.photo_url || item?.url || item?.image || "").trim();
+      const type = String(item?.type || "").toLowerCase();
+      if(!media) return false;
+      if(type.includes("video")) return false;
+      return !/\.(mp4|webm|mov)(\?|$)/i.test(media);
+    });
+
+    if(!fanZoneMediaSlides.length){
+      host.innerHTML = '<div class="fan-zone-media-slide-placeholder"><span>▣</span><small>NO FAN PHOTOS YET</small></div>';
+      return;
+    }
+
+    fanZoneMediaSlideIndex = 0;
+    renderFanZoneMediaSlide();
+
+    if(fanZoneMediaSlideTimer) clearInterval(fanZoneMediaSlideTimer);
+    if(fanZoneMediaSlides.length > 1){
+      fanZoneMediaSlideTimer = setInterval(() => {
+        fanZoneMediaSlideIndex = (fanZoneMediaSlideIndex + 1) % fanZoneMediaSlides.length;
+        renderFanZoneMediaSlide();
+      }, 4000);
+    }
+  }catch(error){
+    host.innerHTML = '<div class="fan-zone-media-slide-placeholder"><span>▣</span><small>FAN MEDIA UNAVAILABLE</small></div>';
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadFanZoneMediaSlideshow);
 
 
 /* =========================================================
