@@ -7166,6 +7166,59 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 
+
+/* =========================================================
+   NATIVE NAL TEAM ROSTERS
+========================================================= */
+#rosterPage{background:#f3f5f7;min-height:calc(100vh - var(--header-height) - var(--nav-height));padding-bottom:28px}
+.nal-roster-hero{background:linear-gradient(145deg,#07172b,#102b4e);color:#fff;padding:22px 18px;position:relative;overflow:hidden}
+.nal-roster-hero:after{content:"X";position:absolute;right:-8px;bottom:-48px;font-size:150px;font-weight:1000;color:rgba(227,27,35,.16)}
+.nal-roster-eyebrow{font-size:10px;font-weight:900;letter-spacing:2px;color:#b9c4d1}
+.nal-roster-hero h1{margin:5px 0 3px;font-size:29px;line-height:1;font-weight:1000}
+.nal-roster-hero h1 span{color:#e31b23}
+.nal-roster-hero p{margin:7px 0 0;color:#c8d0da;font-size:11px;font-weight:700}
+.nal-roster-seasonbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;padding:12px 14px;border-bottom:1px solid #e3e7eb}
+.nal-roster-seasonlabel{font-size:9px;font-weight:1000;letter-spacing:1.2px;color:#7b8490}
+.nal-roster-seasonselect{border:1px solid #d6dce2;border-radius:8px;background:#fff;color:#07172b;font-size:11px;font-weight:900;padding:8px 28px 8px 10px}
+.nal-roster-teamstrip{display:flex;gap:9px;overflow-x:auto;padding:13px 14px 12px;background:#fff;scrollbar-width:none}
+.nal-roster-teamstrip::-webkit-scrollbar{display:none}
+.nal-roster-teamchoice{min-width:68px;border:0;background:transparent;text-align:center;color:#727c86;font-size:9px;font-weight:900;cursor:pointer}
+.nal-roster-mini{width:52px;height:52px;border:2px solid #e5e9ed;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:auto auto 5px;overflow:hidden}
+.nal-roster-mini img{width:86%;height:86%;object-fit:contain}
+.nal-roster-teamchoice.active{color:#e31b23}
+.nal-roster-teamchoice.active .nal-roster-mini{border:3px solid #e31b23}
+.nal-roster-teamchoice small{display:block;font-size:8px;font-weight:900;line-height:1.1}
+.nal-roster-tabs{display:flex;gap:7px;background:#fff;padding:0 13px 13px;border-bottom:1px solid #e3e7eb}
+.nal-roster-tab{flex:1;border:1px solid #d5dbe1;background:#fff;border-radius:20px;padding:10px 3px;font-size:11px;font-weight:1000;color:#07172b}
+.nal-roster-tab.active{background:#e31b23;border-color:#e31b23;color:#fff}
+.nal-roster-content{padding:14px}
+.nal-roster-banner{background:#07172b;color:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;overflow:hidden}
+.nal-roster-banner:after{content:"";position:absolute;right:-25px;top:-35px;width:110px;height:110px;border-radius:50%;background:#e31b23;opacity:.14}
+.nal-roster-banner-logo{width:62px;height:62px;flex:0 0 62px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;z-index:1}
+.nal-roster-banner-logo img{width:86%;height:86%;object-fit:contain}
+.nal-roster-banner-copy{position:relative;z-index:1;min-width:0}
+.nal-roster-banner-copy small{display:block;color:#bcc8d4;font-size:8px;font-weight:900;letter-spacing:1px;margin-bottom:4px}
+.nal-roster-banner-copy b{display:block;font-size:18px;line-height:1.05;text-transform:uppercase}
+.nal-roster-banner-copy span{display:block;margin-top:5px;color:#c8d1da;font-size:9px;font-weight:800}
+.nal-roster-summary{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 10px}
+.nal-roster-summary b{font-size:15px;color:#07172b}
+.nal-roster-summary span{font-size:9px;color:#7b8490;font-weight:900}
+.nal-roster-tablewrap{overflow-x:auto;border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(7,23,43,.07)}
+.nal-roster-table{width:100%;border-collapse:collapse;white-space:nowrap}
+.nal-roster-table th{background:#07172b;color:#fff;padding:11px 8px;font-size:9px;text-align:left}
+.nal-roster-table td{border-bottom:1px solid #ebedf0;padding:11px 8px;font-size:10px;color:#4e5965;font-weight:800}
+.nal-roster-table tr:last-child td{border-bottom:0}
+.nal-roster-table .nal-roster-number{width:38px;text-align:center;color:#e31b23;font-size:13px;font-weight:1000}
+.nal-roster-table .nal-roster-name{color:#07172b;font-size:11px;font-weight:1000}
+.nal-roster-table .nal-roster-pos{font-weight:1000;color:#07172b}
+.nal-roster-staffgrid{display:grid;gap:9px}
+.nal-roster-staffcard{background:#fff;border:1px solid #e3e7eb;border-radius:12px;padding:14px 15px;box-shadow:0 2px 7px rgba(7,23,43,.05)}
+.nal-roster-staffcard b{display:block;color:#07172b;font-size:13px}
+.nal-roster-staffcard span{display:block;margin-top:4px;color:#e31b23;font-size:9px;font-weight:900;text-transform:uppercase}
+.nal-roster-empty{background:#fff;border-radius:14px;padding:28px 18px;text-align:center;color:#727b86;font-size:12px;line-height:1.5}
+.nal-roster-empty strong{display:block;color:#07172b;font-size:17px;margin-bottom:6px}
+
+
 /* =========================================================
    NATIVE NAL SCHEDULE — SEASON X
 ========================================================= */
@@ -8555,10 +8608,10 @@ document.addEventListener("DOMContentLoaded", () => {
       <button
         class="team-menu-card"
         type="button"
-        data-team-link="staff"
+        data-team-link="transactions"
       >
-        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 26v-4a14 14 0 0 1 28 0v4"/><rect x="6" y="23" width="8" height="14" rx="3"/><rect x="34" y="23" width="8" height="14" rx="3"/><path d="M38 37c0 4-4 5-9 5h-3"/><circle cx="24" cy="42" r="2"/></svg></span>
-        <span class="team-menu-title">STAFF</span>
+        <span class="team-menu-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M9 12h30v25H9z"/><path d="M15 19h18M15 25h18M15 31h11"/><path d="M32 29l5 4-5 4"/></svg></span>
+        <span class="team-menu-title">TRANSACTIONS</span>
       </button>
 
       <button
@@ -8728,6 +8781,37 @@ document.addEventListener("DOMContentLoaded", () => {
   </main>
 
 
+
+
+
+  <!-- =====================================================
+       NATIVE NAL TEAM ROSTERS
+  ====================================================== -->
+  <main id="rosterPage" class="app-page" style="display:none">
+    <section class="nal-roster-hero">
+      <div class="nal-roster-eyebrow">NATIONAL ARENA LEAGUE</div>
+      <h1>2026 <span>ROSTERS</span></h1>
+      <p>OFFICIAL NAL TEAM ROSTERS &amp; STAFF</p>
+    </section>
+
+    <div class="nal-roster-seasonbar">
+      <div class="nal-roster-seasonlabel">SEASON ARCHIVE</div>
+      <select id="nalRosterSeason" class="nal-roster-seasonselect" aria-label="Roster season">
+        <option value="2026" selected>2026</option>
+      </select>
+    </div>
+
+    <div class="nal-roster-teamstrip" id="nalRosterTeamStrip"></div>
+
+    <div class="nal-roster-tabs" role="tablist" aria-label="Roster views">
+      <button class="nal-roster-tab active" type="button" data-roster-view="players">PLAYERS</button>
+      <button class="nal-roster-tab" type="button" data-roster-view="staff">TEAM STAFF</button>
+    </div>
+
+    <section class="nal-roster-content" id="nalRosterContent">
+      <div class="nal-roster-empty"><strong>LOADING ROSTER</strong>Connecting to the official NAL roster archive…</div>
+    </section>
+  </main>
 
 
   <!-- =====================================================
@@ -14826,9 +14910,12 @@ function openTeamHome(team) {
   const hasTeamData =
     !!team.footballShift;
 
+  /* Core Team Football destinations are now native app pages.
+     Keep this section visible even when a team does not have
+     a FootballShift mapping. External-only destinations such
+     as Tickets still use the team's configured URL when present. */
   if (footballSection) {
-    footballSection.style.display =
-      hasTeamData ? "" : "none";
+    footballSection.style.display = "";
   }
 
   if (newsSectionTeam) {
@@ -14936,6 +15023,16 @@ function openTeamHome(team) {
             return;
           }
 
+          if (destination === "roster" && typeof window.openNalRoster === "function") {
+            window.openNalRoster(team.name || shortName);
+            return;
+          }
+
+          if (destination === "transactions" && typeof window.openNalTransactions === "function") {
+            window.openNalTransactions(team.name || shortName);
+            return;
+          }
+
           const url =
             team.footballShift &&
             team.footballShift[
@@ -14962,8 +15059,8 @@ function openTeamHome(team) {
               ? "STATS"
               : destination === "standings"
               ? "STANDINGS"
-              : destination === "staff"
-              ? "STAFF"
+              : destination === "transactions"
+              ? "TRANSACTIONS"
               : destination === "tickets"
               ? "TICKETS"
               : destination.toUpperCase();
@@ -19615,6 +19712,218 @@ function closeLightcastTest(){
 </script>
 
 
+
+<script>
+/* =========================================================
+   NATIVE NAL TEAM ROSTERS
+   Source: data/rosters/{season}/rosters.json
+========================================================= */
+(function(){
+  let rosterSeason = "2026";
+  let rosterView = "players";
+  let rosterTeam = "";
+  let rosterData = [];
+  let rosterLoadedSeason = "";
+
+  const ROSTER_TEAM_SLUGS = {
+    "amarillo warbirds":"amarillo-warbirds",
+    "colorado spartans":"colorado-spartans",
+    "dallas apex":"dallas-apex",
+    "louisiana rouxgaroux":"louisiana-rouxgaroux",
+    "omaha beef":"omaha-beef",
+    "pueblo punishers":"pueblo-punishers",
+    "salina liberty":"salina-liberty",
+    "sioux city bandits":"sioux-city-bandits",
+    "southwest kansas storm":"southwest-kansas-storm",
+    "wheeling miners":"wheeling-miners"
+  };
+
+  function rosterEscape(value){
+    if (typeof escapeHTML === "function") return escapeHTML(String(value ?? ""));
+    return String(value ?? "")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  function rosterNormalize(value){
+    return String(value || "").trim().toLowerCase().replace(/\s+/g," ");
+  }
+
+  function rosterLogo(name){
+    const slug = ROSTER_TEAM_SLUGS[rosterNormalize(name)] || "";
+    return (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug])
+      || (typeof NAL_LOGO !== "undefined" ? NAL_LOGO : "");
+  }
+
+  function rosterShortName(name){
+    return String(name || "").replace(/^(Southwest Kansas|Sioux City|Louisiana|Colorado|Amarillo|Pueblo|Salina|Omaha|Wheeling|Dallas)\s+/,"");
+  }
+
+  function rosterTeams(){
+    return Array.isArray(rosterData) ? rosterData : [];
+  }
+
+  function findRosterTeam(name){
+    const wanted = rosterNormalize(name);
+    return rosterTeams().find(team => rosterNormalize(team?.team) === wanted)
+      || rosterTeams().find(team => rosterNormalize(team?.slug) === wanted)
+      || null;
+  }
+
+  function renderRosterTeamStrip(){
+    const strip = document.getElementById("nalRosterTeamStrip");
+    if (!strip) return;
+    const teams = rosterTeams();
+    strip.innerHTML = teams.map(team => `
+      <button type="button" class="nal-roster-teamchoice${team.team===rosterTeam?" active":""}" data-roster-team="${rosterEscape(team.team)}">
+        <span class="nal-roster-mini"><img src="${rosterEscape(rosterLogo(team.team))}" alt="${rosterEscape(team.team)} logo"></span>
+        <small>${rosterEscape(rosterShortName(team.team))}</small>
+      </button>
+    `).join("");
+  }
+
+  function playerRows(players){
+    return players.map(player => `
+      <tr>
+        <td class="nal-roster-number">${rosterEscape(player?.number || "—")}</td>
+        <td class="nal-roster-name">${rosterEscape(player?.name || "")}</td>
+        <td class="nal-roster-pos">${rosterEscape(player?.position || "—")}</td>
+        <td>${rosterEscape(player?.height || "—")}</td>
+        <td>${rosterEscape(player?.weight || "—")}</td>
+        <td>${rosterEscape(player?.college || "—")}</td>
+      </tr>
+    `).join("");
+  }
+
+  function renderRoster(){
+    const content = document.getElementById("nalRosterContent");
+    if (!content) return;
+
+    document.querySelectorAll("[data-roster-view]").forEach(btn => {
+      btn.classList.toggle("active",btn.dataset.rosterView === rosterView);
+    });
+
+    const teams = rosterTeams();
+    if (!teams.length) {
+      document.getElementById("nalRosterTeamStrip").innerHTML = "";
+      content.innerHTML = `<div class="nal-roster-empty"><strong>ROSTERS UNAVAILABLE</strong>No ${rosterEscape(rosterSeason)} roster records are currently available.</div>`;
+      return;
+    }
+
+    if (!rosterTeam || !findRosterTeam(rosterTeam)) rosterTeam = teams[0].team;
+    renderRosterTeamStrip();
+
+    const team = findRosterTeam(rosterTeam);
+    if (!team) return;
+
+    const players = Array.isArray(team.players) ? team.players : [];
+    const staff = Array.isArray(team.staff) ? team.staff : [];
+    const logo = rosterLogo(team.team);
+    const count = rosterView === "staff" ? staff.length : players.length;
+
+    let body = "";
+    if (rosterView === "players") {
+      body = players.length ? `
+        <div class="nal-roster-tablewrap">
+          <table class="nal-roster-table">
+            <thead><tr><th>#</th><th>NAME</th><th>POS</th><th>HT</th><th>WT</th><th>COLLEGE</th></tr></thead>
+            <tbody>${playerRows(players)}</tbody>
+          </table>
+        </div>` :
+        `<div class="nal-roster-empty"><strong>ROSTER COMING SOON</strong>No player roster has been posted for ${rosterEscape(team.team)} yet.</div>`;
+    } else {
+      body = staff.length ? `
+        <div class="nal-roster-staffgrid">
+          ${staff.map(person => `
+            <article class="nal-roster-staffcard">
+              <b>${rosterEscape(person?.name || "")}</b>
+              <span>${rosterEscape(person?.position || "Team Staff")}</span>
+            </article>
+          `).join("")}
+        </div>` :
+        `<div class="nal-roster-empty"><strong>STAFF COMING SOON</strong>No team staff has been posted for ${rosterEscape(team.team)} yet.</div>`;
+    }
+
+    content.innerHTML = `
+      <div class="nal-roster-banner">
+        <div class="nal-roster-banner-logo"><img src="${rosterEscape(logo)}" alt="${rosterEscape(team.team)} logo"></div>
+        <div class="nal-roster-banner-copy">
+          <small>OFFICIAL TEAM ROSTER</small>
+          <b>${rosterEscape(team.team)}</b>
+          <span>${players.length} PLAYER${players.length===1?"":"S"} • ${staff.length} STAFF</span>
+        </div>
+      </div>
+      <div class="nal-roster-summary">
+        <b>${rosterView === "staff" ? "TEAM STAFF" : "ACTIVE ROSTER"}</b>
+        <span>${count} ${rosterView === "staff" ? "STAFF" : "PLAYER"+(count===1?"":"S")}</span>
+      </div>
+      ${body}
+    `;
+  }
+
+  async function loadRoster(season=rosterSeason){
+    rosterSeason = String(season || "2026");
+    const content = document.getElementById("nalRosterContent");
+    if (content) content.innerHTML = `<div class="nal-roster-empty"><strong>LOADING ROSTER</strong>Connecting to the official NAL roster archive…</div>`;
+
+    if (rosterLoadedSeason === rosterSeason && rosterData.length) {
+      renderRoster();
+      return;
+    }
+
+    try {
+      const response = await fetch(`data/rosters/${encodeURIComponent(rosterSeason)}/rosters.json?v=${Date.now()}`,{cache:"no-store"});
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      rosterData = Array.isArray(payload?.teams) ? payload.teams : [];
+      rosterLoadedSeason = rosterSeason;
+      renderRoster();
+    } catch (error) {
+      console.error("Unable to load NAL rosters:",error);
+      rosterData = [];
+      document.getElementById("nalRosterTeamStrip").innerHTML = "";
+      if (content) content.innerHTML = `<div class="nal-roster-empty"><strong>ROSTERS UNAVAILABLE</strong>The ${rosterEscape(rosterSeason)} roster archive could not be loaded. Please try again.</div>`;
+    }
+  }
+
+  document.addEventListener("click",event=>{
+    const view = event.target.closest("[data-roster-view]");
+    if (view) {
+      rosterView = view.dataset.rosterView || "players";
+      renderRoster();
+      return;
+    }
+    const team = event.target.closest("[data-roster-team]");
+    if (team) {
+      rosterTeam = team.dataset.rosterTeam || "";
+      renderRoster();
+      window.scrollTo({top:0,left:0,behavior:"instant"});
+    }
+  });
+
+  document.getElementById("nalRosterSeason")?.addEventListener("change",event=>{
+    loadRoster(event.target.value);
+  });
+
+  window.openNalRoster = function(teamName=""){
+    const requested = String(teamName || "").trim();
+    if (requested) rosterTeam = requested;
+    rosterView = "players";
+    if (typeof showPage === "function") showPage("rosterPage");
+    const afterLoad = loadRoster(rosterSeason);
+    Promise.resolve(afterLoad).then(()=>{
+      if (requested) rosterTeam = requested;
+      renderRoster();
+      window.scrollTo({top:0,left:0,behavior:"instant"});
+    });
+    return afterLoad;
+  };
+
+  window.renderNalRoster = renderRoster;
+})();
+</script>
+
+
 <script>
 /* =========================================================
    NATIVE NAL TRANSACTIONS
@@ -19777,7 +20086,7 @@ function closeLightcastTest(){
       const payload = await response.json();
       transactionData = Array.isArray(payload?.transactions) ? payload.transactions : [];
       transactionLoadedSeason = transactionSeason;
-      transactionTeam = "";
+      if (transactionView !== "team") transactionTeam = "";
       renderTransactions();
     } catch (error) {
       console.error("Unable to load NAL transactions:",error);
@@ -19804,9 +20113,23 @@ function closeLightcastTest(){
     loadTransactions(event.target.value);
   });
 
-  window.openNalTransactions = function(){
+  window.openNalTransactions = function(teamName=""){
+    const requested = String(teamName || "").trim();
+    if (requested) {
+      transactionView = "team";
+      transactionTeam = requested;
+    }
     if (typeof showPage === "function") showPage("transactionsPage");
-    loadTransactions(transactionSeason);
+    const afterLoad = loadTransactions(transactionSeason);
+    Promise.resolve(afterLoad).then(()=>{
+      if (requested) {
+        transactionView = "team";
+        transactionTeam = requested;
+        renderTransactions();
+      }
+      window.scrollTo({top:0,left:0,behavior:"instant"});
+    });
+    return afterLoad;
   };
   window.renderNalTransactions = renderTransactions;
 })();
