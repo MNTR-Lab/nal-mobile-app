@@ -1,0 +1,23 @@
+{
+  "source": "Lightcast Live Events",
+  "channel_id": "72165",
+  "games": [
+    {
+      "event_id": "388320",
+      "title": "Southwest Kansas Storm vs Pueblo Punishers",
+      "description": "Southwest Motors Events Center\r\nPueblo, Colorado",
+      "start_time": "2027-03-06 19:35:00",
+      "end_time": "2027-03-06 22:40:00",
+      "start_time_utc": "2027-03-07 00:35:00",
+      "end_time_utc": "2027-03-07 03:40:00",
+      "timezone": "US/Eastern",
+      "seconds_until_start": 14164413,
+      "simulated_live": "0",
+      "player_landing_url": "https://player.mntrlab.com/live/cjMxYTN",
+      "embed_code": "<div style=\"position: relative; padding-bottom: 56.25%; margin-top: 25px; height: 0;\"><iframe style=\"position: absolute; height: 0px; width: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;\" src=\"https://www.lightcast.com/embed/player.php?responsive=1&skinColor=000000&autoPlay=0&playlistPos=inside&playlistSize=350&tvButtonID=lightcast&id=72165&type=live\" frameborder=\"0\" allow=\"autoplay;fullscreen\" allowfullscreen></iframe></div>",
+      "embed_code_adaptive": "",
+      "event_image": "",
+      "channel_id": "72165"
+    }
+  ]
+}
