@@ -11,6 +11,19 @@
 
 <title>National Arena League</title>
 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
+
+<meta name="theme-color" content="#07172b">
+
+<title>National Arena League</title>
+
 <style>
 
 /* =========================================================
@@ -6394,12 +6407,30 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-forum-author-avatar{width:34px;height:34px;border-radius:50%;background:#07172b;color:#fff;display:grid;place-items:center;overflow:hidden;flex:0 0 34px;font-size:13px;font-weight:1000;text-transform:uppercase;}
 .fan-forum-author-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
 .fan-forum-author-copy{min-width:0;display:flex;flex-direction:column;gap:2px;}
-.fan-forum-author-name{color:#07172b;font-size:10px;font-weight:1000;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fan-forum-author-name{color:#07172b;font-size:10px;font-weight:1000;line-height:1.15;display:inline-flex;align-items:center;gap:0;max-width:100%;overflow:visible;white-space:nowrap;}
 .fan-forum-author-time{color:#748293;font-size:9px;font-weight:800;line-height:1.15;}
 .fan-forum-thread-card .fan-forum-author-row{margin:8px 0 12px;}
 .fan-forum-reply .fan-forum-author-row{margin:0 0 9px;}
 .fan-forum-topic-card .fan-forum-author-row{margin:8px 0 0;}
 .fan-forum-topic-card .fan-forum-author-avatar{width:28px;height:28px;flex-basis:28px;font-size:11px;}
+
+
+/* NAL MEMBER ROLE BADGES — approved visual system */
+.nal-member-badge{display:inline-flex;align-items:center;justify-content:center;vertical-align:-3px;margin-left:5px;flex:0 0 auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.18));}
+.nal-member-badge svg{display:block;overflow:visible;}
+.nal-member-badge-fan svg{width:17px;height:13px;fill:#8a4b24;stroke:#6d3518;stroke-width:.8;}
+.nal-member-badge-fan .nal-football-lace{fill:none;stroke:#fff;stroke-width:1.35;stroke-linecap:round;}
+.nal-member-badge-verified{vertical-align:-4px;margin-left:4px;filter:drop-shadow(0 1px 2px rgba(29,155,240,.42));}
+.nal-member-badge-verified svg{width:19px;height:19px;fill:#1d9bf0;}
+.nal-member-badge-verified .nal-badge-check{fill:none;stroke:#fff;stroke-width:3.35;stroke-linecap:round;stroke-linejoin:round;}
+.nal-member-badge-vip{vertical-align:-4px;margin-left:5px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.24));}
+.nal-member-badge-vip svg{width:22px;height:18px;}
+.nal-member-badge-vip .nal-helmet-shell{fill:#e31b23;stroke:#9e1118;stroke-width:1.15;stroke-linejoin:round;}
+.nal-member-badge-vip .nal-helmet-ear{fill:#fff;stroke:#9e1118;stroke-width:1;}
+.nal-member-badge-vip .nal-helmet-mask{fill:none;stroke:#07172b;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.nal-member-badge-moderator svg{width:17px;height:17px;fill:#07172b;stroke:#e31b23;stroke-width:1.3;}
+.nal-member-badge-moderator .nal-mod-inner{fill:#102b4e;stroke:#c8cdd3;stroke-width:.9;}
+.nal-member-badge-moderator .nal-mod-m{fill:#fff;stroke:none;}
 .fan-forum-reply-compose{margin-top:14px;border:1px solid #dbe3eb;border-radius:14px;background:#fff;padding:15px;}
 .fan-forum-reply-compose h3{margin:0 0 4px;color:#07172b;font-size:14px;font-weight:1000;}
 .fan-forum-reply-compose p{margin:0 0 10px;color:#748293;font-size:10px;line-height:1.4;}
@@ -8321,516 +8352,341 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 </style>
+<style>
 
-<style id="nal-network-website-width-override">
-/* =========================================================
-   NAL NETWORK — WEBSITE WIDTH OVERRIDE
-   Layout width only. Existing Network content/functionality
-   remains unchanged.
-========================================================= */
-body{
-  background:#f3f5f7;
-}
-
-.app{
-  width:100% !important;
-  max-width:none !important;
-  margin:0 !important;
-}
-
-.topbar,
-.bottom-nav{
-  max-width:none !important;
-}
-
-/* Give the existing Network content room to behave as a website
-   while preserving its internal sections and responsive rules. */
-#watchPage{
-  width:100% !important;
-  max-width:none !important;
-  margin:0 !important;
-}
-
-@media (min-width: 900px){
-  #watchPage > .section,
-  #watchPage > .network-section,
-  #watchPage > section{
-    width:100%;
-  }
-}
-</style>
-
-
-<style id="nal-network-footballshift-container-match">
-/* Desktop container modeled on the FootballShift content width shown in the reference screenshot.
-   Width only — no Network content, order, artwork, IDs, or functionality changed. */
-@media (min-width: 1200px){
-  .app{
-    width:calc(100% - 48px) !important;
-    max-width:1640px !important;
-    margin-left:auto !important;
-    margin-right:auto !important;
-  }
-}
-@media (min-width: 768px) and (max-width: 1199px){
-  .app{
-    width:calc(100% - 40px) !important;
-    max-width:1640px !important;
-    margin-left:auto !important;
-    margin-right:auto !important;
-  }
-}
-@media (max-width: 767px){
-  .app{
-    width:100% !important;
-    max-width:none !important;
-    margin:0 !important;
-  }
-}
-</style>
-
-
-<style id="nal-network-website-removals">
-/* Website version: remove app footer/navigation completely */
-.bottom-nav,
-#bottomNav {
-  display:none !important;
-}
-
-/* Remove bottom space that was reserved for the mobile-app footer */
-.app,
-.app-page,
-#watchPage {
-  padding-bottom:0 !important;
-  margin-bottom:0 !important;
-}
-</style>
-
-
-<style id="nal-network-website-header-removal">
-/* Website version: remove the mobile-app header/top bar completely */
-.topbar,
-#topbar,
-.app-header,
-#appHeader,
-header.topbar {
-  display:none !important;
-}
-
-/* Remove any spacing reserved for the app header */
-.app,
-.app-page,
-#watchPage {
-  padding-top:0 !important;
-  margin-top:0 !important;
-}
-</style>
-
-
-<style id="nal-network-team-channel-16x9-website">
-/* TEAM CHANNELS — use the existing 16:9 artwork full-frame on website */
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art{
-  width:100% !important;
-  aspect-ratio:16 / 9 !important;
+/* NAL NETWORK — RESTORED DEDICATED 16:9 TEAM CHANNEL ART */
+#watchPage .network-team-channel-art{
   padding:0 !important;
-  background:transparent !important;
-  overflow:hidden !important;
+  background:#07172b !important;
 }
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art img{
+#watchPage .network-team-channel-art img{
   width:100% !important;
   height:100% !important;
   object-fit:cover !important;
   object-position:center !important;
-  display:block !important;
+}
+
+</style>
+<style>
+
+/* =========================================================
+   INTERNAL PREVIOUS-PAGE BACK BUTTON
+   ========================================================= */
+.app-back-row{
+  display:none;
+  width:100%;
+  padding:8px 14px 6px;
+  background:var(--light);
+}
+.app-back-row.is-visible{display:block;}
+.app-back-button{
+  min-height:31px;
+  padding:6px 11px 6px 8px;
+  border:1px solid rgba(7,23,43,.16);
+  border-radius:999px;
+  background:#ffffff;
+  color:var(--nal-blue);
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:9px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:.75px;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+.app-back-button:active{transform:scale(.97);}
+.app-back-arrow{
+  font-size:18px;
+  line-height:.7;
+  margin-top:-1px;
+}
+
+</style>
+<style>
+
+/* =========================================================
+   HOME SCHEDULE / NEXT GAMES BACKGROUND
+   Put the artwork on the actual game card, not behind the
+   entire section where the card's opaque gradient hides it.
+   ========================================================= */
+.home-schedule-background{
+  position:relative;
+  background:#06172b;
+  overflow:hidden;
+}
+
+#homePage .home-schedule-background .home-game-placeholder,
+#homePage .home-schedule-background .home-game-placeholder.home-game-slide{
+  background-image:
+    linear-gradient(rgba(3,12,24,.38), rgba(3,12,24,.48)),
+    url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/schedule-background.png?v=1790265599") !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  border-color:rgba(255,255,255,.22);
+}
+
+</style>
+<style>
+
+/* =========================================================
+   FAN ZONE — FAN POLLS COMPACT BANNER
+   ========================================================= */
+#fanPage .fan-zone-polls-banner{
+  min-height:108px;
+  height:108px;
+  margin-top:12px;
+  padding:15px 17px;
+  border:1px solid #31577f;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  background:
+    radial-gradient(circle at 88% 50%,rgba(227,27,35,.42),transparent 32%),
+    linear-gradient(110deg,#07172b 0%,#102b4e 68%,#07172b 100%);
+  box-shadow:0 10px 24px rgba(0,0,0,.20);
+}
+#fanPage .fan-zone-polls-banner:after{
+  background:linear-gradient(90deg,rgba(2,12,24,.12),transparent 65%);
+}
+#fanPage .fan-zone-polls-banner-copy{
+  position:relative;
+  z-index:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+#fanPage .fan-zone-polls-banner .fan-zone-tag{
+  padding:0;
+  margin:0 0 4px;
+  border-radius:0;
+  background:transparent;
+  color:#e31b23;
+  font-size:9px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:1.35px;
+}
+#fanPage .fan-zone-polls-banner-copy strong{
+  color:#fff;
+  font-size:25px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-.45px;
+}
+#fanPage .fan-zone-polls-banner-copy small{
+  margin-top:6px;
+  color:#dbe5ef;
+  font-size:11px;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:.15px;
+}
+#fanPage .fan-zone-polls-banner-action{
+  position:relative;
+  z-index:1;
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:38px;
+  padding:0 12px;
+  border-radius:9px;
+  background:#e31b23;
+  color:#fff;
+  font-size:10px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.65px;
+}
+#fanPage .fan-zone-polls-banner-action b{
+  font-size:18px;
+  line-height:1;
+}
+@media(max-width:430px){
+  #fanPage .fan-zone-polls-banner{
+    min-height:102px;
+    height:102px;
+    padding:14px 15px;
+  }
+  #fanPage .fan-zone-polls-banner-copy strong{font-size:23px;}
+}
+
+</style>
+
+<style>
+/* =========================================================
+   FAN ZONE — FAN PHOTO SUBMISSION GATEWAY
+   Submission now has its own space on the Fan Zone home.
+   ========================================================= */
+#fanPage .fan-zone-photo-submit-banner{
+  width:100%;
+  min-height:108px;
+  margin-top:12px;
+  padding:15px 17px;
+  border:1px solid #31577f;
+  border-radius:16px;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  background:
+    radial-gradient(circle at 88% 50%,rgba(227,27,35,.34),transparent 32%),
+    linear-gradient(110deg,#07172b 0%,#102b4e 68%,#07172b 100%);
+  color:#fff;
+  text-align:left;
+  box-shadow:0 10px 24px rgba(0,0,0,.20);
+  cursor:pointer;
+  font:inherit;
+}
+#fanPage .fan-zone-photo-submit-banner:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(2,12,24,.12),transparent 65%);
+  pointer-events:none;
+}
+#fanPage .fan-zone-photo-submit-copy{
+  position:relative;
+  z-index:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+#fanPage .fan-zone-photo-submit-kicker{
+  margin-bottom:4px;
+  color:#e31b23;
+  font-size:9px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:1.35px;
+}
+#fanPage .fan-zone-photo-submit-copy strong{
+  color:#fff;
+  font-size:22px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-.35px;
+}
+#fanPage .fan-zone-photo-submit-copy small{
+  margin-top:6px;
+  color:#dbe5ef;
+  font-size:11px;
+  line-height:1.2;
+  font-weight:800;
+}
+#fanPage .fan-zone-photo-submit-action{
+  position:relative;
+  z-index:1;
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:38px;
+  padding:0 12px;
+  border-radius:9px;
+  background:#e31b23;
+  color:#fff;
+  font-size:10px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.65px;
+}
+#fanPage .fan-zone-photo-submit-action b{
+  font-size:18px;
+  line-height:1;
+}
+@media(max-width:430px){
+  #fanPage .fan-zone-photo-submit-banner{
+    min-height:102px;
+    padding:14px 15px;
+  }
+  #fanPage .fan-zone-photo-submit-copy strong{
+    font-size:19px;
+  }
 }
 </style>
 
 
-<style id="nal-watch-anywhere-styles">
-.nal-watch-anywhere{
-  margin:42px 0 8px;
-  padding:0 14px 28px;
+<style>
+/* =========================================================
+   FAN ZONE — FAN MEDIA SLIDESHOW PREVIEW
+   Uses the existing approved data/fan-media.json feed.
+   ========================================================= */
+#fanPage .fan-media-slideshow-card{
+  padding:13px 12px 12px;
+  justify-content:flex-start;
+  gap:9px;
+  overflow:hidden;
 }
-.nal-watch-anywhere-inner{
-  background:linear-gradient(145deg,#071522 0%,#0b2235 55%,#101820 100%);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:18px;
-  padding:34px 28px 30px;
-  text-align:center;
-  box-shadow:0 14px 36px rgba(0,0,0,.18);
-}
-.nal-watch-mntr-logo{
-  display:block;
-  max-width:118px;
-  max-height:46px;
-  object-fit:contain;
-  margin:0 auto 18px;
-}
-.nal-watch-eyebrow{
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:2.2px;
-  color:#e2232a;
-  margin-bottom:7px;
-}
-.nal-watch-anywhere h2{
+#fanPage .fan-media-slideshow-card h3{
+  width:100%;
   margin:0;
-  color:#fff;
-  font-size:27px;
-  line-height:1.12;
-  font-weight:950;
-  letter-spacing:-.4px;
+  text-align:center;
 }
-.nal-watch-copy{
-  margin:10px auto 24px;
-  max-width:650px;
-  color:rgba(255,255,255,.70);
-  font-size:14px;
-  line-height:1.5;
+#fanPage .fan-zone-media-slideshow{
+  position:relative;
+  width:100%;
+  aspect-ratio:1 / 1;
+  min-height:0;
+  overflow:hidden;
+  border-radius:10px;
+  background:#07172b;
 }
-.nal-platform-grid{
-  display:grid;
-  grid-template-columns:repeat(5,minmax(0,1fr));
-  gap:10px;
-  max-width:930px;
-  margin:0 auto 24px;
+#fanPage .fan-zone-media-slideshow img,
+#fanPage .fan-zone-media-slideshow video{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:#07172b;
 }
-.nal-platform-card{
-  min-height:116px;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:12px;
-  background:rgba(255,255,255,.055);
+#fanPage .fan-zone-media-slide-placeholder{
+  width:100%;
+  height:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:14px 8px;
-  color:#fff;
-  text-decoration:none;
+  gap:7px;
+  color:rgba(255,255,255,.72);
+  background:linear-gradient(145deg,#102b4e,#07172b);
 }
-.nal-platform-link{
-  cursor:pointer;
-  transition:transform .15s ease,border-color .15s ease,background .15s ease;
+#fanPage .fan-zone-media-slide-placeholder span{
+  font-size:24px;
 }
-.nal-platform-link:hover{
-  transform:translateY(-2px);
-  border-color:rgba(255,255,255,.30);
-  background:rgba(255,255,255,.09);
+#fanPage .fan-zone-media-slide-placeholder small{
+  font-size:7px;
+  font-weight:950;
+  letter-spacing:.8px;
 }
-.nal-platform-icon{
-  height:32px;
-  min-width:32px;
-  padding:0 7px;
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:9px;
-  font-size:14px;
-  font-weight:900;
-  color:#fff;
-}
-.nal-platform-card strong{
-  font-size:12px;
-  line-height:1.15;
+#fanPage .fan-zone-media-view-all{
+  width:100%;
+  min-height:31px;
+  padding:7px 5px;
+  border:0;
+  border-top:1px solid #e4e8ec;
+  background:transparent;
+  color:#e31b23;
+  font:inherit;
+  font-size:8px;
+  line-height:1.1;
+  font-weight:950;
   letter-spacing:.45px;
+  text-align:center;
+  cursor:pointer;
 }
-.nal-platform-card span{
-  margin-top:4px;
-  color:rgba(255,255,255,.55);
-  font-size:10px;
-}
-.nal-watch-download{
-  display:inline-flex;
-  min-height:42px;
-  align-items:center;
-  justify-content:center;
-  padding:0 22px;
-  border-radius:7px;
-  background:#e2232a;
-  color:#fff !important;
-  text-decoration:none;
-  font-size:12px;
-  font-weight:950;
-  letter-spacing:.6px;
-}
-.nal-watch-tagline{
-  margin-top:22px;
-  color:rgba(255,255,255,.45);
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:1.6px;
-}
-@media(max-width:800px){
-  .nal-platform-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
-  .nal-platform-card:last-child{grid-column:1 / -1;}
-  .nal-watch-anywhere h2{font-size:22px;}
-}
-@media(max-width:480px){
-  .nal-watch-anywhere{padding-left:8px;padding-right:8px;}
-  .nal-watch-anywhere-inner{padding:28px 14px 24px;}
-}
-</style>
-
-
-<style id="nal-watch-four-platform-final">
-.nal-platform-grid.nal-platform-grid-four{
-  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
-  max-width:940px;
-}
-.nal-platform-grid-four .nal-platform-card{
-  min-height:132px;
-}
-.nal-brand-logo{
-  height:38px;
-  width:82px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:10px;
-  color:#fff;
-}
-.nal-brand-logo svg{width:100%;height:100%;display:block}
-.nal-brand-apple{width:40px}
-.nal-brand-appletv{width:82px}
-.nal-brand-word{
-  height:38px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:10px;
-  color:#fff;
-  font-weight:950;
-  line-height:1;
-}
-.nal-brand-roku{
-  font-family:Arial,sans-serif;
-  font-size:29px;
-  letter-spacing:-1.8px;
-}
-.nal-brand-fire{
-  font-family:Arial,sans-serif;
-  font-size:25px;
-  letter-spacing:-1px;
-  text-transform:lowercase;
-}
-.nal-brand-fire span{
-  font-weight:500;
-  margin-left:3px;
-}
-.nal-platform-grid-four .nal-platform-card span{
-  font-size:9px;
-  letter-spacing:.35px;
-}
-.nal-platform-search{
-  cursor:default;
-}
-.nal-watch-download{display:none !important}
-@media(max-width:800px){
-  .nal-platform-grid.nal-platform-grid-four{
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-  }
-  .nal-platform-card:last-child{grid-column:auto !important;}
-}
-</style>
-
-
-<style id="nal-watch-compact-one-row">
-/* Compact single-row platform treatment */
-.nal-watch-anywhere-inner{
-  padding:28px 28px 24px !important;
-}
-.nal-watch-copy{
-  margin-bottom:18px !important;
-}
-.nal-platform-grid.nal-platform-grid-four{
-  display:grid !important;
-  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
-  gap:8px !important;
-  max-width:760px !important;
-  margin:0 auto 18px !important;
-}
-.nal-platform-grid-four .nal-platform-card{
-  min-height:82px !important;
-  padding:10px 6px !important;
-  border-radius:9px !important;
-}
-.nal-brand-logo,
-.nal-brand-word{
-  height:24px !important;
-  margin-bottom:5px !important;
-}
-.nal-brand-apple{
-  width:25px !important;
-}
-.nal-brand-appletv{
-  width:54px !important;
-}
-.nal-brand-roku{
-  font-size:20px !important;
-  letter-spacing:-1px !important;
-}
-.nal-brand-fire{
-  font-size:18px !important;
-}
-.nal-platform-grid-four .nal-platform-card strong{
-  font-size:10px !important;
-}
-.nal-platform-grid-four .nal-platform-card span{
-  margin-top:2px !important;
-  font-size:7.5px !important;
-}
-@media(max-width:650px){
-  .nal-platform-grid.nal-platform-grid-four{
-    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
-    gap:4px !important;
-  }
-  .nal-platform-grid-four .nal-platform-card{
-    min-height:72px !important;
-    padding:8px 2px !important;
-  }
-  .nal-brand-logo,
-  .nal-brand-word{
-    transform:scale(.82);
-    margin-bottom:2px !important;
-  }
-  .nal-platform-grid-four .nal-platform-card strong{
-    font-size:8px !important;
-  }
-  .nal-platform-grid-four .nal-platform-card span{
-    font-size:6.5px !important;
-  }
-}
-</style>
-
-
-
-
-
-
-
-
-<style id="nal-network-final-verified-layout">
-/* AUTHORITATIVE WEBSITE FRAME: one 1100px Network container, no wider outer shell */
-@media (min-width:1200px){
-  body{
-    background:#071522 !important;
-  }
-  body #watchPage{
-    width:calc(100% - 48px) !important;
-    max-width:1100px !important;
-    min-height:0 !important;
-    height:auto !important;
-    margin-left:auto !important;
-    margin-right:auto !important;
-    padding-bottom:20px !important;
-    flex:none !important;
-  }
-  body #watchPage > *{
-    width:100% !important;
-    max-width:none !important;
-    margin-left:0 !important;
-    margin-right:0 !important;
-  }
-}
-
-/* VERIFIED TEAM CHANNELS LOCATION: archives panel */
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-grid{
-  display:flex !important;
-  flex-wrap:wrap !important;
-  justify-content:center !important;
-  gap:12px !important;
-  align-items:flex-start !important;
-}
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-card{
-  box-sizing:border-box !important;
-  flex:0 0 calc((100% - 36px) / 4) !important;
-  width:calc((100% - 36px) / 4) !important;
-  max-width:calc((100% - 36px) / 4) !important;
-  min-width:0 !important;
-}
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art{
-  width:100% !important;
-  aspect-ratio:16 / 9 !important;
-  padding:0 !important;
-  overflow:hidden !important;
-  background:transparent !important;
-}
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art img{
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  object-fit:cover !important;
-  object-position:center !important;
-}
-
-@media(max-width:850px){
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-card{
-    flex-basis:calc((100% - 12px) / 2) !important;
-    width:calc((100% - 12px) / 2) !important;
-    max-width:calc((100% - 12px) / 2) !important;
-  }
-}
-@media(max-width:480px){
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-card{
-    flex-basis:100% !important;
-    width:100% !important;
-    max-width:100% !important;
-  }
-}
-</style>
-
-
-<style id="nal-website-shrink-wrap-pages">
-/* Website-only: let every visible app page end with its actual content. */
-html, body {
-  min-height: 0 !important;
-  height: auto !important;
-}
-body {
-  overflow-y: auto !important;
-}
-.app {
-  min-height: 0 !important;
-  height: auto !important;
-}
-.app-page {
-  min-height: 0 !important;
-  height: auto !important;
-  padding-bottom: 24px !important;
-}
-#watchPage,
-#homePage,
-#teamsPage,
-#schedulePage,
-#standingsPage,
-#transactionsPage,
-#fanPage,
-#fanForumPage,
-#fanForumCategoryPage,
-#fanForumThreadPage,
-#fanPollPage,
-#fanGalleryPage,
-#fanUploadPage {
-  min-height: 0 !important;
-  height: auto !important;
-}
-
-/* Team-channel internal views/modals should also size to their content. */
-.network-team-hub,
-.network-team-hub-shell,
-.network-team-modal,
-.network-team-modal-card,
-.network-team-channel-modal,
-.network-team-channel-modal-card {
-  min-height: 0 !important;
-  height: auto !important;
-}
-
-/* Remove app-style viewport fillers that create blank blue space. */
-main.app-page {
-  flex: none !important;
+#fanPage .fan-zone-media-view-all b{
+  font-size:13px;
 }
 </style>
 
@@ -8940,6 +8796,14 @@ main.app-page {
 
   <div class="global-header-buffer" aria-hidden="true"></div>
 
+<div id="appBackRow" class="app-back-row" aria-hidden="true">
+  <button id="appBackButton" class="app-back-button" type="button" aria-label="Go back to previous app page">
+    <span class="app-back-arrow" aria-hidden="true">‹</span>
+    <span>BACK</span>
+  </button>
+</div>
+
+
 
   <!-- =====================================================
        HOME PAGE
@@ -8959,7 +8823,7 @@ main.app-page {
     </section>
 
     <!-- NEXT GAMES + QUICK ACCESS -->
-    <section class="home-dark-section">
+    <section class="home-dark-section home-schedule-background">
       <div class="section-header">
         <div class="section-title">Next Games</div>
         <button class="network-view-all" type="button" data-home-action="scores" id="viewAllScheduleButton">
@@ -9058,9 +8922,9 @@ main.app-page {
         </div>
 
         <div class="home-network-side">
-          <button class="home-network-show-tile" type="button" onclick="openWatchPage(); setTimeout(() => switchNetworkTab('shows'), 50);" aria-label="Open Around the NAL">
-            <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL">
-          </button>
+          <button class="home-network-show-tile" type="button" onclick="openNALShowChannel('around-the-nal')" aria-label="Open Around the NAL Channel">
+          <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164" alt="Around the NAL">
+        </button>
           <button class="home-network-show-tile" type="button" onclick="openWatchPage(); setTimeout(() => switchNetworkTab('shows'), 50);" aria-label="Open Coaches Shows">
             <img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows.png?v=1789849233" alt="Coaches' Shows">
           </button>
@@ -9567,9 +9431,40 @@ main.app-page {
         </div>
       </section>
 
+      <section class="network-hub-section">
+        <div class="network-section-header">
+          <div class="network-section-title">NAL Network Originals</div>
+          <button class="network-view-all" type="button" onclick="switchNetworkTab('shows')">VIEW ALL ›</button>
+        </div>
+        <div class="network-card-scroll">
+          <button class="network-show-card" type="button" onclick="openNALShowChannel('around-the-nal')">
+            <div class="network-show-art network-art-around"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL_Poster_8352963d-5e78-44ee-9aa5-cb742443e0bf.png?v=1790124876" alt="Around the NAL" loading="lazy"></div>
+            <div class="network-show-title">Around the NAL</div><div class="network-show-meta">Original Series</div>
+          </button>
+          <button class="network-show-card" type="button" onclick="previewNetworkItem('Coaches’ Shows','Team coaches and weekly programming')">
+            <div class="network-show-art network-art-coaches"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Coaches_Shows_Poster_ffbbc053-483a-4d1f-afa7-ce79bcd535f4.png?v=1790124876" alt="Coaches Shows" loading="lazy"></div>
+            <div class="network-show-title">Coaches’ Shows</div><div class="network-show-meta">Team Programming</div>
+          </button>
+          <button class="network-show-card" type="button" onclick="openNALShowChannel('nal-gameday')">
+            <div class="network-show-art network-art-gameday"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_NAL_GAMEDAY_Poster_186b8209-957a-4a05-a25a-0ea795a11aa6.png?v=1790124876" alt="NAL Gameday" loading="lazy"></div>
+            <div class="network-show-title">NAL Gameday</div><div class="network-show-meta">Gameday Coverage</div>
+          </button>
+        </div>
+      </section>
+
+      <section class="network-hub-section">
+        <div class="network-section-header">
+          <div class="network-section-title">Highlights</div>
+          <button class="network-view-all" type="button" onclick="switchNetworkTab('shows')">VIEW ALL ›</button>
+        </div>
+        <div class="network-card-scroll">
+        </div>
+      </section>
+
       
     </div>
-<div class="network-tab-panel" data-network-panel="team-channels">
+
+    <div class="network-tab-panel" data-network-panel="team-channels">
       <section class="network-library-head nal-game-live-head">
         <div>
           <h2>LIVE GAMES</h2>
@@ -9717,6 +9612,15 @@ main.app-page {
         </span>
       </button>
 
+      <button class="fan-zone-photo-submit-banner" type="button" onclick="openFanZoneFeature('media')" aria-label="Open Fan Photo Submission">
+        <span class="fan-zone-photo-submit-copy">
+          <span class="fan-zone-photo-submit-kicker">NAL FAN ZONE</span>
+          <strong>FAN PHOTO SUBMISSION</strong>
+          <small>Share your NAL moment with the league.</small>
+        </span>
+        <span class="fan-zone-photo-submit-action">SUBMIT <b>›</b></span>
+      </button>
+
       <div class="fan-zone-grid">
         <button class="fan-zone-card" type="button" onclick="openFanZoneFeature('pickem')">
           <span class="fan-zone-icon">✓</span>
@@ -9725,49 +9629,32 @@ main.app-page {
           <span class="fan-zone-link">MAKE YOUR PICKS <b>›</b></span>
         </button>
 
-        <button class="fan-zone-card" type="button" onclick="openFanPhotosGallery()">
-          <span class="fan-zone-icon">▣</span>
+        <div class="fan-zone-card fan-media-slideshow-card">
           <h3>FAN PHOTOS &amp; VIDEOS</h3>
-          <p>See approved photos and videos submitted by NAL fans across the league.</p>
-          <span class="fan-zone-link">VIEW FAN MEDIA <b>›</b></span>
-        </button>
-      </div>
-
-      <button class="fan-zone-poll-card" type="button" onclick="openFanPoll()">
-        <span class="fan-zone-tag">FAN POLL</span>
-        <h2>WHO ARE YOU MOST LOOKING FORWARD TO SEEING THIS SEASON?</h2>
-        <p>Cast your vote and see how NAL fans are responding.</p>
-        <span class="fan-zone-action red">VOTE NOW <b>›</b></span>
-      </button>
-
-      <section class="fan-photo-week">
-        <div class="fan-photo-week-heading">
-          <div>
-            <span>FROM THE NAL COMMUNITY</span>
-            <h2>FAN PHOTO OF THE WEEK</h2>
-          </div>
-          <span class="fan-photo-week-badge">FEATURED FAN</span>
-        </div>
-
-        <div class="fan-photo-week-card">
-          <div class="fan-photo-week-image" id="fanPhotoWeekImage">
-            <div class="fan-photo-week-placeholder">
-              <span class="fan-photo-camera">▣</span>
-              <strong>FAN PHOTO</strong>
-              <small>FROM THE NAL COMMUNITY</small>
+          <div id="fanZoneMediaSlideshow" class="fan-zone-media-slideshow" aria-label="Fan Photos and Videos slideshow">
+            <div class="fan-zone-media-slide-placeholder">
+              <span>▣</span>
+              <small>LOADING FAN MEDIA...</small>
             </div>
           </div>
-
-          <div class="fan-photo-week-info">
-            <span class="fan-photo-week-team" id="fanPhotoWeekTeam">NAL FAN</span>
-            <h3 id="fanPhotoWeekName">FAN NAME</h3>
-            <p id="fanPhotoWeekCaption">Your Fan Photos caption will appear here.</p>
-            <button type="button" class="fan-photo-submit-button" onclick="openFanZoneFeature('media')">
-              SUBMIT YOUR PHOTO <b>›</b>
-            </button>
-          </div>
+          <button class="fan-zone-media-view-all" type="button" onclick="openFanPhotosGallery()">
+            VIEW ALL FAN MEDIA <b>›</b>
+          </button>
         </div>
-      </section>
+      </div>
+
+      <button class="fan-zone-poll-card fan-zone-polls-banner" type="button" onclick="openFanPoll()" aria-label="Open Fan Polls">
+        <span class="fan-zone-polls-banner-copy">
+          <span class="fan-zone-tag">NAL FAN ZONE</span>
+          <strong>FAN POLLS</strong>
+          <small>Your League. Your Voice.</small>
+        </span>
+        <span class="fan-zone-polls-banner-action">ENTER <b>›</b></span>
+      </button>
+
+
+
+
 </div>
   </main>
 
@@ -9841,7 +9728,7 @@ main.app-page {
 
       <header class="fan-poll-head">
         <div class="fan-poll-kicker">NAL FAN ZONE</div>
-        <h1>FAN POLL</h1>
+        <h1>FAN POLLS</h1>
         <p id="fanPollQuestion">Loading the current NAL fan poll...</p>
       </header>
 
@@ -9877,9 +9764,6 @@ main.app-page {
         <div class="fan-gallery-empty">LOADING FAN MEDIA...</div>
       </div>
 
-      <button type="button" class="fan-gallery-submit" onclick="openFanZoneFeature('media')">
-        SHARE YOUR NAL MOMENT <b>›</b>
-      </button>
     </div>
   </main>
 
@@ -13828,7 +13712,56 @@ const headerHome =
 ========================================================= */
 
 
+let appPreviousPage = null;
+let appBackRestoring = false;
+
+function getCurrentAppPageSnapshot() {
+  const current = Array.from(pages).find(page =>
+    page.classList.contains("active") &&
+    getComputedStyle(page).display !== "none"
+  );
+
+  if (!current) return null;
+
+  return {
+    pageId: current.id,
+    scrollY: window.scrollY || 0
+  };
+}
+
+function updateAppBackButton() {
+  const row = document.getElementById("appBackRow");
+  if (!row) return;
+
+  const current = getCurrentAppPageSnapshot();
+
+  const excludedPages = new Set([
+    "homePage",
+    "articlePage",
+    "liveGameViewerPage"
+  ]);
+
+  const visible =
+    !!current &&
+    !excludedPages.has(current.pageId) &&
+    !!appPreviousPage &&
+    appPreviousPage.pageId !== current.pageId;
+
+  row.classList.toggle("is-visible", visible);
+  row.setAttribute("aria-hidden", visible ? "false" : "true");
+}
+
 function showPage(pageId) {
+
+  const leavingPage = getCurrentAppPageSnapshot();
+
+  if (
+    !appBackRestoring &&
+    leavingPage &&
+    leavingPage.pageId !== pageId
+  ) {
+    appPreviousPage = leavingPage;
+  }
 
   pages.forEach(page => {
     page.classList.remove("active");
@@ -13845,11 +13778,9 @@ function showPage(pageId) {
     page.classList.add("active");
   }
 
-
   navButtons.forEach(button => {
     button.classList.remove("active");
   });
-
 
   const navButton =
     document.querySelector(
@@ -13860,12 +13791,12 @@ function showPage(pageId) {
     navButton.classList.add("active");
   }
 
-
   window.scrollTo({
     top: 0,
     behavior: "instant"
   });
 
+  requestAnimationFrame(updateAppBackButton);
 }
 
 
@@ -14834,7 +14765,7 @@ loadNews();
    NAL TEAMS — LOAD FROM data/teams.json
    ========================================================= */
 
-const TEAM_LOGO_OVERRIDES = {"louisiana-rouxgaroux": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784", "wheeling-miners": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792", "pueblo-punishers": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792", "dallas-apex": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784", "southwest-kansas-storm": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792", "omaha-beef": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792", "salina-liberty": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792", "colorado-spartans": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784", "sioux-city-bandits": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792", "amarillo-warbirds": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776"};
+const TEAM_LOGO_OVERRIDES = {"louisiana-rouxgaroux": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux_93be9d7e-ac73-4aae-8f1f-9784ebc62616.png?v=1790208585", "wheeling-miners": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_a547bbd0-e575-4512-9ad6-47e081cb1fc3.png?v=1790208460", "pueblo-punishers": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_30eafc0a-763a-412b-838b-321dd9088d96.png?v=1790208460", "dallas-apex": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_da6cbdd6-f226-4a20-8e83-34317cd45e5e.png?v=1790208460", "southwest-kansas-storm": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_3eff88a7-a61e-48bf-8673-7b03e554d827.png?v=1790208460", "omaha-beef": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_9853fbad-f3a0-49d6-9a8f-aaa1a85b28f8.png?v=1790208460", "salina-liberty": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_87f2d951-a969-4ce6-930b-1b0094c7bd4d.png?v=1790208460", "colorado-spartans": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_3c044d01-0658-40e9-be80-ce08e59945fc.png?v=1790208460", "sioux-city-bandits": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_5e3eba6e-6998-4c9a-9b73-3999b5e5d875.png?v=1790208460", "amarillo-warbirds": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds3.png?v=1790256854"};
 
 function getTeamLogo(team) {
   if (!team) return NAL_LOGO;
@@ -15967,15 +15898,11 @@ function openNetworkVodTeam(slug){
 }
 function openTeamHomeNetworkChannel(slug){
   if(!slug) return;
-  if(typeof showPage==="function") showPage("watchPage");
-  if(typeof switchNetworkTab==="function") switchNetworkTab("archives");
-  if(typeof populateNetworkTeamChannels==="function") populateNetworkTeamChannels();
-  window.scrollTo({top:0,left:0,behavior:"instant"});
-  setTimeout(()=>{
-    if(typeof openNALTeamHub==="function" && typeof NAL_TEAM_CHANNELS!=="undefined" && NAL_TEAM_CHANNELS?.[slug]){
-      openNALTeamHub(slug);
-    }
-  },80);
+  // Open the NAL Network Team Channel directly over the current Team Home.
+  // Do not navigate to watchPage first; closing the channel returns to the team.
+  if(typeof openNALTeamHub==="function" && typeof NAL_TEAM_CHANNELS!=="undefined" && NAL_TEAM_CHANNELS?.[slug]){
+    openNALTeamHub(slug);
+  }
 }
 
 function openNetworkArchiveTeam(slug){
@@ -16042,7 +15969,7 @@ closeNetworkPreview = function(){
 ========================================================= */
 const NETWORK_FEATURED = {
   title: "Latest NAL Network Content",
-  embedUrl: "https://www.lightcast.com/embed/player.php?id=819893&channelId=72114"
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=72124&type=vod"
 };
 
 function createNetworkFeaturedVideo() {
@@ -16553,11 +16480,33 @@ function formatNalForumTime(value){
   return `${date} at ${time}`;
 }
 
+function nalMemberBadgeHTML(role){
+  let value = String(role || "fan").trim().toLowerCase();
+  if (["nal verified","nal-verified","nal_verified"].includes(value)) value = "verified";
+  if (["all-pro","all pro","all_pro"].includes(value)) value = "vip";
+  if (["mod","nal moderator"].includes(value)) value = "moderator";
+  if (value === "admin") return ""; // Preserve existing Admin treatment.
+  if (value === "verified") {
+    return `<span class="nal-member-badge nal-member-badge-verified" title="NAL Verified" aria-label="NAL Verified"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.8l2.2 1.6 2.7-.2 1.1 2.5 2.4 1.3-.3 2.7 1.5 2.3-1.5 2.3.3 2.7-2.4 1.3-1.1 2.5-2.7-.2L12 22.2l-2.2-1.6-2.7.2L6 18.3 3.6 17l.3-2.7L2.4 12l1.5-2.3-.3-2.7L6 5.7l1.1-2.5 2.7.2L12 1.8z"/><path class="nal-badge-check" d="M7.2 12.2l2.9 2.9 6.7-6.7"/></svg></span>`;
+  }
+  if (value === "vip") {
+    return `<span class="nal-member-badge nal-member-badge-vip" title="VIP" aria-label="VIP"><svg viewBox="0 0 36 28" aria-hidden="true"><path class="nal-helmet-shell" d="M4 17.2V11C4 5.3 8.6 1.8 15 1.8h3.2c7.1 0 12.2 4.6 12.2 11.2v2.2h-8.2v-2.4c0-2.3-1.8-4.1-4.2-4.1h-4.4v8.5H4z"/><path class="nal-helmet-shell" d="M8.8 17.2h10.6v4H8.8z"/><circle class="nal-helmet-ear" cx="18.7" cy="14.8" r="2.2"/><path class="nal-helmet-mask" d="M20.8 13.7h10.5v3.1h-7.2v3h9.3v3.2h-9.3v3.1"/><path class="nal-helmet-mask" d="M29.6 16.8v7.8"/></svg></span>`;
+  }
+  if (value === "moderator") {
+    return `<span class="nal-member-badge nal-member-badge-moderator" title="Moderator" aria-label="Moderator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.8l8 3.1v6.3c0 5.2-3.2 9.2-8 11-4.8-1.8-8-5.8-8-11V4.9z"/><path class="nal-mod-inner" d="M12 5.1l4.8 1.9v4.1c0 3.2-1.8 5.8-4.8 7.3-3-1.5-4.8-4.1-4.8-7.3V7z"/><path class="nal-mod-m" d="M8.9 14.9V9.2h1.7l1.4 2.3 1.4-2.3h1.7v5.7h-1.6v-3.2L12 14l-1.5-2.3v3.2z"/></svg></span>`;
+  }
+  if (value === "fan") {
+    return `<span class="nal-member-badge nal-member-badge-fan" title="Fan" aria-label="Fan"><svg viewBox="0 0 28 18" aria-hidden="true"><path d="M2.1 9c2.7-5.6 7.3-8 11.9-8s9.2 2.4 11.9 8c-2.7 5.6-7.3 8-11.9 8S4.8 14.6 2.1 9z"/><path class="nal-football-lace" d="M10.3 5.9l7.4 6.2M11.4 8.3l1.6-1.9M13.6 10.1l1.6-1.9M15.8 11.9l1.6-1.9"/></svg></span>`;
+  }
+  return `<span class="nal-member-badge nal-member-badge-fan" title="Fan" aria-label="Fan"><svg viewBox="0 0 28 18" aria-hidden="true"><path d="M2.1 9c2.7-5.6 7.3-8 11.9-8s9.2 2.4 11.9 8c-2.7 5.6-7.3 8-11.9 8S4.8 14.6 2.1 9z"/><path class="nal-football-lace" d="M10.3 5.9l7.4 6.2M11.4 8.3l1.6-1.9M13.6 10.1l1.6-1.9M15.8 11.9l1.6-1.9"/></svg></span>`;
+}
+
 function nalForumAuthorData(item){
   const profile = item?._forum_author || {};
   const name = profile.display_name || forumTopicValue(item,["author_display_name","display_name","author_name"],"NAL Fan");
+  const role = profile.role || forumTopicValue(item,["role","author_role"],"fan");
   const avatar = profile.avatar_url || forumTopicValue(item,["avatar_url","author_avatar_url"],"");
-  return { name:String(name || "NAL Fan"), avatar:String(avatar || "") };
+  return { name:String(name || "NAL Fan"), role:String(role || "fan").toLowerCase(), avatar:String(avatar || "") };
 }
 
 function nalForumAuthorHTML(item,created){
@@ -16566,7 +16515,7 @@ function nalForumAuthorHTML(item,created){
   const avatar = author.avatar
     ? `<span class="fan-forum-author-avatar"><img src="${escapeHTML(author.avatar)}" alt="" loading="lazy"></span>`
     : `<span class="fan-forum-author-avatar" aria-hidden="true">${escapeHTML(initial)}</span>`;
-  return `<div class="fan-forum-author-row">${avatar}<div class="fan-forum-author-copy"><span class="fan-forum-author-name">${escapeHTML(author.name)}</span>${created ? `<span class="fan-forum-author-time">${escapeHTML(created)}</span>` : ""}</div></div>`;
+  return `<div class="fan-forum-author-row">${avatar}<div class="fan-forum-author-copy"><span class="fan-forum-author-name">${escapeHTML(author.name)}${nalMemberBadgeHTML(author.role)}</span>${created ? `<span class="fan-forum-author-time">${escapeHTML(created)}</span>` : ""}</div></div>`;
 }
 
 async function enrichNalForumAuthors(items){
@@ -16576,7 +16525,7 @@ async function enrichNalForumAuthors(items){
   try{
     const client = getNalAccountClient();
     if (!client) return rows;
-    const { data, error } = await client.from("profiles").select("id,display_name,avatar_url").in("id",ids);
+    const { data, error } = await client.from("profiles").select("id,display_name,avatar_url,role").in("id",ids);
     if (error) throw error;
     const profiles = new Map((Array.isArray(data)?data:[]).map(profile => [String(profile.id),profile]));
     rows.forEach(item => {
@@ -17219,6 +17168,90 @@ function openNALSocial(network){
  const url=NAL_SOCIAL_LINKS[network];
  if(url) window.open(url,"_blank","noopener,noreferrer");
 }
+
+
+
+/* =========================================================
+   FAN ZONE — FAN MEDIA SLIDESHOW PREVIEW
+   Rotates approved images from the same fan-media feed.
+========================================================= */
+let fanZoneMediaSlides = [];
+let fanZoneMediaSlideIndex = 0;
+let fanZoneMediaSlideTimer = null;
+
+function renderFanZoneMediaSlide(){
+  const host = document.getElementById("fanZoneMediaSlideshow");
+  if(!host || !fanZoneMediaSlides.length) return;
+
+  const item = fanZoneMediaSlides[fanZoneMediaSlideIndex % fanZoneMediaSlides.length];
+  const media = String(item?.media || item?.imageUrl || item?.image_url || item?.photoUrl || item?.photo_url || item?.url || item?.image || "").trim();
+
+  if(!media) return;
+
+  host.innerHTML = "";
+
+  const img = document.createElement("img");
+  img.src = media;
+  img.alt = "NAL fan submitted photo";
+  img.loading = "eager";
+  img.addEventListener("error", () => {
+    fanZoneMediaSlideIndex = (fanZoneMediaSlideIndex + 1) % fanZoneMediaSlides.length;
+    renderFanZoneMediaSlide();
+  });
+
+  host.appendChild(img);
+}
+
+async function loadFanZoneMediaSlideshow(){
+  const host = document.getElementById("fanZoneMediaSlideshow");
+  if(!host) return;
+
+  try{
+    const response = await fetch("data/fan-media.json?ts=" + Date.now(), {cache:"no-store"});
+    if(!response.ok) throw new Error("Fan media feed unavailable");
+
+    const payload = await response.json();
+    const items = Array.isArray(payload)
+      ? payload
+      : Array.isArray(payload?.items)
+        ? payload.items
+        : Array.isArray(payload?.media)
+          ? payload.media
+          : Array.isArray(payload?.submissions)
+            ? payload.submissions
+            : [];
+
+    /* Home preview is intentionally photo-only.
+       Videos remain available in VIEW ALL FAN MEDIA. */
+    fanZoneMediaSlides = items.filter(item => {
+      const media = String(item?.media || item?.imageUrl || item?.image_url || item?.photoUrl || item?.photo_url || item?.url || item?.image || "").trim();
+      const type = String(item?.type || "").toLowerCase();
+      if(!media) return false;
+      if(type.includes("video")) return false;
+      return !/\.(mp4|webm|mov)(\?|$)/i.test(media);
+    });
+
+    if(!fanZoneMediaSlides.length){
+      host.innerHTML = '<div class="fan-zone-media-slide-placeholder"><span>▣</span><small>NO FAN PHOTOS YET</small></div>';
+      return;
+    }
+
+    fanZoneMediaSlideIndex = 0;
+    renderFanZoneMediaSlide();
+
+    if(fanZoneMediaSlideTimer) clearInterval(fanZoneMediaSlideTimer);
+    if(fanZoneMediaSlides.length > 1){
+      fanZoneMediaSlideTimer = setInterval(() => {
+        fanZoneMediaSlideIndex = (fanZoneMediaSlideIndex + 1) % fanZoneMediaSlides.length;
+        renderFanZoneMediaSlide();
+      }, 4000);
+    }
+  }catch(error){
+    host.innerHTML = '<div class="fan-zone-media-slide-placeholder"><span>▣</span><small>FAN MEDIA UNAVAILABLE</small></div>';
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadFanZoneMediaSlideshow);
 
 
 /* =========================================================
@@ -18516,7 +18549,7 @@ This notification will publish immediately.'))return;
     if (entered === null) return;
 
     const newRole = String(entered).trim().toLowerCase();
-    const allowedRoles = ["fan","all-pro","moderator","admin"];
+    const allowedRoles = ["fan","verified","vip","moderator","admin"];
 
     if (!allowedRoles.includes(newRole)){
       window.alert("Please enter FAN, ALL-PRO, MODERATOR, or ADMIN.");
@@ -20264,29 +20297,14 @@ function closeLightcastTest(){
   }
 
   function iframeUrlFromGame(game){
-    const LIVE_GAMES_CHANNEL_ID = "72124";
     const markup = game.embed_code_adaptive || game.embed_code || "";
     const match = String(markup).match(/<iframe[^>]+src=["']([^"']+)["']/i);
-
-    let playerUrl = "";
     if (match && match[1]) {
       const textarea = document.createElement("textarea");
       textarea.innerHTML = match[1];
-      playerUrl = textarea.value;
-    } else {
-      playerUrl = game.player_landing_url || "";
+      return textarea.value;
     }
-
-    if (!playerUrl) return "";
-
-    try {
-      const url = new URL(playerUrl, window.location.href);
-      url.searchParams.set("channelId", LIVE_GAMES_CHANNEL_ID);
-      return url.toString();
-    } catch (error) {
-      const separator = playerUrl.includes("?") ? "&" : "?";
-      return `${playerUrl}${separator}channelId=${LIVE_GAMES_CHANNEL_ID}`;
-    }
+    return game.player_landing_url || "";
   }
 
   function openLiveGame(game){
@@ -20909,90 +20927,99 @@ function closeLightcastTest(){
 
 
 <script>
-/* NAL NETWORK STANDALONE TEST ENTRY
-   No NAL Network markup, styling, IDs, channel assignments, API logic,
-   artwork, or player logic is changed here. */
-window.addEventListener("DOMContentLoaded", function () {
-  if (typeof showPage === "function") {
-    showPage("watchPage");
-  } else {
-    document.querySelectorAll(".app-page").forEach(function(page){
-      page.classList.remove("active");
+/* Previous internal app view Back control */
+(function(){
+  const button = document.getElementById("appBackButton");
+  if(!button) return;
+
+  button.addEventListener("click", function(){
+    if(!appPreviousPage?.pageId) return;
+
+    const destination = appPreviousPage;
+    appPreviousPage = null;
+    appBackRestoring = true;
+
+    showPage(destination.pageId);
+
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        top: destination.scrollY || 0,
+        left: 0,
+        behavior: "instant"
+      });
+      appBackRestoring = false;
+      updateAppBackButton();
     });
-    var networkPage = document.getElementById("watchPage");
-    if (networkPage) networkPage.classList.add("active");
-  }
-  window.scrollTo(0,0);
-});
-</script>
-
-
-<script>
-window.addEventListener("DOMContentLoaded", function () {
-  /* Remove NAL NETWORK ORIGINALS and HIGHLIGHTS only. */
-  const removeTitles = new Set(["NAL NETWORK ORIGINALS", "HIGHLIGHTS"]);
-  document.querySelectorAll("#watchPage h1, #watchPage h2, #watchPage h3, #watchPage h4, #watchPage strong").forEach(function(el){
-    const title = (el.textContent || "").trim().toUpperCase();
-    if (!removeTitles.has(title)) return;
-
-    const section =
-      el.closest(".watch-section") ||
-      el.closest(".network-section") ||
-      el.closest(".section") ||
-      el.closest("section");
-
-    if (section) section.remove();
   });
-});
-</script>
 
-
-<script id="nal-network-homepage-section-cleanup">
-(function () {
-  function removeHomepageSectionByTitle(titleText) {
-    const home = document.getElementById("watchPage");
-    if (!home) return;
-
-    const wanted = titleText.trim().toUpperCase();
-
-    const candidates = home.querySelectorAll(
-      ":scope > section h1, :scope > section h2, :scope > section h3, :scope > section h4," +
-      ":scope > .section h1, :scope > .section h2, :scope > .section h3, :scope > .section h4," +
-      ":scope > .network-section h1, :scope > .network-section h2, :scope > .network-section h3, :scope > .network-section h4"
-    );
-
-    candidates.forEach(function (heading) {
-      if ((heading.textContent || "").trim().toUpperCase() !== wanted) return;
-
-      const section =
-        heading.closest("section") ||
-        heading.closest(".network-section") ||
-        heading.closest(".section");
-
-      /* Only remove direct homepage sections, never content inside a modal/team hub. */
-      if (section && home.contains(section) &&
-          !section.closest(".modal") &&
-          !section.closest("[role='dialog']")) {
-        section.remove();
-      }
-    });
-  }
-
-  function cleanNALNetworkHomepage() {
-    removeHomepageSectionByTitle("HIGHLIGHTS");
-    removeHomepageSectionByTitle("NAL NETWORK ORIGINALS");
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", cleanNALNetworkHomepage);
-  } else {
-    cleanNALNetworkHomepage();
-  }
+  requestAnimationFrame(updateAppBackButton);
 })();
 </script>
 
 
+<script>
+/* =========================================================
+   BACK BUTTON RESILIENCE
+   Keeps the existing internal Back control synchronized even
+   when a page is opened by code that changes .app-page directly.
+   ========================================================= */
+(function(){
+  const row = document.getElementById("appBackRow");
+  const button = document.getElementById("appBackButton");
+  if(!row || !button || typeof getCurrentAppPageSnapshot !== "function") return;
 
+  let lastPage = getCurrentAppPageSnapshot();
+  let queued = false;
+
+  function syncBackFromActualPage(){
+    queued = false;
+    const now = getCurrentAppPageSnapshot();
+    if(!now) return;
+
+    if(
+      lastPage &&
+      now.pageId !== lastPage.pageId &&
+      !appBackRestoring
+    ){
+      appPreviousPage = lastPage;
+    }
+
+    lastPage = {
+      pageId: now.pageId,
+      scrollY: window.scrollY || 0
+    };
+
+    if(typeof updateAppBackButton === "function"){
+      updateAppBackButton();
+    }
+  }
+
+  function queueSync(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(syncBackFromActualPage);
+  }
+
+  document.querySelectorAll(".app-page").forEach(page => {
+    new MutationObserver(queueSync).observe(page, {
+      attributes:true,
+      attributeFilter:["class","style"]
+    });
+  });
+
+  document.addEventListener("pointerdown", function(){
+    const now = getCurrentAppPageSnapshot();
+    if(now){
+      lastPage = {
+        pageId: now.pageId,
+        scrollY: window.scrollY || 0
+      };
+    }
+  }, true);
+
+  requestAnimationFrame(syncBackFromActualPage);
+})();
+</script>
 
 </body>
 </html>
