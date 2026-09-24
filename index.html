@@ -7342,26 +7342,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================================
-   NATIVE TEAMS DIRECTORY — SEASON X
+   TEAMS DIRECTORY — VISUAL REFRESH ONLY
+   Existing dynamic content + click behavior preserved.
 ========================================================= */
-.teams-directory-page{
-  min-height:calc(100vh - 72px);
-  padding:18px 14px 105px;
-  background:#07172b;
+#teamsPage{
+  background:#07172b !important;
   color:#fff;
+  min-height:calc(100vh - 72px);
 }
-.teams-directory-shell{max-width:760px;margin:0 auto}
-.teams-directory-hero{
+#teamsPage .teams-directory{
+  max-width:760px;
+  margin:0 auto;
+  padding:18px 14px 105px !important;
+}
+#teamsPage .teams-directory-head{
   position:relative;
   overflow:hidden;
-  padding:25px 20px 23px;
-  border-radius:18px;
+  display:block !important;
+  margin:0 0 21px !important;
+  padding:25px 20px 23px !important;
+  border-radius:18px !important;
+  text-align:left !important;
   background:
     radial-gradient(circle at 92% 15%,rgba(227,27,35,.34),transparent 28%),
-    linear-gradient(125deg,#07172b,#12345b);
-  box-shadow:0 12px 28px rgba(0,0,0,.25);
+    linear-gradient(125deg,#07172b,#12345b) !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.25) !important;
 }
-.teams-directory-hero::after{
+#teamsPage .teams-directory-head::after{
   content:"◈";
   position:absolute;
   right:18px;
@@ -7373,122 +7380,106 @@ document.addEventListener("DOMContentLoaded", () => {
   transform:rotate(8deg);
   pointer-events:none;
 }
-.teams-directory-kicker{
+#teamsPage .teams-directory-kicker{
   position:relative;
   z-index:1;
   color:#e31b23;
   font-size:9px;
+  line-height:1.2;
   font-weight:1000;
   letter-spacing:1.5px;
+  text-transform:uppercase;
 }
-.teams-directory-hero h1{
+#teamsPage .teams-directory-head h1{
   position:relative;
   z-index:1;
-  margin:4px 0 7px;
-  color:#fff;
-  font-size:34px;
-  line-height:1;
-  font-weight:1000;
-  letter-spacing:-1.1px;
+  margin:4px 0 7px !important;
+  color:#fff !important;
+  font-size:34px !important;
+  line-height:1 !important;
+  font-weight:1000 !important;
+  letter-spacing:-1.1px !important;
 }
-.teams-directory-hero p{
+#teamsPage .teams-directory-head p{
   position:relative;
   z-index:1;
-  margin:0;
-  color:#d3deea;
-  font-size:12px;
-  font-weight:750;
-  letter-spacing:.35px;
+  margin:0 !important;
+  color:#d3deea !important;
+  font-size:12px !important;
+  line-height:1.5 !important;
+  font-weight:750 !important;
+  letter-spacing:.35px !important;
 }
-.teams-directory-content{padding:21px 0 22px}
-.teams-directory-heading{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  margin:0 2px 13px;
-  color:#fff;
-  font-size:16px;
-  font-weight:1000;
-}
-.teams-directory-heading::before{
-  content:"";
-  width:4px;
-  height:18px;
-  border-radius:4px;
-  background:#e31b23;
-}
-#teamsPage .teams-grid{
+#teamsPage .teams-directory-grid{
   display:grid !important;
   grid-template-columns:repeat(2,minmax(0,1fr)) !important;
   gap:11px !important;
 }
-#teamsPage .team-card{
-  position:relative;
-  overflow:hidden;
-  min-height:224px;
-  padding:15px 10px 13px !important;
+#teamsPage .teams-directory-card{
+  position:relative !important;
+  overflow:hidden !important;
+  min-height:205px !important;
+  padding:15px 10px 14px !important;
   border:1px solid rgba(255,255,255,.07) !important;
   border-radius:15px !important;
   background:linear-gradient(145deg,#102b4e,#0a2039) !important;
   color:#fff !important;
-  text-align:center;
+  text-align:center !important;
   box-shadow:0 7px 18px rgba(0,0,0,.20) !important;
 }
-#teamsPage .team-card::before{
+#teamsPage .teams-directory-card::before{
   content:"";
   position:absolute;
   left:0;right:0;top:0;
   height:3px;
   background:#e31b23;
 }
-#teamsPage .team-card .team-logo-wrap,
-#teamsPage .team-card .logo-wrap{
-  min-height:115px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:8px;
-  border-radius:12px;
+#teamsPage .teams-directory-logo{
+  width:100% !important;
+  height:130px !important;
+  min-height:130px !important;
+  margin:0 0 9px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border-radius:12px !important;
   background:
     radial-gradient(circle at center,
       rgba(255,255,255,.14) 0%,
       rgba(255,255,255,.07) 35%,
       rgba(16,43,78,.025) 58%,
-      rgba(7,23,43,0) 76%);
+      rgba(7,23,43,0) 76%) !important;
 }
-#teamsPage .team-card img{
-  max-width:108px !important;
-  max-height:105px !important;
+#teamsPage .teams-directory-logo img{
+  width:auto !important;
+  height:auto !important;
+  max-width:118px !important;
+  max-height:115px !important;
   object-fit:contain !important;
   filter:
     drop-shadow(0 9px 9px rgba(0,0,0,.68))
-    drop-shadow(0 2px 2px rgba(0,0,0,.50));
+    drop-shadow(0 2px 2px rgba(0,0,0,.50)) !important;
 }
-#teamsPage .team-card .team-name{
+#teamsPage .teams-directory-name{
+  margin:0 !important;
+  min-height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   color:#fff !important;
   font-size:14px !important;
   line-height:1.08 !important;
   font-weight:1000 !important;
   text-transform:uppercase;
 }
-#teamsPage .team-card .team-city,
-#teamsPage .team-card .team-market{
-  margin-top:4px;
-  color:#aeb8c6 !important;
-  font-size:9px !important;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-}
-#teamsPage .team-card .team-arrow,
-#teamsPage .team-card .view-team{
-  color:#e31b23 !important;
-  font-weight:1000;
+#teamsPage .teams-load-message{
+  grid-column:1/-1;
+  color:#d3deea !important;
 }
 @media(max-width:360px){
-  #teamsPage .teams-grid{gap:8px !important}
-  #teamsPage .team-card{padding-left:7px !important;padding-right:7px !important}
-  #teamsPage .team-card .team-name{font-size:12.5px !important}
+  #teamsPage .teams-directory-grid{gap:8px !important}
+  #teamsPage .teams-directory-card{padding-left:7px !important;padding-right:7px !important}
+  #teamsPage .teams-directory-name{font-size:12.5px !important}
 }
 
 </style>
@@ -8747,19 +8738,15 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </main>
 
-  <main id="teamsPage" class="app-page teams-directory-page" style="display:none;">
-  <div class="teams-directory-shell">
-    <section class="teams-directory-hero">
+  <main id="teamsPage" class="app-page teams-page" style="display:none;">
+  <section class="teams-directory">
+    <div class="teams-directory-head">
       <div class="teams-directory-kicker">NAL TEAMS</div>
       <h1>THE TEAMS</h1>
       <p>SEASON X • 2027</p>
-    </section>
-
-    <section class="teams-directory-content">
-      <div class="teams-directory-heading">SEASON X TEAMS</div>
-      <div id="teamsGrid" class="teams-grid"></div>
-    </section>
-  </div>
+    </div>
+    <div id="teamsDirectoryGrid" class="teams-directory-grid"></div>
+  </section>
 </main>
 
 <!-- =====================================================
