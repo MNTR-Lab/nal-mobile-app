@@ -3,12 +3,12 @@
   "season_label": "2025-2026",
   "stats_section_id": "1200",
   "division_id": "41958",
-  "generated_at": "2026-09-24T13:00:41.089830+00:00",
+  "generated_at": "2026-09-24T13:05:04.251311+00:00",
   "team_count": 10,
   "successful_teams": 10,
   "failed_teams": 0,
   "total_players": 196,
-  "total_staff": 172,
+  "total_staff": 26,
   "teams": [
     {
       "slug": "amarillo-warbirds",
@@ -216,118 +216,13 @@
       ],
       "staff": [
         {
-          "staff_id": "",
-          "name": "Addison McCauley",
-          "position": "18"
-        },
-        {
-          "staff_id": "",
-          "name": "Almount Smith",
-          "position": "12"
-        },
-        {
-          "staff_id": "",
-          "name": "Christian Stokley",
-          "position": "2"
-        },
-        {
-          "staff_id": "",
-          "name": "Damion Powell",
-          "position": "77"
-        },
-        {
-          "staff_id": "",
-          "name": "Daniel Byse",
-          "position": "91"
-        },
-        {
-          "staff_id": "",
-          "name": "Demry Croft",
-          "position": "6"
-        },
-        {
-          "staff_id": "",
-          "name": "Desmond Raiford",
-          "position": "7"
-        },
-        {
-          "staff_id": "",
-          "name": "Devery Smith",
-          "position": "33"
-        },
-        {
-          "staff_id": "",
-          "name": "Dren Johnson",
-          "position": "17"
-        },
-        {
-          "staff_id": "",
-          "name": "Frankie Solomon Jr",
-          "position": "4"
-        },
-        {
-          "staff_id": "",
-          "name": "Jalen Riley",
-          "position": "76"
-        },
-        {
-          "staff_id": "",
-          "name": "Josh Batiste",
-          "position": "10"
-        },
-        {
-          "staff_id": "",
-          "name": "Kearyon Taylor",
-          "position": "4"
-        },
-        {
-          "staff_id": "",
-          "name": "LaGrant Pegram Jr.",
-          "position": "5"
-        },
-        {
-          "staff_id": "",
-          "name": "Lakedrick Holmes",
-          "position": "1"
-        },
-        {
-          "staff_id": "",
-          "name": "Michael Arceneaux",
-          "position": "0"
-        },
-        {
-          "staff_id": "",
-          "name": "Miqueal Pillow-Smiley",
-          "position": "94"
-        },
-        {
-          "staff_id": "",
-          "name": "Orlando Doss",
-          "position": "8"
-        },
-        {
-          "staff_id": "",
-          "name": "Shaquan Curenton",
-          "position": "9"
-        },
-        {
-          "staff_id": "",
-          "name": "Tyler Cassell",
-          "position": "65"
-        },
-        {
-          "staff_id": "",
-          "name": "Xavier Powell",
-          "position": "11"
-        },
-        {
-          "staff_id": "",
-          "name": "Zyquarius Dixon",
-          "position": "32"
+          "staff_id": "121416",
+          "name": "Jimmy Johnson",
+          "position": "Head Coach"
         }
       ],
       "player_count": 22,
-      "staff_count": 22
+      "staff_count": 1
     },
     {
       "slug": "colorado-spartans",
@@ -797,133 +692,28 @@
       ],
       "staff": [
         {
-          "staff_id": "",
-          "name": "Brian Isaac",
-          "position": "30"
+          "staff_id": "121368",
+          "name": "Thomas Williams",
+          "position": "Defensive/Asst. HC"
         },
         {
-          "staff_id": "",
-          "name": "Cedric Hearvey",
-          "position": "97"
+          "staff_id": "121369",
+          "name": "Nathanael Block",
+          "position": "OL/DL Coach"
         },
         {
-          "staff_id": "",
-          "name": "Chase Baker",
-          "position": "69"
+          "staff_id": "121370",
+          "name": "Mike Clark",
+          "position": "Assistant Coach"
         },
         {
-          "staff_id": "",
-          "name": "Chauncey Lowman",
-          "position": "13"
-        },
-        {
-          "staff_id": "",
-          "name": "Dajon Richard",
-          "position": "0"
-        },
-        {
-          "staff_id": "",
-          "name": "Devonte Carter",
-          "position": "77"
-        },
-        {
-          "staff_id": "",
-          "name": "Dominique Pugh",
-          "position": "21"
-        },
-        {
-          "staff_id": "",
-          "name": "Dylan Moghaddam",
-          "position": "8"
-        },
-        {
-          "staff_id": "",
-          "name": "Jacobi Brewer",
-          "position": "50"
-        },
-        {
-          "staff_id": "",
-          "name": "Jamarsha Huglon",
-          "position": "9"
-        },
-        {
-          "staff_id": "",
-          "name": "James Pitre",
-          "position": "11"
-        },
-        {
-          "staff_id": "",
-          "name": "James Taylor",
-          "position": "88"
-        },
-        {
-          "staff_id": "",
-          "name": "Javon Ross",
-          "position": "71"
-        },
-        {
-          "staff_id": "",
-          "name": "Jay Kennedy",
-          "position": ""
-        },
-        {
-          "staff_id": "",
-          "name": "Jordan Barton",
-          "position": "10"
-        },
-        {
-          "staff_id": "",
-          "name": "Keon Coleman",
-          "position": ""
-        },
-        {
-          "staff_id": "",
-          "name": "Keontae Chavies",
-          "position": "16"
-        },
-        {
-          "staff_id": "",
-          "name": "La'Roderick Scott",
-          "position": "5"
-        },
-        {
-          "staff_id": "",
-          "name": "Levonta Hall",
-          "position": "6"
-        },
-        {
-          "staff_id": "",
-          "name": "Malik Allen",
-          "position": "15"
-        },
-        {
-          "staff_id": "",
-          "name": "Monquez Moore",
-          "position": "23"
-        },
-        {
-          "staff_id": "",
-          "name": "Quintayvion Taylor",
-          "position": "17"
-        },
-        {
-          "staff_id": "",
-          "name": "Rashad Ridley",
-          "position": "4"
-        },
-        {
-          "staff_id": "",
-          "name": "Trayoun Maxie",
-          "position": "7"
-        },
-        {
-          "staff_id": "",
-          "name": "Trayv'on Culbert",
-          "position": "3"
+          "staff_id": "121367",
+          "name": "Michael Blair",
+          "position": "Head Coach"
         }
       ],
       "player_count": 25,
-      "staff_count": 25
+      "staff_count": 4
     },
     {
       "slug": "omaha-beef",
@@ -1167,138 +957,33 @@
       ],
       "staff": [
         {
-          "staff_id": "",
-          "name": "Arthur Anderson IV",
-          "position": "80"
+          "staff_id": "79614",
+          "name": "Adam Loftis",
+          "position": "Interim Head Coach"
         },
         {
-          "staff_id": "",
-          "name": "Brandon Munoz",
-          "position": "0"
+          "staff_id": "102620",
+          "name": "CJ Cain",
+          "position": "OC / Line Coach"
         },
         {
-          "staff_id": "",
-          "name": "Chase Contreraz",
-          "position": "19"
+          "staff_id": "106571",
+          "name": "Brandon Stewart",
+          "position": "Special Teams Coach"
         },
         {
-          "staff_id": "",
-          "name": "Chris Perry",
-          "position": "3"
+          "staff_id": "79153",
+          "name": "Marty Almendarez",
+          "position": "Equip. / Bench Coach"
         },
         {
-          "staff_id": "",
-          "name": "Dalton Phillips",
-          "position": "73"
-        },
-        {
-          "staff_id": "",
-          "name": "David Francis",
-          "position": "15"
-        },
-        {
-          "staff_id": "",
-          "name": "David Ross",
-          "position": "32"
-        },
-        {
-          "staff_id": "",
-          "name": "Dequan Dudley",
-          "position": "17"
-        },
-        {
-          "staff_id": "",
-          "name": "Devanaire Conliffe",
-          "position": "12"
-        },
-        {
-          "staff_id": "",
-          "name": "D'Nerius Antoine",
-          "position": "13"
-        },
-        {
-          "staff_id": "",
-          "name": "Edarius Anderson",
-          "position": "55"
-        },
-        {
-          "staff_id": "",
-          "name": "Freedom Akinmoladun",
-          "position": "91"
-        },
-        {
-          "staff_id": "",
-          "name": "Jaylen Johnson",
-          "position": "42"
-        },
-        {
-          "staff_id": "",
-          "name": "Jaylen Perkins Sr.",
-          "position": "23"
-        },
-        {
-          "staff_id": "",
-          "name": "Jayshawn Washington",
-          "position": "5"
-        },
-        {
-          "staff_id": "",
-          "name": "Keyshawn Cobb",
-          "position": "20"
-        },
-        {
-          "staff_id": "",
-          "name": "Korrell Koehlmoos",
-          "position": "16"
-        },
-        {
-          "staff_id": "",
-          "name": "Lorenzo Thompson",
-          "position": "2"
-        },
-        {
-          "staff_id": "",
-          "name": "Olukayode Akinmoladun Jr.",
-          "position": "50"
-        },
-        {
-          "staff_id": "",
-          "name": "Ponce Deleon",
-          "position": "26"
-        },
-        {
-          "staff_id": "",
-          "name": "Reggie Patrick",
-          "position": "71"
-        },
-        {
-          "staff_id": "",
-          "name": "Rodell Rahmaan",
-          "position": "11"
-        },
-        {
-          "staff_id": "",
-          "name": "Terrence Jackson Jr",
-          "position": "1"
-        },
-        {
-          "staff_id": "",
-          "name": "Trevor Stewart",
-          "position": ""
-        },
-        {
-          "staff_id": "",
-          "name": "Trey Dudley-Giles",
-          "position": "21"
-        },
-        {
-          "staff_id": "",
-          "name": "Vincent Espinoza",
-          "position": "8"
+          "staff_id": "108991",
+          "name": "George Martinez",
+          "position": "Quality Control"
         }
       ],
       "player_count": 26,
-      "staff_count": 26
+      "staff_count": 5
     },
     {
       "slug": "pueblo-punishers",
@@ -1524,128 +1209,13 @@
       ],
       "staff": [
         {
-          "staff_id": "",
-          "name": "Chris Elmore",
-          "position": "3"
-        },
-        {
-          "staff_id": "",
-          "name": "Dawandrick Crockett",
-          "position": "5"
-        },
-        {
-          "staff_id": "",
-          "name": "Devond Blair Jr",
-          "position": ""
-        },
-        {
-          "staff_id": "",
-          "name": "Harold Brooks",
-          "position": "14"
-        },
-        {
-          "staff_id": "",
-          "name": "Jeff Luc",
-          "position": "1"
-        },
-        {
-          "staff_id": "",
-          "name": "Jeff Mack II",
-          "position": "4"
-        },
-        {
-          "staff_id": "",
-          "name": "Jo-El Shaw",
-          "position": "9"
-        },
-        {
-          "staff_id": "",
-          "name": "Josh Best",
-          "position": "2"
-        },
-        {
-          "staff_id": "",
-          "name": "Joshua Hollins",
-          "position": "8"
-        },
-        {
-          "staff_id": "",
-          "name": "Kaytron Allen",
-          "position": "22"
-        },
-        {
-          "staff_id": "",
-          "name": "Kentrell Pierce",
-          "position": "21"
-        },
-        {
-          "staff_id": "",
-          "name": "Kenttwon Brown",
-          "position": "12"
-        },
-        {
-          "staff_id": "",
-          "name": "Keshaun Taylor",
-          "position": "7"
-        },
-        {
-          "staff_id": "",
-          "name": "King Mwikuta",
-          "position": "24"
-        },
-        {
-          "staff_id": "",
-          "name": "Makeah Scippio",
-          "position": "20"
-        },
-        {
-          "staff_id": "",
-          "name": "Marcello Holguin",
-          "position": "92"
-        },
-        {
-          "staff_id": "",
-          "name": "Noa Purcell",
-          "position": "17"
-        },
-        {
-          "staff_id": "",
-          "name": "Rodrick Jarrett",
-          "position": "23"
-        },
-        {
-          "staff_id": "",
-          "name": "Rudy Ngougni",
-          "position": "13"
-        },
-        {
-          "staff_id": "",
-          "name": "Stanley Williams",
-          "position": "7"
-        },
-        {
-          "staff_id": "",
-          "name": "Stephen Nagbe Jr",
-          "position": "10"
-        },
-        {
-          "staff_id": "",
-          "name": "Tevin Shipp",
-          "position": "11"
-        },
-        {
-          "staff_id": "",
-          "name": "Tyrell Thompson",
-          "position": "95"
-        },
-        {
-          "staff_id": "",
-          "name": "Victor Leventritt",
-          "position": "15"
+          "staff_id": "116385",
+          "name": "Clinton Soloman",
+          "position": "Co-Head Coach"
         }
       ],
       "player_count": 24,
-      "staff_count": 24
+      "staff_count": 1
     },
     {
       "slug": "salina-liberty",
@@ -1880,133 +1450,28 @@
       ],
       "staff": [
         {
-          "staff_id": "",
-          "name": "Adina Okeke",
-          "position": "60"
+          "staff_id": "113587",
+          "name": "Heron ONeal",
+          "position": "Head Coach/AGM/OC"
         },
         {
-          "staff_id": "",
-          "name": "Aleki Tapa",
-          "position": "70"
+          "staff_id": "91904",
+          "name": "Jermaine Hampton",
+          "position": "Defensive Coord."
         },
         {
-          "staff_id": "",
-          "name": "Daniel Mckinney",
-          "position": "3"
+          "staff_id": "113588",
+          "name": "Dominic Logan",
+          "position": "OL/DL Coach"
         },
         {
-          "staff_id": "",
-          "name": "Darin Hungerford",
-          "position": "9"
-        },
-        {
-          "staff_id": "",
-          "name": "Dion Kuinlan",
-          "position": "15"
-        },
-        {
-          "staff_id": "",
-          "name": "Dylan Van Boxel",
-          "position": "12"
-        },
-        {
-          "staff_id": "",
-          "name": "Ed Smith Jr.",
-          "position": "0"
-        },
-        {
-          "staff_id": "",
-          "name": "Gabriel Reed",
-          "position": "46"
-        },
-        {
-          "staff_id": "",
-          "name": "Gourney Sloan",
-          "position": "25"
-        },
-        {
-          "staff_id": "",
-          "name": "Henry Kellogg",
-          "position": "12"
-        },
-        {
-          "staff_id": "",
-          "name": "Jahlil Brown",
-          "position": "4"
-        },
-        {
-          "staff_id": "",
-          "name": "Justin Foster",
-          "position": "16"
-        },
-        {
-          "staff_id": "",
-          "name": "Kavon Samuels",
-          "position": "6"
-        },
-        {
-          "staff_id": "",
-          "name": "Kerry Starks",
-          "position": "1"
-        },
-        {
-          "staff_id": "",
-          "name": "Neriyan Brown",
-          "position": "5"
-        },
-        {
-          "staff_id": "",
-          "name": "Noah Hambrick",
-          "position": "14"
-        },
-        {
-          "staff_id": "",
-          "name": "Rico Moore",
-          "position": "10"
-        },
-        {
-          "staff_id": "",
-          "name": "Shane Meerbott",
-          "position": "23"
-        },
-        {
-          "staff_id": "",
-          "name": "Spensirr Howard",
-          "position": "3"
-        },
-        {
-          "staff_id": "",
-          "name": "Stephen Matina",
-          "position": "99"
-        },
-        {
-          "staff_id": "",
-          "name": "Tracy Brooks",
-          "position": "2"
-        },
-        {
-          "staff_id": "",
-          "name": "Travis Taylor",
-          "position": "40"
-        },
-        {
-          "staff_id": "",
-          "name": "Trevonte Carter",
-          "position": "11"
-        },
-        {
-          "staff_id": "",
-          "name": "Tyrie Adams",
-          "position": "8"
-        },
-        {
-          "staff_id": "",
-          "name": "Zion Byrd",
-          "position": "74"
+          "staff_id": "113589",
+          "name": "Dylan Mendicina",
+          "position": "Coaching Analyst"
         }
       ],
       "player_count": 25,
-      "staff_count": 25
+      "staff_count": 4
     },
     {
       "slug": "sioux-city-bandits",
@@ -2241,133 +1706,38 @@
       ],
       "staff": [
         {
-          "staff_id": "",
-          "name": "Ben Pister",
-          "position": "7"
+          "staff_id": "77373",
+          "name": "Erv Strohbeen",
+          "position": "Head Coach"
         },
         {
-          "staff_id": "",
-          "name": "Braden Meints",
-          "position": "18"
+          "staff_id": "79359",
+          "name": "Marlon Lobban",
+          "position": "DC/Recruiting Coord."
         },
         {
-          "staff_id": "",
-          "name": "Brandon Sheperd",
-          "position": "14"
+          "staff_id": "79360",
+          "name": "Scott Jensen",
+          "position": "Offensive Coord."
         },
         {
-          "staff_id": "",
-          "name": "Carlton Watkins",
-          "position": "5"
+          "staff_id": "82566",
+          "name": "Dennis Wagner",
+          "position": "Offensive Line"
         },
         {
-          "staff_id": "",
-          "name": "Dajon Emory",
-          "position": "15"
+          "staff_id": "24574",
+          "name": "Josh Resignalo",
+          "position": "Assistant Coach"
         },
         {
-          "staff_id": "",
-          "name": "Damond Powell",
-          "position": "6"
-        },
-        {
-          "staff_id": "",
-          "name": "Devin Groenhagen",
-          "position": "26"
-        },
-        {
-          "staff_id": "",
-          "name": "Dylan Karnes",
-          "position": "20"
-        },
-        {
-          "staff_id": "",
-          "name": "Fred Bruno",
-          "position": "2"
-        },
-        {
-          "staff_id": "",
-          "name": "Isaiah Blackmon",
-          "position": "17"
-        },
-        {
-          "staff_id": "",
-          "name": "Jacob Ungruhe",
-          "position": "73"
-        },
-        {
-          "staff_id": "",
-          "name": "Jadon Johnson",
-          "position": "21"
-        },
-        {
-          "staff_id": "",
-          "name": "Jatavius Stewart",
-          "position": "22"
-        },
-        {
-          "staff_id": "",
-          "name": "Juan Moore",
-          "position": "16"
-        },
-        {
-          "staff_id": "",
-          "name": "Justin Gilbert",
-          "position": "0"
-        },
-        {
-          "staff_id": "",
-          "name": "Laronji Vason-McCoy",
-          "position": "8"
-        },
-        {
-          "staff_id": "",
-          "name": "Lorenzo Brown",
-          "position": "10"
-        },
-        {
-          "staff_id": "",
-          "name": "Marzion Crosby",
-          "position": "9"
-        },
-        {
-          "staff_id": "",
-          "name": "Monalo Caldwell",
-          "position": "11"
-        },
-        {
-          "staff_id": "",
-          "name": "Raheem Harvey",
-          "position": "3"
-        },
-        {
-          "staff_id": "",
-          "name": "Sterling Clark",
-          "position": "70"
-        },
-        {
-          "staff_id": "",
-          "name": "Tony Kennedy",
-          "position": "55"
-        },
-        {
-          "staff_id": "",
-          "name": "Treden Davis-Reed",
-          "position": "19"
-        },
-        {
-          "staff_id": "",
-          "name": "Verlon Reed",
-          "position": "1"
-        },
-        {
-          "staff_id": "",
-          "name": "William Rollins",
-          "position": "56"
+          "staff_id": "82567",
+          "name": "Anthony Thomas",
+          "position": "Defensive Line"
         }
       ],
       "player_count": 25,
-      "staff_count": 25
+      "staff_count": 6
     },
     {
       "slug": "southwest-kansas-storm",
@@ -2602,133 +1972,33 @@
       ],
       "staff": [
         {
-          "staff_id": "",
-          "name": "Austin Bacher",
-          "position": "24"
+          "staff_id": "113592",
+          "name": "Gary Thomas",
+          "position": "Head Coach"
         },
         {
-          "staff_id": "",
-          "name": "Carvelle Keely",
-          "position": "70"
+          "staff_id": "113593",
+          "name": "Jason Scheck",
+          "position": "Co-DC"
         },
         {
-          "staff_id": "",
-          "name": "Demarius Washington",
-          "position": "0"
+          "staff_id": "113594",
+          "name": "Patrick Callahan",
+          "position": "Co-DC"
         },
         {
-          "staff_id": "",
-          "name": "De'Shayvion Mcrath",
-          "position": "11"
+          "staff_id": "113595",
+          "name": "Marcos Gutierres",
+          "position": "Offensive Line"
         },
         {
-          "staff_id": "",
-          "name": "Dillon Burkhard",
-          "position": "15"
-        },
-        {
-          "staff_id": "",
-          "name": "Dominic Moore",
-          "position": "50"
-        },
-        {
-          "staff_id": "",
-          "name": "Dwayne Thompson Ii",
-          "position": "13"
-        },
-        {
-          "staff_id": "",
-          "name": "Jaden Sutton",
-          "position": "3"
-        },
-        {
-          "staff_id": "",
-          "name": "Jalen Knox",
-          "position": "9"
-        },
-        {
-          "staff_id": "",
-          "name": "Jamell Winn Ii",
-          "position": "55"
-        },
-        {
-          "staff_id": "",
-          "name": "Jaylen Pickle",
-          "position": "93"
-        },
-        {
-          "staff_id": "",
-          "name": "Jelani Baker",
-          "position": "8"
-        },
-        {
-          "staff_id": "",
-          "name": "Joshua Moore",
-          "position": "56"
-        },
-        {
-          "staff_id": "",
-          "name": "Josiah Silver",
-          "position": "20"
-        },
-        {
-          "staff_id": "",
-          "name": "Jyaire Stevens",
-          "position": "5"
-        },
-        {
-          "staff_id": "",
-          "name": "Kyle Meyers",
-          "position": "6"
-        },
-        {
-          "staff_id": "",
-          "name": "Mason Pierce",
-          "position": "2"
-        },
-        {
-          "staff_id": "",
-          "name": "Matt Friess",
-          "position": "4"
-        },
-        {
-          "staff_id": "",
-          "name": "Naeem Alexander",
-          "position": "10"
-        },
-        {
-          "staff_id": "",
-          "name": "Rafael Recio",
-          "position": "77"
-        },
-        {
-          "staff_id": "",
-          "name": "Shaquez Bond",
-          "position": "7"
-        },
-        {
-          "staff_id": "",
-          "name": "Timothy Shannon Jr.",
-          "position": "21"
-        },
-        {
-          "staff_id": "",
-          "name": "Trae Self",
-          "position": "1"
-        },
-        {
-          "staff_id": "",
-          "name": "Vincent Dileo ||",
-          "position": "34"
-        },
-        {
-          "staff_id": "",
-          "name": "Zachary Fondal",
-          "position": "72"
+          "staff_id": "113596",
+          "name": "Logan Hernandez",
+          "position": "Running Backs"
         }
       ],
       "player_count": 25,
-      "staff_count": 25
+      "staff_count": 5
     },
     {
       "slug": "wheeling-miners",
