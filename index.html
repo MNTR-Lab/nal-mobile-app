@@ -20570,5 +20570,70 @@ function closeLightcastTest(){
 })();
 </script>
 
+
+<script>
+/* =========================================================
+   BACK BUTTON RESILIENCE
+   Keeps the existing internal Back control synchronized even
+   when a page is opened by code that changes .app-page directly.
+   ========================================================= */
+(function(){
+  const row = document.getElementById("appBackRow");
+  const button = document.getElementById("appBackButton");
+  if(!row || !button || typeof getCurrentAppPageSnapshot !== "function") return;
+
+  let lastPage = getCurrentAppPageSnapshot();
+  let queued = false;
+
+  function syncBackFromActualPage(){
+    queued = false;
+    const now = getCurrentAppPageSnapshot();
+    if(!now) return;
+
+    if(
+      lastPage &&
+      now.pageId !== lastPage.pageId &&
+      !appBackRestoring
+    ){
+      appPreviousPage = lastPage;
+    }
+
+    lastPage = {
+      pageId: now.pageId,
+      scrollY: window.scrollY || 0
+    };
+
+    if(typeof updateAppBackButton === "function"){
+      updateAppBackButton();
+    }
+  }
+
+  function queueSync(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(syncBackFromActualPage);
+  }
+
+  document.querySelectorAll(".app-page").forEach(page => {
+    new MutationObserver(queueSync).observe(page, {
+      attributes:true,
+      attributeFilter:["class","style"]
+    });
+  });
+
+  document.addEventListener("pointerdown", function(){
+    const now = getCurrentAppPageSnapshot();
+    if(now){
+      lastPage = {
+        pageId: now.pageId,
+        scrollY: window.scrollY || 0
+      };
+    }
+  }, true);
+
+  requestAnimationFrame(syncBackFromActualPage);
+})();
+</script>
+
 </body>
 </html>
