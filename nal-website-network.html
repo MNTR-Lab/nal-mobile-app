@@ -20970,5 +20970,45 @@ window.addEventListener("DOMContentLoaded", function () {
 })();
 </script>
 
+
+<script id="nal-team-channel-exact-artwork">
+(function(){
+  const artwork = {"amarillo-warbirds": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776", "colorado-spartans": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784", "dallas-apex": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784", "louisiana-rouxgaroux": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784", "omaha-beef": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792", "pueblo-punishers": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792", "salina-liberty": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792", "sioux-city-bandits": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792", "southwest-kansas-storm": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792", "wheeling-miners": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792"};
+
+  function applyExactTeamArtwork(){
+    document.querySelectorAll('#watchPage [data-network-panel="archives"] a, #watchPage [data-network-panel="archives"] button, #watchPage [data-network-panel="archives"] .network-team-card, #watchPage [data-network-panel="archives"] .network-archive-card').forEach(function(card){
+      const raw = [
+        card.getAttribute('href') || '',
+        card.getAttribute('onclick') || '',
+        card.getAttribute('data-team') || '',
+        card.getAttribute('data-slug') || '',
+        card.outerHTML.slice(0,1200)
+      ].join(' ').toLowerCase();
+
+      Object.keys(artwork).forEach(function(slug){
+        const aliases = [slug];
+        if(slug === 'louisiana-rouxgaroux') aliases.push('louisiana-rougaroux','louisiana');
+        if(slug === 'southwest-kansas-storm') aliases.push('sw-kansas-storm','southwest-kansas','sw-kansas');
+        if(aliases.some(function(a){ return raw.indexOf(a) !== -1; })){
+          const img = card.querySelector('.network-team-channel-art img') || card.querySelector('img');
+          if(img){
+            img.src = artwork[slug];
+            img.removeAttribute('srcset');
+          }
+        }
+      });
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', applyExactTeamArtwork);
+  } else {
+    applyExactTeamArtwork();
+  }
+  window.addEventListener('load', applyExactTeamArtwork);
+  setTimeout(applyExactTeamArtwork, 300);
+})();
+</script>
+
 </body>
 </html>
