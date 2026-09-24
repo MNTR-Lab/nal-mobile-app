@@ -7608,6 +7608,17 @@ document.addEventListener("DOMContentLoaded", () => {
   text-transform:uppercase;
 }
 
+
+/* TEAM HOME — INTERNAL WATCH CHANNEL BUTTON RESET */
+#teamWatchChannelButton{
+  width:100%;
+  font:inherit;
+  color:inherit;
+  text-align:left;
+  border:0;
+  cursor:pointer;
+}
+
 </style>
 
 <style>
@@ -8513,7 +8524,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </div>
 
-    <div class="team-watch-card">
+    <button class="team-watch-card" id="teamWatchChannelButton" type="button" aria-label="Open team channel on NAL Network">
 
       <div class="team-watch-play">
         ▶
@@ -8538,7 +8549,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       </div>
 
-    </div>
+    </button>
 
   </section>
 
@@ -14770,6 +14781,19 @@ function openTeamHome(team) {
 
 
   /* =====================================================
+     WATCH TEAM — INTERNAL NAL NETWORK TEAM CHANNEL
+     ===================================================== */
+  const teamWatchChannelButton = document.getElementById("teamWatchChannelButton");
+  if (teamWatchChannelButton) {
+    teamWatchChannelButton.onclick = () => {
+      if (typeof openTeamHomeNetworkChannel === "function") {
+        openTeamHomeNetworkChannel(team.slug);
+      }
+    };
+  }
+
+
+  /* =====================================================
      OFFICIAL WEBSITE BUTTON
      ===================================================== */
 
@@ -14826,6 +14850,17 @@ function openTeamHome(team) {
 
           const destination =
             button.dataset.teamLink;
+
+          /* Native Team Home routing */
+          if (destination === "schedule" && typeof window.openNalTeamSchedule === "function") {
+            window.openNalTeamSchedule(team.name || shortName);
+            return;
+          }
+
+          if (destination === "stats" && typeof window.openNalStats === "function") {
+            window.openNalStats("teams", team.name || shortName);
+            return;
+          }
 
           const url =
             team.footballShift &&
@@ -15078,6 +15113,19 @@ function openNetworkVodTeam(slug){
   const name=team?.name||slug.split("-").map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(" ");
   previewNetworkItem(name+" Video-on-Demand","Team video-on-demand programming will be connected here.");
 }
+function openTeamHomeNetworkChannel(slug){
+  if(!slug) return;
+  if(typeof showPage==="function") showPage("watchPage");
+  if(typeof switchNetworkTab==="function") switchNetworkTab("archives");
+  if(typeof populateNetworkTeamChannels==="function") populateNetworkTeamChannels();
+  window.scrollTo({top:0,left:0,behavior:"instant"});
+  setTimeout(()=>{
+    if(typeof openNALTeamHub==="function" && typeof NAL_TEAM_CHANNELS!=="undefined" && NAL_TEAM_CHANNELS?.[slug]){
+      openNALTeamHub(slug);
+    }
+  },80);
+}
+
 function openNetworkArchiveTeam(slug){
   if(typeof openNALTeamHub === "function" && NAL_TEAM_CHANNELS?.[slug]){
     openNALTeamHub(slug);
@@ -19203,6 +19251,15 @@ function closeLightcastTest(){
       return `<div class="nal-schedule-teamgame" data-schedule-event-id="${liveEscape(g.event_id)}"><div class="nal-schedule-datebox"><b>${day}</b><span>${mon}</span></div><div class="nal-schedule-opp"><small>${home?"HOME":"AWAY"}</small><b>${home?"vs":"@"} ${liveEscape(opp)}</b></div><div class="nal-schedule-gt">${liveEscape(scheduleTimeOnly(g))}</div></div>`}).join("");
   }
 
+  window.openNalTeamSchedule = function(teamName){
+    const requested = String(teamName || "").trim();
+    if (requested) nalScheduleTeam = requested;
+    nalScheduleView = "team";
+    if (typeof showPage === "function") showPage("schedulePage");
+    renderNalSchedule();
+    window.scrollTo({top:0,left:0,behavior:"instant"});
+  };
+
   function renderNalSchedule(){
     const root=document.getElementById("nalScheduleContent"); if(!root)return;
     document.querySelectorAll(".nal-schedule-tab").forEach(b=>b.classList.toggle("active",b.dataset.scheduleView===nalScheduleView));
@@ -19733,7 +19790,26 @@ function closeLightcastTest(){
   document.addEventListener("click",e=>{const view=e.target.closest("[data-stats-view]");if(view){statsView=view.dataset.statsView;render();return}const sec=e.target.closest("[data-leader-section]");if(sec){leaderSection=sec.dataset.leaderSection;leaderCategory="";renderLeaders();return}const cat=e.target.closest("[data-leader-category]");if(cat){leaderCategory=cat.dataset.leaderCategory;renderLeaders();return}const pc=e.target.closest("[data-player-toggle]");if(pc){const card=pc.closest("[data-player-card]");if(card){card.classList.toggle("open");const ex=pc.querySelector(".nal-player-expand");if(ex)ex.textContent=card.classList.contains("open")?'−':'+'}return}const team=e.target.closest("[data-stats-team]");if(team){teamId=team.dataset.statsTeam;renderTeams();return}const tc=e.target.closest("[data-team-category]");if(tc){teamCategory=tc.dataset.teamCategory;renderTeams()}});
   document.addEventListener("input",e=>{if(e.target?.id==="nalPlayerSearch"){playerSearch=e.target.value;renderPlayers()}});
   document.addEventListener("change",e=>{if(e.target?.id==="nalPlayerCategory"){playerCategory=e.target.value;renderPlayers()}if(e.target?.id==="nalStatsSeason")load(e.target.value)});
-  window.openNalStats=function(view="leaders"){statsView=["leaders","players","teams"].includes(view)?view:"leaders";if(typeof showPage==="function")showPage("statsPage");load(statsSeason)};
+  window.openNalStats=function(view="leaders",teamName=""){
+    statsView=["leaders","players","teams"].includes(view)?view:"leaders";
+    const requestedTeam=norm(teamName);
+    if(requestedTeam && Array.isArray(teamsData?.teams)){
+      const match=teamsData.teams.find(t=>norm(t.team)===requestedTeam);
+      if(match) teamId=String(match.team_id);
+    }
+    if(typeof showPage==="function")showPage("statsPage");
+    const afterLoad=load(statsSeason);
+    if(requestedTeam){
+      Promise.resolve(afterLoad).then(()=>{
+        const match=Array.isArray(teamsData?.teams)?teamsData.teams.find(t=>norm(t.team)===requestedTeam):null;
+        if(match) teamId=String(match.team_id);
+        statsView="teams";
+        render();
+        window.scrollTo({top:0,left:0,behavior:"instant"});
+      });
+    }
+    return afterLoad;
+  };
   window.renderNalStats=render;
 })();
 </script>
