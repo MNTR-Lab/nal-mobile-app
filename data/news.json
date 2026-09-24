@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-09-24T19:20:16.469985+00:00",
+  "updatedAt": "2026-09-24T19:34:17.414182+00:00",
   "source": "https://www.thenationalarenaleague.com/",
   "articles": [
+    {
+      "title": "NATIONAL ARENA LEAGUE EXPANDS COMMITMENT TO MILITARY AND VETERAN COMMUNITY FOR SEASON X",
+      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-expands-commitment-to-milita",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-3498136b-c967-42a9-a37e-73f24c309600/1790277598-1223.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-09-24T19:15:00+00:00",
+      "category": "NAL NEWS"
+    },
     {
       "title": "NATIONAL ARENA LEAGUE KICKS OFF SEASON X PARTNERSHIP ROLLOUT WITH THREE RETURNING PARTNERS",
       "url": "https://www.thenationalarenaleague.com/news/national-arena-league-kicks-off-season-x-partner",
@@ -24,14 +32,6 @@
       "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-c38bda78-0269-458b-b588-ed8c629d1b5d/1789821191-1223.png",
       "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
       "date": "2026-09-17T20:02:00+00:00",
-      "category": "NAL NEWS"
-    },
-    {
-      "title": "National Arena League Names Jeff Blumenauer Director of Broadcast Operations",
-      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-names-jeff-blumenauer-direct",
-      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-9fe103c4-8d74-4871-a81d-2b102ccc44ba/1789576988-1223.png",
-      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
-      "date": "2026-09-16T18:39:00+00:00",
       "category": "NAL NEWS"
     }
   ]
