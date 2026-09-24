@@ -226,24 +226,46 @@ def parse_players(content):
 # ============================================================
 
 def parse_staff(content):
-    staff = []
+    """
+    Only accept actual DigitalShift team-staff records.
 
-    staff_section = re.search(
-        r"Team Staff.*?<table[^>]*>(.*?)</table>",
+    Staff links use:
+        /stats#/team-staff/121416
+    or:
+        #/team-staff/121416
+
+    This prevents player rows from being incorrectly counted
+    as staff when DigitalShift duplicates/nests roster markup.
+    """
+
+    staff = []
+    seen_staff_ids = set()
+
+    rows = re.findall(
+        r"<tr[^>]*>(.*?)</tr>",
         content,
         re.IGNORECASE | re.DOTALL,
     )
 
-    if not staff_section:
-        return staff
-
-    rows = re.findall(
-        r"<tr[^>]*>(.*?)</tr>",
-        staff_section.group(1),
-        re.IGNORECASE | re.DOTALL,
-    )
-
     for row in rows:
+        staff_link = re.search(
+            r'href=["\'][^"\']*#/team-staff/(\d+)["\']',
+            row,
+            re.IGNORECASE,
+        )
+
+        # If the row does not contain an actual DigitalShift
+        # team-staff link, it is not a staff record.
+        if not staff_link:
+            continue
+
+        staff_id = staff_link.group(1)
+
+        # DigitalShift can duplicate markup. Keep each staff
+        # member only once.
+        if staff_id in seen_staff_ids:
+            continue
+
         cells = re.findall(
             r"<td[^>]*>(.*?)</td>",
             row,
@@ -253,23 +275,13 @@ def parse_staff(content):
         if len(cells) < 2:
             continue
 
-        staff_link = re.search(
-            r'href=["\'][^"\']*#/team-staff/(\d+)["\']',
-            cells[0],
-            re.IGNORECASE,
-        )
-
-        staff_id = (
-            staff_link.group(1)
-            if staff_link
-            else ""
-        )
-
         name = normalize_value(cells[0])
         position = normalize_value(cells[1])
 
         if not name:
             continue
+
+        seen_staff_ids.add(staff_id)
 
         staff.append(
             {
