@@ -15,7 +15,7 @@ button{font:inherit}
 .head h1{margin:0;font-size:clamp(28px,4vw,48px);letter-spacing:.02em}
 .head p{margin:6px 0 0;color:#c8d0da}
 .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
-.card{border:0;padding:0;background:transparent;color:#fff;text-align:left;cursor:pointer}
+.card{border:0;padding:0;background:transparent;color:#fff;text-align:left;cursor:pointer;text-decoration:none;display:block}
 .card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:12px;border:1px solid var(--line);transition:.18s transform,.18s border-color}
 .card:hover img,.card:focus-visible img{transform:translateY(-2px);border-color:#fff}
 .card span{display:block;margin-top:8px;font-size:13px;font-weight:800;letter-spacing:.02em}
@@ -140,16 +140,30 @@ function play(key,index){
   document.getElementById("backHub").onclick=()=>openTeam(activeSlug);
 }
 Object.entries(TEAMS).forEach(([slug,t])=>{
-  const b=document.createElement("button");b.type="button";b.className="card";b.dataset.team=slug;
-  b.innerHTML=`<img src="${esc(t.banner)}" alt="${esc(t.name)}"><span>${esc(t.name)}</span>`;
-  grid.appendChild(b);
+  const a=document.createElement("a");
+  a.className="card";
+  a.href=`#team-${slug}`;
+  a.innerHTML=`<img src="${esc(t.banner)}" alt="${esc(t.name)}"><span>${esc(t.name)}</span>`;
+  grid.appendChild(a);
 });
-grid.addEventListener("click",e=>{const b=e.target.closest("[data-team]");if(b)openTeam(b.dataset.team)});
+
+function openTeamFromHash(){
+  const match=location.hash.match(/^#team-(.+)$/);
+  if(match && TEAMS[match[1]]){
+    openTeam(match[1]);
+  } else if(!modal.hidden){
+    modal.hidden=true;
+    document.body.style.overflow="";
+    activeSlug=null;
+  }
+}
+
+window.addEventListener("hashchange",openTeamFromHash);
 content.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if(b)play(b.dataset.play,Number(b.dataset.index))});
 document.getElementById("closeModal").addEventListener("click",closeTeam);
 modal.addEventListener("click",e=>{if(e.target===modal)closeTeam()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!modal.hidden)closeTeam()});
-const initial=location.hash.match(/^#team-(.+)$/);if(initial&&TEAMS[initial[1]])openTeam(initial[1]);
+openTeamFromHash();
 </script>
 </body>
 </html>
