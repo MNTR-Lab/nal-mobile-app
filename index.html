@@ -8289,6 +8289,38 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 </style>
+<style>
+
+/* =========================================================
+   NAL NETWORK — HEADER + TEAM CHANNEL CARD FIX
+   Keep the normal global NAL header. Start Network content
+   immediately below it and display logos as contained artwork.
+   ========================================================= */
+#watchPage{
+  margin-top:0 !important;
+  padding-top:0 !important;
+}
+#watchPage .network-hub-header.network-unified-hero{
+  margin:0 14px 0 !important;
+  border-radius:0 0 18px 18px !important;
+}
+#watchPage .network-team-channel-art{
+  background:#ffffff !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+  padding:10px !important;
+}
+#watchPage .network-team-channel-art img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  display:block !important;
+}
+
+</style>
 </head>
 
 
