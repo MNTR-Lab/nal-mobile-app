@@ -16487,7 +16487,7 @@ function nalForumAuthorData(item){
   const name = profile.display_name || forumTopicValue(item,["author_display_name","display_name","author_name"],"NAL Fan");
   const role = profile.role || forumTopicValue(item,["role","author_role"],"fan");
   const avatar = profile.avatar_url || forumTopicValue(item,["avatar_url","author_avatar_url"],"");
-  return { name:String(name || "NAL Fan"), avatar:String(avatar || "") };
+  return { name:String(name || "NAL Fan"), role:String(role || "fan").toLowerCase(), avatar:String(avatar || "") };
 }
 
 function nalForumAuthorHTML(item,created){
