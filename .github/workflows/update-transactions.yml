@@ -26,6 +26,8 @@ jobs:
         run: pip install requests
 
       - name: Fetch NAL transactions
+        env:
+          DIGITALSHIFT_AUTH_TICKET: ${{ secrets.DIGITALSHIFT_AUTH_TICKET }}
         run: python scripts/update_transactions.py
 
       - name: Show generated transactions
