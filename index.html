@@ -8399,6 +8399,95 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 </style>
+<style>
+
+/* =========================================================
+   FAN ZONE — FAN POLLS COMPACT BANNER
+   ========================================================= */
+#fanPage .fan-zone-polls-banner{
+  min-height:108px;
+  height:108px;
+  margin-top:12px;
+  padding:15px 17px;
+  border:1px solid #31577f;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  background:
+    radial-gradient(circle at 88% 50%,rgba(227,27,35,.42),transparent 32%),
+    linear-gradient(110deg,#07172b 0%,#102b4e 68%,#07172b 100%);
+  box-shadow:0 10px 24px rgba(0,0,0,.20);
+}
+#fanPage .fan-zone-polls-banner:after{
+  background:linear-gradient(90deg,rgba(2,12,24,.12),transparent 65%);
+}
+#fanPage .fan-zone-polls-banner-copy{
+  position:relative;
+  z-index:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+#fanPage .fan-zone-polls-banner .fan-zone-tag{
+  padding:0;
+  margin:0 0 4px;
+  border-radius:0;
+  background:transparent;
+  color:#e31b23;
+  font-size:9px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:1.35px;
+}
+#fanPage .fan-zone-polls-banner-copy strong{
+  color:#fff;
+  font-size:25px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-.45px;
+}
+#fanPage .fan-zone-polls-banner-copy small{
+  margin-top:6px;
+  color:#dbe5ef;
+  font-size:11px;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:.15px;
+}
+#fanPage .fan-zone-polls-banner-action{
+  position:relative;
+  z-index:1;
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:38px;
+  padding:0 12px;
+  border-radius:9px;
+  background:#e31b23;
+  color:#fff;
+  font-size:10px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.65px;
+}
+#fanPage .fan-zone-polls-banner-action b{
+  font-size:18px;
+  line-height:1;
+}
+@media(max-width:430px){
+  #fanPage .fan-zone-polls-banner{
+    min-height:102px;
+    height:102px;
+    padding:14px 15px;
+  }
+  #fanPage .fan-zone-polls-banner-copy strong{font-size:23px;}
+}
+
+</style>
 </head>
 
 
@@ -9337,11 +9426,13 @@ document.addEventListener("DOMContentLoaded", () => {
         </button>
       </div>
 
-      <button class="fan-zone-poll-card" type="button" onclick="openFanPoll()">
-        <span class="fan-zone-tag">FAN POLL</span>
-        <h2>WHO ARE YOU MOST LOOKING FORWARD TO SEEING THIS SEASON?</h2>
-        <p>Cast your vote and see how NAL fans are responding.</p>
-        <span class="fan-zone-action red">VOTE NOW <b>›</b></span>
+      <button class="fan-zone-poll-card fan-zone-polls-banner" type="button" onclick="openFanPoll()" aria-label="Open Fan Polls">
+        <span class="fan-zone-polls-banner-copy">
+          <span class="fan-zone-tag">NAL FAN ZONE</span>
+          <strong>FAN POLLS</strong>
+          <small>Your League. Your Voice.</small>
+        </span>
+        <span class="fan-zone-polls-banner-action">ENTER <b>›</b></span>
       </button>
 
       <section class="fan-photo-week">
@@ -9445,7 +9536,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <header class="fan-poll-head">
         <div class="fan-poll-kicker">NAL FAN ZONE</div>
-        <h1>FAN POLL</h1>
+        <h1>FAN POLLS</h1>
         <p id="fanPollQuestion">Loading the current NAL fan poll...</p>
       </header>
 
