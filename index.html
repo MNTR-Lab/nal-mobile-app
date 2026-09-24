@@ -18538,6 +18538,7 @@ This notification will publish immediately.'))return;
       const name = member.display_name || "NAL FAN";
       const initial = (name.trim().charAt(0) || "N").toUpperCase();
       const role = String(member.role || "fan").toLowerCase();
+      const roleLabel = role === "verified" ? "NAL VERIFIED" : role.toUpperCase();
       const status = String(member.account_status || "active").toLowerCase();
       const favorite = member.favorite_team || "No favorite team";
       const joined = formatAdminDate(member.created_at);
@@ -18546,7 +18547,7 @@ This notification will publish immediately.'))return;
       return '<div class="fan-admin-user" data-member-id="'+escapeAdminText(member.id)+'">' +
         '<div class="fan-admin-uavatar">'+escapeAdminText(initial)+'</div>' +
         '<div class="fan-admin-uinfo"><b>'+escapeAdminText(name)+'</b><span class="fan-admin-meta fan-admin-status-'+escapeAdminText(status)+'">'+escapeAdminText(meta)+'</span></div>' +
-        '<span class="fan-admin-role '+escapeAdminText(role)+'">'+escapeAdminText(role.toUpperCase())+'</span>' +
+        '<span class="fan-admin-role '+escapeAdminText(role)+'">'+escapeAdminText(roleLabel)+'</span>' +
         '<span class="fan-member-chev">›</span></div>';
     }).join("");
   }
@@ -18587,11 +18588,11 @@ This notification will publish immediately.'))return;
     };
     set("fanAdminDetailInitial",(name.trim().charAt(0)||"N").toUpperCase());
     set("fanAdminDetailName",name);
-    set("fanAdminDetailSummary",String(role).toUpperCase()+" • "+String(status).toUpperCase());
+    set("fanAdminDetailSummary",roleLabel+" • "+String(status).toUpperCase());
     set("fanAdminDetailDisplayName",name);
     set("fanAdminDetailEmail",member.email);
     set("fanAdminDetailFavorite",member.favorite_team || "Not selected");
-    set("fanAdminDetailRole",String(role).toUpperCase());
+    set("fanAdminDetailRole",roleLabel);
     set("fanAdminDetailStatus",String(status).toUpperCase());
     set("fanAdminDetailJoined",formatAdminDate(member.created_at) || "—");
 
@@ -18661,16 +18662,17 @@ This notification will publish immediately.'))return;
       "CHANGE ROLE — " + name + "\n\n" +
       "Current role: " + currentRole.toUpperCase() + "\n\n" +
       "Enter one of the following:\n" +
-      "FAN\nALL-PRO\nMODERATOR\nADMIN"
+      "FAN\nNAL VERIFIED\nVIP\nMODERATOR\nADMIN"
     );
 
     if (entered === null) return;
 
-    const newRole = String(entered).trim().toLowerCase();
+    let newRole = String(entered).trim().toLowerCase();
+    if (["nal verified","nal-verified","nal_verified"].includes(newRole)) newRole = "verified";
     const allowedRoles = ["fan","verified","vip","moderator","admin"];
 
     if (!allowedRoles.includes(newRole)){
-      window.alert("Please enter FAN, ALL-PRO, MODERATOR, or ADMIN.");
+      window.alert("Please enter FAN, NAL VERIFIED, VIP, MODERATOR, or ADMIN.");
       return;
     }
 
