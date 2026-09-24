@@ -8374,6 +8374,25 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 </style>
+<style>
+
+/* =========================================================
+   HOME SCHEDULE BACKGROUND
+   ========================================================= */
+.home-schedule-background{
+  position:relative;
+  background:
+    linear-gradient(rgba(3,12,24,.72), rgba(3,12,24,.78)),
+    url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/schedule-background.png?v=1790265599")
+    center center / cover no-repeat;
+  overflow:hidden;
+}
+.home-schedule-background > *{
+  position:relative;
+  z-index:1;
+}
+
+</style>
 </head>
 
 
@@ -8507,7 +8526,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </section>
 
     <!-- NEXT GAMES + QUICK ACCESS -->
-    <section class="home-dark-section">
+    <section class="home-dark-section home-schedule-background">
       <div class="section-header">
         <div class="section-title">Next Games</div>
         <button class="network-view-all" type="button" data-home-action="scores" id="viewAllScheduleButton">
