@@ -7495,6 +7495,29 @@ document.addEventListener("DOMContentLoaded", () => {
 .nal-game-live-section .nal-game-team-mark {
   background: #ffffff !important;
 }
+
+/* =====================================================
+   HOME GAME WEEK CAROUSEL — MONDAY-SUNDAY EASTERN
+===================================================== */
+#homePage .home-game-carousel{position:relative;overflow:hidden;border-radius:9px;touch-action:pan-y;}
+#homePage .home-game-placeholder.home-game-slide{grid-template-columns:minmax(72px,1fr) minmax(92px,1.15fr) minmax(72px,1fr);width:100%;}
+#homePage .home-game-slide[hidden]{display:none !important;}
+#homePage .home-game-logo-slot.is-team-logo{border:0 !important;border-radius:50% !important;background:#fff !important;overflow:hidden;padding:5px;}
+#homePage .home-game-logo-slot.is-team-logo img{width:100%;height:100%;object-fit:contain;display:block;}
+#homePage .home-game-team-role{margin-top:3px;color:rgba(255,255,255,.48);font-size:7px;font-weight:900;letter-spacing:.7px;text-transform:uppercase;}
+#homePage .home-game-week-label{margin-bottom:4px;color:#b9c8dc;font-size:8px;font-weight:950;letter-spacing:.8px;text-transform:uppercase;}
+#homePage .home-game-live-label{display:inline-flex;align-items:center;gap:5px;margin-bottom:5px;padding:3px 7px;border-radius:999px;background:var(--nal-red);color:#fff;font-size:8px;font-weight:950;letter-spacing:.6px;}
+#homePage .home-game-live-label:before{content:"";width:5px;height:5px;border-radius:50%;background:#fff;}
+#homePage .home-game-watch{margin-top:7px;border:0;border-radius:5px;background:var(--nal-red);color:#fff;min-height:30px;padding:0 10px;font-size:8px;font-weight:950;letter-spacing:.5px;text-transform:uppercase;}
+#homePage .home-game-carousel-controls{min-height:30px;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:10px;}
+#homePage .home-game-carousel-controls[hidden]{display:none !important;}
+#homePage .home-game-arrow{width:30px;height:30px;border:0;background:transparent;color:#b9c8dc;font-size:24px;line-height:1;cursor:pointer;}
+#homePage .home-game-dots{display:flex;align-items:center;justify-content:center;gap:6px;min-height:30px;}
+#homePage .home-game-dot{width:7px;height:7px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;}
+#homePage .home-game-dot.is-active{background:#fff;transform:scale(1.2);}
+#homePage .home-game-loading{display:flex !important;justify-content:center;}
+#homePage .home-game-loading-center{width:100%;}
+@media (max-width:380px){#homePage .home-game-placeholder.home-game-slide{grid-template-columns:68px 1fr 68px;gap:7px !important;}#homePage .home-game-team-name{font-size:8px !important;}}
 </style>
 </head>
 
@@ -7629,27 +7652,18 @@ document.addEventListener("DOMContentLoaded", () => {
         </button>
       </div>
 
-      <div class="home-game-placeholder">
-        <div class="home-game-team">
-          <div class="home-game-logo-slot">
-            TEAM LOGO<br>56 × 56
-          </div>
-          <div class="home-game-team-name">HOME TEAM</div>
-        </div>
-
-        <div class="home-game-center">
-          <div class="home-game-date">SEASON X</div>
-          <div class="home-game-location">
-            Game information will populate after schedule release.
+      <div class="home-game-carousel" id="homeGameCarousel" aria-live="polite">
+        <div class="home-game-placeholder home-game-loading">
+          <div class="home-game-center home-game-loading-center">
+            <div class="home-game-date">LOADING GAME WEEK</div>
+            <div class="home-game-location">NAL NETWORK</div>
           </div>
         </div>
-
-        <div class="home-game-team">
-          <div class="home-game-logo-slot">
-            TEAM LOGO<br>56 × 56
-          </div>
-          <div class="home-game-team-name">AWAY TEAM</div>
-        </div>
+      </div>
+      <div class="home-game-carousel-controls" id="homeGameCarouselControls" hidden>
+        <button class="home-game-arrow" id="homeGamePrev" type="button" aria-label="Previous game">‹</button>
+        <div class="home-game-dots" id="homeGameDots" aria-label="Game carousel pages"></div>
+        <button class="home-game-arrow" id="homeGameNext" type="button" aria-label="Next game">›</button>
       </div>
 
       <div class="home-quick-grid">
@@ -18262,6 +18276,118 @@ function closeLightcastTest(){
     `;
   }
 
+  const HOME_GAME_ROTATE_MS = 6000;
+  let homeGameSlides = [];
+  let homeGameIndex = 0;
+  let homeGameTimer = null;
+  let homeTouchStartX = null;
+
+  function easternParts(date){
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/New_York",
+      year: "numeric", month: "2-digit", day: "2-digit", weekday: "short"
+    });
+    const parts = Object.fromEntries(formatter.formatToParts(date).map(part => [part.type, part.value]));
+    return { year:Number(parts.year), month:Number(parts.month), day:Number(parts.day), weekday:parts.weekday };
+  }
+
+  function easternWeekKey(date){
+    const p = easternParts(date);
+    const dayIndex = {Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[p.weekday];
+    const utcNoon = new Date(Date.UTC(p.year, p.month - 1, p.day, 12));
+    utcNoon.setUTCDate(utcNoon.getUTCDate() - ((dayIndex + 6) % 7));
+    return `${utcNoon.getUTCFullYear()}-${String(utcNoon.getUTCMonth()+1).padStart(2,"0")}-${String(utcNoon.getUTCDate()).padStart(2,"0")}`;
+  }
+
+  function formatHomeKickoff(game){
+    const start = utcDate(game.start_time_utc);
+    if (!start) return "TIME TBA";
+    try {
+      return start.toLocaleString("en-US", {timeZone:"America/New_York", weekday:"short", month:"short", day:"numeric", hour:"numeric", minute:"2-digit", timeZoneName:"short"}).toUpperCase();
+    } catch(e) { return formatEventTime(game); }
+  }
+
+  function selectHomeGameWeek(games){
+    const usable = games.filter(game => utcDate(game.start_time_utc) && eventState(game) !== "ended")
+      .sort((a,b) => utcDate(a.start_time_utc) - utcDate(b.start_time_utc));
+    if (!usable.length) return [];
+    const currentKey = easternWeekKey(new Date());
+    const currentWeek = usable.filter(game => easternWeekKey(utcDate(game.start_time_utc)) === currentKey);
+    if (currentWeek.length) return currentWeek;
+    const next = usable.find(game => utcDate(game.start_time_utc) > new Date()) || usable[0];
+    const nextKey = easternWeekKey(utcDate(next.start_time_utc));
+    return usable.filter(game => easternWeekKey(utcDate(game.start_time_utc)) === nextKey);
+  }
+
+  function homeGameSlide(game, index){
+    const matchup = parseMatchup(game.title);
+    const state = eventState(game);
+    const awayLogo = logoForTeam(matchup.awayName);
+    const homeLogo = logoForTeam(matchup.homeName);
+    const venue = game.description ? liveEscape(game.description) : "NAL FOOTBALL";
+    return `
+      <div class="home-game-placeholder home-game-slide" data-home-game-index="${index}" ${index ? "hidden" : ""}>
+        <div class="home-game-team">
+          <div class="home-game-logo-slot is-team-logo"><img src="${liveEscape(awayLogo)}" alt="${liveEscape(matchup.awayName)}"></div>
+          <div class="home-game-team-name">${liveEscape(matchup.awayName)}</div>
+          <div class="home-game-team-role">AWAY</div>
+        </div>
+        <div class="home-game-center">
+          <div class="home-game-week-label">NAL GAME WEEK</div>
+          ${state === "live" ? '<div class="home-game-live-label">LIVE NOW</div>' : ''}
+          <div class="home-game-date">${state === "live" ? "LIVE" : liveEscape(formatHomeKickoff(game))}</div>
+          <div class="home-game-location">${venue}</div>
+          ${state === "live" ? `<button class="home-game-watch" type="button" data-home-live-event-id="${liveEscape(game.event_id)}">▶ WATCH LIVE</button>` : ''}
+        </div>
+        <div class="home-game-team">
+          <div class="home-game-logo-slot is-team-logo"><img src="${liveEscape(homeLogo)}" alt="${liveEscape(matchup.homeName)}"></div>
+          <div class="home-game-team-name">${liveEscape(matchup.homeName)}</div>
+          <div class="home-game-team-role">HOME</div>
+        </div>
+      </div>`;
+  }
+
+  function stopHomeGameRotation(){
+    if (homeGameTimer) clearInterval(homeGameTimer);
+    homeGameTimer = null;
+  }
+
+  function showHomeGame(index, restart=true){
+    if (!homeGameSlides.length) return;
+    homeGameIndex = (index + homeGameSlides.length) % homeGameSlides.length;
+    document.querySelectorAll("[data-home-game-index]").forEach((slide,i) => slide.hidden = i !== homeGameIndex);
+    document.querySelectorAll(".home-game-dot").forEach((dot,i) => {
+      dot.classList.toggle("is-active", i === homeGameIndex);
+      dot.setAttribute("aria-current", i === homeGameIndex ? "true" : "false");
+    });
+    if (restart) startHomeGameRotation();
+  }
+
+  function startHomeGameRotation(){
+    stopHomeGameRotation();
+    if (homeGameSlides.length <= 1) return;
+    homeGameTimer = setInterval(() => showHomeGame(homeGameIndex + 1, false), HOME_GAME_ROTATE_MS);
+  }
+
+  function renderHomeGameCarousel(){
+    const host = document.getElementById("homeGameCarousel");
+    const controls = document.getElementById("homeGameCarouselControls");
+    const dots = document.getElementById("homeGameDots");
+    if (!host || !controls || !dots) return;
+    homeGameSlides = selectHomeGameWeek(nalLiveGames);
+    homeGameIndex = 0;
+    stopHomeGameRotation();
+    if (!homeGameSlides.length) {
+      host.innerHTML = `<div class="home-game-placeholder home-game-loading"><div class="home-game-center home-game-loading-center"><div class="home-game-date">SEASON X</div><div class="home-game-location">NO UPCOMING GAMES CURRENTLY SCHEDULED</div></div></div>`;
+      controls.hidden = true;
+      return;
+    }
+    host.innerHTML = homeGameSlides.map(homeGameSlide).join("");
+    dots.innerHTML = homeGameSlides.map((game,index) => `<button class="home-game-dot ${index===0?"is-active":""}" type="button" data-home-game-dot="${index}" aria-label="Show game ${index+1}" ${index===0?'aria-current="true"':''}></button>`).join("");
+    controls.hidden = homeGameSlides.length <= 1;
+    startHomeGameRotation();
+  }
+
   function renderLiveGames(){
     const list = document.getElementById("nalLiveGamesList");
     const count = document.getElementById("nalLiveGameCount");
@@ -18293,6 +18419,7 @@ function closeLightcastTest(){
       const data = await response.json();
       nalLiveGames = Array.isArray(data) ? data : (Array.isArray(data.games) ? data.games : []);
       renderLiveGames();
+      renderHomeGameCarousel();
     } catch (error) {
       console.error("NAL Live Games could not be loaded:", error);
       if (count) count.textContent = "0 GAMES";
@@ -18390,13 +18517,40 @@ function closeLightcastTest(){
   }
 
   document.addEventListener("click", function(event){
-    const button = event.target.closest("[data-live-event-index]");
-    if (!button) return;
-    const index = Number(button.dataset.liveEventIndex);
-    if (!Number.isInteger(index) || !nalLiveGames[index]) return;
-    event.preventDefault();
-    openLiveGame(nalLiveGames[index]);
+    const liveButton = event.target.closest("[data-live-event-index]");
+    if (liveButton) {
+      const card = liveButton.closest("[data-live-event-id]");
+      const id = card ? String(card.dataset.liveEventId || "") : "";
+      const game = nalLiveGames.find(item => String(item.event_id) === id);
+      if (game) { event.preventDefault(); openLiveGame(game); }
+      return;
+    }
+    const homeWatch = event.target.closest("[data-home-live-event-id]");
+    if (homeWatch) {
+      const id = String(homeWatch.dataset.homeLiveEventId || "");
+      const game = nalLiveGames.find(item => String(item.event_id) === id);
+      if (game) { event.preventDefault(); openLiveGame(game); }
+      return;
+    }
+    const dot = event.target.closest("[data-home-game-dot]");
+    if (dot) { showHomeGame(Number(dot.dataset.homeGameDot)); return; }
+    if (event.target.closest("#homeGamePrev")) { showHomeGame(homeGameIndex - 1); return; }
+    if (event.target.closest("#homeGameNext")) { showHomeGame(homeGameIndex + 1); return; }
   });
+
+  const homeCarousel = document.getElementById("homeGameCarousel");
+  homeCarousel?.addEventListener("touchstart", event => {
+    homeTouchStartX = event.changedTouches[0]?.clientX ?? null;
+    stopHomeGameRotation();
+  }, {passive:true});
+  homeCarousel?.addEventListener("touchend", event => {
+    if (homeTouchStartX === null) return startHomeGameRotation();
+    const endX = event.changedTouches[0]?.clientX ?? homeTouchStartX;
+    const delta = endX - homeTouchStartX;
+    homeTouchStartX = null;
+    if (Math.abs(delta) > 40) showHomeGame(homeGameIndex + (delta < 0 ? 1 : -1));
+    else startHomeGameRotation();
+  }, {passive:true});
 
   document.getElementById("liveGameViewerBack")?.addEventListener("click", closeLiveGame);
 
