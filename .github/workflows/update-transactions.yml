@@ -25,26 +25,26 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Fetch NAL transactions
+      - name: Fetch NAL 2026 transactions
         env:
           DIGITALSHIFT_AUTH_TICKET: ${{ secrets.DIGITALSHIFT_AUTH_TICKET }}
         run: python scripts/update_transactions.py
 
-      - name: Show generated transactions
+      - name: Show generated 2026 transactions
         run: |
-          echo "----- data/transactions.json -----"
-          cat data/transactions.json
+          echo "----- data/transactions/2026.json -----"
+          cat data/transactions/2026.json
 
-      - name: Commit transactions
+      - name: Commit 2026 transactions
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add data/transactions.json
+          git add data/transactions/2026.json
 
           if git diff --cached --quiet; then
-            echo "No transaction changes to commit."
+            echo "No 2026 transaction changes to commit."
           else
-            git commit -m "Update NAL transactions"
+            git commit -m "Update NAL 2026 transactions"
             git push
           fi
