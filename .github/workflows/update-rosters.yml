@@ -1,0 +1,49 @@
+name: Update NAL Rosters
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "47 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-rosters:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Update NAL rosters
+        env:
+          DIGITALSHIFT_AUTH_TICKET: ${{ secrets.DIGITALSHIFT_AUTH_TICKET }}
+        run: |
+          python scripts/update_rosters.py
+
+      - name: Commit roster changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/rosters/2026/rosters.json
+
+          if git diff --cached --quiet; then
+            echo "No roster changes detected."
+            exit 0
+          fi
+
+          git commit -m "Update NAL rosters"
+          git push
