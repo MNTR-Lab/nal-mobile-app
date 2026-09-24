@@ -16,8 +16,7 @@ from bs4 import BeautifulSoup
 YEAR = 2026
 
 # DigitalShift configuration for the 2025-2026 NAL stats section.
-# These values are season-specific and should NOT be treated as
-# permanent league identifiers.
+# These values are season-specific.
 STATS_SECTION_ID = 1200
 SEASON_ID = 9264
 DIVISION_ID = 41958
@@ -42,6 +41,14 @@ STAT_CATEGORIES = (
 
 PLAYER_ID_RE = re.compile(r"/player/(\d+)")
 
+# DigitalShift occasionally includes Angular template expressions
+# inside table-cell text, for example:
+#
+# {{ctrl.show_more == '2952142' ? 'arrow_drop_up' : 'arrow_drop_down'}}
+#
+# These are UI instructions and should never be stored as stat data.
+ANGULAR_EXPRESSION_RE = re.compile(r"\{\{.*?\}\}", re.DOTALL)
+
 REQUEST_TIMEOUT = 30
 
 
@@ -61,16 +68,8 @@ def build_session():
         )
         sys.exit(1)
 
-    # Normalize the GitHub secret into the exact authorization
+    # Normalize the GitHub secret into the authorization
     # format expected by DigitalShift.
-    #
-    # These formats are supported:
-    #
-    # actual-ticket-value
-    #
-    # ticket="actual-ticket-value"
-    #
-    # Authorization: ticket="actual-ticket-value"
 
     if ticket.lower().startswith(
         "authorization:"
@@ -158,12 +157,33 @@ def get_content(
 # ============================================================
 
 def clean_text(value):
+    """
+    Clean text extracted from DigitalShift HTML.
+
+    In addition to normal whitespace cleanup, remove Angular
+    template expressions that DigitalShift sometimes embeds
+    inside player-name cells.
+    """
+
     if value is None:
         return ""
 
-    return " ".join(
-        str(value).split()
+    text = str(value)
+
+    # Remove Angular expressions such as:
+    #
+    # {{ctrl.show_more == '2952142' ? 'arrow_drop_up' : 'arrow_drop_down'}}
+    text = ANGULAR_EXPRESSION_RE.sub(
+        "",
+        text,
     )
+
+    # Collapse tabs, newlines and repeated spaces.
+    text = " ".join(
+        text.split()
+    )
+
+    return text.strip()
 
 
 def extract_player_id(link):
@@ -251,11 +271,6 @@ def discover_teams(session):
         "Discovering teams from DigitalShift..."
     )
 
-    # CONFIRMED DIGITALSHIFT ENDPOINT:
-    #
-    # https://web.api.digitalshift.ca/
-    # partials/stats/team?team_id=566774
-
     url = (
         f"{BASE_URL}/team"
     )
@@ -305,8 +320,6 @@ def discover_teams(session):
         start_marker,
         1,
     )[1].strip()
-
-    # Locate the complete JSON array embedded in ng-init.
 
     depth = 0
     in_string = False
@@ -458,8 +471,8 @@ def category_from_table(table):
 
 def get_stat_period(table):
     """
-    DigitalShift returns both Regular Season and Playoff
-    tables in the same team stats response.
+    DigitalShift returns Regular Season and Playoff tables
+    in the same team stats response.
 
     The nearest preceding H3 identifies which statistical
     period owns the table.
@@ -513,9 +526,8 @@ def parse_stat_table(
         table
     )
 
-    # For the initial 2026 Player Stats database,
-    # collect Regular Season statistics only.
-
+    # Current 2026 Player Stats database contains
+    # Regular Season statistics only.
     if period != "Regular Season":
         return []
 
@@ -651,20 +663,9 @@ def fetch_team_stats(
     session,
     team,
 ):
-    # CONFIRMED DIGITALSHIFT ENDPOINT:
+    # Confirmed DigitalShift endpoint:
     #
-    # https://web.api.digitalshift.ca/
-    # partials/stats/team/stats?team_id=566774
-    #
-    # This response contains:
-    #
-    # Passing
-    # Rushing
-    # Receiving
-    # Offensive
-    # Defensive
-    # Returning
-    # Kicking
+    # /partials/stats/team/stats?team_id=...
 
     url = (
         f"{BASE_URL}/team/stats"
@@ -692,10 +693,7 @@ def fetch_team_stats(
     for table in tables:
 
         # DigitalShift generates duplicate fixed tables for
-        # its responsive/mobile presentation.
-        #
-        # Ignore the duplicate aria-hidden/fixed copy.
-
+        # responsive layouts. Ignore the duplicate copy.
         if table.find_parent(
             class_="table-fixed"
         ):
@@ -726,12 +724,10 @@ def fetch_team_stats(
 
 def merge_players(records):
     """
-    A player can appear in several statistical categories.
+    DigitalShift player_id is used as the unique player key.
 
-    A player may also have statistics for more than one team
-    during the same season.
-
-    DigitalShift player_id is therefore our unique player key.
+    This allows one player to contain multiple statistical
+    categories and, when applicable, multiple teams.
     """
 
     players = {}
@@ -759,9 +755,6 @@ def merge_players(records):
         player = players[
             player_key
         ]
-
-        # Some tables provide better player information
-        # than others. Fill missing values when available.
 
         if (
             not player["number"]
@@ -883,11 +876,8 @@ def validate_results(
             "Player Stats file."
         )
 
-    # Kicking is a critical validation check because
-    # special-teams players were the reason we chose the
-    # team-stat source instead of relying only on the
-    # league-wide leader tables.
-
+    # Kicking is a critical validation because it confirms
+    # that special-teams data is being collected correctly.
     if (
         category_counts.get(
             "kicking",
