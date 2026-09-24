@@ -1,0 +1,883 @@
+{
+  "year": 2026,
+  "league_id": 1200,
+  "division_id": 41958,
+  "game_type": "Regular Season",
+  "section_count": 4,
+  "category_count": 12,
+  "leader_count": 60,
+  "sections": [
+    {
+      "name": "Passing",
+      "categories": [
+        {
+          "name": "Total Passed Yards",
+          "unit": "Yards",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 2209611,
+              "name": "Joshua Hollins",
+              "number": "8",
+              "position": "Quarterback",
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 1481,
+              "unit": "Yards",
+              "player_image": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/person-photo_url-2209611-joshua-hollins-1714509576064789058-140.png",
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 990009,
+              "name": "Javin Kilgo",
+              "number": "8",
+              "position": null,
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 1227,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 2891858,
+              "name": "Lorenzo Brown",
+              "number": "10",
+              "position": null,
+              "team_id": 570666,
+              "team": "Sioux City Bandits",
+              "value": 1223,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570666-sioux-city-bandits-1753180472315238090-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 3774512,
+              "name": "Trae Self",
+              "number": "1",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 857,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 3436585,
+              "name": "Matt Struck",
+              "number": "1",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 586,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            }
+          ]
+        },
+        {
+          "name": "Touchdown Passes",
+          "unit": "TD",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 990009,
+              "name": "Javin Kilgo",
+              "number": "8",
+              "position": "Quarterback",
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 33,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 2891858,
+              "name": "Lorenzo Brown",
+              "number": "10",
+              "position": null,
+              "team_id": 570666,
+              "team": "Sioux City Bandits",
+              "value": 30,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570666-sioux-city-bandits-1753180472315238090-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 2209611,
+              "name": "Joshua Hollins",
+              "number": "8",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 25,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 3774512,
+              "name": "Trae Self",
+              "number": "1",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 15,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 2406868,
+              "name": "Vincent Espinoza",
+              "number": "8",
+              "position": null,
+              "team_id": 566774,
+              "team": "Omaha Beef",
+              "value": 15,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-566774-omaha-beef-1758585800113526632-small.png"
+            }
+          ]
+        },
+        {
+          "name": "Passing Yards per Game",
+          "unit": "PYPGA",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 990009,
+              "name": "Javin Kilgo",
+              "number": "8",
+              "position": "Quarterback",
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 175.3,
+              "unit": "PYPGA",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 2209611,
+              "name": "Joshua Hollins",
+              "number": "8",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 164.6,
+              "unit": "PYPGA",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 3436585,
+              "name": "Matt Struck",
+              "number": "1",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 146.5,
+              "unit": "PYPGA",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 3774512,
+              "name": "Trae Self",
+              "number": "1",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 142.8,
+              "unit": "PYPGA",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 2891858,
+              "name": "Lorenzo Brown",
+              "number": "10",
+              "position": null,
+              "team_id": 570666,
+              "team": "Sioux City Bandits",
+              "value": 135.9,
+              "unit": "PYPGA",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570666-sioux-city-bandits-1753180472315238090-small.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Receiving",
+      "categories": [
+        {
+          "name": "Receiving Yards",
+          "unit": "Yards",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 2222082,
+              "name": "Demarius Washington",
+              "number": "0",
+              "position": "Wide Receiver",
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 684,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 2917361,
+              "name": "Bizzet Woodley",
+              "number": "11",
+              "position": null,
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 569,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 2256081,
+              "name": "Steven Newbold",
+              "number": "3",
+              "position": null,
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 431,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 3436580,
+              "name": "Orlando Doss",
+              "number": "8",
+              "position": null,
+              "team_id": 566773,
+              "team": "Amarillo Warbirds",
+              "value": 407,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-566773-amarillo-warbird-1753180647733097800-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 2193660,
+              "name": "Brandon Sheperd",
+              "number": "14",
+              "position": null,
+              "team_id": 570666,
+              "team": "Sioux City Bandits",
+              "value": 366,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570666-sioux-city-bandits-1753180472315238090-small.png"
+            }
+          ]
+        },
+        {
+          "name": "Touchdown Receptions",
+          "unit": "TD",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 2917361,
+              "name": "Bizzet Woodley",
+              "number": "11",
+              "position": "Wide Receiver",
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 16,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 2222082,
+              "name": "Demarius Washington",
+              "number": "0",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 16,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 2256081,
+              "name": "Steven Newbold",
+              "number": "3",
+              "position": null,
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 15,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 2193660,
+              "name": "Brandon Sheperd",
+              "number": "14",
+              "position": null,
+              "team_id": 570666,
+              "team": "Sioux City Bandits",
+              "value": 11,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570666-sioux-city-bandits-1753180472315238090-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 2948335,
+              "name": "Aaron Dilworth",
+              "number": "0",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 10,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            }
+          ]
+        },
+        {
+          "name": "Receiving Yards per Game",
+          "unit": "Rec Avg",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 2222082,
+              "name": "Demarius Washington",
+              "number": "0",
+              "position": "Wide Receiver",
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 68.4,
+              "unit": "Rec Avg",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 2917361,
+              "name": "Bizzet Woodley",
+              "number": "11",
+              "position": null,
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 56.9,
+              "unit": "Rec Avg",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 2361995,
+              "name": "Damond Powell",
+              "number": "6",
+              "position": null,
+              "team_id": 570666,
+              "team": "Sioux City Bandits",
+              "value": 54.2,
+              "unit": "Rec Avg",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570666-sioux-city-bandits-1753180472315238090-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 2948335,
+              "name": "Aaron Dilworth",
+              "number": "0",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 45.7,
+              "unit": "Rec Avg",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 3796171,
+              "name": "Keshaun Taylor",
+              "number": "7",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 44.3,
+              "unit": "Rec Avg",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rushing",
+      "categories": [
+        {
+          "name": "Rushing Yards",
+          "unit": "Yards",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 3365144,
+              "name": "Tracy Brooks",
+              "number": "2",
+              "position": "Running Back",
+              "team_id": 600411,
+              "team": "Salina Liberty",
+              "value": 424,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600411-salina-liberty-1758331677793535030-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 3603859,
+              "name": "Jaden Sutton",
+              "number": "3",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 404,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 2209611,
+              "name": "Joshua Hollins",
+              "number": "8",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 326,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 3380572,
+              "name": "Jeff Mack II",
+              "number": "4",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 277,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 3673330,
+              "name": "Dajon Richard",
+              "number": "0",
+              "position": null,
+              "team_id": 573852,
+              "team": "Louisiana Rouxgaroux",
+              "value": 275,
+              "unit": "Yards",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-573852-louisiana-rouxgaroux-1758585600665699907-small.png"
+            }
+          ]
+        },
+        {
+          "name": "Rushing Touchdowns",
+          "unit": "TD",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 3603859,
+              "name": "Jaden Sutton",
+              "number": "3",
+              "position": "Running Back",
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 18,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 3365144,
+              "name": "Tracy Brooks",
+              "number": "2",
+              "position": null,
+              "team_id": 600411,
+              "team": "Salina Liberty",
+              "value": 16,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600411-salina-liberty-1758331677793535030-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 766385,
+              "name": "Jo-El Shaw",
+              "number": "9",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 13,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 2209611,
+              "name": "Joshua Hollins",
+              "number": "8",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 11,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 2952142,
+              "name": "D'Nerius Antoine",
+              "number": "13",
+              "position": null,
+              "team_id": 566774,
+              "team": "Omaha Beef",
+              "value": 10,
+              "unit": "TD",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-566774-omaha-beef-1758585800113526632-small.png"
+            }
+          ]
+        },
+        {
+          "name": "Rushing Yards per Game",
+          "unit": "Rush Avg",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 2228392,
+              "name": "Tabyus Taylor",
+              "number": "22",
+              "position": "Running Back",
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 48.7,
+              "unit": "Rush Avg",
+              "player_image": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/person-photo_url-2228392-tabyus-taylor-1712001036320025045-140.png",
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 3365144,
+              "name": "Tracy Brooks",
+              "number": "2",
+              "position": null,
+              "team_id": 600411,
+              "team": "Salina Liberty",
+              "value": 42.4,
+              "unit": "Rush Avg",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600411-salina-liberty-1758331677793535030-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 3603859,
+              "name": "Jaden Sutton",
+              "number": "3",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 40.4,
+              "unit": "Rush Avg",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 2209611,
+              "name": "Joshua Hollins",
+              "number": "8",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 36.2,
+              "unit": "Rush Avg",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 2406868,
+              "name": "Vincent Espinoza",
+              "number": "8",
+              "position": null,
+              "team_id": 566774,
+              "team": "Omaha Beef",
+              "value": 35.5,
+              "unit": "Rush Avg",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-566774-omaha-beef-1758585800113526632-small.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Defensive",
+      "categories": [
+        {
+          "name": "Solo Tackles",
+          "unit": "Tackles",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 3431860,
+              "name": "Darin Hungerford",
+              "number": "9",
+              "position": "Linebacker",
+              "team_id": 600411,
+              "team": "Salina Liberty",
+              "value": 61,
+              "unit": "Tackles",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600411-salina-liberty-1758331677793535030-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 3453467,
+              "name": "Shaquez Bond",
+              "number": "7",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 51,
+              "unit": "Tackles",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 3616514,
+              "name": "Dillon Thomas",
+              "number": "27",
+              "position": null,
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 47,
+              "unit": "Tackles",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 3392795,
+              "name": "Dion Kuinlan",
+              "number": "15",
+              "position": null,
+              "team_id": 600411,
+              "team": "Salina Liberty",
+              "value": 45,
+              "unit": "Tackles",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600411-salina-liberty-1758331677793535030-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 3535334,
+              "name": "Evan DiMaggio",
+              "number": "34",
+              "position": null,
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 45,
+              "unit": "Tackles",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            }
+          ]
+        },
+        {
+          "name": "Sacks",
+          "unit": "Sacks",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 3535334,
+              "name": "Evan DiMaggio",
+              "number": "34",
+              "position": "Linebacker",
+              "team_id": 600414,
+              "team": "Southwest Kansas Storm",
+              "value": 7.0,
+              "unit": "Sacks",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600414-southwest-kansas-storm-1758331757705441256-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 3400383,
+              "name": "Dajon Emory",
+              "number": "15",
+              "position": null,
+              "team_id": 570666,
+              "team": "Sioux City Bandits",
+              "value": 6.0,
+              "unit": "Sacks",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570666-sioux-city-bandits-1753180472315238090-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 1089298,
+              "name": "Kerry Starks",
+              "number": "1",
+              "position": null,
+              "team_id": 600411,
+              "team": "Salina Liberty",
+              "value": 6.0,
+              "unit": "Sacks",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-600411-salina-liberty-1758331677793535030-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 2256075,
+              "name": "Sam Hammond",
+              "number": "10",
+              "position": null,
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 6.0,
+              "unit": "Sacks",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 1617557,
+              "name": "Brandon Munoz",
+              "number": "0",
+              "position": null,
+              "team_id": 566774,
+              "team": "Omaha Beef",
+              "value": 5.0,
+              "unit": "Sacks",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-566774-omaha-beef-1758585800113526632-small.png"
+            }
+          ]
+        },
+        {
+          "name": "Interceptions",
+          "unit": "INT",
+          "leaders": [
+            {
+              "rank": 1,
+              "player_id": 719328,
+              "name": "Laronji Vason-McCoy",
+              "number": "8",
+              "position": "Defensive Back",
+              "team_id": 570666,
+              "team": "Sioux City Bandits",
+              "value": 7,
+              "unit": "INT",
+              "player_image": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/person-photo_url-719328-laronji-vason-mccoy-1773878678655640899-140.png",
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570666-sioux-city-bandits-1753180472315238090-small.png"
+            },
+            {
+              "rank": 2,
+              "player_id": 2323196,
+              "name": "Travion Mosby",
+              "number": "1",
+              "position": null,
+              "team_id": 570667,
+              "team": "Colorado Spartans",
+              "value": 7,
+              "unit": "INT",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570667-colorado-spartans-1753180726493166525-small.png"
+            },
+            {
+              "rank": 3,
+              "player_id": 2709000,
+              "name": "Dawandrick Crockett",
+              "number": "5",
+              "position": null,
+              "team_id": 577047,
+              "team": "Pueblo Punishers",
+              "value": 6,
+              "unit": "INT",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-577047-pueblo-punishers-1754178088918150114-small.png"
+            },
+            {
+              "rank": 4,
+              "player_id": 3322030,
+              "name": "Jaylen Perkins Sr.",
+              "number": "23",
+              "position": null,
+              "team_id": 566774,
+              "team": "Omaha Beef",
+              "value": 5,
+              "unit": "INT",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-566774-omaha-beef-1758585800113526632-small.png"
+            },
+            {
+              "rank": 5,
+              "player_id": 3493611,
+              "name": "Marzion Crosby",
+              "number": "9",
+              "position": null,
+              "team_id": 570666,
+              "team": "Sioux City Bandits",
+              "value": 4,
+              "unit": "INT",
+              "player_image": null,
+              "source_team_logo": "https://digitalshift-stats.us-lax-1.linodeobjects.com/1652db2b-0d2d-428c-a04a-1a82bbe750c4/team-logo_url-570666-sioux-city-bandits-1753180472315238090-small.png"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
