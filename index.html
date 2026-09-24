@@ -8339,35 +8339,39 @@ document.addEventListener("DOMContentLoaded", () => {
 <style>
 
 /* =========================================================
-   CONTEXTUAL APP BACK BUTTON
-   Small previous-view control for deeper native pages.
+   UNIVERSAL INTERNAL BACK BUTTON
    ========================================================= */
-#appContextBack{
+.app-back-row{
   display:none;
-  position:fixed;
-  left:max(10px, calc((100vw - 600px) / 2 + 10px));
-  top:calc(var(--header-height) + max(8px, env(safe-area-inset-top)));
-  z-index:2950;
-  min-height:30px;
-  padding:6px 10px 6px 8px;
-  border:1px solid rgba(7,23,43,.14);
+  width:100%;
+  padding:9px 14px 3px;
+  background:transparent;
+}
+.app-back-row.is-visible{
+  display:block;
+}
+.app-back-button{
+  min-height:31px;
+  padding:6px 11px 6px 8px;
+  border:1px solid rgba(7,23,43,.16);
   border-radius:999px;
-  background:rgba(255,255,255,.94);
+  background:rgba(255,255,255,.96);
   color:var(--nal-blue);
-  box-shadow:0 3px 10px rgba(0,0,0,.12);
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  display:inline-flex;
   align-items:center;
   gap:4px;
   font-size:9px;
   line-height:1;
   font-weight:950;
-  letter-spacing:.7px;
+  letter-spacing:.75px;
   text-transform:uppercase;
   cursor:pointer;
-  -webkit-backdrop-filter:blur(8px);
-  backdrop-filter:blur(8px);
 }
-#appContextBack.is-visible{display:flex;}
-#appContextBack .app-context-back-arrow{
+.app-back-button:active{
+  transform:scale(.97);
+}
+.app-back-arrow{
   font-size:18px;
   line-height:.7;
   margin-top:-1px;
@@ -8390,10 +8394,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <h1 id="fanForumThreadCategory">COMMUNITY</h1>
         <p>Join the conversation with NAL fans.</p>
       </header>
-<button id="appContextBack" type="button" aria-label="Go back to previous app page">
-  <span class="app-context-back-arrow" aria-hidden="true">‹</span>
-  <span>BACK</span>
-</button>
+<div id="appBackRow" class="app-back-row" aria-hidden="true">
+  <button id="appBackButton" class="app-back-button" type="button" aria-label="Go back to previous app page">
+    <span class="app-back-arrow" aria-hidden="true">‹</span>
+    <span>BACK</span>
+  </button>
+</div>
 
 
       <article id="fanForumThreadPost" class="fan-forum-thread-card">
@@ -20467,129 +20473,145 @@ function closeLightcastTest(){
 
 <script>
 /* =========================================================
-   CONTEXTUAL APP BACK — PREVIOUS INTERNAL VIEW
-   Does not use browser history, so the wrapper cannot back
-   the user out of the app. Existing page routing is preserved.
+   UNIVERSAL INTERNAL BACK — ACTUAL PREVIOUS APP VIEW
    ========================================================= */
 (function(){
-  const backButton = document.getElementById("appContextBack");
+  const row = document.getElementById("appBackRow");
+  const button = document.getElementById("appBackButton");
+  if(!row || !button) return;
 
-  /* These are the native deeper pages that benefit from a small Back control. */
-  const backEnabledPages = new Set([
-    "schedulePage",
-    "rosterPage",
-    "statsPage",
-    "standingsPage",
-    "transactionsPage"
-  ]);
+  const ROOT_PAGE = "homePage";
+  let currentView = null;
+  let previousView = null;
+  let restoring = false;
+  let scheduled = false;
 
-  let appPreviousView = null;
-  let restoringPreviousView = false;
-
-  function getActiveAppPage(){
-    return [...document.querySelectorAll(".app-page")].find(page =>
-      page.classList.contains("active") &&
-      getComputedStyle(page).display !== "none"
-    ) || null;
+  function visiblePage(){
+    const pages = Array.from(document.querySelectorAll(".app-page"));
+    return pages.find(page => {
+      const style = getComputedStyle(page);
+      return page.classList.contains("active") && style.display !== "none";
+    }) || pages.find(page => getComputedStyle(page).display !== "none") || null;
   }
 
-  function getActiveNavPage(){
-    return document.querySelector(".bottom-nav .nav-button.active")?.dataset?.page || "";
-  }
-
-  function snapshotCurrentView(){
-    const page = getActiveAppPage();
-    if(!page) return null;
+  function snapshot(page){
+    if(!page || !page.id) return null;
     return {
       pageId: page.id,
-      scrollY: window.scrollY || 0,
-      navPage: getActiveNavPage()
+      scrollY: window.scrollY || 0
     };
   }
 
-  function updateBackButton(){
-    const active = getActiveAppPage();
-    const shouldShow =
-      !!appPreviousView &&
-      !!active &&
-      backEnabledPages.has(active.id);
+  function setButtonState(){
+    const page = visiblePage();
+    const canGoBack =
+      !!page &&
+      page.id !== ROOT_PAGE &&
+      !!previousView &&
+      previousView.pageId !== page.id;
 
-    backButton?.classList.toggle("is-visible", shouldShow);
+    row.classList.toggle("is-visible", canGoBack);
+    row.setAttribute("aria-hidden", canGoBack ? "false" : "true");
   }
 
-  function restoreView(view){
-    if(!view?.pageId) return;
+  function reconcile(){
+    scheduled = false;
+    const page = visiblePage();
+    if(!page) return;
 
-    restoringPreviousView = true;
+    if(!currentView){
+      currentView = snapshot(page);
+      setButtonState();
+      return;
+    }
+
+    if(page.id !== currentView.pageId){
+      if(!restoring){
+        previousView = currentView;
+      }
+      currentView = snapshot(page);
+    }
+
+    setButtonState();
+  }
+
+  function queueReconcile(){
+    if(scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(reconcile);
+  }
+
+  function restorePrevious(){
+    if(!previousView?.pageId) return;
+
+    const target = document.getElementById(previousView.pageId);
+    if(!target) return;
+
+    const returnView = previousView;
+    restoring = true;
 
     document.querySelectorAll(".app-page").forEach(page => {
       page.classList.remove("active");
       page.style.display = "none";
     });
 
-    const target = document.getElementById(view.pageId);
-    if(target){
-      target.style.display = "block";
-      target.classList.add("active");
-    }
+    target.style.display = "block";
+    target.classList.add("active");
 
-    document.querySelectorAll(".bottom-nav .nav-button").forEach(button => {
-      button.classList.remove("active");
+    currentView = snapshot(target);
+    previousView = null;
+
+    // Match bottom navigation to the restored major section when possible.
+    const navMap = {
+      homePage: "homePage",
+      newsPage: "newsPage",
+      watchPage: "watchPage",
+      teamsPage: "teamsPage",
+      teamPage: "teamsPage",
+      fanZonePage: "fanZonePage"
+    };
+    const navTarget = navMap[target.id];
+
+    document.querySelectorAll(".bottom-nav .nav-button").forEach(nav => {
+      nav.classList.toggle("active", !!navTarget && nav.dataset.page === navTarget);
     });
 
-    let nav = view.navPage
-      ? document.querySelector(`.bottom-nav .nav-button[data-page="${view.navPage}"]`)
-      : null;
-
-    if(!nav && view.pageId === "teamPage"){
-      nav = document.querySelector('.bottom-nav .nav-button[data-page="homePage"]');
-    }
-    if(nav) nav.classList.add("active");
-
-    appPreviousView = null;
-    backButton?.classList.remove("is-visible");
+    setButtonState();
 
     requestAnimationFrame(() => {
-      window.scrollTo({top:view.scrollY || 0,left:0,behavior:"instant"});
-      restoringPreviousView = false;
+      window.scrollTo({top:returnView.scrollY || 0,left:0,behavior:"instant"});
+      restoring = false;
+      queueReconcile();
     });
   }
 
-  /* Wrap the master's existing showPage function. It still does all real routing. */
-  if(typeof window.showPage === "function"){
-    const originalShowPage = window.showPage;
+  button.addEventListener("click", restorePrevious);
 
-    window.showPage = function(pageId){
-      if(!restoringPreviousView && backEnabledPages.has(pageId)){
-        const current = snapshotCurrentView();
-        if(current && current.pageId !== pageId){
-          appPreviousView = current;
-        }
-      }
-
-      const result = originalShowPage.apply(this, arguments);
-
-      requestAnimationFrame(updateBackButton);
-      return result;
-    };
-  }
-
-  backButton?.addEventListener("click", function(){
-    if(appPreviousView) restoreView(appPreviousView);
+  // Track the master's real page changes rather than assuming a particular router.
+  const observer = new MutationObserver(queueReconcile);
+  document.querySelectorAll(".app-page").forEach(page => {
+    observer.observe(page, {
+      attributes:true,
+      attributeFilter:["class","style"]
+    });
   });
 
-  /* Root navigation starts a fresh path, so stale Back context never leaks. */
-  document.querySelectorAll(".bottom-nav .nav-button, #headerHome").forEach(control => {
-    control.addEventListener("click", function(){
-      const destination = control.dataset?.page || (control.id === "headerHome" ? "homePage" : "");
-      if(destination && !backEnabledPages.has(destination)){
-        appPreviousView = null;
-        backButton?.classList.remove("is-visible");
-      }
-    }, true);
-  });
+  // Capture where the user was immediately before an internal navigation click.
+  document.addEventListener("pointerdown", function(){
+    const page = visiblePage();
+    if(page) currentView = snapshot(page);
+  }, true);
 
-  updateBackButton();
+  // Home is the root. Once Home is reached, don't show a stale Back button.
+  document.addEventListener("click", function(event){
+    const homeNav = event.target.closest('.bottom-nav .nav-button[data-page="homePage"]');
+    if(homeNav){
+      previousView = null;
+      requestAnimationFrame(setButtonState);
+    }
+  }, true);
+
+  reconcile();
 })();
 </script>
 
