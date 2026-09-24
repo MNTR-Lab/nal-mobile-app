@@ -18519,6 +18519,16 @@ function closeLightcastTest(){
     return [...map.entries()].map(([key,games],i)=>({key,number:i+1,games}));
   }
 
+  function formatScheduleWeekRange(key){
+    const parts=String(key||"").split("-").map(Number);
+    if(parts.length!==3||parts.some(Number.isNaN)) return "";
+    const monday=new Date(Date.UTC(parts[0],parts[1]-1,parts[2],12));
+    const sunday=new Date(monday);
+    sunday.setUTCDate(sunday.getUTCDate()+6);
+    const short=d=>`${String(d.getUTCMonth()+1).padStart(2,"0")}/${String(d.getUTCDate()).padStart(2,"0")}`;
+    return `${short(monday)} – ${short(sunday)}`;
+  }
+
   function scheduleDateLabel(game){
     const d=utcDate(game.start_time_utc); if(!d)return "";
     return d.toLocaleDateString("en-US",{timeZone:gameTimeZone(game),weekday:"long",month:"short",day:"numeric"}).toUpperCase();
@@ -18576,11 +18586,11 @@ function closeLightcastTest(){
       nalScheduleWeekIndex=Math.max(0,Math.min(nalScheduleWeekIndex,groups.length-1));
       const group=groups[nalScheduleWeekIndex];
       const nums=groups.map((g,i)=>`<button class="nal-schedule-wn ${i===nalScheduleWeekIndex?"active":""}" type="button" data-schedule-week="${i}">${g.number}</button>`).join("");
-      root.innerHTML=`<div class="nal-schedule-weekpicker"><div class="nal-schedule-weeknav"><button class="nal-schedule-arrow" type="button" data-schedule-step="-1">‹</button><div class="nal-schedule-center"><b>WEEK ${group.number}</b><span>${liveEscape(group.key)}</span></div><button class="nal-schedule-arrow" type="button" data-schedule-step="1">›</button></div><div class="nal-schedule-weeknums">${nums}</div></div>
+      root.innerHTML=`<div class="nal-schedule-weekpicker"><div class="nal-schedule-weeknav"><button class="nal-schedule-arrow" type="button" data-schedule-step="-1">‹</button><div class="nal-schedule-center"><b>WEEK ${group.number}</b><span>${liveEscape(formatScheduleWeekRange(group.key))}</span></div><button class="nal-schedule-arrow" type="button" data-schedule-step="1">›</button></div><div class="nal-schedule-weeknums">${nums}</div></div>
       <div class="nal-schedule-weekhead"><b>WEEK ${group.number} GAMES</b><span>${group.games.length} GAME${group.games.length===1?"":"S"}</span></div>${group.games.map(scheduleCard).join("")}`;
       return;
     }
-    root.innerHTML=groups.map(group=>`<div class="nal-schedule-weekhead"><b>WEEK ${group.number}</b><span>${liveEscape(group.key)}</span></div>${group.games.map(scheduleCard).join("")}`).join("");
+    root.innerHTML=groups.map(group=>`<div class="nal-schedule-weekhead"><b>WEEK ${group.number}</b><span>${liveEscape(formatScheduleWeekRange(group.key))}</span></div>${group.games.map(scheduleCard).join("")}`).join("");
   }
 
   document.addEventListener("click",event=>{
