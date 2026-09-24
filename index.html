@@ -11,19 +11,6 @@
 
 <title>National Arena League</title>
 
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
->
-
-<meta name="theme-color" content="#07172b">
-
-<title>National Arena League</title>
-
 <style>
 
 /* =========================================================
@@ -6431,6 +6418,10 @@ document.addEventListener("DOMContentLoaded", () => {
 .nal-member-badge-moderator svg{width:17px;height:17px;fill:#07172b;stroke:#e31b23;stroke-width:1.3;}
 .nal-member-badge-moderator .nal-mod-inner{fill:#102b4e;stroke:#c8cdd3;stroke-width:.9;}
 .nal-member-badge-moderator .nal-mod-m{fill:#fff;stroke:none;}
+.nal-member-badge-admin{vertical-align:-4px;margin-left:5px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.22));}
+.nal-member-badge-admin svg{width:18px;height:18px;}
+.nal-member-badge-admin .nal-admin-shield{fill:#e31b23;stroke:#07172b;stroke-width:1.25;stroke-linejoin:round;}
+.nal-member-badge-admin .nal-admin-a{fill:#fff;stroke:none;}
 .fan-forum-reply-compose{margin-top:14px;border:1px solid #dbe3eb;border-radius:14px;background:#fff;padding:15px;}
 .fan-forum-reply-compose h3{margin:0 0 4px;color:#07172b;font-size:14px;font-weight:1000;}
 .fan-forum-reply-compose p{margin:0 0 10px;color:#748293;font-size:10px;line-height:1.4;}
@@ -16485,7 +16476,9 @@ function nalMemberBadgeHTML(role){
   if (["nal verified","nal-verified","nal_verified"].includes(value)) value = "verified";
   if (["all-pro","all pro","all_pro"].includes(value)) value = "vip";
   if (["mod","nal moderator"].includes(value)) value = "moderator";
-  if (value === "admin") return ""; // Preserve existing Admin treatment.
+  if (value === "admin") {
+    return `<span class="nal-member-badge nal-member-badge-admin" title="NAL Admin" aria-label="NAL Admin"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="nal-admin-shield" d="M12 1.8l8 3.1v6.3c0 5.2-3.2 9.2-8 11-4.8-1.8-8-5.8-8-11V4.9z"/><path class="nal-admin-a" d="M12 6.1l4.1 10.2h-2.3l-.8-2.2H9l-.8 2.2H5.9L10 6.1h2zm0 3.2l-1.5 3h3l-1.5-3z"/></svg></span>`;
+  }
   if (value === "verified") {
     return `<span class="nal-member-badge nal-member-badge-verified" title="NAL Verified" aria-label="NAL Verified"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.8l2.2 1.6 2.7-.2 1.1 2.5 2.4 1.3-.3 2.7 1.5 2.3-1.5 2.3.3 2.7-2.4 1.3-1.1 2.5-2.7-.2L12 22.2l-2.2-1.6-2.7.2L6 18.3 3.6 17l.3-2.7L2.4 12l1.5-2.3-.3-2.7L6 5.7l1.1-2.5 2.7.2L12 1.8z"/><path class="nal-badge-check" d="M7.2 12.2l2.9 2.9 6.7-6.7"/></svg></span>`;
   }
