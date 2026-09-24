@@ -7533,6 +7533,81 @@ document.addEventListener("DOMContentLoaded", () => {
   #teamsPage .teams-directory-name{font-size:12.5px !important}
 }
 
+
+/* TEAM HOME — DYNAMIC NEXT GAME */
+.team-next-game-matchup{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr);
+  align-items:center;
+  gap:8px;
+  margin-top:14px;
+}
+.team-next-game-side{
+  min-width:0;
+  text-align:center;
+}
+.team-next-game-logo{
+  width:72px;
+  height:72px;
+  margin:0 auto 7px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.team-next-game-logo img{
+  max-width:70px;
+  max-height:70px;
+  object-fit:contain;
+  filter:drop-shadow(0 6px 6px rgba(0,0,0,.45));
+}
+.team-next-game-side b{
+  display:block;
+  color:#fff;
+  font-size:10px;
+  line-height:1.15;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.team-next-game-side small{
+  display:block;
+  margin-top:4px;
+  color:rgba(255,255,255,.62);
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+.team-next-game-center{text-align:center}
+.team-next-game-vs{
+  color:#fff;
+  font-size:19px;
+  font-weight:1000;
+}
+.team-next-game-date{
+  position:relative;
+  z-index:1;
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.15);
+  color:#fff;
+  font-size:12px;
+  line-height:1.35;
+  font-weight:1000;
+  text-align:center;
+}
+.team-next-game-place{
+  position:relative;
+  z-index:1;
+  margin-top:5px;
+  color:rgba(255,255,255,.68);
+  font-size:9px;
+  line-height:1.35;
+  font-weight:750;
+  text-align:center;
+  text-transform:uppercase;
+}
+
 </style>
 
 <style>
@@ -8311,16 +8386,16 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </div>
 
-    <div class="team-coming-soon">
-      <div class="team-coming-soon-label">
+    <div class="team-coming-soon" id="teamNextGameCard">
+      <div class="team-coming-soon-label" id="teamNextGameLabel">
         SEASON X
       </div>
 
-      <div class="team-coming-soon-title">
+      <div class="team-coming-soon-title" id="teamNextGameTitle">
         SCHEDULE COMING SOON
       </div>
 
-      <div class="team-coming-soon-copy">
+      <div class="team-coming-soon-copy" id="teamNextGameCopy">
         Game information will appear here when the Season X schedule is released.
       </div>
     </div>
@@ -14646,6 +14721,11 @@ function openTeamHome(team) {
   /* Load this team's live news feed */
   loadTeamNews(team);
 
+  /* Populate Next Game from the connected NAL schedule feed. */
+  if (typeof window.renderActiveTeamNextGame === "function") {
+    window.renderActiveTeamNextGame();
+  }
+
 
   /* =====================================================
      COLORADO LIMITED TEAM HOME
@@ -14685,8 +14765,7 @@ function openTeamHome(team) {
   }
 
   if (nextGameSection) {
-    nextGameSection.style.display =
-      hasTeamData ? "" : "none";
+    nextGameSection.style.display = "";
   }
 
 
@@ -16467,7 +16546,7 @@ document.addEventListener("click", function(event){
     const supported = !!getTeamFootballShiftId(team);
 
     if (section) section.style.display = supported ? "" : "none";
-    if (nextGame) nextGame.style.display = supported ? "" : "none";
+    if (nextGame) nextGame.style.display = "";
   }, 0);
 }, true);
 
@@ -19159,6 +19238,95 @@ function closeLightcastTest(){
   });
 
 
+
+  /* =========================================================
+     TEAM HOME — NEXT GAME FROM INTERNAL NAL SCHEDULE
+     Uses the exact same data and timezone logic as Schedule.
+  ========================================================= */
+  function renderActiveTeamNextGame(){
+    const card = document.getElementById("teamNextGameCard");
+    const label = document.getElementById("teamNextGameLabel");
+    const title = document.getElementById("teamNextGameTitle");
+    const copy = document.getElementById("teamNextGameCopy");
+
+    if (!card || !label || !title || !copy || !activeTeam) return;
+
+    const activeNames = [
+      activeTeam.name,
+      activeTeam.teamName,
+      activeTeam.shortName,
+      activeTeam.displayName
+    ].filter(Boolean).map(normalizeName);
+
+    const activeSlug = activeTeam.slug || "";
+
+    const belongsToActiveTeam = game => {
+      const matchup = parseMatchup(game.title);
+      const awaySlug = slugForTeam(matchup.awayName);
+      const homeSlug = slugForTeam(matchup.homeName);
+
+      if (activeSlug && (awaySlug === activeSlug || homeSlug === activeSlug)) return true;
+
+      const away = normalizeName(matchup.awayName);
+      const home = normalizeName(matchup.homeName);
+      return activeNames.includes(away) || activeNames.includes(home);
+    };
+
+    const games = nalLiveGames
+      .filter(belongsToActiveTeam)
+      .filter(game => eventState(game) !== "ended")
+      .filter(game => utcDate(game.start_time_utc))
+      .sort((a,b) => utcDate(a.start_time_utc) - utcDate(b.start_time_utc));
+
+    const game = games[0];
+
+    if (!game) {
+      label.textContent = "SEASON X";
+      title.textContent = "NO UPCOMING GAME SCHEDULED";
+      copy.innerHTML = "The next game will appear here automatically when it is added to the NAL schedule.";
+      return;
+    }
+
+    const matchup = parseMatchup(game.title);
+    const state = eventState(game);
+    const awayLogo = logoForTeam(matchup.awayName);
+    const homeLogo = logoForTeam(matchup.homeName);
+    const kickoff = formatHomeKickoff(game);
+    const venue = game.description || "NAL FOOTBALL";
+
+    label.textContent = state === "live" ? "LIVE NOW" : "NEXT GAME";
+    title.textContent = state === "live" ? "GAME IN PROGRESS" : kickoff;
+
+    copy.innerHTML = `
+      <div class="team-next-game-matchup">
+        <div class="team-next-game-side">
+          <div class="team-next-game-logo">
+            <img src="${liveEscape(awayLogo)}" alt="${liveEscape(matchup.awayName)}">
+          </div>
+          <b>${liveEscape(matchup.awayName)}</b>
+          <small>AWAY</small>
+        </div>
+
+        <div class="team-next-game-center">
+          <div class="team-next-game-vs">VS</div>
+        </div>
+
+        <div class="team-next-game-side">
+          <div class="team-next-game-logo">
+            <img src="${liveEscape(homeLogo)}" alt="${liveEscape(matchup.homeName)}">
+          </div>
+          <b>${liveEscape(matchup.homeName)}</b>
+          <small>HOME</small>
+        </div>
+      </div>
+
+      <div class="team-next-game-date">${liveEscape(kickoff)}</div>
+      <div class="team-next-game-place">${liveEscape(venue)}</div>
+    `;
+  }
+
+  window.renderActiveTeamNextGame = renderActiveTeamNextGame;
+
   async function loadLiveGames(){
     const list = document.getElementById("nalLiveGamesList");
     const count = document.getElementById("nalLiveGameCount");
@@ -19173,6 +19341,7 @@ function closeLightcastTest(){
       renderHomeGameCarousel();
       renderNalSchedule();
       renderNalStandings();
+      renderActiveTeamNextGame();
     } catch (error) {
       console.error("NAL Live Games could not be loaded:", error);
       if (count) count.textContent = "0 GAMES";
