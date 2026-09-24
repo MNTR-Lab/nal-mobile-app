@@ -1,0 +1,112 @@
+{
+  "year": 2026,
+  "season_label": "2025-2026",
+  "stats_section_id": "1200",
+  "division_id": "41958",
+  "generated_at": "2026-09-24T12:54:17.549160+00:00",
+  "team_count": 10,
+  "total_players": 0,
+  "total_staff": 0,
+  "teams": [
+    {
+      "slug": "amarillo-warbirds",
+      "team": "Amarillo Warbirds",
+      "team_id": "566773",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=566773"
+    },
+    {
+      "slug": "colorado-spartans",
+      "team": "Colorado Spartans",
+      "team_id": "570667",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=570667"
+    },
+    {
+      "slug": "dallas-apex",
+      "team": "Dallas Apex",
+      "team_id": "680252",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=680252"
+    },
+    {
+      "slug": "louisiana-rouxgaroux",
+      "team": "Louisiana Rouxgaroux",
+      "team_id": "573852",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=573852"
+    },
+    {
+      "slug": "omaha-beef",
+      "team": "Omaha Beef",
+      "team_id": "566774",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=566774"
+    },
+    {
+      "slug": "pueblo-punishers",
+      "team": "Pueblo Punishers",
+      "team_id": "577047",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=577047"
+    },
+    {
+      "slug": "salina-liberty",
+      "team": "Salina Liberty",
+      "team_id": "600411",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=600411"
+    },
+    {
+      "slug": "sioux-city-bandits",
+      "team": "Sioux City Bandits",
+      "team_id": "570666",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=570666"
+    },
+    {
+      "slug": "southwest-kansas-storm",
+      "team": "Southwest Kansas Storm",
+      "team_id": "600414",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=600414"
+    },
+    {
+      "slug": "wheeling-miners",
+      "team": "Wheeling Miners",
+      "team_id": "707897",
+      "players": [],
+      "staff": [],
+      "player_count": 0,
+      "staff_count": 0,
+      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=707897"
+    }
+  ]
+}
