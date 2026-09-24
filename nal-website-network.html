@@ -8411,6 +8411,43 @@ body{
 }
 </style>
 
+
+<style id="nal-network-website-removals">
+/* Website version: remove app footer/navigation completely */
+.bottom-nav,
+#bottomNav {
+  display:none !important;
+}
+
+/* Remove bottom space that was reserved for the mobile-app footer */
+.app,
+.app-page,
+#watchPage {
+  padding-bottom:0 !important;
+  margin-bottom:0 !important;
+}
+</style>
+
+
+<style id="nal-network-website-header-removal">
+/* Website version: remove the mobile-app header/top bar completely */
+.topbar,
+#topbar,
+.app-header,
+#appHeader,
+header.topbar {
+  display:none !important;
+}
+
+/* Remove any spacing reserved for the app header */
+.app,
+.app-page,
+#watchPage {
+  padding-top:0 !important;
+  margin-top:0 !important;
+}
+</style>
+
 </head>
 
 
@@ -20516,6 +20553,26 @@ window.addEventListener("DOMContentLoaded", function () {
     if (networkPage) networkPage.classList.add("active");
   }
   window.scrollTo(0,0);
+});
+</script>
+
+
+<script>
+window.addEventListener("DOMContentLoaded", function () {
+  /* Remove NAL NETWORK ORIGINALS and HIGHLIGHTS only. */
+  const removeTitles = new Set(["NAL NETWORK ORIGINALS", "HIGHLIGHTS"]);
+  document.querySelectorAll("#watchPage h1, #watchPage h2, #watchPage h3, #watchPage h4, #watchPage strong").forEach(function(el){
+    const title = (el.textContent || "").trim().toUpperCase();
+    if (!removeTitles.has(title)) return;
+
+    const section =
+      el.closest(".watch-section") ||
+      el.closest(".network-section") ||
+      el.closest(".section") ||
+      el.closest("section");
+
+    if (section) section.remove();
+  });
 });
 </script>
 
