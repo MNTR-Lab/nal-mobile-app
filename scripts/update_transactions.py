@@ -1,4 +1,5 @@
 import json
+import os
 import time
 from pathlib import Path
 
@@ -24,6 +25,20 @@ OUTPUT_FILE = Path("data/transactions.json")
 
 
 # ============================================================
+# DIGITALSHIFT AUTHORIZATION
+# ============================================================
+
+DIGITALSHIFT_AUTH_TICKET = os.environ.get(
+    "DIGITALSHIFT_AUTH_TICKET"
+)
+
+if not DIGITALSHIFT_AUTH_TICKET:
+    raise RuntimeError(
+        "DIGITALSHIFT_AUTH_TICKET environment variable is missing."
+    )
+
+
+# ============================================================
 # REQUEST SESSION
 # ============================================================
 
@@ -32,7 +47,14 @@ session = requests.Session()
 session.headers.update(
     {
         "Accept": "application/json, text/plain, */*",
-        "User-Agent": "NAL-Mobile-App/1.0",
+        "Authorization": f'ticket="{DIGITALSHIFT_AUTH_TICKET}"',
+        "Origin": "https://www.thenationalarenaleague.com",
+        "Referer": "https://www.thenationalarenaleague.com/",
+        "User-Agent": (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/153.0.0.0 Safari/537.36"
+        ),
     }
 )
 
@@ -62,6 +84,13 @@ def fetch_transaction_page(start_id=None, offset=None):
         params=params,
         timeout=30,
     )
+
+    if response.status_code != 200:
+        print(
+            f"DigitalShift returned HTTP "
+            f"{response.status_code}"
+        )
+        print(response.text[:500])
 
     response.raise_for_status()
 
@@ -93,7 +122,7 @@ def normalize_transaction(txn):
         "person": {
             "id": person.get("id"),
             "name": person.get("name"),
-        },
+        } if person else None,
 
         "coach": {
             "id": coach.get("id"),
@@ -131,10 +160,15 @@ def main():
             offset=offset,
         )
 
-        transactions = payload.get("transactions", [])
+        transactions = payload.get(
+            "transactions",
+            []
+        )
 
         if not transactions:
-            print("No additional transactions returned.")
+            print(
+                "No additional transactions returned."
+            )
             break
 
         new_count = 0
@@ -162,28 +196,20 @@ def main():
             f"({new_count} new)."
         )
 
-        # ----------------------------------------------------
-        # If DigitalShift returns fewer than LIMIT records,
-        # we have reached the end.
-        # ----------------------------------------------------
-
         if len(transactions) < LIMIT:
-            print("Reached final transaction page.")
+            print(
+                "Reached final transaction page."
+            )
             break
-
-        # ----------------------------------------------------
-        # DigitalShift infinite-scroll pagination
-        #
-        # The browser uses the final transaction ID from the
-        # previous batch as start_id and increments offset.
-        # ----------------------------------------------------
 
         last_transaction = transactions[-1]
 
         next_start_id = last_transaction.get("id")
 
         if not next_start_id:
-            print("Unable to determine next start_id.")
+            print(
+                "Unable to determine next start_id."
+            )
             break
 
         start_id = next_start_id
@@ -195,10 +221,8 @@ def main():
 
         page_number += 1
 
-        # Small delay so we do not hammer DigitalShift.
         time.sleep(0.25)
 
-        # Safety guard.
         if page_number > 100:
             raise RuntimeError(
                 "Pagination exceeded 100 pages. "
