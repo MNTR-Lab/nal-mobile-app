@@ -7219,6 +7219,24 @@ document.addEventListener("DOMContentLoaded", () => {
 .nal-transactions-empty{background:#fff;border-radius:14px;padding:28px 18px;text-align:center;color:#727b86;font-size:12px;line-height:1.5}
 .nal-transactions-empty strong{display:block;color:#07172b;font-size:17px;margin-bottom:6px}
 
+
+/* =========================================================
+   NATIVE NAL STATS — 2026 ARCHIVE
+========================================================= */
+#statsPage{background:#f3f5f7;min-height:calc(100vh - var(--header-height) - var(--nav-height));padding-bottom:28px}
+.nal-stats-hero{background:linear-gradient(145deg,#07172b,#102b4e);color:#fff;padding:22px 18px;position:relative;overflow:hidden}
+.nal-stats-hero:after{content:"26";position:absolute;right:-10px;bottom:-45px;font-size:126px;font-weight:1000;color:rgba(227,27,35,.14)}
+.nal-stats-eyebrow{font-size:10px;font-weight:900;letter-spacing:2px;color:#b9c4d1}.nal-stats-hero h1{margin:5px 0 3px;font-size:29px;line-height:1;font-weight:1000}.nal-stats-hero h1 span{color:#e31b23}.nal-stats-hero p{margin:7px 0 0;color:#c8d0da;font-size:11px;font-weight:700}
+.nal-stats-seasonbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:#fff;border-bottom:1px solid #e3e7eb}.nal-stats-seasonlabel{font-size:9px;font-weight:1000;letter-spacing:1px;color:#7a8490}.nal-stats-seasonselect{border:1px solid #d5dbe1;border-radius:9px;background:#f7f8fa;color:#07172b;font-size:11px;font-weight:1000;padding:8px 28px 8px 10px}
+.nal-stats-tabs{display:flex;gap:6px;background:#fff;padding:13px;border-bottom:1px solid #e3e7eb}.nal-stats-tab{flex:1;border:1px solid #d5dbe1;background:#fff;border-radius:20px;padding:10px 3px;font-size:9px;font-weight:1000;color:#07172b;white-space:nowrap}.nal-stats-tab.active{background:#e31b23;border-color:#e31b23;color:#fff}
+.nal-stats-content{padding:14px}.nal-stats-loading,.nal-stats-empty{background:#fff;border-radius:14px;padding:28px 18px;text-align:center;color:#727b86;font-size:12px;line-height:1.5}.nal-stats-loading strong,.nal-stats-empty strong{display:block;color:#07172b;font-size:17px;margin-bottom:6px}
+.nal-stats-pills{display:flex;gap:7px;overflow-x:auto;padding:1px 0 12px;scrollbar-width:none}.nal-stats-pills::-webkit-scrollbar{display:none}.nal-stats-pill{flex:0 0 auto;border:1px solid #d9dee4;background:#fff;color:#59636e;border-radius:999px;padding:8px 12px;font-size:9px;font-weight:1000;text-transform:uppercase}.nal-stats-pill.active{background:#07172b;border-color:#07172b;color:#fff}
+.nal-stats-sectionhead{display:flex;align-items:end;justify-content:space-between;gap:8px;margin:3px 2px 11px}.nal-stats-sectionhead b{color:#07172b;font-size:18px;line-height:1.05}.nal-stats-sectionhead span{color:#7c858f;font-size:9px;font-weight:900;text-align:right}
+.nal-leader-feature{position:relative;overflow:hidden;background:linear-gradient(145deg,#07172b,#102b4e);border-radius:16px;padding:17px;margin-bottom:9px;color:#fff;display:grid;grid-template-columns:68px 1fr auto;gap:12px;align-items:center;box-shadow:0 4px 13px rgba(7,23,43,.13)}.nal-leader-rank{width:62px;height:62px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;border:3px solid #e31b23}.nal-leader-rank img{width:88%;height:88%;object-fit:contain}.nal-leader-rank .player-photo{width:100%;height:100%;object-fit:cover}.nal-leader-name{font-size:15px;font-weight:1000;line-height:1.08;text-transform:uppercase}.nal-leader-team{margin-top:4px;color:#bdc9d5;font-size:9px;font-weight:800}.nal-leader-value{text-align:right;font-size:25px;font-weight:1000;color:#fff}.nal-leader-value small{display:block;margin-top:2px;font-size:7px;letter-spacing:.7px;color:#aebccc;text-transform:uppercase}
+.nal-leader-row{background:#fff;border:1px solid #e5e9ed;border-radius:12px;padding:10px 12px;margin-bottom:7px;display:grid;grid-template-columns:26px 38px 1fr auto;gap:8px;align-items:center}.nal-leader-row-rank{font-size:16px;font-weight:1000;color:#e31b23;text-align:center}.nal-leader-row-logo{width:36px;height:36px;border-radius:50%;border:1px solid #e5e9ed;display:flex;align-items:center;justify-content:center;overflow:hidden}.nal-leader-row-logo img{width:86%;height:86%;object-fit:contain}.nal-leader-row-name{font-size:11px;font-weight:1000;color:#07172b;text-transform:uppercase}.nal-leader-row-team{font-size:8px;color:#7a8490;font-weight:800;margin-top:2px}.nal-leader-row-value{font-size:16px;font-weight:1000;color:#07172b;text-align:right}.nal-leader-row-value small{display:block;font-size:6px;color:#8b949e;text-transform:uppercase}
+.nal-stats-tools{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:10px}.nal-stats-search,.nal-stats-select{width:100%;border:1px solid #d9dee4;background:#fff;border-radius:10px;padding:11px;color:#07172b;font-size:11px;font-weight:800;outline:none}.nal-stats-select{width:auto;max-width:145px;font-weight:1000}.nal-player-card{background:#fff;border:1px solid #e5e9ed;border-radius:13px;margin-bottom:8px;overflow:hidden}.nal-player-summary{width:100%;border:0;background:#fff;padding:11px 12px;display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;text-align:left}.nal-player-logo{width:44px;height:44px;border-radius:50%;border:1px solid #e5e9ed;display:flex;align-items:center;justify-content:center;overflow:hidden}.nal-player-logo img{width:86%;height:86%;object-fit:contain}.nal-player-name{color:#07172b;font-size:12px;font-weight:1000;text-transform:uppercase}.nal-player-meta{margin-top:3px;color:#7a8490;font-size:8px;font-weight:900}.nal-player-expand{color:#e31b23;font-size:18px;font-weight:1000}.nal-player-detail{display:none;border-top:1px solid #edf0f2;padding:10px 12px 12px;background:#f8f9fa}.nal-player-card.open .nal-player-detail{display:block}.nal-player-category{margin:8px 0 5px;color:#07172b;font-size:10px;font-weight:1000;text-transform:uppercase}.nal-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.nal-stat-box{background:#fff;border:1px solid #e4e8ec;border-radius:8px;padding:7px 4px;text-align:center;min-width:0}.nal-stat-box b{display:block;color:#07172b;font-size:12px;overflow:hidden;text-overflow:ellipsis}.nal-stat-box small{display:block;margin-top:2px;color:#8a939d;font-size:6px;font-weight:900;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis}
+.nal-team-strip{display:flex;gap:9px;overflow-x:auto;padding:1px 0 13px;scrollbar-width:none}.nal-team-strip::-webkit-scrollbar{display:none}.nal-team-choice{min-width:68px;text-align:center;border:0;background:transparent}.nal-team-choice-logo{width:52px;height:52px;border-radius:50%;background:#fff;border:2px solid #e5e9ed;display:flex;align-items:center;justify-content:center;margin:auto;overflow:hidden}.nal-team-choice-logo img{width:86%;height:86%;object-fit:contain}.nal-team-choice small{display:block;margin-top:4px;font-size:8px;font-weight:900;color:#707984;max-width:68px;line-height:1.1}.nal-team-choice.active .nal-team-choice-logo{border:3px solid #e31b23}.nal-team-choice.active small{color:#e31b23}.nal-team-stats-banner{background:#07172b;color:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px}.nal-team-stats-banner img{width:58px;height:58px;object-fit:contain;background:#fff;border-radius:50%;padding:4px}.nal-team-stats-banner b{display:block;font-size:17px}.nal-team-stats-banner span{font-size:9px;color:#c1cbd6}.nal-team-tablewrap{overflow-x:auto;background:#fff;border-radius:12px;border:1px solid #e5e9ed}.nal-team-table{width:100%;border-collapse:collapse;white-space:nowrap}.nal-team-table th{background:#07172b;color:#fff;padding:10px 7px;font-size:8px;text-transform:uppercase}.nal-team-table th:first-child,.nal-team-table td:first-child{text-align:left;position:sticky;left:0}.nal-team-table th:first-child{background:#07172b}.nal-team-table td:first-child{background:#fff}.nal-team-table td{padding:9px 7px;border-bottom:1px solid #edf0f2;text-align:center;font-size:9px;font-weight:800;color:#4f5a65}.nal-team-table td:first-child{font-weight:1000;color:#07172b;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+
 </style>
 
 <style>
@@ -7798,7 +7816,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <span>Transactions</span>
         </button>
 
-        <button class="home-quick-button" type="button" data-home-action="league-leaders" aria-label="League Leaders">
+        <button class="home-quick-button" type="button" data-home-action="stats" aria-label="Stats">
           <svg viewBox="0 0 24 24">
             <path d="M8 4h8v3c0 3.3-1.8 5.7-4 5.7S8 10.3 8 7V4z"></path>
             <path d="M8 6H4v1c0 3 1.8 5 5 5"></path>
@@ -7807,7 +7825,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <path d="M8 21h8"></path>
             <path d="M9 17h6v4H9z"></path>
           </svg>
-          <span>League Leaders</span>
+          <span>Stats</span>
         </button>
       </div>
     </section>
@@ -8214,6 +8232,32 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
     <section class="nal-schedule-content" id="nalScheduleContent">
       <div class="nal-schedule-empty"><strong>LOADING SCHEDULE</strong>Connecting to NAL game data…</div>
+    </section>
+  </main>
+
+
+  <!-- =====================================================
+       NATIVE NAL STATS
+  ====================================================== -->
+  <main id="statsPage" class="app-page" style="display:none">
+    <section class="nal-stats-hero">
+      <div class="nal-stats-eyebrow">NATIONAL ARENA LEAGUE</div>
+      <h1>2026 <span>STATS</span></h1>
+      <p>OFFICIAL NAL REGULAR SEASON STATISTICS</p>
+    </section>
+    <div class="nal-stats-seasonbar">
+      <div class="nal-stats-seasonlabel">SEASON ARCHIVE</div>
+      <select id="nalStatsSeason" class="nal-stats-seasonselect" aria-label="Stats season">
+        <option value="2026" selected>2026</option>
+      </select>
+    </div>
+    <div class="nal-stats-tabs" role="tablist" aria-label="Statistics views">
+      <button class="nal-stats-tab active" type="button" data-stats-view="leaders">LEAGUE LEADERS</button>
+      <button class="nal-stats-tab" type="button" data-stats-view="players">PLAYER STATS</button>
+      <button class="nal-stats-tab" type="button" data-stats-view="teams">TEAM STATS</button>
+    </div>
+    <section class="nal-stats-content" id="nalStatsContent">
+      <div class="nal-stats-loading"><strong>LOADING STATS</strong>Connecting to the official NAL statistics archive…</div>
     </section>
   </main>
 
@@ -12754,21 +12798,12 @@ document.addEventListener("click", event => {
     return;
   }
 
-  if (action === "league-leaders") {
-    openArticle(
-      LEAGUE_LEADERS_URL,
-      {
-        mode: "team",
-        title: "LEAGUE LEADERS",
-        subtitle: "REGULAR SEASON",
-        loadingText: "LOADING LEAGUE LEADERS",
-        brand: {
-          primary: "#07172b",
-          accent: "#e31b23"
-        },
-        navPage: "homePage"
-      }
-    );
+  if (action === "stats") {
+    if (typeof window.openNalStats === "function") {
+      window.openNalStats();
+    } else {
+      showPage("statsPage");
+    }
     return;
   }
 
@@ -19135,6 +19170,63 @@ function closeLightcastTest(){
     loadTransactions(transactionSeason);
   };
   window.renderNalTransactions = renderTransactions;
+})();
+</script>
+
+
+<script>
+/* =========================================================
+   NATIVE NAL STATS
+   Sources:
+   data/stats/{season}/leaders.json
+   data/stats/{season}/players.json
+   data/stats/{season}/teams.json
+========================================================= */
+(function(){
+  let statsSeason="2026", statsView="leaders", leaderSection="Passing", leaderCategory="";
+  let playerCategory="all", playerSearch="", teamCategory="passing", teamId="";
+  let leadersData=null, playersData=null, teamsData=null, loadedSeason="";
+  const STAT_ORDER=["passing","rushing","receiving","offensive","defensive","returning","kicking"];
+  const STAT_LABELS={passing:"Passing",rushing:"Rushing",receiving:"Receiving",offensive:"Offensive",defensive:"Defensive",returning:"Returning",kicking:"Kicking"};
+  const TEAM_SLUGS_STATS={"amarillo warbirds":"amarillo-warbirds","colorado spartans":"colorado-spartans","dallas apex":"dallas-apex","louisiana rouxgaroux":"louisiana-rouxgaroux","omaha beef":"omaha-beef","pueblo punishers":"pueblo-punishers","salina liberty":"salina-liberty","sioux city bandits":"sioux-city-bandits","southwest kansas storm":"southwest-kansas-storm","wheeling miners":"wheeling-miners"};
+  function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+  function norm(v){return String(v||"").trim().toLowerCase().replace(/\s+/g," ")}
+  function logo(name,fallback=""){const slug=TEAM_SLUGS_STATS[norm(name)]||"";return (slug&&typeof TEAM_LOGO_OVERRIDES!=="undefined"&&TEAM_LOGO_OVERRIDES[slug])||fallback||(typeof NAL_LOGO!=="undefined"?NAL_LOGO:"")}
+  function shortTeam(name){return String(name||"").replace(/^(Southwest Kansas|Sioux City|Louisiana|Colorado|Amarillo|Pueblo|Salina|Omaha|Wheeling|Dallas)\s+/,"")}
+  function pretty(k){return String(k||"").replaceAll("_"," ").replace(/\b\w/g,c=>c.toUpperCase()).replace("Pct","%").replace("Yds","Yds").replace("Gp","GP").replace("Td","TD").replace("Pat","PAT").replace("Fg","FG")}
+  function teamForPlayer(p){return p?.teams?.[0]?.team||"NAL"}
+  function render(){
+    document.querySelectorAll("[data-stats-view]").forEach(b=>b.classList.toggle("active",b.dataset.statsView===statsView));
+    if(statsView==="leaders") renderLeaders(); else if(statsView==="players") renderPlayers(); else renderTeams();
+  }
+  function renderLeaders(){
+    const c=document.getElementById("nalStatsContent"); if(!c)return;
+    const sections=Array.isArray(leadersData?.sections)?leadersData.sections:[];
+    if(!sections.length){c.innerHTML='<div class="nal-stats-empty"><strong>NO LEAGUE LEADERS</strong>No leader data is available for this season.</div>';return}
+    if(!sections.some(x=>x.name===leaderSection)) leaderSection=sections[0].name;
+    const section=sections.find(x=>x.name===leaderSection)||sections[0], cats=section.categories||[];
+    if(!cats.some(x=>x.name===leaderCategory)) leaderCategory=cats[0]?.name||"";
+    const cat=cats.find(x=>x.name===leaderCategory)||cats[0], leaders=cat?.leaders||[];
+    const sectionPills=sections.map(x=>`<button class="nal-stats-pill${x.name===leaderSection?' active':''}" data-leader-section="${esc(x.name)}">${esc(x.name)}</button>`).join("");
+    const catPills=cats.map(x=>`<button class="nal-stats-pill${x.name===leaderCategory?' active':''}" data-leader-category="${esc(x.name)}">${esc(x.name)}</button>`).join("");
+    const first=leaders[0];
+    let cards="";
+    if(first){const img=first.player_image||logo(first.team,first.source_team_logo);cards+=`<article class="nal-leader-feature"><div class="nal-leader-rank"><img class="${first.player_image?'player-photo':''}" src="${esc(img)}" alt=""></div><div><div class="nal-leader-name">${esc(first.name)}</div><div class="nal-leader-team">#${esc(first.number)}${first.position?' • '+esc(first.position):''} • ${esc(first.team)}</div></div><div class="nal-leader-value">${esc(first.value)}<small>${esc(first.unit||cat.unit||"")}</small></div></article>`}
+    cards+=leaders.slice(1).map(p=>`<article class="nal-leader-row"><div class="nal-leader-row-rank">${esc(p.rank)}</div><div class="nal-leader-row-logo"><img src="${esc(logo(p.team,p.source_team_logo))}" alt=""></div><div><div class="nal-leader-row-name">${esc(p.name)}</div><div class="nal-leader-row-team">${esc(p.team)}</div></div><div class="nal-leader-row-value">${esc(p.value)}<small>${esc(p.unit||cat?.unit||"")}</small></div></article>`).join("");
+    c.innerHTML=`<div class="nal-stats-pills">${sectionPills}</div><div class="nal-stats-pills">${catPills}</div><div class="nal-stats-sectionhead"><b>${esc(cat?.name||leaderSection)}</b><span>TOP ${leaders.length}<br>REGULAR SEASON</span></div>${cards}`;
+  }
+  function filteredPlayers(){let a=Array.isArray(playersData?.players)?playersData.players:[]; if(playerCategory!=="all")a=a.filter(p=>(p.categories||[]).includes(playerCategory)); const q=norm(playerSearch); if(q)a=a.filter(p=>norm(p.name).includes(q)||norm(teamForPlayer(p)).includes(q)||String(p.number||"").includes(q)); return a.sort((a,b)=>String(a.name).localeCompare(String(b.name)))}
+  function statBoxes(row){const omit=new Set(["team_id","team","number","name","pos"]);return Object.entries(row||{}).filter(([k,v])=>!omit.has(k)&&v!==""&&v!=null).map(([k,v])=>`<div class="nal-stat-box"><b>${esc(v)}</b><small>${esc(pretty(k))}</small></div>`).join("")}
+  function playerCard(p){const team=teamForPlayer(p);const details=(p.categories||[]).map(cat=>{const rows=p.stats?.[cat]||[];return rows.map(row=>`<div class="nal-player-category">${esc(STAT_LABELS[cat]||cat)}${row.team&&row.team!==team?' • '+esc(row.team):''}</div><div class="nal-stat-grid">${statBoxes(row)}</div>`).join("")}).join("");return `<article class="nal-player-card" data-player-card><button class="nal-player-summary" type="button" data-player-toggle><span class="nal-player-logo"><img src="${esc(logo(team))}" alt=""></span><span><span class="nal-player-name">${esc(p.name)}</span><span class="nal-player-meta">#${esc(p.number)} • ${esc(p.position||'—')} • ${esc(team)}</span></span><span class="nal-player-expand">+</span></button><div class="nal-player-detail">${details}</div></article>`}
+  function renderPlayers(){const c=document.getElementById("nalStatsContent");if(!c)return;const players=filteredPlayers();c.innerHTML=`<div class="nal-stats-tools"><input id="nalPlayerSearch" class="nal-stats-search" type="search" placeholder="Search player or team" value="${esc(playerSearch)}"><select id="nalPlayerCategory" class="nal-stats-select"><option value="all">ALL STATS</option>${STAT_ORDER.map(x=>`<option value="${x}"${x===playerCategory?' selected':''}>${STAT_LABELS[x].toUpperCase()}</option>`).join("")}</select></div><div class="nal-stats-sectionhead"><b>PLAYER STATS</b><span>${players.length} PLAYER${players.length===1?'':'S'}</span></div>${players.length?players.map(playerCard).join(""):'<div class="nal-stats-empty"><strong>NO PLAYERS FOUND</strong>Try another player, team, or category.</div>'}`; const inp=document.getElementById("nalPlayerSearch");if(inp){inp.focus({preventScroll:true});inp.setSelectionRange(inp.value.length,inp.value.length)}}
+  function teamRows(team,cat){return team?.stats?.[cat]||[]}
+  function renderTeams(){const c=document.getElementById("nalStatsContent");if(!c)return;const teams=Array.isArray(teamsData?.teams)?teamsData.teams:[];if(!teams.length){c.innerHTML='<div class="nal-stats-empty"><strong>NO TEAM STATS</strong>No team statistics are available.</div>';return} if(!teamId)teamId=String((teams.find(t=>t.player_count>0)||teams[0]).team_id);const team=teams.find(t=>String(t.team_id)===String(teamId))||teams[0];const available=team.categories||[];if(!available.includes(teamCategory))teamCategory=available[0]||"passing";const rows=teamRows(team,teamCategory);const keys=rows.length?Object.keys(rows[0].stats||{}).filter(k=>!["number","name","pos"].includes(k)):[];const strip=teams.map(t=>`<button class="nal-team-choice${String(t.team_id)===String(team.team_id)?' active':''}" data-stats-team="${esc(t.team_id)}"><span class="nal-team-choice-logo"><img src="${esc(logo(t.team))}" alt=""></span><small>${esc(shortTeam(t.team))}</small></button>`).join("");const cats=STAT_ORDER.filter(x=>available.includes(x)).map(x=>`<button class="nal-stats-pill${x===teamCategory?' active':''}" data-team-category="${x}">${STAT_LABELS[x]}</button>`).join("");const table=rows.length?`<div class="nal-team-tablewrap"><table class="nal-team-table"><thead><tr><th>PLAYER</th>${keys.map(k=>`<th>${esc(pretty(k))}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr><td>#${esc(r.number)} ${esc(r.name)}</td>${keys.map(k=>`<td>${esc(r.stats?.[k]??'')}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`:`<div class="nal-stats-empty"><strong>NO ${esc((STAT_LABELS[teamCategory]||teamCategory).toUpperCase())} STATS</strong>No records are available for this category.</div>`;c.innerHTML=`<div class="nal-team-strip">${strip}</div><div class="nal-team-stats-banner"><img src="${esc(logo(team.team))}" alt=""><div><b>${esc(team.team)}</b><span>${team.player_count} PLAYER${team.player_count===1?'':'S'} WITH 2026 STATS</span></div></div>${available.length?`<div class="nal-stats-pills">${cats}</div>`:''}${team.player_count?table:'<div class="nal-stats-empty"><strong>NO 2026 STATS</strong>This team has no Regular Season statistics in the 2026 archive.</div>'}`}
+  async function load(season=statsSeason){statsSeason=String(season||"2026");const c=document.getElementById("nalStatsContent");if(c)c.innerHTML='<div class="nal-stats-loading"><strong>LOADING STATS</strong>Connecting to the official NAL statistics archive…</div>';if(loadedSeason===statsSeason&&leadersData&&playersData&&teamsData){render();return}try{const base=`data/stats/${encodeURIComponent(statsSeason)}`;const stamp=Date.now();const [lr,pr,tr]=await Promise.all([fetch(`${base}/leaders.json?v=${stamp}`,{cache:"no-store"}),fetch(`${base}/players.json?v=${stamp}`,{cache:"no-store"}),fetch(`${base}/teams.json?v=${stamp}`,{cache:"no-store"})]);if(!lr.ok||!pr.ok||!tr.ok)throw new Error(`Stats HTTP ${lr.status}/${pr.status}/${tr.status}`);[leadersData,playersData,teamsData]=await Promise.all([lr.json(),pr.json(),tr.json()]);loadedSeason=statsSeason;render()}catch(e){console.error("Unable to load NAL stats:",e);if(c)c.innerHTML=`<div class="nal-stats-empty"><strong>STATS UNAVAILABLE</strong>The ${esc(statsSeason)} statistics archive could not be loaded. Please try again.</div>`}}
+  document.addEventListener("click",e=>{const view=e.target.closest("[data-stats-view]");if(view){statsView=view.dataset.statsView;render();return}const sec=e.target.closest("[data-leader-section]");if(sec){leaderSection=sec.dataset.leaderSection;leaderCategory="";renderLeaders();return}const cat=e.target.closest("[data-leader-category]");if(cat){leaderCategory=cat.dataset.leaderCategory;renderLeaders();return}const pc=e.target.closest("[data-player-toggle]");if(pc){const card=pc.closest("[data-player-card]");if(card){card.classList.toggle("open");const ex=pc.querySelector(".nal-player-expand");if(ex)ex.textContent=card.classList.contains("open")?'−':'+'}return}const team=e.target.closest("[data-stats-team]");if(team){teamId=team.dataset.statsTeam;renderTeams();return}const tc=e.target.closest("[data-team-category]");if(tc){teamCategory=tc.dataset.teamCategory;renderTeams()}});
+  document.addEventListener("input",e=>{if(e.target?.id==="nalPlayerSearch"){playerSearch=e.target.value;renderPlayers()}});
+  document.addEventListener("change",e=>{if(e.target?.id==="nalPlayerCategory"){playerCategory=e.target.value;renderPlayers()}if(e.target?.id==="nalStatsSeason")load(e.target.value)});
+  window.openNalStats=function(view="leaders"){statsView=["leaders","players","teams"].includes(view)?view:"leaders";if(typeof showPage==="function")showPage("statsPage");load(statsSeason)};
+  window.renderNalStats=render;
 })();
 </script>
 
