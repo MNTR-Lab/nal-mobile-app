@@ -8336,6 +8336,44 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 </style>
+<style>
+
+/* =========================================================
+   CONTEXTUAL APP BACK BUTTON
+   Small previous-view control for deeper native pages.
+   ========================================================= */
+#appContextBack{
+  display:none;
+  position:fixed;
+  left:max(10px, calc((100vw - 600px) / 2 + 10px));
+  top:calc(var(--header-height) + max(8px, env(safe-area-inset-top)));
+  z-index:2950;
+  min-height:30px;
+  padding:6px 10px 6px 8px;
+  border:1px solid rgba(7,23,43,.14);
+  border-radius:999px;
+  background:rgba(255,255,255,.94);
+  color:var(--nal-blue);
+  box-shadow:0 3px 10px rgba(0,0,0,.12);
+  align-items:center;
+  gap:4px;
+  font-size:9px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  cursor:pointer;
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+}
+#appContextBack.is-visible{display:flex;}
+#appContextBack .app-context-back-arrow{
+  font-size:18px;
+  line-height:.7;
+  margin-top:-1px;
+}
+
+</style>
 </head>
 
 
@@ -8352,6 +8390,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <h1 id="fanForumThreadCategory">COMMUNITY</h1>
         <p>Join the conversation with NAL fans.</p>
       </header>
+<button id="appContextBack" type="button" aria-label="Go back to previous app page">
+  <span class="app-context-back-arrow" aria-hidden="true">‹</span>
+  <span>BACK</span>
+</button>
+
 
       <article id="fanForumThreadPost" class="fan-forum-thread-card">
         <div class="fan-forum-loading">LOADING CONVERSATION…</div>
@@ -20418,6 +20461,135 @@ function closeLightcastTest(){
     return afterLoad;
   };
   window.renderNalStats=render;
+})();
+</script>
+
+
+<script>
+/* =========================================================
+   CONTEXTUAL APP BACK — PREVIOUS INTERNAL VIEW
+   Does not use browser history, so the wrapper cannot back
+   the user out of the app. Existing page routing is preserved.
+   ========================================================= */
+(function(){
+  const backButton = document.getElementById("appContextBack");
+
+  /* These are the native deeper pages that benefit from a small Back control. */
+  const backEnabledPages = new Set([
+    "schedulePage",
+    "rosterPage",
+    "statsPage",
+    "standingsPage",
+    "transactionsPage"
+  ]);
+
+  let appPreviousView = null;
+  let restoringPreviousView = false;
+
+  function getActiveAppPage(){
+    return [...document.querySelectorAll(".app-page")].find(page =>
+      page.classList.contains("active") &&
+      getComputedStyle(page).display !== "none"
+    ) || null;
+  }
+
+  function getActiveNavPage(){
+    return document.querySelector(".bottom-nav .nav-button.active")?.dataset?.page || "";
+  }
+
+  function snapshotCurrentView(){
+    const page = getActiveAppPage();
+    if(!page) return null;
+    return {
+      pageId: page.id,
+      scrollY: window.scrollY || 0,
+      navPage: getActiveNavPage()
+    };
+  }
+
+  function updateBackButton(){
+    const active = getActiveAppPage();
+    const shouldShow =
+      !!appPreviousView &&
+      !!active &&
+      backEnabledPages.has(active.id);
+
+    backButton?.classList.toggle("is-visible", shouldShow);
+  }
+
+  function restoreView(view){
+    if(!view?.pageId) return;
+
+    restoringPreviousView = true;
+
+    document.querySelectorAll(".app-page").forEach(page => {
+      page.classList.remove("active");
+      page.style.display = "none";
+    });
+
+    const target = document.getElementById(view.pageId);
+    if(target){
+      target.style.display = "block";
+      target.classList.add("active");
+    }
+
+    document.querySelectorAll(".bottom-nav .nav-button").forEach(button => {
+      button.classList.remove("active");
+    });
+
+    let nav = view.navPage
+      ? document.querySelector(`.bottom-nav .nav-button[data-page="${view.navPage}"]`)
+      : null;
+
+    if(!nav && view.pageId === "teamPage"){
+      nav = document.querySelector('.bottom-nav .nav-button[data-page="homePage"]');
+    }
+    if(nav) nav.classList.add("active");
+
+    appPreviousView = null;
+    backButton?.classList.remove("is-visible");
+
+    requestAnimationFrame(() => {
+      window.scrollTo({top:view.scrollY || 0,left:0,behavior:"instant"});
+      restoringPreviousView = false;
+    });
+  }
+
+  /* Wrap the master's existing showPage function. It still does all real routing. */
+  if(typeof window.showPage === "function"){
+    const originalShowPage = window.showPage;
+
+    window.showPage = function(pageId){
+      if(!restoringPreviousView && backEnabledPages.has(pageId)){
+        const current = snapshotCurrentView();
+        if(current && current.pageId !== pageId){
+          appPreviousView = current;
+        }
+      }
+
+      const result = originalShowPage.apply(this, arguments);
+
+      requestAnimationFrame(updateBackButton);
+      return result;
+    };
+  }
+
+  backButton?.addEventListener("click", function(){
+    if(appPreviousView) restoreView(appPreviousView);
+  });
+
+  /* Root navigation starts a fresh path, so stale Back context never leaks. */
+  document.querySelectorAll(".bottom-nav .nav-button, #headerHome").forEach(control => {
+    control.addEventListener("click", function(){
+      const destination = control.dataset?.page || (control.id === "headerHome" ? "homePage" : "");
+      if(destination && !backEnabledPages.has(destination)){
+        appPreviousView = null;
+        backButton?.classList.remove("is-visible");
+      }
+    }, true);
+  });
+
+  updateBackButton();
 })();
 </script>
 
