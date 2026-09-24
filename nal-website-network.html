@@ -8396,7 +8396,7 @@ body{
 @media (min-width: 1200px){
   .app{
     width:calc(100% - 48px) !important;
-    max-width:1430px !important;
+    max-width:1100px !important;
     margin-left:auto !important;
     margin-right:auto !important;
   }
@@ -8404,7 +8404,7 @@ body{
 @media (min-width: 768px) and (max-width: 1199px){
   .app{
     width:calc(100% - 40px) !important;
-    max-width:1430px !important;
+    max-width:1100px !important;
     margin-left:auto !important;
     margin-right:auto !important;
   }
@@ -8739,13 +8739,13 @@ header.topbar {
   body{ background:#071522 !important; }
   #watchPage{
     width:calc(100% - 32px) !important;
-    max-width:1820px !important;
+    max-width:1400px !important;
     margin-left:auto !important;
     margin-right:auto !important;
   }
   #watchPage > *{
     width:100% !important;
-    max-width:1430px !important;
+    max-width:1100px !important;
     margin-left:auto !important;
     margin-right:auto !important;
   }
@@ -8847,6 +8847,37 @@ body {
 /* Remove app-style viewport fillers that create blank blue space. */
 main.app-page {
   flex: none !important;
+}
+</style>
+
+
+<style id="nal-network-final-page-cap">
+/* Final website sizing: preserve 1100px content width and 1400px blue shell. */
+@media (min-width:1200px){
+  body #watchPage{
+    width:calc(100% - 32px) !important;
+    max-width:1400px !important;
+    min-height:0 !important;
+    height:auto !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    padding-bottom:20px !important;
+  }
+
+  body #watchPage > *{
+    width:100% !important;
+    max-width:1100px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+}
+
+/* Prevent app viewport/flex rules from stretching the Network page vertically. */
+body #watchPage{
+  min-height:0 !important;
+  height:auto !important;
+  flex:none !important;
+  padding-bottom:20px !important;
 }
 </style>
 
