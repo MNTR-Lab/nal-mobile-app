@@ -1,7 +1,6 @@
 import html
 import json
 import os
-import re
 import time
 from pathlib import Path
 
@@ -10,6 +9,7 @@ import requests
 
 # ============================================================
 # NAL / DIGITALSHIFT SETTINGS
+# 2026 NAL TRANSACTIONS
 # ============================================================
 
 LEAGUE_ID = 1200
@@ -23,7 +23,8 @@ BASE_URL = (
     "partials/stats/transactions/table"
 )
 
-OUTPUT_FILE = Path("data/transactions.json")
+# Store the 2026 season permanently in its own archive file.
+OUTPUT_FILE = Path("data/transactions/2026.json")
 
 
 # ============================================================
@@ -147,12 +148,12 @@ def extract_transactions(payload):
     # Convert HTML entities such as &quot; back to quotes.
     decoded = html.unescape(content)
 
-    # We previously confirmed DigitalShift initializes the
-    # transaction table using:
+    # DigitalShift initializes the transaction table using:
     #
     # ctrl.txns = [...]
     #
     # inside an ng-init attribute.
+
     marker = "ctrl.txns"
 
     marker_position = decoded.find(marker)
@@ -164,7 +165,8 @@ def extract_transactions(payload):
         )
         return []
 
-    # Find the "=" following ctrl.txns
+    # Find the "=" following ctrl.txns.
+
     equals_position = decoded.find(
         "=",
         marker_position
@@ -174,6 +176,7 @@ def extract_transactions(payload):
         return []
 
     # Find beginning of JSON array.
+
     array_start = decoded.find(
         "[",
         equals_position
@@ -184,9 +187,6 @@ def extract_transactions(payload):
 
     # --------------------------------------------------------
     # Locate the matching closing bracket.
-    #
-    # We cannot simply regex .*? because descriptions or
-    # embedded JSON may contain brackets or quoted text.
     # --------------------------------------------------------
 
     depth = 0
@@ -308,7 +308,7 @@ def normalize_transaction(txn):
 def main():
 
     print("==========================================")
-    print("NAL TRANSACTION UPDATE")
+    print("NAL 2026 TRANSACTION UPDATE")
     print("==========================================")
 
     all_transactions = []
@@ -357,15 +357,6 @@ def main():
     # ========================================================
     # PAGINATION
     # ========================================================
-
-    #
-    # DigitalShift's infinite-scroll request observed in
-    # DevTools uses:
-    #
-    # start_id=<transaction id>
-    # offset=<page offset>
-    # limit=25
-    #
 
     last_transaction = transactions[-1]
 
@@ -424,10 +415,8 @@ def main():
             f"({new_count} new)."
         )
 
-        # ----------------------------------------------------
-        # If the API gives us records but every record was
-        # already seen, stop rather than loop forever.
-        # ----------------------------------------------------
+        # If every returned transaction has already been seen,
+        # stop rather than creating a pagination loop.
 
         if new_count == 0:
             print(
@@ -436,9 +425,7 @@ def main():
             )
             break
 
-        # ----------------------------------------------------
-        # Fewer than 25 means final page.
-        # ----------------------------------------------------
+        # Fewer than LIMIT means this is the final page.
 
         if len(transactions) < LIMIT:
             print(
@@ -457,6 +444,7 @@ def main():
             break
 
         # Prevent accidental pagination loop.
+
         if next_start_id == start_id:
             print(
                 "DigitalShift returned the same "
@@ -489,10 +477,11 @@ def main():
     )
 
     # ========================================================
-    # BUILD FINAL JSON
+    # BUILD FINAL 2026 JSON
     # ========================================================
 
     output = {
+        "year": 2026,
         "league_id": LEAGUE_ID,
         "division_id": DIVISION_ID,
         "season_id": SEASON_ID,
@@ -518,7 +507,7 @@ def main():
     print("==========================================")
     print(
         f"Saved {len(all_transactions)} "
-        f"transactions to {OUTPUT_FILE}"
+        f"2026 transactions to {OUTPUT_FILE}"
     )
     print("==========================================")
 
