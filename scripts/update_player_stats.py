@@ -53,19 +53,15 @@ def build_session():
         print("ERROR: DIGITALSHIFT_AUTH_TICKET is not set.")
         sys.exit(1)
 
-    # Allow the secret to work whether GitHub contains:
+    # Normalize the GitHub secret into the format DigitalShift expects.
     #
-    #   actual-ticket-value
+    # These will all work:
     #
-    # OR:
+    # actual-ticket-value
     #
-    #   ticket="actual-ticket-value"
+    # ticket="actual-ticket-value"
     #
-    # OR:
-    #
-    #   Authorization: ticket="actual-ticket-value"
-    #
-    # We normalize everything to the exact format DigitalShift expects.
+    # Authorization: ticket="actual-ticket-value"
 
     if ticket.lower().startswith("authorization:"):
         ticket = ticket.split(":", 1)[1].strip()
@@ -215,65 +211,54 @@ def discover_teams(session):
 
     ng_init = container.get("ng-init", "")
 
-    match = re.search(
-        r"ctrl\.teams_by_division\s*=\s*(\[.*?\])\s*$",
-        ng_init,
-        flags=re.DOTALL,
-    )
+    start_marker = "ctrl.teams_by_division ="
 
-    if not match:
-        # Fallback for DigitalShift markup where additional
-        # whitespace/content follows the JSON.
-        start_marker = "ctrl.teams_by_division ="
+    if start_marker not in ng_init:
+        raise RuntimeError(
+            "Could not locate DigitalShift team JSON."
+        )
 
-        if start_marker not in ng_init:
-            raise RuntimeError(
-                "Could not locate DigitalShift team JSON."
-            )
+    raw = ng_init.split(start_marker, 1)[1].strip()
 
-        raw = ng_init.split(start_marker, 1)[1].strip()
+    # Find the complete JSON array.
+    depth = 0
+    in_string = False
+    escaped = False
+    end_index = None
 
-        # Find the complete outer JSON array safely.
-        depth = 0
-        in_string = False
-        escaped = False
-        end_index = None
+    for index, char in enumerate(raw):
 
-        for index, char in enumerate(raw):
-            if escaped:
-                escaped = False
-                continue
+        if escaped:
+            escaped = False
+            continue
 
-            if char == "\\":
-                escaped = True
-                continue
+        if char == "\\":
+            escaped = True
+            continue
 
-            if char == '"':
-                in_string = not in_string
-                continue
+        if char == '"':
+            in_string = not in_string
+            continue
 
-            if in_string:
-                continue
+        if in_string:
+            continue
 
-            if char == "[":
-                depth += 1
+        if char == "[":
+            depth += 1
 
-            elif char == "]":
-                depth -= 1
+        elif char == "]":
+            depth -= 1
 
-                if depth == 0:
-                    end_index = index + 1
-                    break
+            if depth == 0:
+                end_index = index + 1
+                break
 
-        if end_index is None:
-            raise RuntimeError(
-                "Could not determine end of DigitalShift team JSON."
-            )
+    if end_index is None:
+        raise RuntimeError(
+            "Could not determine end of DigitalShift team JSON."
+        )
 
-        team_json = raw[:end_index]
-
-    else:
-        team_json = match.group(1)
+    team_json = raw[:end_index]
 
     try:
         divisions = json.loads(team_json)
@@ -285,8 +270,11 @@ def discover_teams(session):
     teams = []
 
     for division in divisions:
+
         try:
-            division_id = int(division.get("id", 0))
+            division_id = int(
+                division.get("id", 0)
+            )
         except (TypeError, ValueError):
             continue
 
@@ -294,6 +282,7 @@ def discover_teams(session):
             continue
 
         for team in division.get("teams", []):
+
             try:
                 team_id = int(team["id"])
             except (KeyError, TypeError, ValueError):
@@ -301,8 +290,12 @@ def discover_teams(session):
 
             teams.append({
                 "id": team_id,
-                "name": clean_text(team.get("name")),
-                "short_name": clean_text(team.get("short_name")),
+                "name": clean_text(
+                    team.get("name")
+                ),
+                "short_name": clean_text(
+                    team.get("short_name")
+                ),
             })
 
     if not teams:
@@ -325,12 +318,17 @@ def category_from_table(table):
     classes = table.get("class", [])
 
     for category in STAT_CATEGORIES:
+
         if f"team_{category}" in classes:
             return category
 
-    table_id = table.get("id", "").lower()
+    table_id = table.get(
+        "id",
+        "",
+    ).lower()
 
     for category in STAT_CATEGORIES:
+
         if category in table_id:
             return category
 
@@ -339,11 +337,11 @@ def category_from_table(table):
 
 def get_stat_period(table):
     """
-    DigitalShift includes Regular Season and Playoff tables in
-    the same HTML response.
+    DigitalShift returns Regular Season and Playoff tables
+    inside the same response.
 
-    Walk backward to the closest H3 heading and determine which
-    statistical period owns the table.
+    The closest preceding H3 tells us which set the table
+    belongs to.
     """
 
     heading = table.find_previous("h3")
@@ -352,7 +350,10 @@ def get_stat_period(table):
         return None
 
     heading_text = clean_text(
-        heading.get_text(" ", strip=True)
+        heading.get_text(
+            " ",
+            strip=True,
+        )
     ).lower()
 
     if "regular season" in heading_text:
@@ -376,24 +377,30 @@ def parse_stat_table(table, team):
 
     period = get_stat_period(table)
 
-    # For this initial 2026 Player Stats database we are using
-    # REGULAR SEASON statistics only.
+    # Player Stats currently uses 2026 Regular Season statistics.
     if period != "Regular Season":
         return []
 
-    header_cells = table.select("thead th")
+    header_cells = table.select(
+        "thead th"
+    )
 
     if not header_cells:
         return []
 
     raw_headers = [
         clean_text(
-            cell.get_text(" ", strip=True)
+            cell.get_text(
+                " ",
+                strip=True,
+            )
         )
         for cell in header_cells
     ]
 
-    headers = unique_headers(raw_headers)
+    headers = unique_headers(
+        raw_headers
+    )
 
     records = []
 
@@ -402,7 +409,11 @@ def parse_stat_table(table, team):
     if not tbody:
         return []
 
-    for row in tbody.find_all("tr", recursive=False):
+    for row in tbody.find_all(
+        "tr",
+        recursive=False,
+    ):
+
         cells = row.find_all(
             "td",
             recursive=False,
@@ -443,20 +454,25 @@ def parse_stat_table(table, team):
         ]
 
         if len(values) < len(headers):
+
             values.extend(
                 [""] * (
-                    len(headers) -
-                    len(values)
+                    len(headers)
+                    - len(values)
                 )
             )
 
         if len(values) > len(headers):
+
             values = values[
                 :len(headers)
             ]
 
         stats = dict(
-            zip(headers, values)
+            zip(
+                headers,
+                values,
+            )
         )
 
         jersey_number = stats.get(
@@ -512,8 +528,8 @@ def fetch_team_stats(session, team):
 
     for table in tables:
 
-        # DigitalShift creates duplicate responsive tables inside
-        # .table-fixed. Ignore those clones.
+        # DigitalShift generates a duplicate fixed table for its
+        # responsive layout. Ignore that copy.
         if table.find_parent(
             class_="table-fixed"
         ):
@@ -546,6 +562,7 @@ def merge_players(records):
     players = {}
 
     for record in records:
+
         player_id = record[
             "player_id"
         ]
@@ -555,6 +572,7 @@ def merge_players(records):
         )
 
         if player_key not in players:
+
             players[player_key] = {
                 "player_id": player_id,
                 "name": record["name"],
@@ -569,7 +587,9 @@ def merge_players(records):
             player_key
         ]
 
-        # Fill missing number if another table has it.
+        # Some stat tables contain better roster information
+        # than others. Fill blanks when we find better data.
+
         if (
             not player["number"]
             and record["number"]
@@ -578,7 +598,6 @@ def merge_players(records):
                 "number"
             ]
 
-        # Fill missing position if another table has it.
         if (
             not player["position"]
             and record["position"]
@@ -627,6 +646,7 @@ def merge_players(records):
             stat_record
             not in player["stats"][category]
         ):
+
             player["stats"][
                 category
             ].append(
@@ -682,13 +702,15 @@ def validate_results(
             "existing Player Stats file."
         )
 
-    # We specifically discovered the team-stat method because
-    # kicking/returning players are not fully represented by the
-    # league-wide leader tables.
+    # Kicking is an important validation because this is one of
+    # the reasons we're collecting stats from individual team
+    # pages rather than only league leader tables.
+
     if category_counts.get(
         "kicking",
         0,
     ) == 0:
+
         raise RuntimeError(
             "No kicking statistics were found. "
             "Refusing to overwrite Player Stats "
@@ -700,9 +722,9 @@ def validate_results(
         "returning",
         0,
     ) == 0:
+
         print(
-            "WARNING: No returning statistics "
-            "were found."
+            "WARNING: No returning statistics were found."
         )
 
 
@@ -716,8 +738,7 @@ def main():
     )
 
     print(
-        f"Stats section: "
-        f"{STATS_SECTION_ID}"
+        f"Stats section: {STATS_SECTION_ID}"
     )
 
     print(
@@ -745,6 +766,7 @@ def main():
     )
 
     for team in teams:
+
         print(
             f"  {team['id']} - "
             f"{team['name']}"
@@ -781,12 +803,19 @@ def main():
             for record in records
         }
 
-        print(
-            f"  {len(player_ids)} players "
-            f"with stats | "
-            f"{', '.join(categories_found) "
+        # CORRECTED BLOCK:
+        # Build the category text first instead of nesting
+        # conditional logic inside an f-string.
+
+        category_text = (
+            ", ".join(categories_found)
             if categories_found
-            else 'NO CATEGORIES'}"
+            else "NO CATEGORIES"
+        )
+
+        print(
+            f"  {len(player_ids)} players with stats | "
+            f"{category_text}"
         )
 
         team_results.append({
@@ -834,7 +863,7 @@ def main():
     )
 
     # --------------------------------------------------------
-    # OUTPUT
+    # BUILD OUTPUT
     # --------------------------------------------------------
 
     output = {
@@ -853,6 +882,10 @@ def main():
         "teams": team_results,
         "players": players,
     }
+
+    # --------------------------------------------------------
+    # SAVE JSON
+    # --------------------------------------------------------
 
     OUTPUT_FILE.parent.mkdir(
         parents=True,
@@ -881,9 +914,11 @@ def main():
     print(
         "======================================"
     )
+
     print(
         "NAL PLAYER STATS UPDATE COMPLETE"
     )
+
     print(
         "======================================"
     )
@@ -909,8 +944,7 @@ def main():
     ) in category_counts.items():
 
         print(
-            f"  "
-            f"{category.title()}: "
+            f"  {category.title()}: "
             f"{count}"
         )
 
