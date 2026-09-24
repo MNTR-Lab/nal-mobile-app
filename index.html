@@ -6965,6 +6965,155 @@ document.addEventListener("DOMContentLoaded", () => {
   #watchPage .nal-game-team strong{font-size:10.5px;}
 }
 
+
+/* =========================================================
+   NAL LIVE GAMES — LIGHTCAST DATA CONNECTION
+   Reads data/live-games.json and preserves the approved card design.
+========================================================= */
+#watchPage .nal-live-games-loading,
+#watchPage .nal-live-games-empty{
+  min-height:180px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  color:rgba(255,255,255,.65);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+#watchPage .nal-game-team-mark{
+  overflow:hidden;
+}
+#watchPage .nal-game-team-logo{
+  width:82%;
+  height:82%;
+  object-fit:contain;
+  display:block;
+  filter:drop-shadow(0 3px 5px rgba(0,0,0,.30));
+}
+#watchPage .nal-game-live-pill.is-upcoming{
+  background:#4b4b4b;
+}
+#watchPage .nal-game-live-pill.is-ended{
+  background:#4b4b4b;
+  opacity:.72;
+}
+#watchPage .nal-game-live-dot.is-upcoming{
+  box-shadow:none;
+}
+#watchPage .nal-game-watch-button:disabled{
+  opacity:.48;
+  cursor:default;
+  box-shadow:none;
+}
+#watchPage .nal-game-description{
+  margin:-6px 0 12px;
+  color:rgba(255,255,255,.55);
+  font-size:8px;
+  line-height:1.35;
+  font-weight:800;
+  text-align:center;
+  white-space:pre-line;
+}
+
+/* Dedicated game viewing screen */
+.live-game-viewer-page{
+  min-height:calc(100dvh - var(--header-height) - var(--nav-height));
+  background:#06172b;
+  color:#fff;
+}
+.live-game-viewer-toolbar{
+  min-height:58px;
+  padding:10px 14px;
+  display:grid;
+  grid-template-columns:42px 1fr 42px;
+  align-items:center;
+  border-bottom:3px solid var(--nal-red);
+  background:#07172b;
+}
+.live-game-viewer-back{
+  width:38px;
+  height:38px;
+  border:0;
+  background:transparent;
+  color:#fff;
+  font-size:27px;
+  line-height:1;
+  cursor:pointer;
+}
+.live-game-viewer-heading{
+  min-width:0;
+  text-align:center;
+}
+.live-game-viewer-title{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#fff;
+  font-size:11px;
+  line-height:1.2;
+  font-weight:1000;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+}
+.live-game-viewer-subtitle{
+  margin-top:3px;
+  color:rgba(255,255,255,.55);
+  font-size:7px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:1px;
+}
+.live-game-viewer-player{
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+  position:relative;
+}
+.live-game-viewer-player iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+.live-game-viewer-info{
+  padding:18px 17px 24px;
+}
+.live-game-viewer-status{
+  display:inline-flex;
+  align-items:center;
+  min-height:24px;
+  padding:5px 9px;
+  border-radius:999px;
+  background:var(--nal-red);
+  color:#fff;
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.8px;
+}
+.live-game-viewer-matchup{
+  margin-top:11px;
+  color:#fff;
+  font-size:18px;
+  line-height:1.15;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.live-game-viewer-meta{
+  margin-top:8px;
+  color:rgba(255,255,255,.62);
+  font-size:10px;
+  line-height:1.5;
+  font-weight:700;
+  white-space:pre-line;
+}
+
 </style>
 
 <style>
@@ -7976,75 +8125,14 @@ document.addEventListener("DOMContentLoaded", () => {
           <h2>LIVE GAMES</h2>
           <p>Watch live NAL action from across the league.</p>
         </div>
-        <div class="nal-game-count">2 GAMES</div>
+        <div class="nal-game-count" id="nalLiveGameCount">LOADING</div>
       </section>
 
-      <section class="network-hub-section nal-game-live-section">
-
-        <article class="nal-game-card nal-game-card-featured">
-          <div class="nal-game-card-topline">
-            <span class="nal-game-featured-label">FEATURED GAME</span>
-            <span class="nal-game-live-pill"><span class="nal-game-live-dot"></span> LIVE</span>
-          </div>
-
-          <div class="nal-game-matchup">
-            <div class="nal-game-team">
-              <div class="nal-game-team-mark">NAL</div>
-              <strong>HOME TEAM</strong>
-              <span>HOME</span>
-            </div>
-
-            <div class="nal-game-center">
-              <div class="nal-game-status">LIVE NOW</div>
-              <div class="nal-game-versus">VS</div>
-              <div class="nal-game-time">NAL NETWORK</div>
-            </div>
-
-            <div class="nal-game-team">
-              <div class="nal-game-team-mark">NAL</div>
-              <strong>AWAY TEAM</strong>
-              <span>AWAY</span>
-            </div>
-          </div>
-
-          <button class="nal-game-watch-button" type="button" data-live-game-watch="featured">
-            <span class="nal-game-watch-play">▶</span>
-            <span>WATCH LIVE</span>
-          </button>
-        </article>
-
-        <article class="nal-game-card nal-game-card-secondary">
-          <div class="nal-game-card-topline">
-            <span class="nal-game-secondary-label">NAL FOOTBALL</span>
-            <span class="nal-game-live-pill"><span class="nal-game-live-dot"></span> LIVE</span>
-          </div>
-
-          <div class="nal-game-matchup nal-game-matchup-secondary">
-            <div class="nal-game-team">
-              <div class="nal-game-team-mark nal-game-team-mark-small">NAL</div>
-              <strong>HOME TEAM</strong>
-              <span>HOME</span>
-            </div>
-
-            <div class="nal-game-center">
-              <div class="nal-game-status">LIVE NOW</div>
-              <div class="nal-game-versus">VS</div>
-              <div class="nal-game-time">NAL NETWORK</div>
-            </div>
-
-            <div class="nal-game-team">
-              <div class="nal-game-team-mark nal-game-team-mark-small">NAL</div>
-              <strong>AWAY TEAM</strong>
-              <span>AWAY</span>
-            </div>
-          </div>
-
-          <button class="nal-game-watch-button" type="button" data-live-game-watch="secondary">
-            <span class="nal-game-watch-play">▶</span>
-            <span>WATCH LIVE</span>
-          </button>
-        </article>
-
+      <section class="network-hub-section nal-game-live-section" id="nalLiveGamesList">
+        <div class="nal-live-games-loading">
+          <div class="news-spinner"></div>
+          <span>LOADING LIVE EVENTS</span>
+        </div>
       </section>
     </div>
 
@@ -8417,6 +8505,30 @@ document.addEventListener("DOMContentLoaded", () => {
       title="NAL Shop"
     ></iframe>
 
+  </main>
+
+
+  <!-- =====================================================
+       LIVE GAME VIEWER
+       Dedicated Lightcast event player.
+  ====================================================== -->
+  <main id="liveGameViewerPage" class="app-page live-game-viewer-page">
+    <div class="live-game-viewer-toolbar">
+      <button type="button" class="live-game-viewer-back" id="liveGameViewerBack" aria-label="Back to Live Games">‹</button>
+      <div class="live-game-viewer-heading">
+        <div class="live-game-viewer-title" id="liveGameViewerTitle">NAL LIVE GAME</div>
+        <div class="live-game-viewer-subtitle">NAL NETWORK</div>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="live-game-viewer-player" id="liveGameViewerPlayer"></div>
+
+    <div class="live-game-viewer-info">
+      <div class="live-game-viewer-status" id="liveGameViewerStatus">NAL NETWORK</div>
+      <div class="live-game-viewer-matchup" id="liveGameViewerMatchup"></div>
+      <div class="live-game-viewer-meta" id="liveGameViewerMeta"></div>
+    </div>
   </main>
 
 
@@ -17976,6 +18088,314 @@ function closeLightcastTest(){
     <div id="lightcastTestContent" class="lightcast-test-content"></div>
   </div>
 </div>
+
+
+<script>
+/* =========================================================
+   NAL LIVE GAMES — LIGHTCAST JSON
+   Source: data/live-games.json
+========================================================= */
+(function(){
+  const LIVE_GAMES_FEED = "data/live-games.json";
+
+  const TEAM_NAME_TO_SLUG = {
+    "amarillo warbirds": "amarillo-warbirds",
+    "colorado spartans": "colorado-spartans",
+    "dallas apex": "dallas-apex",
+    "louisiana rouxgaroux": "louisiana-rouxgaroux",
+    "omaha beef": "omaha-beef",
+    "pueblo punishers": "pueblo-punishers",
+    "salina liberty": "salina-liberty",
+    "sioux city bandits": "sioux-city-bandits",
+    "southwest kansas storm": "southwest-kansas-storm",
+    "wheeling miners": "wheeling-miners"
+  };
+
+  let nalLiveGames = [];
+
+  function liveEscape(value){
+    if (typeof escapeHTML === "function") return escapeHTML(value || "");
+    return String(value || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function normalizeName(value){
+    return String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+  }
+
+  function parseMatchup(title){
+    const parts = String(title || "").split(/\s+vs\.?\s+/i);
+    if (parts.length < 2) {
+      return { awayName: String(title || "NAL TEAM"), homeName: "NAL TEAM" };
+    }
+    return {
+      awayName: parts[0].trim(),
+      homeName: parts.slice(1).join(" vs ").trim()
+    };
+  }
+
+  function slugForTeam(name){
+    return TEAM_NAME_TO_SLUG[normalizeName(name)] || "";
+  }
+
+  function logoForTeam(name){
+    const slug = slugForTeam(name);
+    if (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug]) {
+      return TEAM_LOGO_OVERRIDES[slug];
+    }
+    if (slug && Array.isArray(window.nalTeams || nalTeams)) {
+      const list = window.nalTeams || nalTeams;
+      const team = list.find(item => item.slug === slug);
+      if (team && typeof getTeamLogo === "function") return getTeamLogo(team);
+    }
+    return typeof NAL_LOGO !== "undefined" ? NAL_LOGO : "";
+  }
+
+  function utcDate(value){
+    if (!value) return null;
+    const raw = String(value).trim();
+    const date = new Date(/[zZ]|[+-]\d\d:\d\d$/.test(raw) ? raw : raw + "Z");
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  function eventState(game){
+    const now = new Date();
+    const start = utcDate(game.start_time_utc);
+    const end = utcDate(game.end_time_utc);
+
+    if (start && now < start) return "upcoming";
+    if (start && (!end || now <= end)) return "live";
+    if (end && now > end) return "ended";
+    return "upcoming";
+  }
+
+  function formatEventTime(game){
+    const start = utcDate(game.start_time_utc);
+    if (!start) return "NAL NETWORK";
+    try {
+      return start.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        timeZoneName: "short"
+      }).toUpperCase();
+    } catch (e) {
+      return game.start_time || "NAL NETWORK";
+    }
+  }
+
+  function statusText(state){
+    if (state === "live") return "LIVE NOW";
+    if (state === "ended") return "FINAL";
+    return "UPCOMING";
+  }
+
+  function pillText(state){
+    if (state === "live") return "LIVE";
+    if (state === "ended") return "ENDED";
+    return "UPCOMING";
+  }
+
+  function gameCard(game, index){
+    const matchup = parseMatchup(game.title);
+    const state = eventState(game);
+    const awayLogo = logoForTeam(matchup.awayName);
+    const homeLogo = logoForTeam(matchup.homeName);
+    const featured = index === 0;
+
+    return `
+      <article class="nal-game-card ${featured ? "nal-game-card-featured" : "nal-game-card-secondary"}" data-live-event-id="${liveEscape(game.event_id)}">
+        <div class="nal-game-card-topline">
+          <span class="${featured ? "nal-game-featured-label" : "nal-game-secondary-label"}">${featured ? "FEATURED GAME" : "NAL FOOTBALL"}</span>
+          <span class="nal-game-live-pill ${state === "upcoming" ? "is-upcoming" : ""} ${state === "ended" ? "is-ended" : ""}">
+            <span class="nal-game-live-dot ${state === "upcoming" ? "is-upcoming" : ""}"></span>
+            ${pillText(state)}
+          </span>
+        </div>
+
+        <div class="nal-game-matchup ${featured ? "" : "nal-game-matchup-secondary"}">
+          <div class="nal-game-team">
+            <div class="nal-game-team-mark ${featured ? "" : "nal-game-team-mark-small"}">
+              <img class="nal-game-team-logo" src="${liveEscape(homeLogo)}" alt="${liveEscape(matchup.homeName)}">
+            </div>
+            <strong>${liveEscape(matchup.homeName)}</strong>
+            <span>HOME</span>
+          </div>
+
+          <div class="nal-game-center">
+            <div class="nal-game-status">${statusText(state)}</div>
+            <div class="nal-game-versus">VS</div>
+            <div class="nal-game-time">${liveEscape(formatEventTime(game))}</div>
+          </div>
+
+          <div class="nal-game-team">
+            <div class="nal-game-team-mark ${featured ? "" : "nal-game-team-mark-small"}">
+              <img class="nal-game-team-logo" src="${liveEscape(awayLogo)}" alt="${liveEscape(matchup.awayName)}">
+            </div>
+            <strong>${liveEscape(matchup.awayName)}</strong>
+            <span>AWAY</span>
+          </div>
+        </div>
+
+        ${game.description ? `<div class="nal-game-description">${liveEscape(game.description)}</div>` : ""}
+
+        <button class="nal-game-watch-button" type="button" data-live-event-index="${index}" ${state === "ended" ? "disabled" : ""}>
+          <span class="nal-game-watch-play">▶</span>
+          <span>${state === "ended" ? "EVENT ENDED" : "WATCH LIVE"}</span>
+        </button>
+      </article>
+    `;
+  }
+
+  function renderLiveGames(){
+    const list = document.getElementById("nalLiveGamesList");
+    const count = document.getElementById("nalLiveGameCount");
+    if (!list || !count) return;
+
+    const activeGames = nalLiveGames.filter(game => eventState(game) !== "ended");
+
+    count.textContent = `${activeGames.length} ${activeGames.length === 1 ? "GAME" : "GAMES"}`;
+
+    if (!activeGames.length) {
+      list.innerHTML = `
+        <div class="nal-live-games-empty">
+          <span>NO UPCOMING LIVE EVENTS</span>
+        </div>`;
+      return;
+    }
+
+    list.innerHTML = activeGames.map(gameCard).join("");
+  }
+
+  async function loadLiveGames(){
+    const list = document.getElementById("nalLiveGamesList");
+    const count = document.getElementById("nalLiveGameCount");
+
+    try {
+      const response = await fetch(`${LIVE_GAMES_FEED}?v=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("Unable to load live-games.json");
+
+      const data = await response.json();
+      nalLiveGames = Array.isArray(data) ? data : (Array.isArray(data.games) ? data.games : []);
+      renderLiveGames();
+    } catch (error) {
+      console.error("NAL Live Games could not be loaded:", error);
+      if (count) count.textContent = "0 GAMES";
+      if (list) {
+        list.innerHTML = `
+          <div class="nal-live-games-empty">
+            <span>LIVE EVENTS CURRENTLY UNAVAILABLE</span>
+          </div>`;
+      }
+    }
+  }
+
+  function iframeUrlFromGame(game){
+    const markup = game.embed_code_adaptive || game.embed_code || "";
+    const match = String(markup).match(/<iframe[^>]+src=["']([^"']+)["']/i);
+    if (match && match[1]) {
+      const textarea = document.createElement("textarea");
+      textarea.innerHTML = match[1];
+      return textarea.value;
+    }
+    return game.player_landing_url || "";
+  }
+
+  function openLiveGame(game){
+    if (!game) return;
+
+    const viewer = document.getElementById("liveGameViewerPage");
+    const player = document.getElementById("liveGameViewerPlayer");
+    const title = document.getElementById("liveGameViewerTitle");
+    const status = document.getElementById("liveGameViewerStatus");
+    const matchup = document.getElementById("liveGameViewerMatchup");
+    const meta = document.getElementById("liveGameViewerMeta");
+    if (!viewer || !player) return;
+
+    const state = eventState(game);
+    const playerUrl = iframeUrlFromGame(game);
+
+    document.querySelectorAll(".app-page").forEach(page => {
+      page.classList.remove("active");
+      page.style.display = "none";
+    });
+
+    viewer.style.display = "block";
+    viewer.classList.add("active");
+
+    document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
+    const networkNav = document.querySelector('.bottom-nav [data-page="watchPage"]');
+    if (networkNav) networkNav.classList.add("active");
+
+    if (title) title.textContent = game.title || "NAL LIVE GAME";
+    if (status) {
+      status.textContent = statusText(state);
+      status.style.background = state === "live" ? "var(--nal-red)" : "#4b4b4b";
+    }
+    if (matchup) matchup.textContent = game.title || "";
+    if (meta) meta.textContent = `${formatEventTime(game)}${game.description ? "\n" + game.description : ""}`;
+
+    player.innerHTML = "";
+    if (playerUrl) {
+      const iframe = document.createElement("iframe");
+      iframe.src = playerUrl;
+      iframe.title = game.title || "NAL Live Game";
+      iframe.setAttribute("frameborder", "0");
+      iframe.setAttribute("allow", "fullscreen; picture-in-picture; autoplay");
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.referrerPolicy = "no-referrer-when-downgrade";
+      player.appendChild(iframe);
+    } else {
+      player.innerHTML = '<div style="height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:900;">PLAYER CURRENTLY UNAVAILABLE</div>';
+    }
+
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+
+  function closeLiveGame(){
+    const viewer = document.getElementById("liveGameViewerPage");
+    const player = document.getElementById("liveGameViewerPlayer");
+    const watch = document.getElementById("watchPage");
+
+    if (player) player.innerHTML = "";
+    if (viewer) {
+      viewer.classList.remove("active");
+      viewer.style.display = "none";
+    }
+    if (watch) {
+      watch.style.display = "block";
+      watch.classList.add("active");
+    }
+
+    document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
+    const networkNav = document.querySelector('.bottom-nav [data-page="watchPage"]');
+    if (networkNav) networkNav.classList.add("active");
+
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+
+  document.addEventListener("click", function(event){
+    const button = event.target.closest("[data-live-event-index]");
+    if (!button) return;
+    const index = Number(button.dataset.liveEventIndex);
+    if (!Number.isInteger(index) || !nalLiveGames[index]) return;
+    event.preventDefault();
+    openLiveGame(nalLiveGames[index]);
+  });
+
+  document.getElementById("liveGameViewerBack")?.addEventListener("click", closeLiveGame);
+
+  document.addEventListener("DOMContentLoaded", loadLiveGames);
+  if (document.readyState !== "loading") loadLiveGames();
+
+  window.loadNALLiveGames = loadLiveGames;
+})();
+</script>
 
 </body>
 </html>
