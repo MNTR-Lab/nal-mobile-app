@@ -10013,9 +10013,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
           <button class="fan-account-primary" type="submit">SIGN IN</button>
 
+          <button class="fan-account-switch" type="button" data-account-view="forgot">
+            <strong>FORGOT PASSWORD?</strong>
+          </button>
+
           <button class="fan-account-switch" type="button" data-account-view="signup">
             NEW TO THE NAL? <strong>CREATE ACCOUNT</strong>
           </button>
+        </form>
+
+        <!-- FORGOT PASSWORD -->
+        <form id="fanForgotPasswordForm" class="fan-account-form" hidden>
+          <label>
+            <span>EMAIL</span>
+            <input id="fanForgotPasswordEmail" type="email" autocomplete="email" required>
+          </label>
+          <button class="fan-account-primary" type="submit">SEND RESET LINK</button>
+          <button class="fan-account-switch" type="button" data-account-view="signin">BACK TO SIGN IN</button>
+        </form>
+
+        <!-- CREATE / RESET PASSWORD -->
+        <form id="fanResetPasswordForm" class="fan-account-form" hidden>
+          <label>
+            <span>NEW PASSWORD</span>
+            <input id="fanResetPassword" type="password" minlength="8" autocomplete="new-password" required>
+          </label>
+          <label>
+            <span>CONFIRM NEW PASSWORD</span>
+            <input id="fanResetPasswordConfirm" type="password" minlength="8" autocomplete="new-password" required>
+          </label>
+          <button class="fan-account-primary" type="submit">SAVE NEW PASSWORD</button>
+          <button class="fan-account-switch" id="fanResetPasswordCancel" type="button">CANCEL</button>
         </form>
 
         <!-- CREATE ACCOUNT -->
@@ -10128,11 +10156,13 @@ document.addEventListener("DOMContentLoaded", () => {
             <section class="fan-member-section">
               <h3 class="fan-member-title">SECURITY</h3>
               <div class="fan-member-card">
-                <div class="fan-member-row">
-                  <div class="fan-member-ico">🔒</div>
-                  <div class="fan-member-rowtext"><b>Change Password</b><span>Update your account password</span></div>
-                  <span class="fan-member-chev">›</span>
-                </div>
+                <button class="fan-admin-rowbtn" id="fanMemberChangePassword" type="button">
+                  <div class="fan-member-row">
+                    <div class="fan-member-ico">🔒</div>
+                    <div class="fan-member-rowtext"><b>Change Password</b><span>Update your account password</span></div>
+                    <span class="fan-member-chev">›</span>
+                  </div>
+                </button>
               </div>
             </section>
 
@@ -17612,16 +17642,34 @@ function setFanAccountMessage(message = "", isError = false){
 function setFanAccountView(view){
   const signIn = document.getElementById("fanSignInForm");
   const signUp = document.getElementById("fanSignUpForm");
+  const forgotPassword = document.getElementById("fanForgotPasswordForm");
+  const resetPassword = document.getElementById("fanResetPasswordForm");
   const checkEmail = document.getElementById("fanCheckEmailView");
   const loggedIn = document.getElementById("fanLoggedInView");
   const title = document.getElementById("fanAccountTitle");
   const subtitle = document.getElementById("fanAccountSubtitle");
 
-  [signIn, signUp, checkEmail, loggedIn].forEach(el => {
+  [signIn, signUp, forgotPassword, resetPassword, checkEmail, loggedIn].forEach(el => {
     if (el) el.hidden = true;
   });
 
   setFanAccountMessage("");
+
+  if (view === "forgot"){
+    forgotPassword.hidden = false;
+    title.textContent = "RESET PASSWORD";
+    subtitle.textContent = "Enter your account email and we’ll send you a secure reset link.";
+    const knownEmail = document.getElementById("fanSignInEmail")?.value?.trim();
+    if (knownEmail && document.getElementById("fanForgotPasswordEmail")) document.getElementById("fanForgotPasswordEmail").value = knownEmail;
+    return;
+  }
+
+  if (view === "resetpassword"){
+    resetPassword.hidden = false;
+    title.textContent = "CREATE NEW PASSWORD";
+    subtitle.textContent = "Choose a new password for your NAL Fan Account.";
+    return;
+  }
 
   if (view === "signup"){
     signUp.hidden = false;
@@ -17941,6 +17989,15 @@ async function initializeNalFanAccount(){
     client.auth.onAuthStateChange(async (event, session) => {
       nalAccountUser = session?.user || null;
 
+      if (event === "PASSWORD_RECOVERY"){
+        setTimeout(() => {
+          openFanAccount();
+          setFanAccountView("resetpassword");
+          setFanAccountMessage("Reset link verified. Create your new password below.");
+        }, 0);
+        return;
+      }
+
       if (nalAccountUser){
         setTimeout(async () => {
           await loadNalFanProfile(nalAccountUser);
@@ -18023,12 +18080,80 @@ document.addEventListener("click", function(event){
     return;
   }
 
+  const changePasswordButton = event.target.closest("#fanMemberChangePassword");
+  if (changePasswordButton){
+    event.preventDefault();
+    setFanAccountView("resetpassword");
+    return;
+  }
+
+  const resetCancelButton = event.target.closest("#fanResetPasswordCancel");
+  if (resetCancelButton){
+    event.preventDefault();
+    setFanAccountView(nalAccountUser ? "profile" : "signin");
+    return;
+  }
+
   const switchButton = event.target.closest("[data-account-view]");
   if (switchButton){
     event.preventDefault();
     setFanAccountView(switchButton.dataset.accountView);
   }
 }, true);
+
+document.getElementById("fanForgotPasswordForm")?.addEventListener("submit", async function(event){
+  event.preventDefault();
+  setFanAccountMessage("");
+  const email = document.getElementById("fanForgotPasswordEmail").value.trim();
+  const submit = this.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  submit.textContent = "SENDING...";
+  try{
+    const client = getNalAccountClient();
+    const redirectTo = window.location.origin + window.location.pathname;
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error) throw error;
+    setFanAccountMessage("Password reset email sent. Open the link in that email to create a new password.");
+  } catch(error){
+    setFanAccountMessage(error?.message || "We could not send the password reset email. Please try again.", true);
+  } finally{
+    submit.disabled = false;
+    submit.textContent = "SEND RESET LINK";
+  }
+});
+
+document.getElementById("fanResetPasswordForm")?.addEventListener("submit", async function(event){
+  event.preventDefault();
+  setFanAccountMessage("");
+  const password = document.getElementById("fanResetPassword").value;
+  const confirmPassword = document.getElementById("fanResetPasswordConfirm").value;
+  const submit = this.querySelector('button[type="submit"]');
+  if (password.length < 8){
+    setFanAccountMessage("Your new password must be at least 8 characters.", true);
+    return;
+  }
+  if (password !== confirmPassword){
+    setFanAccountMessage("The new passwords do not match.", true);
+    return;
+  }
+  submit.disabled = true;
+  submit.textContent = "SAVING...";
+  try{
+    const client = getNalAccountClient();
+    const { data, error } = await client.auth.updateUser({ password });
+    if (error) throw error;
+    nalAccountUser = data?.user || nalAccountUser;
+    document.getElementById("fanResetPassword").value = "";
+    document.getElementById("fanResetPasswordConfirm").value = "";
+    setFanAccountView("profile");
+    setFanAccountMessage("Password updated successfully.");
+  } catch(error){
+    setFanAccountMessage(error?.message || "We could not update your password. Please try again.", true);
+  } finally{
+    submit.disabled = false;
+    submit.textContent = "SAVE NEW PASSWORD";
+  }
+});
 
 document.getElementById("fanSignInForm")?.addEventListener("submit", async function(event){
   event.preventDefault();
