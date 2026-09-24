@@ -8339,23 +8339,21 @@ document.addEventListener("DOMContentLoaded", () => {
 <style>
 
 /* =========================================================
-   UNIVERSAL INTERNAL BACK BUTTON
+   INTERNAL PREVIOUS-PAGE BACK BUTTON
    ========================================================= */
 .app-back-row{
   display:none;
   width:100%;
-  padding:9px 14px 3px;
-  background:transparent;
+  padding:8px 14px 6px;
+  background:var(--light);
 }
-.app-back-row.is-visible{
-  display:block;
-}
+.app-back-row.is-visible{display:block;}
 .app-back-button{
   min-height:31px;
   padding:6px 11px 6px 8px;
   border:1px solid rgba(7,23,43,.16);
   border-radius:999px;
-  background:rgba(255,255,255,.96);
+  background:#ffffff;
   color:var(--nal-blue);
   box-shadow:0 2px 8px rgba(0,0,0,.08);
   display:inline-flex;
@@ -8368,9 +8366,7 @@ document.addEventListener("DOMContentLoaded", () => {
   text-transform:uppercase;
   cursor:pointer;
 }
-.app-back-button:active{
-  transform:scale(.97);
-}
+.app-back-button:active{transform:scale(.97);}
 .app-back-arrow{
   font-size:18px;
   line-height:.7;
@@ -8394,13 +8390,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <h1 id="fanForumThreadCategory">COMMUNITY</h1>
         <p>Join the conversation with NAL fans.</p>
       </header>
-<div id="appBackRow" class="app-back-row" aria-hidden="true">
-  <button id="appBackButton" class="app-back-button" type="button" aria-label="Go back to previous app page">
-    <span class="app-back-arrow" aria-hidden="true">‹</span>
-    <span>BACK</span>
-  </button>
-</div>
-
 
       <article id="fanForumThreadPost" class="fan-forum-thread-card">
         <div class="fan-forum-loading">LOADING CONVERSATION…</div>
@@ -8490,6 +8479,14 @@ document.addEventListener("DOMContentLoaded", () => {
   </header>
 
   <div class="global-header-buffer" aria-hidden="true"></div>
+
+<div id="appBackRow" class="app-back-row" aria-hidden="true">
+  <button id="appBackButton" class="app-back-button" type="button" aria-label="Go back to previous app page">
+    <span class="app-back-arrow" aria-hidden="true">‹</span>
+    <span>BACK</span>
+  </button>
+</div>
+
 
 
   <!-- =====================================================
@@ -13410,7 +13407,56 @@ const headerHome =
 ========================================================= */
 
 
+let appPreviousPage = null;
+let appBackRestoring = false;
+
+function getCurrentAppPageSnapshot() {
+  const current = Array.from(pages).find(page =>
+    page.classList.contains("active") &&
+    getComputedStyle(page).display !== "none"
+  );
+
+  if (!current) return null;
+
+  return {
+    pageId: current.id,
+    scrollY: window.scrollY || 0
+  };
+}
+
+function updateAppBackButton() {
+  const row = document.getElementById("appBackRow");
+  if (!row) return;
+
+  const current = getCurrentAppPageSnapshot();
+
+  const excludedPages = new Set([
+    "homePage",
+    "articlePage",
+    "liveGameViewerPage"
+  ]);
+
+  const visible =
+    !!current &&
+    !excludedPages.has(current.pageId) &&
+    !!appPreviousPage &&
+    appPreviousPage.pageId !== current.pageId;
+
+  row.classList.toggle("is-visible", visible);
+  row.setAttribute("aria-hidden", visible ? "false" : "true");
+}
+
 function showPage(pageId) {
+
+  const leavingPage = getCurrentAppPageSnapshot();
+
+  if (
+    !appBackRestoring &&
+    leavingPage &&
+    leavingPage.pageId !== pageId
+  ) {
+    appPreviousPage = leavingPage;
+  }
 
   pages.forEach(page => {
     page.classList.remove("active");
@@ -13427,11 +13473,9 @@ function showPage(pageId) {
     page.classList.add("active");
   }
 
-
   navButtons.forEach(button => {
     button.classList.remove("active");
   });
-
 
   const navButton =
     document.querySelector(
@@ -13442,12 +13486,12 @@ function showPage(pageId) {
     navButton.classList.add("active");
   }
 
-
   window.scrollTo({
     top: 0,
     behavior: "instant"
   });
 
+  requestAnimationFrame(updateAppBackButton);
 }
 
 
@@ -20472,146 +20516,32 @@ function closeLightcastTest(){
 
 
 <script>
-/* =========================================================
-   UNIVERSAL INTERNAL BACK — ACTUAL PREVIOUS APP VIEW
-   ========================================================= */
+/* Previous internal app view Back control */
 (function(){
-  const row = document.getElementById("appBackRow");
   const button = document.getElementById("appBackButton");
-  if(!row || !button) return;
+  if(!button) return;
 
-  const ROOT_PAGE = "homePage";
-  let currentView = null;
-  let previousView = null;
-  let restoring = false;
-  let scheduled = false;
+  button.addEventListener("click", function(){
+    if(!appPreviousPage?.pageId) return;
 
-  function visiblePage(){
-    const pages = Array.from(document.querySelectorAll(".app-page"));
-    return pages.find(page => {
-      const style = getComputedStyle(page);
-      return page.classList.contains("active") && style.display !== "none";
-    }) || pages.find(page => getComputedStyle(page).display !== "none") || null;
-  }
+    const destination = appPreviousPage;
+    appPreviousPage = null;
+    appBackRestoring = true;
 
-  function snapshot(page){
-    if(!page || !page.id) return null;
-    return {
-      pageId: page.id,
-      scrollY: window.scrollY || 0
-    };
-  }
-
-  function setButtonState(){
-    const page = visiblePage();
-    const canGoBack =
-      !!page &&
-      page.id !== ROOT_PAGE &&
-      !!previousView &&
-      previousView.pageId !== page.id;
-
-    row.classList.toggle("is-visible", canGoBack);
-    row.setAttribute("aria-hidden", canGoBack ? "false" : "true");
-  }
-
-  function reconcile(){
-    scheduled = false;
-    const page = visiblePage();
-    if(!page) return;
-
-    if(!currentView){
-      currentView = snapshot(page);
-      setButtonState();
-      return;
-    }
-
-    if(page.id !== currentView.pageId){
-      if(!restoring){
-        previousView = currentView;
-      }
-      currentView = snapshot(page);
-    }
-
-    setButtonState();
-  }
-
-  function queueReconcile(){
-    if(scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(reconcile);
-  }
-
-  function restorePrevious(){
-    if(!previousView?.pageId) return;
-
-    const target = document.getElementById(previousView.pageId);
-    if(!target) return;
-
-    const returnView = previousView;
-    restoring = true;
-
-    document.querySelectorAll(".app-page").forEach(page => {
-      page.classList.remove("active");
-      page.style.display = "none";
-    });
-
-    target.style.display = "block";
-    target.classList.add("active");
-
-    currentView = snapshot(target);
-    previousView = null;
-
-    // Match bottom navigation to the restored major section when possible.
-    const navMap = {
-      homePage: "homePage",
-      newsPage: "newsPage",
-      watchPage: "watchPage",
-      teamsPage: "teamsPage",
-      teamPage: "teamsPage",
-      fanZonePage: "fanZonePage"
-    };
-    const navTarget = navMap[target.id];
-
-    document.querySelectorAll(".bottom-nav .nav-button").forEach(nav => {
-      nav.classList.toggle("active", !!navTarget && nav.dataset.page === navTarget);
-    });
-
-    setButtonState();
+    showPage(destination.pageId);
 
     requestAnimationFrame(() => {
-      window.scrollTo({top:returnView.scrollY || 0,left:0,behavior:"instant"});
-      restoring = false;
-      queueReconcile();
-    });
-  }
-
-  button.addEventListener("click", restorePrevious);
-
-  // Track the master's real page changes rather than assuming a particular router.
-  const observer = new MutationObserver(queueReconcile);
-  document.querySelectorAll(".app-page").forEach(page => {
-    observer.observe(page, {
-      attributes:true,
-      attributeFilter:["class","style"]
+      window.scrollTo({
+        top: destination.scrollY || 0,
+        left: 0,
+        behavior: "instant"
+      });
+      appBackRestoring = false;
+      updateAppBackButton();
     });
   });
 
-  // Capture where the user was immediately before an internal navigation click.
-  document.addEventListener("pointerdown", function(){
-    const page = visiblePage();
-    if(page) currentView = snapshot(page);
-  }, true);
-
-  // Home is the root. Once Home is reached, don't show a stale Back button.
-  document.addEventListener("click", function(event){
-    const homeNav = event.target.closest('.bottom-nav .nav-button[data-page="homePage"]');
-    if(homeNav){
-      previousView = null;
-      requestAnimationFrame(setButtonState);
-    }
-  }, true);
-
-  reconcile();
+  requestAnimationFrame(updateAppBackButton);
 })();
 </script>
 
