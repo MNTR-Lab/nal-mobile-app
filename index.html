@@ -18549,6 +18549,26 @@ This notification will publish immediately.'))return;
         '<span class="fan-admin-role '+escapeAdminText(role)+'">'+escapeAdminText(role.toUpperCase())+'</span>' +
         '<span class="fan-member-chev">›</span></div>';
     }).join("");
+
+    // Bind each rendered member row directly so opening member details does not
+    // depend on delegated click target behavior after the list is re-rendered.
+    list.querySelectorAll(".fan-admin-user[data-member-id]").forEach(function(row){
+      row.setAttribute("role", "button");
+      row.setAttribute("tabindex", "0");
+      const openRow = function(){
+        const member = adminMembers.find(function(item){
+          return String(item.id) === String(row.dataset.memberId);
+        });
+        if (member) openAdminMemberDetail(member);
+      };
+      row.addEventListener("click", openRow);
+      row.addEventListener("keydown", function(event){
+        if (event.key === "Enter" || event.key === " "){
+          event.preventDefault();
+          openRow();
+        }
+      });
+    });
   }
 
   async function loadAdminMembers(){
@@ -18641,13 +18661,6 @@ This notification will publish immediately.'))return;
     detail?.classList.add("show");
     setTimeout(function(){detail?.scrollIntoView({behavior:"smooth",block:"nearest"});},30);
   }
-
-  list?.addEventListener("click",function(event){
-    const row=event.target.closest(".fan-admin-user[data-member-id]");
-    if(!row) return;
-    const member=adminMembers.find(function(item){return String(item.id)===String(row.dataset.memberId);});
-    openAdminMemberDetail(member);
-  });
 
   document.getElementById("fanAdminRoleAction")?.addEventListener("click", async function(){
     if (!selectedAdminMember || nalAccountProfile?.role !== "admin") return;
