@@ -8726,6 +8726,57 @@ header.topbar {
 }
 </style>
 
+
+<style id="nal-team-channels-four-across">
+/* TEAM CHANNELS — website layout: 4 across, using the existing 16:9 Team Channel artwork */
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid,
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid,
+#watchPage .network-tab-panel[data-network-panel="archives"] .team-grid{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:12px !important;
+  align-items:start !important;
+}
+
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-card,
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-card,
+#watchPage .network-tab-panel[data-network-panel="archives"] .team-card{
+  width:100% !important;
+  min-width:0 !important;
+}
+
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art{
+  width:100% !important;
+  aspect-ratio:16 / 9 !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  background:transparent !important;
+}
+
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art img{
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  object-fit:cover !important;
+  object-position:center !important;
+}
+
+@media(max-width:850px){
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid,
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid,
+  #watchPage .network-tab-panel[data-network-panel="archives"] .team-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+@media(max-width:480px){
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid,
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid,
+  #watchPage .network-tab-panel[data-network-panel="archives"] .team-grid{
+    grid-template-columns:1fr !important;
+  }
+}
+</style>
+
 </head>
 
 
