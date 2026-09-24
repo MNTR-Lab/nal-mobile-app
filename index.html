@@ -7237,6 +7237,43 @@ document.addEventListener("DOMContentLoaded", () => {
 .nal-stats-tools{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:10px}.nal-stats-search,.nal-stats-select{width:100%;border:1px solid #d9dee4;background:#fff;border-radius:10px;padding:11px;color:#07172b;font-size:11px;font-weight:800;outline:none}.nal-stats-select{width:auto;max-width:145px;font-weight:1000}.nal-player-card{background:#fff;border:1px solid #e5e9ed;border-radius:13px;margin-bottom:8px;overflow:hidden}.nal-player-summary{width:100%;border:0;background:#fff;padding:11px 12px;display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;text-align:left}.nal-player-logo{width:44px;height:44px;border-radius:50%;border:1px solid #e5e9ed;display:flex;align-items:center;justify-content:center;overflow:hidden}.nal-player-logo img{width:86%;height:86%;object-fit:contain}.nal-player-name{color:#07172b;font-size:12px;font-weight:1000;text-transform:uppercase}.nal-player-meta{margin-top:3px;color:#7a8490;font-size:8px;font-weight:900}.nal-player-expand{color:#e31b23;font-size:18px;font-weight:1000}.nal-player-detail{display:none;border-top:1px solid #edf0f2;padding:10px 12px 12px;background:#f8f9fa}.nal-player-card.open .nal-player-detail{display:block}.nal-player-category{margin:8px 0 5px;color:#07172b;font-size:10px;font-weight:1000;text-transform:uppercase}.nal-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.nal-stat-box{background:#fff;border:1px solid #e4e8ec;border-radius:8px;padding:7px 4px;text-align:center;min-width:0}.nal-stat-box b{display:block;color:#07172b;font-size:12px;overflow:hidden;text-overflow:ellipsis}.nal-stat-box small{display:block;margin-top:2px;color:#8a939d;font-size:6px;font-weight:900;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis}
 .nal-team-strip{display:flex;gap:9px;overflow-x:auto;padding:1px 0 13px;scrollbar-width:none}.nal-team-strip::-webkit-scrollbar{display:none}.nal-team-choice{min-width:68px;text-align:center;border:0;background:transparent}.nal-team-choice-logo{width:52px;height:52px;border-radius:50%;background:#fff;border:2px solid #e5e9ed;display:flex;align-items:center;justify-content:center;margin:auto;overflow:hidden}.nal-team-choice-logo img{width:86%;height:86%;object-fit:contain}.nal-team-choice small{display:block;margin-top:4px;font-size:8px;font-weight:900;color:#707984;max-width:68px;line-height:1.1}.nal-team-choice.active .nal-team-choice-logo{border:3px solid #e31b23}.nal-team-choice.active small{color:#e31b23}.nal-team-stats-banner{background:#07172b;color:#fff;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px}.nal-team-stats-banner img{width:58px;height:58px;object-fit:contain;background:#fff;border-radius:50%;padding:4px}.nal-team-stats-banner b{display:block;font-size:17px}.nal-team-stats-banner span{font-size:9px;color:#c1cbd6}.nal-team-tablewrap{overflow-x:auto;background:#fff;border-radius:12px;border:1px solid #e5e9ed}.nal-team-table{width:100%;border-collapse:collapse;white-space:nowrap}.nal-team-table th{background:#07172b;color:#fff;padding:10px 7px;font-size:8px;text-transform:uppercase}.nal-team-table th:first-child,.nal-team-table td:first-child{text-align:left;position:sticky;left:0}.nal-team-table th:first-child{background:#07172b}.nal-team-table td:first-child{background:#fff}.nal-team-table td{padding:9px 7px;border-bottom:1px solid #edf0f2;text-align:center;font-size:9px;font-weight:800;color:#4f5a65}.nal-team-table td:first-child{font-weight:1000;color:#07172b;max-width:150px;overflow:hidden;text-overflow:ellipsis}
 
+
+/* =========================================================
+   NATIVE NAL NEWS
+========================================================= */
+.native-news-page{background:#07172b;min-height:calc(100vh - 72px);padding:18px 14px 105px;color:#fff}
+.native-news-shell{max-width:760px;margin:0 auto}
+.native-news-hero{position:relative;overflow:hidden;border-radius:18px;padding:25px 20px 23px;background:radial-gradient(circle at 92% 15%,rgba(227,27,35,.34),transparent 28%),linear-gradient(125deg,#07172b,#12345b);color:#fff;box-shadow:0 12px 28px rgba(0,0,0,.22)}
+.native-news-hero:after{content:"•••";position:absolute;right:18px;bottom:-13px;color:rgba(255,255,255,.08);font-size:78px;font-weight:1000;letter-spacing:-8px}
+.native-news-kicker{position:relative;z-index:1;color:#e31b23;font-size:9px;font-weight:1000;letter-spacing:1.5px}
+.native-news-hero h1{position:relative;z-index:1;margin:4px 0 7px;font-size:34px;line-height:1;font-weight:1000;letter-spacing:-1.1px}
+.native-news-hero p{position:relative;z-index:1;margin:0;max-width:510px;color:#d3deea;font-size:12px;line-height:1.5}
+.native-news-feature{display:block;margin-top:18px;border-radius:16px;overflow:hidden;background:#102b4e;color:#fff;text-decoration:none;box-shadow:0 8px 22px rgba(0,0,0,.22)}
+.native-news-feature-image{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#102b4e}
+.native-news-feature-body{padding:15px 16px 17px}
+.native-news-meta{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.native-news-badge{display:inline-flex;background:#e31b23;color:#fff;border-radius:4px;padding:5px 7px;font-size:9px;font-weight:1000;letter-spacing:1px}
+.native-news-date{color:#aeb8c6;font-size:10px;font-weight:850;text-transform:uppercase}
+.native-news-feature h2{margin:0 0 12px;color:#fff;font-size:21px;line-height:1.14;font-weight:1000}
+.native-news-read{color:#e31b23;font-size:11px;font-weight:1000;letter-spacing:1px}
+.native-news-section-head{display:flex;align-items:center;gap:9px;margin:22px 2px 11px;color:#fff;font-size:16px;font-weight:1000}
+.native-news-section-head:before{content:"";width:4px;height:18px;border-radius:4px;background:#e31b23}
+.native-news-list{display:grid;gap:11px}
+.native-news-card{display:grid;grid-template-columns:128px 1fr;min-height:112px;border-radius:12px;overflow:hidden;background:#102b4e;color:#fff;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.native-news-card img{width:128px;height:100%;object-fit:cover;background:#102b4e}
+.native-news-card-body{padding:11px;display:flex;flex-direction:column;min-width:0}
+.native-news-card .native-news-meta{margin-bottom:5px}
+.native-news-card .native-news-badge{font-size:7.5px;padding:4px 5px}
+.native-news-card .native-news-date{font-size:8.5px}
+.native-news-card h3{margin:0;color:#fff;font-size:13px;line-height:1.18;font-weight:1000;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.native-news-card .native-news-read{margin-top:auto;padding-top:6px;font-size:10px}
+.native-news-loading,.native-news-error{margin-top:18px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:#102b4e;padding:22px;text-align:center;color:#c8d2df;font-size:11px;font-weight:850}
+@media(max-width:420px){
+  .native-news-feature h2{font-size:19px}
+  .native-news-card{grid-template-columns:115px 1fr}
+  .native-news-card img{width:115px}
+}
+
 </style>
 
 <style>
@@ -7932,6 +7969,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   </main>
 
+
+
+  <!-- =========================================================
+       NATIVE NAL NEWS
+       ========================================================= -->
+  <main id="newsPage" class="app-page native-news-page" style="display:none;">
+    <div class="native-news-shell">
+      <section class="native-news-hero">
+        <div class="native-news-kicker">THE NATIONAL ARENA LEAGUE</div>
+        <h1>LATEST</h1>
+        <p>THE LATEST FROM AROUND THE LEAGUE</p>
+      </section>
+
+      <div id="nativeNewsContent">
+        <div class="native-news-loading">LOADING NAL NEWS</div>
+      </div>
+    </div>
+  </main>
 
   <!-- =========================================================
      TEAM HOME PAGE
@@ -12474,14 +12529,9 @@ document.addEventListener("click", function(event){
 }, true);
 
 function openNalNewsInApp() {
-  if (typeof openArticle === "function") {
-    openArticle("https://www.thenationalarenaleague.com/news", {
-      mode: "team",
-      title: "NAL NEWS",
-      subtitle: "NATIONAL ARENA LEAGUE",
-      loadingText: "LOADING NAL NEWS",
-      brand: { primary: "#07172b", accent: "#e31b23" }
-    });
+  if (typeof showPage === "function") {
+    showPage("newsPage");
+    if (typeof renderNativeNews === "function") renderNativeNews();
   }
 }
 
@@ -13417,6 +13467,79 @@ function showNewsError() {
 }
 
 
+
+/* =========================================================
+   NATIVE NEWS PAGE
+========================================================= */
+let nalNewsArticles = [];
+
+function renderNativeNews() {
+  const target = document.getElementById("nativeNewsContent");
+  if (!target) return;
+
+  const articles = Array.isArray(nalNewsArticles) ? nalNewsArticles : [];
+  if (!articles.length) {
+    target.innerHTML = '<div class="native-news-error">Latest league news is temporarily unavailable. Please check back shortly.</div>';
+    return;
+  }
+
+  const sorted = [...articles].sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0));
+  const lead = sorted[0];
+  const rest = sorted.slice(1);
+
+  const featureImage = lead.image
+    ? `<img class="native-news-feature-image" src="${escapeHTML(lead.image)}" alt="${escapeHTML(lead.title || "")}" onerror="this.style.display='none'">`
+    : "";
+
+  let output = `
+    <a class="native-news-feature" href="${escapeHTML(lead.url || "#")}" data-native-news-story="true">
+      ${featureImage}
+      <div class="native-news-feature-body">
+        <div class="native-news-meta">
+          <span class="native-news-badge">${escapeHTML(lead.category || "NAL NEWS")}</span>
+          <span class="native-news-date">${escapeHTML(formatNewsDate(lead.date))}</span>
+        </div>
+        <h2>${escapeHTML(lead.title || "NAL NEWS")}</h2>
+        <div class="native-news-read">READ STORY →</div>
+      </div>
+    </a>
+  `;
+
+  if (rest.length) {
+    output += '<div class="native-news-section-head">LATEST NEWS</div><div class="native-news-list">';
+    rest.forEach(article => {
+      const image = article.image
+        ? `<img src="${escapeHTML(article.image)}" alt="${escapeHTML(article.title || "")}" loading="lazy" onerror="this.style.display='none'">`
+        : "";
+      output += `
+        <a class="native-news-card" href="${escapeHTML(article.url || "#")}" data-native-news-story="true">
+          ${image}
+          <div class="native-news-card-body">
+            <div class="native-news-meta">
+              <span class="native-news-badge">${escapeHTML(article.category || "NAL NEWS")}</span>
+              <span class="native-news-date">${escapeHTML(formatNewsDate(article.date))}</span>
+            </div>
+            <h3>${escapeHTML(article.title || "NAL NEWS")}</h3>
+            <div class="native-news-read">READ →</div>
+          </div>
+        </a>
+      `;
+    });
+    output += '</div>';
+  }
+
+  target.innerHTML = output;
+}
+
+document.addEventListener("click", function(event) {
+  const story = event.target.closest('[data-native-news-story="true"]');
+  if (!story) return;
+  const url = story.getAttribute("href");
+  if (!url || url === "#") return;
+  event.preventDefault();
+  openArticle(url);
+});
+
 /* =========================================================
    LOAD NEWS.JSON
 ========================================================= */
@@ -13467,9 +13590,11 @@ async function loadNews() {
     }
 
 
+    nalNewsArticles = feed.articles;
     renderNews(
       feed.articles
     );
+    renderNativeNews();
 
 
   } catch (error) {
@@ -13481,6 +13606,10 @@ async function loadNews() {
 
 
     showNewsError();
+    const nativeTarget = document.getElementById("nativeNewsContent");
+    if (nativeTarget) {
+      nativeTarget.innerHTML = '<div class="native-news-error">Latest league news is temporarily unavailable. Please check back shortly.</div>';
+    }
 
   }
 
