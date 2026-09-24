@@ -96,7 +96,7 @@ def parse_players(content):
     """
     DigitalShift returns rendered HTML.
 
-    The list-view roster contains:
+    The roster table contains:
 
     Name
     #
@@ -105,8 +105,9 @@ def parse_players(content):
     Position
     College
 
-    We parse the first roster table only. This avoids duplicate
-    rows from DigitalShift's fixed/mobile table markup.
+    DigitalShift can include duplicate table markup for its
+    scrolling/fixed layout. We intentionally parse only the
+    first complete roster table.
     """
 
     players = []
@@ -268,6 +269,11 @@ def fetch_team_roster(session, slug, team):
 
     content = payload.get("content", "")
 
+    if not content:
+        raise RuntimeError(
+            "DigitalShift returned no roster content."
+        )
+
     players = parse_players(content)
     staff = parse_staff(content)
 
@@ -292,15 +298,28 @@ def fetch_team_roster(session, slug, team):
 # ============================================================
 
 def main():
-    authorization = os.environ.get(
+    authorization_ticket = os.environ.get(
         "DIGITALSHIFT_AUTH_TICKET",
         ""
     ).strip()
 
-    if not authorization:
+    if not authorization_ticket:
         raise RuntimeError(
             "DIGITALSHIFT_AUTH_TICKET environment variable "
             "is missing."
+        )
+
+    # The browser sends:
+    #
+    # authorization: ticket=XXXXXXXX
+    #
+    # Keep only the raw ticket in GitHub Secrets.
+    # This script adds the required "ticket=" prefix.
+    if authorization_ticket.lower().startswith("ticket="):
+        authorization_header = authorization_ticket
+    else:
+        authorization_header = (
+            f"ticket={authorization_ticket}"
         )
 
     session = requests.Session()
@@ -308,7 +327,7 @@ def main():
     session.headers.update(
         {
             "Accept": "application/json, text/plain, */*",
-            "Authorization": authorization,
+            "Authorization": authorization_header,
             "Origin": "https://www.thenationalarenaleague.com",
             "Referer": "https://www.thenationalarenaleague.com/",
             "User-Agent": (
@@ -323,6 +342,9 @@ def main():
 
     rosters = []
 
+    successful_teams = 0
+    failed_teams = 0
+
     for slug, team in TEAMS.items():
         try:
             roster = fetch_team_roster(
@@ -332,8 +354,11 @@ def main():
             )
 
             rosters.append(roster)
+            successful_teams += 1
 
         except Exception as exc:
+            failed_teams += 1
+
             print(
                 f"ERROR fetching {team['name']}: {exc}"
             )
@@ -350,6 +375,14 @@ def main():
                     "error": str(exc),
                 }
             )
+
+    # If every request failed, do NOT overwrite the existing
+    # roster data with an empty/error-only file.
+    if successful_teams == 0:
+        raise RuntimeError(
+            "All DigitalShift roster requests failed. "
+            "Existing roster JSON was not replaced."
+        )
 
     total_players = sum(
         team["player_count"]
@@ -370,6 +403,8 @@ def main():
             timezone.utc
         ).isoformat(),
         "team_count": len(rosters),
+        "successful_teams": successful_teams,
+        "failed_teams": failed_teams,
         "total_players": total_players,
         "total_staff": total_staff,
         "teams": rosters,
@@ -393,6 +428,8 @@ def main():
     print()
     print("Roster update complete.")
     print(f"Teams: {len(rosters)}")
+    print(f"Successful teams: {successful_teams}")
+    print(f"Failed teams: {failed_teams}")
     print(f"Players: {total_players}")
     print(f"Staff: {total_staff}")
     print(f"Saved: {OUTPUT_FILE}")
