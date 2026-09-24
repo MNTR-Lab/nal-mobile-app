@@ -7619,6 +7619,69 @@ document.addEventListener("DOMContentLoaded", () => {
   cursor:pointer;
 }
 
+
+/* =========================================================
+   TEAM HOME — NEXT GAME FULL-WIDTH / CENTERED
+========================================================= */
+#teamNextGameCard{
+  width:100%;
+  text-align:center;
+}
+#teamNextGameCard .team-next-game-matchup{
+  width:100%;
+  grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);
+  justify-content:center;
+  align-items:center;
+  margin:16px auto 0;
+}
+#teamNextGameCard .team-next-game-side{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+#teamNextGameCard .team-next-game-logo{
+  width:88px;
+  height:88px;
+  margin:0 auto 8px;
+}
+#teamNextGameCard .team-next-game-logo img{
+  max-width:86px;
+  max-height:86px;
+}
+#teamNextGameCard .team-next-game-center{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#teamNextGameCard .team-next-game-vs{
+  font-size:22px;
+  text-align:center;
+}
+#teamNextGameCard .team-next-game-date,
+#teamNextGameCard .team-next-game-place{
+  width:100%;
+  text-align:center;
+}
+
+/* =========================================================
+   TEAM HOME — WATCH / TEAM CHANNEL
+   Preserve the existing purple card, use white copy throughout.
+========================================================= */
+#teamWatchChannelButton,
+#teamWatchChannelButton .team-watch-play,
+#teamWatchChannelButton .team-watch-copy,
+#teamWatchChannelButton .team-watch-label,
+#teamWatchChannelButton .team-watch-name,
+#teamWatchChannelButton .team-watch-subtitle{
+  color:#fff !important;
+}
+#teamWatchChannelButton .team-watch-label,
+#teamWatchChannelButton .team-watch-subtitle{
+  opacity:.9;
+}
+
 </style>
 
 <style>
