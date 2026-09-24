@@ -8377,19 +8377,25 @@ document.addEventListener("DOMContentLoaded", () => {
 <style>
 
 /* =========================================================
-   HOME SCHEDULE BACKGROUND
+   HOME SCHEDULE / NEXT GAMES BACKGROUND
+   Put the artwork on the actual game card, not behind the
+   entire section where the card's opaque gradient hides it.
    ========================================================= */
 .home-schedule-background{
   position:relative;
-  background:
-    linear-gradient(rgba(3,12,24,.72), rgba(3,12,24,.78)),
-    url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/schedule-background.png?v=1790265599")
-    center center / cover no-repeat;
+  background:#06172b;
   overflow:hidden;
 }
-.home-schedule-background > *{
-  position:relative;
-  z-index:1;
+
+#homePage .home-schedule-background .home-game-placeholder,
+#homePage .home-schedule-background .home-game-placeholder.home-game-slide{
+  background-image:
+    linear-gradient(rgba(3,12,24,.38), rgba(3,12,24,.48)),
+    url("https://cdn.shopify.com/s/files/1/0719/1966/5231/files/schedule-background.png?v=1790265599") !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  border-color:rgba(255,255,255,.22);
 }
 
 </style>
