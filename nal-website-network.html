@@ -8727,77 +8727,22 @@ header.topbar {
 </style>
 
 
-<style id="nal-team-channels-four-across">
-/* TEAM CHANNELS — website layout: 4 across, using the existing 16:9 Team Channel artwork */
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid,
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid,
-#watchPage .network-tab-panel[data-network-panel="archives"] .team-grid{
-  display:grid !important;
-  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
-  gap:12px !important;
-  align-items:start !important;
-}
-
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-card,
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-card,
-#watchPage .network-tab-panel[data-network-panel="archives"] .team-card{
-  width:100% !important;
-  min-width:0 !important;
-}
-
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art{
-  width:100% !important;
-  aspect-ratio:16 / 9 !important;
-  padding:0 !important;
-  overflow:hidden !important;
-  background:transparent !important;
-}
-
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art img{
-  width:100% !important;
-  height:100% !important;
-  display:block !important;
-  object-fit:cover !important;
-  object-position:center !important;
-}
-
-@media(max-width:850px){
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid,
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid,
-  #watchPage .network-tab-panel[data-network-panel="archives"] .team-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-  }
-}
-@media(max-width:480px){
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid,
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid,
-  #watchPage .network-tab-panel[data-network-panel="archives"] .team-grid{
-    grid-template-columns:1fr !important;
-  }
-}
-</style>
 
 
-<style id="nal-wide-blue-shell-centered-team-grid">
-/*
-  WEBSITE SHELL:
-  Widen only the blue outer presentation area.
-  Keep the actual NAL Network content locked at 1100px.
-*/
+
+
+
+
+<style id="nal-network-final-verified-layout">
+/* VERIFIED WEBSITE FRAME: blue shell 1400px, content remains 1100px */
 @media (min-width:1200px){
-  body{
-    background:#071522 !important;
-  }
-
-  /* Outer Network/page presentation can visually extend wider */
+  body{ background:#071522 !important; }
   #watchPage{
     width:calc(100% - 32px) !important;
     max-width:1400px !important;
     margin-left:auto !important;
     margin-right:auto !important;
   }
-
-  /* Actual content remains exactly 1100px */
   #watchPage > *{
     width:100% !important;
     max-width:1100px !important;
@@ -8806,78 +8751,29 @@ header.topbar {
   }
 }
 
-/*
-  TEAM CHANNELS:
-  Exactly 4 cards per row on desktop.
-  Incomplete final rows are centered.
-*/
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid,
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid,
-#watchPage .network-tab-panel[data-network-panel="archives"] .team-grid{
+/* VERIFIED TEAM CHANNELS LOCATION: archives panel */
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-grid{
   display:flex !important;
   flex-wrap:wrap !important;
   justify-content:center !important;
   gap:12px !important;
   align-items:flex-start !important;
 }
-
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid > *,
-#watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid > *,
-#watchPage .network-tab-panel[data-network-panel="archives"] .team-grid > *{
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-card{
+  box-sizing:border-box !important;
   flex:0 0 calc((100% - 36px) / 4) !important;
   width:calc((100% - 36px) / 4) !important;
   max-width:calc((100% - 36px) / 4) !important;
   min-width:0 !important;
 }
-
-@media(max-width:850px){
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid > *,
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid > *,
-  #watchPage .network-tab-panel[data-network-panel="archives"] .team-grid > *{
-    flex-basis:calc((100% - 12px) / 2) !important;
-    width:calc((100% - 12px) / 2) !important;
-    max-width:calc((100% - 12px) / 2) !important;
-  }
-}
-
-@media(max-width:480px){
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-grid > *,
-  #watchPage .network-tab-panel[data-network-panel="archives"] .network-archive-grid > *,
-  #watchPage .network-tab-panel[data-network-panel="archives"] .team-grid > *{
-    flex-basis:100% !important;
-    width:100% !important;
-    max-width:100% !important;
-  }
-}
-</style>
-
-
-<style id="nal-team-channel-grid-ACTUAL-fix">
-/* ACTUAL Team Channels panel — 4 across with incomplete rows centered */
-#watchPage .network-tab-panel[data-network-panel="team-channels"] .network-team-channel-grid{
-  display:flex !important;
-  flex-wrap:wrap !important;
-  justify-content:center !important;
-  gap:12px !important;
-  align-items:flex-start !important;
-}
-
-#watchPage .network-tab-panel[data-network-panel="team-channels"] .network-team-channel-card{
-  flex:0 0 calc((100% - 36px) / 4) !important;
-  width:calc((100% - 36px) / 4) !important;
-  max-width:calc((100% - 36px) / 4) !important;
-  min-width:0 !important;
-}
-
-#watchPage .network-tab-panel[data-network-panel="team-channels"] .network-team-channel-art{
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art{
   width:100% !important;
   aspect-ratio:16 / 9 !important;
   padding:0 !important;
   overflow:hidden !important;
   background:transparent !important;
 }
-
-#watchPage .network-tab-panel[data-network-panel="team-channels"] .network-team-channel-art img{
+#watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-art img{
   display:block !important;
   width:100% !important;
   height:100% !important;
@@ -8886,15 +8782,14 @@ header.topbar {
 }
 
 @media(max-width:850px){
-  #watchPage .network-tab-panel[data-network-panel="team-channels"] .network-team-channel-card{
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-card{
     flex-basis:calc((100% - 12px) / 2) !important;
     width:calc((100% - 12px) / 2) !important;
     max-width:calc((100% - 12px) / 2) !important;
   }
 }
-
 @media(max-width:480px){
-  #watchPage .network-tab-panel[data-network-panel="team-channels"] .network-team-channel-card{
+  #watchPage .network-tab-panel[data-network-panel="archives"] .network-team-channel-card{
     flex-basis:100% !important;
     width:100% !important;
     max-width:100% !important;
@@ -9724,43 +9619,43 @@ header.topbar {
         
         <div class="network-team-channel-grid">
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('amarillo-warbirds')">
-            <div class="network-team-channel-art"><img data-network-team-logo="amarillo-warbirds" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds3.png?v=1790256854" alt="Amarillo Warbirds" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="amarillo-warbirds" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776" alt="Amarillo Warbirds" loading="lazy"></div>
             <span>Amarillo Warbirds</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('colorado-spartans')">
-            <div class="network-team-channel-art"><img data-network-team-logo="colorado-spartans" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_3c044d01-0658-40e9-be80-ce08e59945fc.png?v=1790208460" alt="Colorado Spartans" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="colorado-spartans" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784" alt="Colorado Spartans" loading="lazy"></div>
             <span>Colorado Spartans</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('dallas-apex')">
-            <div class="network-team-channel-art"><img data-network-team-logo="dallas-apex" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_da6cbdd6-f226-4a20-8e83-34317cd45e5e.png?v=1790208460" alt="Dallas Apex" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="dallas-apex" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784" alt="Dallas Apex" loading="lazy"></div>
             <span>Dallas Apex</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('louisiana-rouxgaroux')">
-            <div class="network-team-channel-art"><img data-network-team-logo="louisiana-rouxgaroux" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux_93be9d7e-ac73-4aae-8f1f-9784ebc62616.png?v=1790208585" alt="Louisiana Rouxgaroux" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="louisiana-rouxgaroux" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784" alt="Louisiana Rouxgaroux" loading="lazy"></div>
             <span>Louisiana Rouxgaroux</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('omaha-beef')">
-            <div class="network-team-channel-art"><img data-network-team-logo="omaha-beef" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_9853fbad-f3a0-49d6-9a8f-aaa1a85b28f8.png?v=1790208460" alt="Omaha Beef" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="omaha-beef" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792" alt="Omaha Beef" loading="lazy"></div>
             <span>Omaha Beef</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('pueblo-punishers')">
-            <div class="network-team-channel-art"><img data-network-team-logo="pueblo-punishers" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_30eafc0a-763a-412b-838b-321dd9088d96.png?v=1790208460" alt="Pueblo Punishers" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="pueblo-punishers" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792" alt="Pueblo Punishers" loading="lazy"></div>
             <span>Pueblo Punishers</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('salina-liberty')">
-            <div class="network-team-channel-art"><img data-network-team-logo="salina-liberty" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_87f2d951-a969-4ce6-930b-1b0094c7bd4d.png?v=1790208460" alt="Salina Liberty" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="salina-liberty" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792" alt="Salina Liberty" loading="lazy"></div>
             <span>Salina Liberty</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('sioux-city-bandits')">
-            <div class="network-team-channel-art"><img data-network-team-logo="sioux-city-bandits" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_5e3eba6e-6998-4c9a-9b73-3999b5e5d875.png?v=1790208460" alt="Sioux City Bandits" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="sioux-city-bandits" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792" alt="Sioux City Bandits" loading="lazy"></div>
             <span>Sioux City Bandits</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('southwest-kansas-storm')">
-            <div class="network-team-channel-art"><img data-network-team-logo="southwest-kansas-storm" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_3eff88a7-a61e-48bf-8673-7b03e554d827.png?v=1790208460" alt="Southwest Kansas Storm" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="southwest-kansas-storm" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792" alt="Southwest Kansas Storm" loading="lazy"></div>
             <span>Southwest Kansas Storm</span>
           </button>
           <button class="network-team-channel-card" type="button" onclick="openNetworkArchiveTeam('wheeling-miners')">
-            <div class="network-team-channel-art"><img data-network-team-logo="wheeling-miners" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_a547bbd0-e575-4512-9ad6-47e081cb1fc3.png?v=1790208460" alt="Wheeling Miners" loading="lazy"></div>
+            <div class="network-team-channel-art"><img data-network-team-logo="wheeling-miners" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792" alt="Wheeling Miners" loading="lazy"></div>
             <span>Wheeling Miners</span>
           </button>
         
@@ -21096,44 +20991,7 @@ window.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
-<script id="nal-team-channel-exact-artwork">
-(function(){
-  const artwork = {"amarillo-warbirds": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds_7b513b27-f2ce-4ffa-9586-ba2dcf668189.png?v=1789958776", "colorado-spartans": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans_480feef1-7bc3-452c-9ce6-dc07a60ef428.png?v=1789958784", "dallas-apex": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_74547e7e-0c4f-4ac8-9019-60c4e27c9468.png?v=1789958784", "louisiana-rouxgaroux": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Rougaroux.png?v=1789958784", "omaha-beef": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef_309b8bf9-64a9-49ee-a82b-8dc03a65e682.png?v=1789958792", "pueblo-punishers": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_ef24297e-0272-470d-a83a-31c448d281f6.png?v=1789958792", "salina-liberty": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty_3d57ec7c-83b3-4c5b-8879-de7760882d2a.png?v=1789958792", "sioux-city-bandits": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits_025d82f8-d04a-4bff-a149-b53adc221f8f.png?v=1789958792", "southwest-kansas-storm": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm_658fdc5b-8fa0-48e2-88c0-8b745931aaf6.png?v=1789958792", "wheeling-miners": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners_7036a9ed-e23b-47b4-81f1-9b7369301037.png?v=1789958792"};
 
-  function applyExactTeamArtwork(){
-    document.querySelectorAll('#watchPage [data-network-panel="team-channels"] .network-team-channel-card').forEach(function(card){
-      const raw = [
-        card.getAttribute('href') || '',
-        card.getAttribute('onclick') || '',
-        card.getAttribute('data-team') || '',
-        card.getAttribute('data-slug') || '',
-        card.outerHTML.slice(0,1200)
-      ].join(' ').toLowerCase();
-
-      Object.keys(artwork).forEach(function(slug){
-        const aliases = [slug];
-        if(slug === 'louisiana-rouxgaroux') aliases.push('louisiana-rougaroux','louisiana');
-        if(slug === 'southwest-kansas-storm') aliases.push('sw-kansas-storm','southwest-kansas','sw-kansas');
-        if(aliases.some(function(a){ return raw.indexOf(a) !== -1; })){
-          const img = card.querySelector('.network-team-channel-art img') || card.querySelector('img');
-          if(img){
-            img.src = artwork[slug];
-            img.removeAttribute('srcset');
-          }
-        }
-      });
-    });
-  }
-
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', applyExactTeamArtwork);
-  } else {
-    applyExactTeamArtwork();
-  }
-  window.addEventListener('load', applyExactTeamArtwork);
-  setTimeout(applyExactTeamArtwork, 300);
-})();
-</script>
 
 </body>
 </html>
