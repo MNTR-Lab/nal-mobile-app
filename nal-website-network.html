@@ -4,6 +4,12 @@
 
 <meta
   name="viewport"
+ <html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
   content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
 
@@ -20574,6 +20580,51 @@ window.addEventListener("DOMContentLoaded", function () {
     if (section) section.remove();
   });
 });
+</script>
+
+
+<script id="nal-network-homepage-section-cleanup">
+(function () {
+  function removeHomepageSectionByTitle(titleText) {
+    const home = document.getElementById("watchPage");
+    if (!home) return;
+
+    const wanted = titleText.trim().toUpperCase();
+
+    const candidates = home.querySelectorAll(
+      ":scope > section h1, :scope > section h2, :scope > section h3, :scope > section h4," +
+      ":scope > .section h1, :scope > .section h2, :scope > .section h3, :scope > .section h4," +
+      ":scope > .network-section h1, :scope > .network-section h2, :scope > .network-section h3, :scope > .network-section h4"
+    );
+
+    candidates.forEach(function (heading) {
+      if ((heading.textContent || "").trim().toUpperCase() !== wanted) return;
+
+      const section =
+        heading.closest("section") ||
+        heading.closest(".network-section") ||
+        heading.closest(".section");
+
+      /* Only remove direct homepage sections, never content inside a modal/team hub. */
+      if (section && home.contains(section) &&
+          !section.closest(".modal") &&
+          !section.closest("[role='dialog']")) {
+        section.remove();
+      }
+    });
+  }
+
+  function cleanNALNetworkHomepage() {
+    removeHomepageSectionByTitle("HIGHLIGHTS");
+    removeHomepageSectionByTitle("NAL NETWORK ORIGINALS");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", cleanNALNetworkHomepage);
+  } else {
+    cleanNALNetworkHomepage();
+  }
+})();
 </script>
 
 </body>
