@@ -88,6 +88,46 @@ def normalize_value(value):
     return value
 
 
+def build_authorization_header(secret_value):
+    """
+    DigitalShift's browser request uses:
+
+        Authorization: ticket="<credential>"
+
+    The GitHub secret may contain:
+      raw credential
+      ticket=credential
+      ticket="credential"
+      "credential"
+
+    Normalize all of those forms to the exact browser format.
+    """
+
+    value = (secret_value or "").strip()
+
+    if not value:
+        raise RuntimeError(
+            "DIGITALSHIFT_AUTH_TICKET is empty."
+        )
+
+    if value.lower().startswith("ticket="):
+        value = value[len("ticket="):].strip()
+
+    if (
+        len(value) >= 2
+        and value[0] == '"'
+        and value[-1] == '"'
+    ):
+        value = value[1:-1].strip()
+
+    if not value:
+        raise RuntimeError(
+            "DIGITALSHIFT_AUTH_TICKET contains no ticket value."
+        )
+
+    return f'ticket="{value}"'
+
+
 # ============================================================
 # PARSE PLAYER ROSTER
 # ============================================================
@@ -97,17 +137,15 @@ def parse_players(content):
     DigitalShift returns rendered HTML.
 
     The roster table contains:
+      Name
+      #
+      Weight
+      Height
+      Position
+      College
 
-    Name
-    #
-    Weight
-    Height
-    Position
-    College
-
-    DigitalShift can include duplicate table markup for its
-    scrolling/fixed layout. We intentionally parse only the
-    first complete roster table.
+    DigitalShift also includes duplicate/fixed table markup.
+    We intentionally parse only the first complete roster table.
     """
 
     players = []
@@ -263,6 +301,11 @@ def fetch_team_roster(session, slug, team):
         timeout=30,
     )
 
+    if response.status_code == 401:
+        raise RuntimeError(
+            "DigitalShift returned 401 Unauthorized."
+        )
+
     response.raise_for_status()
 
     payload = response.json()
@@ -301,26 +344,11 @@ def main():
     authorization_ticket = os.environ.get(
         "DIGITALSHIFT_AUTH_TICKET",
         ""
-    ).strip()
+    )
 
-    if not authorization_ticket:
-        raise RuntimeError(
-            "DIGITALSHIFT_AUTH_TICKET environment variable "
-            "is missing."
-        )
-
-    # The browser sends:
-    #
-    # authorization: ticket=XXXXXXXX
-    #
-    # Keep only the raw ticket in GitHub Secrets.
-    # This script adds the required "ticket=" prefix.
-    if authorization_ticket.lower().startswith("ticket="):
-        authorization_header = authorization_ticket
-    else:
-        authorization_header = (
-            f"ticket={authorization_ticket}"
-        )
+    authorization_header = build_authorization_header(
+        authorization_ticket
+    )
 
     session = requests.Session()
 
@@ -376,8 +404,13 @@ def main():
                 }
             )
 
-    # If every request failed, do NOT overwrite the existing
-    # roster data with an empty/error-only file.
+    # ========================================================
+    # SAFETY CHECK
+    #
+    # Never overwrite good roster data if authentication or
+    # DigitalShift fails for every team.
+    # ========================================================
+
     if successful_teams == 0:
         raise RuntimeError(
             "All DigitalShift roster requests failed. "
@@ -426,13 +459,16 @@ def main():
     )
 
     print()
-    print("Roster update complete.")
-    print(f"Teams: {len(rosters)}")
+    print("========================================")
+    print("NAL ROSTER UPDATE COMPLETE")
+    print("========================================")
+    print(f"Teams checked: {len(rosters)}")
     print(f"Successful teams: {successful_teams}")
     print(f"Failed teams: {failed_teams}")
     print(f"Players: {total_players}")
     print(f"Staff: {total_staff}")
     print(f"Saved: {OUTPUT_FILE}")
+    print("========================================")
 
 
 if __name__ == "__main__":
