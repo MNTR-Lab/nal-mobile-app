@@ -3,30 +3,557 @@
   "season_label": "2025-2026",
   "stats_section_id": "1200",
   "division_id": "41958",
-  "generated_at": "2026-09-24T12:54:17.549160+00:00",
+  "generated_at": "2026-09-24T13:00:41.089830+00:00",
   "team_count": 10,
-  "total_players": 0,
-  "total_staff": 0,
+  "successful_teams": 10,
+  "failed_teams": 0,
+  "total_players": 196,
+  "total_staff": 172,
   "teams": [
     {
       "slug": "amarillo-warbirds",
       "team": "Amarillo Warbirds",
       "team_id": "566773",
-      "players": [],
-      "staff": [],
-      "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=566773"
+      "players": [
+        {
+          "player_id": "3622874",
+          "name": "Addison McCauley",
+          "number": "18",
+          "position": "K",
+          "height": "5' 7\"",
+          "weight": "205 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "3874378",
+          "name": "Almount Smith",
+          "number": "12",
+          "position": "WR",
+          "height": "6' 4\"",
+          "weight": "190 lbs",
+          "college": "UT -Martin"
+        },
+        {
+          "player_id": "3557947",
+          "name": "Christian Stokley",
+          "number": "2",
+          "position": "WR",
+          "height": "6' 2\"",
+          "weight": "215 lbs",
+          "college": "Austin Peay University"
+        },
+        {
+          "player_id": "3776448",
+          "name": "Damion Powell",
+          "number": "77",
+          "position": "OL",
+          "height": "6' 5\"",
+          "weight": "300 lbs",
+          "college": "Stony Brook University"
+        },
+        {
+          "player_id": "2620295",
+          "name": "Daniel Byse",
+          "number": "91",
+          "position": "DL",
+          "height": "6' 1\"",
+          "weight": "270 lbs",
+          "college": "Feather River College"
+        },
+        {
+          "player_id": "3205271",
+          "name": "Demry Croft",
+          "number": "6",
+          "position": "QB",
+          "height": "6' 5\"",
+          "weight": "210 lbs",
+          "college": "University of Minnesota"
+        },
+        {
+          "player_id": "3610936",
+          "name": "Desmond Raiford",
+          "number": "7",
+          "position": "DL",
+          "height": "6' 3\"",
+          "weight": "265 lbs",
+          "college": "University of Oregon"
+        },
+        {
+          "player_id": "3725340",
+          "name": "Devery Smith",
+          "number": "33",
+          "position": "DB",
+          "height": "6' 2\"",
+          "weight": "180 lbs",
+          "college": "South Alabama University"
+        },
+        {
+          "player_id": "3241157",
+          "name": "Dren Johnson",
+          "number": "17",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "190 lbs",
+          "college": "Cumberland University"
+        },
+        {
+          "player_id": "3725301",
+          "name": "Frankie Solomon Jr",
+          "number": "4",
+          "position": "WR",
+          "height": "5' 10\"",
+          "weight": "190 lbs",
+          "college": "University of New Mexico"
+        },
+        {
+          "player_id": "2927248",
+          "name": "Jalen Riley",
+          "number": "76",
+          "position": "OL",
+          "height": "6' 5\"",
+          "weight": "285 lbs",
+          "college": "Washington State University"
+        },
+        {
+          "player_id": "2626404",
+          "name": "Josh Batiste",
+          "number": "10",
+          "position": "RB",
+          "height": "5' 10\"",
+          "weight": "195 lbs",
+          "college": "McNeese State"
+        },
+        {
+          "player_id": "3844201",
+          "name": "Kearyon Taylor",
+          "number": "4",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "180 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "1640381",
+          "name": "LaGrant Pegram Jr.",
+          "number": "5",
+          "position": "DB",
+          "height": "6' 1\"",
+          "weight": "190 lbs",
+          "college": "Sacramento City College"
+        },
+        {
+          "player_id": "3476482",
+          "name": "Lakedrick Holmes",
+          "number": "1",
+          "position": "DL",
+          "height": "6' 0\"",
+          "weight": "200 lbs",
+          "college": "Southeastern State University"
+        },
+        {
+          "player_id": "3216307",
+          "name": "Michael Arceneaux",
+          "number": "0",
+          "position": "WR",
+          "height": "5' 11\"",
+          "weight": "178 lbs",
+          "college": "West Texas A&M"
+        },
+        {
+          "player_id": "2628183",
+          "name": "Miqueal Pillow-Smiley",
+          "number": "94",
+          "position": "DL",
+          "height": "6' 2\"",
+          "weight": "260 lbs",
+          "college": "Virginia State University"
+        },
+        {
+          "player_id": "3436580",
+          "name": "Orlando Doss",
+          "number": "8",
+          "position": "WR",
+          "height": "5' 10\"",
+          "weight": "170 lbs",
+          "college": "Mississippi College"
+        },
+        {
+          "player_id": "3723621",
+          "name": "Shaquan Curenton",
+          "number": "9",
+          "position": "WR",
+          "height": "6' 0\"",
+          "weight": "190 lbs",
+          "college": "Scottsdale Community College"
+        },
+        {
+          "player_id": "3812460",
+          "name": "Tyler Cassell",
+          "number": "65",
+          "position": "OL",
+          "height": "6' 2\"",
+          "weight": "255 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "3767410",
+          "name": "Xavier Powell",
+          "number": "11",
+          "position": "QB",
+          "height": "6' 0\"",
+          "weight": "222 lbs",
+          "college": "Wilkes University"
+        },
+        {
+          "player_id": "2877721",
+          "name": "Zyquarius Dixon",
+          "number": "32",
+          "position": "OL",
+          "height": "6' 3\"",
+          "weight": "305 lbs",
+          "college": "Texas Southern"
+        }
+      ],
+      "staff": [
+        {
+          "staff_id": "",
+          "name": "Addison McCauley",
+          "position": "18"
+        },
+        {
+          "staff_id": "",
+          "name": "Almount Smith",
+          "position": "12"
+        },
+        {
+          "staff_id": "",
+          "name": "Christian Stokley",
+          "position": "2"
+        },
+        {
+          "staff_id": "",
+          "name": "Damion Powell",
+          "position": "77"
+        },
+        {
+          "staff_id": "",
+          "name": "Daniel Byse",
+          "position": "91"
+        },
+        {
+          "staff_id": "",
+          "name": "Demry Croft",
+          "position": "6"
+        },
+        {
+          "staff_id": "",
+          "name": "Desmond Raiford",
+          "position": "7"
+        },
+        {
+          "staff_id": "",
+          "name": "Devery Smith",
+          "position": "33"
+        },
+        {
+          "staff_id": "",
+          "name": "Dren Johnson",
+          "position": "17"
+        },
+        {
+          "staff_id": "",
+          "name": "Frankie Solomon Jr",
+          "position": "4"
+        },
+        {
+          "staff_id": "",
+          "name": "Jalen Riley",
+          "position": "76"
+        },
+        {
+          "staff_id": "",
+          "name": "Josh Batiste",
+          "position": "10"
+        },
+        {
+          "staff_id": "",
+          "name": "Kearyon Taylor",
+          "position": "4"
+        },
+        {
+          "staff_id": "",
+          "name": "LaGrant Pegram Jr.",
+          "position": "5"
+        },
+        {
+          "staff_id": "",
+          "name": "Lakedrick Holmes",
+          "position": "1"
+        },
+        {
+          "staff_id": "",
+          "name": "Michael Arceneaux",
+          "position": "0"
+        },
+        {
+          "staff_id": "",
+          "name": "Miqueal Pillow-Smiley",
+          "position": "94"
+        },
+        {
+          "staff_id": "",
+          "name": "Orlando Doss",
+          "position": "8"
+        },
+        {
+          "staff_id": "",
+          "name": "Shaquan Curenton",
+          "position": "9"
+        },
+        {
+          "staff_id": "",
+          "name": "Tyler Cassell",
+          "position": "65"
+        },
+        {
+          "staff_id": "",
+          "name": "Xavier Powell",
+          "position": "11"
+        },
+        {
+          "staff_id": "",
+          "name": "Zyquarius Dixon",
+          "position": "32"
+        }
+      ],
+      "player_count": 22,
+      "staff_count": 22
     },
     {
       "slug": "colorado-spartans",
       "team": "Colorado Spartans",
       "team_id": "570667",
-      "players": [],
+      "players": [
+        {
+          "player_id": "3044279",
+          "name": "Alexis Rosario",
+          "number": "2",
+          "position": "WR",
+          "height": "6' 1\"",
+          "weight": "200 lbs",
+          "college": "South Carolina"
+        },
+        {
+          "player_id": "2254159",
+          "name": "Anthony Wilson",
+          "number": "73",
+          "position": "OL",
+          "height": "6' 5\"",
+          "weight": "298 lbs",
+          "college": "Colorado State Pueblo"
+        },
+        {
+          "player_id": "2917361",
+          "name": "Bizzet Woodley",
+          "number": "11",
+          "position": "WR",
+          "height": "6' 6\"",
+          "weight": "215 lbs",
+          "college": "Delaware State"
+        },
+        {
+          "player_id": "3616527",
+          "name": "Brean Michel",
+          "number": "9",
+          "position": "WR",
+          "height": "6' 1\"",
+          "weight": "200 lbs",
+          "college": "Missouri S & T"
+        },
+        {
+          "player_id": "1196728",
+          "name": "Brian Robinson",
+          "number": "4",
+          "position": "WR",
+          "height": "6' 1\"",
+          "weight": "200 lbs",
+          "college": "Southwestern Oklahoma State"
+        },
+        {
+          "player_id": "3118041",
+          "name": "Carver Shamelle Dumas",
+          "number": "26",
+          "position": "RB",
+          "height": "6' 3\"",
+          "weight": "230 lbs",
+          "college": "San Diego Mesa"
+        },
+        {
+          "player_id": "796320",
+          "name": "Cory Henry",
+          "number": "0",
+          "position": "DL",
+          "height": "6' 5\"",
+          "weight": "255 lbs",
+          "college": "Florida Atlantic University"
+        },
+        {
+          "player_id": "3644525",
+          "name": "Dallas Reins",
+          "number": "67",
+          "position": "OL",
+          "height": "6' 7\"",
+          "weight": "320 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "2251074",
+          "name": "Deonte Rarrieck",
+          "number": "8",
+          "position": "WR/DB",
+          "height": "6' 3\"",
+          "weight": "200 lbs",
+          "college": "Dodge City CC"
+        },
+        {
+          "player_id": "3616514",
+          "name": "Dillon Thomas",
+          "number": "27",
+          "position": "DB",
+          "height": "6' 3\"",
+          "weight": "180 lbs",
+          "college": "Northern Illinois University"
+        },
+        {
+          "player_id": "780948",
+          "name": "Faleaoga Russell",
+          "number": "54",
+          "position": "OL/DL",
+          "height": "6' 5\"",
+          "weight": "335 lbs",
+          "college": "Lincoln University (MO)"
+        },
+        {
+          "player_id": "3874400",
+          "name": "Gabriel Amegatecher",
+          "number": "",
+          "position": "DB",
+          "height": "6' 3\"",
+          "weight": "200 lbs",
+          "college": "Northern Illinois University"
+        },
+        {
+          "player_id": "2383578",
+          "name": "Jack Robinson",
+          "number": "90",
+          "position": "DL",
+          "height": "6' 2\"",
+          "weight": "280 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "990009",
+          "name": "Javin Kilgo",
+          "number": "8",
+          "position": "QB",
+          "height": "6' 4\"",
+          "weight": "210 lbs",
+          "college": "Midwestern State"
+        },
+        {
+          "player_id": "3089242",
+          "name": "Joe Powell",
+          "number": "21",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "190 lbs",
+          "college": "Oklahoma"
+        },
+        {
+          "player_id": "1423807",
+          "name": "Jordus Smith",
+          "number": "7",
+          "position": "WR/DB",
+          "height": "6' 0\"",
+          "weight": "195 lbs",
+          "college": "Nichols State"
+        },
+        {
+          "player_id": "3495124",
+          "name": "Paxton Lynch",
+          "number": "12",
+          "position": "QB",
+          "height": "6' 7\"",
+          "weight": "245 lbs",
+          "college": "Memphis University"
+        },
+        {
+          "player_id": "3813730",
+          "name": "Ralph Joseph",
+          "number": "28",
+          "position": "DB",
+          "height": "6' 3\"",
+          "weight": "200 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "2256075",
+          "name": "Sam Hammond",
+          "number": "10",
+          "position": "DL",
+          "height": "6' 5\"",
+          "weight": "255 lbs",
+          "college": "Nevada"
+        },
+        {
+          "player_id": "2170077",
+          "name": "Steven Fluker",
+          "number": "99",
+          "position": "OL",
+          "height": "6' 6\"",
+          "weight": "325 lbs",
+          "college": "Lane College"
+        },
+        {
+          "player_id": "2256081",
+          "name": "Steven Newbold",
+          "number": "3",
+          "position": "WR",
+          "height": "5' 10\"",
+          "weight": "185 lbs",
+          "college": "Tennessee State"
+        },
+        {
+          "player_id": "2228392",
+          "name": "Tabyus Taylor",
+          "number": "22",
+          "position": "RB",
+          "height": "6' 0\"",
+          "weight": "225 lbs",
+          "college": "Virginia Union"
+        },
+        {
+          "player_id": "2323196",
+          "name": "Travion Mosby",
+          "number": "1",
+          "position": "WR",
+          "height": "6' 3\"",
+          "weight": "205 lbs",
+          "college": "Missouri Southern"
+        },
+        {
+          "player_id": "3870105",
+          "name": "Wilson Yee",
+          "number": "17",
+          "position": "K",
+          "height": "5' 11\"",
+          "weight": "200 lbs",
+          "college": "Chadron State College"
+        }
+      ],
       "staff": [],
-      "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=570667"
+      "player_count": 24,
+      "staff_count": 0
     },
     {
       "slug": "dallas-apex",
@@ -35,68 +562,2173 @@
       "players": [],
       "staff": [],
       "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=680252"
+      "staff_count": 0
     },
     {
       "slug": "louisiana-rouxgaroux",
       "team": "Louisiana Rouxgaroux",
       "team_id": "573852",
-      "players": [],
-      "staff": [],
-      "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=573852"
+      "players": [
+        {
+          "player_id": "3855653",
+          "name": "Brian Isaac",
+          "number": "30",
+          "position": "LB",
+          "height": "6' 0\"",
+          "weight": "200 lbs",
+          "college": "UT Martin"
+        },
+        {
+          "player_id": "3690559",
+          "name": "Cedric Hearvey",
+          "number": "97",
+          "position": "DL",
+          "height": "6' 3\"",
+          "weight": "265 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "3400685",
+          "name": "Chase Baker",
+          "number": "69",
+          "position": "OL",
+          "height": "6' 3\"",
+          "weight": "300 lbs",
+          "college": "Limestone College"
+        },
+        {
+          "player_id": "3875248",
+          "name": "Chauncey Lowman",
+          "number": "13",
+          "position": "QB",
+          "height": "6' 0\"",
+          "weight": "195 lbs",
+          "college": "Central Methodist"
+        },
+        {
+          "player_id": "3673330",
+          "name": "Dajon Richard",
+          "number": "0",
+          "position": "RB",
+          "height": "5' 11\"",
+          "weight": "207 lbs",
+          "college": "Southern Mississippi University"
+        },
+        {
+          "player_id": "3855445",
+          "name": "Devonte Carter",
+          "number": "77",
+          "position": "OL",
+          "height": "6' 3\"",
+          "weight": "370 lbs",
+          "college": "South Louisana CC"
+        },
+        {
+          "player_id": "3617770",
+          "name": "Dominique Pugh",
+          "number": "21",
+          "position": "DB",
+          "height": "5' 11\"",
+          "weight": "175 lbs",
+          "college": "Grambling State University"
+        },
+        {
+          "player_id": "3855548",
+          "name": "Dylan Moghaddam",
+          "number": "8",
+          "position": "",
+          "height": "",
+          "weight": "",
+          "college": ""
+        },
+        {
+          "player_id": "3617781",
+          "name": "Jacobi Brewer",
+          "number": "50",
+          "position": "DL",
+          "height": "6' 4\"",
+          "weight": "270 lbs",
+          "college": "Texas Wesleyan University"
+        },
+        {
+          "player_id": "3588547",
+          "name": "Jamarsha Huglon",
+          "number": "9",
+          "position": "WR",
+          "height": "5' 10\"",
+          "weight": "175 lbs",
+          "college": "University of Louisiana Monroe"
+        },
+        {
+          "player_id": "3617825",
+          "name": "James Pitre",
+          "number": "11",
+          "position": "WR",
+          "height": "6' 4\"",
+          "weight": "185 lbs",
+          "college": "Kentucky State University"
+        },
+        {
+          "player_id": "3776469",
+          "name": "James Taylor",
+          "number": "88",
+          "position": "OL",
+          "height": "6' 1\"",
+          "weight": "340 lbs",
+          "college": "Pittsburgh State University"
+        },
+        {
+          "player_id": "2949524",
+          "name": "Javon Ross",
+          "number": "71",
+          "position": "OL",
+          "height": "6' 2\"",
+          "weight": "355 lbs",
+          "college": "Henderson State"
+        },
+        {
+          "player_id": "752873",
+          "name": "Jay Kennedy",
+          "number": "",
+          "position": "DL",
+          "height": "6' 7\"",
+          "weight": "275 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "2192514",
+          "name": "Jordan Barton",
+          "number": "10",
+          "position": "WR",
+          "height": "6' 1\"",
+          "weight": "180 lbs",
+          "college": "Western Colorado"
+        },
+        {
+          "player_id": "3582988",
+          "name": "Keon Coleman",
+          "number": "",
+          "position": "DB",
+          "height": "6' 3\"",
+          "weight": "210 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "1501245",
+          "name": "Keontae Chavies",
+          "number": "16",
+          "position": "DL",
+          "height": "6' 3\"",
+          "weight": "268 lbs",
+          "college": "Bethany College"
+        },
+        {
+          "player_id": "3588548",
+          "name": "La'Roderick Scott",
+          "number": "5",
+          "position": "DB",
+          "height": "5' 9\"",
+          "weight": "190 lbs",
+          "college": "Miles College"
+        },
+        {
+          "player_id": "2991950",
+          "name": "Levonta Hall",
+          "number": "6",
+          "position": "DB",
+          "height": "6' 1\"",
+          "weight": "234 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "2256040",
+          "name": "Malik Allen",
+          "number": "15",
+          "position": "LB",
+          "height": "6' 1\"",
+          "weight": "255 lbs",
+          "college": "Butler Community College"
+        },
+        {
+          "player_id": "3855591",
+          "name": "Monquez Moore",
+          "number": "23",
+          "position": "DL",
+          "height": "6' 0\"",
+          "weight": "210 lbs",
+          "college": "Texarkana"
+        },
+        {
+          "player_id": "3855512",
+          "name": "Quintayvion Taylor",
+          "number": "17",
+          "position": "WR",
+          "height": "5' 6\"",
+          "weight": "135 lbs",
+          "college": "Troy University"
+        },
+        {
+          "player_id": "2190726",
+          "name": "Rashad Ridley",
+          "number": "4",
+          "position": "WR",
+          "height": "5' 7\"",
+          "weight": "165 lbs",
+          "college": "South Dakota School of the Mines"
+        },
+        {
+          "player_id": "3135338",
+          "name": "Trayoun Maxie",
+          "number": "7",
+          "position": "DB",
+          "height": "5' 11\"",
+          "weight": "199 lbs",
+          "college": "Howard Payne University"
+        },
+        {
+          "player_id": "3748131",
+          "name": "Trayv'on Culbert",
+          "number": "3",
+          "position": "WR",
+          "height": "6' 0\"",
+          "weight": "190 lbs",
+          "college": "University of Louisiana ATA"
+        }
+      ],
+      "staff": [
+        {
+          "staff_id": "",
+          "name": "Brian Isaac",
+          "position": "30"
+        },
+        {
+          "staff_id": "",
+          "name": "Cedric Hearvey",
+          "position": "97"
+        },
+        {
+          "staff_id": "",
+          "name": "Chase Baker",
+          "position": "69"
+        },
+        {
+          "staff_id": "",
+          "name": "Chauncey Lowman",
+          "position": "13"
+        },
+        {
+          "staff_id": "",
+          "name": "Dajon Richard",
+          "position": "0"
+        },
+        {
+          "staff_id": "",
+          "name": "Devonte Carter",
+          "position": "77"
+        },
+        {
+          "staff_id": "",
+          "name": "Dominique Pugh",
+          "position": "21"
+        },
+        {
+          "staff_id": "",
+          "name": "Dylan Moghaddam",
+          "position": "8"
+        },
+        {
+          "staff_id": "",
+          "name": "Jacobi Brewer",
+          "position": "50"
+        },
+        {
+          "staff_id": "",
+          "name": "Jamarsha Huglon",
+          "position": "9"
+        },
+        {
+          "staff_id": "",
+          "name": "James Pitre",
+          "position": "11"
+        },
+        {
+          "staff_id": "",
+          "name": "James Taylor",
+          "position": "88"
+        },
+        {
+          "staff_id": "",
+          "name": "Javon Ross",
+          "position": "71"
+        },
+        {
+          "staff_id": "",
+          "name": "Jay Kennedy",
+          "position": ""
+        },
+        {
+          "staff_id": "",
+          "name": "Jordan Barton",
+          "position": "10"
+        },
+        {
+          "staff_id": "",
+          "name": "Keon Coleman",
+          "position": ""
+        },
+        {
+          "staff_id": "",
+          "name": "Keontae Chavies",
+          "position": "16"
+        },
+        {
+          "staff_id": "",
+          "name": "La'Roderick Scott",
+          "position": "5"
+        },
+        {
+          "staff_id": "",
+          "name": "Levonta Hall",
+          "position": "6"
+        },
+        {
+          "staff_id": "",
+          "name": "Malik Allen",
+          "position": "15"
+        },
+        {
+          "staff_id": "",
+          "name": "Monquez Moore",
+          "position": "23"
+        },
+        {
+          "staff_id": "",
+          "name": "Quintayvion Taylor",
+          "position": "17"
+        },
+        {
+          "staff_id": "",
+          "name": "Rashad Ridley",
+          "position": "4"
+        },
+        {
+          "staff_id": "",
+          "name": "Trayoun Maxie",
+          "position": "7"
+        },
+        {
+          "staff_id": "",
+          "name": "Trayv'on Culbert",
+          "position": "3"
+        }
+      ],
+      "player_count": 25,
+      "staff_count": 25
     },
     {
       "slug": "omaha-beef",
       "team": "Omaha Beef",
       "team_id": "566774",
-      "players": [],
-      "staff": [],
-      "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=566774"
+      "players": [
+        {
+          "player_id": "1120440",
+          "name": "Arthur Anderson IV",
+          "number": "80",
+          "position": "WR/DB",
+          "height": "6' 1\"",
+          "weight": "175 lbs",
+          "college": "Concordia University Nebraska"
+        },
+        {
+          "player_id": "1617557",
+          "name": "Brandon Munoz",
+          "number": "0",
+          "position": "DL",
+          "height": "6' 4\"",
+          "weight": "270 lbs",
+          "college": "Wheeling University"
+        },
+        {
+          "player_id": "3353799",
+          "name": "Chase Contreraz",
+          "number": "19",
+          "position": "K",
+          "height": "6' 0\"",
+          "weight": "200 lbs",
+          "college": "Iowa State"
+        },
+        {
+          "player_id": "2254735",
+          "name": "Chris Perry",
+          "number": "3",
+          "position": "DB",
+          "height": "6' 2\"",
+          "weight": "204 lbs",
+          "college": "Troy University"
+        },
+        {
+          "player_id": "3426705",
+          "name": "Dalton Phillips",
+          "number": "73",
+          "position": "OL",
+          "height": "6' 3\"",
+          "weight": "295 lbs",
+          "college": "Friends University"
+        },
+        {
+          "player_id": "3798031",
+          "name": "David Francis",
+          "number": "15",
+          "position": "DL",
+          "height": "6' 2\"",
+          "weight": "250 lbs",
+          "college": "Gannon University"
+        },
+        {
+          "player_id": "2595393",
+          "name": "David Ross",
+          "number": "32",
+          "position": "RB",
+          "height": "6' 2\"",
+          "weight": "235 lbs",
+          "college": "Western Connecticut"
+        },
+        {
+          "player_id": "1441826",
+          "name": "Dequan Dudley",
+          "number": "17",
+          "position": "WR",
+          "height": "5' 8\"",
+          "weight": "175 lbs",
+          "college": "Texas A&M Commerce"
+        },
+        {
+          "player_id": "3047186",
+          "name": "Devanaire Conliffe",
+          "number": "12",
+          "position": "WR",
+          "height": "6' 2\"",
+          "weight": "250 lbs",
+          "college": "Notre Dame College"
+        },
+        {
+          "player_id": "2952142",
+          "name": "D'Nerius Antoine",
+          "number": "13",
+          "position": "RB",
+          "height": "6' 0\"",
+          "weight": "220 lbs",
+          "college": "Southern Miss"
+        },
+        {
+          "player_id": "1736561",
+          "name": "Edarius Anderson",
+          "number": "55",
+          "position": "OL/DL",
+          "height": "6' 4\"",
+          "weight": "345 lbs",
+          "college": "Iowa Central"
+        },
+        {
+          "player_id": "3827643",
+          "name": "Freedom Akinmoladun",
+          "number": "91",
+          "position": "DL",
+          "height": "6' 3\"",
+          "weight": "295 lbs",
+          "college": "University of Nebraska"
+        },
+        {
+          "player_id": "3712797",
+          "name": "Jaylen Johnson",
+          "number": "42",
+          "position": "LB",
+          "height": "6' 1\"",
+          "weight": "220 lbs",
+          "college": "Kentucky State University"
+        },
+        {
+          "player_id": "3322030",
+          "name": "Jaylen Perkins Sr.",
+          "number": "23",
+          "position": "DB",
+          "height": "5' 11\"",
+          "weight": "195 lbs",
+          "college": "Grand View University"
+        },
+        {
+          "player_id": "2768444",
+          "name": "Jayshawn Washington",
+          "number": "5",
+          "position": "DL",
+          "height": "6' 2\"",
+          "weight": "240 lbs",
+          "college": "Southern Miss"
+        },
+        {
+          "player_id": "3875253",
+          "name": "Keyshawn Cobb",
+          "number": "20",
+          "position": "DB",
+          "height": "5' 11\"",
+          "weight": "205 lbs",
+          "college": "Buffalo"
+        },
+        {
+          "player_id": "2225903",
+          "name": "Korrell Koehlmoos",
+          "number": "16",
+          "position": "WR",
+          "height": "6' 0\"",
+          "weight": "195 lbs",
+          "college": "Concordia University - Nebraska"
+        },
+        {
+          "player_id": "3720784",
+          "name": "Lorenzo Thompson",
+          "number": "2",
+          "position": "WR",
+          "height": "6' 3\"",
+          "weight": "190 lbs",
+          "college": "Hampton University"
+        },
+        {
+          "player_id": "2192482",
+          "name": "Olukayode Akinmoladun Jr.",
+          "number": "50",
+          "position": "OL/DL",
+          "height": "6' 3\"",
+          "weight": "325 lbs",
+          "college": "University of Nebraska - Kearney"
+        },
+        {
+          "player_id": "2192576",
+          "name": "Ponce Deleon",
+          "number": "26",
+          "position": "DB",
+          "height": "5' 10\"",
+          "weight": "185 lbs",
+          "college": "Shepherd University"
+        },
+        {
+          "player_id": "2192681",
+          "name": "Reggie Patrick",
+          "number": "71",
+          "position": "OL/DL",
+          "height": "6' 3\"",
+          "weight": "325 lbs",
+          "college": "Miles College"
+        },
+        {
+          "player_id": "2274332",
+          "name": "Rodell Rahmaan",
+          "number": "11",
+          "position": "WR",
+          "height": "6' 4\"",
+          "weight": "240 lbs",
+          "college": "Tennessee State"
+        },
+        {
+          "player_id": "2192624",
+          "name": "Terrence Jackson Jr",
+          "number": "1",
+          "position": "DB",
+          "height": "5' 8\"",
+          "weight": "170 lbs",
+          "college": "New Mexico Highlands"
+        },
+        {
+          "player_id": "4024587",
+          "name": "Trevor Stewart",
+          "number": "",
+          "position": "DL",
+          "height": "6' 0\"",
+          "weight": "315 lbs",
+          "college": "Greenville University"
+        },
+        {
+          "player_id": "2229673",
+          "name": "Trey Dudley-Giles",
+          "number": "21",
+          "position": "DB",
+          "height": "5' 10\"",
+          "weight": "210 lbs",
+          "college": "UMASS"
+        },
+        {
+          "player_id": "2406868",
+          "name": "Vincent Espinoza",
+          "number": "8",
+          "position": "QB",
+          "height": "6' 4\"",
+          "weight": "205 lbs",
+          "college": "Lincoln University"
+        }
+      ],
+      "staff": [
+        {
+          "staff_id": "",
+          "name": "Arthur Anderson IV",
+          "position": "80"
+        },
+        {
+          "staff_id": "",
+          "name": "Brandon Munoz",
+          "position": "0"
+        },
+        {
+          "staff_id": "",
+          "name": "Chase Contreraz",
+          "position": "19"
+        },
+        {
+          "staff_id": "",
+          "name": "Chris Perry",
+          "position": "3"
+        },
+        {
+          "staff_id": "",
+          "name": "Dalton Phillips",
+          "position": "73"
+        },
+        {
+          "staff_id": "",
+          "name": "David Francis",
+          "position": "15"
+        },
+        {
+          "staff_id": "",
+          "name": "David Ross",
+          "position": "32"
+        },
+        {
+          "staff_id": "",
+          "name": "Dequan Dudley",
+          "position": "17"
+        },
+        {
+          "staff_id": "",
+          "name": "Devanaire Conliffe",
+          "position": "12"
+        },
+        {
+          "staff_id": "",
+          "name": "D'Nerius Antoine",
+          "position": "13"
+        },
+        {
+          "staff_id": "",
+          "name": "Edarius Anderson",
+          "position": "55"
+        },
+        {
+          "staff_id": "",
+          "name": "Freedom Akinmoladun",
+          "position": "91"
+        },
+        {
+          "staff_id": "",
+          "name": "Jaylen Johnson",
+          "position": "42"
+        },
+        {
+          "staff_id": "",
+          "name": "Jaylen Perkins Sr.",
+          "position": "23"
+        },
+        {
+          "staff_id": "",
+          "name": "Jayshawn Washington",
+          "position": "5"
+        },
+        {
+          "staff_id": "",
+          "name": "Keyshawn Cobb",
+          "position": "20"
+        },
+        {
+          "staff_id": "",
+          "name": "Korrell Koehlmoos",
+          "position": "16"
+        },
+        {
+          "staff_id": "",
+          "name": "Lorenzo Thompson",
+          "position": "2"
+        },
+        {
+          "staff_id": "",
+          "name": "Olukayode Akinmoladun Jr.",
+          "position": "50"
+        },
+        {
+          "staff_id": "",
+          "name": "Ponce Deleon",
+          "position": "26"
+        },
+        {
+          "staff_id": "",
+          "name": "Reggie Patrick",
+          "position": "71"
+        },
+        {
+          "staff_id": "",
+          "name": "Rodell Rahmaan",
+          "position": "11"
+        },
+        {
+          "staff_id": "",
+          "name": "Terrence Jackson Jr",
+          "position": "1"
+        },
+        {
+          "staff_id": "",
+          "name": "Trevor Stewart",
+          "position": ""
+        },
+        {
+          "staff_id": "",
+          "name": "Trey Dudley-Giles",
+          "position": "21"
+        },
+        {
+          "staff_id": "",
+          "name": "Vincent Espinoza",
+          "position": "8"
+        }
+      ],
+      "player_count": 26,
+      "staff_count": 26
     },
     {
       "slug": "pueblo-punishers",
       "team": "Pueblo Punishers",
       "team_id": "577047",
-      "players": [],
-      "staff": [],
-      "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=577047"
+      "players": [
+        {
+          "player_id": "3500653",
+          "name": "Chris Elmore",
+          "number": "3",
+          "position": "DL",
+          "height": "6' \"",
+          "weight": "265 lbs",
+          "college": "Syracuse University"
+        },
+        {
+          "player_id": "2709000",
+          "name": "Dawandrick Crockett",
+          "number": "5",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "187 lbs",
+          "college": "Northeastern State"
+        },
+        {
+          "player_id": "2281869",
+          "name": "Devond Blair Jr",
+          "number": "",
+          "position": "QB",
+          "height": "6' 2\"",
+          "weight": "195 lbs",
+          "college": "Northwestern Oklahoma State"
+        },
+        {
+          "player_id": "3673325",
+          "name": "Harold Brooks",
+          "number": "14",
+          "position": "WR",
+          "height": "6' 4\"",
+          "weight": "180 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "2256083",
+          "name": "Jeff Luc",
+          "number": "1",
+          "position": "DL",
+          "height": "6' 2\"",
+          "weight": "290 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "3380572",
+          "name": "Jeff Mack II",
+          "number": "4",
+          "position": "RB",
+          "height": "5' 7\"",
+          "weight": "185 lbs",
+          "college": "Long Post University"
+        },
+        {
+          "player_id": "766385",
+          "name": "Jo-El Shaw",
+          "number": "9",
+          "position": "FB",
+          "height": "6' 0\"",
+          "weight": "228 lbs",
+          "college": "Kent State"
+        },
+        {
+          "player_id": "3829957",
+          "name": "Josh Best",
+          "number": "2",
+          "position": "DB",
+          "height": "6' 1\"",
+          "weight": "180 lbs",
+          "college": "Dakota college of Bottineau"
+        },
+        {
+          "player_id": "2209611",
+          "name": "Joshua Hollins",
+          "number": "8",
+          "position": "QB",
+          "height": "6' 2\"",
+          "weight": "200 lbs",
+          "college": "Presentation College"
+        },
+        {
+          "player_id": "3678615",
+          "name": "Kaytron Allen",
+          "number": "22",
+          "position": "DB",
+          "height": "6' 2\"",
+          "weight": "195 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "1540486",
+          "name": "Kentrell Pierce",
+          "number": "21",
+          "position": "WR/DB",
+          "height": "6' 0\"",
+          "weight": "180 lbs",
+          "college": "Lincoln University"
+        },
+        {
+          "player_id": "2887119",
+          "name": "Kenttwon Brown",
+          "number": "12",
+          "position": "WR",
+          "height": "6' 0\"",
+          "weight": "175 lbs",
+          "college": "Ohio Dominican"
+        },
+        {
+          "player_id": "3796171",
+          "name": "Keshaun Taylor",
+          "number": "7",
+          "position": "WR",
+          "height": "6' 3\"",
+          "weight": "190 lbs",
+          "college": "Mars Hill University"
+        },
+        {
+          "player_id": "3507916",
+          "name": "King Mwikuta",
+          "number": "24",
+          "position": "LB",
+          "height": "6' 5\"",
+          "weight": "230 lbs",
+          "college": "University of Alabama"
+        },
+        {
+          "player_id": "3573149",
+          "name": "Makeah Scippio",
+          "number": "20",
+          "position": "DL",
+          "height": "6' 4\"",
+          "weight": "240 lbs",
+          "college": "Colorado State Pueblo"
+        },
+        {
+          "player_id": "3701329",
+          "name": "Marcello Holguin",
+          "number": "92",
+          "position": "OL",
+          "height": "6' 2\"",
+          "weight": "295 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "3573145",
+          "name": "Noa Purcell",
+          "number": "17",
+          "position": "LB",
+          "height": "6' 0\"",
+          "weight": "240 lbs",
+          "college": "Colorado State Pueblo"
+        },
+        {
+          "player_id": "3870104",
+          "name": "Rodrick Jarrett",
+          "number": "23",
+          "position": "DB",
+          "height": "6' 1\"",
+          "weight": "190 lbs",
+          "college": "Delta State University"
+        },
+        {
+          "player_id": "2192660",
+          "name": "Rudy Ngougni",
+          "number": "13",
+          "position": "DL",
+          "height": "6' 3\"",
+          "weight": "240 lbs",
+          "college": "Long Island University"
+        },
+        {
+          "player_id": "3327713",
+          "name": "Stanley Williams",
+          "number": "7",
+          "position": "RB",
+          "height": "5' 9\"",
+          "weight": "195 lbs",
+          "college": "University of Kentucky"
+        },
+        {
+          "player_id": "3678613",
+          "name": "Stephen Nagbe Jr",
+          "number": "10",
+          "position": "DL",
+          "height": "6' 7\"",
+          "weight": "235 lbs",
+          "college": "CSU _ Pueblo"
+        },
+        {
+          "player_id": "3573146",
+          "name": "Tevin Shipp",
+          "number": "11",
+          "position": "LB",
+          "height": "6' 2\"",
+          "weight": "235 lbs",
+          "college": "University of Tennessee - Martin"
+        },
+        {
+          "player_id": "3505635",
+          "name": "Tyrell Thompson",
+          "number": "95",
+          "position": "OL",
+          "height": "6' 4\"",
+          "weight": "310 lbs",
+          "college": "Tarleton State University"
+        },
+        {
+          "player_id": "3400697",
+          "name": "Victor Leventritt",
+          "number": "15",
+          "position": "K",
+          "height": "6' 1\"",
+          "weight": "195 lbs",
+          "college": "SUNY Sullivan"
+        }
+      ],
+      "staff": [
+        {
+          "staff_id": "",
+          "name": "Chris Elmore",
+          "position": "3"
+        },
+        {
+          "staff_id": "",
+          "name": "Dawandrick Crockett",
+          "position": "5"
+        },
+        {
+          "staff_id": "",
+          "name": "Devond Blair Jr",
+          "position": ""
+        },
+        {
+          "staff_id": "",
+          "name": "Harold Brooks",
+          "position": "14"
+        },
+        {
+          "staff_id": "",
+          "name": "Jeff Luc",
+          "position": "1"
+        },
+        {
+          "staff_id": "",
+          "name": "Jeff Mack II",
+          "position": "4"
+        },
+        {
+          "staff_id": "",
+          "name": "Jo-El Shaw",
+          "position": "9"
+        },
+        {
+          "staff_id": "",
+          "name": "Josh Best",
+          "position": "2"
+        },
+        {
+          "staff_id": "",
+          "name": "Joshua Hollins",
+          "position": "8"
+        },
+        {
+          "staff_id": "",
+          "name": "Kaytron Allen",
+          "position": "22"
+        },
+        {
+          "staff_id": "",
+          "name": "Kentrell Pierce",
+          "position": "21"
+        },
+        {
+          "staff_id": "",
+          "name": "Kenttwon Brown",
+          "position": "12"
+        },
+        {
+          "staff_id": "",
+          "name": "Keshaun Taylor",
+          "position": "7"
+        },
+        {
+          "staff_id": "",
+          "name": "King Mwikuta",
+          "position": "24"
+        },
+        {
+          "staff_id": "",
+          "name": "Makeah Scippio",
+          "position": "20"
+        },
+        {
+          "staff_id": "",
+          "name": "Marcello Holguin",
+          "position": "92"
+        },
+        {
+          "staff_id": "",
+          "name": "Noa Purcell",
+          "position": "17"
+        },
+        {
+          "staff_id": "",
+          "name": "Rodrick Jarrett",
+          "position": "23"
+        },
+        {
+          "staff_id": "",
+          "name": "Rudy Ngougni",
+          "position": "13"
+        },
+        {
+          "staff_id": "",
+          "name": "Stanley Williams",
+          "position": "7"
+        },
+        {
+          "staff_id": "",
+          "name": "Stephen Nagbe Jr",
+          "position": "10"
+        },
+        {
+          "staff_id": "",
+          "name": "Tevin Shipp",
+          "position": "11"
+        },
+        {
+          "staff_id": "",
+          "name": "Tyrell Thompson",
+          "position": "95"
+        },
+        {
+          "staff_id": "",
+          "name": "Victor Leventritt",
+          "position": "15"
+        }
+      ],
+      "player_count": 24,
+      "staff_count": 24
     },
     {
       "slug": "salina-liberty",
       "team": "Salina Liberty",
       "team_id": "600411",
-      "players": [],
-      "staff": [],
-      "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=600411"
+      "players": [
+        {
+          "player_id": "3701162",
+          "name": "Adina Okeke",
+          "number": "60",
+          "position": "OL",
+          "height": "6' 2\"",
+          "weight": "325 lbs",
+          "college": "Kennessaw State"
+        },
+        {
+          "player_id": "3426181",
+          "name": "Aleki Tapa",
+          "number": "70",
+          "position": "OL",
+          "height": "6' 3\"",
+          "weight": "305 lbs",
+          "college": "Adams State University"
+        },
+        {
+          "player_id": "3903837",
+          "name": "Daniel Mckinney",
+          "number": "3",
+          "position": "",
+          "height": "",
+          "weight": "",
+          "college": ""
+        },
+        {
+          "player_id": "3431860",
+          "name": "Darin Hungerford",
+          "number": "9",
+          "position": "LB",
+          "height": "6' 0\"",
+          "weight": "230 lbs",
+          "college": "Kean University"
+        },
+        {
+          "player_id": "3392795",
+          "name": "Dion Kuinlan",
+          "number": "15",
+          "position": "DB",
+          "height": "5' 10\"",
+          "weight": "190 lbs",
+          "college": "Assumption College"
+        },
+        {
+          "player_id": "2948473",
+          "name": "Dylan Van Boxel",
+          "number": "12",
+          "position": "QB",
+          "height": "6' 2\"",
+          "weight": "200 lbs",
+          "college": "Kansas Wesleyan University"
+        },
+        {
+          "player_id": "3551343",
+          "name": "Ed Smith Jr.",
+          "number": "0",
+          "position": "WR",
+          "height": "5' 9\"",
+          "weight": "170 lbs",
+          "college": "Fort Hills State University"
+        },
+        {
+          "player_id": "3812603",
+          "name": "Gabriel Reed",
+          "number": "46",
+          "position": "",
+          "height": "",
+          "weight": "",
+          "college": ""
+        },
+        {
+          "player_id": "3874408",
+          "name": "Gourney Sloan",
+          "number": "25",
+          "position": "WR",
+          "height": "6' 0\"",
+          "weight": "180 lbs",
+          "college": "Davenport University"
+        },
+        {
+          "player_id": "3857542",
+          "name": "Henry Kellogg",
+          "number": "12",
+          "position": "DL",
+          "height": "6' 3\"",
+          "weight": "270 lbs",
+          "college": "College of Dupage"
+        },
+        {
+          "player_id": "3434069",
+          "name": "Jahlil Brown",
+          "number": "4",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "187 lbs",
+          "college": "Central Connecticut State University"
+        },
+        {
+          "player_id": "3875246",
+          "name": "Justin Foster",
+          "number": "16",
+          "position": "DL",
+          "height": "6' 4\"",
+          "weight": "300 lbs",
+          "college": "Samford University"
+        },
+        {
+          "player_id": "2628120",
+          "name": "Kavon Samuels",
+          "number": "6",
+          "position": "RB",
+          "height": "5' 8\"",
+          "weight": "180 lbs",
+          "college": "Butler University"
+        },
+        {
+          "player_id": "1089298",
+          "name": "Kerry Starks",
+          "number": "1",
+          "position": "DL",
+          "height": "6' 2\"",
+          "weight": "230 lbs",
+          "college": "University Louisiana Monroe"
+        },
+        {
+          "player_id": "3623657",
+          "name": "Neriyan Brown",
+          "number": "5",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "215 lbs",
+          "college": "LaFayett College"
+        },
+        {
+          "player_id": "3491099",
+          "name": "Noah Hambrick",
+          "number": "14",
+          "position": "DB",
+          "height": "5' 10\"",
+          "weight": "165 lbs",
+          "college": "East Stroudsburg University"
+        },
+        {
+          "player_id": "3557925",
+          "name": "Rico Moore",
+          "number": "10",
+          "position": "LB",
+          "height": "5' 10\"",
+          "weight": "210 lbs",
+          "college": "Kansas Wesleyan University"
+        },
+        {
+          "player_id": "3812539",
+          "name": "Shane Meerbott",
+          "number": "23",
+          "position": "DB",
+          "height": "6' 2\"",
+          "weight": "205 lbs",
+          "college": "UMass Dartmouth"
+        },
+        {
+          "player_id": "3886982",
+          "name": "Spensirr Howard",
+          "number": "3",
+          "position": "",
+          "height": "",
+          "weight": "",
+          "college": ""
+        },
+        {
+          "player_id": "3610891",
+          "name": "Stephen Matina",
+          "number": "99",
+          "position": "DL",
+          "height": "6' 6\"",
+          "weight": "345 lbs",
+          "college": "University of Nebraska Kearney"
+        },
+        {
+          "player_id": "3365144",
+          "name": "Tracy Brooks",
+          "number": "2",
+          "position": "RB",
+          "height": "5' 8\"",
+          "weight": "205 lbs",
+          "college": ""
+        },
+        {
+          "player_id": "3365141",
+          "name": "Travis Taylor",
+          "number": "40",
+          "position": "DL",
+          "height": "6' 2\"",
+          "weight": "235 lbs",
+          "college": "Murray State"
+        },
+        {
+          "player_id": "3846861",
+          "name": "Trevonte Carter",
+          "number": "11",
+          "position": "DL",
+          "height": "6' 2\"",
+          "weight": "250 lbs",
+          "college": "West Alabama University"
+        },
+        {
+          "player_id": "3857564",
+          "name": "Tyrie Adams",
+          "number": "8",
+          "position": "QB",
+          "height": "6' 3\"",
+          "weight": "183 lbs",
+          "college": "Western Carolina University"
+        },
+        {
+          "player_id": "2362610",
+          "name": "Zion Byrd",
+          "number": "74",
+          "position": "OL",
+          "height": "6' 3\"",
+          "weight": "315 lbs",
+          "college": "Oklahoma Panhandle State"
+        }
+      ],
+      "staff": [
+        {
+          "staff_id": "",
+          "name": "Adina Okeke",
+          "position": "60"
+        },
+        {
+          "staff_id": "",
+          "name": "Aleki Tapa",
+          "position": "70"
+        },
+        {
+          "staff_id": "",
+          "name": "Daniel Mckinney",
+          "position": "3"
+        },
+        {
+          "staff_id": "",
+          "name": "Darin Hungerford",
+          "position": "9"
+        },
+        {
+          "staff_id": "",
+          "name": "Dion Kuinlan",
+          "position": "15"
+        },
+        {
+          "staff_id": "",
+          "name": "Dylan Van Boxel",
+          "position": "12"
+        },
+        {
+          "staff_id": "",
+          "name": "Ed Smith Jr.",
+          "position": "0"
+        },
+        {
+          "staff_id": "",
+          "name": "Gabriel Reed",
+          "position": "46"
+        },
+        {
+          "staff_id": "",
+          "name": "Gourney Sloan",
+          "position": "25"
+        },
+        {
+          "staff_id": "",
+          "name": "Henry Kellogg",
+          "position": "12"
+        },
+        {
+          "staff_id": "",
+          "name": "Jahlil Brown",
+          "position": "4"
+        },
+        {
+          "staff_id": "",
+          "name": "Justin Foster",
+          "position": "16"
+        },
+        {
+          "staff_id": "",
+          "name": "Kavon Samuels",
+          "position": "6"
+        },
+        {
+          "staff_id": "",
+          "name": "Kerry Starks",
+          "position": "1"
+        },
+        {
+          "staff_id": "",
+          "name": "Neriyan Brown",
+          "position": "5"
+        },
+        {
+          "staff_id": "",
+          "name": "Noah Hambrick",
+          "position": "14"
+        },
+        {
+          "staff_id": "",
+          "name": "Rico Moore",
+          "position": "10"
+        },
+        {
+          "staff_id": "",
+          "name": "Shane Meerbott",
+          "position": "23"
+        },
+        {
+          "staff_id": "",
+          "name": "Spensirr Howard",
+          "position": "3"
+        },
+        {
+          "staff_id": "",
+          "name": "Stephen Matina",
+          "position": "99"
+        },
+        {
+          "staff_id": "",
+          "name": "Tracy Brooks",
+          "position": "2"
+        },
+        {
+          "staff_id": "",
+          "name": "Travis Taylor",
+          "position": "40"
+        },
+        {
+          "staff_id": "",
+          "name": "Trevonte Carter",
+          "position": "11"
+        },
+        {
+          "staff_id": "",
+          "name": "Tyrie Adams",
+          "position": "8"
+        },
+        {
+          "staff_id": "",
+          "name": "Zion Byrd",
+          "position": "74"
+        }
+      ],
+      "player_count": 25,
+      "staff_count": 25
     },
     {
       "slug": "sioux-city-bandits",
       "team": "Sioux City Bandits",
       "team_id": "570666",
-      "players": [],
-      "staff": [],
-      "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=570666"
+      "players": [
+        {
+          "player_id": "2423378",
+          "name": "Ben Pister",
+          "number": "7",
+          "position": "DL",
+          "height": "6' 5\"",
+          "weight": "265 lbs",
+          "college": "Missouri Western State University"
+        },
+        {
+          "player_id": "2193647",
+          "name": "Braden Meints",
+          "number": "18",
+          "position": "WR",
+          "height": "6' 0\"",
+          "weight": "230 lbs",
+          "college": "Simpson College"
+        },
+        {
+          "player_id": "2193660",
+          "name": "Brandon Sheperd",
+          "number": "14",
+          "position": "WR",
+          "height": "6' 3\"",
+          "weight": "245 lbs",
+          "college": "Oklahoma State"
+        },
+        {
+          "player_id": "2216595",
+          "name": "Carlton Watkins",
+          "number": "5",
+          "position": "DB",
+          "height": "5' 10\"",
+          "weight": "200 lbs",
+          "college": "Tiffin University"
+        },
+        {
+          "player_id": "3400383",
+          "name": "Dajon Emory",
+          "number": "15",
+          "position": "DL",
+          "height": "6' 3\"",
+          "weight": "250 lbs",
+          "college": "Arkansas State University"
+        },
+        {
+          "player_id": "2361995",
+          "name": "Damond Powell",
+          "number": "6",
+          "position": "WR",
+          "height": "5' 11\"",
+          "weight": "187 lbs",
+          "college": "Iowa"
+        },
+        {
+          "player_id": "2225941",
+          "name": "Devin Groenhagen",
+          "number": "26",
+          "position": "DL",
+          "height": "6' 0\"",
+          "weight": "255 lbs",
+          "college": "Morningside College"
+        },
+        {
+          "player_id": "3657385",
+          "name": "Dylan Karnes",
+          "number": "20",
+          "position": "K",
+          "height": "6' 1\"",
+          "weight": "185 lbs",
+          "college": "Mo"
+        },
+        {
+          "player_id": "2170063",
+          "name": "Fred Bruno",
+          "number": "2",
+          "position": "WR",
+          "height": "5' 9\"",
+          "weight": "205 lbs",
+          "college": "Wayne State University"
+        },
+        {
+          "player_id": "2620318",
+          "name": "Isaiah Blackmon",
+          "number": "17",
+          "position": "DL",
+          "height": "6' 3\"",
+          "weight": "260 lbs",
+          "college": "Belhaven University"
+        },
+        {
+          "player_id": "2402054",
+          "name": "Jacob Ungruhe",
+          "number": "73",
+          "position": "OL",
+          "height": "6' 6\"",
+          "weight": "330 lbs",
+          "college": "Morehead State"
+        },
+        {
+          "player_id": "2909597",
+          "name": "Jadon Johnson",
+          "number": "21",
+          "position": "WR",
+          "height": "6' 1\"",
+          "weight": "205 lbs",
+          "college": "Wayne State"
+        },
+        {
+          "player_id": "3455296",
+          "name": "Jatavius Stewart",
+          "number": "22",
+          "position": "DB",
+          "height": "5' 11\"",
+          "weight": "190 lbs",
+          "college": "William Penn University"
+        },
+        {
+          "player_id": "2194646",
+          "name": "Juan Moore",
+          "number": "16",
+          "position": "DB/LB",
+          "height": "6' 5\"",
+          "weight": "195 lbs",
+          "college": "Minnesota West CC"
+        },
+        {
+          "player_id": "2193597",
+          "name": "Justin Gilbert",
+          "number": "0",
+          "position": "DB",
+          "height": "6' 1\"",
+          "weight": "185 lbs",
+          "college": "Oklahoma State"
+        },
+        {
+          "player_id": "719328",
+          "name": "Laronji Vason-McCoy",
+          "number": "8",
+          "position": "DB",
+          "height": "5' 10\"",
+          "weight": "175 lbs",
+          "college": "West Georgia"
+        },
+        {
+          "player_id": "2891858",
+          "name": "Lorenzo Brown",
+          "number": "10",
+          "position": "QB",
+          "height": "6' 0\"",
+          "weight": "225 lbs",
+          "college": "University of Sioux City"
+        },
+        {
+          "player_id": "3493611",
+          "name": "Marzion Crosby",
+          "number": "9",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "195 lbs",
+          "college": "Waste State College"
+        },
+        {
+          "player_id": "2190642",
+          "name": "Monalo Caldwell",
+          "number": "11",
+          "position": "RB",
+          "height": "6' 0\"",
+          "weight": "205 lbs",
+          "college": "Thomas Moore"
+        },
+        {
+          "player_id": "3774513",
+          "name": "Raheem Harvey",
+          "number": "3",
+          "position": "WR",
+          "height": "6' 2\"",
+          "weight": "205 lbs",
+          "college": "Lake-Clark Valley"
+        },
+        {
+          "player_id": "2304590",
+          "name": "Sterling Clark",
+          "number": "70",
+          "position": "OL",
+          "height": "6' 5\"",
+          "weight": "350 lbs",
+          "college": "Wilmington College"
+        },
+        {
+          "player_id": "3380623",
+          "name": "Tony Kennedy",
+          "number": "55",
+          "position": "OL",
+          "height": "6' 6\"",
+          "weight": "300 lbs",
+          "college": "Baker University"
+        },
+        {
+          "player_id": "3493569",
+          "name": "Treden Davis-Reed",
+          "number": "19",
+          "position": "LB",
+          "height": "6' 0\"",
+          "weight": "225 lbs",
+          "college": "Midland University"
+        },
+        {
+          "player_id": "2256024",
+          "name": "Verlon Reed",
+          "number": "1",
+          "position": "QB",
+          "height": "6' 2\"",
+          "weight": "210 lbs",
+          "college": "Ohio State"
+        },
+        {
+          "player_id": "2846810",
+          "name": "William Rollins",
+          "number": "56",
+          "position": "OL",
+          "height": "6' 2\"",
+          "weight": "305 lbs",
+          "college": "Dickinson State"
+        }
+      ],
+      "staff": [
+        {
+          "staff_id": "",
+          "name": "Ben Pister",
+          "position": "7"
+        },
+        {
+          "staff_id": "",
+          "name": "Braden Meints",
+          "position": "18"
+        },
+        {
+          "staff_id": "",
+          "name": "Brandon Sheperd",
+          "position": "14"
+        },
+        {
+          "staff_id": "",
+          "name": "Carlton Watkins",
+          "position": "5"
+        },
+        {
+          "staff_id": "",
+          "name": "Dajon Emory",
+          "position": "15"
+        },
+        {
+          "staff_id": "",
+          "name": "Damond Powell",
+          "position": "6"
+        },
+        {
+          "staff_id": "",
+          "name": "Devin Groenhagen",
+          "position": "26"
+        },
+        {
+          "staff_id": "",
+          "name": "Dylan Karnes",
+          "position": "20"
+        },
+        {
+          "staff_id": "",
+          "name": "Fred Bruno",
+          "position": "2"
+        },
+        {
+          "staff_id": "",
+          "name": "Isaiah Blackmon",
+          "position": "17"
+        },
+        {
+          "staff_id": "",
+          "name": "Jacob Ungruhe",
+          "position": "73"
+        },
+        {
+          "staff_id": "",
+          "name": "Jadon Johnson",
+          "position": "21"
+        },
+        {
+          "staff_id": "",
+          "name": "Jatavius Stewart",
+          "position": "22"
+        },
+        {
+          "staff_id": "",
+          "name": "Juan Moore",
+          "position": "16"
+        },
+        {
+          "staff_id": "",
+          "name": "Justin Gilbert",
+          "position": "0"
+        },
+        {
+          "staff_id": "",
+          "name": "Laronji Vason-McCoy",
+          "position": "8"
+        },
+        {
+          "staff_id": "",
+          "name": "Lorenzo Brown",
+          "position": "10"
+        },
+        {
+          "staff_id": "",
+          "name": "Marzion Crosby",
+          "position": "9"
+        },
+        {
+          "staff_id": "",
+          "name": "Monalo Caldwell",
+          "position": "11"
+        },
+        {
+          "staff_id": "",
+          "name": "Raheem Harvey",
+          "position": "3"
+        },
+        {
+          "staff_id": "",
+          "name": "Sterling Clark",
+          "position": "70"
+        },
+        {
+          "staff_id": "",
+          "name": "Tony Kennedy",
+          "position": "55"
+        },
+        {
+          "staff_id": "",
+          "name": "Treden Davis-Reed",
+          "position": "19"
+        },
+        {
+          "staff_id": "",
+          "name": "Verlon Reed",
+          "position": "1"
+        },
+        {
+          "staff_id": "",
+          "name": "William Rollins",
+          "position": "56"
+        }
+      ],
+      "player_count": 25,
+      "staff_count": 25
     },
     {
       "slug": "southwest-kansas-storm",
       "team": "Southwest Kansas Storm",
       "team_id": "600414",
-      "players": [],
-      "staff": [],
-      "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=600414"
+      "players": [
+        {
+          "player_id": "3431856",
+          "name": "Austin Bacher",
+          "number": "24",
+          "position": "RB",
+          "height": "5' 11\"",
+          "weight": "215 lbs",
+          "college": "Colorado State Pueblo/ Western Oregon"
+        },
+        {
+          "player_id": "3603858",
+          "name": "Carvelle Keely",
+          "number": "70",
+          "position": "OL",
+          "height": "6' 4\"",
+          "weight": "295 lbs",
+          "college": "Avila University"
+        },
+        {
+          "player_id": "2222082",
+          "name": "Demarius Washington",
+          "number": "0",
+          "position": "WR",
+          "height": "6' 4\"",
+          "weight": "210 lbs",
+          "college": "Tyler Junior College"
+        },
+        {
+          "player_id": "3588527",
+          "name": "De'Shayvion Mcrath",
+          "number": "11",
+          "position": "DL",
+          "height": "6' 0\"",
+          "weight": "240 lbs",
+          "college": "Olivet Nazarene University"
+        },
+        {
+          "player_id": "3874385",
+          "name": "Dillon Burkhard",
+          "number": "15",
+          "position": "K",
+          "height": "5' 9\"",
+          "weight": "160 lbs",
+          "college": "Southeastern Louisiana"
+        },
+        {
+          "player_id": "3573150",
+          "name": "Dominic Moore",
+          "number": "50",
+          "position": "OL",
+          "height": "6' 8\"",
+          "weight": "335 lbs",
+          "college": "Eastern Illinois University"
+        },
+        {
+          "player_id": "3874394",
+          "name": "Dwayne Thompson Ii",
+          "number": "13",
+          "position": "DB",
+          "height": "6' 2\"",
+          "weight": "200 lbs",
+          "college": "Indiana State"
+        },
+        {
+          "player_id": "3603859",
+          "name": "Jaden Sutton",
+          "number": "3",
+          "position": "RB",
+          "height": "6' 1\"",
+          "weight": "225 lbs",
+          "college": "Delaware State University"
+        },
+        {
+          "player_id": "3620598",
+          "name": "Jalen Knox",
+          "number": "9",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "205 lbs",
+          "college": "Ole Miss"
+        },
+        {
+          "player_id": "3523704",
+          "name": "Jamell Winn Ii",
+          "number": "55",
+          "position": "DL",
+          "height": "6' 5\"",
+          "weight": "360 lbs",
+          "college": "Tarleton State University"
+        },
+        {
+          "player_id": "3468098",
+          "name": "Jaylen Pickle",
+          "number": "93",
+          "position": "DL",
+          "height": "6' 5\"",
+          "weight": "305 lbs",
+          "college": "Kansas State University"
+        },
+        {
+          "player_id": "3665686",
+          "name": "Jelani Baker",
+          "number": "8",
+          "position": "WR",
+          "height": "6' 2\"",
+          "weight": "190 lbs",
+          "college": "Limestone College"
+        },
+        {
+          "player_id": "3445911",
+          "name": "Joshua Moore",
+          "number": "56",
+          "position": "OL",
+          "height": "6' 4\"",
+          "weight": "300 lbs",
+          "college": "Keystone University"
+        },
+        {
+          "player_id": "3458970",
+          "name": "Josiah Silver",
+          "number": "20",
+          "position": "DL",
+          "height": "6' 2\"",
+          "weight": "245 lbs",
+          "college": "University of New Hampshire"
+        },
+        {
+          "player_id": "3597098",
+          "name": "Jyaire Stevens",
+          "number": "5",
+          "position": "DL",
+          "height": "6' 4\"",
+          "weight": "240 lbs",
+          "college": "Buffalo"
+        },
+        {
+          "player_id": "3426717",
+          "name": "Kyle Meyers",
+          "number": "6",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "180 lbs",
+          "college": "Florida State University"
+        },
+        {
+          "player_id": "3400762",
+          "name": "Mason Pierce",
+          "number": "2",
+          "position": "WR",
+          "height": "5' 8\"",
+          "weight": "170 lbs",
+          "college": "McNeese / Marshall / Incarnate Word"
+        },
+        {
+          "player_id": "3412196",
+          "name": "Matt Friess",
+          "number": "4",
+          "position": "WR",
+          "height": "5' 10\"",
+          "weight": "185 lbs",
+          "college": "Fort Hays State University"
+        },
+        {
+          "player_id": "3419907",
+          "name": "Naeem Alexander",
+          "number": "10",
+          "position": "DB",
+          "height": "5' 9\"",
+          "weight": "170 lbs",
+          "college": "Shepherd University"
+        },
+        {
+          "player_id": "3535335",
+          "name": "Rafael Recio",
+          "number": "77",
+          "position": "OL",
+          "height": "6' 3\"",
+          "weight": "315 lbs",
+          "college": "Texas A&M Kingsville"
+        },
+        {
+          "player_id": "3453467",
+          "name": "Shaquez Bond",
+          "number": "7",
+          "position": "DB",
+          "height": "6' 0\"",
+          "weight": "200 lbs",
+          "college": "Utah State University"
+        },
+        {
+          "player_id": "3533856",
+          "name": "Timothy Shannon Jr.",
+          "number": "21",
+          "position": "DB",
+          "height": "6' 3\"",
+          "weight": "205 lbs",
+          "college": "Northern Micchigan University"
+        },
+        {
+          "player_id": "3774512",
+          "name": "Trae Self",
+          "number": "1",
+          "position": "QB",
+          "height": "6' 3\"",
+          "weight": "210 lbs",
+          "college": "Stephen F Austin University"
+        },
+        {
+          "player_id": "3897503",
+          "name": "Vincent Dileo ||",
+          "number": "34",
+          "position": "LB",
+          "height": "6' 0\"",
+          "weight": "230 lbs",
+          "college": "Delaware Valley"
+        },
+        {
+          "player_id": "3468072",
+          "name": "Zachary Fondal",
+          "number": "72",
+          "position": "OL",
+          "height": "6' 6\"",
+          "weight": "330 lbs",
+          "college": "Kansas University"
+        }
+      ],
+      "staff": [
+        {
+          "staff_id": "",
+          "name": "Austin Bacher",
+          "position": "24"
+        },
+        {
+          "staff_id": "",
+          "name": "Carvelle Keely",
+          "position": "70"
+        },
+        {
+          "staff_id": "",
+          "name": "Demarius Washington",
+          "position": "0"
+        },
+        {
+          "staff_id": "",
+          "name": "De'Shayvion Mcrath",
+          "position": "11"
+        },
+        {
+          "staff_id": "",
+          "name": "Dillon Burkhard",
+          "position": "15"
+        },
+        {
+          "staff_id": "",
+          "name": "Dominic Moore",
+          "position": "50"
+        },
+        {
+          "staff_id": "",
+          "name": "Dwayne Thompson Ii",
+          "position": "13"
+        },
+        {
+          "staff_id": "",
+          "name": "Jaden Sutton",
+          "position": "3"
+        },
+        {
+          "staff_id": "",
+          "name": "Jalen Knox",
+          "position": "9"
+        },
+        {
+          "staff_id": "",
+          "name": "Jamell Winn Ii",
+          "position": "55"
+        },
+        {
+          "staff_id": "",
+          "name": "Jaylen Pickle",
+          "position": "93"
+        },
+        {
+          "staff_id": "",
+          "name": "Jelani Baker",
+          "position": "8"
+        },
+        {
+          "staff_id": "",
+          "name": "Joshua Moore",
+          "position": "56"
+        },
+        {
+          "staff_id": "",
+          "name": "Josiah Silver",
+          "position": "20"
+        },
+        {
+          "staff_id": "",
+          "name": "Jyaire Stevens",
+          "position": "5"
+        },
+        {
+          "staff_id": "",
+          "name": "Kyle Meyers",
+          "position": "6"
+        },
+        {
+          "staff_id": "",
+          "name": "Mason Pierce",
+          "position": "2"
+        },
+        {
+          "staff_id": "",
+          "name": "Matt Friess",
+          "position": "4"
+        },
+        {
+          "staff_id": "",
+          "name": "Naeem Alexander",
+          "position": "10"
+        },
+        {
+          "staff_id": "",
+          "name": "Rafael Recio",
+          "position": "77"
+        },
+        {
+          "staff_id": "",
+          "name": "Shaquez Bond",
+          "position": "7"
+        },
+        {
+          "staff_id": "",
+          "name": "Timothy Shannon Jr.",
+          "position": "21"
+        },
+        {
+          "staff_id": "",
+          "name": "Trae Self",
+          "position": "1"
+        },
+        {
+          "staff_id": "",
+          "name": "Vincent Dileo ||",
+          "position": "34"
+        },
+        {
+          "staff_id": "",
+          "name": "Zachary Fondal",
+          "position": "72"
+        }
+      ],
+      "player_count": 25,
+      "staff_count": 25
     },
     {
       "slug": "wheeling-miners",
@@ -105,8 +2737,7 @@
       "players": [],
       "staff": [],
       "player_count": 0,
-      "staff_count": 0,
-      "error": "401 Client Error: Unauthorized for url: https://web.api.digitalshift.ca/partials/stats/team/roster?division_id=41958&team_id=707897"
+      "staff_count": 0
     }
   ]
 }
