@@ -8672,20 +8672,26 @@ document.addEventListener("DOMContentLoaded", () => {
   display:none !important;
 }
 
-/* This standalone file is FAN ZONE only */
+/* Standalone Fan Zone website: existing Fan Zone pages are controlled by their existing JS */
 body .app-page{
-  display:none !important;
+  display:none;
 }
 body #fanPage{
-  display:block !important;
+  display:block;
 }
 
-/* Same approved NAL website width/buffer */
+/* Same approved NAL website width/buffer for Fan Zone and its linked internal pages */
 @media (min-width:1200px){
   body{
     background:#071522 !important;
   }
-  body #fanPage{
+  body #fanPage,
+  body #fanForumPage,
+  body #fanForumCategoryPage,
+  body #fanForumThreadPage,
+  body #fanPollPage,
+  body #fanGalleryPage,
+  body #fanUploadPage{
     width:calc(100% - 32px) !important;
     max-width:1400px !important;
     margin-left:auto !important;
@@ -8693,7 +8699,13 @@ body #fanPage{
     padding-top:0 !important;
     padding-bottom:0 !important;
   }
-  body #fanPage > *{
+  body #fanPage > *,
+  body #fanForumPage > *,
+  body #fanForumCategoryPage > *,
+  body #fanForumThreadPage > *,
+  body #fanPollPage > *,
+  body #fanGalleryPage > *,
+  body #fanUploadPage > *{
     width:100% !important;
     max-width:1100px !important;
     margin-left:auto !important;
@@ -8701,18 +8713,45 @@ body #fanPage{
   }
 }
 @media (min-width:768px) and (max-width:1199px){
-  body #fanPage{
+  body #fanPage,
+  body #fanForumPage,
+  body #fanForumCategoryPage,
+  body #fanForumThreadPage,
+  body #fanPollPage,
+  body #fanGalleryPage,
+  body #fanUploadPage{
     width:calc(100% - 40px) !important;
     margin-left:auto !important;
     margin-right:auto !important;
   }
 }
 @media (max-width:767px){
-  body #fanPage{
+  body #fanPage,
+  body #fanForumPage,
+  body #fanForumCategoryPage,
+  body #fanForumThreadPage,
+  body #fanPollPage,
+  body #fanGalleryPage,
+  body #fanUploadPage{
     width:100% !important;
     max-width:none !important;
     margin:0 !important;
   }
+}
+</style>
+
+
+<style id="fan-zone-website-navigation-fix">
+/* Website-only navigation fix:
+   inline display values set by the existing Fan Zone JS must be allowed to control these pages. */
+body #fanPage,
+body #fanForumPage,
+body #fanForumCategoryPage,
+body #fanForumThreadPage,
+body #fanPollPage,
+body #fanGalleryPage,
+body #fanUploadPage{
+  box-sizing:border-box;
 }
 </style>
 
