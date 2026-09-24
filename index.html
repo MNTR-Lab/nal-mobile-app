@@ -18144,14 +18144,19 @@ function closeLightcastTest(){
 
   function logoForTeam(name){
     const slug = slugForTeam(name);
+
+    /* Use the same approved clear-PNG source as the rest of the NAL app. */
     if (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug]) {
       return TEAM_LOGO_OVERRIDES[slug];
     }
-    if (slug && Array.isArray(window.nalTeams || nalTeams)) {
-      const list = window.nalTeams || nalTeams;
-      const team = list.find(item => item.slug === slug);
-      if (team && typeof getTeamLogo === "function") return getTeamLogo(team);
+
+    if (slug && typeof nalTeams !== "undefined" && Array.isArray(nalTeams)) {
+      const team = nalTeams.find(item => item.slug === slug);
+      if (team && typeof getTeamLogo === "function") {
+        return getTeamLogo(team);
+      }
     }
+
     return typeof NAL_LOGO !== "undefined" ? NAL_LOGO : "";
   }
 
