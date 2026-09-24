@@ -7173,6 +7173,52 @@ document.addEventListener("DOMContentLoaded", () => {
 .nal-standings-results{background:#fff;border-radius:13px;margin-top:12px;padding:16px}.nal-standings-results>b{font-size:14px}.nal-standings-result{display:flex;justify-content:space-between;gap:8px;border-top:1px solid #e9edf1;padding:12px 0;font-size:12px;font-weight:bold}.nal-standings-pill{font-size:10px;padding:5px 8px;background:#edf7f1;color:#198452;border-radius:8px;white-space:nowrap}.nal-standings-pill.loss{background:#fceeee;color:#c54a50}
 .nal-standings-empty{background:#fff;border-radius:14px;padding:28px 18px;text-align:center;color:#727b86;font-size:12px;line-height:1.5}.nal-standings-empty strong{display:block;color:#07172b;font-size:17px;margin-bottom:6px}
 
+
+/* =========================================================
+   NATIVE NAL TRANSACTIONS — HISTORICAL SEASON ARCHIVE
+========================================================= */
+#transactionsPage{background:#f3f5f7;min-height:calc(100vh - var(--header-height) - var(--nav-height));padding-bottom:28px}
+.nal-transactions-hero{background:linear-gradient(145deg,#07172b,#102b4e);color:#fff;padding:22px 18px;position:relative;overflow:hidden}
+.nal-transactions-hero:after{content:"26";position:absolute;right:-10px;bottom:-45px;font-size:126px;font-weight:1000;color:rgba(227,27,35,.14)}
+.nal-transactions-eyebrow{font-size:10px;font-weight:900;letter-spacing:2px;color:#b9c4d1}
+.nal-transactions-hero h1{margin:5px 0 3px;font-size:29px;line-height:1;font-weight:1000}
+.nal-transactions-hero h1 span{color:#e31b23}
+.nal-transactions-hero p{margin:7px 0 0;color:#c8d0da;font-size:11px;font-weight:700}
+.nal-transactions-seasonbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:#fff;border-bottom:1px solid #e3e7eb}
+.nal-transactions-seasonlabel{font-size:9px;font-weight:1000;letter-spacing:1px;color:#7a8490}
+.nal-transactions-seasonselect{border:1px solid #d5dbe1;border-radius:9px;background:#f7f8fa;color:#07172b;font-size:11px;font-weight:1000;padding:8px 28px 8px 10px}
+.nal-transactions-tabs{display:flex;gap:7px;background:#fff;padding:13px;border-bottom:1px solid #e3e7eb}
+.nal-transactions-tab{flex:1;border:1px solid #d5dbe1;background:#fff;border-radius:20px;padding:10px 3px;font-size:11px;font-weight:1000;color:#07172b}
+.nal-transactions-tab.active{background:#e31b23;border-color:#e31b23;color:#fff}
+.nal-transactions-content{padding:14px}
+.nal-transactions-summary{display:flex;justify-content:space-between;align-items:end;margin:3px 2px 11px}
+.nal-transactions-summary b{font-size:18px;color:#07172b}
+.nal-transactions-summary span{font-size:9px;color:#7c858f;font-weight:900}
+.nal-transactions-teamstrip{display:flex;gap:9px;overflow-x:auto;padding:2px 1px 14px;scrollbar-width:none}
+.nal-transactions-teamstrip::-webkit-scrollbar{display:none}
+.nal-transactions-teamchoice{min-width:68px;text-align:center;border:0;background:transparent}
+.nal-transactions-mini{width:52px;height:52px;border-radius:50%;background:#fff;border:2px solid #e5e9ed;display:flex;align-items:center;justify-content:center;margin:auto;overflow:hidden}
+.nal-transactions-mini img{width:86%;height:86%;object-fit:contain}
+.nal-transactions-teamchoice small{display:block;margin-top:4px;font-size:8px;font-weight:900;color:#707984;max-width:68px;line-height:1.1}
+.nal-transactions-teamchoice.active .nal-transactions-mini{border:3px solid #e31b23}
+.nal-transactions-teamchoice.active small{color:#e31b23}
+.nal-transaction-card{background:#fff;border:1px solid #e5e9ed;border-radius:14px;margin-bottom:9px;overflow:hidden;box-shadow:0 2px 8px rgba(7,23,43,.05)}
+.nal-transaction-cardbar{height:4px;background:#07172b}
+.nal-transaction-card.trade .nal-transaction-cardbar{background:#e31b23}
+.nal-transaction-main{display:grid;grid-template-columns:50px 1fr;gap:11px;padding:12px 13px}
+.nal-transaction-logo{width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid #e5e9ed;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.nal-transaction-logo img{width:86%;height:86%;object-fit:contain}
+.nal-transaction-date{font-size:8px;color:#e31b23;font-weight:1000;letter-spacing:.8px;text-transform:uppercase}
+.nal-transaction-person{margin-top:3px;color:#07172b;font-size:14px;line-height:1.12;font-weight:1000;text-transform:uppercase}
+.nal-transaction-team{margin-top:3px;color:#7a8490;font-size:9px;font-weight:900;text-transform:uppercase}
+.nal-transaction-desc{border-top:1px solid #edf0f2;padding:10px 13px;color:#424d58;font-size:10px;line-height:1.4;font-weight:800}
+.nal-transaction-trade{display:flex;align-items:center;gap:8px;border-top:1px solid #edf0f2;padding:10px 13px;background:#f8f9fa}
+.nal-transaction-trade-team{display:flex;align-items:center;gap:6px;min-width:0;font-size:9px;font-weight:1000;color:#07172b}
+.nal-transaction-trade-team img{width:25px;height:25px;object-fit:contain}
+.nal-transaction-arrow{color:#e31b23;font-size:15px;font-weight:1000}
+.nal-transactions-empty{background:#fff;border-radius:14px;padding:28px 18px;text-align:center;color:#727b86;font-size:12px;line-height:1.5}
+.nal-transactions-empty strong{display:block;color:#07172b;font-size:17px;margin-bottom:6px}
+
 </style>
 
 <style>
@@ -8171,6 +8217,35 @@ document.addEventListener("DOMContentLoaded", () => {
     </section>
   </main>
 
+
+
+
+  <!-- =====================================================
+       NATIVE NAL TRANSACTIONS
+  ====================================================== -->
+  <main id="transactionsPage" class="app-page" style="display:none">
+    <section class="nal-transactions-hero">
+      <div class="nal-transactions-eyebrow">NATIONAL ARENA LEAGUE</div>
+      <h1>2026 <span>TRANSACTIONS</span></h1>
+      <p>OFFICIAL NAL PLAYER &amp; TEAM TRANSACTION ARCHIVE</p>
+    </section>
+
+    <div class="nal-transactions-seasonbar">
+      <div class="nal-transactions-seasonlabel">SEASON ARCHIVE</div>
+      <select id="nalTransactionsSeason" class="nal-transactions-seasonselect" aria-label="Transaction season">
+        <option value="2026" selected>2026</option>
+      </select>
+    </div>
+
+    <div class="nal-transactions-tabs" role="tablist" aria-label="Transaction views">
+      <button class="nal-transactions-tab active" type="button" data-transactions-view="all">ALL TRANSACTIONS</button>
+      <button class="nal-transactions-tab" type="button" data-transactions-view="team">BY TEAM</button>
+    </div>
+
+    <section class="nal-transactions-content" id="nalTransactionsContent">
+      <div class="nal-transactions-empty"><strong>LOADING TRANSACTIONS</strong>Connecting to the NAL transaction archive…</div>
+    </section>
+  </main>
 
 
   <main id="watchPage" class="app-page network-page">
@@ -12671,20 +12746,11 @@ document.addEventListener("click", event => {
   }
 
   if (action === "transactions") {
-    openArticle(
-      TRANSACTIONS_URL,
-      {
-        mode: "team",
-        title: "TRANSACTIONS",
-        subtitle: "NATIONAL ARENA LEAGUE",
-        loadingText: "LOADING TRANSACTIONS",
-        brand: {
-          primary: "#07172b",
-          accent: "#e31b23"
-        },
-        navPage: "homePage"
-      }
-    );
+    if (typeof window.openNalTransactions === "function") {
+      window.openNalTransactions();
+    } else {
+      showPage("transactionsPage");
+    }
     return;
   }
 
@@ -18871,6 +18937,204 @@ function closeLightcastTest(){
   if (document.readyState !== "loading") loadLiveGames();
 
   window.loadNALLiveGames = loadLiveGames;
+})();
+</script>
+
+
+<script>
+/* =========================================================
+   NATIVE NAL TRANSACTIONS
+   Source: data/transactions/{season}.json
+========================================================= */
+(function(){
+  const TRANSACTION_SEASONS = ["2026"];
+  let transactionSeason = "2026";
+  let transactionView = "all";
+  let transactionTeam = "";
+  let transactionData = [];
+  let transactionLoadedSeason = "";
+
+  const TEAM_SLUGS = {
+    "amarillo warbirds":"amarillo-warbirds",
+    "colorado spartans":"colorado-spartans",
+    "dallas apex":"dallas-apex",
+    "louisiana rouxgaroux":"louisiana-rouxgaroux",
+    "omaha beef":"omaha-beef",
+    "pueblo punishers":"pueblo-punishers",
+    "salina liberty":"salina-liberty",
+    "sioux city bandits":"sioux-city-bandits",
+    "southwest kansas storm":"southwest-kansas-storm",
+    "wheeling miners":"wheeling-miners"
+  };
+
+  function txEscape(value){
+    if (typeof escapeHTML === "function") return escapeHTML(String(value ?? ""));
+    return String(value ?? "")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  function txNormalize(value){
+    return String(value || "").trim().toLowerCase().replace(/\s+/g," ");
+  }
+
+  function txLogo(name, fallback){
+    const slug = TEAM_SLUGS[txNormalize(name)] || "";
+    if (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug]) {
+      return TEAM_LOGO_OVERRIDES[slug];
+    }
+    return fallback || (typeof NAL_LOGO !== "undefined" ? NAL_LOGO : "");
+  }
+
+  function txPerson(tx){
+    return tx?.person?.name || tx?.coach?.name || "NAL TRANSACTION";
+  }
+
+  function txTeamName(tx){
+    return tx?.team?.name || "NATIONAL ARENA LEAGUE";
+  }
+
+  function txDate(value){
+    if (!value) return "";
+    const parts = String(value).slice(0,10).split("-");
+    if (parts.length !== 3) return String(value);
+    const d = new Date(Date.UTC(Number(parts[0]), Number(parts[1])-1, Number(parts[2]), 12));
+    if (Number.isNaN(d.getTime())) return String(value);
+    return new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"}).format(d).toUpperCase();
+  }
+
+  function txIsTrade(tx){
+    return !!(tx?.traded_team?.name);
+  }
+
+  function txTeams(){
+    const map = new Map();
+    transactionData.forEach(tx => {
+      if (tx?.team?.name && !map.has(tx.team.name)) {
+        map.set(tx.team.name,{name:tx.team.name,logo:txLogo(tx.team.name,tx.team.logo)});
+      }
+      if (tx?.traded_team?.name && !map.has(tx.traded_team.name)) {
+        map.set(tx.traded_team.name,{name:tx.traded_team.name,logo:txLogo(tx.traded_team.name,tx.traded_team.logo)});
+      }
+    });
+    return [...map.values()].sort((a,b)=>a.name.localeCompare(b.name));
+  }
+
+  function txCard(tx){
+    const teamName = txTeamName(tx);
+    const logo = txLogo(teamName,tx?.team?.logo);
+    const trade = txIsTrade(tx);
+    const tradedName = tx?.traded_team?.name || "";
+    const tradedLogo = trade ? txLogo(tradedName,tx?.traded_team?.logo) : "";
+    return `
+      <article class="nal-transaction-card${trade ? " trade" : ""}">
+        <div class="nal-transaction-cardbar"></div>
+        <div class="nal-transaction-main">
+          <div class="nal-transaction-logo"><img src="${txEscape(logo)}" alt="${txEscape(teamName)} logo"></div>
+          <div>
+            <div class="nal-transaction-date">${txEscape(txDate(tx?.date))}</div>
+            <div class="nal-transaction-person">${txEscape(txPerson(tx))}</div>
+            <div class="nal-transaction-team">${txEscape(teamName)}</div>
+          </div>
+        </div>
+        ${trade ? `
+          <div class="nal-transaction-trade">
+            <div class="nal-transaction-trade-team"><img src="${txEscape(tradedLogo)}" alt=""><span>${txEscape(tradedName)}</span></div>
+            <div class="nal-transaction-arrow">→</div>
+            <div class="nal-transaction-trade-team"><img src="${txEscape(logo)}" alt=""><span>${txEscape(teamName)}</span></div>
+          </div>` : ""}
+        <div class="nal-transaction-desc">${txEscape(tx?.description || "Transaction")}</div>
+      </article>`;
+  }
+
+  function renderTransactions(){
+    const content = document.getElementById("nalTransactionsContent");
+    if (!content) return;
+
+    document.querySelectorAll("[data-transactions-view]").forEach(btn => {
+      btn.classList.toggle("active",btn.dataset.transactionsView === transactionView);
+    });
+
+    if (!transactionData.length) {
+      content.innerHTML = `<div class="nal-transactions-empty"><strong>NO TRANSACTIONS FOUND</strong>No ${txEscape(transactionSeason)} transaction records are currently available.</div>`;
+      return;
+    }
+
+    let records = transactionData;
+    let teamStrip = "";
+
+    if (transactionView === "team") {
+      const teams = txTeams();
+      if (!transactionTeam && teams.length) transactionTeam = teams[0].name;
+      records = transactionData.filter(tx =>
+        tx?.team?.name === transactionTeam || tx?.traded_team?.name === transactionTeam
+      );
+      teamStrip = `<div class="nal-transactions-teamstrip">${teams.map(team => `
+        <button type="button" class="nal-transactions-teamchoice${team.name===transactionTeam?" active":""}" data-transaction-team="${txEscape(team.name)}">
+          <span class="nal-transactions-mini"><img src="${txEscape(team.logo)}" alt="${txEscape(team.name)} logo"></span>
+          <small>${txEscape(team.name.replace(/^(Southwest Kansas|Sioux City|Louisiana|Colorado|Amarillo|Pueblo|Salina|Omaha|Wheeling|Dallas)\s+/,""))}</small>
+        </button>`).join("")}</div>`;
+    }
+
+    content.innerHTML = `
+      ${teamStrip}
+      <div class="nal-transactions-summary">
+        <b>${transactionView==="team" ? txEscape(transactionTeam) : txEscape(transactionSeason+" TRANSACTIONS")}</b>
+        <span>${records.length} RECORD${records.length===1?"":"S"}</span>
+      </div>
+      ${records.length ? records.map(txCard).join("") :
+        `<div class="nal-transactions-empty"><strong>NO TRANSACTIONS</strong>No records were found for this team.</div>`}
+    `;
+  }
+
+  async function loadTransactions(season=transactionSeason){
+    transactionSeason = String(season || "2026");
+    const content = document.getElementById("nalTransactionsContent");
+    if (content) content.innerHTML = `<div class="nal-transactions-empty"><strong>LOADING TRANSACTIONS</strong>Connecting to the ${txEscape(transactionSeason)} NAL transaction archive…</div>`;
+
+    if (transactionLoadedSeason === transactionSeason && transactionData.length) {
+      renderTransactions();
+      return;
+    }
+
+    try {
+      const response = await fetch(`data/transactions/${encodeURIComponent(transactionSeason)}.json?v=${Date.now()}`,{cache:"no-store"});
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      transactionData = Array.isArray(payload?.transactions) ? payload.transactions : [];
+      transactionLoadedSeason = transactionSeason;
+      transactionTeam = "";
+      renderTransactions();
+    } catch (error) {
+      console.error("Unable to load NAL transactions:",error);
+      transactionData = [];
+      if (content) content.innerHTML = `<div class="nal-transactions-empty"><strong>TRANSACTIONS UNAVAILABLE</strong>The ${txEscape(transactionSeason)} archive could not be loaded. Please try again.</div>`;
+    }
+  }
+
+  document.addEventListener("click",event=>{
+    const view = event.target.closest("[data-transactions-view]");
+    if (view) {
+      transactionView = view.dataset.transactionsView || "all";
+      renderTransactions();
+      return;
+    }
+    const team = event.target.closest("[data-transaction-team]");
+    if (team) {
+      transactionTeam = team.dataset.transactionTeam || "";
+      renderTransactions();
+    }
+  });
+
+  document.getElementById("nalTransactionsSeason")?.addEventListener("change",event=>{
+    loadTransactions(event.target.value);
+  });
+
+  window.openNalTransactions = function(){
+    if (typeof showPage === "function") showPage("transactionsPage");
+    loadTransactions(transactionSeason);
+  };
+  window.renderNalTransactions = renderTransactions;
 })();
 </script>
 
