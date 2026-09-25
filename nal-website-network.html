@@ -16037,20 +16037,17 @@ closeNetworkPreview = function(){
 
 
 /* =========================================================
-   NAL NETWORK — SHARED FEATURED / LATEST CONTENT VIDEO
-   One source powers:
-   1) Home NAL Network Video 1
-   2) Network FEATURED
-   3) Newest item in LATEST CONTENT
+   NAL NETWORK — FEATURED VIDEO SOURCES
+   Home and Network Featured are intentionally independent.
 ========================================================= */
+const NETWORK_HOME_FEATURED = {
+  title: "NAL Network Home",
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=72124&type=vod"
+};
+
 const NETWORK_FEATURED = {
   title: "Latest NAL Network Content",
   embedUrl: "https://www.lightcast.com/embed/player.php?id=72119&type=vod"
-};
-
-const NETWORK_HOME_FEATURED = {
-  title: "NAL Network Home Channel",
-  embedUrl: "https://www.lightcast.com/embed/player.php?id=72124&type=vod"
 };
 
 function createNetworkFeaturedVideo(source = NETWORK_FEATURED) {
