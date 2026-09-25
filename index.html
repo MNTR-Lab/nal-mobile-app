@@ -7093,6 +7093,95 @@ document.addEventListener("DOMContentLoaded", () => {
   white-space:pre-line;
 }
 
+
+/* =========================================================
+   HOME + NAL NETWORK SCORE DISPLAY / GAME CENTER
+========================================================= */
+.nal-inline-score{
+  margin-top:6px;
+  color:#fff;
+  font-size:22px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.5px;
+}
+.nal-inline-score span{
+  color:rgba(255,255,255,.45);
+  font-size:10px;
+  margin:0 6px;
+}
+.home-game-score{
+  margin:7px 0 2px;
+  color:#fff;
+  font-size:24px;
+  line-height:1;
+  font-weight:1000;
+}
+.home-game-score span{
+  color:rgba(255,255,255,.45);
+  font-size:10px;
+  margin:0 7px;
+}
+.game-center-scoreboard{
+  margin:0 0 18px;
+  padding:16px 12px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  background:rgba(255,255,255,.045);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 82px minmax(0,1fr);
+  align-items:center;
+  gap:8px;
+}
+.game-center-team{
+  min-width:0;
+  text-align:center;
+}
+.game-center-team-logo{
+  width:58px;
+  height:58px;
+  margin:0 auto 7px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.game-center-team-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.game-center-team-name{
+  color:#fff;
+  font-size:10px;
+  line-height:1.15;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.game-center-team-role{
+  margin-top:4px;
+  color:rgba(255,255,255,.48);
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+.game-center-score{
+  text-align:center;
+  color:#fff;
+  font-size:28px;
+  line-height:1;
+  font-weight:1000;
+}
+.game-center-score small{
+  display:block;
+  margin-top:7px;
+  color:rgba(255,255,255,.58);
+  font-size:8px;
+  line-height:1.2;
+  font-weight:900;
+  letter-spacing:.7px;
+}
+
 /* Dedicated game viewing screen */
 .live-game-viewer-page{
   min-height:calc(100dvh - var(--header-height) - var(--nav-height));
@@ -9835,15 +9924,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   <!-- =====================================================
-       LIVE GAME VIEWER
-       Dedicated Lightcast event player.
+       NAL GAME CENTER
+       Lightcast game player + game score/status shell.
+       Additional FootballShift stats can be connected here later.
   ====================================================== -->
   <main id="liveGameViewerPage" class="app-page live-game-viewer-page">
     <div class="live-game-viewer-toolbar">
-      <button type="button" class="live-game-viewer-back" id="liveGameViewerBack" aria-label="Back to Live Games">‹</button>
+      <button type="button" class="live-game-viewer-back" id="liveGameViewerBack" aria-label="Back to NAL Network">‹</button>
       <div class="live-game-viewer-heading">
-        <div class="live-game-viewer-title" id="liveGameViewerTitle">NAL LIVE GAME</div>
-        <div class="live-game-viewer-subtitle">NAL NETWORK</div>
+        <div class="live-game-viewer-title" id="liveGameViewerTitle">GAME CENTER</div>
+        <div class="live-game-viewer-subtitle">NAL GAME CENTER</div>
       </div>
       <div></div>
     </div>
@@ -9851,6 +9941,22 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="live-game-viewer-player" id="liveGameViewerPlayer"></div>
 
     <div class="live-game-viewer-info">
+      <div class="game-center-scoreboard">
+        <div class="game-center-team">
+          <div class="game-center-team-logo"><img id="gameCenterAwayLogo" alt=""></div>
+          <div class="game-center-team-name" id="gameCenterAwayName">AWAY</div>
+          <div class="game-center-team-role">AWAY</div>
+        </div>
+        <div class="game-center-score">
+          <div id="gameCenterScore">VS</div>
+          <small id="gameCenterClock">UPCOMING</small>
+        </div>
+        <div class="game-center-team">
+          <div class="game-center-team-logo"><img id="gameCenterHomeLogo" alt=""></div>
+          <div class="game-center-team-name" id="gameCenterHomeName">HOME</div>
+          <div class="game-center-team-role">HOME</div>
+        </div>
+      </div>
       <div class="live-game-viewer-status" id="liveGameViewerStatus">NAL NETWORK</div>
       <div class="live-game-viewer-matchup" id="liveGameViewerMatchup"></div>
       <div class="live-game-viewer-meta" id="liveGameViewerMeta"></div>
@@ -19930,6 +20036,22 @@ function closeLightcastTest(){
     return "UPCOMING";
   }
 
+  function hasGameScore(game){
+    return game &&
+      game.away_score !== undefined && game.away_score !== null &&
+      game.home_score !== undefined && game.home_score !== null;
+  }
+
+  function compactGameScore(game){
+    if (!hasGameScore(game)) return "";
+    return `<div class="nal-inline-score">${liveEscape(game.away_score)} <span>—</span> ${liveEscape(game.home_score)}</div>`;
+  }
+
+  function compactHomeScore(game){
+    if (!hasGameScore(game)) return "";
+    return `<div class="home-game-score">${liveEscape(game.away_score)} <span>—</span> ${liveEscape(game.home_score)}</div>`;
+  }
+
   function gameCard(game, index){
     const matchup = parseMatchup(game.title);
     const state = eventState(game);
@@ -19958,7 +20080,7 @@ function closeLightcastTest(){
 
           <div class="nal-game-center">
             <div class="nal-game-status">${statusText(state)}</div>
-            <div class="nal-game-versus">VS</div>
+            ${hasGameScore(game) ? compactGameScore(game) : '<div class="nal-game-versus">VS</div>'}
             <div class="nal-game-time">${liveEscape(formatEventTime(game))}</div>
           </div>
 
@@ -19975,7 +20097,7 @@ function closeLightcastTest(){
 
         <button class="nal-game-watch-button" type="button" data-live-event-index="${index}" ${state === "ended" ? "disabled" : ""}>
           <span class="nal-game-watch-play">▶</span>
-          <span>${state === "ended" ? "EVENT ENDED" : "WATCH LIVE"}</span>
+          <span>${state === "ended" ? "EVENT ENDED" : "OPEN GAME"}</span>
         </button>
       </article>
     `;
@@ -20041,8 +20163,8 @@ function closeLightcastTest(){
           <div class="home-game-week-label">NAL GAME WEEK</div>
           ${state === "live" ? '<div class="home-game-live-label">LIVE NOW</div>' : ''}
           <div class="home-game-date">${state === "live" ? "LIVE" : liveEscape(formatHomeKickoff(game))}</div>
+          ${compactHomeScore(game)}
           <div class="home-game-location">${venue}</div>
-          ${state === "live" ? `<button class="home-game-watch" type="button" data-home-live-game-key="${liveEscape(liveGameKey(game))}">▶ WATCH LIVE</button>` : ''}
         </div>
         <div class="home-game-team">
           <div class="home-game-logo-slot is-team-logo"><img src="${liveEscape(homeLogo)}" alt="${liveEscape(matchup.homeName)}"></div>
@@ -20458,9 +20580,16 @@ function closeLightcastTest(){
     const status = document.getElementById("liveGameViewerStatus");
     const matchup = document.getElementById("liveGameViewerMatchup");
     const meta = document.getElementById("liveGameViewerMeta");
+    const gcAwayLogo = document.getElementById("gameCenterAwayLogo");
+    const gcAwayName = document.getElementById("gameCenterAwayName");
+    const gcHomeLogo = document.getElementById("gameCenterHomeLogo");
+    const gcHomeName = document.getElementById("gameCenterHomeName");
+    const gcScore = document.getElementById("gameCenterScore");
+    const gcClock = document.getElementById("gameCenterClock");
     if (!viewer || !player) return;
 
     const state = eventState(game);
+    const parsedMatchup = parseMatchup(game.title);
     const playerUrl = iframeUrlFromGame(game);
 
     document.querySelectorAll(".app-page").forEach(page => {
@@ -20475,12 +20604,31 @@ function closeLightcastTest(){
     const networkNav = document.querySelector('.bottom-nav [data-page="watchPage"]');
     if (networkNav) networkNav.classList.add("active");
 
-    if (title) title.textContent = game.title || "NAL LIVE GAME";
+    if (title) title.textContent = "GAME CENTER";
     if (status) {
       status.textContent = statusText(state);
       status.style.background = state === "live" ? "var(--nal-red)" : "#4b4b4b";
     }
-    if (matchup) matchup.textContent = game.title || "";
+    if (gcAwayName) gcAwayName.textContent = parsedMatchup.awayName;
+    if (gcHomeName) gcHomeName.textContent = parsedMatchup.homeName;
+    if (gcAwayLogo) {
+      gcAwayLogo.src = logoForTeam(parsedMatchup.awayName);
+      gcAwayLogo.alt = parsedMatchup.awayName;
+    }
+    if (gcHomeLogo) {
+      gcHomeLogo.src = logoForTeam(parsedMatchup.homeName);
+      gcHomeLogo.alt = parsedMatchup.homeName;
+    }
+    if (gcScore) gcScore.textContent = hasGameScore(game) ? `${game.away_score} — ${game.home_score}` : "VS";
+    if (gcClock) {
+      const detail = state === "ended"
+        ? "FINAL"
+        : state === "live"
+          ? `${game.period || "LIVE"}${game.clock ? " • " + game.clock : ""}`
+          : formatEventTime(game);
+      gcClock.textContent = detail;
+    }
+    if (matchup) matchup.textContent = `${parsedMatchup.awayName} vs ${parsedMatchup.homeName}`;
     if (meta) meta.textContent = `${formatEventTime(game)}${game.description ? "\n" + game.description : ""}`;
 
     player.innerHTML = "";
