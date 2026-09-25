@@ -2,7 +2,6 @@ name: Update Live Games
 
 on:
   workflow_dispatch:
-
   schedule:
     - cron: "17 */6 * * *"
 
@@ -25,9 +24,18 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Fetch Lightcast live events
+      - name: Fetch all Lightcast live events
         env:
+          LIGHTCAST_AMARILLO_API_KEY: ${{ secrets.AMARILLO_WARBIRDS_LIVE }}
+          LIGHTCAST_COLORADO_API_KEY: ${{ secrets.COLORADO_SPARTANS_LIVE }}
+          LIGHTCAST_DALLAS_API_KEY: ${{ secrets.DALLAS_APEX_LIVE }}
+          LIGHTCAST_LOUISIANA_API_KEY: ${{ secrets.LOUISIANA_ROUXGAROUX_LIVE }}
+          LIGHTCAST_OMAHA_API_KEY: ${{ secrets.OMAHA_BEEF_LIVE }}
           LIGHTCAST_PUEBLO_API_KEY: ${{ secrets.PUEBLO_PUNISHERS_LIVE }}
+          LIGHTCAST_SALINA_API_KEY: ${{ secrets.SALINA_LIBERTY_LIVE }}
+          LIGHTCAST_SIOUX_CITY_API_KEY: ${{ secrets.SIOUX_CITY_BANDITS_LIVE }}
+          LIGHTCAST_SW_KANSAS_API_KEY: ${{ secrets.SOUTHWEST_KANSAS_STORM_LIVE }}
+          LIGHTCAST_WHEELING_API_KEY: ${{ secrets.WHEELING_MINERS_LIVE }}
         run: python scripts/update_live_games.py
 
       - name: Show generated live games
@@ -39,9 +47,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add data/live-games.json
-
           if git diff --cached --quiet; then
             echo "No live game changes to commit."
           else
