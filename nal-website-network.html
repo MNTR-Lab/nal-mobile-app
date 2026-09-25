@@ -16057,7 +16057,7 @@ closeNetworkPreview = function(){
 ========================================================= */
 const NETWORK_FEATURED = {
   title: "Latest NAL Network Content",
-  embedUrl: "https://www.lightcast.com/embed/player.php?id=72119&type=vod"
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=72124&type=vod"
 };
 
 function createNetworkFeaturedVideo() {
@@ -19190,7 +19190,7 @@ async function loadLightcastChannels(){
   lightcastLoading("Loading Lightcast subchannels...");
   try{
     const payload=await fetchLightcastCatalog({view:"channels"});
-    const channel=Array.isArray(payload.data) ? payload.data.find(item=>String(item.channel_id)==="72119") || payload.data[0] : null;
+    const channel=Array.isArray(payload.data) ? payload.data.find(item=>String(item.channel_id)==="72124") || payload.data[0] : null;
     lightcastTestChannels=Array.isArray(channel?.subchannels) ? channel.subchannels : [];
     renderLightcastChannels();
   }catch(error){
@@ -19250,7 +19250,7 @@ async function loadLightcastMedia(subId){
 function getLightcastEmbedSrc(item){
   const mediaId=String(item?.media_id || item?.id || "").trim();
   if(!mediaId) return "";
-  return `https://www.lightcast.com/embed/player.php?id=${encodeURIComponent(mediaId)}&channelId=72119`;
+  return `https://www.lightcast.com/embed/player.php?id=${encodeURIComponent(mediaId)}&channelId=72124`;
 }
 
 function openLightcastVideo(index){
@@ -20993,6 +20993,40 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+
+<script id="nal-network-force-72124-player">
+(function(){
+  const EXACT_NAL_NETWORK_PLAYER =
+    "https://www.lightcast.com/embed/player.php?id=72124&type=vod";
+
+  function forceNalNetworkPlayer(){
+    const selectors = [
+      "#networkHomeFeaturedVideo iframe",
+      ".shared-network-featured-embed iframe"
+    ];
+
+    selectors.forEach(function(selector){
+      document.querySelectorAll(selector).forEach(function(frame){
+        if(frame.getAttribute("src") !== EXACT_NAL_NETWORK_PLAYER){
+          frame.setAttribute("src", EXACT_NAL_NETWORK_PLAYER);
+        }
+      });
+    });
+  }
+
+  forceNalNetworkPlayer();
+
+  window.addEventListener("DOMContentLoaded", forceNalNetworkPlayer);
+  window.addEventListener("load", forceNalNetworkPlayer);
+
+  const observer = new MutationObserver(forceNalNetworkPlayer);
+  observer.observe(document.documentElement, {
+    childList:true,
+    subtree:true
+  });
+})();
+</script>
 
 </body>
 </html>
