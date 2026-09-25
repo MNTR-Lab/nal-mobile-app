@@ -52,7 +52,7 @@
       "start_time_utc": "2027-03-07 01:35:00",
       "end_time_utc": "2027-03-07 04:40:00",
       "timezone": "US/Eastern",
-      "seconds_until_start": 14054264,
+      "seconds_until_start": 14053433,
       "simulated_live": "0",
       "player_landing_url": "https://player.mntrlab.com/live/cjMxYTN",
       "embed_code": "<div style=\"position: relative; padding-bottom: 56.25%; margin-top: 25px; height: 0;\"><iframe style=\"position: absolute; height: 0px; width: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;\" src=\"https://www.lightcast.com/embed/player.php?responsive=1&skinColor=000000&autoPlay=0&playlistPos=inside&playlistSize=350&tvButtonID=lightcast&id=72165&type=live\" frameborder=\"0\" allow=\"autoplay;fullscreen\" allowfullscreen></iframe></div>",
@@ -60,6 +60,24 @@
       "event_image": "",
       "channel_id": "72165",
       "channel_team": "Pueblo Punishers"
+    },
+    {
+      "event_id": "388357",
+      "title": "Test Game vs Test Game",
+      "description": "Team Arena\r\nGreat United States of America",
+      "start_time": "2027-03-07 06:05:00",
+      "end_time": "2027-03-07 09:30:00",
+      "start_time_utc": "2027-03-07 11:05:00",
+      "end_time_utc": "2027-03-07 14:30:00",
+      "timezone": "US/Eastern",
+      "seconds_until_start": 14087633,
+      "simulated_live": "0",
+      "player_landing_url": "https://player.mntrlab.com/live/cjMxYjM",
+      "embed_code": "<div style=\"position: relative; padding-bottom: 56.25%; margin-top: 25px; height: 0;\"><iframe style=\"position: absolute; height: 0px; width: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;\" src=\"https://www.lightcast.com/embed/player.php?responsive=1&skinColor=000000&autoPlay=0&playlistPos=inside&playlistSize=350&tvButtonID=lightcast&id=72162&type=live\" frameborder=\"0\" allow=\"autoplay;fullscreen\" allowfullscreen></iframe></div>",
+      "embed_code_adaptive": "",
+      "event_image": "",
+      "channel_id": "72162",
+      "channel_team": "Dallas Apex"
     }
   ]
 }
