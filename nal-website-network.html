@@ -16048,13 +16048,18 @@ const NETWORK_FEATURED = {
   embedUrl: "https://www.lightcast.com/embed/player.php?id=72119&type=vod"
 };
 
-function createNetworkFeaturedVideo() {
+const NETWORK_HOME_FEATURED = {
+  title: "NAL Network Home Channel",
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=72124&type=vod"
+};
+
+function createNetworkFeaturedVideo(source = NETWORK_FEATURED) {
   const wrap = document.createElement("div");
   wrap.className = "shared-network-featured-embed";
   wrap.innerHTML = `
     <iframe
-      src="${NETWORK_FEATURED.embedUrl}"
-      title="${NETWORK_FEATURED.title}"
+      src="${source.embedUrl}"
+      title="${source.title}"
       referrerpolicy="no-referrer-when-downgrade"
       frameborder="0"
       allow="fullscreen; picture-in-picture"
@@ -16065,15 +16070,17 @@ function createNetworkFeaturedVideo() {
 }
 
 function mountSharedNetworkFeaturedVideo() {
-  [
-    "#networkHomeFeaturedVideo",
-    "#networkPageFeaturedVideo"
-  ].forEach(selector => {
-    const host = document.querySelector(selector);
-    if (!host) return;
-    host.innerHTML = "";
-    host.appendChild(createNetworkFeaturedVideo());
-  });
+  const homeHost = document.querySelector("#networkHomeFeaturedVideo");
+  if (homeHost) {
+    homeHost.innerHTML = "";
+    homeHost.appendChild(createNetworkFeaturedVideo(NETWORK_HOME_FEATURED));
+  }
+
+  const networkHost = document.querySelector("#networkPageFeaturedVideo");
+  if (networkHost) {
+    networkHost.innerHTML = "";
+    networkHost.appendChild(createNetworkFeaturedVideo(NETWORK_FEATURED));
+  }
 }
 
 document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
