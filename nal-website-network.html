@@ -8834,6 +8834,21 @@ main.app-page {
 }
 </style>
 
+
+<style id="nal-network-transparent-website-background">
+/* Website embed: remove the outer page background so NAL Network
+   inherits/blends with the host website. Internal Network artwork,
+   cards, players and section backgrounds remain unchanged. */
+html,
+body,
+body > .app,
+#watchPage{
+  background:transparent !important;
+  background-color:transparent !important;
+  background-image:none !important;
+}
+</style>
+
 </head>
 
 
@@ -16042,7 +16057,7 @@ closeNetworkPreview = function(){
 ========================================================= */
 const NETWORK_FEATURED = {
   title: "Latest NAL Network Content",
-  embedUrl: "https://www.lightcast.com/embed/player.php?id=72124&type=vod"
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=72119&type=vod"
 };
 
 function createNetworkFeaturedVideo() {
@@ -20978,36 +20993,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-<script id="nal-network-auto-height-reporter">
-(function () {
-  function sendNetworkHeight() {
-    const height = Math.max(
-      document.body.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight
-    );
-
-    window.parent.postMessage({
-      type: "NAL_NETWORK_HEIGHT",
-      height: height
-    }, "*");
-  }
-
-  window.addEventListener("load", sendNetworkHeight);
-  window.addEventListener("resize", sendNetworkHeight);
-
-  if ("ResizeObserver" in window) {
-    const observer = new ResizeObserver(sendNetworkHeight);
-    observer.observe(document.body);
-  }
-
-  setTimeout(sendNetworkHeight, 250);
-  setTimeout(sendNetworkHeight, 1000);
-})();
-</script>
 
 </body>
 </html>
