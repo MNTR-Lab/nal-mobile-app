@@ -8836,9 +8836,6 @@ main.app-page {
 
 
 <style id="nal-network-transparent-website-background">
-/* Website embed: remove the outer page background so NAL Network
-   inherits/blends with the host website. Internal Network artwork,
-   cards, players and section backgrounds remain unchanged. */
 html,
 body,
 body > .app,
@@ -9054,16 +9051,7 @@ body > .app,
 
       <div class="home-network-layout">
         <div>
-          <div class="home-network-main home-lightcast-player" id="networkHomeFeaturedVideo">
-            <iframe
-              src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
-              title="NAL Network"
-              referrerpolicy="no-referrer-when-downgrade"
-              frameborder="0"
-              allow="fullscreen; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </div>
+          <div class="home-network-main home-lightcast-player" id="networkHomeFeaturedVideo"><div style="position: relative; padding-bottom: 56.25%; margin-top: 25px; height: 0;"><iframe style="position: absolute; height: 0px; width: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;" referrerpolicy="no-referrer-when-downgrade" src="https://www.lightcast.com/embed/player.php?id=72124&type=vod" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div></div>
           <div class="home-network-caption">
             Featured NAL Network Program
           </div>
@@ -16057,7 +16045,7 @@ closeNetworkPreview = function(){
 ========================================================= */
 const NETWORK_FEATURED = {
   title: "Latest NAL Network Content",
-  embedUrl: "https://www.lightcast.com/embed/player.php?id=72124&type=vod"
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=72119&type=vod"
 };
 
 function createNetworkFeaturedVideo() {
@@ -19190,7 +19178,7 @@ async function loadLightcastChannels(){
   lightcastLoading("Loading Lightcast subchannels...");
   try{
     const payload=await fetchLightcastCatalog({view:"channels"});
-    const channel=Array.isArray(payload.data) ? payload.data.find(item=>String(item.channel_id)==="72124") || payload.data[0] : null;
+    const channel=Array.isArray(payload.data) ? payload.data.find(item=>String(item.channel_id)==="72119") || payload.data[0] : null;
     lightcastTestChannels=Array.isArray(channel?.subchannels) ? channel.subchannels : [];
     renderLightcastChannels();
   }catch(error){
@@ -19250,7 +19238,7 @@ async function loadLightcastMedia(subId){
 function getLightcastEmbedSrc(item){
   const mediaId=String(item?.media_id || item?.id || "").trim();
   if(!mediaId) return "";
-  return `https://www.lightcast.com/embed/player.php?id=${encodeURIComponent(mediaId)}&channelId=72124`;
+  return `https://www.lightcast.com/embed/player.php?id=${encodeURIComponent(mediaId)}&channelId=72119`;
 }
 
 function openLightcastVideo(index){
@@ -20993,40 +20981,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-<script id="nal-network-force-72124-player">
-(function(){
-  const EXACT_NAL_NETWORK_PLAYER =
-    "https://www.lightcast.com/embed/player.php?id=72124&type=vod";
-
-  function forceNalNetworkPlayer(){
-    const selectors = [
-      "#networkHomeFeaturedVideo iframe",
-      ".shared-network-featured-embed iframe"
-    ];
-
-    selectors.forEach(function(selector){
-      document.querySelectorAll(selector).forEach(function(frame){
-        if(frame.getAttribute("src") !== EXACT_NAL_NETWORK_PLAYER){
-          frame.setAttribute("src", EXACT_NAL_NETWORK_PLAYER);
-        }
-      });
-    });
-  }
-
-  forceNalNetworkPlayer();
-
-  window.addEventListener("DOMContentLoaded", forceNalNetworkPlayer);
-  window.addEventListener("load", forceNalNetworkPlayer);
-
-  const observer = new MutationObserver(forceNalNetworkPlayer);
-  observer.observe(document.documentElement, {
-    childList:true,
-    subtree:true
-  });
-})();
-</script>
 
 </body>
 </html>
