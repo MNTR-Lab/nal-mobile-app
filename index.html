@@ -10278,6 +10278,8 @@ document.addEventListener("DOMContentLoaded", () => {
                       <select id="fanAdminNotificationAudience">
                         <option value="all">Everyone</option>
                         <option value="team">Specific Team Fans</option>
+                        <option value="role">Membership / Staff Role</option>
+                        <option value="user">Individual Member</option>
                       </select>
                     </div>
                   </div>
@@ -10286,6 +10288,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     <select id="fanAdminNotificationTeam">
                       <option value="">Select a team</option>
                       <option>Amarillo Warbirds</option><option>Colorado Spartans</option><option>Dallas Apex</option><option>Louisiana Rouxgaroux</option><option>Omaha Beef</option><option>Pueblo Punishers</option><option>Salina Liberty</option><option>Sioux City Bandits</option><option>Southwest Kansas Storm</option><option>Wheeling Miners</option>
+                    </select>
+                  </div>
+                  <div class="fan-admin-notify-field" id="fanAdminNotificationRoleField" hidden>
+                    <label for="fanAdminNotificationRole">ROLE</label>
+                    <select id="fanAdminNotificationRole">
+                      <option value="">Select a role</option>
+                      <option value="fan">Fan</option>
+                      <option value="verified">NAL Verified</option>
+                      <option value="vip">VIP</option>
+                      <option value="moderator">Moderator</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+                  <div class="fan-admin-notify-field" id="fanAdminNotificationUserField" hidden>
+                    <label for="fanAdminNotificationUser">MEMBER</label>
+                    <select id="fanAdminNotificationUser">
+                      <option value="">Select a member</option>
                     </select>
                   </div>
                   <div class="fan-admin-notify-field">
@@ -18376,7 +18395,7 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
 });
 
 
-/* NAL ADMIN — send league/team notifications. */
+/* NAL ADMIN — send targeted notifications. */
 (function(){
   const openButton=document.getElementById("fanAdminNotificationButton");
   const panel=document.getElementById("fanAdminNotificationPanel");
@@ -18385,6 +18404,10 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
   const audience=document.getElementById("fanAdminNotificationAudience");
   const teamField=document.getElementById("fanAdminNotificationTeamField");
   const team=document.getElementById("fanAdminNotificationTeam");
+  const roleField=document.getElementById("fanAdminNotificationRoleField");
+  const role=document.getElementById("fanAdminNotificationRole");
+  const userField=document.getElementById("fanAdminNotificationUserField");
+  const user=document.getElementById("fanAdminNotificationUser");
   const title=document.getElementById("fanAdminNotificationTitle");
   const message=document.getElementById("fanAdminNotificationMessage");
   const url=document.getElementById("fanAdminNotificationUrl");
@@ -18392,17 +18415,41 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
   const previewBox=document.getElementById("fanAdminNotificationPreviewBox");
   const sendButton=document.getElementById("fanAdminNotificationSend");
   const status=document.getElementById("fanAdminNotificationMessageStatus");
+  let notificationMembersLoaded=false;
 
   function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
   function setStatus(text,isError=false){if(!status)return;status.textContent=text||"";status.className="fan-admin-notify-message"+(text?(isError?" error":" success"):"");}
-  function syncAudience(){if(teamField)teamField.hidden=audience?.value!=="team";}
-  function values(){return {notificationType:type?.value||"league",targetType:audience?.value||"all",targetTeam:audience?.value==="team"?(team?.value||"").trim():null,title:(title?.value||"").trim(),message:(message?.value||"").trim(),actionUrl:(url?.value||"").trim()||null};}
-  function validate(v){if(!v.title)return "Enter a notification title.";if(!v.message)return "Enter a notification message.";if(v.targetType==="team"&&!v.targetTeam)return "Select the team that should receive this alert.";if(v.actionUrl){try{const parsed=new URL(v.actionUrl);if(!/^https?:$/.test(parsed.protocol))throw new Error();}catch(e){return "Enter a valid http:// or https:// action link.";}}return "";}
-  function renderPreview(){const v=values(),problem=validate(v);if(problem){setStatus(problem,true);previewBox?.classList.remove("show");return false;}setStatus("");const audienceText=v.targetType==="all"?"EVERYONE":"FANS OF "+v.targetTeam.toUpperCase();previewBox.innerHTML='<small>'+esc(v.notificationType.toUpperCase())+' • '+esc(audienceText)+'</small><b>'+esc(v.title)+'</b><p>'+esc(v.message)+'</p>'+(v.actionUrl?'<span>ACTION LINK: '+esc(v.actionUrl)+'</span>':'');previewBox.classList.add("show");return true;}
+  function roleLabel(v){return ({fan:"FAN",verified:"NAL VERIFIED",vip:"VIP",moderator:"MODERATOR",admin:"ADMIN"})[String(v||"").toLowerCase()]||String(v||"").toUpperCase();}
+  function selectedUserLabel(){return user?.selectedOptions?.[0]?.textContent?.trim()||"selected member";}
+  async function loadNotificationMembers(){
+    if(notificationMembersLoaded||!user)return;
+    try{
+      const client=getNalAccountClient();
+      const {data,error}=await client.rpc("admin_list_members");
+      if(error)throw error;
+      const rows=(Array.isArray(data)?data:[]).slice().sort((a,b)=>String(a.display_name||a.email||"").localeCompare(String(b.display_name||b.email||"")));
+      user.innerHTML='<option value="">Select a member</option>'+rows.map(m=>'<option value="'+esc(m.id)+'">'+esc(m.display_name||m.email||"Member")+(m.email&&m.email!==(m.display_name||"")?' — '+esc(m.email):'')+'</option>').join('');
+      notificationMembersLoaded=true;
+    }catch(error){console.error("NAL notification member list error:",error);setStatus("Member list could not be loaded.",true);}
+  }
+  function syncAudience(){
+    const v=audience?.value||"all";
+    if(teamField)teamField.hidden=v!=="team";
+    if(roleField)roleField.hidden=v!=="role";
+    if(userField)userField.hidden=v!=="user";
+    if(v==="user")loadNotificationMembers();
+  }
+  function values(){
+    const targetType=audience?.value||"all";
+    return {notificationType:type?.value||"league",targetType,targetTeam:targetType==="team"?(team?.value||"").trim():null,targetRole:targetType==="role"?(role?.value||"").trim():null,targetUserId:targetType==="user"?(user?.value||"").trim():null,title:(title?.value||"").trim(),message:(message?.value||"").trim(),actionUrl:(url?.value||"").trim()||null};
+  }
+  function validate(v){if(!v.title)return "Enter a notification title.";if(!v.message)return "Enter a notification message.";if(v.targetType==="team"&&!v.targetTeam)return "Select the team that should receive this alert.";if(v.targetType==="role"&&!v.targetRole)return "Select the role that should receive this alert.";if(v.targetType==="user"&&!v.targetUserId)return "Select the member who should receive this alert.";if(v.actionUrl){try{const parsed=new URL(v.actionUrl);if(!/^https?:$/.test(parsed.protocol))throw new Error();}catch(e){return "Enter a valid http:// or https:// action link.";}}return "";}
+  function audienceLabel(v){if(v.targetType==="all")return "EVERYONE";if(v.targetType==="team")return "FANS OF "+v.targetTeam.toUpperCase();if(v.targetType==="role")return roleLabel(v.targetRole);if(v.targetType==="user")return selectedUserLabel().toUpperCase();return "EVERYONE";}
+  function renderPreview(){const v=values(),problem=validate(v);if(problem){setStatus(problem,true);previewBox?.classList.remove("show");return false;}setStatus("");previewBox.innerHTML='<small>'+esc(v.notificationType.toUpperCase())+' • '+esc(audienceLabel(v))+'</small><b>'+esc(v.title)+'</b><p>'+esc(v.message)+'</p>'+(v.actionUrl?'<span>ACTION LINK: '+esc(v.actionUrl)+'</span>':'');previewBox.classList.add("show");return true;}
 
   audience?.addEventListener("change",syncAudience);
   previewButton?.addEventListener("click",renderPreview);
-  [type,audience,team,title,message,url].forEach(el=>el?.addEventListener("input",()=>{setStatus("");previewBox?.classList.remove("show");}));
+  [type,audience,team,role,user,title,message,url].forEach(el=>el?.addEventListener("input",()=>{setStatus("");previewBox?.classList.remove("show");}));
 
   openButton?.addEventListener("click",function(){
     if(document.getElementById("fanAdminArea")?.hidden||nalAccountProfile?.role!=="admin")return;
@@ -18417,28 +18464,21 @@ document.getElementById("fanSignOutButton")?.addEventListener("click", async fun
     event.preventDefault();
     if(nalAccountProfile?.role!=="admin"){setStatus("Only an active NAL Admin can send notifications.",true);return;}
     const v=values(),problem=validate(v);if(problem){setStatus(problem,true);return;}
-    const audienceText=v.targetType==="all"?"ALL NAL App users":"fans of "+v.targetTeam;
-    if(!window.confirm('Send this alert to '+audienceText+'?\
-\
-"'+v.title+'"\
-\
-This notification will publish immediately.'))return;
+    const audienceText=audienceLabel(v);
+    if(!window.confirm('Send this alert to '+audienceText+'?\n\n"'+v.title+'"\n\nThis notification will publish immediately.'))return;
     const original=sendButton.textContent;sendButton.disabled=true;sendButton.textContent="SENDING...";setStatus("");
     try{
       const client=getNalAccountClient();
-      const {error}=await client.rpc("admin_create_notification",{p_title:v.title,p_message:v.message,p_notification_type:v.notificationType,p_target_type:v.targetType,p_target_team:v.targetTeam,p_action_url:v.actionUrl});
+      const {error}=await client.rpc("admin_create_targeted_notification",{p_title:v.title,p_message:v.message,p_notification_type:v.notificationType,p_target_type:v.targetType,p_target_team:v.targetTeam,p_target_role:v.targetRole,p_target_user_id:v.targetUserId,p_action_url:v.actionUrl});
       if(error)throw error;
       setStatus("Notification sent successfully.");
       form.reset();syncAudience();previewBox?.classList.remove("show");
       if(typeof loadNalAlerts==="function")await loadNalAlerts();
-    }catch(error){
-      console.error("NAL Admin notification error:",error);
-      setStatus(error?.message?"Notification was not sent: "+error.message:"Notification was not sent. Please try again.",true);
+    }catch(error){console.error("NAL Admin notification error:",error);setStatus(error?.message?"Notification was not sent: "+error.message:"Notification was not sent. Please try again.",true);
     }finally{sendButton.disabled=false;sendButton.textContent=original;}
   });
   syncAudience();
 })();
-
 
 /* NAL ADMIN — activity log. */
 (function(){
@@ -19044,6 +19084,12 @@ function nalNotificationMatchesFan(notification){
     const targetTeam = String(notification.target_team || "").trim().toLowerCase();
     const favoriteTeam = String(nalAccountProfile?.favorite_team || "").trim().toLowerCase();
     return !!targetTeam && !!favoriteTeam && targetTeam === favoriteTeam;
+  }
+
+  if (targetType === "role"){
+    const targetRole = String(notification.target_role || "").trim().toLowerCase();
+    const currentRole = String(nalAccountProfile?.role || "fan").trim().toLowerCase();
+    return !!targetRole && targetRole === currentRole;
   }
 
   if (targetType === "user"){
