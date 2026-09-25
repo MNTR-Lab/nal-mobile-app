@@ -16042,7 +16042,7 @@ closeNetworkPreview = function(){
 ========================================================= */
 const NETWORK_FEATURED = {
   title: "Latest NAL Network Content",
-  embedUrl: "https://www.lightcast.com/embed/player.php?id=819893&channelId=72124"
+  embedUrl: "https://www.lightcast.com/embed/player.php?id=72119&type=vod"
 };
 
 function createNetworkFeaturedVideo() {
@@ -20264,29 +20264,14 @@ function closeLightcastTest(){
   }
 
   function iframeUrlFromGame(game){
-    const LIVE_GAMES_CHANNEL_ID = "72124";
     const markup = game.embed_code_adaptive || game.embed_code || "";
     const match = String(markup).match(/<iframe[^>]+src=["']([^"']+)["']/i);
-
-    let playerUrl = "";
     if (match && match[1]) {
       const textarea = document.createElement("textarea");
       textarea.innerHTML = match[1];
-      playerUrl = textarea.value;
-    } else {
-      playerUrl = game.player_landing_url || "";
+      return textarea.value;
     }
-
-    if (!playerUrl) return "";
-
-    try {
-      const url = new URL(playerUrl, window.location.href);
-      url.searchParams.set("channelId", LIVE_GAMES_CHANNEL_ID);
-      return url.toString();
-    } catch (error) {
-      const separator = playerUrl.includes("?") ? "&" : "?";
-      return `${playerUrl}${separator}channelId=${LIVE_GAMES_CHANNEL_ID}`;
-    }
+    return game.player_landing_url || "";
   }
 
   function openLiveGame(game){
