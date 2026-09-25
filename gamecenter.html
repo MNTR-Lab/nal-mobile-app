@@ -17,7 +17,7 @@ overflow:hidden;
 background:#081a2e;
 padding:22px 14px 19px;
 display:grid;
-grid-template-columns:1fr 100px 1fr;
+grid-template-columns:1fr 116px 1fr;
 gap:7px;
 align-items:center;
 border-bottom:1px solid rgba(255,255,255,.10)
@@ -93,6 +93,28 @@ background:#6F2DA8;
 box-shadow:-12px 0 34px rgba(111,45,168,.55);
 }
 
+
+.score strong{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:100%;
+  text-align:center;
+}
+.score .score-number{
+  display:inline-block;
+  min-width:30px;
+  text-align:center;
+}
+.score .score-separator{
+  display:inline-block;
+  margin:0;
+  transform:scaleX(.55);
+  transform-origin:center;
+  opacity:.72;
+}
+
 </style>
 </head>
 <body>
@@ -104,7 +126,7 @@ box-shadow:-12px 0 34px rgba(111,45,168,.55);
 <div class="scoreboard">
  <div class="scoreboard-center-glow"></div>
  <div class="team"><div class="logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex_da6cbdd6-f226-4a20-8e83-34317cd45e5e.png?v=1790208460" alt="Dallas Apex"></div><b>DALLAS APEX</b><small>3–1</small></div>
- <div class="score"><strong>28 — 24</strong><b>6:42 • 3RD</b><small>DAL BALL</small></div>
+ <div class="score"><strong><span class="score-number">28</span><span class="score-separator">—</span><span class="score-number">24</span></strong><b>6:42 • 3RD</b><small>DAL BALL</small></div>
  <div class="team"><div class="logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers_30eafc0a-763a-412b-838b-321dd9088d96.png?v=1790208460" alt="Pueblo Punishers"></div><b>PUEBLO PUNISHERS</b><small>2–2</small></div>
 </div>
 
