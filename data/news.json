@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-09-25T17:52:30.830898+00:00",
+  "updatedAt": "2026-09-25T18:23:23.801065+00:00",
   "source": "https://www.thenationalarenaleague.com/",
   "articles": [
+    {
+      "title": "NATIONAL ARENA LEAGUE WELCOMES BACK GOAT SPORTS AND 1ST PHORM FOR SEASON X",
+      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-welcomes-back-goat-sports-an",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-1f5be3aa-6700-4bf7-b6e7-df18b5119e46/1789836409-full.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-09-25T17:36:00+00:00",
+      "category": "NAL NEWS"
+    },
     {
       "title": "NATIONAL ARENA LEAGUE EXPANDS COMMITMENT TO MILITARY AND VETERAN COMMUNITY FOR SEASON X",
       "url": "https://www.thenationalarenaleague.com/news/national-arena-league-expands-commitment-to-milita",
@@ -24,14 +32,6 @@
       "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-8299a4c9-1a38-41ba-92fa-aa93c426558b/1789821164-1223.png",
       "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
       "date": "2026-09-18T16:41:00+00:00",
-      "category": "NAL NEWS"
-    },
-    {
-      "title": "NATIONAL ARENA LEAGUE ANNOUNCES BRAYDEN BULTER AS “THE VOICE OF THE NAL”",
-      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-announces-brayden-bulter-as",
-      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-c38bda78-0269-458b-b588-ed8c629d1b5d/1789821191-1223.png",
-      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
-      "date": "2026-09-17T20:02:00+00:00",
       "category": "NAL NEWS"
     }
   ]
