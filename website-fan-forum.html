@@ -21058,114 +21058,122 @@ function closeLightcastTest(){
 </script>
 
 
-<style id="nal-fan-zone-website-only">
+<style id="nal-fan-zone-full-website">
 /* =========================================================
-   NAL FAN ZONE — WEBSITE / EMBED VERSION
-   The website exposes only the existing Fan Forum system.
+   NAL FAN ZONE — FULL WEBSITE / EMBED VERSION
+   Keeps every existing Fan Zone feature and its existing JS/backend.
    ========================================================= */
-
-html, body {
-  width: 100% !important;
-  min-height: 100% !important;
-  margin: 0 !important;
-  background: #eef1f4 !important;
+html,body{
+  width:100%!important;
+  min-height:100%!important;
+  margin:0!important;
+  background:#eef1f4!important;
+}
+body>.app{
+  width:100%!important;
+  max-width:none!important;
+  min-height:100vh!important;
+  margin:0!important;
+  padding-bottom:0!important;
+  background:#eef1f4!important;
+  overflow-x:hidden!important;
 }
 
-body > .app {
-  width: 100% !important;
-  max-width: none !important;
-  min-height: 100vh !important;
-  margin: 0 !important;
-  padding-bottom: 0 !important;
-  background: #eef1f4 !important;
-  overflow-x: hidden !important;
+/* Website version does not use the mobile-app header/nav. */
+body>.app>.topbar,
+body>.app>.bottom-nav{
+  display:none!important;
 }
 
-/* Remove the normal mobile-app chrome from the website version. */
-body > .app > .topbar,
-body > .app > .bottom-nav {
-  display: none !important;
+/* Only the complete Fan Zone family of pages can appear. */
+body>.app>main.app-page:not(#fanPage):not(#fanForumPage):not(#fanForumCategoryPage):not(#fanForumThreadPage):not(#fanPollPage):not(#fanGalleryPage):not(#fanUploadPage){
+  display:none!important;
 }
 
-/* Only Fan Forum pages are allowed to render as website content. */
-body > .app > main.app-page:not(#fanForumPage):not(#fanForumCategoryPage):not(#fanForumThreadPage) {
-  display: none !important;
-}
-
-/* Responsive website sizing, matching the wider embedded-site approach. */
+#fanPage,
 #fanForumPage,
 #fanForumCategoryPage,
-#fanForumThreadPage {
-  width: 100% !important;
-  max-width: none !important;
-  min-height: 100vh !important;
-  margin: 0 !important;
-  background: #eef1f4 !important;
+#fanForumThreadPage,
+#fanPollPage,
+#fanGalleryPage,
+#fanUploadPage{
+  width:100%!important;
+  max-width:none!important;
+  min-height:100vh!important;
+  margin:0!important;
 }
 
-#fanForumPage > .fan-forum-shell,
-#fanForumCategoryPage > .fan-forum-shell,
-#fanForumThreadPage > .fan-forum-shell {
-  width: min(1100px, calc(100% - 48px)) !important;
-  max-width: 1100px !important;
-  margin: 0 auto !important;
-  padding-top: 28px !important;
-  padding-bottom: 48px !important;
+/* Wider website content while retaining the existing Fan Zone design. */
+#fanPage>.fan-zone-shell,
+#fanForumPage>.fan-forum-shell,
+#fanForumCategoryPage>.fan-forum-shell,
+#fanForumThreadPage>.fan-forum-shell,
+#fanPollPage>.fan-poll-shell,
+#fanGalleryPage>.fan-upload-shell,
+#fanUploadPage>.fan-upload-shell{
+  width:min(1100px,calc(100% - 48px))!important;
+  max-width:1100px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
 }
 
-@media (max-width: 767px) {
-  #fanForumPage > .fan-forum-shell,
-  #fanForumCategoryPage > .fan-forum-shell,
-  #fanForumThreadPage > .fan-forum-shell {
-    width: 100% !important;
-    max-width: none !important;
-    padding: 14px 12px 28px !important;
+@media(max-width:767px){
+  #fanPage>.fan-zone-shell,
+  #fanForumPage>.fan-forum-shell,
+  #fanForumCategoryPage>.fan-forum-shell,
+  #fanForumThreadPage>.fan-forum-shell,
+  #fanPollPage>.fan-poll-shell,
+  #fanGalleryPage>.fan-upload-shell,
+  #fanUploadPage>.fan-upload-shell{
+    width:100%!important;
+    max-width:none!important;
   }
 }
 
-/* The website starts at the Fan Forum home. */
-#fanForumPage {
-  display: block;
-}
+/* Website starts on the actual Fan Zone landing page. */
+#fanPage{display:block;}
 </style>
 
-<script id="nal-fan-zone-website-only-bootstrap">
-(function () {
-  function showWebsiteForumHome() {
-    const forumHome = document.getElementById("fanForumPage");
-    const category = document.getElementById("fanForumCategoryPage");
-    const thread = document.getElementById("fanForumThreadPage");
+<script id="nal-fan-zone-full-website-bootstrap">
+(function(){
+  const allowed = new Set([
+    "fanPage",
+    "fanForumPage",
+    "fanForumCategoryPage",
+    "fanForumThreadPage",
+    "fanPollPage",
+    "fanGalleryPage",
+    "fanUploadPage"
+  ]);
 
-    if (category) category.style.display = "none";
-    if (thread) thread.style.display = "none";
-    if (forumHome) {
-      forumHome.style.display = "block";
-      forumHome.classList.add("active");
-    }
-
-    document.querySelectorAll("body > .app > main.app-page").forEach(page => {
-      if (!["fanForumPage","fanForumCategoryPage","fanForumThreadPage"].includes(page.id)) {
-        page.style.display = "none";
+  function showFanZoneWebsiteHome(){
+    document.querySelectorAll("body>.app>main.app-page").forEach(page=>{
+      if(page.id==="fanPage"){
+        page.style.display="block";
+        page.classList.add("active");
+      }else{
+        page.style.display="none";
         page.classList.remove("active");
       }
     });
-
-    window.scrollTo(0, 0);
-
-    /* Use the existing working forum loader if it is available. */
-    if (typeof window.loadNalForumHome === "function") {
-      try { window.loadNalForumHome(); } catch (e) {}
-    } else if (typeof window.loadNalForumCategories === "function") {
-      try { window.loadNalForumCategories(); } catch (e) {}
-    }
+    window.scrollTo(0,0);
   }
 
-  window.addEventListener("load", function () {
-    setTimeout(showWebsiteForumHome, 0);
+  window.addEventListener("load",function(){
+    setTimeout(function(){
+      document.querySelectorAll("body>.app>main.app-page").forEach(page=>{
+        if(!allowed.has(page.id)){
+          page.style.display="none";
+          page.classList.remove("active");
+        }
+      });
+      showFanZoneWebsiteHome();
+    },0);
   });
 
-  /* On the website, "back to Fan Zone" means back to the forum home. */
-  window.closeFanForum = showWebsiteForumHome;
+  /* Expose a reliable website-home return without altering the
+     existing Fan Zone feature functions. */
+  window.showFanZoneWebsiteHome = showFanZoneWebsiteHome;
 })();
 </script>
 
