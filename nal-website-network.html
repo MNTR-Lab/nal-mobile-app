@@ -139,85 +139,23 @@ body {
 
 .network-home {
   width: calc(100% - 100px);
+
   margin: 18px auto 0;
 }
 
 
 /* =========================================================
-   PLAYER LABEL
-========================================================= */
-
-.network-home-label {
-  display: inline-block;
-
-  margin-left: 18px;
-  margin-bottom: 7px;
-
-  padding: 4px 8px;
-
-  background: #666666;
-
-  color: #ffffff;
-
-  font-size: 13px;
-  font-weight: 700;
-
-  line-height: 1;
-
-  box-shadow: 0 2px 4px rgba(0,0,0,.25);
-}
-
-
-/* =========================================================
-   PLAYER 1
-   CURRENT PLAYER STRUCTURE
-========================================================= */
-
-.network-player {
-  position: relative;
-
-  width: 100%;
-
-  padding-bottom: 56.25%;
-
-  height: 0;
-
-  overflow: hidden;
-
-  background: #000000;
-}
-
-.network-player iframe {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-}
-
-
-/* =========================================================
-   SEPARATION BETWEEN PLAYERS
-========================================================= */
-
-.fresh-player-area {
-  margin-top: 35px;
-}
-
-
-/* =========================================================
-   PLAYER 2
-   COMPLETELY INDEPENDENT 72124 PLAYER
+   INDEPENDENT LIGHTCAST 72124 PLAYER
 ========================================================= */
 
 #nalNetworkFresh72124Section {
   width: 100%;
+
   margin: 0 auto 40px;
 }
+
+
+/* PLAYER LABEL */
 
 .nal-fresh-72124-label {
   display: inline-block;
@@ -239,6 +177,9 @@ body {
   box-shadow: 0 2px 4px rgba(0,0,0,.25);
 }
 
+
+/* PLAYER WRAPPER */
+
 .nal-fresh-72124-wrap {
   position: relative;
 
@@ -252,6 +193,9 @@ body {
 
   background: #000000;
 }
+
+
+/* LIGHTCAST IFRAME */
 
 #nalFresh72124Player {
   position: absolute;
@@ -382,15 +326,10 @@ body {
     margin-top: 14px;
   }
 
-  .network-home-label,
   .nal-fresh-72124-label {
     margin-left: 8px;
 
     font-size: 11px;
-  }
-
-  .fresh-player-area {
-    margin-top: 25px;
   }
 
 }
@@ -468,63 +407,44 @@ body {
 
 
       <!-- =================================================
-           PLAYER 1
-           CURRENT PLAYER
+           INDEPENDENT LIGHTCAST CHANNEL 72124
+
+           This player is intentionally isolated from the
+           old NAL Network player code.
       ================================================== -->
 
-      <div class="network-home-label">
-        Current Player
-      </div>
+      <section id="nalNetworkFresh72124Section">
 
 
-      <div class="network-player">
-
-        <iframe
-          src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
-          title="NAL Network Channel 72124"
-          referrerpolicy="no-referrer-when-downgrade"
-          frameborder="0"
-          allow="fullscreen; picture-in-picture"
-          allowfullscreen>
-        </iframe>
-
-      </div>
+        <div class="nal-fresh-72124-label">
+          Latest NAL Network Content
+        </div>
 
 
-
-      <!-- =================================================
-           PLAYER 2
-           BRAND NEW / INDEPENDENT PLAYER
-      ================================================== -->
-
-      <div class="fresh-player-area">
-
-        <section id="nalNetworkFresh72124Section">
+        <div class="nal-fresh-72124-wrap">
 
 
-          <div class="nal-fresh-72124-label">
-            New Independent 72124 Player
-          </div>
+          <iframe
+            id="nalFresh72124Player"
+
+            src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
+
+            title="Latest NAL Network Content"
+
+            referrerpolicy="no-referrer-when-downgrade"
+
+            frameborder="0"
+
+            allow="fullscreen; picture-in-picture"
+
+            allowfullscreen>
+          </iframe>
 
 
-          <div class="nal-fresh-72124-wrap">
-
-            <iframe
-              id="nalFresh72124Player"
-              src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
-              title="NAL Network Independent Channel 72124"
-              referrerpolicy="no-referrer-when-downgrade"
-              frameborder="0"
-              allow="fullscreen; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-
-          </div>
+        </div>
 
 
-        </section>
-
-      </div>
+      </section>
 
 
     </div>
@@ -674,7 +594,8 @@ body {
    NETWORK TAB NAVIGATION ONLY
 
    IMPORTANT:
-   This script does NOT touch either Lightcast player.
+   This script does NOT create, replace, reload,
+   or modify the Lightcast player.
 ========================================================= */
 
 (function () {
@@ -723,6 +644,7 @@ body {
       );
 
     });
+
 
 
     window.scrollTo({
