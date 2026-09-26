@@ -9559,11 +9559,17 @@ body > .app,
         <div class="network-section-kicker">FEATURED</div>
         <div class="network-feature-card">
           <div class="network-feature-visual" id="networkPageFeaturedVideo">
-            <div class="network-feature-watermark">NAL NETWORK</div>
-            <span class="network-feature-badge">FEATURED</span>
-            <span class="network-circle-play">▶</span>
-          </div>
-          <div class="network-feature-info">
+  <div style="position: relative; padding-bottom: 56.25%; margin-top: 25px; height: 0;">
+    <iframe
+      style="position: absolute; height: 0px; width: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
+      frameborder="0"
+      allow="fullscreen; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>          <div class="network-feature-info">
             <strong>Featured NAL Network Programming</strong>
             <span>Live games, originals and featured league programming.</span>
           </div>
@@ -16073,11 +16079,15 @@ function mountSharedNetworkFeaturedVideo() {
     homeHost.appendChild(createNetworkFeaturedVideo(NETWORK_HOME_FEATURED));
   }
 
-  const networkHost = document.querySelector("#networkPageFeaturedVideo");
-  if (networkHost) {
-    networkHost.innerHTML = "";
-    networkHost.appendChild(createNetworkFeaturedVideo(NETWORK_FEATURED));
+function mountSharedNetworkFeaturedVideo() {
+  const homeHost = document.querySelector("#networkHomeFeaturedVideo");
+  if (homeHost) {
+    homeHost.innerHTML = "";
+    homeHost.appendChild(createNetworkFeaturedVideo(NETWORK_HOME_FEATURED));
   }
+}
+
+document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
 }
 
 document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
