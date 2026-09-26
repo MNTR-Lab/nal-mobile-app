@@ -8896,6 +8896,39 @@ body > .app,
   height:100% !important;
 }
 </style>
+
+<style id="nal-network-page-dual-player-fix">
+/* NAL Network HOME: two visible 16:9 players, LIVE left and featured VOD right. */
+#watchPage #networkPageFeaturedVideo.network-dual-player-grid{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:10px !important;
+  width:100% !important;
+  margin:0 !important;
+}
+#watchPage #networkPageFeaturedVideo .network-dual-player{
+  position:relative !important;
+  width:100% !important;
+  aspect-ratio:16 / 9 !important;
+  overflow:hidden !important;
+  background:#000 !important;
+}
+#watchPage #networkPageFeaturedVideo .network-dual-player iframe{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:100% !important;
+  min-height:100% !important;
+  border:0 !important;
+  display:block !important;
+}
+@media (max-width:700px){
+  #watchPage #networkPageFeaturedVideo.network-dual-player-grid{
+    grid-template-columns:1fr !important;
+  }
+}
+</style>
 </head>
 
 
@@ -9608,10 +9641,18 @@ body > .app,
       <section class="network-hub-section network-feature-section">
         <div class="network-section-kicker">FEATURED</div>
         <div class="network-feature-card">
-          <div id="networkPageFeaturedVideo">
-            <div style="position: relative; padding-bottom: 56.25%; margin-top: 25px; height: 0;">
+          <div id="networkPageFeaturedVideo" class="network-dual-player-grid">
+            <div class="network-dual-player">
               <iframe
-                style="position: absolute; height: 0px; width: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.lightcast.com/embed/player.php?id=72169&type=live"
+                frameborder="0"
+                allow="fullscreen; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="network-dual-player">
+              <iframe
                 referrerpolicy="no-referrer-when-downgrade"
                 src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
                 frameborder="0"
