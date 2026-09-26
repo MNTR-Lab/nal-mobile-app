@@ -1,22 +1,20 @@
-<!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 
 <meta
   name="viewport"
-  content="width=device-width, initial-scale=1.0"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
 
-<title>NAL Network</title>
+<meta name="theme-color" content="#07172b">
 
+<title>National Arena League</title>
 
 <style>
 
 /* =========================================================
-   RESET
+   GLOBAL
 ========================================================= */
 
 * {
@@ -25,669 +23,57 @@
   padding: 0;
 }
 
+:root {
+  --nal-blue: #07172b;
+  --nal-blue-light: #102b4e;
+  --nal-red: #e31b23;
+  --white: #ffffff;
+  --light: #f3f5f7;
+  --gray: #6d7682;
+  --border: #dfe3e8;
+  --black: #101419;
+
+  --nav-height: 80px;
+  --header-height: 72px;
+
+  /*
+     KEEP THIS AT 72PX.
+     This is the approved FootballShift article crop.
+  */
+  --footballshift-crop: 72px;
+}
+
 html,
 body {
-  width: 100%;
   min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #ffffff;
-  color: #101419;
+  background: #d9dde2;
+  color: var(--black);
 }
 
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
 
-/* =========================================================
-   NAL NETWORK PAGE
-========================================================= */
+button {
+  font-family: inherit;
+}
 
-.nal-network-page {
+.app {
   width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
   margin: 0 auto;
-  background: #ffffff;
-}
-
-
-/* =========================================================
-   NETWORK NAVIGATION
-========================================================= */
-
-.network-tabs {
-  width: calc(100% - 72px);
-  margin: 2px auto 0;
-
-  min-height: 56px;
-
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-
-  background: #07172b;
-
-  overflow: hidden;
-}
-
-.network-tab {
+  background: var(--light);
+  padding-bottom: var(--nav-height);
   position: relative;
-
-  min-height: 56px;
-
-  border: 0;
-
-  background: transparent;
-
-  color: #b8c4d4;
-
-  font-family: Arial, Helvetica, sans-serif;
-
-  font-size: 15px;
-  font-weight: 900;
-
-  letter-spacing: .4px;
-
-  text-transform: uppercase;
-
-  cursor: pointer;
-
-  transition:
-    color .18s ease,
-    background .18s ease;
+  overflow-x: hidden;
 }
-
-.network-tab:hover {
-  color: #ffffff;
-}
-
-.network-tab.active {
-  color: #ffffff;
-}
-
-.network-tab.active::after {
-  content: "";
-
-  position: absolute;
-
-  left: 12px;
-  bottom: 0;
-
-  width: 78px;
-  max-width: calc(100% - 24px);
-
-  height: 4px;
-
-  background: #e31b23;
-}
-
-
-/* =========================================================
-   TAB PANELS
-========================================================= */
-
-.network-tab-panel {
-  display: none;
-  width: 100%;
-}
-
-.network-tab-panel.active {
-  display: block;
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
-
-.network-home {
-  width: calc(100% - 100px);
-
-  margin: 18px auto 0;
-}
-
-
-/* =========================================================
-   INDEPENDENT LIGHTCAST 72124 PLAYER
-========================================================= */
-
-#nalNetworkFresh72124Section {
-  width: 100%;
-
-  margin: 0 auto 40px;
-}
-
-
-/* PLAYER LABEL */
-
-.nal-fresh-72124-label {
-  display: inline-block;
-
-  margin-left: 18px;
-  margin-bottom: 7px;
-
-  padding: 4px 8px;
-
-  background: #666666;
-
-  color: #ffffff;
-
-  font-size: 13px;
-  font-weight: 700;
-
-  line-height: 1;
-
-  box-shadow: 0 2px 4px rgba(0,0,0,.25);
-}
-
-
-/* PLAYER WRAPPER */
-
-.nal-fresh-72124-wrap {
-  position: relative;
-
-  width: 100%;
-
-  height: 0;
-
-  padding-bottom: 56.25%;
-
-  overflow: hidden;
-
-  background: #000000;
-}
-
-
-/* LIGHTCAST IFRAME */
-
-#nalFresh72124Player {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  min-width: 100%;
-  max-width: 100%;
-
-  min-height: 100%;
-  max-height: 100%;
-
-  border: 0;
-}
-
-
-/* =========================================================
-   OTHER NETWORK PANELS
-========================================================= */
-
-.network-content {
-  width: calc(100% - 100px);
-
-  margin: 22px auto 50px;
-}
-
-.network-section-header {
-  margin-bottom: 18px;
-}
-
-.network-section-header h2 {
-  color: #07172b;
-
-  font-size: 23px;
-  font-weight: 900;
-
-  letter-spacing: .4px;
-
-  text-transform: uppercase;
-}
-
-.network-section-header p {
-  margin-top: 5px;
-
-  color: #6d7682;
-
-  font-size: 13px;
-
-  line-height: 1.4;
-}
-
-
-/* =========================================================
-   TEMPORARY CONTENT BOXES
-========================================================= */
-
-.network-empty {
-  min-height: 180px;
-
-  border: 1px solid #dfe3e8;
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
-
-  padding: 30px;
-
-  background: #f7f8fa;
-}
-
-.network-empty strong {
-  color: #07172b;
-
-  font-size: 15px;
-  font-weight: 900;
-
-  text-transform: uppercase;
-}
-
-.network-empty span {
-  margin-top: 7px;
-
-  color: #6d7682;
-
-  font-size: 11px;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 700px) {
-
-  .network-tabs {
-    width: 100%;
-  }
-
-  .network-tab {
-    min-height: 54px;
-
-    padding: 0 5px;
-
-    font-size: 10px;
-  }
-
-  .network-tab.active::after {
-    left: 8px;
-
-    width: calc(100% - 16px);
-    max-width: none;
-  }
-
-  .network-home,
-  .network-content {
-    width: calc(100% - 24px);
-  }
-
-  .network-home {
-    margin-top: 14px;
-  }
-
-  .nal-fresh-72124-label {
-    margin-left: 8px;
-
-    font-size: 11px;
-  }
-
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<main class="nal-network-page">
-
-
-  <!-- =====================================================
-       NETWORK NAVIGATION
-  ====================================================== -->
-
-  <nav
-    class="network-tabs"
-    role="tablist"
-    aria-label="NAL Network Sections"
-  >
-
-    <button
-      class="network-tab active"
-      type="button"
-      data-network-tab="home"
-    >
-      HOME
-    </button>
-
-
-    <button
-      class="network-tab"
-      type="button"
-      data-network-tab="live"
-    >
-      LIVE GAMES
-    </button>
-
-
-    <button
-      class="network-tab"
-      type="button"
-      data-network-tab="teams"
-    >
-      TEAM CHANNELS
-    </button>
-
-
-    <button
-      class="network-tab"
-      type="button"
-      data-network-tab="shows"
-    >
-      SHOWS
-    </button>
-
-  </nav>
-
-
-
-  <!-- =====================================================
-       HOME
-  ====================================================== -->
-
-  <section
-    class="network-tab-panel active"
-    data-network-panel="home"
-  >
-
-    <div class="network-home">
-
-
-      <!-- =================================================
-           INDEPENDENT LIGHTCAST CHANNEL 72124
-
-           This player is intentionally isolated from the
-           old NAL Network player code.
-      ================================================== -->
-
-      <section id="nalNetworkFresh72124Section">
-
-
-        <div class="nal-fresh-72124-label">
-          Latest NAL Network Content
-        </div>
-
-
-        <div class="nal-fresh-72124-wrap">
-
-
-          <iframe
-            id="nalFresh72124Player"
-
-            src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
-
-            title="Latest NAL Network Content"
-
-            referrerpolicy="no-referrer-when-downgrade"
-
-            frameborder="0"
-
-            allow="fullscreen; picture-in-picture"
-
-            allowfullscreen>
-          </iframe>
-
-
-        </div>
-
-
-      </section>
-
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================================
-       LIVE GAMES
-  ====================================================== -->
-
-  <section
-    class="network-tab-panel"
-    data-network-panel="live"
-  >
-
-    <div class="network-content">
-
-
-      <div class="network-section-header">
-
-        <h2>
-          Live Games
-        </h2>
-
-        <p>
-          Watch live NAL action from across the league.
-        </p>
-
-      </div>
-
-
-      <div class="network-empty">
-
-        <strong>
-          Live Games
-        </strong>
-
-        <span>
-          Live game programming will appear here.
-        </span>
-
-      </div>
-
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================================
-       TEAM CHANNELS
-  ====================================================== -->
-
-  <section
-    class="network-tab-panel"
-    data-network-panel="teams"
-  >
-
-    <div class="network-content">
-
-
-      <div class="network-section-header">
-
-        <h2>
-          Team Channels
-        </h2>
-
-        <p>
-          Get all your favorite team content in one place.
-        </p>
-
-      </div>
-
-
-      <div class="network-empty">
-
-        <strong>
-          Team Channels
-        </strong>
-
-        <span>
-          NAL team channels will appear here.
-        </span>
-
-      </div>
-
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================================
-       SHOWS
-  ====================================================== -->
-
-  <section
-    class="network-tab-panel"
-    data-network-panel="shows"
-  >
-
-    <div class="network-content">
-
-
-      <div class="network-section-header">
-
-        <h2>
-          Shows
-        </h2>
-
-        <p>
-          NAL Network originals and recurring programming.
-        </p>
-
-      </div>
-
-
-      <div class="network-empty">
-
-        <strong>
-          NAL Network Shows
-        </strong>
-
-        <span>
-          Around the NAL, NAL Gameday, 5 in 5 and Coaches' Shows.
-        </span>
-
-      </div>
-
-
-    </div>
-
-  </section>
-
-
-</main>
-
-
-
-<script>
-
-/* =========================================================
-   NETWORK TAB NAVIGATION ONLY
-
-   IMPORTANT:
-   This script does NOT create, replace, reload,
-   or modify the Lightcast player.
-========================================================= */
-
-(function () {
-
-
-  const tabs =
-    document.querySelectorAll(
-      "[data-network-tab]"
-    );
-
-
-  const panels =
-    document.querySelectorAll(
-      "[data-network-panel]"
-    );
-
-
-
-  function switchNetworkTab(tabName) {
-
-
-    tabs.forEach(function (tab) {
-
-      const isActive =
-        tab.dataset.networkTab === tabName;
-
-
-      tab.classList.toggle(
-        "active",
-        isActive
-      );
-
-    });
-
-
-
-    panels.forEach(function (panel) {
-
-      const isActive =
-        panel.dataset.networkPanel === tabName;
-
-
-      panel.classList.toggle(
-        "active",
-        isActive
-      );
-
-    });
-
-
-
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant"
-    });
-
-
-  }
-
-
-
-  tabs.forEach(function (tab) {
-
-
-    tab.addEventListener(
-      "click",
-      function () {
-
-
-        switchNetworkTab(
-          tab.dataset.networkTab
-        );
-
-
-      }
-    );
-
-
-  });
-
-
-
-  window.switchNetworkTab =
-    switchNetworkTab;
-
-
-})();
-
-</script>
-
-
-</body>
-
-</html>
