@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta
@@ -9,6 +11,7 @@
 >
 
 <title>NAL Network</title>
+
 
 <style>
 
@@ -122,7 +125,6 @@ body {
 
 .network-tab-panel {
   display: none;
-
   width: 100%;
 }
 
@@ -234,9 +236,7 @@ body {
 
 
 /* =========================================================
-   PLACEHOLDER CONTENT
-   These are intentionally clean until the specific
-   Network content is connected below.
+   TEMPORARY CONTENT BOXES
 ========================================================= */
 
 .network-empty {
@@ -324,13 +324,16 @@ body {
   .network-player iframe {
     border-radius: 11px;
   }
+
 }
 
 </style>
+
 </head>
 
 
 <body>
+
 
 <main class="nal-network-page">
 
@@ -353,6 +356,7 @@ body {
       HOME
     </button>
 
+
     <button
       class="network-tab"
       type="button"
@@ -361,6 +365,7 @@ body {
       LIVE GAMES
     </button>
 
+
     <button
       class="network-tab"
       type="button"
@@ -368,6 +373,7 @@ body {
     >
       TEAM CHANNELS
     </button>
+
 
     <button
       class="network-tab"
@@ -392,22 +398,29 @@ body {
 
     <div class="network-home">
 
+
       <div class="network-home-label">
         Latest NAL Network Content
       </div>
 
 
+      <!-- =================================================
+           LIGHTCAST CHANNEL 72124
+      ================================================== -->
+
       <div class="network-player">
 
         <iframe
-          src="https://www.lightcast.com/embed/player.php?id=72119&type=vod"
+          src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
           title="Latest NAL Network Content"
           referrerpolicy="no-referrer-when-downgrade"
+          frameborder="0"
           allow="fullscreen; picture-in-picture"
           allowfullscreen>
         </iframe>
 
       </div>
+
 
     </div>
 
@@ -426,24 +439,32 @@ body {
 
     <div class="network-content">
 
+
       <div class="network-section-header">
-        <h2>Live Games</h2>
+
+        <h2>
+          Live Games
+        </h2>
 
         <p>
           Watch live NAL action from across the league.
         </p>
+
       </div>
 
 
       <div class="network-empty">
 
-        <strong>Live Games</strong>
+        <strong>
+          Live Games
+        </strong>
 
         <span>
           Live game programming will appear here.
         </span>
 
       </div>
+
 
     </div>
 
@@ -462,24 +483,32 @@ body {
 
     <div class="network-content">
 
+
       <div class="network-section-header">
-        <h2>Team Channels</h2>
+
+        <h2>
+          Team Channels
+        </h2>
 
         <p>
           Get all your favorite team content in one place.
         </p>
+
       </div>
 
 
       <div class="network-empty">
 
-        <strong>Team Channels</strong>
+        <strong>
+          Team Channels
+        </strong>
 
         <span>
           NAL team channels will appear here.
         </span>
 
       </div>
+
 
     </div>
 
@@ -498,18 +527,25 @@ body {
 
     <div class="network-content">
 
+
       <div class="network-section-header">
-        <h2>Shows</h2>
+
+        <h2>
+          Shows
+        </h2>
 
         <p>
           NAL Network originals and recurring programming.
         </p>
+
       </div>
 
 
       <div class="network-empty">
 
-        <strong>NAL Network Shows</strong>
+        <strong>
+          NAL Network Shows
+        </strong>
 
         <span>
           Around the NAL, NAL Gameday, 5 in 5 and Coaches' Shows.
@@ -517,12 +553,14 @@ body {
 
       </div>
 
+
     </div>
 
   </section>
 
 
 </main>
+
 
 
 <script>
@@ -533,19 +571,28 @@ body {
 
 (function () {
 
+
   const tabs =
-    document.querySelectorAll("[data-network-tab]");
+    document.querySelectorAll(
+      "[data-network-tab]"
+    );
+
 
   const panels =
-    document.querySelectorAll("[data-network-panel]");
+    document.querySelectorAll(
+      "[data-network-panel]"
+    );
+
 
 
   function switchNetworkTab(tabName) {
+
 
     tabs.forEach(function (tab) {
 
       const isActive =
         tab.dataset.networkTab === tabName;
+
 
       tab.classList.toggle(
         "active",
@@ -555,10 +602,12 @@ body {
     });
 
 
+
     panels.forEach(function (panel) {
 
       const isActive =
         panel.dataset.networkPanel === tabName;
+
 
       panel.classList.toggle(
         "active",
@@ -568,33 +617,42 @@ body {
     });
 
 
+
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: "instant"
     });
 
+
   }
 
 
+
   tabs.forEach(function (tab) {
+
 
     tab.addEventListener(
       "click",
       function () {
 
+
         switchNetworkTab(
           tab.dataset.networkTab
         );
 
+
       }
     );
+
 
   });
 
 
+
   window.switchNetworkTab =
     switchNetworkTab;
+
 
 })();
 
@@ -602,4 +660,5 @@ body {
 
 
 </body>
+
 </html>
