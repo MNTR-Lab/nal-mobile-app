@@ -139,9 +139,13 @@ body {
 
 .network-home {
   width: calc(100% - 100px);
-
   margin: 18px auto 0;
 }
+
+
+/* =========================================================
+   PLAYER LABEL
+========================================================= */
 
 .network-home-label {
   display: inline-block;
@@ -165,7 +169,8 @@ body {
 
 
 /* =========================================================
-   LIGHTCAST PLAYER
+   PLAYER 1
+   CURRENT PLAYER STRUCTURE
 ========================================================= */
 
 .network-player {
@@ -178,8 +183,6 @@ body {
   height: 0;
 
   overflow: hidden;
-
-  border-radius: 15px;
 
   background: #000000;
 }
@@ -194,8 +197,78 @@ body {
   height: 100%;
 
   border: 0;
+}
 
-  border-radius: 15px;
+
+/* =========================================================
+   SEPARATION BETWEEN PLAYERS
+========================================================= */
+
+.fresh-player-area {
+  margin-top: 35px;
+}
+
+
+/* =========================================================
+   PLAYER 2
+   COMPLETELY INDEPENDENT 72124 PLAYER
+========================================================= */
+
+#nalNetworkFresh72124Section {
+  width: 100%;
+  margin: 0 auto 40px;
+}
+
+.nal-fresh-72124-label {
+  display: inline-block;
+
+  margin-left: 18px;
+  margin-bottom: 7px;
+
+  padding: 4px 8px;
+
+  background: #666666;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  box-shadow: 0 2px 4px rgba(0,0,0,.25);
+}
+
+.nal-fresh-72124-wrap {
+  position: relative;
+
+  width: 100%;
+
+  height: 0;
+
+  padding-bottom: 56.25%;
+
+  overflow: hidden;
+
+  background: #000000;
+}
+
+#nalFresh72124Player {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  min-width: 100%;
+  max-width: 100%;
+
+  min-height: 100%;
+  max-height: 100%;
+
+  border: 0;
 }
 
 
@@ -243,8 +316,6 @@ body {
   min-height: 180px;
 
   border: 1px solid #dfe3e8;
-
-  border-radius: 12px;
 
   display: flex;
   flex-direction: column;
@@ -311,18 +382,15 @@ body {
     margin-top: 14px;
   }
 
-  .network-home-label {
+  .network-home-label,
+  .nal-fresh-72124-label {
     margin-left: 8px;
 
     font-size: 11px;
   }
 
-  .network-player {
-    border-radius: 11px;
-  }
-
-  .network-player iframe {
-    border-radius: 11px;
+  .fresh-player-area {
+    margin-top: 25px;
   }
 
 }
@@ -399,25 +467,62 @@ body {
     <div class="network-home">
 
 
+      <!-- =================================================
+           PLAYER 1
+           CURRENT PLAYER
+      ================================================== -->
+
       <div class="network-home-label">
-        Latest NAL Network Content
+        Current Player
       </div>
 
-
-      <!-- =================================================
-           LIGHTCAST CHANNEL 72124
-      ================================================== -->
 
       <div class="network-player">
 
         <iframe
           src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
-          title="Latest NAL Network Content"
+          title="NAL Network Channel 72124"
           referrerpolicy="no-referrer-when-downgrade"
           frameborder="0"
           allow="fullscreen; picture-in-picture"
           allowfullscreen>
         </iframe>
+
+      </div>
+
+
+
+      <!-- =================================================
+           PLAYER 2
+           BRAND NEW / INDEPENDENT PLAYER
+      ================================================== -->
+
+      <div class="fresh-player-area">
+
+        <section id="nalNetworkFresh72124Section">
+
+
+          <div class="nal-fresh-72124-label">
+            New Independent 72124 Player
+          </div>
+
+
+          <div class="nal-fresh-72124-wrap">
+
+            <iframe
+              id="nalFresh72124Player"
+              src="https://www.lightcast.com/embed/player.php?id=72124&type=vod"
+              title="NAL Network Independent Channel 72124"
+              referrerpolicy="no-referrer-when-downgrade"
+              frameborder="0"
+              allow="fullscreen; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+
+          </div>
+
+
+        </section>
 
       </div>
 
@@ -566,7 +671,10 @@ body {
 <script>
 
 /* =========================================================
-   NAL NETWORK TAB NAVIGATION
+   NETWORK TAB NAVIGATION ONLY
+
+   IMPORTANT:
+   This script does NOT touch either Lightcast player.
 ========================================================= */
 
 (function () {
@@ -615,7 +723,6 @@ body {
       );
 
     });
-
 
 
     window.scrollTo({
