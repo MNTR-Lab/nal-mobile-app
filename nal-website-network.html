@@ -8908,6 +8908,41 @@ body > .app,
  #watchPage .nal-landing-arrow{grid-column:3;grid-row:1/3;margin:0;}
 }
 </style>
+
+<style id="nal-network-buttons-20-percent-larger">
+/* Requested: make LIVE GAMES watch-action button and HOME destination buttons 20% larger */
+#watchPage .nal-game-watch-button{
+  min-height:52px;
+  border-radius:12px;
+  gap:10px;
+  font-size:13.2px;
+}
+#watchPage .nal-game-watch-play{font-size:15.6px;}
+
+#watchPage .nal-landing-destination{
+  padding:17px 17px 16px;
+  border-radius:10px;
+}
+#watchPage .nal-landing-destination-icon{
+  width:34px;
+  height:34px;
+  margin-bottom:13px;
+  font-size:12px;
+}
+#watchPage .nal-landing-destination strong{font-size:12px;}
+#watchPage .nal-landing-destination small{margin-top:5px;font-size:9.6px;}
+#watchPage .nal-landing-arrow{margin-top:14px;font-size:8.4px;}
+@media(max-width:700px){
+  #watchPage .nal-landing-destination{
+    grid-template-columns:46px 1fr auto;
+    column-gap:12px;
+    padding:17px;
+  }
+  #watchPage .nal-landing-destination-icon{margin:0;}
+  #watchPage .nal-landing-destination small{margin-top:2px;}
+  #watchPage .nal-landing-arrow{margin:0;}
+}
+</style>
 </head>
 
 
