@@ -8691,7 +8691,10 @@ body #fanPage{
   body #fanForumThreadPage,
   body #fanPollPage,
   body #fanGalleryPage,
-  body #fanUploadPage{
+  body #fanUploadPage,
+  body #fanAccountPage,
+  body #fanTermsPage,
+  body #fanGuidelinesPage{
     width:calc(100% - 32px) !important;
     max-width:1400px !important;
     margin-left:auto !important;
@@ -8705,7 +8708,10 @@ body #fanPage{
   body #fanForumThreadPage > *,
   body #fanPollPage > *,
   body #fanGalleryPage > *,
-  body #fanUploadPage > *{
+  body #fanUploadPage > *,
+  body #fanAccountPage > *,
+  body #fanTermsPage > *,
+  body #fanGuidelinesPage > *{
     width:100% !important;
     max-width:1100px !important;
     margin-left:auto !important;
@@ -8719,7 +8725,10 @@ body #fanPage{
   body #fanForumThreadPage,
   body #fanPollPage,
   body #fanGalleryPage,
-  body #fanUploadPage{
+  body #fanUploadPage,
+  body #fanAccountPage,
+  body #fanTermsPage,
+  body #fanGuidelinesPage{
     width:calc(100% - 40px) !important;
     margin-left:auto !important;
     margin-right:auto !important;
@@ -8732,11 +8741,31 @@ body #fanPage{
   body #fanForumThreadPage,
   body #fanPollPage,
   body #fanGalleryPage,
-  body #fanUploadPage{
+  body #fanUploadPage,
+  body #fanAccountPage,
+  body #fanTermsPage,
+  body #fanGuidelinesPage{
     width:100% !important;
     max-width:none !important;
     margin:0 !important;
   }
+}
+
+/* Website account/login page used by Fan Forum Start a Conversation. */
+#fanAccountPage .fan-account-shell{
+  width:min(560px, calc(100% - 32px)) !important;
+  max-width:560px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+#fanAccountPage .fan-account-card{
+  display:block !important;
+  background:#fff !important;
+  color:#07172b !important;
+}
+#fanAccountPage .fan-account-form{
+  display:block;
+  background:#fff;
 }
 </style>
 
@@ -8750,7 +8779,10 @@ body #fanForumCategoryPage,
 body #fanForumThreadPage,
 body #fanPollPage,
 body #fanGalleryPage,
-body #fanUploadPage{
+body #fanUploadPage,
+body #fanAccountPage,
+body #fanTermsPage,
+body #fanGuidelinesPage{
   box-sizing:border-box;
 }
 </style>
@@ -17749,7 +17781,7 @@ function getCurrentVisibleAppPageId(){
   return visible?.id || "homePage";
 }
 
-async function openFanAccount(){
+async async function openFanAccount(){
   nalAccountReturnPageId = getCurrentVisibleAppPageId();
 
   document.querySelectorAll(".app-page").forEach(page => {
