@@ -17307,7 +17307,13 @@ async function loadFanZoneMediaSlideshow(){
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadFanZoneMediaSlideshow);
+document.addEventListener("DOMContentLoaded", () => {
+  loadFanZoneMediaSlideshow();
+
+  /* Re-check the approved fan-media feed every 60 seconds so
+     newly approved photos can appear without a page refresh. */
+  setInterval(loadFanZoneMediaSlideshow, 60000);
+});
 
 
 /* =========================================================
