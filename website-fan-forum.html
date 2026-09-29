@@ -4476,7 +4476,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
   z-index:1;
   margin:4px 0 7px;
   color:#fff;
-  font-size:34px;
+  font-size:37.4px;
   line-height:1;
   font-style:normal;
   font-weight:1000;
@@ -4517,7 +4517,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 .fan-zone-secondary .fan-zone-card{min-height:175px;background:linear-gradient(145deg,#0d2745,#07172b);}
 .fan-zone-powered{min-height:58px;margin-top:22px;padding-top:17px;border-top:1px solid #29496a;display:flex;align-items:center;justify-content:center;gap:9px;color:#94a6b8;font-size:9px;font-weight:900;letter-spacing:1px;}
 .fan-zone-powered img{height:23px;width:auto;max-width:100px;object-fit:contain;}
-@media(max-width:520px){.fan-zone-shell{padding:18px 12px 24px}.fan-zone-header h1{font-size:34px}.fan-zone-poll-card{min-height:290px;padding:19px}.fan-zone-grid{gap:9px}.fan-zone-card{min-height:220px;padding:15px}.fan-zone-card h3{font-size:16px}.fan-zone-forum{padding:17px;gap:12px}}
+@media(max-width:520px){.fan-zone-shell{padding:18px 12px 24px}.fan-zone-header h1{font-size:37.4px}.fan-zone-poll-card{min-height:290px;padding:19px}.fan-zone-grid{gap:9px}.fan-zone-card{min-height:220px;padding:15px}.fan-zone-card h3{font-size:16px}.fan-zone-forum{padding:17px;gap:12px}}
 
 
 
@@ -8776,51 +8776,26 @@ body > .app,
 </style>
 
 
-<style id="fan-zone-body-text-15-percent">
-/* Fan Zone website: increase supporting/non-header text by 15%. */
-#fanPage .fan-zone-header p,
-#fanPage .fan-zone-tag,
-#fanPage .fan-zone-poll-card p,
-#fanPage .fan-zone-action,
-#fanPage .fan-zone-card p,
-#fanPage .fan-zone-link,
-#fanPage .fan-zone-forum-copy small,
-#fanPage .fan-zone-forum-copy > span,
-#fanPage .fan-zone-forum-copy em,
-#fanPage .fan-zone-powered,
-#fanPage .fan-photo-week-heading > div > span,
-#fanPage .fan-photo-week-badge,
-#fanPage .fan-photo-week-placeholder small,
-#fanPage .fan-photo-week-team,
-#fanPage .fan-photo-week-info p,
-#fanPage .fan-photo-submit-button,
-#fanPage .fan-zone-photo-submit-kicker,
-#fanPage .fan-zone-photo-submit-copy small,
-#fanPage .fan-zone-photo-submit-action,
-#fanPage .fan-zone-polls-banner-copy small,
-#fanPage .fan-zone-polls-banner-action,
-#fanPage .fan-zone-media-view-all,
-#fanPage .fan-zone-media-slide-placeholder small,
-#fanUploadPage .fan-upload-back,
-#fanUploadPage .fan-upload-kicker,
-#fanUploadPage .fan-upload-head p,
-#fanUploadPage .fan-upload-note,
-#fanGalleryPage .fan-gallery-back,
-#fanGalleryPage .fan-gallery-kicker,
-#fanGalleryPage .fan-media-item-copy p,
-#fanForumPage p,
-#fanForumPage small,
-#fanForumPage em,
-#fanForumCategoryPage p,
-#fanForumCategoryPage small,
-#fanForumCategoryPage em,
-#fanForumThreadPage p,
-#fanForumThreadPage small,
-#fanForumThreadPage em,
-#fanPollPage p,
-#fanPollPage small,
-#fanPollPage em {
-  font-size: 115% !important;
+<style id="fan-zone-matching-heading-size">
+/* Final Fan Zone title sizing adjustments. */
+#fanPage .fan-zone-header .fan-zone-kicker{
+  font-size:9px !important; /* matches NAL COMMUNITY */
+}
+#fanPage .fan-zone-header h1{
+  font-size:37.4px !important; /* 10% larger than 34px */
+}
+
+/* Match requested Fan Zone feature titles to the current FAN ZONE heading size. */
+#fanPage .fan-zone-forum-copy strong,
+#fanPage .fan-zone-photo-submit-copy strong,
+#fanPage .fan-zone-card h3:first-child,
+#fanPage .fan-zone-polls-banner-copy strong{
+  font-size:27.54px !important;
+}
+
+/* PICK 'EM uses an h3 after its icon, so target that card directly. */
+#fanPage .fan-zone-card[onclick*="pickem"] h3{
+  font-size:27.54px !important;
 }
 </style>
 </head>
