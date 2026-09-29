@@ -8834,6 +8834,10 @@ body > .app,
 <style id="fan-account-website-modal-demo">
 /* Website Fan Account modal: keeps the Fan Forum visible behind authentication. */
 #fanAccountPage.fan-account-modal-open{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
   position:fixed !important;
   inset:0 !important;
   z-index:100000 !important;
@@ -17822,11 +17826,21 @@ async function openFanAccount(){
   nalAccountReturnPageId = getCurrentVisibleAppPageId();
 
   const page = document.getElementById("fanAccountPage");
-  if (page){
-    page.style.display = "block";
-    page.classList.add("active", "fan-account-modal-open");
+  if (!page) {
+    console.error("NAL Fan Account page was not found.");
+    return;
   }
 
+  // Website version: place authentication directly under BODY so the
+  // standalone .app-page page-switching rules cannot hide the login modal.
+  if (page.parentElement !== document.body) {
+    document.body.appendChild(page);
+  }
+
+  page.classList.add("active", "fan-account-modal-open");
+  page.style.setProperty("display", "block", "important");
+  page.style.setProperty("visibility", "visible", "important");
+  page.style.setProperty("opacity", "1", "important");
   document.body.classList.add("fan-account-overlay-active");
 
   if (nalAccountUser){
@@ -17841,7 +17855,7 @@ function closeFanAccount(){
   const accountPage = document.getElementById("fanAccountPage");
   if (accountPage){
     accountPage.classList.remove("active", "fan-account-modal-open");
-    accountPage.style.display = "none";
+    accountPage.style.setProperty("display", "none", "important");
   }
   document.body.classList.remove("fan-account-overlay-active");
 
