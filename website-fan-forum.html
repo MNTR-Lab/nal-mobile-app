@@ -8830,6 +8830,41 @@ body > .app,
   font-size:27.54px !important;
 }
 </style>
+
+<style id="fan-account-website-modal-demo">
+/* Website Fan Account modal: keeps the Fan Forum visible behind authentication. */
+#fanAccountPage.fan-account-modal-open{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:100000 !important;
+  width:100% !important;
+  max-width:none !important;
+  height:100vh !important;
+  overflow-y:auto !important;
+  padding:32px 16px !important;
+  background:rgba(3,12,23,.86) !important;
+  backdrop-filter:blur(5px);
+}
+#fanAccountPage.fan-account-modal-open .fan-account-shell{
+  width:min(620px,100%) !important;
+  max-width:620px !important;
+  margin:0 auto !important;
+}
+#fanAccountPage.fan-account-modal-open .fan-account-card{
+  display:block !important;
+  background:#fff !important;
+  color:#07172b !important;
+  border-radius:18px !important;
+  box-shadow:0 24px 70px rgba(0,0,0,.38) !important;
+}
+#fanAccountPage.fan-account-modal-open .fan-account-form[hidden],
+#fanAccountPage.fan-account-modal-open .fan-account-state[hidden],
+#fanAccountPage.fan-account-modal-open .fan-member-dashboard[hidden]{display:none !important;}
+body.fan-account-overlay-active{overflow:hidden !important;}
+@media(max-width:640px){
+  #fanAccountPage.fan-account-modal-open{padding:14px 10px !important;}
+}
+</style>
 </head>
 
 
@@ -16998,6 +17033,7 @@ async function submitNalForumReply(){
 
 async function openNalForumComposer(){
   if (!nalAccountUser){
+    nalAccountPendingAction = "forum-composer";
     await openFanAccount();
     return;
   }
@@ -17702,6 +17738,7 @@ let nalAccountClient = null;
 let nalAccountUser = null;
 let nalAccountProfile = null;
 let nalAccountReturnPageId = "homePage";
+let nalAccountPendingAction = null;
 
 function getNalAccountClient(){
   if (nalAccountClient) return nalAccountClient;
@@ -17784,18 +17821,13 @@ function getCurrentVisibleAppPageId(){
 async function openFanAccount(){
   nalAccountReturnPageId = getCurrentVisibleAppPageId();
 
-  document.querySelectorAll(".app-page").forEach(page => {
-    page.classList.remove("active");
-    page.style.display = "none";
-  });
-
   const page = document.getElementById("fanAccountPage");
   if (page){
     page.style.display = "block";
-    page.classList.add("active");
+    page.classList.add("active", "fan-account-modal-open");
   }
 
-  window.scrollTo(0,0);
+  document.body.classList.add("fan-account-overlay-active");
 
   if (nalAccountUser){
     await loadNalFanProfile(nalAccountUser);
@@ -17808,9 +17840,10 @@ async function openFanAccount(){
 function closeFanAccount(){
   const accountPage = document.getElementById("fanAccountPage");
   if (accountPage){
-    accountPage.classList.remove("active");
+    accountPage.classList.remove("active", "fan-account-modal-open");
     accountPage.style.display = "none";
   }
+  document.body.classList.remove("fan-account-overlay-active");
 
   const returnPage = document.getElementById(nalAccountReturnPageId) || document.getElementById("homePage");
   if (returnPage){
@@ -18047,6 +18080,18 @@ function updateHeaderAccountState(){
   button.setAttribute("aria-label","Open your NAL Fan Account");
 }
 
+async function completeNalAccountPendingAction(){
+  const action = nalAccountPendingAction;
+  nalAccountPendingAction = null;
+  if (!action) return;
+
+  closeFanAccount();
+
+  if (action === "forum-composer") {
+    setTimeout(() => { openNalForumComposer(); }, 80);
+  }
+}
+
 async function initializeNalFanAccount(){
   try{
     const client = getNalAccountClient();
@@ -18174,6 +18219,7 @@ document.getElementById("fanSignInForm")?.addEventListener("submit", async funct
     nalAccountUser = data.user;
     await loadNalFanProfile(data.user);
     setFanAccountView("profile");
+    await completeNalAccountPendingAction();
   } catch(error){
     setFanAccountMessage(error?.message || "We could not sign you in. Check your email and password.", true);
   } finally{
@@ -18256,6 +18302,7 @@ document.getElementById("fanSignUpForm")?.addEventListener("submit", async funct
       nalAccountUser = data.user;
       await loadNalFanProfile(data.user);
       setFanAccountView("profile");
+      await completeNalAccountPendingAction();
     } else {
       setFanAccountView("checkemail");
     }
