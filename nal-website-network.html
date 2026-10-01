@@ -19860,16 +19860,17 @@ function closeLightcastTest(){
   function logoForTeam(name){
     const slug = slugForTeam(name);
 
-    /* Use the same approved clear-PNG source as the rest of the NAL app. */
-    if (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug]) {
-      return TEAM_LOGO_OVERRIDES[slug];
-    }
-
+    /* Live Games must use the team's actual logo, not Network/team-channel artwork. */
     if (slug && typeof nalTeams !== "undefined" && Array.isArray(nalTeams)) {
       const team = nalTeams.find(item => item.slug === slug);
-      if (team && typeof getTeamLogo === "function") {
-        return getTeamLogo(team);
+      if (team && team.logo) {
+        return team.logo;
       }
+    }
+
+    /* Fallback only if the team data has not loaded or has no logo value. */
+    if (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug]) {
+      return TEAM_LOGO_OVERRIDES[slug];
     }
 
     return typeof NAL_LOGO !== "undefined" ? NAL_LOGO : "";
