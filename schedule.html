@@ -1,1 +1,300 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2027 NAL Schedule</title>
+<style>
+:root{
+  --navy:#07172b;
+  --navy2:#0c2340;
+  --red:#c51f2f;
+  --white:#fff;
+  --light:#f2f4f7;
+  --muted:#667085;
+  --line:#d9dee7;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#eef1f5;
+  color:var(--navy);
+}
+.hero{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:white;
+  padding:48px 20px 42px;
+  text-align:center;
+  border-bottom:6px solid var(--red);
+}
+.hero .league{
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:3px;
+  opacity:.78;
+  margin-bottom:8px;
+}
+.hero h1{
+  margin:0;
+  font-size:clamp(36px,7vw,72px);
+  line-height:.95;
+  font-weight:1000;
+  letter-spacing:-2px;
+}
+.hero .sub{
+  margin-top:12px;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+.wrap{
+  width:min(1120px,calc(100% - 28px));
+  margin:28px auto 50px;
+}
+.status{
+  background:white;
+  border:1px solid var(--line);
+  padding:18px;
+  text-align:center;
+  font-size:13px;
+  font-weight:800;
+  color:var(--muted);
+  border-radius:10px;
+}
+.schedule{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px;
+}
+.week{
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 16px rgba(7,23,43,.08);
+  border:1px solid #e4e7ec;
+}
+.week-head{
+  background:var(--navy);
+  color:white;
+  padding:14px 17px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  border-top:4px solid var(--red);
+}
+.week-head b{
+  font-size:20px;
+  letter-spacing:.5px;
+}
+.week-range{
+  font-size:11px;
+  font-weight:800;
+  opacity:.75;
+}
+.game{
+  padding:18px 18px 16px;
+  border-top:1px solid #edf0f4;
+}
+.game:first-of-type{border-top:0}
+.game-date{
+  color:var(--red);
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:1.2px;
+  margin-bottom:9px;
+}
+.matchup{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:12px;
+}
+.team{
+  font-size:17px;
+  line-height:1.15;
+  font-weight:1000;
+}
+.team.home{text-align:right}
+.at{
+  font-size:12px;
+  font-weight:1000;
+  color:#98a2b3;
+}
+.place{
+  margin-top:10px;
+  font-size:11px;
+  font-weight:700;
+  color:var(--muted);
+  text-align:center;
+}
+.empty{
+  padding:22px;
+  text-align:center;
+  color:var(--muted);
+  font-weight:800;
+}
+@media(max-width:720px){
+  .hero{padding:36px 16px 32px}
+  .schedule{grid-template-columns:1fr}
+  .wrap{width:min(100% - 20px,1120px);margin-top:18px}
+  .team{font-size:16px}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="league">NATIONAL ARENA LEAGUE</div>
+  <h1>2027 SCHEDULE</h1>
+  <div class="sub">WEEK BY WEEK</div>
+</header>
+
+<main class="wrap">
+  <div id="loading" class="status">LOADING 2027 NAL SCHEDULE…</div>
+  <section id="schedule" class="schedule" hidden></section>
+</main>
+
+<script>
+/*
+  Standalone NAL schedule splash page.
+  Uses the SAME feed already used by the Watch NAL Network / Live Games page.
+*/
+const LIVE_GAMES_FEED = "data/live-games.json";
+
+function esc(v){
+  return String(v ?? "")
+    .replaceAll("&","&amp;").replaceAll("<","&lt;")
+    .replaceAll(">","&gt;").replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function parseMatchup(title){
+  const parts = String(title || "").split(/\s+vs\.?\s+/i);
+  if(parts.length >= 2){
+    return {away:parts[0].trim(), home:parts.slice(1).join(" vs ").trim()};
+  }
+  const atParts = String(title || "").split(/\s+at\s+/i);
+  if(atParts.length >= 2){
+    return {away:atParts[0].trim(), home:atParts.slice(1).join(" at ").trim()};
+  }
+  return {away:String(title || "NAL GAME"), home:""};
+}
+
+function gameDate(game){
+  const raw = game.start_time_utc || game.datetime || game.start_time || game.date;
+  if(!raw) return null;
+  const d = new Date(raw);
+  return isNaN(d) ? null : d;
+}
+
+function easternParts(date){
+  const parts = new Intl.DateTimeFormat("en-US",{
+    timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"
+  }).formatToParts(date).reduce((o,p)=>(o[p.type]=p.value,o),{});
+  return {year:+parts.year,month:+parts.month,day:+parts.day};
+}
+
+function weekKey(game){
+  const d=gameDate(game);
+  if(!d) return "9999-99-99";
+  const p=easternParts(d);
+  const noon=new Date(Date.UTC(p.year,p.month-1,p.day,12));
+  const weekday=new Intl.DateTimeFormat("en-US",{
+    timeZone:"America/New_York",weekday:"short"
+  }).format(noon);
+  const idx=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(weekday);
+  const mondayOffset=(idx+6)%7;
+  const monday=new Date(Date.UTC(p.year,p.month-1,p.day-mondayOffset,12));
+  return monday.toISOString().slice(0,10);
+}
+
+function groupWeeks(games){
+  const sorted=[...games].filter(g=>gameDate(g))
+    .sort((a,b)=>gameDate(a)-gameDate(b));
+  const map=new Map();
+  sorted.forEach(g=>{
+    const key=weekKey(g);
+    if(!map.has(key)) map.set(key,[]);
+    map.get(key).push(g);
+  });
+  return [...map.entries()].map(([key,games],i)=>({key,number:i+1,games}));
+}
+
+function weekRange(key){
+  const p=key.split("-").map(Number);
+  const monday=new Date(Date.UTC(p[0],p[1]-1,p[2],12));
+  const sunday=new Date(monday); sunday.setUTCDate(sunday.getUTCDate()+6);
+  const fmt=d=>d.toLocaleDateString("en-US",{month:"short",day:"numeric",timeZone:"UTC"}).toUpperCase();
+  return `${fmt(monday)} – ${fmt(sunday)}`;
+}
+
+function dateLabel(game){
+  const d=gameDate(game);
+  if(!d) return "";
+  const date=d.toLocaleDateString("en-US",{
+    timeZone:"America/New_York",weekday:"long",month:"long",day:"numeric"
+  }).toUpperCase();
+  const time=d.toLocaleTimeString("en-US",{
+    timeZone:"America/New_York",hour:"numeric",minute:"2-digit"
+  });
+  return `${date} • ${time} ET`;
+}
+
+function gameMarkup(game){
+  const m=parseMatchup(game.title || game.name);
+  const place=game.description || game.venue || game.location || "";
+  return `
+    <div class="game">
+      <div class="game-date">${esc(dateLabel(game))}</div>
+      <div class="matchup">
+        <div class="team">${esc(m.away)}</div>
+        <div class="at">@</div>
+        <div class="team home">${esc(m.home)}</div>
+      </div>
+      ${place ? `<div class="place">${esc(place)}</div>` : ""}
+    </div>`;
+}
+
+function render(games){
+  const root=document.getElementById("schedule");
+  const loading=document.getElementById("loading");
+  const groups=groupWeeks(games);
+
+  if(!groups.length){
+    loading.textContent="2027 SCHEDULE COMING SOON";
+    return;
+  }
+
+  root.innerHTML=groups.map(group=>`
+    <article class="week">
+      <div class="week-head">
+        <b>WEEK ${group.number}</b>
+        <span class="week-range">${esc(weekRange(group.key))}</span>
+      </div>
+      ${group.games.map(gameMarkup).join("")}
+    </article>
+  `).join("");
+
+  loading.hidden=true;
+  root.hidden=false;
+}
+
+async function loadSchedule(){
+  try{
+    const response=await fetch(`${LIVE_GAMES_FEED}?v=${Date.now()}`,{cache:"no-store"});
+    if(!response.ok) throw new Error("Unable to load schedule feed");
+    const data=await response.json();
+    const games=Array.isArray(data) ? data : (Array.isArray(data.games) ? data.games : []);
+    render(games);
+  }catch(err){
+    console.error(err);
+    document.getElementById("loading").textContent="SCHEDULE CURRENTLY UNAVAILABLE";
+  }
+}
+
+loadSchedule();
+</script>
+</body>
+</html>
