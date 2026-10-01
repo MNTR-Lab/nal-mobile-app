@@ -85,13 +85,13 @@ body{
   border-top:4px solid var(--red);
 }
 .week-head b{
-  font-size:20px;
+  font-size:26px;
   letter-spacing:.5px;
 }
 .week-range{
-  font-size:11px;
+  font-size:14px;
   font-weight:800;
-  opacity:.75;
+  opacity:.82;
 }
 .game{
   padding:18px 18px 16px;
@@ -100,9 +100,9 @@ body{
 .game:first-of-type{border-top:0}
 .game-date{
   color:var(--red);
-  font-size:11px;
+  font-size:15px;
   font-weight:1000;
-  letter-spacing:1.2px;
+  letter-spacing:1.1px;
   margin-bottom:9px;
 }
 .matchup{
@@ -138,21 +138,21 @@ body{
   border:1px solid #e4e7ec;
 }
 .team{
-  font-size:17px;
+  font-size:22px;
   line-height:1.15;
   font-weight:1000;
   text-align:center;
 }
 .at{
-  font-size:12px;
+  font-size:16px;
   font-weight:1000;
-  color:#98a2b3;
+  color:#7c8798;
 }
 .place{
   margin-top:10px;
-  font-size:11px;
+  font-size:14px;
   font-weight:700;
-  color:var(--muted);
+  color:#536176;
   text-align:center;
 }
 .empty{
@@ -227,15 +227,37 @@ function parseMatchup(title){
   return {away:String(title || "NAL GAME"), home:""};
 }
 
+function utcDate(value){
+  if(!value) return null;
+  const raw=String(value).trim();
+  const date=new Date(/[zZ]|[+-]\d\d:\d\d$/.test(raw) ? raw : raw + "Z");
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+const TEAM_TIMEZONES = {
+  "pueblo punishers":"America/Denver",
+  "colorado spartans":"America/Denver",
+  "dallas apex":"America/Chicago",
+  "omaha beef":"America/Chicago",
+  "sioux city bandits":"America/Chicago",
+  "salina liberty":"America/Chicago",
+  "southwest kansas storm":"America/Chicago",
+  "amarillo warbirds":"America/Chicago",
+  "louisiana rouxgaroux":"America/Chicago",
+  "wheeling miners":"America/New_York"
+};
+
+function gameTimeZone(game){
+  const matchup=parseMatchup(game && (game.title || game.name));
+  return TEAM_TIMEZONES[normalizeName(matchup.home)] || "America/New_York";
+}
+
 function gameDate(game){
-  const raw = game.start_time_utc || game.datetime || game.start_time || game.date;
-  if(!raw) return null;
-  const d = new Date(raw);
-  return isNaN(d) ? null : d;
+  return utcDate(game.start_time_utc || game.datetime || game.start_time || game.date);
 }
 
 function easternParts(date){
-  const parts = new Intl.DateTimeFormat("en-US",{
+  const parts=new Intl.DateTimeFormat("en-US",{
     timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"
   }).formatToParts(date).reduce((o,p)=>(o[p.type]=p.value,o),{});
   return {year:+parts.year,month:+parts.month,day:+parts.day};
@@ -278,13 +300,14 @@ function weekRange(key){
 function dateLabel(game){
   const d=gameDate(game);
   if(!d) return "";
+  const tz=gameTimeZone(game);
   const date=d.toLocaleDateString("en-US",{
-    timeZone:"America/New_York",weekday:"long",month:"long",day:"numeric"
+    timeZone:tz,weekday:"long",month:"long",day:"numeric"
   }).toUpperCase();
   const time=d.toLocaleTimeString("en-US",{
-    timeZone:"America/New_York",hour:"numeric",minute:"2-digit"
-  });
-  return `${date} • ${time} ET`;
+    timeZone:tz,hour:"numeric",minute:"2-digit",timeZoneName:"short"
+  }).toUpperCase();
+  return `${date} • ${time}`;
 }
 
 function teamBlock(name){
