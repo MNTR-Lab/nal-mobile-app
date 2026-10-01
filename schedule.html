@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -112,12 +111,38 @@ body{
   align-items:center;
   gap:12px;
 }
+.team-side{
+  min-width:0;
+  text-align:center;
+}
+.team-logo{
+  height:86px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:10px;
+}
+.team-logo img{
+  display:block;
+  max-width:96px;
+  max-height:82px;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+}
+.team-logo-placeholder{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:#f2f4f7;
+  border:1px solid #e4e7ec;
+}
 .team{
   font-size:17px;
   line-height:1.15;
   font-weight:1000;
+  text-align:center;
 }
-.team.home{text-align:right}
 .at{
   font-size:12px;
   font-weight:1000;
@@ -162,6 +187,26 @@ body{
   Uses the SAME feed already used by the Watch NAL Network / Live Games page.
 */
 const LIVE_GAMES_FEED = "data/live-games.json";
+const TEAMS_FEED = "data/teams.json";
+let teamLogoMap = {};
+
+function normalizeName(v){
+  return String(v || "").trim().toLowerCase().replace(/\s+/g," ");
+}
+
+function buildTeamLogoMap(teams){
+  teamLogoMap = {};
+  (Array.isArray(teams) ? teams : []).forEach(team=>{
+    const names = [team.name, team.team_name, team.title].filter(Boolean);
+    names.forEach(name=>{
+      if(team.logo) teamLogoMap[normalizeName(name)] = team.logo;
+    });
+  });
+}
+
+function logoForTeam(name){
+  return teamLogoMap[normalizeName(name)] || "";
+}
 
 function esc(v){
   return String(v ?? "")
@@ -242,6 +287,17 @@ function dateLabel(game){
   return `${date} • ${time} ET`;
 }
 
+function teamBlock(name){
+  const logo=logoForTeam(name);
+  return `<div class="team-side">
+    <div class="team-logo">${logo
+      ? `<img src="${esc(logo)}" alt="${esc(name)} logo">`
+      : `<div class="team-logo-placeholder" aria-hidden="true"></div>`}
+    </div>
+    <div class="team">${esc(name)}</div>
+  </div>`;
+}
+
 function gameMarkup(game){
   const m=parseMatchup(game.title || game.name);
   const place=game.description || game.venue || game.location || "";
@@ -249,9 +305,9 @@ function gameMarkup(game){
     <div class="game">
       <div class="game-date">${esc(dateLabel(game))}</div>
       <div class="matchup">
-        <div class="team">${esc(m.away)}</div>
+        ${teamBlock(m.away)}
         <div class="at">@</div>
-        <div class="team home">${esc(m.home)}</div>
+        ${teamBlock(m.home)}
       </div>
       ${place ? `<div class="place">${esc(place)}</div>` : ""}
     </div>`;
@@ -283,10 +339,21 @@ function render(games){
 
 async function loadSchedule(){
   try{
-    const response=await fetch(`${LIVE_GAMES_FEED}?v=${Date.now()}`,{cache:"no-store"});
-    if(!response.ok) throw new Error("Unable to load schedule feed");
-    const data=await response.json();
-    const games=Array.isArray(data) ? data : (Array.isArray(data.games) ? data.games : []);
+    const [gamesResponse,teamsResponse]=await Promise.all([
+      fetch(`${LIVE_GAMES_FEED}?v=${Date.now()}`,{cache:"no-store"}),
+      fetch(`${TEAMS_FEED}?v=${Date.now()}`,{cache:"no-store"})
+    ]);
+    if(!gamesResponse.ok) throw new Error("Unable to load schedule feed");
+
+    const gameData=await gamesResponse.json();
+    const games=Array.isArray(gameData) ? gameData : (Array.isArray(gameData.games) ? gameData.games : []);
+
+    if(teamsResponse.ok){
+      const teamData=await teamsResponse.json();
+      const teams=Array.isArray(teamData) ? teamData : (Array.isArray(teamData.teams) ? teamData.teams : []);
+      buildTeamLogoMap(teams);
+    }
+
     render(games);
   }catch(err){
     console.error(err);
