@@ -9117,7 +9117,7 @@ body > .app,
 }
 @media(max-width:650px){
   .nal-platform-grid.nal-platform-grid-four{
-    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-columns:repeat(5,minmax(0,1fr)) !important;
     gap:4px;
   }
   .nal-platform-card{
@@ -9139,6 +9139,12 @@ body > .app,
 }
 </style>
 
+<style>
+/* MNTR+ platforms — always keep all five device cards on one row */
+.nal-watch-anywhere .nal-platform-grid.nal-platform-grid-four{
+  grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+}
+</style>
 </head>
 
 
