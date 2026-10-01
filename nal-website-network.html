@@ -19860,17 +19860,18 @@ function closeLightcastTest(){
   function logoForTeam(name){
     const slug = slugForTeam(name);
 
-    /* Live Games must use the team's actual logo, not Network/team-channel artwork. */
+    /* Live Games: use the approved standalone team-logo override FIRST.
+       teams.json may contain Network/team-channel artwork in team.logo. */
+    if (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug]) {
+      return TEAM_LOGO_OVERRIDES[slug];
+    }
+
+    /* Only fall back to team.logo when no approved override exists. */
     if (slug && typeof nalTeams !== "undefined" && Array.isArray(nalTeams)) {
       const team = nalTeams.find(item => item.slug === slug);
       if (team && team.logo) {
         return team.logo;
       }
-    }
-
-    /* Fallback only if the team data has not loaded or has no logo value. */
-    if (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug]) {
-      return TEAM_LOGO_OVERRIDES[slug];
     }
 
     return typeof NAL_LOGO !== "undefined" ? NAL_LOGO : "";
