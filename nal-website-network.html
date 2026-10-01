@@ -6858,6 +6858,37 @@ document.addEventListener("DOMContentLoaded", () => {
   gap:14px;
   padding-top:5px!important;
 }
+/* Live Games week accordion */
+#watchPage .nal-live-week{
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:14px;
+  overflow:hidden;
+  background:rgba(255,255,255,.025);
+}
+#watchPage .nal-live-week-toggle{
+  width:100%;
+  min-height:62px;
+  padding:12px 14px;
+  border:0;
+  background:linear-gradient(145deg,#0b2038,#07172b);
+  color:#fff;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:12px;
+  text-align:left;
+  cursor:pointer;
+}
+#watchPage .nal-live-week-title{display:flex;flex-direction:column;gap:4px;min-width:0;}
+#watchPage .nal-live-week-title strong{font-size:14px;line-height:1;font-weight:1000;letter-spacing:.9px;}
+#watchPage .nal-live-week-title span{color:rgba(255,255,255,.58);font-size:8px;line-height:1;font-weight:900;letter-spacing:.8px;}
+#watchPage .nal-live-week-meta{display:flex;align-items:center;gap:10px;}
+#watchPage .nal-live-week-count{color:rgba(255,255,255,.62);font-size:8px;font-weight:900;letter-spacing:.7px;white-space:nowrap;}
+#watchPage .nal-live-week-chevron{font-size:19px;line-height:1;transform:rotate(0deg);transition:transform .18s ease;}
+#watchPage .nal-live-week.is-open .nal-live-week-chevron{transform:rotate(90deg);}
+#watchPage .nal-live-week-games{display:none;padding:12px;flex-direction:column;gap:14px;}
+#watchPage .nal-live-week.is-open .nal-live-week-games{display:flex;}
+
 #watchPage .nal-game-card{
   position:relative;
   overflow:hidden;
@@ -20057,19 +20088,50 @@ function closeLightcastTest(){
     const count = document.getElementById("nalLiveGameCount");
     if (!list || !count) return;
 
-    const activeGames = nalLiveGames.filter(game => eventState(game) !== "ended");
+    // Keep the complete season visible on Live Games and group it with the
+    // same Monday-Sunday Eastern week logic used by the Schedule page.
+    const groups = scheduleWeekGroups();
+    count.textContent = `${nalLiveGames.length} ${nalLiveGames.length === 1 ? "GAME" : "GAMES"}`;
 
-    count.textContent = `${activeGames.length} ${activeGames.length === 1 ? "GAME" : "GAMES"}`;
-
-    if (!activeGames.length) {
+    if (!groups.length) {
       list.innerHTML = `
         <div class="nal-live-games-empty">
-          <span>NO UPCOMING LIVE EVENTS</span>
+          <span>NO LIVE EVENTS CURRENTLY SCHEDULED</span>
         </div>`;
       return;
     }
 
-    list.innerHTML = activeGames.map(gameCard).join("");
+    // Open the live/current week first. If there is no game this week, open
+    // the next upcoming week. After the season, leave the final week open.
+    let openIndex = groups.findIndex(group => group.games.some(game => eventState(game) === "live"));
+    if (openIndex < 0) {
+      const now = new Date();
+      openIndex = groups.findIndex(group => group.games.some(game => {
+        const start = utcDate(game.start_time_utc);
+        return start && start >= now;
+      }));
+    }
+    if (openIndex < 0) openIndex = groups.length - 1;
+
+    let cardIndex = 0;
+    list.innerHTML = groups.map((group, groupIndex) => {
+      const isOpen = groupIndex === openIndex;
+      const cards = group.games.map(game => gameCard(game, cardIndex++)).join("");
+      return `
+        <section class="nal-live-week ${isOpen ? "is-open" : ""}" data-live-week="${groupIndex}">
+          <button class="nal-live-week-toggle" type="button" data-live-week-toggle="${groupIndex}" aria-expanded="${isOpen ? "true" : "false"}">
+            <span class="nal-live-week-title">
+              <strong>WEEK ${group.number}</strong>
+              <span>${liveEscape(formatScheduleWeekRange(group.key))}</span>
+            </span>
+            <span class="nal-live-week-meta">
+              <span class="nal-live-week-count">${group.games.length} GAME${group.games.length === 1 ? "" : "S"}</span>
+              <span class="nal-live-week-chevron" aria-hidden="true">›</span>
+            </span>
+          </button>
+          <div class="nal-live-week-games">${cards}</div>
+        </section>`;
+    }).join("");
   }
 
 
@@ -20482,6 +20544,16 @@ function closeLightcastTest(){
   }
 
   document.addEventListener("click", function(event){
+    const weekToggle = event.target.closest("[data-live-week-toggle]");
+    if (weekToggle) {
+      const week = weekToggle.closest(".nal-live-week");
+      if (week) {
+        const willOpen = !week.classList.contains("is-open");
+        week.classList.toggle("is-open", willOpen);
+        weekToggle.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      }
+      return;
+    }
     const liveButton = event.target.closest("[data-live-event-index]");
     if (liveButton) {
       const card = liveButton.closest("[data-live-event-id]");
