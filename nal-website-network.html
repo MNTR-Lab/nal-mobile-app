@@ -15024,7 +15024,7 @@ const TEAM_LOGO_OVERRIDES = {"louisiana-rouxgaroux": "https://cdn.shopify.com/s/
 
 function getTeamLogo(team) {
   if (!team) return NAL_LOGO;
-  return TEAM_LOGO_OVERRIDES[team.slug] || team.logo || NAL_LOGO;
+  return team.logo || TEAM_LOGO_OVERRIDES[team.slug] || NAL_LOGO;
 }
 
 let nalTeams = [];
@@ -15074,6 +15074,11 @@ async function loadNALTeams() {
     if (teamsPage && teamsPage.style.display !== "none") {
       renderTeamsDirectory();
     }
+
+    /* Refresh logo-dependent views now that the actual team logos are loaded. */
+    if (typeof renderLiveGames === "function") renderLiveGames();
+    if (typeof renderHomeGameCarousel === "function") renderHomeGameCarousel();
+    if (typeof renderActiveTeamNextGame === "function") renderActiveTeamNextGame();
 
   } catch (error) {
     console.error("NAL Teams could not be loaded:", error);
@@ -19860,18 +19865,15 @@ function closeLightcastTest(){
   function logoForTeam(name){
     const slug = slugForTeam(name);
 
-    /* Live Games: use the approved standalone team-logo override FIRST.
-       teams.json may contain Network/team-channel artwork in team.logo. */
-    if (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug]) {
-      return TEAM_LOGO_OVERRIDES[slug];
-    }
-
-    /* Only fall back to team.logo when no approved override exists. */
+    /* Live Games: use the actual team-provided logo from data/teams.json. */
     if (slug && typeof nalTeams !== "undefined" && Array.isArray(nalTeams)) {
       const team = nalTeams.find(item => item.slug === slug);
-      if (team && team.logo) {
-        return team.logo;
-      }
+      if (team && team.logo) return team.logo;
+    }
+
+    /* Temporary fallback only while team data is still loading. */
+    if (slug && typeof TEAM_LOGO_OVERRIDES !== "undefined" && TEAM_LOGO_OVERRIDES[slug]) {
+      return TEAM_LOGO_OVERRIDES[slug];
     }
 
     return typeof NAL_LOGO !== "undefined" ? NAL_LOGO : "";
