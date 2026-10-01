@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-10-01T17:23:48.858799+00:00",
+  "updatedAt": "2026-10-01T17:50:52.533838+00:00",
   "source": "https://www.thenationalarenaleague.com/",
   "articles": [
+    {
+      "title": "NATIONAL ARENA LEAGUE ANNOUNCES FULL 2027 SCHEDULE",
+      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-announces-full-2027-schedule",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-3d958b97-b586-4131-8faa-cc20e5df56ac/1790875420-1223.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-10-01T01:21:00+00:00",
+      "category": "NAL NEWS"
+    },
     {
       "title": "NAL &amp; MNTR+ PARTNER TO BUILD THE NEXT GENERATION OF NAL NETWORK",
       "url": "https://www.thenationalarenaleague.com/news/nal-mntr-partner-to-build-the-next-generation-of-n",
@@ -24,14 +32,6 @@
       "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-3498136b-c967-42a9-a37e-73f24c309600/1790277598-1223.png",
       "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
       "date": "2026-09-24T19:15:00+00:00",
-      "category": "NAL NEWS"
-    },
-    {
-      "title": "NATIONAL ARENA LEAGUE KICKS OFF SEASON X PARTNERSHIP ROLLOUT WITH THREE RETURNING PARTNERS",
-      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-kicks-off-season-x-partner",
-      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-5b7b1a24-ff0e-40c8-9316-4441d0c0879c/1790190670-1223.png",
-      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
-      "date": "2026-09-23T18:33:00+00:00",
       "category": "NAL NEWS"
     }
   ]
