@@ -7329,6 +7329,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* NAL Admin Poll Management */
 .fan-poll-admin-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}.fan-poll-admin-head p{margin-top:4px;color:#78879a;font-size:9px;line-height:1.35}.fan-poll-admin-new{border:0;border-radius:9px;background:#e31b23;color:#fff;padding:9px 11px;font-size:9px;font-weight:1000;white-space:nowrap;cursor:pointer}.fan-poll-admin-form{margin:10px 0 12px;padding:14px;border:1px solid #dfe4eb;border-radius:14px;background:#fff}.fan-poll-admin-formtop{display:flex;align-items:center;justify-content:space-between;color:#07172b;font-size:11px;font-weight:1000;margin-bottom:12px}.fan-poll-admin-formtop button{border:0;background:transparent;color:#718095;font-size:22px;cursor:pointer}.fan-poll-admin-label{display:block;color:#6d7a8c;font-size:8px;font-weight:1000;letter-spacing:.6px;margin-bottom:5px}.fan-poll-admin-form textarea,.fan-poll-admin-option-row input{width:100%;border:1px solid #d9e0e8;border-radius:9px;padding:11px;font:inherit;font-size:11px;background:#fff;color:#101419}.fan-poll-admin-form textarea{min-height:76px;resize:vertical}.fan-poll-admin-options-head{display:flex;align-items:center;justify-content:space-between;margin:13px 0 7px;color:#6d7a8c;font-size:8px;font-weight:1000;letter-spacing:.6px}.fan-poll-admin-options-head button{border:0;background:transparent;color:#e31b23;font-size:8px;font-weight:1000;cursor:pointer}.fan-poll-admin-option-row{display:grid;grid-template-columns:1fr 1fr 30px;gap:6px;margin-bottom:7px}.fan-poll-admin-option-row button{border:1px solid #f0c8cb;border-radius:8px;background:#fff5f5;color:#b31921;font-size:16px;cursor:pointer}.fan-poll-admin-help{font-size:8px;color:#8793a2;line-height:1.35}.fan-poll-admin-create-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.fan-poll-admin-create-actions button,.fan-poll-card-actions button{border:0;border-radius:9px;padding:10px 8px;font-size:8px;font-weight:1000;cursor:pointer}.fan-poll-admin-save{background:#e9edf2;color:#07172b}.fan-poll-admin-publish{background:#e31b23;color:#fff}.fan-poll-admin-card{background:#fff;border:1px solid #dfe4eb;border-radius:14px;padding:13px;margin-bottom:9px}.fan-poll-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.fan-poll-card-question{color:#07172b;font-size:12px;line-height:1.3;font-weight:1000}.fan-poll-status{flex:0 0 auto;border-radius:20px;padding:5px 7px;font-size:7px;font-weight:1000;letter-spacing:.5px}.fan-poll-status.active{background:#e6f6ec;color:#16713b}.fan-poll-status.draft{background:#eef1f5;color:#66758a}.fan-poll-status.closed{background:#fee7e8;color:#a51b22}.fan-poll-card-meta{margin-top:6px;color:#8290a0;font-size:8px}.fan-poll-admin-option-result{margin-top:10px}.fan-poll-result-line{display:flex;justify-content:space-between;gap:8px;color:#26364b;font-size:9px;font-weight:900}.fan-poll-result-bar{height:6px;margin-top:4px;border-radius:10px;background:#e9edf2;overflow:hidden}.fan-poll-result-fill{height:100%;background:#e31b23;border-radius:10px}.fan-poll-card-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.fan-poll-card-actions .activate{background:#e31b23;color:#fff}.fan-poll-card-actions .close{background:#07172b;color:#fff}.fan-poll-card-actions .delete{background:#fff0f1;color:#a51b22;border:1px solid #f2c8cb}.fan-poll-card-actions button:disabled,.fan-poll-admin-create-actions button:disabled{opacity:.5;cursor:not-allowed}
+
+/* NAL production account-deletion modal */
+.nal-delete-modal{position:fixed;inset:0;z-index:10050;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(3,13,29,.78);backdrop-filter:blur(4px)}
+.nal-delete-modal.show{display:flex}
+.nal-delete-dialog{width:min(520px,100%);background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.38);border:1px solid rgba(7,31,63,.14)}
+.nal-delete-head{background:linear-gradient(135deg,#071f3f,#142d54);padding:22px 24px 18px;border-bottom:4px solid #e31b2d}
+.nal-delete-kicker{font-size:11px;letter-spacing:2px;font-weight:900;color:#c7d4e7;margin-bottom:6px}
+.nal-delete-head h2{margin:0;color:#fff;font-size:24px;line-height:1.05}
+.nal-delete-body{padding:22px 24px 24px;color:#0a1e39}
+.nal-delete-body p{margin:0 0 14px;font-size:14px;line-height:1.55}
+.nal-delete-warning{font-weight:900;color:#b31323}
+.nal-delete-confirm-label{display:block;margin:18px 0 7px;font-size:12px;font-weight:900;letter-spacing:.6px}
+.nal-delete-confirm-input{box-sizing:border-box;width:100%;border:1px solid #b9c4d2;border-radius:10px;padding:12px 13px;font:inherit;font-weight:800;text-transform:uppercase;outline:none}
+.nal-delete-confirm-input:focus{border-color:#173e73;box-shadow:0 0 0 3px rgba(23,62,115,.12)}
+.nal-delete-error{min-height:18px;margin:8px 0 0!important;color:#b31323;font-size:12px!important;font-weight:800}
+.nal-delete-actions{display:flex;gap:10px;margin-top:18px}
+.nal-delete-actions button{flex:1;border:0;border-radius:999px;padding:12px 14px;font-weight:900;letter-spacing:.4px;cursor:pointer}
+.nal-delete-cancel{background:#e8edf4;color:#0a1e39}
+.nal-delete-confirm{background:#c91527;color:#fff}
+.nal-delete-confirm:disabled{opacity:.55;cursor:not-allowed}
+
 </style>
 
 <style>
@@ -9794,6 +9815,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <button class="fan-member-signout" id="fanSignOutButton" type="button">SIGN OUT</button>
             <button class="fan-member-delete" id="fanDeleteAccountButton" type="button">DELETE MY ACCOUNT</button>
+            <div class="nal-delete-modal" id="nalDeleteAccountModal" role="dialog" aria-modal="true" aria-labelledby="nalDeleteAccountTitle">
+              <div class="nal-delete-dialog">
+                <div class="nal-delete-head">
+                  <div class="nal-delete-kicker">NAL FAN ACCOUNT</div>
+                  <h2 id="nalDeleteAccountTitle">DELETE MY ACCOUNT</h2>
+                </div>
+                <div class="nal-delete-body">
+                  <p>Your login, profile and personal account information will be permanently deleted.</p>
+                  <p>Forum posts and replies, Pick ’Em history, poll participation and other historical NAL activity may remain, but will no longer publicly identify you.</p>
+                  <p class="nal-delete-warning">This cannot be undone.</p>
+                  <label class="nal-delete-confirm-label" for="nalDeleteAccountConfirmInput">TYPE DELETE TO CONFIRM</label>
+                  <input class="nal-delete-confirm-input" id="nalDeleteAccountConfirmInput" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="DELETE">
+                  <p class="nal-delete-error" id="nalDeleteAccountError" aria-live="polite"></p>
+                  <div class="nal-delete-actions">
+                    <button class="nal-delete-cancel" id="nalDeleteAccountCancel" type="button">CANCEL</button>
+                    <button class="nal-delete-confirm" id="nalDeleteAccountConfirm" type="button" disabled>DELETE ACCOUNT</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -16865,7 +16906,9 @@ async function loadNalVotingActivity(){
 
       return `
         <div class="fan-member-vote-item">
-          <div class="fan-member-vote-question">${escapeNalAdminHtml(question)}</div>
+          <div class="fan-member-vote-question">${function escapeNalAdminHtml(value){ return escapeHTML(value); }
+
+escapeNalAdminHtml(question)}</div>
           <div class="fan-member-vote-pick"><b>YOUR PICK:</b> ${escapeNalAdminHtml(pick)}</div>
           ${votedDate ? `<div class="fan-member-vote-date">VOTED ${escapeNalAdminHtml(votedDate.toUpperCase())}</div>` : ""}
         </div>
@@ -17252,65 +17295,92 @@ document.getElementById("fanSignUpForm")?.addEventListener("submit", async funct
   }
 });
 
-document.getElementById("fanDeleteAccountButton")?.addEventListener("click", async function(){
-  if (!nalAccountUser){
-    setFanAccountMessage("Please sign in before deleting your account.", true);
-    return;
+(function(){
+  const openButton = document.getElementById("fanDeleteAccountButton");
+  const modal = document.getElementById("nalDeleteAccountModal");
+  const input = document.getElementById("nalDeleteAccountConfirmInput");
+  const cancelButton = document.getElementById("nalDeleteAccountCancel");
+  const confirmButton = document.getElementById("nalDeleteAccountConfirm");
+  const errorBox = document.getElementById("nalDeleteAccountError");
+
+  function closeDeleteModal(){
+    modal?.classList.remove("show");
+    if(input) input.value = "";
+    if(errorBox) errorBox.textContent = "";
+    if(confirmButton) confirmButton.disabled = true;
   }
 
-  const confirmed = window.confirm(
-    "Permanently delete your NAL Fan Account?\n\n" +
-    "Your login, profile and personal account information will be deleted. " +
-    "Forum posts and replies, Pick ’Em history, poll participation and other historical NAL activity may remain, but will no longer publicly identify you.\n\n" +
-    "This cannot be undone."
-  );
-  if (!confirmed) return;
-
-  const typed = window.prompt(
-    'To confirm permanent account deletion, type DELETE below.'
-  );
-  if (typed !== "DELETE"){
-    if (typed !== null) setFanAccountMessage("Account deletion cancelled. You must type DELETE exactly to confirm.", true);
-    return;
+  function syncDeleteConfirmation(){
+    if(confirmButton) confirmButton.disabled = (input?.value || "").trim().toUpperCase() !== "DELETE";
+    if(errorBox) errorBox.textContent = "";
   }
 
-  const finalConfirmed = window.confirm(
-    "FINAL CONFIRMATION\n\nDelete this NAL Fan Account permanently? This action cannot be reversed."
-  );
-  if (!finalConfirmed) return;
+  openButton?.addEventListener("click", function(){
+    if(!nalAccountUser){
+      setFanAccountMessage("Please sign in before deleting your account.", true);
+      return;
+    }
+    if(input) input.value = "";
+    if(errorBox) errorBox.textContent = "";
+    if(confirmButton) confirmButton.disabled = true;
+    modal?.classList.add("show");
+    setTimeout(()=>input?.focus(), 50);
+  });
 
-  const button = this;
-  const originalText = button.textContent;
-  button.disabled = true;
-  button.textContent = "DELETING ACCOUNT...";
+  cancelButton?.addEventListener("click", closeDeleteModal);
+  input?.addEventListener("input", syncDeleteConfirmation);
+  input?.addEventListener("keydown", function(event){
+    if(event.key === "Escape") closeDeleteModal();
+    if(event.key === "Enter" && confirmButton && !confirmButton.disabled) confirmButton.click();
+  });
+  modal?.addEventListener("click", function(event){
+    if(event.target === modal) closeDeleteModal();
+  });
 
-  try{
-    const client = getNalAccountClient();
-    const { error } = await client.rpc("delete_my_nal_account");
-    if (error) throw error;
+  confirmButton?.addEventListener("click", async function(){
+    if(!nalAccountUser){
+      closeDeleteModal();
+      setFanAccountMessage("Please sign in before deleting your account.", true);
+      return;
+    }
+    if((input?.value || "").trim().toUpperCase() !== "DELETE"){
+      if(errorBox) errorBox.textContent = "Type DELETE exactly to continue.";
+      return;
+    }
 
-    try{ await client.auth.signOut({ scope: "local" }); }catch(_e){}
-    nalAccountUser = null;
-    nalAccountProfile = null;
-    nalNotifications = [];
-    nalNotificationReadIds = new Set();
-    updateHeaderAccountState();
-    setNalNotificationBadge(0);
-    setFanAccountView("signin");
-    setFanAccountMessage("Your NAL Fan Account has been permanently deleted.", false);
-  } catch(error){
-    console.error("NAL self-service account deletion error:", error);
-    setFanAccountMessage(
-      error?.message
-        ? "We could not delete your account: " + error.message
-        : "We could not delete your account. Please try again.",
-      true
-    );
-  } finally{
-    button.disabled = false;
-    button.textContent = originalText;
-  }
-});
+    const originalText = confirmButton.textContent;
+    confirmButton.disabled = true;
+    confirmButton.textContent = "DELETING...";
+
+    try{
+      const client = getNalAccountClient();
+      const { error } = await client.rpc("delete_my_nal_account");
+      if(error) throw error;
+
+      try{ await client.auth.signOut({ scope: "local" }); }catch(_e){}
+      nalAccountUser = null;
+      nalAccountProfile = null;
+      nalNotifications = [];
+      nalNotificationReadIds = new Set();
+      updateHeaderAccountState();
+      setNalNotificationBadge(0);
+      closeDeleteModal();
+      setFanAccountView("signin");
+      setFanAccountMessage("Your NAL Fan Account has been permanently deleted.", false);
+    }catch(error){
+      console.error("NAL self-service account deletion error:", error);
+      if(errorBox){
+        errorBox.textContent = error?.message
+          ? "We could not delete your account: " + error.message
+          : "We could not delete your account. Please try again.";
+      }
+      confirmButton.disabled = false;
+    }finally{
+      confirmButton.textContent = originalText;
+      syncDeleteConfirmation();
+    }
+  });
+})();
 
 document.getElementById("fanSignOutButton")?.addEventListener("click", async function(){
   this.disabled = true;
