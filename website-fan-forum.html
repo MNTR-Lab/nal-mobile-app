@@ -16257,6 +16257,92 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 </style>
 
+
+<style id="nal-live-pickem-light-fix">
+/* PICK 'EM — match the live Fan Center light-page readability.
+   Functionality and markup are unchanged. */
+#fanPickemPage.pickem-page{
+  background:#f3f5f7 !important;
+  color:#07172b !important;
+}
+#fanPickemPage .fan-upload-back{
+  color:#07172b !important;
+}
+#fanPickemPage .pickem-hero h1{
+  color:#07172b !important;
+}
+#fanPickemPage .pickem-hero p{
+  color:#526174 !important;
+}
+#fanPickemPage .pickem-hero small,
+#fanPickemPage .pickem-weekbar small,
+#fanPickemPage .pickem-board-head small,
+#fanPickemPage .pickem-record-card small{
+  color:#e31b23 !important;
+}
+
+/* Tabs become readable on the light page. */
+#fanPickemPage .pickem-tabs{
+  background:#ffffff !important;
+  border-color:#dfe3e8 !important;
+}
+#fanPickemPage .pickem-tabs button{
+  color:#526174 !important;
+}
+#fanPickemPage .pickem-tabs button.active{
+  background:#07172b !important;
+  color:#ffffff !important;
+}
+
+/* Week information and game cards already use light surfaces; enforce navy copy. */
+#fanPickemPage .pickem-weekbar,
+#fanPickemPage .pickem-game,
+#fanPickemPage .pickem-tiebreak,
+#fanPickemPage .pickem-board,
+#fanPickemPage .pickem-record-card{
+  color:#07172b !important;
+}
+#fanPickemPage .pickem-notice{
+  background:#ffffff !important;
+  color:#26384d !important;
+  border:1px solid #dfe3e8 !important;
+  border-left:4px solid #e31b23 !important;
+}
+#fanPickemPage .pickem-game h3,
+#fanPickemPage .pickem-tiebreak h3,
+#fanPickemPage .pickem-board h2,
+#fanPickemPage .pickem-record-card h2,
+#fanPickemPage .pickem-record-card h3{
+  color:#07172b !important;
+}
+#fanPickemPage .pickem-game-meta{
+  color:#07172b !important;
+}
+#fanPickemPage .pickem-team,
+#fanPickemPage .pickem-team b{
+  color:#07172b !important;
+}
+#fanPickemPage .pickem-team small,
+#fanPickemPage .pickem-selection,
+#fanPickemPage .pickem-tiebreak p{
+  color:#6b7786 !important;
+}
+#fanPickemPage .pickem-at{
+  color:#8491a0 !important;
+}
+
+/* Preserve intentional white text on dark/red selected/action surfaces. */
+#fanPickemPage .pickem-selection.has-pick{
+  color:#ffffff !important;
+}
+#fanPickemPage .pickem-save,
+#fanPickemPage .pickem-save *,
+#fanPickemPage .pickem-primary,
+#fanPickemPage .pickem-primary *{
+  color:#ffffff !important;
+}
+</style>
+
 </head>
 
 
