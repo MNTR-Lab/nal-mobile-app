@@ -19033,44 +19033,62 @@ function closeLightcastTest(){
   }
 
   function selectHomeGameWeek(games){
-    const scheduled = games
+    const scheduled = (Array.isArray(games) ? games : [])
       .filter(game => utcDate(game.start_time_utc))
+      .slice()
       .sort((a,b) => utcDate(a.start_time_utc) - utcDate(b.start_time_utc));
 
     if (!scheduled.length) return [];
 
-    const weekMap = new Map();
+    // NAL Week 1 is the Eastern Monday-Sunday week containing the first scheduled game.
+    // Every following NAL week is the next seven-day window, including bye weeks.
+    const firstStart = utcDate(scheduled[0].start_time_utc);
+    const firstParts = easternParts(firstStart);
+    const firstDayIndex = {Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[firstParts.weekday];
+    const weekOneStart = new Date(Date.UTC(
+      firstParts.year,
+      firstParts.month - 1,
+      firstParts.day - ((firstDayIndex + 6) % 7),
+      5, 0, 0
+    ));
 
+    function nalWeekNumber(game){
+      const start = utcDate(game.start_time_utc);
+      return Math.floor((start.getTime() - weekOneStart.getTime()) / (7 * 24 * 60 * 60 * 1000)) + 1;
+    }
+
+    const weeks = new Map();
     scheduled.forEach(game => {
-      const key = easternWeekKey(utcDate(game.start_time_utc));
-      if (!weekMap.has(key)) weekMap.set(key, []);
-      weekMap.get(key).push(game);
+      const weekNumber = nalWeekNumber(game);
+      if (weekNumber < 1) return;
+      if (!weeks.has(weekNumber)) weeks.set(weekNumber, []);
+      weeks.get(weekNumber).push(game);
     });
 
-    const weeks = Array.from(weekMap.entries())
-      .map(([key, weekGames]) => ({
-        key,
-        games: weekGames,
-        startsAt: utcDate(weekGames[0].start_time_utc)
-      }))
-      .sort((a,b) => a.startsAt - b.startsAt);
+    const availableWeeks = Array.from(weeks.keys()).sort((a,b) => a-b);
+    if (!availableWeeks.length) return [];
 
     const now = new Date();
+    const elapsedWeek = Math.floor((now.getTime() - weekOneStart.getTime()) / (7 * 24 * 60 * 60 * 1000)) + 1;
 
-    // Before Week 1 begins, keep showing Week 1.
-    // Once a new week's first game begins, advance to that week.
-    // Completed games remain visible until the following week actually starts.
-    let activeWeek = weeks[0];
+    // Before the season begins, show Week 1 only.
+    // During the season, keep showing the most recent scheduled NAL week until
+    // the first game in a later scheduled week has actually begun.
+    let activeWeekNumber = availableWeeks[0];
 
-    for (const week of weeks) {
-      if (week.startsAt <= now) {
-        activeWeek = week;
+    for (const weekNumber of availableWeeks) {
+      const weekGames = weeks.get(weekNumber);
+      const firstKickoff = utcDate(weekGames[0].start_time_utc);
+      if (firstKickoff && firstKickoff <= now) {
+        activeWeekNumber = weekNumber;
       } else {
         break;
       }
     }
 
-    return activeWeek.games;
+    if (elapsedWeek < 1) activeWeekNumber = availableWeeks[0];
+
+    return (weeks.get(activeWeekNumber) || []).slice();
   }
 
   function homeGameSlide(game, index){
@@ -19128,7 +19146,8 @@ function closeLightcastTest(){
     const controls = document.getElementById("homeGameCarouselControls");
     const dots = document.getElementById("homeGameDots");
     if (!host || !controls || !dots) return;
-    homeGameSlides = selectHomeGameWeek(nalLiveGames);
+    const selectedWeekGames = selectHomeGameWeek(nalLiveGames);
+    homeGameSlides = Array.isArray(selectedWeekGames) ? selectedWeekGames.slice() : [];
     homeGameIndex = 0;
     stopHomeGameRotation();
     if (!homeGameSlides.length) {
