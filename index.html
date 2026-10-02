@@ -16861,7 +16861,13 @@ async function loadNalFanProfile(user){
       nalAccountProfile = null;
       updateHeaderAccountState();
       setFanAccountView("signin");
-      setFanAccountMessage("This account is not currently active.", true);
+      const accountStatus = String(data.account_status || "").toLowerCase();
+      const accountStatusMessage = accountStatus === "suspended"
+        ? "This account has been suspended. Please contact NAL support if you believe this is an error."
+        : accountStatus === "banned"
+          ? "This account has been banned from the NAL Fan Community. Please contact NAL support if you believe this is an error."
+          : "This account is not currently active. Please contact NAL support if you believe this is an error.";
+      setFanAccountMessage(accountStatusMessage, true);
       return null;
     }
 
