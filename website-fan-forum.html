@@ -16415,6 +16415,167 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 </style>
 
+
+<style id="nalPollsMatchForumStyle">
+/* =========================================================
+   FAN POLLS — MATCH FAN FORUM VISUAL LANGUAGE
+   Same page framing, header treatment, cards, spacing,
+   borders and typography while preserving poll functionality.
+   ========================================================= */
+
+/* Poll page shell mirrors Forum page */
+#fanPollPage{
+  padding:0 !important;
+  background:linear-gradient(135deg,#07172b 0%,#102d50 62%,#542046 100%) !important;
+  color:#fff !important;
+}
+
+/* Poll page top area */
+#fanPollPage .fan-poll-wrap,
+#fanPollPage .fan-poll-shell,
+#fanPollPage .fan-poll-page-inner{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+}
+
+/* Back link / eyebrow / heading match Forum hierarchy */
+#fanPollPage .fan-poll-back{
+  color:#fff !important;
+  font-weight:800 !important;
+  letter-spacing:.04em !important;
+  text-transform:uppercase !important;
+}
+#fanPollPage .fan-poll-eyebrow{
+  color:#ed1c2e !important;
+  font-weight:900 !important;
+  letter-spacing:.12em !important;
+  text-transform:uppercase !important;
+}
+#fanPollPage .fan-poll-title{
+  color:#fff !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  letter-spacing:-.02em !important;
+}
+#fanPollPage .fan-poll-subtitle{
+  color:#d7dfeb !important;
+}
+
+/* Red divider under page header, same visual cue as Forum */
+#fanPollPage .fan-poll-header,
+#fanPollPage [class*="fan-poll-head"]{
+  border-bottom:3px solid #ed1c2e !important;
+  padding-bottom:18px !important;
+  margin-bottom:24px !important;
+}
+
+/* Each live poll becomes a Forum-style discussion card */
+#fanPollPage .fan-poll-live-card{
+  background:rgba(7,23,43,.92) !important;
+  border:1px solid rgba(255,255,255,.22) !important;
+  border-radius:16px !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.20) !important;
+  padding:20px !important;
+  margin:0 0 16px !important;
+  color:#fff !important;
+}
+
+/* Poll question = Forum topic title */
+#fanPollPage .fan-poll-question{
+  color:#fff !important;
+  font-size:1.18rem !important;
+  line-height:1.25 !important;
+  font-weight:900 !important;
+  margin:0 0 14px !important;
+}
+
+/* Options resemble Forum rows */
+#fanPollPage .fan-poll-options{
+  display:grid !important;
+  gap:10px !important;
+  margin-top:12px !important;
+}
+#fanPollPage .fan-poll-option{
+  width:100% !important;
+  background:rgba(255,255,255,.07) !important;
+  border:1px solid rgba(255,255,255,.20) !important;
+  border-radius:12px !important;
+  color:#fff !important;
+  overflow:hidden !important;
+  transition:border-color .18s ease, background .18s ease, transform .18s ease !important;
+}
+#fanPollPage .fan-poll-option:hover{
+  background:rgba(255,255,255,.11) !important;
+  border-color:rgba(255,255,255,.45) !important;
+}
+#fanPollPage .fan-poll-option.selected,
+#fanPollPage .fan-poll-option[aria-pressed="true"]{
+  border-color:#ed1c2e !important;
+  box-shadow:0 0 0 2px rgba(237,28,46,.22) !important;
+}
+
+/* Poll option copy */
+#fanPollPage .fan-poll-option-name,
+#fanPollPage .fan-poll-option span,
+#fanPollPage .fan-poll-option strong{
+  color:#fff !important;
+}
+
+/* Media remains contained cleanly in Forum-style cards */
+#fanPollPage .fan-poll-option img,
+#fanPollPage .fan-poll-option video,
+#fanPollPage .fan-poll-option iframe{
+  border-radius:10px !important;
+}
+
+/* Status/results use muted Forum metadata */
+#fanPollPage .fan-poll-status,
+#fanPollPage .fan-poll-result-label,
+#fanPollPage .fan-poll-result-value,
+#fanPollPage .fan-poll-meta{
+  color:#d7dfeb !important;
+}
+
+/* Voting CTA uses the same strong red action language */
+#fanPollPage .fan-poll-vote-button{
+  background:#ed1c2e !important;
+  color:#fff !important;
+  border:0 !important;
+  border-radius:10px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  letter-spacing:.04em !important;
+  min-height:46px !important;
+  padding:0 20px !important;
+}
+#fanPollPage .fan-poll-vote-button:disabled{
+  opacity:.55 !important;
+}
+
+/* Empty/loading states look like Forum cards */
+#fanPollPage .fan-poll-state,
+#fanPollPage .fan-poll-empty,
+#fanPollPage .fan-poll-loading{
+  background:rgba(7,23,43,.92) !important;
+  border:1px solid rgba(255,255,255,.20) !important;
+  border-radius:14px !important;
+  color:#d7dfeb !important;
+  padding:22px !important;
+}
+
+/* Mobile consistency */
+@media (max-width:700px){
+  #fanPollPage .fan-poll-live-card{
+    padding:16px !important;
+    border-radius:14px !important;
+  }
+  #fanPollPage .fan-poll-question{
+    font-size:1.08rem !important;
+  }
+}
+</style>
+
 </head>
 
 
