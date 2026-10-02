@@ -16218,6 +16218,465 @@ document.addEventListener("DOMContentLoaded", () => {
 .nal-delete-confirm:disabled{opacity:.55;cursor:not-allowed}
 
 </style>
+
+
+
+
+
+
+
+
+
+
+<style id="nalUnifiedFanCenterStyle">
+/* =========================================================
+   NAL FAN CENTER — UNIFIED FAN ZONE VISUAL SYSTEM
+   Every Fan Center subpage follows the main Fan Zone:
+   dark navy/purple surfaces, white copy, NAL red accents.
+   Main NAL website header/navigation remains untouched.
+   ========================================================= */
+:root{
+  --nal-fan-navy:#07172b;
+  --nal-fan-navy-2:#102d50;
+  --nal-fan-purple:#542046;
+  --nal-fan-red:#ed1c2e;
+  --nal-fan-white:#ffffff;
+  --nal-fan-muted:#d7dfeb;
+}
+
+/* Fan Center pages only */
+#fanPage,
+#fanForumPage,
+#fanForumTopicPage,
+#fanForumComposerPage,
+#fanPollPage,
+#fanPickemPage,
+#fanGalleryPage,
+#fanAccountPage,
+#fanTermsPage,
+#fanGuidelinesPage,
+#fanPrivacyPage {
+  color:var(--nal-fan-white) !important;
+  background:
+    linear-gradient(135deg,
+      var(--nal-fan-navy) 0%,
+      var(--nal-fan-navy-2) 62%,
+      var(--nal-fan-purple) 100%) !important;
+}
+
+/* Ensure full subpage content has the same dark treatment */
+#fanForumPage > *,
+#fanForumTopicPage > *,
+#fanForumComposerPage > *,
+#fanPollPage > *,
+#fanPickemPage > *,
+#fanGalleryPage > *,
+#fanAccountPage > *,
+#fanTermsPage > *,
+#fanGuidelinesPage > *,
+#fanPrivacyPage > * {
+  color:var(--nal-fan-white);
+}
+
+/* Primary typography */
+#fanPage h1, #fanPage h2, #fanPage h3, #fanPage h4, #fanPage p, #fanPage span, #fanPage small, #fanPage strong, #fanPage label,
+#fanForumPage h1, #fanForumPage h2, #fanForumPage h3, #fanForumPage h4, #fanForumPage p, #fanForumPage span, #fanForumPage small, #fanForumPage strong, #fanForumPage label,
+#fanForumTopicPage h1, #fanForumTopicPage h2, #fanForumTopicPage h3, #fanForumTopicPage h4, #fanForumTopicPage p, #fanForumTopicPage span, #fanForumTopicPage small, #fanForumTopicPage strong, #fanForumTopicPage label,
+#fanForumComposerPage h1, #fanForumComposerPage h2, #fanForumComposerPage h3, #fanForumComposerPage h4, #fanForumComposerPage p, #fanForumComposerPage span, #fanForumComposerPage small, #fanForumComposerPage strong, #fanForumComposerPage label,
+#fanPollPage h1, #fanPollPage h2, #fanPollPage h3, #fanPollPage h4, #fanPollPage p, #fanPollPage span, #fanPollPage small, #fanPollPage strong, #fanPollPage label,
+#fanPickemPage h1, #fanPickemPage h2, #fanPickemPage h3, #fanPickemPage h4, #fanPickemPage p, #fanPickemPage span, #fanPickemPage small, #fanPickemPage strong, #fanPickemPage label,
+#fanGalleryPage h1, #fanGalleryPage h2, #fanGalleryPage h3, #fanGalleryPage h4, #fanGalleryPage p, #fanGalleryPage span, #fanGalleryPage small, #fanGalleryPage strong, #fanGalleryPage label,
+#fanAccountPage h1, #fanAccountPage h2, #fanAccountPage h3, #fanAccountPage h4, #fanAccountPage p, #fanAccountPage span, #fanAccountPage small, #fanAccountPage strong, #fanAccountPage label,
+#fanTermsPage h1, #fanTermsPage h2, #fanTermsPage h3, #fanTermsPage h4, #fanTermsPage p, #fanTermsPage span, #fanTermsPage small, #fanTermsPage strong,
+#fanGuidelinesPage h1, #fanGuidelinesPage h2, #fanGuidelinesPage h3, #fanGuidelinesPage h4, #fanGuidelinesPage p, #fanGuidelinesPage span, #fanGuidelinesPage small, #fanGuidelinesPage strong,
+#fanPrivacyPage h1, #fanPrivacyPage h2, #fanPrivacyPage h3, #fanPrivacyPage h4, #fanPrivacyPage p, #fanPrivacyPage span, #fanPrivacyPage small, #fanPrivacyPage strong {
+  color:var(--nal-fan-white) !important;
+}
+
+/* Red NAL eyebrow/kicker/accent labels */
+#fanPage [class*="eyebrow"],
+#fanPage [class*="kicker"],
+#fanForumPage [class*="eyebrow"],
+#fanForumPage [class*="kicker"],
+#fanPollPage [class*="eyebrow"],
+#fanPollPage [class*="kicker"],
+#fanPickemPage [class*="eyebrow"],
+#fanPickemPage [class*="kicker"],
+#fanGalleryPage [class*="eyebrow"],
+#fanGalleryPage [class*="kicker"],
+#fanAccountPage [class*="eyebrow"],
+#fanAccountPage [class*="kicker"] {
+  color:var(--nal-fan-red) !important;
+}
+
+/* Cards/panels use the same Fan Zone dark glass treatment */
+#fanForumPage article,
+#fanForumPage [class*="card"],
+#fanForumPage [class*="panel"],
+#fanForumTopicPage article,
+#fanForumTopicPage [class*="card"],
+#fanForumTopicPage [class*="panel"],
+#fanForumComposerPage [class*="card"],
+#fanForumComposerPage [class*="panel"],
+#fanPollPage article,
+#fanPollPage [class*="card"],
+#fanPollPage [class*="panel"],
+#fanPickemPage article,
+#fanPickemPage [class*="card"],
+#fanPickemPage [class*="panel"],
+#fanGalleryPage article,
+#fanGalleryPage [class*="card"],
+#fanAccountPage [class*="card"],
+#fanAccountPage [class*="panel"],
+#fanTermsPage [class*="card"],
+#fanGuidelinesPage [class*="card"],
+#fanPrivacyPage [class*="card"] {
+  background:rgba(7,23,43,.78) !important;
+  color:var(--nal-fan-white) !important;
+  border-color:rgba(255,255,255,.18) !important;
+}
+
+/* Poll options and Pick 'Em game selections */
+#fanPollPage .fan-poll-option,
+#fanPollPage [class*="option"],
+#fanPickemPage [class*="game-card"],
+#fanPickemPage [class*="team"],
+#fanPickemPage [class*="week-card"] {
+  background:rgba(255,255,255,.08) !important;
+  color:var(--nal-fan-white) !important;
+  border-color:rgba(255,255,255,.25) !important;
+}
+#fanPollPage .fan-poll-option *,
+#fanPollPage [class*="option"] *,
+#fanPickemPage [class*="game-card"] *,
+#fanPickemPage [class*="team"] *,
+#fanPickemPage [class*="week-card"] * {
+  color:var(--nal-fan-white) !important;
+}
+
+/* Forms: light fields for easy entry, dark typed text */
+#fanForumPage input, #fanForumPage textarea, #fanForumPage select,
+#fanForumTopicPage input, #fanForumTopicPage textarea, #fanForumTopicPage select,
+#fanForumComposerPage input, #fanForumComposerPage textarea, #fanForumComposerPage select,
+#fanPollPage input, #fanPollPage textarea, #fanPollPage select,
+#fanPickemPage input, #fanPickemPage textarea, #fanPickemPage select,
+#fanAccountPage input, #fanAccountPage textarea, #fanAccountPage select {
+  background:#fff !important;
+  color:var(--nal-fan-navy) !important;
+  border-color:rgba(255,255,255,.65) !important;
+}
+#fanForumPage input::placeholder, #fanForumPage textarea::placeholder,
+#fanForumComposerPage input::placeholder, #fanForumComposerPage textarea::placeholder,
+#fanPickemPage input::placeholder, #fanAccountPage input::placeholder {
+  color:#667386 !important;
+  opacity:1 !important;
+}
+
+/* Back links and ordinary links */
+#fanForumPage a, #fanForumTopicPage a, #fanForumComposerPage a,
+#fanPollPage a, #fanPickemPage a, #fanGalleryPage a,
+#fanAccountPage a, #fanTermsPage a, #fanGuidelinesPage a, #fanPrivacyPage a {
+  color:var(--nal-fan-white) !important;
+}
+
+/* Primary action controls */
+#fanPage button,
+#fanForumPage button,
+#fanForumTopicPage button,
+#fanForumComposerPage button,
+#fanPollPage button,
+#fanPickemPage button,
+#fanGalleryPage button,
+#fanAccountPage button,
+#fanTermsPage button,
+#fanGuidelinesPage button,
+#fanPrivacyPage button {
+  text-shadow:none !important;
+}
+
+/* Red action buttons keep white labels */
+#fanPage .fan-zone-action,
+#fanPage .fan-zone-button,
+#fanForumPage .fan-forum-primary-button,
+#fanForumComposerPage button[type="submit"],
+#fanPollPage .fan-poll-vote-button,
+#fanPickemPage .pickem-save-button,
+#fanAccountPage .fan-account-submit {
+  background:var(--nal-fan-red) !important;
+  color:#fff !important;
+}
+
+/* Account modal interior follows Fan Zone instead of returning to a light theme */
+#fanAccountPage .fan-account-card,
+#fanAccountPage .fan-member-card,
+#fanAccountPage .fan-account-shell {
+  background:rgba(7,23,43,.92) !important;
+  color:#fff !important;
+}
+</style>
+
+
+<style id="nalPollsMatchForumStyle">
+/* =========================================================
+   FAN POLLS — MATCH FAN FORUM VISUAL LANGUAGE
+   Same page framing, header treatment, cards, spacing,
+   borders and typography while preserving poll functionality.
+   ========================================================= */
+
+/* Poll page shell mirrors Forum page */
+#fanPollPage{
+  padding:0 !important;
+  background:linear-gradient(135deg,#07172b 0%,#102d50 62%,#542046 100%) !important;
+  color:#fff !important;
+}
+
+/* Poll page top area */
+#fanPollPage .fan-poll-wrap,
+#fanPollPage .fan-poll-shell,
+#fanPollPage .fan-poll-page-inner{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+}
+
+/* Back link / eyebrow / heading match Forum hierarchy */
+#fanPollPage .fan-poll-back{
+  color:#fff !important;
+  font-weight:800 !important;
+  letter-spacing:.04em !important;
+  text-transform:uppercase !important;
+}
+#fanPollPage .fan-poll-eyebrow{
+  color:#ed1c2e !important;
+  font-weight:900 !important;
+  letter-spacing:.12em !important;
+  text-transform:uppercase !important;
+}
+#fanPollPage .fan-poll-title{
+  color:#fff !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  letter-spacing:-.02em !important;
+}
+#fanPollPage .fan-poll-subtitle{
+  color:#d7dfeb !important;
+}
+
+/* Red divider under page header, same visual cue as Forum */
+#fanPollPage .fan-poll-header,
+#fanPollPage [class*="fan-poll-head"]{
+  border-bottom:3px solid #ed1c2e !important;
+  padding-bottom:18px !important;
+  margin-bottom:24px !important;
+}
+
+/* Each live poll becomes a Forum-style discussion card */
+#fanPollPage .fan-poll-live-card{
+  background:rgba(7,23,43,.92) !important;
+  border:1px solid rgba(255,255,255,.22) !important;
+  border-radius:16px !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.20) !important;
+  padding:20px !important;
+  margin:0 0 16px !important;
+  color:#fff !important;
+}
+
+/* Poll question = Forum topic title */
+#fanPollPage .fan-poll-question{
+  color:#fff !important;
+  font-size:1.18rem !important;
+  line-height:1.25 !important;
+  font-weight:900 !important;
+  margin:0 0 14px !important;
+}
+
+/* Options resemble Forum rows */
+#fanPollPage .fan-poll-options{
+  display:grid !important;
+  gap:10px !important;
+  margin-top:12px !important;
+}
+#fanPollPage .fan-poll-option{
+  width:100% !important;
+  background:rgba(255,255,255,.07) !important;
+  border:1px solid rgba(255,255,255,.20) !important;
+  border-radius:12px !important;
+  color:#fff !important;
+  overflow:hidden !important;
+  transition:border-color .18s ease, background .18s ease, transform .18s ease !important;
+}
+#fanPollPage .fan-poll-option:hover{
+  background:rgba(255,255,255,.11) !important;
+  border-color:rgba(255,255,255,.45) !important;
+}
+#fanPollPage .fan-poll-option.selected,
+#fanPollPage .fan-poll-option[aria-pressed="true"]{
+  border-color:#ed1c2e !important;
+  box-shadow:0 0 0 2px rgba(237,28,46,.22) !important;
+}
+
+/* Poll option copy */
+#fanPollPage .fan-poll-option-name,
+#fanPollPage .fan-poll-option span,
+#fanPollPage .fan-poll-option strong{
+  color:#fff !important;
+}
+
+/* Media remains contained cleanly in Forum-style cards */
+#fanPollPage .fan-poll-option img,
+#fanPollPage .fan-poll-option video,
+#fanPollPage .fan-poll-option iframe{
+  border-radius:10px !important;
+}
+
+/* Status/results use muted Forum metadata */
+#fanPollPage .fan-poll-status,
+#fanPollPage .fan-poll-result-label,
+#fanPollPage .fan-poll-result-value,
+#fanPollPage .fan-poll-meta{
+  color:#d7dfeb !important;
+}
+
+/* Voting CTA uses the same strong red action language */
+#fanPollPage .fan-poll-vote-button{
+  background:#ed1c2e !important;
+  color:#fff !important;
+  border:0 !important;
+  border-radius:10px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  letter-spacing:.04em !important;
+  min-height:46px !important;
+  padding:0 20px !important;
+}
+#fanPollPage .fan-poll-vote-button:disabled{
+  opacity:.55 !important;
+}
+
+/* Empty/loading states look like Forum cards */
+#fanPollPage .fan-poll-state,
+#fanPollPage .fan-poll-empty,
+#fanPollPage .fan-poll-loading{
+  background:rgba(7,23,43,.92) !important;
+  border:1px solid rgba(255,255,255,.20) !important;
+  border-radius:14px !important;
+  color:#d7dfeb !important;
+  padding:22px !important;
+}
+
+/* Mobile consistency */
+@media (max-width:700px){
+  #fanPollPage .fan-poll-live-card{
+    padding:16px !important;
+    border-radius:14px !important;
+  }
+  #fanPollPage .fan-poll-question{
+    font-size:1.08rem !important;
+  }
+}
+</style>
+
+
+<style id="nalFanCenterNoBlueBackground">
+/* Preview: remove the blue/purple Fan Center page background.
+   Keep the existing cards, typography, red accents and functionality. */
+#fanPage,
+#fanForumPage,
+#fanForumTopicPage,
+#fanForumComposerPage,
+#fanPollPage,
+#fanPickemPage,
+#fanGalleryPage,
+#fanAccountPage,
+#fanTermsPage,
+#fanGuidelinesPage,
+#fanPrivacyPage {
+  background:#ffffff !important;
+}
+
+/* Fan Polls specifically: remove the page-level blue gradient. */
+#fanPollPage {
+  background:#ffffff !important;
+}
+</style>
+
+
+<style id="nalPollForumTypographyFix">
+/* Fan Polls typography now follows Fan Forum on the same light page background. */
+#fanPollPage,
+#fanPollPage .fan-poll-wrap,
+#fanPollPage .fan-poll-shell,
+#fanPollPage .fan-poll-page-inner {
+  color:#07172b !important;
+}
+
+/* Back link matches Fan Forum */
+#fanPollPage .fan-poll-back {
+  color:#07172b !important;
+  font-weight:800 !important;
+}
+
+/* Red community/section label */
+#fanPollPage .fan-poll-eyebrow {
+  color:#ed1c2e !important;
+  font-weight:900 !important;
+  letter-spacing:.12em !important;
+  text-transform:uppercase !important;
+}
+
+/* Main page title like FAN FORUM */
+#fanPollPage .fan-poll-title {
+  color:#07172b !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  letter-spacing:-.025em !important;
+}
+
+/* Intro copy */
+#fanPollPage .fan-poll-subtitle {
+  color:#667386 !important;
+  font-weight:600 !important;
+}
+
+/* Poll question/title uses the same strong navy hierarchy as Forum headings */
+#fanPollPage .fan-poll-question {
+  color:#07172b !important;
+  font-weight:900 !important;
+  line-height:1.25 !important;
+}
+
+/* Poll card copy */
+#fanPollPage .fan-poll-live-card,
+#fanPollPage .fan-poll-live-card p,
+#fanPollPage .fan-poll-live-card span,
+#fanPollPage .fan-poll-live-card strong,
+#fanPollPage .fan-poll-option-name {
+  color:#07172b !important;
+}
+
+/* Secondary poll information matches Forum's muted blue-gray descriptions */
+#fanPollPage .fan-poll-status,
+#fanPollPage .fan-poll-meta,
+#fanPollPage .fan-poll-result-label,
+#fanPollPage .fan-poll-result-value {
+  color:#667386 !important;
+}
+
+/* Keep option labels dark on their white/light cards */
+#fanPollPage .fan-poll-option,
+#fanPollPage .fan-poll-option span,
+#fanPollPage .fan-poll-option strong {
+  color:#07172b !important;
+}
+
+/* Preserve white text only where it belongs: red action buttons */
+#fanPollPage .fan-poll-vote-button,
+#fanPollPage .fan-poll-vote-button span,
+#fanPollPage .fan-poll-vote-button strong {
+  color:#fff !important;
+}
+</style>
+
 </head>
 
 
