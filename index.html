@@ -15515,10 +15515,14 @@ function nalMemberBadgeHTML(role){
 
 function nalForumAuthorData(item){
   const profile = item?._forum_author || {};
-  const name = profile.display_name || forumTopicValue(item,["author_display_name","display_name","author_name"],"NAL Fan");
-  const role = profile.role || forumTopicValue(item,["role","author_role"],"fan");
-  const avatar = profile.avatar_url || forumTopicValue(item,["avatar_url","author_avatar_url"],"");
-  return { name:String(name || "NAL Fan"), role:String(role || "fan").toLowerCase(), avatar:String(avatar || "") };
+  const userId = String(forumTopicValue(item,["user_id"],"") || "").trim();
+  const retainedDeletedUser = !userId;
+  const name = retainedDeletedUser
+    ? "Deleted User"
+    : (profile.display_name || forumTopicValue(item,["author_display_name","display_name","author_name"],"NAL Fan"));
+  const role = retainedDeletedUser ? "" : (profile.role || forumTopicValue(item,["role","author_role"],"fan"));
+  const avatar = retainedDeletedUser ? "" : (profile.avatar_url || forumTopicValue(item,["avatar_url","author_avatar_url"],""));
+  return { name:String(name || "Deleted User"), role:String(role || "").toLowerCase(), avatar:String(avatar || "") };
 }
 
 function nalForumAuthorHTML(item,created){
@@ -17250,78 +17254,56 @@ document.getElementById("fanSignUpForm")?.addEventListener("submit", async funct
 
 document.getElementById("fanDeleteAccountButton")?.addEventListener("click", async function(){
   if (!nalAccountUser){
-    setFanAccountMessage("Please sign in before requesting account deletion.", true);
+    setFanAccountMessage("Please sign in before deleting your account.", true);
     return;
   }
 
-  const displayName = nalAccountProfile?.display_name || "NAL Fan";
-  const accountEmail = nalAccountUser?.email || "";
-
   const confirmed = window.confirm(
-    "Request deletion of your NAL Fan Account?\n\n" +
-    "This sends an account deletion request for review. Your account will NOT be deleted immediately. " +
-    "After the request is recorded, your email app will open with a prepared message to NAL App Support."
+    "Permanently delete your NAL Fan Account?\n\n" +
+    "Your login, profile and personal account information will be deleted. " +
+    "Forum posts and replies, Pick ’Em history, poll participation and other historical NAL activity may remain, but will no longer publicly identify you.\n\n" +
+    "This cannot be undone."
   );
   if (!confirmed) return;
+
+  const typed = window.prompt(
+    'To confirm permanent account deletion, type DELETE below.'
+  );
+  if (typed !== "DELETE"){
+    if (typed !== null) setFanAccountMessage("Account deletion cancelled. You must type DELETE exactly to confirm.", true);
+    return;
+  }
+
+  const finalConfirmed = window.confirm(
+    "FINAL CONFIRMATION\n\nDelete this NAL Fan Account permanently? This action cannot be reversed."
+  );
+  if (!finalConfirmed) return;
 
   const button = this;
   const originalText = button.textContent;
   button.disabled = true;
-  button.textContent = "SUBMITTING REQUEST...";
+  button.textContent = "DELETING ACCOUNT...";
 
   try{
     const client = getNalAccountClient();
+    const { error } = await client.rpc("delete_my_nal_account");
+    if (error) throw error;
 
-    const { data: existing, error: existingError } = await client
-      .from("account_deletion_requests")
-      .select("id,status,requested_at")
-      .eq("user_id", nalAccountUser.id)
-      .maybeSingle();
-
-    if (existingError) throw existingError;
-
-    if (!existing){
-      const { error: insertError } = await client
-        .from("account_deletion_requests")
-        .insert({
-          user_id: nalAccountUser.id,
-          status: "pending"
-        });
-
-      if (insertError) throw insertError;
-    } else if (existing.status !== "pending"){
-      throw new Error("A previous account deletion request already exists for this account.");
-    }
-
-    const subject = "NAL Fan Account Deletion Request";
-    const body = [
-      "NAL Fan Account Deletion Request",
-      "",
-      "Display Name: " + displayName,
-      "Account Email: " + accountEmail,
-      "",
-      "I am requesting deletion of my NAL Fan Account.",
-      "",
-      "This request was initiated while signed in to the account."
-    ].join("\n");
-
-    setFanAccountMessage(
-      existing
-        ? "Your account deletion request is already pending. Opening your email app so you can contact NAL App Support."
-        : "Your account deletion request has been recorded. Opening your email app so you can contact NAL App Support.",
-      false
-    );
-
-    window.location.href =
-      "mailto:appsupport@thenationalarenaleague.com?subject=" +
-      encodeURIComponent(subject) +
-      "&body=" +
-      encodeURIComponent(body);
-
+    try{ await client.auth.signOut({ scope: "local" }); }catch(_e){}
+    nalAccountUser = null;
+    nalAccountProfile = null;
+    nalNotifications = [];
+    nalNotificationReadIds = new Set();
+    updateHeaderAccountState();
+    setNalNotificationBadge(0);
+    setFanAccountView("signin");
+    setFanAccountMessage("Your NAL Fan Account has been permanently deleted.", false);
   } catch(error){
-    console.error("NAL account deletion request error:", error);
+    console.error("NAL self-service account deletion error:", error);
     setFanAccountMessage(
-      "We could not submit your account deletion request. Please try again.",
+      error?.message
+        ? "We could not delete your account: " + error.message
+        : "We could not delete your account. Please try again.",
       true
     );
   } finally{
