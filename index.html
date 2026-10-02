@@ -4856,6 +4856,9 @@ document.addEventListener("DOMContentLoaded", () => {
   .fan-poll-option-name{font-size:12px;}
 }
 
+/* Multiple active Fan Polls + image/video poll media */
+.fan-poll-list{display:grid;gap:22px}.fan-poll-live-card{border:1px solid rgba(255,255,255,.13);border-radius:16px;padding:16px;background:rgba(255,255,255,.04)}.fan-poll-live-question{margin:0 0 12px;font-size:20px;line-height:1.2;font-weight:1000;color:#fff}.fan-poll-live-status{min-height:20px;margin:9px 0 0;font-size:12px;font-weight:800;color:#dbe4ee}.fan-poll-live-status.error{color:#ff8b8f}.fan-poll-option-media video,.fan-poll-option-media iframe{width:100%;height:100%;display:block;border:0;background:#000}.fan-poll-option-media.video-media{height:auto;aspect-ratio:16/9;background:#000}.fan-poll-option-media.empty-media{height:32px;background:#f2f4f7}.fan-poll-result-media{width:100%;aspect-ratio:16/9;background:#000;overflow:hidden}.fan-poll-result-media img,.fan-poll-result-media video,.fan-poll-result-media iframe{width:100%;height:100%;display:block;border:0;object-fit:contain}.fan-poll-live-card .fan-poll-results-note{margin-top:12px}.fan-poll-live-card .fan-poll-options{margin-top:10px}
+
 #teamPage .team-menu-icon{
   width:34px !important;
   height:34px !important;
@@ -9131,20 +9134,12 @@ document.addEventListener("DOMContentLoaded", () => {
       <header class="fan-poll-head">
         <div class="fan-poll-kicker">NAL FAN ZONE</div>
         <h1>FAN POLLS</h1>
-        <p id="fanPollQuestion">Loading the current NAL fan poll...</p>
+        <p>Vote in the latest active NAL fan polls.</p>
       </header>
 
       <div id="fanPollStatus" class="fan-poll-status" aria-live="polite"></div>
-      <div id="fanPollOptions" class="fan-poll-options">
-        <div class="fan-poll-loading">LOADING POLL...</div>
-      </div>
-
-      <button id="fanPollSubmit" class="fan-poll-submit" type="button" onclick="submitFanPollVote()" disabled>
-        SUBMIT VOTE
-      </button>
-
-      <div id="fanPollResultsNote" class="fan-poll-results-note" hidden>
-        LIVE FAN RESULTS
+      <div id="fanPollList" class="fan-poll-list">
+        <div class="fan-poll-loading">LOADING POLLS...</div>
       </div>
     </div>
   </main>
@@ -9670,7 +9665,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   <textarea id="fanPollAdminQuestion" maxlength="240" placeholder="Enter the fan poll question"></textarea>
                   <div class="fan-poll-admin-options-head"><span>ANSWER CHOICES</span><button type="button" id="fanPollAdminAddOption">+ ADD CHOICE</button></div>
                   <div id="fanPollAdminOptionFields"></div>
-                  <p class="fan-poll-admin-help">Add at least two choices. Image URLs are optional.</p>
+                  <p class="fan-poll-admin-help">Add at least two choices. Each choice can optionally use an image URL or video URL.</p>
                   <div class="fan-poll-admin-create-actions">
                     <button type="button" class="fan-poll-admin-save" id="fanPollAdminSaveDraft">SAVE DRAFT</button>
                     <button type="button" class="fan-poll-admin-publish" id="fanPollAdminPublish">CREATE &amp; ACTIVATE</button>
@@ -9678,7 +9673,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   <p class="fan-admin-action-message" id="fanPollAdminFormMessage" aria-live="polite"></p>
                 </div>
                 <div id="fanPollAdminList"><div class="fan-admin-loading">Open Poll Management to load polls.</div></div>
-                <p class="fan-admin-note">Only one fan poll is kept active at a time. Activating a poll closes any currently active poll. Vote records are read-only in Poll Management.</p>
+                <p class="fan-admin-note">Multiple fan polls can be active at the same time. Each poll can be activated or closed independently. Image and video media are supported. Vote records are read-only in Poll Management.</p>
               </div>
 
               <div class="fan-admin-panel" id="fanAdminNotificationPanel">
@@ -15158,285 +15153,118 @@ document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
 const NAL_POLL_SUPABASE_URL = "https://rcoaprzmutcwlpugobry.supabase.co";
 const NAL_POLL_SUPABASE_KEY = "sb_publishable_tHzWH6oFoUemOrdLs_h9bw_UOLBP-yb";
 
-let activeFanPoll = null;
-let fanPollOptions = [];
-let selectedFanPollOption = null;
+let activeFanPolls = [];
+const fanPollState = new Map();
 
 function fanPollHeaders(extra = {}){
-  return {
-    "Accept": "application/json",
-    ...extra
-  };
+  return { "Accept":"application/json", ...extra };
 }
-
 function fanPollApiUrl(pathAndQuery){
   const separator = pathAndQuery.includes("?") ? "&" : "?";
   return `${NAL_POLL_SUPABASE_URL}/rest/v1/${pathAndQuery}${separator}apikey=${encodeURIComponent(NAL_POLL_SUPABASE_KEY)}`;
 }
-
 function getFanPollVoterId(){
-  const key = "nal_fan_poll_voter_id";
-  let voterId = localStorage.getItem(key);
-  if (!voterId){
-    voterId = (window.crypto && crypto.randomUUID)
-      ? crypto.randomUUID()
-      : "nal-" + Date.now() + "-" + Math.random().toString(36).slice(2);
-    localStorage.setItem(key, voterId);
-  }
+  const key="nal_fan_poll_voter_id"; let voterId=localStorage.getItem(key);
+  if(!voterId){ voterId=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():"nal-"+Date.now()+"-"+Math.random().toString(36).slice(2); localStorage.setItem(key,voterId); }
   return voterId;
 }
+function fanPollVoteStorageKey(pollId){ return "nal_fan_poll_voted_"+pollId; }
+function hasLocalFanPollVote(pollId){ return !!localStorage.getItem(fanPollVoteStorageKey(pollId)); }
+function rememberLocalFanPollVote(pollId,optionId){ localStorage.setItem(fanPollVoteStorageKey(pollId),String(optionId)); }
+function fanPollEsc(v){ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function setFanPollStatus(message="",isError=false){ const el=document.getElementById("fanPollStatus"); if(!el)return; el.textContent=message; el.classList.toggle("error",!!isError); }
+function setFanPollCardStatus(pollId,message="",isError=false){ const el=document.querySelector(`[data-fan-poll-status="${pollId}"]`); if(!el)return; el.textContent=message; el.classList.toggle("error",!!isError); }
+function setFanZoneNavActive(){ document.querySelectorAll(".bottom-nav .nav-button").forEach(b=>b.classList.remove("active")); document.querySelector('.bottom-nav .nav-button[data-page="fanPage"]')?.classList.add("active"); }
 
-function fanPollVoteStorageKey(pollId){
-  return "nal_fan_poll_voted_" + pollId;
+function fanPollMediaKind(url){
+  const u=String(url||"").trim(); if(!u)return "none";
+  if(/(?:youtube\.com\/watch|youtu\.be\/|youtube\.com\/shorts\/)/i.test(u))return "youtube";
+  if(/vimeo\.com\//i.test(u))return "vimeo";
+  if(/\.(mp4|webm|ogg|m4v|mov)(?:[?#].*)?$/i.test(u))return "video";
+  if(/\.(m3u8)(?:[?#].*)?$/i.test(u))return "video";
+  return "image";
 }
-
-function hasLocalFanPollVote(pollId){
-  return !!localStorage.getItem(fanPollVoteStorageKey(pollId));
+function fanPollEmbedUrl(url,kind){
+  try{
+    const u=new URL(url);
+    if(kind==="youtube"){
+      let id=""; if(u.hostname.includes("youtu.be"))id=u.pathname.split("/").filter(Boolean)[0]||""; else if(u.pathname.includes("/shorts/"))id=u.pathname.split("/shorts/")[1]?.split("/")[0]||""; else id=u.searchParams.get("v")||"";
+      return id?`https://www.youtube.com/embed/${encodeURIComponent(id)}?playsinline=1`:url;
+    }
+    if(kind==="vimeo"){
+      const id=u.pathname.split("/").filter(Boolean).find(x=>/^\d+$/.test(x)); return id?`https://player.vimeo.com/video/${id}`:url;
+    }
+  }catch(_){ }
+  return url;
 }
-
-function rememberLocalFanPollVote(pollId, optionId){
-  localStorage.setItem(fanPollVoteStorageKey(pollId), String(optionId));
-}
-
-function setFanPollStatus(message = "", isError = false){
-  const status = document.getElementById("fanPollStatus");
-  if (!status) return;
-  status.textContent = message;
-  status.classList.toggle("error", !!isError);
-}
-
-function setFanZoneNavActive(){
-  document.querySelectorAll(".bottom-nav .nav-button").forEach(button => button.classList.remove("active"));
-  const fanNav = document.querySelector('.bottom-nav .nav-button[data-page="fanPage"]');
-  if (fanNav) fanNav.classList.add("active");
+function fanPollMediaHtml(url,name,results=false){
+  const safe=fanPollEsc(url||""), alt=fanPollEsc(name||"Poll choice"), kind=fanPollMediaKind(url);
+  if(kind==="none")return results?"":'<span class="fan-poll-option-media empty-media"></span>';
+  if(kind==="youtube"||kind==="vimeo"){
+    const embed=fanPollEsc(fanPollEmbedUrl(url,kind));
+    return results?`<div class="fan-poll-result-media"><iframe src="${embed}" title="${alt}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`:`<span class="fan-poll-option-media video-media"><iframe src="${embed}" title="${alt}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen onclick="event.stopPropagation()"></iframe></span>`;
+  }
+  if(kind==="video") return results?`<div class="fan-poll-result-media"><video src="${safe}" controls playsinline preload="metadata"></video></div>`:`<span class="fan-poll-option-media video-media"><video src="${safe}" controls playsinline preload="metadata" onclick="event.stopPropagation()"></video></span>`;
+  return results?`<div class="fan-poll-result-media"><img src="${safe}" alt="${alt}" loading="lazy"></div>`:`<span class="fan-poll-option-media"><img src="${safe}" alt="${alt}" loading="lazy"></span>`;
 }
 
 async function openFanPoll(){
-  document.querySelectorAll(".app-page").forEach(page => {
-    page.classList.remove("active");
-    page.style.display = "none";
-  });
-
-  const page = document.getElementById("fanPollPage");
-  if (page){
-    page.style.display = "block";
-    page.classList.add("active");
-  }
-
-  setFanZoneNavActive();
-  window.scrollTo(0,0);
-  await loadActiveFanPoll();
+  document.querySelectorAll(".app-page").forEach(page=>{page.classList.remove("active");page.style.display="none";});
+  const page=document.getElementById("fanPollPage"); if(page){page.style.display="block";page.classList.add("active");}
+  setFanZoneNavActive(); window.scrollTo(0,0); await loadActiveFanPoll();
 }
-
 function closeFanPoll(){
-  const pollPage = document.getElementById("fanPollPage");
-  if (pollPage){
-    pollPage.classList.remove("active");
-    pollPage.style.display = "none";
-  }
-
-  const fanPage = document.getElementById("fanPage");
-  if (fanPage){
-    fanPage.style.display = "block";
-    fanPage.classList.add("active");
-  }
-
-  setFanZoneNavActive();
-  window.scrollTo(0,0);
+  const pollPage=document.getElementById("fanPollPage"); if(pollPage){pollPage.classList.remove("active");pollPage.style.display="none";}
+  const fanPage=document.getElementById("fanPage"); if(fanPage){fanPage.style.display="block";fanPage.classList.add("active");}
+  setFanZoneNavActive(); window.scrollTo(0,0);
 }
 
 async function loadActiveFanPoll(){
-  const optionsHost = document.getElementById("fanPollOptions");
-  const submit = document.getElementById("fanPollSubmit");
-  const note = document.getElementById("fanPollResultsNote");
-  const question = document.getElementById("fanPollQuestion");
-
-  selectedFanPollOption = null;
-  if (submit){
-    submit.disabled = true;
-    submit.hidden = false;
-    submit.textContent = "SUBMIT VOTE";
-  }
-  if (note) note.hidden = true;
-  if (optionsHost) optionsHost.innerHTML = '<div class="fan-poll-loading">LOADING POLL...</div>';
-  setFanPollStatus("");
-
+  const host=document.getElementById("fanPollList"); if(host)host.innerHTML='<div class="fan-poll-loading">LOADING POLLS...</div>'; setFanPollStatus(""); fanPollState.clear();
   try{
-    const pollResponse = await fetch(
-      fanPollApiUrl("polls?status=eq.active&select=id,question&order=id.desc&limit=1"),
-      { method:"GET", mode:"cors", headers: fanPollHeaders(), cache:"no-store" }
-    );
-    if (!pollResponse.ok) {
-      const detail = await pollResponse.text();
-      throw new Error(`Poll connection error (${pollResponse.status})${detail ? ": " + detail.slice(0,120) : ""}`);
-    }
-    const polls = await pollResponse.json();
-    if (!polls.length) throw new Error("There is no active fan poll right now.");
-
-    activeFanPoll = polls[0];
-    if (question) question.textContent = activeFanPoll.question;
-
-    const optionResponse = await fetch(
-      fanPollApiUrl(`poll_options?poll_id=eq.${activeFanPoll.id}&select=id,poll_id,option_name,image_url,display_order&order=display_order.asc`),
-      { method:"GET", mode:"cors", headers: fanPollHeaders(), cache:"no-store" }
-    );
-    if (!optionResponse.ok) throw new Error("Unable to load poll choices.");
-    fanPollOptions = await optionResponse.json();
-
-    if (hasLocalFanPollVote(activeFanPoll.id)){
-      await showFanPollResults();
-    } else {
-      renderFanPollChoices();
-    }
-  }catch(error){
-    if (optionsHost) optionsHost.innerHTML = '<div class="fan-poll-loading">FAN POLL UNAVAILABLE</div>';
-    if (submit) submit.hidden = true;
-    const message = error && error.message ? error.message : "Unable to load the fan poll.";
-    setFanPollStatus(message === "Load failed" || message === "Failed to fetch"
-      ? "Unable to reach the Fan Poll server. Please refresh and try again."
-      : message, true);
-  }
+    const pr=await fetch(fanPollApiUrl("polls?status=eq.active&select=id,question,created_at&order=created_at.desc"),{method:"GET",mode:"cors",headers:fanPollHeaders(),cache:"no-store"});
+    if(!pr.ok){const detail=await pr.text();throw new Error(`Poll connection error (${pr.status})${detail?": "+detail.slice(0,120):""}`);}
+    activeFanPolls=await pr.json(); if(!activeFanPolls.length)throw new Error("There are no active fan polls right now.");
+    const ids=activeFanPolls.map(p=>p.id).join(",");
+    const or=await fetch(fanPollApiUrl(`poll_options?poll_id=in.(${ids})&select=id,poll_id,option_name,image_url,display_order&order=display_order.asc`),{method:"GET",mode:"cors",headers:fanPollHeaders(),cache:"no-store"});
+    if(!or.ok)throw new Error("Unable to load poll choices."); const allOptions=await or.json();
+    activeFanPolls.forEach(p=>fanPollState.set(String(p.id),{poll:p,options:allOptions.filter(o=>String(o.poll_id)===String(p.id)),selected:null}));
+    renderActiveFanPolls();
+    for(const p of activeFanPolls){ if(hasLocalFanPollVote(p.id)) await showFanPollResults(p.id); }
+  }catch(error){ if(host)host.innerHTML='<div class="fan-poll-loading">FAN POLLS UNAVAILABLE</div>'; const m=error?.message||"Unable to load fan polls."; setFanPollStatus((m==="Load failed"||m==="Failed to fetch")?"Unable to reach the Fan Poll server. Please refresh and try again.":m,true); }
 }
-
-function renderFanPollChoices(){
-  const host = document.getElementById("fanPollOptions");
-  const submit = document.getElementById("fanPollSubmit");
-  if (!host) return;
-
-  host.innerHTML = fanPollOptions.map(option => `
-    <button class="fan-poll-option" type="button" data-poll-option="${option.id}" onclick="selectFanPollOption(${option.id})">
-      <span class="fan-poll-option-media">
-        <img src="${option.image_url || ""}" alt="${option.option_name}" loading="lazy">
-      </span>
-      <span class="fan-poll-option-name">${option.option_name}</span>
-      <span class="fan-poll-check">✓</span>
-    </button>
-  `).join("");
-
-  if (submit){
-    submit.hidden = false;
-    submit.disabled = true;
-    submit.textContent = "SUBMIT VOTE";
-  }
-  setFanPollStatus("SELECT ONE TEAM TO CAST YOUR VOTE.");
+function renderActiveFanPolls(){
+  const host=document.getElementById("fanPollList"); if(!host)return;
+  host.innerHTML=activeFanPolls.map(p=>`<section class="fan-poll-live-card" data-fan-poll-card="${p.id}"><h2 class="fan-poll-live-question">${fanPollEsc(p.question)}</h2><div class="fan-poll-options" data-fan-poll-options="${p.id}"></div><button class="fan-poll-submit" type="button" data-fan-poll-submit="${p.id}" onclick="submitFanPollVote(${p.id})" disabled>SUBMIT VOTE</button><div class="fan-poll-results-note" data-fan-poll-results-note="${p.id}" hidden>LIVE FAN RESULTS</div><div class="fan-poll-live-status" data-fan-poll-status="${p.id}" aria-live="polite"></div></section>`).join("");
+  activeFanPolls.forEach(p=>renderFanPollChoices(p.id));
 }
-
-function selectFanPollOption(optionId){
-  selectedFanPollOption = Number(optionId);
-  document.querySelectorAll("#fanPollOptions .fan-poll-option").forEach(button => {
-    button.classList.toggle("selected", Number(button.dataset.pollOption) === selectedFanPollOption);
-  });
-  const submit = document.getElementById("fanPollSubmit");
-  if (submit) submit.disabled = false;
-  setFanPollStatus("");
+function renderFanPollChoices(pollId){
+  const state=fanPollState.get(String(pollId)); const host=document.querySelector(`[data-fan-poll-options="${pollId}"]`); const submit=document.querySelector(`[data-fan-poll-submit="${pollId}"]`); if(!state||!host)return;
+  host.innerHTML=state.options.map(o=>`<button class="fan-poll-option" type="button" data-poll-option="${o.id}" onclick="selectFanPollOption(${pollId},${o.id})">${fanPollMediaHtml(o.image_url,o.option_name)}<span class="fan-poll-option-name">${fanPollEsc(o.option_name)}</span><span class="fan-poll-check">✓</span></button>`).join("");
+  if(submit){submit.hidden=false;submit.disabled=true;submit.textContent="SUBMIT VOTE";} setFanPollCardStatus(pollId,"SELECT ONE CHOICE TO CAST YOUR VOTE.");
 }
-
-async function submitFanPollVote(){
-  if (!activeFanPoll || !selectedFanPollOption) return;
-
-  const submit = document.getElementById("fanPollSubmit");
-  if (submit){
-    submit.disabled = true;
-    submit.textContent = "SUBMITTING...";
-  }
-
+function selectFanPollOption(pollId,optionId){
+  const state=fanPollState.get(String(pollId)); if(!state)return; state.selected=Number(optionId);
+  document.querySelectorAll(`[data-fan-poll-options="${pollId}"] .fan-poll-option`).forEach(b=>b.classList.toggle("selected",Number(b.dataset.pollOption)===state.selected));
+  const submit=document.querySelector(`[data-fan-poll-submit="${pollId}"]`); if(submit)submit.disabled=false; setFanPollCardStatus(pollId,"");
+}
+async function submitFanPollVote(pollId){
+  const state=fanPollState.get(String(pollId)); if(!state||!state.selected)return; const submit=document.querySelector(`[data-fan-poll-submit="${pollId}"]`); if(submit){submit.disabled=true;submit.textContent="SUBMITTING...";}
   try{
-    let signedInUserId = null;
-    let accessToken = null;
-
-    try{
-      const client = getNalAccountClient();
-      const { data } = await client.auth.getSession();
-      signedInUserId = data?.session?.user?.id || null;
-      accessToken = data?.session?.access_token || null;
-    }catch(accountError){
-      signedInUserId = null;
-      accessToken = null;
-    }
-
-    const votePayload = {
-      poll_id: activeFanPoll.id,
-      option_id: selectedFanPollOption,
-      voter_id: getFanPollVoterId()
-    };
-
-    if (signedInUserId){
-      votePayload.user_id = signedInUserId;
-    }
-
-    const requestHeaders = fanPollHeaders({
-      "Content-Type":"application/json"
-    });
-    if (accessToken){
-      requestHeaders.Authorization = `Bearer ${accessToken}`;
-    }
-
-    const response = await fetch(fanPollApiUrl("poll_votes"), {
-      method:"POST",
-      mode:"cors",
-      headers: requestHeaders,
-      body:JSON.stringify(votePayload)
-    });
-
-    if (!response.ok){
-      const body = await response.text();
-      if (response.status === 409 || body.includes("one_vote_per_poll_per_device")){
-        rememberLocalFanPollVote(activeFanPoll.id, selectedFanPollOption);
-        await showFanPollResults();
-        setFanPollStatus("A vote from this device has already been recorded.");
-        return;
-      }
-      throw new Error("Your vote could not be submitted. Please try again.");
-    }
-
-    rememberLocalFanPollVote(activeFanPoll.id, selectedFanPollOption);
-    await showFanPollResults();
-    if (signedInUserId) await loadNalVotingActivity();
-    setFanPollStatus("VOTE COUNTED — THANK YOU FOR VOTING!");
-  }catch(error){
-    if (submit){
-      submit.disabled = false;
-      submit.textContent = "SUBMIT VOTE";
-    }
-    setFanPollStatus(error.message || "Unable to submit vote.", true);
-  }
+    let signedInUserId=null,accessToken=null; try{const client=getNalAccountClient();const {data}=await client.auth.getSession();signedInUserId=data?.session?.user?.id||null;accessToken=data?.session?.access_token||null;}catch(_){ }
+    const payload={poll_id:state.poll.id,option_id:state.selected,voter_id:getFanPollVoterId()}; if(signedInUserId)payload.user_id=signedInUserId;
+    const headers=fanPollHeaders({"Content-Type":"application/json"}); if(accessToken)headers.Authorization=`Bearer ${accessToken}`;
+    const response=await fetch(fanPollApiUrl("poll_votes"),{method:"POST",mode:"cors",headers,body:JSON.stringify(payload)});
+    if(!response.ok){const body=await response.text();if(response.status===409||body.includes("one_vote_per_poll_per_device")){rememberLocalFanPollVote(state.poll.id,state.selected);await showFanPollResults(pollId);setFanPollCardStatus(pollId,"A vote from this device has already been recorded.");return;}throw new Error("Your vote could not be submitted. Please try again.");}
+    rememberLocalFanPollVote(state.poll.id,state.selected); await showFanPollResults(pollId); if(signedInUserId)await loadNalVotingActivity(); setFanPollCardStatus(pollId,"VOTE COUNTED — THANK YOU FOR VOTING!");
+  }catch(error){if(submit){submit.disabled=false;submit.textContent="SUBMIT VOTE";}setFanPollCardStatus(pollId,error?.message||"Unable to submit vote.",true);}
 }
-
-async function showFanPollResults(){
-  if (!activeFanPoll) return;
-  const host = document.getElementById("fanPollOptions");
-  const submit = document.getElementById("fanPollSubmit");
-  const note = document.getElementById("fanPollResultsNote");
-
-  const response = await fetch(
-    fanPollApiUrl(`poll_results?poll_id=eq.${activeFanPoll.id}&select=option_id,poll_id,option_name,image_url,display_order,votes&order=display_order.asc`),
-    { method:"GET", mode:"cors", headers: fanPollHeaders(), cache:"no-store" }
-  );
-  if (!response.ok) throw new Error("Unable to load live poll results.");
-
-  const results = await response.json();
-  const totalVotes = results.reduce((sum,item) => sum + Number(item.votes || 0), 0);
-
-  host.innerHTML = results.map(item => {
-    const votes = Number(item.votes || 0);
-    const percent = totalVotes ? Math.round((votes / totalVotes) * 100) : 0;
-    return `
-      <div class="fan-poll-result">
-        <div class="fan-poll-result-top">
-          <img class="fan-poll-result-logo" src="${item.image_url || ""}" alt="${item.option_name}" loading="lazy">
-          <div class="fan-poll-result-name">${item.option_name}</div>
-          <div class="fan-poll-result-count"><strong>${percent}%</strong>${votes} ${votes === 1 ? "VOTE" : "VOTES"}</div>
-        </div>
-        <div class="fan-poll-result-bar"><span style="width:${percent}%"></span></div>
-      </div>
-    `;
-  }).join("");
-
-  if (submit) submit.hidden = true;
-  if (note){
-    note.hidden = false;
-    note.textContent = `LIVE FAN RESULTS • ${totalVotes} ${totalVotes === 1 ? "VOTE" : "VOTES"}`;
-  }
+async function showFanPollResults(pollId){
+  const state=fanPollState.get(String(pollId)); if(!state)return; const host=document.querySelector(`[data-fan-poll-options="${pollId}"]`); const submit=document.querySelector(`[data-fan-poll-submit="${pollId}"]`); const note=document.querySelector(`[data-fan-poll-results-note="${pollId}"]`);
+  const response=await fetch(fanPollApiUrl(`poll_results?poll_id=eq.${pollId}&select=option_id,poll_id,option_name,image_url,display_order,votes&order=display_order.asc`),{method:"GET",mode:"cors",headers:fanPollHeaders(),cache:"no-store"}); if(!response.ok)throw new Error("Unable to load live poll results.");
+  const results=await response.json(),total=results.reduce((sum,i)=>sum+Number(i.votes||0),0);
+  if(host)host.innerHTML=results.map(i=>{const votes=Number(i.votes||0),pct=total?Math.round(votes/total*100):0;return `<div class="fan-poll-result">${fanPollMediaHtml(i.image_url,i.option_name,true)}<div class="fan-poll-result-top"><div class="fan-poll-result-name">${fanPollEsc(i.option_name)}</div><div></div><div class="fan-poll-result-count"><strong>${pct}%</strong>${votes} ${votes===1?"VOTE":"VOTES"}</div></div><div class="fan-poll-result-bar"><span style="width:${pct}%"></span></div></div>`;}).join("");
+  if(submit)submit.hidden=true; if(note){note.hidden=false;note.textContent=`LIVE FAN RESULTS • ${total} ${total===1?"VOTE":"VOTES"}`;}
 }
 
 let nalForumCategories = [];
@@ -20301,7 +20129,7 @@ setTimeout(configureNalModerationAccess,0);
   function addOptionField(name="",image=""){
     const host=document.getElementById("fanPollAdminOptionFields");if(!host)return;
     const row=document.createElement("div");row.className="fan-poll-admin-option-row";
-    row.innerHTML='<input type="text" maxlength="120" class="fan-poll-admin-option-name" placeholder="Choice name" value="'+esc(name)+'"><input type="url" class="fan-poll-admin-option-image" placeholder="Image URL (optional)" value="'+esc(image)+'"><button type="button" class="fan-poll-admin-remove-option" aria-label="Remove choice">×</button>';
+    row.innerHTML='<input type="text" maxlength="120" class="fan-poll-admin-option-name" placeholder="Choice name" value="'+esc(name)+'"><input type="url" class="fan-poll-admin-option-image" placeholder="Image or video URL (optional)" value="'+esc(image)+'"><button type="button" class="fan-poll-admin-remove-option" aria-label="Remove choice">×</button>';
     host.appendChild(row);
   }
   function resetForm(){
@@ -20347,7 +20175,6 @@ setTimeout(configureNalModerationAccess,0);
     let createdId=null;
     try{
       const client=getNalAccountClient();
-      if(status==="active"){const close=await client.from("polls").update({status:"closed"}).eq("status","active");if(close.error)throw close.error;}
       const ins=await client.from("polls").insert({question,status}).select("id").single();if(ins.error)throw ins.error;createdId=ins.data.id;
       const payload=options.map((o,i)=>({poll_id:createdId,option_name:o.option_name,image_url:o.image_url,display_order:i}));const oi=await client.from("poll_options").insert(payload);if(oi.error)throw oi.error;
       toggleForm(false);await loadPolls();statusMessage("");
@@ -20357,7 +20184,7 @@ setTimeout(configureNalModerationAccess,0);
   async function act(action,id){
     if(!canManage())return;const client=getNalAccountClient();
     try{
-      if(action==="activate"){if(!confirm("Activate this poll? Any currently active poll will be closed."))return;const c=await client.from("polls").update({status:"closed"}).eq("status","active").neq("id",id);if(c.error)throw c.error;const u=await client.from("polls").update({status:"active"}).eq("id",id);if(u.error)throw u.error;}
+      if(action==="activate"){if(!confirm("Activate this poll? It will be added to the currently active fan polls."))return;const u=await client.from("polls").update({status:"active"}).eq("id",id);if(u.error)throw u.error;}
       if(action==="close"){if(!confirm("Close this poll? Fans will no longer be able to vote in it."))return;const u=await client.from("polls").update({status:"closed"}).eq("id",id);if(u.error)throw u.error;}
       if(action==="delete"){if(!confirm("Delete this draft poll? This cannot be undone."))return;const d=await client.from("polls").delete().eq("id",id).eq("status","draft");if(d.error)throw d.error;}
       await loadPolls();
