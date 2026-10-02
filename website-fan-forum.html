@@ -16218,6 +16218,77 @@ document.addEventListener("DOMContentLoaded", () => {
 .nal-delete-confirm:disabled{opacity:.55;cursor:not-allowed}
 
 </style>
+
+<style id="nalFanCenterDarkFontOverride">
+/* FAN CENTER WEBSITE — readability override
+   Keep text dark on light page/card/form surfaces. */
+#fanPage,
+#fanForumPage,
+#fanForumTopicPage,
+#fanForumComposerPage,
+#fanPollPage,
+#fanPickemPage,
+#fanGalleryPage,
+#fanAccountPage,
+#fanTermsPage,
+#fanGuidelinesPage,
+#fanPrivacyPage {
+  color: #07172b !important;
+}
+
+#fanPage p, #fanPage h1, #fanPage h2, #fanPage h3, #fanPage h4, #fanPage h5, #fanPage h6,
+#fanPage span, #fanPage small, #fanPage strong, #fanPage label,
+#fanForumPage p, #fanForumPage h1, #fanForumPage h2, #fanForumPage h3, #fanForumPage h4, #fanForumPage span, #fanForumPage small, #fanForumPage strong, #fanForumPage label,
+#fanForumTopicPage p, #fanForumTopicPage h1, #fanForumTopicPage h2, #fanForumTopicPage h3, #fanForumTopicPage h4, #fanForumTopicPage span, #fanForumTopicPage small, #fanForumTopicPage strong, #fanForumTopicPage label,
+#fanForumComposerPage p, #fanForumComposerPage h1, #fanForumComposerPage h2, #fanForumComposerPage h3, #fanForumComposerPage h4, #fanForumComposerPage span, #fanForumComposerPage small, #fanForumComposerPage strong, #fanForumComposerPage label,
+#fanPollPage p, #fanPollPage h1, #fanPollPage h2, #fanPollPage h3, #fanPollPage h4, #fanPollPage span, #fanPollPage small, #fanPollPage strong, #fanPollPage label,
+#fanPickemPage p, #fanPickemPage h1, #fanPickemPage h2, #fanPickemPage h3, #fanPickemPage h4, #fanPickemPage span, #fanPickemPage small, #fanPickemPage strong, #fanPickemPage label,
+#fanGalleryPage p, #fanGalleryPage h1, #fanGalleryPage h2, #fanGalleryPage h3, #fanGalleryPage h4, #fanGalleryPage span, #fanGalleryPage small, #fanGalleryPage strong, #fanGalleryPage label,
+#fanAccountPage p, #fanAccountPage h1, #fanAccountPage h2, #fanAccountPage h3, #fanAccountPage h4, #fanAccountPage span, #fanAccountPage small, #fanAccountPage strong, #fanAccountPage label,
+#fanTermsPage p, #fanTermsPage h1, #fanTermsPage h2, #fanTermsPage h3, #fanTermsPage h4, #fanTermsPage span, #fanTermsPage small, #fanTermsPage strong,
+#fanGuidelinesPage p, #fanGuidelinesPage h1, #fanGuidelinesPage h2, #fanGuidelinesPage h3, #fanGuidelinesPage h4, #fanGuidelinesPage span, #fanGuidelinesPage small, #fanGuidelinesPage strong,
+#fanPrivacyPage p, #fanPrivacyPage h1, #fanPrivacyPage h2, #fanPrivacyPage h3, #fanPrivacyPage h4, #fanPrivacyPage span, #fanPrivacyPage small, #fanPrivacyPage strong {
+  color: #07172b !important;
+}
+
+/* Inputs and user-entered text */
+#fanPage input, #fanPage textarea, #fanPage select,
+#fanForumPage input, #fanForumPage textarea, #fanForumPage select,
+#fanForumTopicPage input, #fanForumTopicPage textarea, #fanForumTopicPage select,
+#fanForumComposerPage input, #fanForumComposerPage textarea, #fanForumComposerPage select,
+#fanPollPage input, #fanPollPage textarea, #fanPollPage select,
+#fanPickemPage input, #fanPickemPage textarea, #fanPickemPage select,
+#fanAccountPage input, #fanAccountPage textarea, #fanAccountPage select {
+  color: #07172b !important;
+}
+
+/* Preserve intentionally dark/red/navy action surfaces with readable light labels. */
+#fanPage button,
+#fanForumPage button,
+#fanForumTopicPage button,
+#fanForumComposerPage button,
+#fanPollPage button,
+#fanPickemPage button,
+#fanGalleryPage button,
+#fanAccountPage button,
+#fanTermsPage button,
+#fanGuidelinesPage button,
+#fanPrivacyPage button {
+  text-shadow: none;
+}
+
+/* Explicit light text only where the control itself has a dark/red filled background. */
+#fanPage button[style*="background"],
+#fanForumPage button[style*="background"],
+#fanForumTopicPage button[style*="background"],
+#fanForumComposerPage button[style*="background"],
+#fanPollPage button[style*="background"],
+#fanPickemPage button[style*="background"],
+#fanAccountPage button[style*="background"] {
+  /* existing button-specific colors remain authoritative */
+}
+</style>
+
 </head>
 
 
