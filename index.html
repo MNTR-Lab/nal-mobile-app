@@ -16871,6 +16871,8 @@ async function loadNalFanProfile(user){
   }
 }
 
+function escapeNalAdminHtml(value = "") { return escapeHTML(value); }
+
 async function loadNalVotingActivity(){
   const host = document.getElementById("fanMemberVotingActivity");
   if (!host) return;
@@ -16906,9 +16908,7 @@ async function loadNalVotingActivity(){
 
       return `
         <div class="fan-member-vote-item">
-          <div class="fan-member-vote-question">${function escapeNalAdminHtml(value){ return escapeHTML(value); }
-
-escapeNalAdminHtml(question)}</div>
+          <div class="fan-member-vote-question">${escapeNalAdminHtml(question)}</div>
           <div class="fan-member-vote-pick"><b>YOUR PICK:</b> ${escapeNalAdminHtml(pick)}</div>
           ${votedDate ? `<div class="fan-member-vote-date">VOTED ${escapeNalAdminHtml(votedDate.toUpperCase())}</div>` : ""}
         </div>
