@@ -19033,15 +19033,44 @@ function closeLightcastTest(){
   }
 
   function selectHomeGameWeek(games){
-    const usable = games.filter(game => utcDate(game.start_time_utc) && eventState(game) !== "ended")
+    const scheduled = games
+      .filter(game => utcDate(game.start_time_utc))
       .sort((a,b) => utcDate(a.start_time_utc) - utcDate(b.start_time_utc));
-    if (!usable.length) return [];
-    const currentKey = easternWeekKey(new Date());
-    const currentWeek = usable.filter(game => easternWeekKey(utcDate(game.start_time_utc)) === currentKey);
-    if (currentWeek.length) return currentWeek;
-    const next = usable.find(game => utcDate(game.start_time_utc) > new Date()) || usable[0];
-    const nextKey = easternWeekKey(utcDate(next.start_time_utc));
-    return usable.filter(game => easternWeekKey(utcDate(game.start_time_utc)) === nextKey);
+
+    if (!scheduled.length) return [];
+
+    const weekMap = new Map();
+
+    scheduled.forEach(game => {
+      const key = easternWeekKey(utcDate(game.start_time_utc));
+      if (!weekMap.has(key)) weekMap.set(key, []);
+      weekMap.get(key).push(game);
+    });
+
+    const weeks = Array.from(weekMap.entries())
+      .map(([key, weekGames]) => ({
+        key,
+        games: weekGames,
+        startsAt: utcDate(weekGames[0].start_time_utc)
+      }))
+      .sort((a,b) => a.startsAt - b.startsAt);
+
+    const now = new Date();
+
+    // Before Week 1 begins, keep showing Week 1.
+    // Once a new week's first game begins, advance to that week.
+    // Completed games remain visible until the following week actually starts.
+    let activeWeek = weeks[0];
+
+    for (const week of weeks) {
+      if (week.startsAt <= now) {
+        activeWeek = week;
+      } else {
+        break;
+      }
+    }
+
+    return activeWeek.games;
   }
 
   function homeGameSlide(game, index){
