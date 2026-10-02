@@ -16258,89 +16258,25 @@ document.addEventListener("DOMContentLoaded", () => {
 </style>
 
 
-<style id="nal-live-pickem-light-fix">
-/* PICK 'EM — match the live Fan Center light-page readability.
-   Functionality and markup are unchanged. */
-#fanPickemPage.pickem-page{
-  background:#f3f5f7 !important;
-  color:#07172b !important;
-}
-#fanPickemPage .fan-upload-back{
-  color:#07172b !important;
-}
-#fanPickemPage .pickem-hero h1{
-  color:#07172b !important;
-}
-#fanPickemPage .pickem-hero p{
-  color:#526174 !important;
-}
-#fanPickemPage .pickem-hero small,
-#fanPickemPage .pickem-weekbar small,
-#fanPickemPage .pickem-board-head small,
-#fanPickemPage .pickem-record-card small{
-  color:#e31b23 !important;
-}
-
-/* Tabs become readable on the light page. */
-#fanPickemPage .pickem-tabs{
-  background:#ffffff !important;
-  border-color:#dfe3e8 !important;
-}
-#fanPickemPage .pickem-tabs button{
-  color:#526174 !important;
-}
-#fanPickemPage .pickem-tabs button.active{
-  background:#07172b !important;
-  color:#ffffff !important;
-}
-
-/* Week information and game cards already use light surfaces; enforce navy copy. */
-#fanPickemPage .pickem-weekbar,
-#fanPickemPage .pickem-game,
-#fanPickemPage .pickem-tiebreak,
-#fanPickemPage .pickem-board,
-#fanPickemPage .pickem-record-card{
-  color:#07172b !important;
-}
-#fanPickemPage .pickem-notice{
-  background:#ffffff !important;
-  color:#26384d !important;
-  border:1px solid #dfe3e8 !important;
-  border-left:4px solid #e31b23 !important;
-}
-#fanPickemPage .pickem-game h3,
-#fanPickemPage .pickem-tiebreak h3,
-#fanPickemPage .pickem-board h2,
-#fanPickemPage .pickem-record-card h2,
-#fanPickemPage .pickem-record-card h3{
-  color:#07172b !important;
-}
-#fanPickemPage .pickem-game-meta{
-  color:#07172b !important;
-}
-#fanPickemPage .pickem-team,
-#fanPickemPage .pickem-team b{
-  color:#07172b !important;
-}
-#fanPickemPage .pickem-team small,
-#fanPickemPage .pickem-selection,
-#fanPickemPage .pickem-tiebreak p{
-  color:#6b7786 !important;
-}
-#fanPickemPage .pickem-at{
-  color:#8491a0 !important;
-}
-
-/* Preserve intentional white text on dark/red selected/action surfaces. */
-#fanPickemPage .pickem-selection.has-pick{
-  color:#ffffff !important;
-}
-#fanPickemPage .pickem-save,
-#fanPickemPage .pickem-save *,
-#fanPickemPage .pickem-primary,
-#fanPickemPage .pickem-primary *{
-  color:#ffffff !important;
-}
+<style id="nal-pickem-render-repair">
+#fanPickemPage.app-page.active,#fanPickemPage[style*="display: block"],#fanPickemPage[style*="display:block"]{
+ display:block!important;visibility:visible!important;opacity:1!important;min-height:700px!important;background:#f3f5f7!important;color:#07172b!important}
+#fanPickemPage .pickem-shell{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:2!important;width:100%!important;max-width:900px!important;min-height:650px!important;margin:0 auto!important;padding:18px 16px 50px!important;color:#07172b!important}
+#fanPickemPage .fan-upload-back,#fanPickemPage .pickem-hero,#fanPickemPage .pickem-tabs,#fanPickemPage .pickem-weekbar,#fanPickemPage .pickem-notice,#fanPickemPage .pickem-game,#fanPickemPage .pickem-tiebreak,#fanPickemPage .pickem-save{visibility:visible!important;opacity:1!important}
+#fanPickemPage .fan-upload-back{display:inline-block!important;color:#07172b!important}
+#fanPickemPage .pickem-hero{display:block!important;color:#07172b!important}
+#fanPickemPage .pickem-hero h1{color:#07172b!important}
+#fanPickemPage .pickem-hero p{color:#526174!important}
+#fanPickemPage .pickem-hero small{color:#e31b23!important}
+#fanPickemPage .pickem-tabs{display:grid!important;grid-template-columns:repeat(3,1fr)!important}
+#fanPickemPage .pickem-view{display:none!important}
+#fanPickemPage .pickem-view.active{display:block!important}
+#fanPickemPage .pickem-weekbar,#fanPickemPage .pickem-game,#fanPickemPage .pickem-tiebreak,#fanPickemPage .pickem-board-head,#fanPickemPage .pickem-board-row,#fanPickemPage .pickem-record-card,#fanPickemPage .pickem-history{background:#fff!important;color:#07172b!important}
+#fanPickemPage .pickem-notice{display:block!important;background:#fff!important;color:#26384d!important;border-left:4px solid #e31b23!important}
+#fanPickemPage .pickem-team,#fanPickemPage .pickem-team b{color:#07172b!important}
+#fanPickemPage .pickem-tabs button{color:#526174!important}
+#fanPickemPage .pickem-tabs button.active{background:#07172b!important;color:#fff!important}
+#fanPickemPage .pickem-save{display:block!important;color:#fff!important;background:#e31b23!important}
 </style>
 
 </head>
@@ -28732,7 +28668,21 @@ body>.app>main.app-page:not(#fanPage):not(#fanForumPage):not(#fanForumCategoryPa
     const tie=games.find(x=>x.key===w.tiebreaker)||games[games.length-1];
     view.innerHTML=`<div class="pickem-weekbar"><div><small>REGULAR SEASON</small><h2>WEEK ${esc(w.week)}</h2><span>${esc(w.dateRange||'2027')}</span></div><span class="pickem-status open">PICKS OPEN</span></div><div class="pickem-notice">Each matchup locks individually at its scheduled kickoff. You can change your pick until that game locks.</div>${cards}<div class="pickem-tiebreak"><small>TIEBREAKER</small><h3>${esc(tie.awayName)} at ${esc(tie.homeName)} — TOTAL POINTS</h3><input id="pickemTiebreakInput" type="number" min="0" inputmode="numeric" placeholder="Enter total points"><p>Used only to break ties in the weekly standings.</p></div><button class="pickem-save" type="button" onclick="pickemPreviewSave()">SAVE MY PICKS</button><div id="pickemSaveMessage" class="pickem-save-message"></div>`;
   }
-  window.openPickemPreview=function(){document.querySelectorAll('.app-page').forEach(p=>{p.classList.remove('active');p.style.display='none'});const saved=loadSaved(),keys=Object.keys(saved).sort((a,b)=>+a-+b);if(keys.length)renderFanFromSaved(keys[0]);const p=document.getElementById('fanPickemPage');if(p){p.style.display='block';p.classList.add('active')}window.scrollTo(0,0)};
+  window.openPickemPreview=function(){
+ document.querySelectorAll('.app-page').forEach(p=>{p.classList.remove('active');p.style.display='none'});
+ const saved=loadSaved(),keys=Object.keys(saved).sort((a,b)=>+a-+b);
+ if(keys.length)renderFanFromSaved(keys[0]);
+ const p=document.getElementById('fanPickemPage');
+ if(p){
+   p.style.setProperty('display','block','important');p.style.visibility='visible';p.style.opacity='1';p.classList.add('active');
+   const shell=p.querySelector('.pickem-shell');
+   if(shell){shell.style.setProperty('display','block','important');shell.style.visibility='visible';shell.style.opacity='1';}
+   p.querySelectorAll('.pickem-view').forEach(v=>v.classList.remove('active'));
+   document.getElementById('pickemPicksView')?.classList.add('active');
+   p.querySelectorAll('[data-picktab]').forEach(b=>b.classList.toggle('active',b.dataset.picktab==='picks'));
+ }
+ window.scrollTo(0,0);
+};
   window.closePickemPreview=function(){const p=document.getElementById('fanPickemPage');if(p){p.style.display='none';p.classList.remove('active')}const f=document.getElementById('fanPage');if(f){f.style.display='block';f.classList.add('active')}window.scrollTo(0,0)};
   window.pickemPreviewSave=function(){const games=[...document.querySelectorAll('#fanPickemPage .pickem-game')];const missing=games.some(g=>!g.querySelector('.pickem-team.selected'));const m=document.getElementById('pickemSaveMessage');if(m){m.textContent=missing?'MAKE A PICK FOR EACH GAME BEFORE SAVING.':'✓ PICKS SAVED — PREVIEW MODE';m.style.color=missing?'#ffb7bd':'#a9f0bf'}};
   document.addEventListener('click',e=>{
