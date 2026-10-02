@@ -8770,6 +8770,10 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 </style>
 
+
+<style id="nalModerationStyles">
+.fan-moderation-toolbar{display:flex;gap:7px;margin:0 0 12px}.fan-moderation-filter{border:1px solid #dfe3e8;background:#fff;color:#07172b;border-radius:999px;padding:8px 11px;font-size:8px;font-weight:950;letter-spacing:.7px;cursor:pointer}.fan-moderation-filter.active{background:#07172b;color:#fff;border-color:#07172b}.fan-moderation-card{border:1px solid #dfe3e8;border-radius:12px;background:#fff;padding:13px;margin:0 0 10px}.fan-moderation-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.fan-moderation-type{font-size:8px;font-weight:950;letter-spacing:1px;color:#e31b23}.fan-moderation-status{font-size:7px;font-weight:950;letter-spacing:.7px;padding:4px 7px;border-radius:999px;background:#eef1f4;color:#07172b}.fan-moderation-reason{font-size:12px;font-weight:900;color:#07172b;margin-top:8px}.fan-moderation-content{margin-top:8px;padding:10px;border-radius:8px;background:#f5f7f9;color:#303944;font-size:10px;line-height:1.45;white-space:pre-wrap}.fan-moderation-meta{margin-top:7px;color:#78818c;font-size:8px;line-height:1.4}.fan-moderation-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:11px}.fan-moderation-actions button{min-height:35px;border:0;border-radius:7px;font-size:8px;font-weight:950;letter-spacing:.5px;cursor:pointer}.fan-mod-keep{background:#e8f4ec;color:#176b35}.fan-mod-remove{background:#fff0f0;color:#b5161c}.fan-mod-suspend{background:#fff5df;color:#835600}.fan-mod-ban{background:#07172b;color:#fff}.fan-mod-message{margin-top:8px;font-size:8px;font-weight:800}.fan-mod-empty{padding:20px 10px;text-align:center;color:#7b8490;font-size:9px;font-weight:900}.fan-admin-only[hidden]{display:none!important}
+</style>
 </head>
 
 
@@ -10307,7 +10311,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
               <div class="fan-admin-stats">
                 <div class="fan-admin-stat"><strong id="fanAdminMemberCount">—</strong><span>MEMBERS</span></div>
-                <div class="fan-admin-stat"><strong>—</strong><span>OPEN REPORTS</span></div>
+                <div class="fan-admin-stat"><strong id="fanModerationOpenCount">—</strong><span>OPEN REPORTS</span></div>
                 <div class="fan-admin-stat"><strong>—</strong><span>ACTIVE POLLS</span></div>
               </div>
 
@@ -10322,7 +10326,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class="fan-admin-rowbtn" id="fanAdminNotificationButton" type="button">
                   <div class="fan-member-row"><div class="fan-member-ico">🔔</div><div class="fan-member-rowtext"><b>Send Notification</b><span>Publish league or team alerts to NAL Fan Accounts</span></div><span class="fan-member-chev">›</span></div>
                 </button>
-                <div class="fan-member-row"><div class="fan-member-ico">🚩</div><div class="fan-member-rowtext"><b>Moderation</b><span>Reports, forum posts and submitted content</span></div><span class="fan-member-badge">COMING SOON</span></div>
+                <button class="fan-admin-rowbtn" id="fanModerationButton" type="button"><div class="fan-member-row"><div class="fan-member-ico">🚩</div><div class="fan-member-rowtext"><b>Moderation</b><span>Review reported forum topics and replies</span></div><span class="fan-member-chev">›</span></div></button>
                 <div class="fan-member-row"><div class="fan-member-ico">✓</div><div class="fan-member-rowtext"><b>Poll Management</b><span>Create, activate and close fan polls</span></div><span class="fan-member-badge">COMING SOON</span></div>
                 <div class="fan-member-row"><div class="fan-member-ico">🏈</div><div class="fan-member-rowtext"><b>Pick ’Em Management</b><span>Games, deadlines and leaderboard controls</span></div><span class="fan-member-badge">COMING SOON</span></div>
                 <div class="fan-member-row"><div class="fan-member-ico">⚙</div><div class="fan-member-rowtext"><b>App Management</b><span>Future administrative app controls</span></div><span class="fan-member-badge">COMING SOON</span></div>
@@ -10361,6 +10365,17 @@ document.addEventListener("DOMContentLoaded", () => {
                   </div>
                 </div>
                 <p class="fan-admin-note">Member information is loaded through the secure admin-only Supabase function. Administrative actions will be added separately with server-side permission verification.</p>
+              </div>
+
+              <div class="fan-admin-panel" id="fanModerationPanel">
+                <h3 class="fan-member-title">MODERATION QUEUE</h3>
+                <div class="fan-moderation-toolbar">
+                  <button type="button" class="fan-moderation-filter active" data-mod-filter="open">OPEN</button>
+                  <button type="button" class="fan-moderation-filter" data-mod-filter="resolved">RESOLVED</button>
+                  <button type="button" class="fan-moderation-filter" data-mod-filter="all">ALL</button>
+                </div>
+                <div id="fanModerationList"><div class="fan-admin-loading">Open Moderation to load reports.</div></div>
+                <p class="fan-admin-note">Reports do not automatically remove content. Moderators review the report and choose the appropriate action.</p>
               </div>
 
               <div class="fan-admin-panel" id="fanAdminNotificationPanel">
@@ -21309,6 +21324,92 @@ function closeLightcastTest(){
 
   requestAnimationFrame(syncBackFromActualPage);
 })();
+</script>
+
+<script id="nalModerationSystem">
+/* =========================================================
+   NAL FORUM MODERATION QUEUE
+   Database/RLS migration is supplied with this build.
+========================================================= */
+let nalModerationReports=[];
+let nalModerationFilter="open";
+
+function nalCanModerate(){
+  return ["moderator","admin"].includes(String(nalAccountProfile?.role||"").toLowerCase());
+}
+function nalIsAdmin(){ return String(nalAccountProfile?.role||"").toLowerCase()==="admin"; }
+function nalModEscape(v){ return typeof escapeHTML==="function"?escapeHTML(String(v??"")):String(v??"").replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;","'":"&#39;"}[c])); }
+function nalModDate(v){ try{return v?new Date(v).toLocaleString():""}catch(_){return ""} }
+
+async function loadNalModerationQueue(){
+  const host=document.getElementById("fanModerationList");
+  if(!host||!nalCanModerate()) return;
+  host.innerHTML='<div class="fan-admin-loading">Loading moderation reports…</div>';
+  try{
+    const client=getNalAccountClient();
+    let q=client.from("forum_reports").select("id,reporter_user_id,topic_id,reply_id,reason,status,created_at,resolved_at,resolved_by,resolution_note").order("created_at",{ascending:false});
+    if(nalModerationFilter==="open") q=q.eq("status","open");
+    else if(nalModerationFilter==="resolved") q=q.neq("status","open");
+    const {data,error}=await q.limit(100); if(error) throw error;
+    nalModerationReports=Array.isArray(data)?data:[];
+    await enrichNalModerationReports();
+    renderNalModerationQueue();
+    await refreshNalModerationCount();
+  }catch(error){ console.error("Moderation queue error:",error); host.innerHTML='<div class="fan-mod-empty">Moderation reports could not be loaded. Confirm the supplied Supabase moderation migration has been run.</div>'; }
+}
+
+async function enrichNalModerationReports(){
+  const client=getNalAccountClient();
+  const topicIds=[...new Set(nalModerationReports.map(r=>r.topic_id).filter(Boolean))];
+  const replyIds=[...new Set(nalModerationReports.map(r=>r.reply_id).filter(Boolean))];
+  let topics=[],replies=[];
+  if(topicIds.length){const x=await client.from("forum_topics").select("id,author_id,title,body,is_hidden").in("id",topicIds); if(!x.error)topics=x.data||[];}
+  if(replyIds.length){const x=await client.from("forum_replies").select("id,user_id,topic_id,body,is_hidden").in("id",replyIds); if(!x.error)replies=x.data||[];}
+  const tm=new Map(topics.map(x=>[String(x.id),x])), rm=new Map(replies.map(x=>[String(x.id),x]));
+  const authorIds=[]; nalModerationReports.forEach(r=>{const c=r.topic_id?tm.get(String(r.topic_id)):rm.get(String(r.reply_id)); r._content=c||null; const uid=c?.author_id||c?.user_id; if(uid)authorIds.push(String(uid));});
+  const ids=[...new Set(authorIds)]; let profiles=[]; if(ids.length){const x=await client.from("profiles").select("id,display_name,email,role,account_status").in("id",ids); if(!x.error)profiles=x.data||[];}
+  const pm=new Map(profiles.map(x=>[String(x.id),x])); nalModerationReports.forEach(r=>{const c=r._content; r._author=pm.get(String(c?.author_id||c?.user_id||""))||null;});
+}
+
+function renderNalModerationQueue(){
+  const host=document.getElementById("fanModerationList"); if(!host)return;
+  if(!nalModerationReports.length){host.innerHTML='<div class="fan-mod-empty">No reports in this view.</div>';return;}
+  host.innerHTML=nalModerationReports.map(r=>{const c=r._content||{};const isTopic=!!r.topic_id;const hidden=!!c.is_hidden;const author=r._author||{};const status=String(r.status||"open");return `<article class="fan-moderation-card" data-report-id="${nalModEscape(r.id)}"><div class="fan-moderation-top"><span class="fan-moderation-type">${isTopic?"TOPIC":"REPLY"} REPORT</span><span class="fan-moderation-status">${nalModEscape(status.toUpperCase())}</span></div><div class="fan-moderation-reason">${nalModEscape(r.reason||"Reported content")}</div><div class="fan-moderation-content">${isTopic&&c.title?`<strong>${nalModEscape(c.title)}</strong><br>`:""}${nalModEscape(c.body||"Content unavailable")}${hidden?'<br><strong>[CURRENTLY HIDDEN]</strong>':""}</div><div class="fan-moderation-meta">Posted by ${nalModEscape(author.display_name||"NAL Fan")} • Reported ${nalModEscape(nalModDate(r.created_at))}</div>${status==="open"?`<div class="fan-moderation-actions"><button class="fan-mod-keep" onclick="resolveNalModerationReport('${nalModEscape(r.id)}','kept')">KEEP CONTENT</button><button class="fan-mod-remove" onclick="removeNalModeratedContent('${nalModEscape(r.id)}')">REMOVE CONTENT</button>${nalIsAdmin()?`<button class="fan-mod-suspend" onclick="moderateNalForumAccount('${nalModEscape(r.id)}','suspended')">SUSPEND USER</button><button class="fan-mod-ban" onclick="moderateNalForumAccount('${nalModEscape(r.id)}','banned')">BAN USER</button>`:""}</div>`:""}<div class="fan-mod-message" id="fanModMsg-${nalModEscape(r.id)}"></div></article>`;}).join("");
+}
+function nalModerationReport(id){return nalModerationReports.find(r=>String(r.id)===String(id));}
+function nalModMsg(id,msg,bad=false){const el=document.getElementById(`fanModMsg-${id}`);if(el){el.textContent=msg;el.style.color=bad?"#b5161c":"#176b35";}}
+
+async function resolveNalModerationReport(id,resolution){
+  if(!nalCanModerate())return; nalModMsg(id,"Saving moderation decision…");
+  try{const client=getNalAccountClient();const {error}=await client.rpc("moderate_forum_report",{report_id:id,action_name:resolution});if(error)throw error;await loadNalModerationQueue();}catch(e){console.error(e);nalModMsg(id,e?.message||"Moderation action failed.",true);}
+}
+async function removeNalModeratedContent(id){
+  if(!nalCanModerate())return; if(!confirm("Remove this content from the NAL Fan Forum?"))return; nalModMsg(id,"Removing content…");
+  try{const client=getNalAccountClient();const {error}=await client.rpc("moderate_forum_report",{report_id:id,action_name:"removed"});if(error)throw error;await loadNalModerationQueue();}catch(e){console.error(e);nalModMsg(id,e?.message||"Content could not be removed.",true);}
+}
+async function moderateNalForumAccount(id,newStatus){
+  if(!nalIsAdmin()){nalModMsg(id,"Only an administrator can suspend or ban an account.",true);return;}
+  const r=nalModerationReport(id), uid=r?._content?.author_id||r?._content?.user_id; if(!uid)return;
+  if(!confirm(`${newStatus==="banned"?"Ban":"Suspend"} this member account?`))return; nalModMsg(id,"Updating account…");
+  try{const client=getNalAccountClient();const {error}=await client.rpc("admin_set_account_status",{target_user_id:uid,new_status:newStatus});if(error)throw error;const x=await client.rpc("moderate_forum_report",{report_id:id,action_name:newStatus==="banned"?"user_banned":"user_suspended"});if(x.error)throw x.error;await loadNalModerationQueue();}catch(e){console.error(e);nalModMsg(id,e?.message||"Account action failed.",true);}
+}
+async function refreshNalModerationCount(){
+  const el=document.getElementById("fanModerationOpenCount");if(!el||!nalCanModerate())return;try{const client=getNalAccountClient();const {count,error}=await client.from("forum_reports").select("id",{count:"exact",head:true}).eq("status","open");if(error)throw error;el.textContent=String(count??0);}catch(_){el.textContent="—";}
+}
+function configureNalModerationAccess(){
+  const area=document.getElementById("fanAdminArea"); if(!area)return; const can=nalCanModerate(), admin=nalIsAdmin(); area.hidden=!can;
+  ["fanAdminUsersButton","fanAdminActivityButton","fanAdminNotificationButton","fanAdminUsersPanel","fanAdminActivityPanel","fanAdminNotificationPanel"].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=!admin;});
+  const banner=area.querySelector(".fan-admin-banner b");const sub=area.querySelector(".fan-admin-banner span");if(banner)banner.textContent=admin?"NAL ADMIN":"NAL MODERATOR";if(sub)sub.textContent=admin?"Authorized league app management":"Authorized community moderation";
+  refreshNalModerationCount();
+}
+
+document.addEventListener("click",e=>{const b=e.target.closest?.("#fanModerationButton");if(!b)return;document.querySelectorAll("#fanAdminArea .fan-admin-panel").forEach(p=>p.classList.remove("show"));document.getElementById("fanModerationPanel")?.classList.add("show");loadNalModerationQueue();});
+document.addEventListener("click",e=>{const b=e.target.closest?.("[data-mod-filter]");if(!b)return;nalModerationFilter=b.dataset.modFilter;document.querySelectorAll(".fan-moderation-filter").forEach(x=>x.classList.toggle("active",x===b));loadNalModerationQueue();});
+
+// Re-apply role-based access whenever the profile UI is rendered.
+const _nalOriginalRenderProfile=window.renderNalFanProfile;
+if(typeof _nalOriginalRenderProfile==="function"){window.renderNalFanProfile=function(){const r=_nalOriginalRenderProfile.apply(this,arguments);configureNalModerationAccess();return r;};}
+setTimeout(configureNalModerationAccess,0);
 </script>
 
 </body>
