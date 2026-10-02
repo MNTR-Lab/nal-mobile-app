@@ -16219,9 +16219,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </style>
 
-<style id="nalFanCenterDarkFontOverride">
-/* FAN CENTER WEBSITE — readability override
-   Keep text dark on light page/card/form surfaces. */
+
+
+
+
+
+
+<style id="nalFanCenterReadabilityFix">
+/* =========================================================
+   FAN CENTER WEBSITE — CONTRAST FIX
+   Light surfaces = dark navy text
+   Dark/gradient surfaces = white text
+   Existing red accents remain red.
+   ========================================================= */
+
+/* Default content on light page backgrounds */
 #fanPage,
 #fanForumPage,
 #fanForumTopicPage,
@@ -16233,59 +16245,123 @@ document.addEventListener("DOMContentLoaded", () => {
 #fanTermsPage,
 #fanGuidelinesPage,
 #fanPrivacyPage {
-  color: #07172b !important;
+  color:#07172b;
 }
 
-#fanPage p, #fanPage h1, #fanPage h2, #fanPage h3, #fanPage h4, #fanPage h5, #fanPage h6,
-#fanPage span, #fanPage small, #fanPage strong, #fanPage label,
-#fanForumPage p, #fanForumPage h1, #fanForumPage h2, #fanForumPage h3, #fanForumPage h4, #fanForumPage span, #fanForumPage small, #fanForumPage strong, #fanForumPage label,
-#fanForumTopicPage p, #fanForumTopicPage h1, #fanForumTopicPage h2, #fanForumTopicPage h3, #fanForumTopicPage h4, #fanForumTopicPage span, #fanForumTopicPage small, #fanForumTopicPage strong, #fanForumTopicPage label,
-#fanForumComposerPage p, #fanForumComposerPage h1, #fanForumComposerPage h2, #fanForumComposerPage h3, #fanForumComposerPage h4, #fanForumComposerPage span, #fanForumComposerPage small, #fanForumComposerPage strong, #fanForumComposerPage label,
-#fanPollPage p, #fanPollPage h1, #fanPollPage h2, #fanPollPage h3, #fanPollPage h4, #fanPollPage span, #fanPollPage small, #fanPollPage strong, #fanPollPage label,
-#fanPickemPage p, #fanPickemPage h1, #fanPickemPage h2, #fanPickemPage h3, #fanPickemPage h4, #fanPickemPage span, #fanPickemPage small, #fanPickemPage strong, #fanPickemPage label,
-#fanGalleryPage p, #fanGalleryPage h1, #fanGalleryPage h2, #fanGalleryPage h3, #fanGalleryPage h4, #fanGalleryPage span, #fanGalleryPage small, #fanGalleryPage strong, #fanGalleryPage label,
-#fanAccountPage p, #fanAccountPage h1, #fanAccountPage h2, #fanAccountPage h3, #fanAccountPage h4, #fanAccountPage span, #fanAccountPage small, #fanAccountPage strong, #fanAccountPage label,
-#fanTermsPage p, #fanTermsPage h1, #fanTermsPage h2, #fanTermsPage h3, #fanTermsPage h4, #fanTermsPage span, #fanTermsPage small, #fanTermsPage strong,
-#fanGuidelinesPage p, #fanGuidelinesPage h1, #fanGuidelinesPage h2, #fanGuidelinesPage h3, #fanGuidelinesPage h4, #fanGuidelinesPage span, #fanGuidelinesPage small, #fanGuidelinesPage strong,
-#fanPrivacyPage p, #fanPrivacyPage h1, #fanPrivacyPage h2, #fanPrivacyPage h3, #fanPrivacyPage h4, #fanPrivacyPage span, #fanPrivacyPage small, #fanPrivacyPage strong {
-  color: #07172b !important;
+#fanForumPage h1, #fanForumPage h2, #fanForumPage h3, #fanForumPage p,
+#fanForumTopicPage h1, #fanForumTopicPage h2, #fanForumTopicPage h3, #fanForumTopicPage p,
+#fanForumComposerPage h1, #fanForumComposerPage h2, #fanForumComposerPage h3, #fanForumComposerPage p,
+#fanPollPage h1, #fanPollPage h2, #fanPollPage h3, #fanPollPage p,
+#fanPickemPage h1, #fanPickemPage h2, #fanPickemPage h3, #fanPickemPage p,
+#fanGalleryPage h1, #fanGalleryPage h2, #fanGalleryPage h3, #fanGalleryPage p,
+#fanAccountPage h1, #fanAccountPage h2, #fanAccountPage h3, #fanAccountPage p,
+#fanTermsPage h1, #fanTermsPage h2, #fanTermsPage h3, #fanTermsPage p,
+#fanGuidelinesPage h1, #fanGuidelinesPage h2, #fanGuidelinesPage h3, #fanGuidelinesPage p,
+#fanPrivacyPage h1, #fanPrivacyPage h2, #fanPrivacyPage h3, #fanPrivacyPage p {
+  color:#07172b !important;
 }
 
-/* Inputs and user-entered text */
-#fanPage input, #fanPage textarea, #fanPage select,
+/* Poll page: all light-background copy must be readable */
+#fanPollPage .fan-poll-title,
+#fanPollPage .fan-poll-subtitle,
+#fanPollPage .fan-poll-question,
+#fanPollPage .fan-poll-option-name,
+#fanPollPage .fan-poll-status,
+#fanPollPage .fan-poll-result-label,
+#fanPollPage .fan-poll-result-value,
+#fanPollPage .fan-poll-back {
+  color:#07172b !important;
+}
+#fanPollPage .fan-poll-eyebrow {
+  color:#e31b23 !important;
+}
+
+/* Pick 'Em light cards */
+#fanPickemPage .pickem-page-title,
+#fanPickemPage .pickem-page-subtitle,
+#fanPickemPage .pickem-game-card,
+#fanPickemPage .pickem-game-card *,
+#fanPickemPage .pickem-week-card,
+#fanPickemPage .pickem-week-card * {
+  color:#07172b !important;
+}
+
+/* Forms */
 #fanForumPage input, #fanForumPage textarea, #fanForumPage select,
 #fanForumTopicPage input, #fanForumTopicPage textarea, #fanForumTopicPage select,
 #fanForumComposerPage input, #fanForumComposerPage textarea, #fanForumComposerPage select,
 #fanPollPage input, #fanPollPage textarea, #fanPollPage select,
 #fanPickemPage input, #fanPickemPage textarea, #fanPickemPage select,
 #fanAccountPage input, #fanAccountPage textarea, #fanAccountPage select {
-  color: #07172b !important;
+  color:#07172b !important;
 }
 
-/* Preserve intentionally dark/red/navy action surfaces with readable light labels. */
+/* FAN ZONE landing cards are intentionally dark/gradient.
+   Restore their copy to white while retaining red eyebrow/accent text. */
+#fanPage .fan-zone-hero,
+#fanPage .fan-zone-hero h1,
+#fanPage .fan-zone-hero h2,
+#fanPage .fan-zone-hero h3,
+#fanPage .fan-zone-hero p,
+#fanPage .fan-zone-hero span,
+#fanPage .fan-zone-feature,
+#fanPage .fan-zone-feature h1,
+#fanPage .fan-zone-feature h2,
+#fanPage .fan-zone-feature h3,
+#fanPage .fan-zone-feature p,
+#fanPage .fan-zone-feature span,
+#fanPage .fan-zone-card,
+#fanPage .fan-zone-card h1,
+#fanPage .fan-zone-card h2,
+#fanPage .fan-zone-card h3,
+#fanPage .fan-zone-card p,
+#fanPage .fan-zone-card span,
+#fanPage .fan-zone-tile,
+#fanPage .fan-zone-tile h1,
+#fanPage .fan-zone-tile h2,
+#fanPage .fan-zone-tile h3,
+#fanPage .fan-zone-tile p,
+#fanPage .fan-zone-tile span,
+#fanPage [class*="fan-zone"][class*="card"],
+#fanPage [class*="fan-zone"][class*="card"] * {
+  color:#fff !important;
+}
+
+/* The actual master uses additional Fan Zone feature classes.
+   Any text sitting directly on a dark/gradient Fan Zone surface gets white. */
+#fanPage [style*="linear-gradient"] *,
+#fanPage [style*="background:#07172b"] *,
+#fanPage [style*="background: #07172b"] *,
+#fanPage [style*="background-color:#07172b"] *,
+#fanPage [style*="background-color: #07172b"] * {
+  color:#fff !important;
+}
+
+/* Preserve NAL red eyebrow/accent labels on dark cards */
+#fanPage .fan-zone-eyebrow,
+#fanPage [class*="eyebrow"],
+#fanPage [class*="kicker"] {
+  color:#e31b23 !important;
+}
+
+/* Filled red/navy action buttons remain white for contrast */
 #fanPage button,
 #fanForumPage button,
 #fanForumTopicPage button,
 #fanForumComposerPage button,
 #fanPollPage button,
 #fanPickemPage button,
-#fanGalleryPage button,
-#fanAccountPage button,
-#fanTermsPage button,
-#fanGuidelinesPage button,
-#fanPrivacyPage button {
-  text-shadow: none;
+#fanAccountPage button {
+  text-shadow:none !important;
 }
-
-/* Explicit light text only where the control itself has a dark/red filled background. */
-#fanPage button[style*="background"],
-#fanForumPage button[style*="background"],
-#fanForumTopicPage button[style*="background"],
-#fanForumComposerPage button[style*="background"],
-#fanPollPage button[style*="background"],
-#fanPickemPage button[style*="background"],
-#fanAccountPage button[style*="background"] {
-  /* existing button-specific colors remain authoritative */
+#fanPage .fan-zone-action,
+#fanPage .fan-zone-button,
+#fanForumPage .fan-forum-primary-button,
+#fanForumComposerPage button[type="submit"],
+#fanPollPage .fan-poll-vote-button,
+#fanPickemPage .pickem-save-button,
+#fanAccountPage .fan-account-submit {
+  color:#fff !important;
 }
 </style>
 
