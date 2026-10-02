@@ -15632,7 +15632,7 @@ function nalForumAuthorHTML(item,created){
 
 async function enrichNalForumAuthors(items){
   const rows = Array.isArray(items) ? items : [];
-  const ids = [...new Set(rows.map(item => String(forumTopicValue(item,["user_id","author_id"],"") || "").trim()).filter(Boolean))];
+  const ids = [...new Set(rows.map(item => String(forumTopicValue(item,["user_id"],"") || "").trim()).filter(Boolean))];
   if (!ids.length) return rows;
   try{
     const client = getNalAccountClient();
@@ -15641,7 +15641,7 @@ async function enrichNalForumAuthors(items){
     if (error) throw error;
     const profiles = new Map((Array.isArray(data)?data:[]).map(profile => [String(profile.id),profile]));
     rows.forEach(item => {
-      const id = String(forumTopicValue(item,["user_id","author_id"],"") || "");
+      const id = String(forumTopicValue(item,["user_id"],"") || "");
       if (profiles.has(id)) item._forum_author = profiles.get(id);
     });
   }catch(error){
@@ -16034,7 +16034,7 @@ async function submitNalForumTopic(){
   if (status){ status.textContent="Posting conversation…"; status.className="fan-forum-compose-status"; }
   try{
     const client = getNalAccountClient();
-    const payload = { category_id:activeNalForumCategory.id, author_id:nalAccountUser.id, title, body };
+    const payload = { category_id:activeNalForumCategory.id, user_id:nalAccountUser.id, title, body };
     const { error } = await client.from("forum_topics").insert(payload);
     if (error) throw error;
     if (titleInput) titleInput.value="";
@@ -20204,9 +20204,9 @@ async function enrichNalModerationReports(){
   if(topicIds.length){const x=await client.from("forum_topics").select("id,user_id,title,body,is_hidden").in("id",topicIds); if(!x.error)topics=x.data||[];}
   if(replyIds.length){const x=await client.from("forum_replies").select("id,user_id,topic_id,body,is_hidden").in("id",replyIds); if(!x.error)replies=x.data||[];}
   const tm=new Map(topics.map(x=>[String(x.id),x])), rm=new Map(replies.map(x=>[String(x.id),x]));
-  const authorIds=[]; nalModerationReports.forEach(r=>{const c=r.topic_id?tm.get(String(r.topic_id)):rm.get(String(r.reply_id)); r._content=c||null; const uid=c?.author_id||c?.user_id; if(uid)authorIds.push(String(uid));});
+  const authorIds=[]; nalModerationReports.forEach(r=>{const c=r.topic_id?tm.get(String(r.topic_id)):rm.get(String(r.reply_id)); r._content=c||null; const uid=c?.user_id; if(uid)authorIds.push(String(uid));});
   const ids=[...new Set(authorIds)]; let profiles=[]; if(ids.length){const x=await client.from("profiles").select("id,display_name,role,account_status").in("id",ids); if(!x.error)profiles=x.data||[];}
-  const pm=new Map(profiles.map(x=>[String(x.id),x])); nalModerationReports.forEach(r=>{const c=r._content; r._author=pm.get(String(c?.author_id||c?.user_id||""))||null;});
+  const pm=new Map(profiles.map(x=>[String(x.id),x])); nalModerationReports.forEach(r=>{const c=r._content; r._author=pm.get(String(c?.user_id||""))||null;});
 }
 
 function renderNalModerationQueue(){
@@ -20227,7 +20227,7 @@ async function removeNalModeratedContent(id){
 }
 async function moderateNalForumAccount(id,newStatus){
   if(!nalIsAdmin()){nalModMsg(id,"Only an administrator can suspend or ban an account.",true);return;}
-  const r=nalModerationReport(id), uid=r?._content?.author_id||r?._content?.user_id; if(!uid)return;
+  const r=nalModerationReport(id), uid=r?._content?.user_id; if(!uid)return;
   if(!confirm(`${newStatus==="banned"?"Ban":"Suspend"} this member account?`))return; nalModMsg(id,"Updating account…");
   try{const client=getNalAccountClient();const {error}=await client.rpc("admin_set_account_status",{target_user_id:uid,new_status:newStatus});if(error)throw error;const x=await client.rpc("moderate_forum_report",{report_id:id,action_name:newStatus==="banned"?"user_banned":"user_suspended"});if(x.error)throw x.error;await loadNalModerationQueue();}catch(e){console.error(e);nalModMsg(id,e?.message||"Account action failed.",true);}
 }
