@@ -20201,11 +20201,11 @@ async function enrichNalModerationReports(){
   const topicIds=[...new Set(nalModerationReports.map(r=>r.topic_id).filter(Boolean))];
   const replyIds=[...new Set(nalModerationReports.map(r=>r.reply_id).filter(Boolean))];
   let topics=[],replies=[];
-  if(topicIds.length){const x=await client.from("forum_topics").select("id,author_id,title,body,is_hidden").in("id",topicIds); if(!x.error)topics=x.data||[];}
+  if(topicIds.length){const x=await client.from("forum_topics").select("id,user_id,title,body,is_hidden").in("id",topicIds); if(!x.error)topics=x.data||[];}
   if(replyIds.length){const x=await client.from("forum_replies").select("id,user_id,topic_id,body,is_hidden").in("id",replyIds); if(!x.error)replies=x.data||[];}
   const tm=new Map(topics.map(x=>[String(x.id),x])), rm=new Map(replies.map(x=>[String(x.id),x]));
   const authorIds=[]; nalModerationReports.forEach(r=>{const c=r.topic_id?tm.get(String(r.topic_id)):rm.get(String(r.reply_id)); r._content=c||null; const uid=c?.author_id||c?.user_id; if(uid)authorIds.push(String(uid));});
-  const ids=[...new Set(authorIds)]; let profiles=[]; if(ids.length){const x=await client.from("profiles").select("id,display_name,email,role,account_status").in("id",ids); if(!x.error)profiles=x.data||[];}
+  const ids=[...new Set(authorIds)]; let profiles=[]; if(ids.length){const x=await client.from("profiles").select("id,display_name,role,account_status").in("id",ids); if(!x.error)profiles=x.data||[];}
   const pm=new Map(profiles.map(x=>[String(x.id),x])); nalModerationReports.forEach(r=>{const c=r._content; r._author=pm.get(String(c?.author_id||c?.user_id||""))||null;});
 }
 
