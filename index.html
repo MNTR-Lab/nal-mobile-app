@@ -20546,6 +20546,32 @@ setTimeout(configureNalModerationAccess,0);
       if(st)st.textContent=`PUBLISH FAILED: ${error?.message||'Unknown error'}`;
     }
   }
+  /* Production bridge for Admin Game Results.
+     This deliberately lives inside Schedule Sync so both features use the exact
+     same selected week and production records. */
+  window.nalPickemGetCurrentProductionGames = async function(){
+    const gs=groups(), g=gs[pickemWeekIndex];
+    if(!g)return {week:null,games:[]};
+
+    const client=getNalAccountClient();
+
+    // Query the production games directly. The selected Schedule Sync group is
+    // already the authority for which matchups belong to the current week, so
+    // Game Results does not need a second pickem_weeks lookup.
+    const {data:allGames,error:gamesError}=await client.from('pickem_games')
+      .select('id,week_id,away_team,home_team,away_score,home_score,winner,status,display_order,kickoff_at')
+      .order('display_order',{ascending:true});
+
+    if(gamesError)throw gamesError;
+
+    const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+    const currentKeys=new Set((g.games||[]).map(x=>norm(x.away)+'|'+norm(x.home)));
+    const games=(allGames||[]).filter(x=>currentKeys.has(norm(x.away_team)+'|'+norm(x.home_team)));
+
+    // A saved production week is confirmed by finding its production games.
+    return {week:games.length?{week_number:Number(g.number)}:null,games};
+  };
+
   /* Direct production action used by the dynamically rendered APPLY / UPDATE WEEK button. */
   window.nalPickemApplyCurrentWeek = async function(){
     return await saveCurrentWeek();
@@ -20931,10 +20957,20 @@ setTimeout(configureNalModerationAccess,0);
   const list=document.getElementById('pickemAdminGameResultsList'); if(!list)return;
   list.innerHTML='<div class="pickem-result-empty">Loading saved Pick ’Em games…</div>';
   try{
-   const w=await selectedWeek(); if(!w){list.innerHTML='<div class="pickem-result-empty">This week has not been saved to production Pick ’Em yet. Apply the week above before entering results.</div>';return;}
-   const c=getNalAccountClient(); const {data,error}=await c.from('pickem_games').select('id,week_id,away_team,home_team,away_score,home_score,winner,status,display_order').eq('week_id',w.id).order('display_order',{ascending:true});
-   if(error)throw error; const games=data||[]; list.innerHTML=games.length?games.map(card).join(''):'<div class="pickem-result-empty">No production Pick ’Em games are saved for this week.</div>';
-  }catch(err){console.error(err);list.innerHTML='<div class="pickem-result-empty">Game Results could not be loaded. Refresh and try again.</div>';}
+   if(typeof window.nalPickemGetCurrentProductionGames!=='function'){
+     throw new Error('Schedule Sync production bridge is unavailable.');
+   }
+   const result=await window.nalPickemGetCurrentProductionGames();
+   if(!result?.week){
+     list.innerHTML='<div class="pickem-result-empty">This week has not been saved to production Pick ’Em yet. Apply the week above before entering results.</div>';
+     return;
+   }
+   const games=result.games||[];
+   list.innerHTML=games.length?games.map(card).join(''):'<div class="pickem-result-empty">No production Pick ’Em games are saved for this week.</div>';
+  }catch(err){
+   console.error('Pick Em Game Results load error:',err);
+   list.innerHTML='<div class="pickem-result-empty">Game Results could not be loaded. Refresh and try again.</div>';
+  }
  }
  async function save(el){
   const msg=el.querySelector('.pickem-result-message'),btn=el.querySelector('[data-save-result]'),av=String(el.querySelector('[data-away-score]')?.value??'').trim(),hv=String(el.querySelector('[data-home-score]')?.value??'').trim(),a=Number(av),h=Number(hv);
