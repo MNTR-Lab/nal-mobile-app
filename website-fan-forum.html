@@ -28697,5 +28697,47 @@ body>.app>main.app-page:not(#fanPage):not(#fanForumPage):not(#fanForumCategoryPa
   const originalLoad=window.loadLiveGames; setTimeout(()=>{if(document.getElementById('fanPickemManagementPanel')?.classList.contains('show'))renderAdmin();},1200);
 })();
 </script>
+<script id="nalPickemProductionSystem">
+
+(function(){
+ async function currentUser(){try{const c=getNalAccountClient(),{data}=await c.auth.getSession();return data?.session?.user||null}catch(_){return null}}
+ function message(t,bad=false){const e=document.getElementById("pickemSaveMessage");if(e){e.textContent=t;e.style.color=bad?"#b5161c":"#14733a"}}
+ function visibleGames(){return [...document.querySelectorAll("#pickemPicksView .pickem-game")]}
+ async function saveProductionPickem(){
+  const cards=visibleGames();
+  if(cards.some(c=>!c.querySelector(".pickem-team.selected"))){message("MAKE A PICK FOR EACH GAME BEFORE SAVING.",true);return}
+  const user=await currentUser();
+  if(!user){nalAccountPendingAction="pickem-save";message("SIGN IN OR CREATE AN ACCOUNT TO SAVE YOUR PICKS.",true);await openFanAccount();return}
+  const button=document.querySelector("#pickemPicksView .pickem-save");if(button){button.disabled=true;button.textContent="SAVING PICKS..."}
+  try{
+   const client=getNalAccountClient();
+   const {data:games,error:ge}=await client.from("pickem_games").select("*").order("kickoff_at",{ascending:true});if(ge)throw ge;
+   const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+   for(const card of cards){
+    const text=norm(card.textContent), selected=String(card.querySelector(".pickem-team.selected")?.dataset.team||"");
+    const game=(games||[]).find(g=>{const a=norm(g.away_team||g.away_team_name||g.away_name),h=norm(g.home_team||g.home_team_name||g.home_name);return a&&h&&text.includes(a)&&text.includes(h)});
+    if(!game)throw new Error("This matchup has not been published to production Pick ’Em yet.");
+    const ko=game.kickoff_at||game.start_time_utc||game.kickoff_time;if(ko&&new Date(ko)<=new Date())throw new Error("One or more games have already locked at kickoff.");
+    const {data:old,error:oe}=await client.from("pickem_picks").select("id").eq("user_id",user.id).eq("game_id",game.id).maybeSingle();if(oe)throw oe;
+    if(old?.id){const {error}=await client.from("pickem_picks").update({picked_team:selected}).eq("id",old.id).eq("user_id",user.id);if(error)throw error}
+    else{const {error}=await client.from("pickem_picks").insert({user_id:user.id,game_id:game.id,picked_team:selected});if(error)throw error}
+   }
+   const tie=document.querySelector("#pickemPicksView .pickem-tiebreak input"),v=String(tie?.value||"").trim();
+   if(v!==""){
+    const week=Number((document.querySelector("#pickemPicksView .pickem-weekbar h2")?.textContent||"1").match(/\d+/)?.[0]||1);
+    const {data:old,error:oe}=await client.from("pickem_tiebreakers").select("id").eq("user_id",user.id).eq("week_number",week).maybeSingle();if(oe)throw oe;
+    if(old?.id){const {error}=await client.from("pickem_tiebreakers").update({total_points:Number(v)}).eq("id",old.id).eq("user_id",user.id);if(error)throw error}
+    else{const {error}=await client.from("pickem_tiebreakers").insert({user_id:user.id,week_number:week,total_points:Number(v)});if(error)throw error}
+   }
+   message("✓ PICKS SAVED — YOU CAN UPDATE THEM UNTIL EACH GAME KICKS OFF.");if(button)button.textContent="UPDATE MY PICKS";
+  }catch(e){console.error("Pick Em save:",e);message(e?.message||"WE COULD NOT SAVE YOUR PICKS.",true)}
+  finally{if(button){button.disabled=false;if(button.textContent==="SAVING PICKS...")button.textContent="SAVE MY PICKS"}}
+ }
+ window.pickemPreviewSave=saveProductionPickem;
+ const prior=window.completeNalAccountPendingAction;
+ window.completeNalAccountPendingAction=async function(){if(nalAccountPendingAction==="pickem-save"){nalAccountPendingAction=null;closeFanAccount();setTimeout(saveProductionPickem,100);return}if(typeof prior==="function")return prior()};
+})();
+
+</script>
 </body>
 </html>
