@@ -26,6 +26,12 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
 select,input{font:inherit}
 @media(max-width:1000px){.cards.roster-cards{grid-template-columns:repeat(2,1fr)!important}}
 @media(max-width:760px){.cards{grid-template-columns:1fr}.hero{align-items:start;flex-direction:column}.nav{overflow:auto}.grid{grid-template-columns:1fr}table{min-width:760px}.panel{overflow:auto}}
+
+.tx-footer-actions{display:flex;justify-content:center;padding:18px 0 4px}
+.tx-see-all{background:var(--navy);color:#fff;border:0;border-radius:7px;padding:12px 22px;font-weight:900;font-size:12px;letter-spacing:.04em;cursor:pointer}
+.tx-see-all:hover{opacity:.92}
+.tx-back{background:#eef2f6;color:var(--navy);border:0;border-radius:7px;padding:10px 16px;font-weight:900;font-size:12px;cursor:pointer}
+
 </style>
 </head>
 <body>
@@ -65,9 +71,18 @@ select,input{font:inherit}
     <div id="pendingTable"><div class="loading">Loading live transactions…</div></div>
   </section>
 
-  <section class="panel">
-    <div class="panelhead"><h3>Transactions</h3><span class="pill" style="background:#eef2f6;color:#536070" id="transactionResultCount">—</span></div>
+  <section class="panel" id="transactionsPanel">
+    <div class="panelhead">
+      <div>
+        <button id="backTransactionsBtn" class="tx-back" onclick="showRecentTransactions()" style="display:none;margin-bottom:10px">← BACK TO TRANSACTIONS</button>
+        <h3 id="transactionsHeading">Recent Transactions</h3>
+      </div>
+      <span class="pill" style="background:#eef2f6;color:#536070" id="transactionResultCount">—</span>
+    </div>
     <div id="transactionsTable"><div class="loading">Loading live transactions…</div></div>
+    <div class="tx-footer-actions" id="seeAllTransactionsWrap">
+      <button class="tx-see-all" onclick="showAllTransactions()">SEE ALL TRANSACTIONS</button>
+    </div>
   </section>
   <div class="footer">NAL League Operations • Internal Use Only</div>
 </div>
@@ -268,14 +283,43 @@ function transactionTable(rows, pending=false){
   return `<table>${head}<tbody>${body}</tbody></table>`;
 }
 
+let showingAllTransactions = false;
+
+function transactionTimestamp(tx){
+  const value = tx.submittedAt || tx.transactionDate || "";
+  const time = Date.parse(value);
+  return Number.isNaN(time) ? 0 : time;
+}
+
+function showAllTransactions(){
+  showingAllTransactions = true;
+  renderTransactions();
+  $("transactionsPanel")?.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function showRecentTransactions(){
+  showingAllTransactions = false;
+  renderTransactions();
+  $("transactionsPanel")?.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
 function renderTransactions(){
   if(!API_DATA) return;
   const pending = API_DATA.transactions?.pending || [];
   $("pendingTable").innerHTML = transactionTable(pending,true);
 
-  const rows = filteredTransactions();
-  $("transactionResultCount").textContent = `${rows.length} RECORD${rows.length===1?"":"S"}`;
+  const filtered = filteredTransactions();
+  const sorted = [...filtered].sort((a,b)=>transactionTimestamp(b)-transactionTimestamp(a));
+  const rows = showingAllTransactions ? sorted : sorted.slice(0,10);
+
+  $("transactionsHeading").textContent = showingAllTransactions ? "All Transactions" : "Recent Transactions";
+  $("transactionResultCount").textContent = showingAllTransactions
+    ? `${sorted.length} RECORD${sorted.length===1?"":"S"}`
+    : `${rows.length} OF ${sorted.length}`;
   $("transactionsTable").innerHTML = transactionTable(rows,false);
+
+  $("seeAllTransactionsWrap").style.display = (!showingAllTransactions && sorted.length > 10) ? "flex" : "none";
+  $("backTransactionsBtn").style.display = showingAllTransactions ? "inline-block" : "none";
 }
 
 function openTransaction(id){
