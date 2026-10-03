@@ -20738,7 +20738,11 @@ setTimeout(configureNalModerationAccess,0);
         .select('id,season,week_number,title,status,tiebreaker_enabled,tiebreaker_question')
         .in('status',['active','published']).order('week_number',{ascending:true});
       if(we)throw we;
-      if(!weeks?.length)return; /* retain bundled preview until admin publishes */
+      if(!weeks?.length){
+        view.innerHTML=`<div class="pickem-weekbar"><div><small>REGULAR SEASON</small><h2>PICK ’EM</h2><span>2027 SEASON</span></div><span class="pickem-status">PICKS CLOSED</span></div>
+        <div class="pickem-notice"><strong>PICKS CURRENTLY CLOSED</strong><br>There is no Pick ’Em week open right now. Check your completed results under My Record and the Leaderboard. The next week will appear here automatically when it opens.</div>`;
+        return;
+      }
 
       const now=Date.now();
       let selectedWeek=null;
