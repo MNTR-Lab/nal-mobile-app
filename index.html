@@ -20434,7 +20434,7 @@ setTimeout(configureNalModerationAccess,0);
     if(savedWeek){g.games.forEach(x=>{const old=(savedWeek.games||[]).find(y=>y.key===gameKey(x));if(!old||old.fingerprint!==fingerprint(x))changes++;});}
     document.getElementById('pickemAdminChangeCount').textContent=changes;
     const rows=g.games.map((x,i)=>{const m=matchup(x), old=savedWeek&&(savedWeek.games||[]).find(y=>y.key===gameKey(x)), changed=!!old&&old.fingerprint!==fingerprint(x);return `<div class="pickem-sync-game ${changed?'changed':''}"><label class="pickem-sync-check"><input type="checkbox" data-pickem-include="${esc(gameKey(x))}" ${!savedWeek||!old||old.include!==false?'checked':''}><span>INCLUDE</span></label><div class="pickem-sync-match"><span class="pickem-sync-logo"><img src="${esc(logo(m.awayName))}" alt=""></span><div><b>${esc(m.awayName)}</b><small>AWAY</small></div><em>AT</em><span class="pickem-sync-logo"><img src="${esc(logo(m.homeName))}" alt=""></span><div><b>${esc(m.homeName)}</b><small>HOME</small></div></div><div class="pickem-sync-kickoff">${esc(kickoff(x))}</div>${changed?'<div class="pickem-sync-change">SCHEDULE CHANGE DETECTED — REVIEW BEFORE APPLYING</div>':''}<label class="pickem-sync-tie"><input type="radio" name="pickemTiebreaker" value="${esc(gameKey(x))}" ${(savedWeek?.tiebreaker||gameKey(g.games[g.games.length-1]))===gameKey(x)?'checked':''}> USE AS TIEBREAKER</label></div>`}).join('');
-    host.innerHTML=`<div class="pickem-admin-week"><div class="pickem-admin-weekhead"><div><small>2027 REGULAR SEASON • SCHEDULE SYNC</small><h4>WEEK ${g.number}</h4><span>${esc(weekDateRange(g))}</span></div><span class="pickem-status open">${savedWeek?'SAVED':'READY'}</span></div>${rows}<div class="pickem-admin-weekactions"><button type="button" id="pickemImportWeek">${savedWeek?'APPLY / UPDATE WEEK':'IMPORT / PUBLISH WEEK'}</button><button type="button" id="pickemSelectAll">SELECT ALL</button><button type="button" id="pickemClearWeek">CLEAR SAVED WEEK</button></div></div>`;
+    host.innerHTML=`<div class="pickem-admin-week"><div class="pickem-admin-weekhead"><div><small>2027 REGULAR SEASON • SCHEDULE SYNC</small><h4>WEEK ${g.number}</h4><span>${esc(weekDateRange(g))}</span></div><span class="pickem-status open">${savedWeek?'SAVED':'READY'}</span></div>${rows}<div class="pickem-admin-weekactions"><button type="button" id="pickemImportWeek" onclick="event.preventDefault(); event.stopPropagation(); window.nalPickemApplyCurrentWeek && window.nalPickemApplyCurrentWeek();">${savedWeek?'APPLY / UPDATE WEEK':'IMPORT / PUBLISH WEEK'}</button><button type="button" id="pickemSelectAll">SELECT ALL</button><button type="button" id="pickemClearWeek">CLEAR SAVED WEEK</button></div></div>`;
     const st=document.getElementById('pickemSyncStatus');if(st)st.textContent=`Schedule synced • ${g.games.length} game${g.games.length===1?'':'s'} found for Week ${g.number}${changes?` • ${changes} change${changes===1?'':'s'} need review`:''}.`;
   }
   async function saveCurrentWeek(){
@@ -20532,6 +20532,11 @@ setTimeout(configureNalModerationAccess,0);
       if(st)st.textContent=`PUBLISH FAILED: ${error?.message||'Unknown error'}`;
     }
   }
+  /* Direct production action used by the dynamically rendered APPLY / UPDATE WEEK button. */
+  window.nalPickemApplyCurrentWeek = async function(){
+    return await saveCurrentWeek();
+  };
+
   function renderFanFromSaved(weekNo){
     const saved=loadSaved(), w=saved[String(weekNo)]||saved[Object.keys(saved).sort((a,b)=>+a-+b)[0]]; if(!w)return;
     const games=(w.games||[]).filter(x=>x.include!==false); const view=document.getElementById('pickemPicksView');if(!view||!games.length)return;
