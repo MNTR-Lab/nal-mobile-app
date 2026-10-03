@@ -24,6 +24,21 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
 .errorbox{background:#fee4e2;border:1px solid #f5b7b1;color:#8a1c14;padding:14px 16px;border-radius:8px;margin:16px 0}
 .btn{border:1px solid #cfd6df;background:white;border-radius:6px;padding:8px 11px;font-weight:700;color:var(--navy);cursor:pointer}
 select,input{font:inherit}
+
+.adminbar{display:none;background:#101d33;color:white;padding:10px 18px;border-radius:8px;margin:0 0 18px;align-items:center;justify-content:space-between;gap:12px}
+.adminbar.show{display:flex}
+.adminbar .role{font-size:11px;font-weight:900;letter-spacing:.08em;color:#aebbd0}
+.adminbar strong{font-size:14px}
+.admin-actions{display:flex;gap:7px;flex-wrap:wrap}
+.admin-approve,.admin-action,.admin-edit{border:0;border-radius:6px;padding:7px 10px;font-weight:900;font-size:11px;cursor:pointer}
+.admin-approve{background:#dff6e7;color:#176a39}
+.admin-action{background:#fee4e2;color:#9d1f17}
+.admin-edit{background:#eef2f6;color:#27364b}
+.admin-preview{border:1px dashed #9ca9ba;background:#f8fafc;padding:14px 16px;border-radius:8px;margin:0 0 18px}
+.admin-preview b{color:var(--navy)}
+.reviewbox{border-top:1px solid #e3e7ed;margin-top:18px;padding-top:18px}
+.reviewbox textarea{width:100%;box-sizing:border-box;min-height:90px;padding:10px;border:1px solid #d8dee8;border-radius:7px;font:inherit}
+
 @media(max-width:1000px){.cards.roster-cards{grid-template-columns:repeat(2,1fr)!important}}
 @media(max-width:760px){.cards{grid-template-columns:1fr}.hero{align-items:start;flex-direction:column}.nav{overflow:auto}.grid{grid-template-columns:1fr}table{min-width:760px}.panel{overflow:auto}}
 </style>
@@ -33,9 +48,16 @@ select,input{font:inherit}
   <div class="brand"><div class="mark">NAL</div><div><h1>NATIONAL ARENA LEAGUE</h1><small>League Operations Portal</small></div></div>
   <div class="user"><b>LEAGUE OPERATIONS</b><br><span id="connectionStatus">Connecting…</span></div>
 </header>
-<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Rosters</button><button id="docsNav" onclick="showDocuments()">Documents</button><button onclick="alert('Account access will be connected when Supabase Auth is added.')">Account</button></nav>
+<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Rosters</button><button id="docsNav" onclick="showDocuments()">Documents</button><button onclick="showAccountPreview()">Account</button></nav>
 
 <main class="wrap">
+<div class="admin-preview">
+  <b>ADMIN/MODERATOR PREVIEW</b> — This prototype shows how authorized controls can look. Buttons below are intentionally preview-only and do not write to Monday yet.
+</div>
+<div class="adminbar show" id="adminBar">
+  <div><div class="role">SIGNED IN AS</div><strong>League Administrator</strong></div>
+  <div style="font-size:12px;color:#c8d2e2">Review controls enabled • Monday remains source of truth</div>
+</div>
 <div id="transactionsView">
   <section class="hero">
     <div><div class="eyebrow">2027 SEASON</div><h2>Transaction Center</h2><p>League-wide transactions and live review status from Monday.</p></div>
@@ -127,6 +149,15 @@ select,input{font:inherit}
     <div class="field"><small>PROFESSIONAL EXPERIENCE</small><b id="mexp">—</b></div>
    </div>
    <div id="specialInfo" class="notice" style="display:none;margin:18px 0 0"><strong id="specialTitle"></strong><span id="specialText"></span></div>
+   <div class="reviewbox">
+     <div style="font-size:11px;font-weight:900;color:var(--muted);margin-bottom:7px">ADMINISTRATIVE REVIEW</div>
+     <textarea id="adminReason" placeholder="Reason / internal review note (required for Needs Action)"></textarea>
+     <div class="admin-actions" style="margin-top:10px">
+       <button class="admin-approve" onclick="previewModalAction('Approve')">APPROVE TRANSACTION</button>
+       <button class="admin-action" onclick="previewModalAction('Needs Action')">RETURN — NEEDS ACTION</button>
+     </div>
+     <div class="sub" style="margin-top:9px">Preview only: production actions will pass through a protected Supabase function and then update Monday.</div>
+   </div>
   </div>
  </div>
 </div>
@@ -262,7 +293,10 @@ function transactionTable(rows, pending=false){
       <td>${esc(tx.position||"—")}</td>
       <td>${formatDate(tx.submittedAt)}</td>`;
     const wait = pending ? `<td>${waitingTime(tx.submittedAt)}</td>` : "";
-    return `<tr>${base}${wait}<td>${statusPill(tx.state)}</td><td><button class="view" onclick="openTransaction('${esc(tx.id)}')">View</button></td></tr>`;
+    const adminButtons = tx.state==="Pending"
+      ? `<div class="admin-actions"><button class="view" onclick="openTransaction('${esc(tx.id)}')">View</button><button class="admin-approve" onclick="previewAdminAction(event,'Approve','${esc(tx.id)}')">Approve</button><button class="admin-action" onclick="previewAdminAction(event,'Needs Action','${esc(tx.id)}')">Needs Action</button></div>`
+      : `<div class="admin-actions"><button class="view" onclick="openTransaction('${esc(tx.id)}')">View</button><button class="admin-edit" onclick="previewAdminAction(event,'Admin Review','${esc(tx.id)}')">Admin</button></div>`;
+    return `<tr>${base}${wait}<td>${statusPill(tx.state)}</td><td>${adminButtons}</td></tr>`;
   }).join("");
 
   return `<table>${head}<tbody>${body}</tbody></table>`;
@@ -437,6 +471,31 @@ function showDocuments(){
   $("rosterView").style.display="none";
   $("documentsView").style.display="block";
   activateNav("docsNav"); window.scrollTo(0,0);
+}
+
+
+function previewAdminAction(event,action,id){
+  event.stopPropagation();
+  const tx = (API_DATA?.transactions?.all || []).find(x=>String(x.id)===String(id));
+  if(tx) openTransaction(id);
+  setTimeout(()=>{
+    const reason = $("adminReason");
+    if(reason && action==="Needs Action") reason.focus();
+  },50);
+}
+
+function previewModalAction(action){
+  const reason = $("adminReason")?.value.trim() || "";
+  if(action==="Needs Action" && !reason){
+    alert("In the live admin version, a reason will be required before returning a transaction for correction.");
+    $("adminReason")?.focus();
+    return;
+  }
+  alert(action + " PREVIEW\\n\\nNo Monday record was changed.\\n\\nIn production this action will be verified against the logged-in user's role, sent to a protected Supabase function, written to Monday, and then refreshed back into this portal.");
+}
+
+function showAccountPreview(){
+  alert("ACCOUNT / ACCESS PREVIEW\\n\\nLeague Administrator\\n• Review all league transactions\\n• Approve or return transactions\\n• View all organizations\\n• Manage permitted league operations\\n\\nModerator\\n• Review transactions\\n• Approve / return based on assigned permissions\\n\\nTeam User\\n• Submit transactions\\n• View permitted league information\\n\\nProduction sign-in will use Supabase Auth.");
 }
 
 loadOperations();
