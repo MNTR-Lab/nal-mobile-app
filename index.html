@@ -19474,6 +19474,11 @@ function closeLightcastTest(){
       renderNalSchedule();
       renderNalStandings();
       renderActiveTeamNextGame();
+      if (document.getElementById("fanPickemManagementPanel")?.classList.contains("show")) {
+        setTimeout(() => {
+          document.getElementById("pickemSyncRefresh")?.dispatchEvent(new CustomEvent("nal-pickem-feed-ready"));
+        }, 0);
+      }
     } catch (error) {
       console.error("NAL Live Games could not be loaded:", error);
       if (count) count.textContent = "0 GAMES";
@@ -19637,7 +19642,19 @@ function closeLightcastTest(){
   document.addEventListener("DOMContentLoaded", loadLiveGames);
   if (document.readyState !== "loading") loadLiveGames();
 
+  /* Expose the official schedule helpers to Pick ’Em Management.
+     These functions previously lived only inside the schedule module IIFE,
+     so Pick ’Em could not see the already-loaded 2027 schedule. */
   window.loadNALLiveGames = loadLiveGames;
+  window.scheduleWeekGroups = scheduleWeekGroups;
+  window.liveGameKey = liveGameKey;
+  window.parseMatchup = parseMatchup;
+  window.utcDate = utcDate;
+  window.logoForTeam = logoForTeam;
+  window.scheduleDateLabel = scheduleDateLabel;
+  window.scheduleTimeOnly = scheduleTimeOnly;
+
+  window.addEventListener("nal:schedule-loaded", function(){});
 })();
 </script>
 
@@ -20527,7 +20544,14 @@ setTimeout(configureNalModerationAccess,0);
   window.pickemPreviewSave=function(){const games=[...document.querySelectorAll('#fanPickemPage .pickem-game')];const missing=games.some(g=>!g.querySelector('.pickem-team.selected'));const m=document.getElementById('pickemSaveMessage');if(m){m.textContent=missing?'MAKE A PICK FOR EACH GAME BEFORE SAVING.':'✓ PICKS SAVED — PREVIEW MODE';m.style.color=missing?'#ffb7bd':'#a9f0bf'}};
   document.addEventListener('click',e=>{
     const b=e.target.closest('#fanPickemManagementButton');if(b){document.querySelectorAll('#fanAdminArea .fan-admin-panel').forEach(p=>p.classList.remove('show'));const p=document.getElementById('fanPickemManagementPanel');p?.classList.add('show');setTimeout(()=>{renderAdmin();p?.scrollIntoView({behavior:'smooth',block:'nearest'})},40);return}
-    if(e.target.closest('#pickemSyncRefresh')){renderAdmin();return} if(e.target.closest('#pickemImportWeek')){saveCurrentWeek();return}
+    if(e.target.closest('#pickemSyncRefresh')){
+      const btn=e.target.closest('#pickemSyncRefresh');
+      const old=btn.textContent;btn.disabled=true;btn.textContent='↻ SYNCING…';
+      Promise.resolve(typeof window.loadNALLiveGames==='function'?window.loadNALLiveGames():null)
+        .then(()=>setTimeout(renderAdmin,100))
+        .finally(()=>{btn.disabled=false;btn.textContent=old;});
+      return
+    } if(e.target.closest('#pickemImportWeek')){saveCurrentWeek();return}
     if(e.target.closest('#pickemSelectAll')){document.querySelectorAll('[data-pickem-include]').forEach(x=>x.checked=true);return}
     if(e.target.closest('#pickemClearWeek')){const g=groups()[pickemWeekIndex];if(g&&confirm(`Clear the saved Pick ’Em setup for Week ${g.number}?`)){const s=loadSaved();delete s[String(g.number)];saveSaved(s);renderAdmin()}return}
     const t=e.target.closest('#fanPickemPage .pickem-team');if(t){const g=t.closest('.pickem-game');g.querySelectorAll('.pickem-team').forEach(x=>x.classList.remove('selected'));t.classList.add('selected');const q=g.querySelector('.pickem-selection');q.textContent='YOUR PICK: '+t.dataset.team.toUpperCase();q.classList.add('has-pick');return}
