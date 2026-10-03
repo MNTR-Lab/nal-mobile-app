@@ -9174,8 +9174,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="pickem-tiebreak"><small>WEEK 1 TIEBREAKER</small><h3>TOTAL POINTS IN THE OMAHA AT DALLAS GAME</h3><input type="number" min="0" max="199" placeholder="Enter total points"><p>Used only to break leaderboard ties.</p></div>
         <button type="button" class="pickem-save" onclick="pickemPreviewSave()">SAVE WEEK 1 PICKS</button><div id="pickemSaveMessage" class="pickem-save-message"></div>
       </section>
-      <section id="pickemLeaderboardView" class="pickem-view"><div class="pickem-board-head"><small>2027 SEASON</small><h2>FAN LEADERBOARD</h2></div><div class="pickem-board-row header"><span>RANK</span><span>FAN</span><span>CORRECT</span><span>PCT</span></div><div class="pickem-board-row"><strong>1</strong><span>ARENAFAN27</span><b>0–0</b><span>—</span></div><div class="pickem-board-row"><strong>2</strong><span>NALFAN</span><b>0–0</b><span>—</span></div><p class="pickem-preview-note">Leaderboard shown with sample fans until live Pick ’Em data is connected.</p></section>
-      <section id="pickemRecordView" class="pickem-view"><div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>0</strong><span>CORRECT PICKS</span><div><b>0–0</b><em>0 WEEKS PLAYED</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>Your completed weeks and results will appear here.</p></div></section>
+      <section id="pickemLeaderboardView" class="pickem-view"><div class="pickem-board-head"><small>2027 SEASON</small><h2>FAN LEADERBOARD</h2></div><div class="pickem-board-row header"><span>RANK</span><span>FAN</span><span>CORRECT</span><span>PCT</span></div><div id="pickemLiveLeaderboardRows"><p class="pickem-preview-note">LOADING LIVE LEADERBOARD…</p></div></section>
+      <section id="pickemRecordView" class="pickem-view"><div id="pickemLiveRecord"><div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>—</strong><span>CORRECT PICKS</span><div><b>—</b><em>LOADING RECORD…</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>Loading your completed weeks and results…</p></div></div></section>
     </div>
   </main>
 
@@ -20739,6 +20739,142 @@ setTimeout(configureNalModerationAccess,0);
   window.loadProductionPickem=loadProductionPickem;
   const oldOpen=window.openPickemPreview;
   window.openPickemPreview=function(){if(typeof oldOpen==='function')oldOpen();setTimeout(loadProductionPickem,80)};
+})();
+</script>
+
+
+<script id="nalAppPickemLiveLeaderboardRecord">
+(function(){
+  const escPickemLive = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+
+  function pct(correct,total){
+    return total ? Math.round((correct/total)*100) + '%' : '—';
+  }
+
+  async function getSignedInPickemUser(){
+    const c = getNalAccountClient();
+    if(!c) return null;
+    const {data,error} = await c.auth.getSession();
+    if(error) throw error;
+    return data?.session?.user || null;
+  }
+
+  async function loadLivePickemLeaderboard(){
+    const host = document.getElementById('pickemLiveLeaderboardRows');
+    if(!host) return;
+    host.innerHTML = '<p class="pickem-preview-note">LOADING LIVE LEADERBOARD…</p>';
+    try{
+      const c = getNalAccountClient();
+      if(!c) throw new Error('Account service is unavailable.');
+      const {data,error} = await c.rpc('get_pickem_leaderboard',{target_season:2027});
+      if(error) throw error;
+      const rows = Array.isArray(data) ? data : [];
+      if(!rows.length){
+        host.innerHTML = '<p class="pickem-preview-note">No completed Pick ’Em results are available yet.</p>';
+        return;
+      }
+      host.innerHTML = rows.map((r,i)=>{
+        const correct = Number(r.correct_picks||0);
+        const total = Number(r.graded_picks||0);
+        const rank = Number(r.rank_position||i+1);
+        const name = r.display_name || 'Deleted User';
+        return `<div class="pickem-board-row"><strong>${rank}</strong><span>${escPickemLive(name)}</span><b>${correct}–${total}</b><span>${escPickemLive(pct(correct,total))}</span></div>`;
+      }).join('');
+    }catch(error){
+      console.error('NAL Pick Em leaderboard load error:',error);
+      host.innerHTML = '<p class="pickem-preview-note">LIVE LEADERBOARD IS NOT AVAILABLE YET.</p>';
+    }
+  }
+
+  async function loadMyLivePickemRecord(){
+    const host = document.getElementById('pickemLiveRecord');
+    if(!host) return;
+    try{
+      const c = getNalAccountClient();
+      if(!c) throw new Error('Account service is unavailable.');
+      const u = await getSignedInPickemUser();
+      if(!u){
+        host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>—</strong><span>CORRECT PICKS</span><div><b>—</b><em>SIGN IN TO VIEW YOUR RECORD</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>Sign in to see your completed weeks and results.</p></div>`;
+        return;
+      }
+
+      const {data:weeks,error:we} = await c.from('pickem_weeks')
+        .select('id,week_number,title,season').eq('season',2027).order('week_number',{ascending:true});
+      if(we) throw we;
+      const weekIds = (weeks||[]).map(w=>w.id);
+      if(!weekIds.length){
+        host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>0</strong><span>CORRECT PICKS</span><div><b>0–0</b><em>0 WEEKS PLAYED</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>No completed weeks yet.</p></div>`;
+        return;
+      }
+
+      const {data:games,error:ge} = await c.from('pickem_games')
+        .select('id,week_id,away_team,home_team,winner,status,away_score,home_score')
+        .in('week_id',weekIds).eq('status','final');
+      if(ge) throw ge;
+
+      const finalGames = games || [];
+      const gameIds = finalGames.map(g=>g.id);
+      let picks = [];
+      if(gameIds.length){
+        const {data,error} = await c.from('pickem_picks')
+          .select('game_id,selected_team').eq('user_id',u.id).in('game_id',gameIds);
+        if(error) throw error;
+        picks = data || [];
+      }
+
+      const gameMap = new Map(finalGames.map(g=>[String(g.id),g]));
+      const weekMap = new Map((weeks||[]).map(w=>[String(w.id),w]));
+      let correct = 0;
+      const byWeek = new Map();
+
+      for(const p of picks){
+        const g = gameMap.get(String(p.game_id));
+        if(!g) continue;
+        const isCorrect = String(p.selected_team||'') === String(g.winner||'');
+        if(isCorrect) correct++;
+        const key = String(g.week_id);
+        if(!byWeek.has(key)) byWeek.set(key,{correct:0,total:0});
+        const w = byWeek.get(key);
+        w.total++;
+        if(isCorrect) w.correct++;
+      }
+
+      const total = picks.length;
+      const weeksPlayed = [...byWeek.values()].filter(x=>x.total>0).length;
+      const history = [...byWeek.entries()]
+        .sort((a,b)=>Number(weekMap.get(a[0])?.week_number||0)-Number(weekMap.get(b[0])?.week_number||0))
+        .map(([weekId,r])=>{
+          const w = weekMap.get(weekId);
+          return `<div class="pickem-board-row"><strong>WEEK ${escPickemLive(w?.week_number||'')}</strong><span>${r.correct} CORRECT</span><b>${r.correct}–${r.total}</b><span>${escPickemLive(pct(r.correct,r.total))}</span></div>`;
+        }).join('');
+
+      host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>${correct}</strong><span>CORRECT PICKS</span><div><b>${correct}–${total}</b><em>${weeksPlayed} WEEK${weeksPlayed===1?'':'S'} PLAYED</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3>${history || '<p>Your completed weeks and results will appear here.</p>'}</div>`;
+    }catch(error){
+      console.error('NAL Pick Em record load error:',error);
+      host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>—</strong><span>CORRECT PICKS</span><div><b>—</b><em>RECORD UNAVAILABLE</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>We could not load your Pick ’Em record. Please try again.</p></div>`;
+    }
+  }
+
+  window.loadLivePickemLeaderboard = loadLivePickemLeaderboard;
+  window.loadMyLivePickemRecord = loadMyLivePickemRecord;
+
+  document.addEventListener('click',function(e){
+    const tab=e.target.closest('#fanPickemPage [data-picktab]');
+    if(!tab) return;
+    if(tab.dataset.picktab==='leaderboard') setTimeout(loadLivePickemLeaderboard,0);
+    if(tab.dataset.picktab==='record') setTimeout(loadMyLivePickemRecord,0);
+  });
+
+  const previousOpen = window.openPickemPreview;
+  window.openPickemPreview = function(){
+    if(typeof previousOpen==='function') previousOpen();
+    setTimeout(()=>{
+      loadLivePickemLeaderboard();
+      loadMyLivePickemRecord();
+    },120);
+  };
 })();
 </script>
 
