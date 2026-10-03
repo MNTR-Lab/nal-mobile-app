@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NAL Team Operations — Transaction Center</title>
+<style>
+:root{--navy:#071b33;--navy2:#0c294c;--red:#c61f2b;--bg:#f3f5f8;--line:#dce2e9;--text:#172033;--muted:#667085;--green:#11845b;--amber:#c87908;--danger:#b42318}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+.top{background:var(--navy);color:white;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:4px solid var(--red)}
+.brand{display:flex;align-items:center;gap:14px}.mark{width:48px;height:48px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-weight:900;letter-spacing:-2px}
+.brand h1{font-size:18px;margin:0}.brand small{opacity:.72}.user{font-size:13px;text-align:right}
+.nav{background:white;border-bottom:1px solid var(--line);padding:0 28px;display:flex;gap:28px}.nav button{border:0;background:none;padding:16px 2px;font-weight:700;color:#536070;cursor:pointer}.nav button.active{color:var(--navy);border-bottom:3px solid var(--red)}
+.wrap{max-width:1180px;margin:28px auto;padding:0 20px}.hero{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:20px}.eyebrow{color:var(--red);font-weight:800;font-size:12px;letter-spacing:1.5px}.hero h2{font-size:31px;margin:5px 0}.hero p{margin:0;color:var(--muted)}
+.primary{background:var(--red);color:white;border:0;border-radius:8px;padding:13px 18px;font-weight:800;cursor:pointer;box-shadow:0 3px 8px #0002}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:22px 0}.card{background:white;border:1px solid var(--line);border-radius:11px;padding:18px;cursor:pointer}.card:hover{box-shadow:0 6px 18px #14213d14}.card .label{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.7px}.num{font-size:32px;font-weight:900;margin-top:6px}.pending .num{color:var(--amber)}.approved .num{color:var(--green)}.action .num{color:var(--danger)}
+.panel{background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:18px}.panelhead{padding:19px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.panelhead h3{margin:0;font-size:18px}.pill{font-size:11px;font-weight:900;border-radius:999px;padding:6px 9px}.p-pending{background:#fff2d6;color:#9a5c00}.p-approved{background:#def7ec;color:#08734e}.p-rejected{background:#fee4e2;color:#9f1c15}
+table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;color:#697586;font-size:11px;letter-spacing:.5px;padding:11px 18px}td{padding:15px 18px;border-top:1px solid #edf0f3;font-size:14px}.name{font-weight:800;color:var(--navy)}.sub{font-size:12px;color:var(--muted);margin-top:3px}.view{border:1px solid #cfd6df;background:white;border-radius:6px;padding:7px 10px;font-weight:700;color:var(--navy);cursor:pointer}
+.notice{margin:18px 20px;background:#fff7e8;border:1px solid #f1d29b;border-left:4px solid var(--amber);padding:14px 16px;border-radius:7px}.notice strong{display:block;margin-bottom:4px}
+.footer{padding:25px;text-align:center;color:#8993a4;font-size:12px}
+.modal{position:fixed;inset:0;background:#061528a8;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.sheet{width:min(650px,100%);background:white;border-radius:13px;overflow:hidden;box-shadow:0 24px 70px #0006}.sheethead{background:var(--navy);color:white;padding:20px;display:flex;justify-content:space-between}.sheetbody{padding:22px}.x{background:none;border:0;color:white;font-size:24px;cursor:pointer}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{padding:12px;background:#f7f9fb;border-radius:7px}.field small{display:block;color:var(--muted);font-weight:700;margin-bottom:5px}.timeline{border-left:3px solid #d8dee7;margin:22px 5px;padding-left:18px}.step{margin:14px 0}.step b{display:block}.step span{color:var(--muted);font-size:13px}
+@media(max-width:760px){.cards{grid-template-columns:1fr}.hero{align-items:start;flex-direction:column}.nav{overflow:auto}.grid{grid-template-columns:1fr}table{min-width:760px}.panel{overflow:auto}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><div class="mark">NAL</div><div><h1>NATIONAL ARENA LEAGUE</h1><small>Team Operations Portal</small></div></div>
+  <div class="user"><b>DALLAS APEX</b><br>Team Administrator</div>
+</header>
+<nav class="nav"><button class="active">Transactions</button><button>Roster</button><button>Documents</button><button>Account</button></nav>
+
+<main class="wrap">
+  <section class="hero">
+    <div><div class="eyebrow">2027 SEASON</div><h2>Transaction Center</h2><p>Submit transactions and track league review from one place.</p></div>
+    <button class="primary" onclick="alert('Prototype: this opens the New Transaction form.')">+ SUBMIT NEW TRANSACTION</button>
+  </section>
+
+  <section class="cards">
+    <div class="card pending"><div class="label">PENDING LEAGUE REVIEW</div><div class="num">2</div><div class="sub">Track submissions awaiting a decision</div></div>
+    <div class="card approved"><div class="label">APPROVED</div><div class="num">14</div><div class="sub">Approved 2027 transactions</div></div>
+    <div class="card action"><div class="label">NEEDS ACTION</div><div class="num">1</div><div class="sub">Returned or rejected submissions</div></div>
+  </section>
+
+  <section class="panel">
+    <div class="panelhead"><h3>Pending Transactions</h3><span class="pill p-pending">2 PENDING</span></div>
+    <div class="notice"><strong>Your submissions are here as soon as they are received.</strong>Submitted date and time remain visible while the league office reviews the transaction.</div>
+    <table>
+      <thead><tr><th>PLAYER</th><th>TYPE</th><th>POSITION</th><th>SUBMITTED</th><th>WAITING</th><th>STATUS</th><th></th></tr></thead>
+      <tbody>
+        <tr><td><div class="name">Jordan Mitchell</div></td><td>Signing</td><td>Defensive Back</td><td>Oct. 3, 2026<div class="sub">9:42 AM</div></td><td>Today</td><td><span class="pill p-pending">PENDING</span></td><td><button class="view" onclick="openDetail('Jordan Mitchell','Signing','Defensive Back','Oct. 3, 2026 at 9:42 AM')">View</button></td></tr>
+        <tr><td><div class="name">Marcus Reed</div></td><td>Release</td><td>Wide Receiver</td><td>Oct. 2, 2026<div class="sub">4:18 PM</div></td><td>1 day</td><td><span class="pill p-pending">PENDING</span></td><td><button class="view" onclick="openDetail('Marcus Reed','Release','Wide Receiver','Oct. 2, 2026 at 4:18 PM')">View</button></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <div class="panelhead"><h3>Recent Transactions</h3><button class="view">View All</button></div>
+    <table>
+      <thead><tr><th>PLAYER</th><th>TYPE</th><th>POSITION</th><th>SUBMITTED</th><th>STATUS</th><th></th></tr></thead>
+      <tbody>
+        <tr><td><div class="name">Var'Keyes Gumms</div></td><td>Signing</td><td>Wide Receiver</td><td>Jul. 14, 2026<div class="sub">11:13 AM</div></td><td><span class="pill p-approved">APPROVED</span></td><td><button class="view">View</button></td></tr>
+        <tr><td><div class="name">Jaydyn Barral</div><div class="sub">Contract incomplete</div></td><td>Signing</td><td>Wide Receiver</td><td>Sep. 1, 2026<div class="sub">12:32 PM</div></td><td><span class="pill p-rejected">NEEDS ACTION</span></td><td><button class="view" onclick="alert('Reason: No team representative signature and no date of signature.')">Review</button></td></tr>
+      </tbody>
+    </table>
+  </section>
+  <div class="footer">NAL Team Operations • Internal Team Use Only</div>
+</main>
+
+<div class="modal" id="modal">
+ <div class="sheet">
+  <div class="sheethead"><div><b id="mname">Player</b><div style="opacity:.7;font-size:12px;margin-top:4px">Dallas Apex • <span id="mtype"></span></div></div><button class="x" onclick="closeDetail()">×</button></div>
+  <div class="sheetbody">
+   <span class="pill p-pending">PENDING LEAGUE REVIEW</span>
+   <div class="grid" style="margin-top:18px">
+    <div class="field"><small>POSITION</small><b id="mpos"></b></div>
+    <div class="field"><small>SUBMITTED</small><b id="mdate"></b></div>
+   </div>
+   <div class="timeline">
+    <div class="step"><b>✓ Transaction Submitted</b><span id="mdate2"></span></div>
+    <div class="step"><b>● Awaiting League Review</b><span>The league office has received this submission.</span></div>
+    <div class="step"><b>○ League Decision</b><span>Approval or action required will appear here.</span></div>
+   </div>
+   <button class="view">View Submitted Documents</button>
+  </div>
+ </div>
+</div>
+<script>
+function openDetail(n,t,p,d){document.getElementById('mname').textContent=n;document.getElementById('mtype').textContent=t;document.getElementById('mpos').textContent=p;document.getElementById('mdate').textContent=d;document.getElementById('mdate2').textContent=d;document.getElementById('modal').classList.add('show')}
+function closeDetail(){document.getElementById('modal').classList.remove('show')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeDetail()})
+</script>
+</body>
+</html>
