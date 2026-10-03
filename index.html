@@ -20618,19 +20618,22 @@ setTimeout(configureNalModerationAccess,0);
 
       for(const card of rows){
         const txt=norm(card.textContent);
-        const selected=String(card.querySelector(".pickem-team.selected")?.dataset.team||"").trim();
+        const selectedButton=card.querySelector(".pickem-team.selected");
+        const selected=String(selectedButton?.dataset.team||"").trim();
         const dbId=card.dataset.dbGameId;
         const g=(games||[]).find(x=>dbId?String(x.id)===String(dbId):(()=>{const a=norm(x.away_team),h=norm(x.home_team);return a&&h&&txt.includes(a)&&txt.includes(h)})());
         if(!g)throw new Error("A displayed matchup does not match the published production Pick ’Em schedule.");
+        const selectedSide = selected === g.away_team ? "away" : selected === g.home_team ? "home" : "";
+        if(!selectedSide)throw new Error("The selected team does not match this production matchup.");
         if(String(g.status||"scheduled").toLowerCase()!=="scheduled")throw new Error("One or more games are no longer open for picks.");
         if(new Date(g.kickoff_at).getTime()<=Date.now())throw new Error("One or more games have already locked at kickoff.");
 
         const {data:old,error:oe}=await c.from("pickem_picks").select("id").eq("user_id",u.id).eq("game_id",g.id).maybeSingle();
         if(oe)throw oe;
         if(old?.id){
-          const {error}=await c.from("pickem_picks").update({selected_team:selected}).eq("id",old.id).eq("user_id",u.id);if(error)throw error;
+          const {error}=await c.from("pickem_picks").update({selected_team:selectedSide}).eq("id",old.id).eq("user_id",u.id);if(error)throw error;
         }else{
-          const {error}=await c.from("pickem_picks").insert({user_id:u.id,game_id:g.id,selected_team:selected});if(error)throw error;
+          const {error}=await c.from("pickem_picks").insert({user_id:u.id,game_id:g.id,selected_team:selectedSide});if(error)throw error;
         }
       }
 
@@ -20712,7 +20715,8 @@ setTimeout(configureNalModerationAccess,0);
       }
 
       const cards=games.map(g=>{
-        const pick=savedPicks.find(p=>String(p.game_id)===String(g.id))?.selected_team||'';
+        const storedSide=savedPicks.find(p=>String(p.game_id)===String(g.id))?.selected_team||'';
+        const pick=storedSide==='away'?g.away_team:storedSide==='home'?g.home_team:'';
         const locked=String(g.status||'scheduled').toLowerCase()!=='scheduled'||new Date(g.kickoff_at).getTime()<=now;
         return `<div class="pickem-game" data-db-game-id="${g.id}">
           <div class="pickem-game-meta">${esc(fmtKickoff(g.kickoff_at))} <span>${locked?'LOCKED':'LOCKS AT KICKOFF'}</span></div>
