@@ -8237,6 +8237,11 @@ document.addEventListener("DOMContentLoaded", () => {
 .pickem-result-final{margin-top:7px;font-size:13px;font-weight:900;color:#168044}.pickem-result-actions{margin-top:9px;display:flex;gap:8px;flex-wrap:wrap}.pickem-result-btn{border:0;border-radius:7px;padding:9px 12px;font-size:11px;font-weight:900;cursor:pointer}.pickem-result-btn.primary{background:#e31b23;color:#fff}.pickem-result-btn.secondary{background:#07172b;color:#fff}
 .pickem-result-editor{display:none;padding:12px;border-top:1px solid #e3e8ee;background:#f7f9fb}.pickem-result-editor.open{display:block}.pickem-result-score-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end}.pickem-result-field label{display:block;margin-bottom:4px;font-size:10px;font-weight:900;color:#526274}.pickem-result-field input{width:100%;box-sizing:border-box;border:1px solid #cbd4df;border-radius:7px;padding:9px 8px;background:#fff;color:#07172b;font-size:16px;font-weight:900}.pickem-result-dash{padding-bottom:10px;color:#7d8a99;font-weight:900}.pickem-result-message{margin-top:7px;font-size:11px;font-weight:800;color:#526274}.pickem-result-message.error{color:#b3121a}.pickem-result-empty{padding:14px;border:1px solid #d9e0e8;border-radius:10px;background:#fff;color:#607084;font-size:12px;font-weight:700}
 </style>
+<style id="nalPickemLeaderboardDiffStyles">
+#pickemLeaderboardView .pickem-board-row{grid-template-columns:42px minmax(0,1fr) 68px 52px 46px;}
+#pickemLeaderboardView .pickem-board-row > :last-child{text-align:right;}
+</style>
+
 </head>
 
 <body>
@@ -9184,7 +9189,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="pickem-tiebreak"><small>WEEK 1 TIEBREAKER</small><h3>TOTAL POINTS IN THE OMAHA AT DALLAS GAME</h3><input type="number" min="0" max="199" placeholder="Enter total points"><p>Used only to break leaderboard ties.</p></div>
         <button type="button" class="pickem-save" onclick="pickemPreviewSave()">SAVE WEEK 1 PICKS</button><div id="pickemSaveMessage" class="pickem-save-message"></div>
       </section>
-      <section id="pickemLeaderboardView" class="pickem-view"><div class="pickem-board-head"><small>2027 SEASON</small><h2>FAN LEADERBOARD</h2></div><div class="pickem-board-row header"><span>RANK</span><span>FAN</span><span>CORRECT</span><span>PCT</span></div><div id="pickemLiveLeaderboardRows"><p class="pickem-preview-note">LOADING LIVE LEADERBOARD…</p></div></section>
+      <section id="pickemLeaderboardView" class="pickem-view"><div class="pickem-board-head"><small>2027 SEASON</small><h2>FAN LEADERBOARD</h2></div><div class="pickem-board-row header"><span>RANK</span><span>FAN</span><span>CORRECT</span><span>PCT</span><span>DIFF</span></div><div id="pickemLiveLeaderboardRows"><p class="pickem-preview-note">LOADING LIVE LEADERBOARD…</p></div><p class="pickem-preview-note">DIFF = cumulative points away from actual tiebreaker totals. Lower is better and is used when records are tied.</p></section>
       <section id="pickemRecordView" class="pickem-view"><div id="pickemLiveRecord"><div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>—</strong><span>CORRECT PICKS</span><div><b>—</b><em>LOADING RECORD…</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>Loading your completed weeks and results…</p></div></div></section>
     </div>
   </main>
@@ -20832,7 +20837,10 @@ setTimeout(configureNalModerationAccess,0);
         const total = Number(r.graded_picks||0);
         const rank = Number(r.rank_position||i+1);
         const name = r.display_name || 'Deleted User';
-        return `<div class="pickem-board-row"><strong>${rank}</strong><span>${escPickemLive(name)}</span><b>${correct}–${total}</b><span>${escPickemLive(pct(correct,total))}</span></div>`;
+        const rawDiff = r.tiebreaker_difference;
+        const diffNumber = rawDiff === null || rawDiff === undefined ? null : Number(rawDiff);
+        const diff = Number.isFinite(diffNumber) && diffNumber < 9223372036854775807 ? String(diffNumber) : '—';
+        return `<div class="pickem-board-row"><strong>${rank}</strong><span>${escPickemLive(name)}</span><b>${correct}–${total}</b><span>${escPickemLive(pct(correct,total))}</span><span>${escPickemLive(diff)}</span></div>`;
       }).join('');
     }catch(error){
       console.error('NAL Pick Em leaderboard load error:',error);
