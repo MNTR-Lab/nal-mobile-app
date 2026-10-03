@@ -20449,5 +20449,108 @@ setTimeout(configureNalModerationAccess,0);
   const originalLoad=window.loadLiveGames; setTimeout(()=>{if(document.getElementById('fanPickemManagementPanel')?.classList.contains('show'))renderAdmin();},1200);
 })();
 </script>
+
+<script id="nalAppPickemProductionTest">
+(function(){
+  function msg(text,bad){
+    const el=document.getElementById("pickemSaveMessage");
+    if(!el)return;
+    el.textContent=text||"";
+    el.style.color=bad?"#ffb3b7":"#b9f5cc";
+  }
+  async function user(){
+    const c=getNalAccountClient();
+    const {data,error}=await c.auth.getSession();
+    if(error)throw error;
+    return data?.session?.user||null;
+  }
+  const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+  const cards=()=>[...document.querySelectorAll("#pickemPicksView .pickem-game")];
+
+  async function save(){
+    const rows=cards();
+    if(!rows.length){msg("PICK ’EM GAMES ARE NOT AVAILABLE YET.",true);return;}
+    if(rows.some(x=>!x.querySelector(".pickem-team.selected"))){msg("MAKE A PICK FOR EACH GAME BEFORE SAVING.",true);return;}
+
+    let u;
+    try{u=await user();}catch(e){msg("ACCOUNT SERVICE COULD NOT BE VERIFIED. PLEASE TRY AGAIN.",true);return;}
+    if(!u){
+      nalAccountPendingAction="pickem-save";
+      msg("SIGN IN OR CREATE AN ACCOUNT TO SAVE YOUR PICKS.",true);
+      await openFanAccount();
+      return;
+    }
+
+    const btn=document.querySelector("#pickemPicksView .pickem-save");
+    if(btn){btn.disabled=true;btn.textContent="SAVING PICKS...";}
+    try{
+      const c=getNalAccountClient();
+      const {data:weeks,error:we}=await c.from("pickem_weeks")
+        .select("id,season,week_number,title,status,tiebreaker_enabled,tiebreaker_question")
+        .in("status",["active","published"]).order("week_number",{ascending:true});
+      if(we)throw we;
+      if(!weeks?.length)throw new Error("No published Pick ’Em week is currently available.");
+
+      const visible=Number((document.querySelector("#pickemPicksView .pickem-weekbar h2")?.textContent||"").match(/\d+/)?.[0]||weeks[0].week_number);
+      const week=weeks.find(w=>Number(w.week_number)===visible)||weeks[0];
+
+      const {data:games,error:ge}=await c.from("pickem_games")
+        .select("id,week_id,away_team,home_team,kickoff_at,status,display_order")
+        .eq("week_id",week.id).order("display_order",{ascending:true});
+      if(ge)throw ge;
+
+      for(const card of rows){
+        const txt=norm(card.textContent);
+        const selected=String(card.querySelector(".pickem-team.selected")?.dataset.team||"").trim();
+        const g=(games||[]).find(x=>{const a=norm(x.away_team),h=norm(x.home_team);return a&&h&&txt.includes(a)&&txt.includes(h)});
+        if(!g)throw new Error("A displayed matchup does not match the published production Pick ’Em schedule.");
+        if(String(g.status||"scheduled").toLowerCase()!=="scheduled")throw new Error("One or more games are no longer open for picks.");
+        if(new Date(g.kickoff_at).getTime()<=Date.now())throw new Error("One or more games have already locked at kickoff.");
+
+        const {data:old,error:oe}=await c.from("pickem_picks").select("id").eq("user_id",u.id).eq("game_id",g.id).maybeSingle();
+        if(oe)throw oe;
+        if(old?.id){
+          const {error}=await c.from("pickem_picks").update({selected_team:selected}).eq("id",old.id).eq("user_id",u.id);if(error)throw error;
+        }else{
+          const {error}=await c.from("pickem_picks").insert({user_id:u.id,game_id:g.id,selected_team:selected});if(error)throw error;
+        }
+      }
+
+      const input=document.querySelector("#pickemPicksView .pickem-tiebreak input"), raw=String(input?.value||"").trim();
+      if(week.tiebreaker_enabled&&raw!==""){
+        const total=Number(raw);
+        if(!Number.isInteger(total)||total<0)throw new Error("Enter a valid whole-number tiebreaker score.");
+        const {data:old,error:oe}=await c.from("pickem_tiebreakers").select("id").eq("user_id",u.id).eq("week_id",week.id).maybeSingle();
+        if(oe)throw oe;
+        if(old?.id){
+          const {error}=await c.from("pickem_tiebreakers").update({predicted_total:total}).eq("id",old.id).eq("user_id",u.id);if(error)throw error;
+        }else{
+          const {error}=await c.from("pickem_tiebreakers").insert({user_id:u.id,week_id:week.id,predicted_total:total});if(error)throw error;
+        }
+      }
+      msg("✓ PICKS SAVED — YOU CAN UPDATE THEM UNTIL EACH GAME KICKS OFF.",false);
+      if(btn)btn.textContent="UPDATE MY PICKS";
+    }catch(e){
+      console.error("NAL app Pick ’Em production save error:",e);
+      msg(e?.message||"WE COULD NOT SAVE YOUR PICKS. PLEASE TRY AGAIN.",true);
+    }finally{
+      if(btn){btn.disabled=false;if(btn.textContent==="SAVING PICKS...")btn.textContent="SAVE WEEK 1 PICKS";}
+    }
+  }
+
+  window.pickemPreviewSave=save;
+  const previous=window.completeNalAccountPendingAction;
+  window.completeNalAccountPendingAction=async function(){
+    if(nalAccountPendingAction==="pickem-save"){
+      nalAccountPendingAction=null;
+      closeFanAccount();
+      setTimeout(()=>save(),120);
+      return;
+    }
+    if(typeof previous==="function")return previous();
+  };
+})();
+</script>
+
 </body>
 </html>
