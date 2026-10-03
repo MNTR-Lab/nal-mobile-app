@@ -9189,7 +9189,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="pickem-tiebreak"><small>WEEK 1 TIEBREAKER</small><h3>TOTAL POINTS IN THE OMAHA AT DALLAS GAME</h3><input type="number" min="0" max="199" placeholder="Enter total points"><p>Used only to break leaderboard ties.</p></div>
         <button type="button" class="pickem-save" onclick="pickemPreviewSave()">SAVE WEEK 1 PICKS</button><div id="pickemSaveMessage" class="pickem-save-message"></div>
       </section>
-      <section id="pickemLeaderboardView" class="pickem-view"><div class="pickem-board-head"><small>2027 SEASON</small><h2>FAN LEADERBOARD</h2></div><div class="pickem-board-row header"><span>RANK</span><span>FAN</span><span>CORRECT</span><span>PCT</span><span>DIFF</span></div><div id="pickemLiveLeaderboardRows"><p class="pickem-preview-note">LOADING LIVE LEADERBOARD…</p></div><p class="pickem-preview-note">DIFF = cumulative points away from actual tiebreaker totals. Lower is better and is used when records are tied.</p></section>
+      <section id="pickemLeaderboardView" class="pickem-view"><div class="pickem-board-head"><small>2027 SEASON</small><h2>FAN LEADERBOARD</h2></div><div class="pickem-board-row header"><span>RANK</span><span>FAN</span><span>RECORD</span><span>PCT</span><span>DIFF</span></div><div id="pickemLiveLeaderboardRows"><p class="pickem-preview-note">LOADING LIVE LEADERBOARD…</p></div><p class="pickem-preview-note">DIFF = cumulative points away from actual tiebreaker totals. Lower is better and is used when records are tied.</p></section>
       <section id="pickemRecordView" class="pickem-view"><div id="pickemLiveRecord"><div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>—</strong><span>CORRECT PICKS</span><div><b>—</b><em>LOADING RECORD…</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>Loading your completed weeks and results…</p></div></div></section>
     </div>
   </main>
@@ -20840,7 +20840,7 @@ setTimeout(configureNalModerationAccess,0);
         const rawDiff = r.tiebreaker_difference;
         const diffNumber = rawDiff === null || rawDiff === undefined ? null : Number(rawDiff);
         const diff = Number.isFinite(diffNumber) && diffNumber < 9223372036854775807 ? String(diffNumber) : '—';
-        return `<div class="pickem-board-row"><strong>${rank}</strong><span>${escPickemLive(name)}</span><b>${correct}–${total}</b><span>${escPickemLive(pct(correct,total))}</span><span>${escPickemLive(diff)}</span></div>`;
+        return `<div class="pickem-board-row"><strong>${rank}</strong><span>${escPickemLive(name)}</span><b>${correct}–${Math.max(0,total-correct)}</b><span>${escPickemLive(pct(correct,total))}</span><span>${escPickemLive(diff)}</span></div>`;
       }).join('');
     }catch(error){
       console.error('NAL Pick Em leaderboard load error:',error);
