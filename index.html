@@ -20565,7 +20565,10 @@ setTimeout(configureNalModerationAccess,0);
     if(gamesError)throw gamesError;
 
     const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-    const currentKeys=new Set((g.games||[]).map(x=>norm(x.away)+'|'+norm(x.home)));
+    const currentKeys=new Set((g.games||[]).map(x=>{
+      const m=matchup(x);
+      return norm(m.awayName)+'|'+norm(m.homeName);
+    }));
     const games=(allGames||[]).filter(x=>currentKeys.has(norm(x.away_team)+'|'+norm(x.home_team)));
 
     // A saved production week is confirmed by finding its production games.
