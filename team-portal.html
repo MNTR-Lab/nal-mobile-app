@@ -58,8 +58,8 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
     <table>
       <thead><tr><th>PLAYER</th><th>TYPE</th><th>POSITION</th><th>SUBMITTED</th><th>STATUS</th><th></th></tr></thead>
       <tbody>
-        <tr><td><div class="name">Var'Keyes Gumms</div></td><td>Signing</td><td>Wide Receiver</td><td>Jul. 14, 2026<div class="sub">11:13 AM</div></td><td><span class="pill p-approved">APPROVED</span></td><td><button class="view">View</button></td></tr>
-        <tr><td><div class="name">Jaydyn Barral</div><div class="sub">Contract incomplete</div></td><td>Signing</td><td>Wide Receiver</td><td>Sep. 1, 2026<div class="sub">12:32 PM</div></td><td><span class="pill p-rejected">NEEDS ACTION</span></td><td><button class="view" onclick="alert('Reason: No team representative signature and no date of signature.')">Review</button></td></tr>
+        <tr><td><div class="name">Var'Keyes Gumms</div></td><td>Signing</td><td>Wide Receiver</td><td>Jul. 14, 2026<div class="sub">11:13 AM</div></td><td><span class="pill p-approved">APPROVED</span></td><td><button class="view" onclick="openRecordDetail('Var\'Keyes Gumms','Signing','Wide Receiver','Jul. 14, 2026 at 11:13 AM','6\'3','230','University North Texas','0','APPROVED','')">View</button></td></tr>
+        <tr><td><div class="name">Jaydyn Barral</div><div class="sub">Contract incomplete</div></td><td>Signing</td><td>Wide Receiver</td><td>Sep. 1, 2026<div class="sub">12:32 PM</div></td><td><span class="pill p-rejected">NEEDS ACTION</span></td><td><button class="view" onclick="openRecordDetail('Jaydyn Barral','Signing','Wide Receiver','Sep. 1, 2026 at 12:32 PM','6’0','180','East Texas University','0','NEEDS ACTION','Contract incomplete — no team representative signature and no date of signature.')">View</button></td></tr>
       </tbody>
     </table>
   </section>
@@ -124,18 +124,37 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
    <div class="grid" style="margin-top:18px">
     <div class="field"><small>POSITION</small><b id="mpos"></b></div>
     <div class="field"><small>SUBMITTED</small><b id="mdate"></b></div>
+    <div class="field extraInfo"><small>HEIGHT</small><b id="mheight">—</b></div>
+    <div class="field extraInfo"><small>WEIGHT</small><b id="mweight">—</b></div>
+    <div class="field extraInfo"><small>COLLEGE / SCHOOL</small><b id="mcollege">—</b></div>
+    <div class="field extraInfo"><small>PROFESSIONAL EXPERIENCE</small><b id="mexp">—</b></div>
    </div>
+   <div id="actionReason" class="notice" style="display:none;margin:18px 0 0"><strong>Needs Action</strong><span id="mreason"></span></div>
    <div class="timeline">
     <div class="step"><b>✓ Transaction Submitted</b><span id="mdate2"></span></div>
     <div class="step"><b>● Awaiting League Review</b><span>The league office has received this submission.</span></div>
     <div class="step"><b>○ League Decision</b><span>Approval or action required will appear here.</span></div>
    </div>
-   <button class="view">View Submitted Documents</button>
   </div>
  </div>
 </div>
 <script>
-function openDetail(n,t,p,d){document.getElementById('mname').textContent=n;document.getElementById('mtype').textContent=t;document.getElementById('mpos').textContent=p;document.getElementById('mdate').textContent=d;document.getElementById('mdate2').textContent=d;document.getElementById('modal').classList.add('show')}
+function openDetail(n,t,p,d){openRecordDetail(n,t,p,d,'—','—','—','—','PENDING','')}
+function openRecordDetail(n,t,p,d,h,w,c,x,status,reason){
+ document.getElementById('mname').textContent=n;
+ document.getElementById('mtype').textContent=t;
+ document.getElementById('mpos').textContent=p||'—';
+ document.getElementById('mdate').textContent=d;
+ document.getElementById('mdate2').textContent=d;
+ document.getElementById('mheight').textContent=h||'—';
+ document.getElementById('mweight').textContent=w||'—';
+ document.getElementById('mcollege').textContent=c||'—';
+ document.getElementById('mexp').textContent=x||'—';
+ const box=document.getElementById('actionReason');
+ box.style.display=reason?'block':'none';
+ document.getElementById('mreason').textContent=reason||'';
+ document.getElementById('modal').classList.add('show');
+}
 function closeDetail(){document.getElementById('modal').classList.remove('show')}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeDetail()})
 
