@@ -32,7 +32,7 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
 <main class="wrap">
   <section class="hero">
     <div><div class="eyebrow">2027 SEASON</div><h2>Transaction Center</h2><p>Submit transactions and track league review from one place.</p></div>
-    <button class="primary" onclick="alert('Prototype: this opens the New Transaction form.')">+ SUBMIT NEW TRANSACTION</button>
+    <button class="primary" onclick="openNewTransaction()">+ SUBMIT NEW TRANSACTION</button>
   </section>
 
   <section class="cards">
@@ -66,6 +66,56 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
   <div class="footer">NAL Team Operations • Internal Team Use Only</div>
 </main>
 
+
+<div class="modal" id="newTxModal">
+ <div class="sheet" style="width:min(780px,100%)">
+  <div class="sheethead">
+   <div><b>Submit New Transaction</b><div style="opacity:.7;font-size:12px;margin-top:4px">Dallas Apex • 2027 Season</div></div>
+   <button class="x" onclick="closeNewTransaction()">×</button>
+  </div>
+  <div class="sheetbody">
+   <form id="txForm" onsubmit="submitPrototype(event)">
+    <div class="grid">
+     <label class="field"><small>TRANSACTION TYPE</small>
+      <select id="txType" required onchange="updateTxFields()" style="width:100%;padding:9px">
+       <option value="">Select type...</option><option>Signing</option><option>Release</option><option>Trade</option>
+       <option>Refusal to Report (RTR - MAX 3)</option><option>Commissioner's Exempt List (MAX 3)</option>
+       <option>Team/League Suspension (Equipment/Monies Owed)</option><option>Injury Report</option>
+      </select>
+     </label>
+     <label class="field"><small>ORGANIZATION</small><b>Dallas Apex</b></label>
+     <label class="field"><small>FIRST NAME</small><input id="firstName" required style="width:100%;padding:9px"></label>
+     <label class="field"><small>LAST NAME</small><input id="lastName" required style="width:100%;padding:9px"></label>
+    </div>
+
+    <div id="signingFields" style="display:none;margin-top:14px">
+     <div class="grid">
+      <label class="field"><small>POSITION</small><select style="width:100%;padding:9px"><option>Quarterback</option><option>Running Back</option><option>Wide Receiver</option><option>Offensive Line</option><option>Defensive Line</option><option>Linebacker</option><option>Defensive Back</option><option>Kicker/Specialist</option><option>Athlete</option></select></label>
+      <label class="field"><small>COLLEGE / SCHOOL</small><input style="width:100%;padding:9px"></label>
+      <label class="field"><small>HEIGHT</small><input placeholder="6'2&quot;" style="width:100%;padding:9px"></label>
+      <label class="field"><small>WEIGHT</small><input placeholder="215" style="width:100%;padding:9px"></label>
+      <label class="field"><small>PROFESSIONAL EXPERIENCE</small><input placeholder="0" style="width:100%;padding:9px"></label>
+      <label class="field"><small>COPY OF SIGNED CONTRACT</small><input type="file" style="width:100%;padding:6px 0"></label>
+     </div>
+    </div>
+
+    <div id="tradeFields" class="field" style="display:none;margin-top:14px"><small>TRADE REQUEST DETAILS</small><textarea style="width:100%;min-height:90px;padding:9px"></textarea></div>
+    <div id="injuryFields" class="field" style="display:none;margin-top:14px"><small>INJURY LENGTH</small><select style="width:100%;padding:9px"><option>Short Term</option><option>Long Term</option><option>Season Ending</option><option>Physically Unable to Perform</option></select></div>
+    <div id="suspensionFields" class="field" style="display:none;margin-top:14px"><small>REASON FOR SUSPENSION</small><textarea style="width:100%;min-height:90px;padding:9px"></textarea></div>
+
+    <div class="grid" style="margin-top:14px">
+     <label class="field"><small>PERSON & POSITION SUBMITTING</small><input required placeholder="Name / Title" style="width:100%;padding:9px"></label>
+     <div class="field"><small>TEAM ACKNOWLEDGEMENT</small><label><input type="checkbox" required> I confirm this submission is accurate.</label></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px">
+     <button type="button" class="view" onclick="closeNewTransaction()">Cancel</button>
+     <button type="submit" class="primary">Submit Transaction</button>
+    </div>
+   </form>
+  </div>
+ </div>
+</div>
+
 <div class="modal" id="modal">
  <div class="sheet">
   <div class="sheethead"><div><b id="mname">Player</b><div style="opacity:.7;font-size:12px;margin-top:4px">Dallas Apex • <span id="mtype"></span></div></div><button class="x" onclick="closeDetail()">×</button></div>
@@ -88,6 +138,24 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
 function openDetail(n,t,p,d){document.getElementById('mname').textContent=n;document.getElementById('mtype').textContent=t;document.getElementById('mpos').textContent=p;document.getElementById('mdate').textContent=d;document.getElementById('mdate2').textContent=d;document.getElementById('modal').classList.add('show')}
 function closeDetail(){document.getElementById('modal').classList.remove('show')}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeDetail()})
+
+function openNewTransaction(){document.getElementById('newTxModal').classList.add('show')}
+function closeNewTransaction(){document.getElementById('newTxModal').classList.remove('show')}
+function updateTxFields(){
+ const v=document.getElementById('txType').value;
+ document.getElementById('signingFields').style.display=v==='Signing'?'block':'none';
+ document.getElementById('tradeFields').style.display=v==='Trade'?'block':'none';
+ document.getElementById('injuryFields').style.display=v==='Injury Report'?'block':'none';
+ document.getElementById('suspensionFields').style.display=v.indexOf('Suspension')>=0?'block':'none';
+}
+function submitPrototype(e){
+ e.preventDefault();
+ const first=document.getElementById('firstName').value.trim(), last=document.getElementById('lastName').value.trim(), type=document.getElementById('txType').value;
+ alert('Prototype submission created for '+first+' '+last+' ('+type+').\n\nNext step: we will connect this action to the Monday board.');
+ closeNewTransaction(); e.target.reset(); updateTxFields();
+}
+document.getElementById('newTxModal').addEventListener('click',e=>{if(e.target.id==='newTxModal')closeNewTransaction()})
+
 </script>
 </body>
 </html>
