@@ -29140,5 +29140,46 @@ body>.app>main.app-page:not(#fanPage):not(#fanForumPage):not(#fanForumCategoryPa
 })();
 </script>
 
+
+<script id="nalWebsitePickemOpenProductionFix">
+(function(){
+  const previousOpenPickemPreview = window.openPickemPreview;
+
+  window.openPickemPreview = async function(){
+    if(typeof previousOpenPickemPreview === "function"){
+      previousOpenPickemPreview();
+    }
+
+    const view = document.getElementById("pickemPicksView");
+    if(view){
+      view.innerHTML = `
+        <div class="pickem-weekbar">
+          <div><small>NAL PICK ’EM</small><h2>LOADING...</h2><span>2027 SEASON</span></div>
+          <span class="pickem-status">CHECKING</span>
+        </div>
+        <div class="pickem-notice">Checking the current Pick ’Em week...</div>
+      `;
+    }
+
+    if(typeof window.loadProductionPickem === "function"){
+      try{
+        await window.loadProductionPickem();
+      }catch(error){
+        console.error("NAL website Pick ’Em production load error:", error);
+        if(view){
+          view.innerHTML = `
+            <div class="pickem-weekbar">
+              <div><small>NAL PICK ’EM</small><h2>2027 SEASON</h2><span>PLEASE TRY AGAIN</span></div>
+              <span class="pickem-status">UNAVAILABLE</span>
+            </div>
+            <div class="pickem-notice">Pick ’Em could not be loaded right now. Please try again.</div>
+          `;
+        }
+      }
+    }
+  };
+})();
+</script>
+
 </body>
 </html>
