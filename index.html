@@ -20958,7 +20958,7 @@ setTimeout(configureNalModerationAccess,0);
   return `<div class="pickem-result-card" data-result-card="${esc(g.id)}"><div class="pickem-result-summary">
    <div class="pickem-result-matchup"><div class="pickem-result-team">${esc(g.away_team)}<br><small>AWAY</small></div><div class="pickem-result-at">AT</div><div class="pickem-result-team home">${esc(g.home_team)}<br><small>HOME</small></div></div>
    ${final?`<div class="pickem-result-final">FINAL • ${esc(g.away_team)} ${esc(g.away_score)} – ${esc(g.home_team)} ${esc(g.home_score)}</div>`:''}
-   <div class="pickem-result-actions"><button type="button" class="pickem-result-btn ${final?'secondary':'primary'}" data-open-result>${final?'EDIT RESULT':'ENTER RESULT'}</button></div>
+   <div class="pickem-result-actions"><button type="button" class="pickem-result-btn ${final?'secondary':'primary'}" data-open-result>${final?'EDIT RESULT':'ENTER RESULT'}</button>${final?'<button type="button" class="pickem-result-btn secondary" data-reset-result>RESET RESULT</button>':''}</div>
    </div><div class="pickem-result-editor"><div class="pickem-result-score-grid">
    <div class="pickem-result-field"><label>${esc(g.away_team)} — AWAY</label><input data-away-score type="number" min="0" inputmode="numeric" value="${esc(g.away_score??'')}"></div><div class="pickem-result-dash">—</div>
    <div class="pickem-result-field"><label>${esc(g.home_team)} — HOME</label><input data-home-score type="number" min="0" inputmode="numeric" value="${esc(g.home_score??'')}"></div></div>
@@ -20996,10 +20996,29 @@ setTimeout(configureNalModerationAccess,0);
    await load();if(typeof window.loadLivePickemLeaderboard==='function')window.loadLivePickemLeaderboard();if(typeof window.loadMyLivePickemRecord==='function')window.loadMyLivePickemRecord();
   }catch(err){btn.disabled=false;btn.textContent='SAVE FINAL RESULT';msg.textContent='Result save failed: '+(err?.message||'Unknown error');msg.classList.add('error');}
  }
+ async function resetResult(el){
+  const btn=el.querySelector('[data-reset-result]');
+  if(!btn)return;
+  if(!window.confirm('Reset this final result? The scores and winner will be cleared and the game will return to scheduled.'))return;
+  try{
+   btn.disabled=true;btn.textContent='RESETTING…';
+   const c=getNalAccountClient();
+   const {data:s,error:se}=await c.auth.getSession();if(se)throw se;if(!s?.session?.user)throw new Error('You must be signed in.');
+   const {error}=await c.from('pickem_games').update({away_score:null,home_score:null,winner:null,status:'scheduled',updated_at:new Date().toISOString()}).eq('id',Number(el.dataset.resultCard));
+   if(error)throw error;
+   await load();
+   if(typeof window.loadLivePickemLeaderboard==='function')window.loadLivePickemLeaderboard();
+   if(typeof window.loadMyLivePickemRecord==='function')window.loadMyLivePickemRecord();
+  }catch(err){
+   btn.disabled=false;btn.textContent='RESET RESULT';
+   window.alert('Result reset failed: '+(err?.message||'Unknown error'));
+  }
+ }
  document.addEventListener('click',e=>{
   const o=e.target.closest('[data-open-result]');if(o){o.closest('[data-result-card]').querySelector('.pickem-result-editor').classList.add('open');return}
   const c=e.target.closest('[data-cancel-result]');if(c){c.closest('[data-result-card]').querySelector('.pickem-result-editor').classList.remove('open');return}
   const s=e.target.closest('[data-save-result]');if(s){save(s.closest('[data-result-card]'));return}
+  const r=e.target.closest('[data-reset-result]');if(r){resetResult(r.closest('[data-result-card]'));return}
  });
  document.addEventListener('change',e=>{if(e.target.id==='pickemAdminWeekSelect')setTimeout(load,80)});
  document.addEventListener('click',e=>{const t=String(e.target?.textContent||'').trim().toUpperCase();if(t.includes('APPLY')&&t.includes('WEEK'))setTimeout(load,900)});
