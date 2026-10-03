@@ -19,307 +19,400 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
 .notice{margin:18px 20px;background:#fff7e8;border:1px solid #f1d29b;border-left:4px solid var(--amber);padding:14px 16px;border-radius:7px}.notice strong{display:block;margin-bottom:4px}
 .footer{padding:25px;text-align:center;color:#8993a4;font-size:12px}
 .modal{position:fixed;inset:0;background:#061528a8;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.sheet{width:min(650px,100%);background:white;border-radius:13px;overflow:hidden;box-shadow:0 24px 70px #0006}.sheethead{background:var(--navy);color:white;padding:20px;display:flex;justify-content:space-between}.sheetbody{padding:22px}.x{background:none;border:0;color:white;font-size:24px;cursor:pointer}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{padding:12px;background:#f7f9fb;border-radius:7px}.field small{display:block;color:var(--muted);font-weight:700;margin-bottom:5px}.timeline{border-left:3px solid #d8dee7;margin:22px 5px;padding-left:18px}.step{margin:14px 0}.step b{display:block}.step span{color:var(--muted);font-size:13px}
+.loading{padding:30px;text-align:center;color:var(--muted);font-weight:700}
+.empty{padding:26px 20px;color:var(--muted)}
+.errorbox{background:#fee4e2;border:1px solid #f5b7b1;color:#8a1c14;padding:14px 16px;border-radius:8px;margin:16px 0}
+.btn{border:1px solid #cfd6df;background:white;border-radius:6px;padding:8px 11px;font-weight:700;color:var(--navy);cursor:pointer}
+select,input{font:inherit}
+@media(max-width:1000px){.cards.roster-cards{grid-template-columns:repeat(2,1fr)!important}}
 @media(max-width:760px){.cards{grid-template-columns:1fr}.hero{align-items:start;flex-direction:column}.nav{overflow:auto}.grid{grid-template-columns:1fr}table{min-width:760px}.panel{overflow:auto}}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="brand"><div class="mark">NAL</div><div><h1>NATIONAL ARENA LEAGUE</h1><small>League Operations Portal</small></div></div>
-  <div class="user"><b>DALLAS APEX</b><br>Team Administrator</div>
+  <div class="user"><b>LEAGUE OPERATIONS</b><br><span id="connectionStatus">Connecting…</span></div>
 </header>
-<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Rosters</button><button id="docsNav" onclick="showDocuments()">Documents</button><button>Account</button></nav>
+<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Rosters</button><button id="docsNav" onclick="showDocuments()">Documents</button><button onclick="alert('Account access will be connected when Supabase Auth is added.')">Account</button></nav>
 
-<main class="wrap"><div id="transactionsView">
+<main class="wrap">
+<div id="transactionsView">
   <section class="hero">
-    <div><div class="eyebrow">2027 SEASON</div><h2>Transaction Center</h2><p>Submit transactions and track league review from one place.</p></div>
-    <button class="primary" onclick="window.open('https://forms.monday.com/forms/d26313aa7135e6742a0daeaac7ac066c?r=use1', '_blank', 'noopener,noreferrer')">+ SUBMIT NEW TRANSACTION</button>
+    <div><div class="eyebrow">2027 SEASON</div><h2>Transaction Center</h2><p>League-wide transactions and live review status from Monday.</p></div>
+    <button class="primary" onclick="window.open('https://forms.monday.com/forms/d26313aa7135e6742a0daeaac7ac066c?r=use1','_blank','noopener,noreferrer')">+ SUBMIT NEW TRANSACTION</button>
   </section>
+
+  <div id="apiError"></div>
 
   <section class="panel" style="padding:16px 18px;margin-bottom:18px">
-<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end">
- <div style="flex:1;min-width:190px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">ORGANIZATION</div><select style="width:100%;padding:11px;border:1px solid #d8dee8;border-radius:7px"><option>All Organizations</option><option>Dallas Apex</option><option>Amarillo Warbirds</option><option>Colorado Spartans</option><option>Louisiana Rouxgaroux</option><option>Omaha Beef</option><option>Pueblo Punishers</option><option>Salina Liberty</option><option>Sioux City Bandits</option><option>Southwest Kansas Storm</option><option>Wheeling Miners</option></select></div>
- <div style="flex:1;min-width:180px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">TRANSACTION TYPE</div><select style="width:100%;padding:11px;border:1px solid #d8dee8;border-radius:7px"><option>All Transaction Types</option><option>Signing</option><option>Release</option><option>Trade</option><option>Injury Report</option><option>Commissioner's Exempt</option><option>Suspension</option></select></div>
- <div style="flex:1;min-width:170px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">STATUS</div><select style="width:100%;padding:11px;border:1px solid #d8dee8;border-radius:7px"><option>All Statuses</option><option>Pending</option><option>Approved</option><option>Needs Action</option></select></div>
- <div style="flex:1.4;min-width:220px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">PLAYER SEARCH</div><input placeholder="Search player name..." style="width:100%;box-sizing:border-box;padding:11px;border:1px solid #d8dee8;border-radius:7px"></div>
-</div></section>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end">
+      <div style="flex:1;min-width:190px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">ORGANIZATION</div><select id="organizationFilter" onchange="renderTransactions()" style="width:100%;padding:11px;border:1px solid #d8dee8;border-radius:7px"><option value="">All Organizations</option></select></div>
+      <div style="flex:1;min-width:180px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">TRANSACTION TYPE</div><select id="typeFilter" onchange="renderTransactions()" style="width:100%;padding:11px;border:1px solid #d8dee8;border-radius:7px"><option value="">All Transaction Types</option></select></div>
+      <div style="flex:1;min-width:170px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">STATUS</div><select id="statusFilter" onchange="renderTransactions()" style="width:100%;padding:11px;border:1px solid #d8dee8;border-radius:7px"><option value="">All Statuses</option><option>Pending</option><option>Approved</option><option>Needs Action</option></select></div>
+      <div style="flex:1.4;min-width:220px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">PLAYER SEARCH</div><input id="playerSearch" oninput="renderTransactions()" placeholder="Search player name..." style="width:100%;box-sizing:border-box;padding:11px;border:1px solid #d8dee8;border-radius:7px"></div>
+    </div>
+  </section>
 
-<section class="cards">
-    <div class="card pending"><div class="label">PENDING LEAGUE REVIEW</div><div class="num">2</div><div class="sub">Track submissions awaiting a decision</div></div>
-    <div class="card approved"><div class="label">APPROVED</div><div class="num">14</div><div class="sub">Approved 2027 transactions</div></div>
-    <div class="card action"><div class="label">NEEDS ACTION</div><div class="num">1</div><div class="sub">Returned or rejected submissions</div></div>
+  <section class="cards">
+    <div class="card pending"><div class="label">PENDING LEAGUE REVIEW</div><div class="num" id="pendingCount">—</div><div class="sub">Awaiting league decision</div></div>
+    <div class="card approved"><div class="label">APPROVED</div><div class="num" id="approvedCount">—</div><div class="sub">Approved 2027 transactions</div></div>
+    <div class="card action"><div class="label">NEEDS ACTION</div><div class="num" id="actionCount">—</div><div class="sub">Returned or rejected submissions</div></div>
   </section>
 
   <section class="panel">
-    <div class="panelhead"><h3>Pending Transactions</h3><span class="pill p-pending">2 PENDING</span></div>
-    <div class="notice"><strong>Your submissions are here as soon as they are received.</strong>Submitted date and time remain visible while the league office reviews the transaction.</div>
-    <table>
-      <thead><tr><th>PLAYER</th><th>TYPE</th><th>POSITION</th><th>SUBMITTED</th><th>WAITING</th><th>STATUS</th><th></th></tr></thead>
-      <tbody>
-        <tr><td><div class="name">Jordan Mitchell</div></td><td>Dallas Apex</td><td>Signing</td><td>Defensive Back</td><td>Oct. 3, 2026<div class="sub">9:42 AM</div></td><td>Today</td><td><span class="pill p-pending">PENDING</span></td><td><button class="view" onclick="openDetail('Jordan Mitchell','Signing','Defensive Back','Oct. 3, 2026 at 9:42 AM')">View</button></td></tr>
-        <tr><td><div class="name">Marcus Reed</div></td><td>Omaha Beef</td><td>Release</td><td>Wide Receiver</td><td>Oct. 2, 2026<div class="sub">4:18 PM</div></td><td>1 day</td><td><span class="pill p-pending">PENDING</span></td><td><button class="view" onclick="openDetail('Marcus Reed','Release','Wide Receiver','Oct. 2, 2026 at 4:18 PM')">View</button></td></tr>
-      </tbody>
-    </table>
+    <div class="panelhead"><h3>Pending Transactions</h3><span class="pill p-pending" id="pendingPill">—</span></div>
+    <div class="notice"><strong>Live league review queue</strong>Submissions appear here while they remain in the Monday Pending Transactions group.</div>
+    <div id="pendingTable"><div class="loading">Loading live transactions…</div></div>
   </section>
 
   <section class="panel">
-    <div class="panelhead"><h3>Recent Transactions</h3><button class="view">View All</button></div>
-    <table>
-      <thead><tr><th>PLAYER</th><th>TYPE</th><th>POSITION</th><th>SUBMITTED</th><th>STATUS</th><th></th></tr></thead>
-      <tbody>
-        <tr><td><div class="name">Var'Keyes Gumms</div></td><td>Signing</td><td>Wide Receiver</td><td>Jul. 14, 2026<div class="sub">11:13 AM</div></td><td><span class="pill p-approved">APPROVED</span></td><td><button class="view" onclick="openRecordDetail('Var\'Keyes Gumms','Signing','Wide Receiver','Jul. 14, 2026 at 11:13 AM','6\'3','230','University North Texas','0','APPROVED','')">View</button></td></tr>
-        <tr><td><div class="name">Jaydyn Barral</div><div class="sub">Contract incomplete</div></td><td>Signing</td><td>Wide Receiver</td><td>Sep. 1, 2026<div class="sub">12:32 PM</div></td><td><span class="pill p-rejected">NEEDS ACTION</span></td><td><button class="view" onclick="openRecordDetail('Jaydyn Barral','Signing','Wide Receiver','Sep. 1, 2026 at 12:32 PM','6’0','180','East Texas University','0','NEEDS ACTION','Contract incomplete — no team representative signature and no date of signature.')">View</button></td></tr>
-      </tbody>
-    </table>
+    <div class="panelhead"><h3>Transactions</h3><span class="pill" style="background:#eef2f6;color:#536070" id="transactionResultCount">—</span></div>
+    <div id="transactionsTable"><div class="loading">Loading live transactions…</div></div>
   </section>
-  <div class="footer">NAL Team Operations • Internal Team Use Only</div></div>
+  <div class="footer">NAL League Operations • Internal Use Only</div>
+</div>
+
 <div id="rosterView" style="display:none">
-<section class="hero">
- <div><div class="eyebrow">2027 SEASON</div><h2>Team Roster</h2><p>League-wide roster center • Select an organization below</p></div>
-</section>
+  <section class="hero">
+    <div><div class="eyebrow">2027 SEASON</div><h2>Team Rosters</h2><p>League-wide roster center • Select an organization below</p></div>
+  </section>
 
-<section class="panel" style="padding:18px;margin-bottom:18px">
- <div style="display:flex;align-items:end;gap:16px;flex-wrap:wrap">
-  <div style="flex:1;min-width:280px">
-   <div style="font-size:12px;font-weight:800;color:var(--muted);margin-bottom:7px">SELECT ORGANIZATION</div>
-   <select id="teamSelect" onchange="demoTeamChange()" style="width:100%;padding:13px 14px;border:1px solid #d8dee8;border-radius:8px;font-size:15px;font-weight:700;background:white">
-    <option>Dallas Apex</option><option>Amarillo Warbirds</option><option>Colorado Spartans</option>
-    <option>Louisiana Rouxgaroux</option><option>Omaha Beef</option><option>Pueblo Punishers</option>
-    <option>Salina Liberty</option><option>Sioux City Bandits</option><option>Southwest Kansas Storm</option><option>Wheeling Miners</option>
-   </select>
-  </div>
-  <div style="min-width:220px"><div style="font-size:12px;font-weight:800;color:var(--muted);margin-bottom:7px">CURRENT VIEW</div><div id="selectedTeamLabel" style="font-size:20px;font-weight:900">Dallas Apex</div></div>
- </div>
-</section>
+  <section class="panel" style="padding:18px;margin-bottom:18px">
+    <div style="display:flex;align-items:end;gap:16px;flex-wrap:wrap">
+      <div style="flex:1;min-width:280px">
+        <div style="font-size:12px;font-weight:800;color:var(--muted);margin-bottom:7px">SELECT ORGANIZATION</div>
+        <select id="teamSelect" onchange="renderRoster()" style="width:100%;padding:13px 14px;border:1px solid #d8dee8;border-radius:8px;font-size:15px;font-weight:700;background:white"></select>
+      </div>
+      <div style="min-width:220px"><div style="font-size:12px;font-weight:800;color:var(--muted);margin-bottom:7px">CURRENT VIEW</div><div id="selectedTeamLabel" style="font-size:20px;font-weight:900">—</div></div>
+    </div>
+  </section>
 
-<section class="cards" style="grid-template-columns:repeat(5,1fr)">
- <div class="card approved"><div class="label">ACTIVE ROSTER</div><div class="num">3</div><div class="sub">Active players</div></div>
- <div class="card"><div class="label">INJURED RESERVE</div><div class="num">0</div><div class="sub">IR / injury designation</div></div>
- <div class="card"><div class="label">COMMISSIONER'S EXEMPT</div><div class="num">0</div><div class="sub">League exempt list</div></div>
- <div class="card"><div class="label">PERSONAL CONDUCT</div><div class="num">0</div><div class="sub">Personal conduct exempt</div></div>
- <div class="card action"><div class="label">RELEASED</div><div class="num">1</div><div class="sub">No longer active</div></div>
-</section>
+  <section class="cards roster-cards" style="grid-template-columns:repeat(5,1fr)">
+    <div class="card approved"><div class="label">ACTIVE ROSTER</div><div class="num" id="rActive">—</div><div class="sub">Active players</div></div>
+    <div class="card"><div class="label">INJURED RESERVE</div><div class="num" id="rIR">—</div><div class="sub">IR / injury designation</div></div>
+    <div class="card"><div class="label">COMMISSIONER'S EXEMPT</div><div class="num" id="rCE">—</div><div class="sub">League exempt list</div></div>
+    <div class="card"><div class="label">PERSONAL CONDUCT</div><div class="num" id="rPC">—</div><div class="sub">Personal conduct exempt</div></div>
+    <div class="card action"><div class="label">RELEASED</div><div class="num" id="rReleased">—</div><div class="sub">Released players</div></div>
+  </section>
 
-<section class="panel">
- <div class="panelhead"><h3>Active Roster</h3><span class="pill p-approved">3 ACTIVE</span></div>
- <table><thead><tr><th>PLAYER</th><th>POSITION</th><th>HEIGHT</th><th>WEIGHT</th><th>COLLEGE / SCHOOL</th><th>STATUS</th></tr></thead>
- <tbody>
- <tr><td><div class="name">Var'Keyes Gumms</div></td><td>Wide Receiver</td><td>6'3</td><td>230</td><td>University North Texas</td><td><span class="pill p-approved">ACTIVE</span></td></tr>
- <tr><td><div class="name">Quintravious Livingston</div></td><td>Defensive Back</td><td>6’2</td><td>180</td><td>Bacone University</td><td><span class="pill p-approved">ACTIVE</span></td></tr>
- <tr><td><div class="name">Arthur Jones Jr.</div></td><td>Defensive Back</td><td>6’0</td><td>200</td><td>TJC</td><td><span class="pill p-approved">ACTIVE</span></td></tr>
- </tbody></table>
-</section>
-
-<section class="panel">
- <div class="panelhead"><h3>Injured Reserve</h3><span class="pill" style="background:#eef2f6;color:#536070">0 PLAYERS</span></div>
- <div style="padding:24px;color:var(--muted)">No Dallas Apex players are currently listed on Injured Reserve.</div>
-</section>
-
-<section class="panel">
- <div class="panelhead"><h3>Commissioner's Exempt List</h3><span class="pill" style="background:#eef2f6;color:#536070">0 PLAYERS</span></div>
- <div style="padding:24px;color:var(--muted)">No Dallas Apex players are currently listed on the Commissioner's Exempt List.</div>
-</section>
-
-<section class="panel">
- <div class="panelhead"><h3>Personal Conduct Exempt List</h3><span class="pill" style="background:#eef2f6;color:#536070">0 PLAYERS</span></div>
- <div style="padding:24px;color:var(--muted)">No Dallas Apex players are currently listed on the Personal Conduct Exempt List.</div>
-</section>
-
-<section class="panel">
- <div class="panelhead"><h3>Released Players</h3><span class="pill p-rejected">1 RELEASED</span></div>
- <table><thead><tr><th>PLAYER</th><th>POSITION</th><th>TRANSACTION</th><th>DATE</th><th>STATUS</th></tr></thead>
- <tbody>
- <tr><td><div class="name">Sample Released Player</div></td><td>Wide Receiver</td><td>Release</td><td>Oct. 1, 2026</td><td><span class="pill p-rejected">RELEASED</span></td></tr>
- </tbody></table>
- <div style="padding:12px 18px;color:var(--muted);font-size:12px">Sample row shown only to demonstrate the released-player layout.</div>
-</section>
-
-<div class="notice" style="margin:18px 0"><strong>Roster classification preview</strong>Active Roster currently uses the real Dallas Apex records previously pulled from Monday. IR, Commissioner's Exempt, Personal Conduct Exempt and Released are layout previews until we finish mapping each classification to the board's live transaction rules.</div>
-<div class="footer">NAL Team Operations • Internal Team Use Only</div>
+  <div id="rosterSections"><div class="panel"><div class="loading">Loading live roster…</div></div></div>
+  <div class="footer">NAL League Operations • Internal Use Only</div>
 </div>
 
 <div id="documentsView" style="display:none">
-<section class="hero">
- <div>
-  <div class="eyebrow">2027 SEASON</div>
-  <h2>Team Documents</h2>
-  <p>League forms, manuals and operational resources available to NAL organizations.</p>
- </div>
-</section>
-
-<section class="cards" style="grid-template-columns:repeat(3,1fr)">
- <div class="card approved"><div class="label">AVAILABLE DOCUMENTS</div><div class="num">2</div><div class="sub">Currently active in Monday</div></div>
- <div class="card"><div class="label">LEAGUE OPERATIONS</div><div class="num">1</div><div class="sub">Active document</div></div>
- <div class="card"><div class="label">PLAYER FORMS</div><div class="num">1</div><div class="sub">Active document</div></div>
-</section>
-
-<section class="panel">
- <div class="panelhead"><h3>League Operations</h3><span class="pill p-approved">1 DOCUMENT</span></div>
- <table>
-  <thead><tr><th>DOCUMENT</th><th>SEASON</th><th>FILE TYPE</th><th>STATUS</th><th>ACTION</th></tr></thead>
-  <tbody>
-   <tr>
-    <td><div class="name">Operations Manual</div><div style="font-size:12px;color:var(--muted);margin-top:4px">League Operations</div></td>
-    <td>2027</td>
-    <td>Word Document</td>
-    <td><span class="pill p-approved">ACTIVE</span></td>
-    <td><a class="btn" style="text-decoration:none;display:inline-block" target="_blank" rel="noopener" href="https://executive-committee-space.monday.com/protected_static/24628318/resources/3291515033/2027%20Operations%20Manual.docx">Open / Download</a></td>
-   </tr>
-  </tbody>
- </table>
-</section>
-
-<section class="panel">
- <div class="panelhead"><h3>Player Forms</h3><span class="pill p-approved">1 DOCUMENT</span></div>
- <table>
-  <thead><tr><th>DOCUMENT</th><th>SEASON</th><th>FILE TYPE</th><th>STATUS</th><th>ACTION</th></tr></thead>
-  <tbody>
-   <tr>
-    <td><div class="name">Player Contract</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Player Forms</div></td>
-    <td>2027</td>
-    <td>Word Document</td>
-    <td><span class="pill p-approved">ACTIVE</span></td>
-    <td><a class="btn" style="text-decoration:none;display:inline-block" target="_blank" rel="noopener" href="https://executive-committee-space.monday.com/protected_static/24628318/resources/3291515285/2027%20-%20NAL%20Standard%20Coaching%20Agreement.docx">Open / Download</a></td>
-   </tr>
-  </tbody>
- </table>
-</section>
-
-<div class="notice" style="margin:18px 0">
- <strong>Connected to the Monday document structure</strong>
- This preview shows the two records currently marked Active on the Documents board. NAL By-Laws is intentionally hidden because its Active box is not checked and it currently has no file attached.
+  <section class="hero">
+    <div><div class="eyebrow">2027 SEASON</div><h2>Documents</h2><p>Active league forms, manuals and operational resources from Monday.</p></div>
+  </section>
+  <section class="cards" style="grid-template-columns:repeat(3,1fr)">
+    <div class="card approved"><div class="label">AVAILABLE DOCUMENTS</div><div class="num" id="docCount">—</div><div class="sub">Currently active in Monday</div></div>
+    <div class="card"><div class="label">CATEGORIES</div><div class="num" id="docCategoryCount">—</div><div class="sub">Document categories</div></div>
+    <div class="card"><div class="label">SEASON</div><div class="num" style="font-size:24px">2027</div><div class="sub">Current operations year</div></div>
+  </section>
+  <div id="documentSections"><div class="panel"><div class="loading">Loading live documents…</div></div></div>
+  <div class="footer">NAL League Operations • Internal Use Only</div>
 </div>
-<div class="footer">NAL Team Operations • Internal Team Use Only</div>
-</div>
-
-<div class="modal" id="newTxModal">
- <div class="sheet" style="width:min(780px,100%)">
-  <div class="sheethead">
-   <div><b>Submit New Transaction</b><div style="opacity:.7;font-size:12px;margin-top:4px">Dallas Apex • 2027 Season</div></div>
-   <button class="x" onclick="closeNewTransaction()">×</button>
-  </div>
-  <div class="sheetbody">
-   <form id="txForm" onsubmit="submitPrototype(event)">
-    <div class="grid">
-     <label class="field"><small>TRANSACTION TYPE</small>
-      <select id="txType" required onchange="updateTxFields()" style="width:100%;padding:9px">
-       <option value="">Select type...</option><option>Signing</option><option>Release</option><option>Trade</option>
-       <option>Refusal to Report (RTR - MAX 3)</option><option>Commissioner's Exempt List (MAX 3)</option>
-       <option>Team/League Suspension (Equipment/Monies Owed)</option><option>Injury Report</option>
-      </select>
-     </label>
-     <label class="field"><small>ORGANIZATION</small><b>Dallas Apex</b></label>
-     <label class="field"><small>FIRST NAME</small><input id="firstName" required style="width:100%;padding:9px"></label>
-     <label class="field"><small>LAST NAME</small><input id="lastName" required style="width:100%;padding:9px"></label>
-    </div>
-
-    <div id="signingFields" style="display:none;margin-top:14px">
-     <div class="grid">
-      <label class="field"><small>POSITION</small><select style="width:100%;padding:9px"><option>Quarterback</option><option>Running Back</option><option>Wide Receiver</option><option>Offensive Line</option><option>Defensive Line</option><option>Linebacker</option><option>Defensive Back</option><option>Kicker/Specialist</option><option>Athlete</option></select></label>
-      <label class="field"><small>COLLEGE / SCHOOL</small><input style="width:100%;padding:9px"></label>
-      <label class="field"><small>HEIGHT</small><input placeholder="6'2&quot;" style="width:100%;padding:9px"></label>
-      <label class="field"><small>WEIGHT</small><input placeholder="215" style="width:100%;padding:9px"></label>
-      <label class="field"><small>PROFESSIONAL EXPERIENCE</small><input placeholder="0" style="width:100%;padding:9px"></label>
-      <label class="field"><small>COPY OF SIGNED CONTRACT</small><input type="file" style="width:100%;padding:6px 0"></label>
-     </div>
-    </div>
-
-    <div id="tradeFields" class="field" style="display:none;margin-top:14px"><small>TRADE REQUEST DETAILS</small><textarea style="width:100%;min-height:90px;padding:9px"></textarea></div>
-    <div id="injuryFields" class="field" style="display:none;margin-top:14px"><small>INJURY LENGTH</small><select style="width:100%;padding:9px"><option>Short Term</option><option>Long Term</option><option>Season Ending</option><option>Physically Unable to Perform</option></select></div>
-    <div id="suspensionFields" class="field" style="display:none;margin-top:14px"><small>REASON FOR SUSPENSION</small><textarea style="width:100%;min-height:90px;padding:9px"></textarea></div>
-
-    <div class="grid" style="margin-top:14px">
-     <label class="field"><small>PERSON & POSITION SUBMITTING</small><input required placeholder="Name / Title" style="width:100%;padding:9px"></label>
-     <div class="field"><small>TEAM ACKNOWLEDGEMENT</small><label><input type="checkbox" required> I confirm this submission is accurate.</label></div>
-    </div>
-    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px">
-     <button type="button" class="view" onclick="closeNewTransaction()">Cancel</button>
-     <button type="submit" class="primary">Submit Transaction</button>
-    </div>
-   </form>
-  </div>
- </div>
-</div>
+</main>
 
 <div class="modal" id="modal">
  <div class="sheet">
-  <div class="sheethead"><div><b id="mname">Player</b><div style="opacity:.7;font-size:12px;margin-top:4px">Dallas Apex • <span id="mtype"></span></div></div><button class="x" onclick="closeDetail()">×</button></div>
+  <div class="sheethead"><div><b id="mname">Player</b><div style="opacity:.7;font-size:12px;margin-top:4px"><span id="morg"></span> • <span id="mtype"></span></div></div><button class="x" onclick="closeDetail()">×</button></div>
   <div class="sheetbody">
-   <span class="pill p-pending">PENDING LEAGUE REVIEW</span>
+   <span class="pill" id="mstatus">STATUS</span>
    <div class="grid" style="margin-top:18px">
-    <div class="field"><small>POSITION</small><b id="mpos"></b></div>
-    <div class="field"><small>SUBMITTED</small><b id="mdate"></b></div>
-    <div class="field extraInfo"><small>HEIGHT</small><b id="mheight">—</b></div>
-    <div class="field extraInfo"><small>WEIGHT</small><b id="mweight">—</b></div>
-    <div class="field extraInfo"><small>COLLEGE / SCHOOL</small><b id="mcollege">—</b></div>
-    <div class="field extraInfo"><small>PROFESSIONAL EXPERIENCE</small><b id="mexp">—</b></div>
+    <div class="field"><small>POSITION</small><b id="mpos">—</b></div>
+    <div class="field"><small>SUBMITTED</small><b id="mdate">—</b></div>
+    <div class="field"><small>HEIGHT</small><b id="mheight">—</b></div>
+    <div class="field"><small>WEIGHT</small><b id="mweight">—</b></div>
+    <div class="field"><small>COLLEGE / SCHOOL</small><b id="mcollege">—</b></div>
+    <div class="field"><small>PROFESSIONAL EXPERIENCE</small><b id="mexp">—</b></div>
    </div>
-   <div id="actionReason" class="notice" style="display:none;margin:18px 0 0"><strong>Needs Action</strong><span id="mreason"></span></div>
-   <div class="timeline">
-    <div class="step"><b>✓ Transaction Submitted</b><span id="mdate2"></span></div>
-    <div class="step"><b>● Awaiting League Review</b><span>The league office has received this submission.</span></div>
-    <div class="step"><b>○ League Decision</b><span>Approval or action required will appear here.</span></div>
-   </div>
+   <div id="specialInfo" class="notice" style="display:none;margin:18px 0 0"><strong id="specialTitle"></strong><span id="specialText"></span></div>
   </div>
  </div>
 </div>
 <script>
-function openDetail(n,t,p,d){openRecordDetail(n,t,p,d,'—','—','—','—','PENDING','')}
-function openRecordDetail(n,t,p,d,h,w,c,x,status,reason){
- document.getElementById('mname').textContent=n;
- document.getElementById('mtype').textContent=t;
- document.getElementById('mpos').textContent=p||'—';
- document.getElementById('mdate').textContent=d;
- document.getElementById('mdate2').textContent=d;
- document.getElementById('mheight').textContent=h||'—';
- document.getElementById('mweight').textContent=w||'—';
- document.getElementById('mcollege').textContent=c||'—';
- document.getElementById('mexp').textContent=x||'—';
- const box=document.getElementById('actionReason');
- box.style.display=reason?'block':'none';
- document.getElementById('mreason').textContent=reason||'';
- document.getElementById('modal').classList.add('show');
-}
-function closeDetail(){document.getElementById('modal').classList.remove('show')}
-document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeDetail()})
+/*
+  NAL LEAGUE OPERATIONS PORTAL
+  ----------------------------
+  The Supabase publishable/anon key is intentionally a browser-safe key.
+  DO NOT put a service_role key here.
 
-function openNewTransaction(){document.getElementById('newTxModal').classList.add('show')}
-function closeNewTransaction(){document.getElementById('newTxModal').classList.remove('show')}
-function updateTxFields(){
- const v=document.getElementById('txType').value;
- document.getElementById('signingFields').style.display=v==='Signing'?'block':'none';
- document.getElementById('tradeFields').style.display=v==='Trade'?'block':'none';
- document.getElementById('injuryFields').style.display=v==='Injury Report'?'block':'none';
- document.getElementById('suspensionFields').style.display=v.indexOf('Suspension')>=0?'block':'none';
-}
-function submitPrototype(e){
- e.preventDefault();
- const first=document.getElementById('firstName').value.trim(), last=document.getElementById('lastName').value.trim(), type=document.getElementById('txType').value;
- alert('Prototype submission created for '+first+' '+last+' ('+type+').\n\nNext step: we will connect this action to the Monday board.');
- closeNewTransaction(); e.target.reset(); updateTxFields();
-}
-document.getElementById('newTxModal').addEventListener('click',e=>{if(e.target.id==='newTxModal')closeNewTransaction()})
+  Paste the project's anon key below before publishing.
+*/
+const SUPABASE_URL = "https://rcoaprzmutcwlpuqobry.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_tHzWH6oFoUemOrdLs_h9bw_UOLBP-yb";
+const API_URL = SUPABASE_URL + "/functions/v1/nal-operations-api";
 
+let API_DATA = null;
 
-function showRoster(){
- document.getElementById('transactionsView').style.display='none';
- document.getElementById('rosterView').style.display='block';
- document.getElementById('txNav').classList.remove('active');
- document.getElementById('rosterNav').classList.add('active');
- window.scrollTo(0,0);
+const $ = id => document.getElementById(id);
+const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+}[c]));
+
+function formatDate(value){
+  if(!value) return "—";
+  const d = new Date(value);
+  if(Number.isNaN(d.getTime())) return esc(value);
+  return d.toLocaleString([], {year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+}
+function formatDateOnly(value){
+  if(!value) return "—";
+  const d = new Date(value);
+  if(Number.isNaN(d.getTime())) return esc(value);
+  return d.toLocaleDateString([], {year:"numeric",month:"short",day:"numeric"});
+}
+function waitingTime(value){
+  if(!value) return "—";
+  const then = new Date(value).getTime(), now = Date.now();
+  if(Number.isNaN(then)) return "—";
+  const mins = Math.max(0, Math.floor((now-then)/60000));
+  if(mins < 60) return mins + " min";
+  const hrs = Math.floor(mins/60);
+  if(hrs < 24) return hrs + (hrs===1?" hour":" hours");
+  const days = Math.floor(hrs/24);
+  return days + (days===1?" day":" days");
+}
+function statusPill(state){
+  const cls = state==="Approved" ? "p-approved" : state==="Needs Action" ? "p-rejected" : "p-pending";
+  return `<span class="pill ${cls}">${esc(state).toUpperCase()}</span>`;
+}
+
+async function loadOperations(){
+  try{
+    $("connectionStatus").textContent = "Connecting…";
+    if(SUPABASE_ANON_KEY.includes("PASTE_YOUR")){
+      throw new Error("Add your Supabase anon key to SUPABASE_ANON_KEY in this HTML file before testing.");
+    }
+    const response = await fetch(API_URL,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "apikey":SUPABASE_ANON_KEY,
+        "Authorization":"Bearer " + SUPABASE_ANON_KEY
+      },
+      body:"{}"
+    });
+    const data = await response.json().catch(()=>({}));
+    if(!response.ok || !data.success){
+      throw new Error(data.error || ("API request failed with HTTP " + response.status));
+    }
+    API_DATA = data;
+    $("connectionStatus").textContent = "Live Monday Data";
+    $("apiError").innerHTML = "";
+    initializeFilters();
+    renderDashboard();
+    renderTransactions();
+    initializeTeams();
+    renderRoster();
+    renderDocuments();
+  }catch(err){
+    $("connectionStatus").textContent = "Connection Error";
+    $("apiError").innerHTML = `<div class="errorbox"><b>Live data could not load.</b><br>${esc(err.message)}</div>`;
+    console.error(err);
+  }
+}
+
+function initializeFilters(){
+  const orgs = API_DATA?.rosters?.organizations || [];
+  $("organizationFilter").innerHTML = '<option value="">All Organizations</option>' +
+    orgs.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+
+  const types = [...new Set((API_DATA?.transactions?.all || []).map(x=>x.transactionType).filter(Boolean))].sort();
+  $("typeFilter").innerHTML = '<option value="">All Transaction Types</option>' +
+    types.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+}
+
+function renderDashboard(){
+  const d = API_DATA.dashboard || {};
+  $("pendingCount").textContent = d.pending ?? 0;
+  $("approvedCount").textContent = d.approved ?? 0;
+  $("actionCount").textContent = d.needsAction ?? 0;
+  $("pendingPill").textContent = `${d.pending ?? 0} PENDING`;
+}
+
+function filteredTransactions(){
+  let rows = [...(API_DATA?.transactions?.all || [])];
+  const org = $("organizationFilter").value;
+  const type = $("typeFilter").value;
+  const status = $("statusFilter").value;
+  const search = $("playerSearch").value.trim().toLowerCase();
+
+  if(org) rows = rows.filter(x=>x.organization===org);
+  if(type) rows = rows.filter(x=>x.transactionType===type);
+  if(status) rows = rows.filter(x=>x.state===status);
+  if(search) rows = rows.filter(x=>(x.player||"").toLowerCase().includes(search));
+
+  rows.sort((a,b)=>new Date(b.submittedAt||0)-new Date(a.submittedAt||0));
+  return rows;
+}
+
+function transactionTable(rows, pending=false){
+  if(!rows.length) return `<div class="empty">${pending ? "No transactions are currently pending league review." : "No transactions match the selected filters."}</div>`;
+
+  const head = pending
+    ? `<thead><tr><th>PLAYER</th><th>ORGANIZATION</th><th>TYPE</th><th>POSITION</th><th>SUBMITTED</th><th>WAITING</th><th>STATUS</th><th></th></tr></thead>`
+    : `<thead><tr><th>PLAYER</th><th>ORGANIZATION</th><th>TYPE</th><th>POSITION</th><th>SUBMITTED</th><th>STATUS</th><th></th></tr></thead>`;
+
+  const body = rows.map(tx=>{
+    const action = tx.actionReason ? `<div class="sub">${esc(tx.actionReason)}</div>` : "";
+    const base = `<td><div class="name">${esc(tx.player)}</div>${action}</td>
+      <td>${esc(tx.organization||"—")}</td>
+      <td>${esc(tx.transactionType||"—")}</td>
+      <td>${esc(tx.position||"—")}</td>
+      <td>${formatDate(tx.submittedAt)}</td>`;
+    const wait = pending ? `<td>${waitingTime(tx.submittedAt)}</td>` : "";
+    return `<tr>${base}${wait}<td>${statusPill(tx.state)}</td><td><button class="view" onclick="openTransaction('${esc(tx.id)}')">View</button></td></tr>`;
+  }).join("");
+
+  return `<table>${head}<tbody>${body}</tbody></table>`;
+}
+
+function renderTransactions(){
+  if(!API_DATA) return;
+  const pending = API_DATA.transactions?.pending || [];
+  $("pendingTable").innerHTML = transactionTable(pending,true);
+
+  const rows = filteredTransactions();
+  $("transactionResultCount").textContent = `${rows.length} RECORD${rows.length===1?"":"S"}`;
+  $("transactionsTable").innerHTML = transactionTable(rows,false);
+}
+
+function openTransaction(id){
+  const tx = (API_DATA?.transactions?.all || []).find(x=>String(x.id)===String(id));
+  if(!tx) return;
+
+  $("mname").textContent = tx.player || "Player";
+  $("morg").textContent = tx.organization || "NAL";
+  $("mtype").textContent = tx.transactionType || "Transaction";
+  $("mpos").textContent = tx.position || "—";
+  $("mdate").textContent = formatDate(tx.submittedAt);
+  $("mheight").textContent = tx.height || "—";
+  $("mweight").textContent = tx.weight || "—";
+  $("mcollege").textContent = tx.college || "—";
+  $("mexp").textContent = tx.professionalExperience || "—";
+
+  const pill = $("mstatus");
+  pill.textContent = (tx.state||"").toUpperCase();
+  pill.className = "pill " + (tx.state==="Approved" ? "p-approved" : tx.state==="Needs Action" ? "p-rejected" : "p-pending");
+
+  const details = [];
+  if(tx.actionReason) details.push(["Needs Action",tx.actionReason]);
+  else if(tx.tradeDetails) details.push(["Trade Details",tx.tradeDetails]);
+  else if(tx.injuryLength) details.push(["Injury Length",tx.injuryLength]);
+  else if(tx.suspensionReason) details.push(["Suspension Reason",tx.suspensionReason]);
+
+  $("specialInfo").style.display = details.length ? "block" : "none";
+  if(details.length){
+    $("specialTitle").textContent = details[0][0];
+    $("specialText").textContent = details[0][1];
+  }
+  $("modal").classList.add("show");
+}
+function closeDetail(){ $("modal").classList.remove("show"); }
+$("modal").addEventListener("click",e=>{if(e.target.id==="modal") closeDetail();});
+
+function initializeTeams(){
+  const orgs = API_DATA?.rosters?.organizations || [];
+  const preferred = orgs.includes("Dallas Apex") ? "Dallas Apex" : (orgs[0]||"");
+  $("teamSelect").innerHTML = orgs.map(x=>`<option value="${esc(x)}"${x===preferred?" selected":""}>${esc(x)}</option>`).join("");
+}
+
+function rosterPlayerTable(players,status){
+  if(!players.length) return `<div class="empty">No players are currently listed in this section.</div>`;
+
+  if(status==="Released"){
+    return `<table><thead><tr><th>PLAYER</th><th>TRANSACTION</th><th>DATE</th><th>STATUS</th></tr></thead><tbody>` +
+      players.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.transactionType||"Release")}</td><td>${formatDateOnly(p.submittedAt)}</td><td><span class="pill p-rejected">RELEASED</span></td></tr>`).join("") +
+      `</tbody></table>`;
+  }
+
+  return `<table><thead><tr><th>PLAYER</th><th>POSITION</th><th>HEIGHT</th><th>WEIGHT</th><th>COLLEGE / SCHOOL</th><th>STATUS</th></tr></thead><tbody>` +
+    players.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.height||"—")}</td><td>${esc(p.weight||"—")}</td><td>${esc(p.college||"—")}</td><td><span class="pill ${status==="Active"?"p-approved":"p-pending"}">${esc(status).toUpperCase()}</span></td></tr>`).join("") +
+    `</tbody></table>`;
+}
+
+function rosterSection(title,players,status){
+  const cls = status==="Active" ? "p-approved" : status==="Released" ? "p-rejected" : "";
+  const style = cls ? "" : ' style="background:#eef2f6;color:#536070"';
+  return `<section class="panel"><div class="panelhead"><h3>${esc(title)}</h3><span class="pill ${cls}"${style}>${players.length} ${players.length===1?"PLAYER":"PLAYERS"}</span></div>${rosterPlayerTable(players,status)}</section>`;
+}
+
+function renderRoster(){
+  if(!API_DATA) return;
+  const team = $("teamSelect").value;
+  const r = API_DATA?.rosters?.teams?.[team];
+  $("selectedTeamLabel").textContent = team || "—";
+  if(!r){
+    $("rosterSections").innerHTML = `<div class="panel"><div class="empty">No roster data is available for this organization.</div></div>`;
+    return;
+  }
+
+  $("rActive").textContent = r.counts?.active ?? 0;
+  $("rIR").textContent = r.counts?.injuredReserve ?? 0;
+  $("rCE").textContent = r.counts?.commissionersExempt ?? 0;
+  $("rPC").textContent = r.counts?.personalConductExempt ?? 0;
+  $("rReleased").textContent = r.counts?.released ?? 0;
+
+  $("rosterSections").innerHTML =
+    rosterSection("Active Roster",r.active||[],"Active") +
+    rosterSection("Injured Reserve",r.injuredReserve||[],"Injured Reserve") +
+    rosterSection("Commissioner's Exempt List",r.commissionersExempt||[],"Commissioner's Exempt") +
+    rosterSection("Personal Conduct Exempt List",r.personalConductExempt||[],"Personal Conduct") +
+    rosterSection("Released Players",r.released||[],"Released");
+}
+
+function renderDocuments(){
+  if(!API_DATA) return;
+  const docs = API_DATA.documents || [];
+  const groups = {};
+  docs.forEach(d=>{
+    const cat = d.category || "Other";
+    (groups[cat] ||= []).push(d);
+  });
+
+  $("docCount").textContent = docs.length;
+  $("docCategoryCount").textContent = Object.keys(groups).length;
+
+  if(!docs.length){
+    $("documentSections").innerHTML = `<section class="panel"><div class="empty">No active documents are currently available.</div></section>`;
+    return;
+  }
+
+  $("documentSections").innerHTML = Object.entries(groups).sort(([a],[b])=>a.localeCompare(b)).map(([category,items])=>{
+    const rows = items.map(d=>{
+      const file = typeof d.file==="string" ? d.file : "";
+      const action = file ? `<a class="btn" style="text-decoration:none;display:inline-block" target="_blank" rel="noopener" href="${esc(file)}">Open / Download</a>` : `<span class="sub">No file attached</span>`;
+      return `<tr><td><div class="name">${esc(d.name)}</div><div class="sub">${esc(category)}</div></td><td>${esc(d.season||"—")}</td><td><span class="pill p-approved">ACTIVE</span></td><td>${action}</td></tr>`;
+    }).join("");
+    return `<section class="panel"><div class="panelhead"><h3>${esc(category)}</h3><span class="pill p-approved">${items.length} DOCUMENT${items.length===1?"":"S"}</span></div><table><thead><tr><th>DOCUMENT</th><th>SEASON</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>${rows}</tbody></table></section>`;
+  }).join("");
+}
+
+function activateNav(id){
+  ["txNav","rosterNav","docsNav"].forEach(x=>$(x)?.classList.remove("active"));
+  $(id)?.classList.add("active");
 }
 function showTransactions(){
- document.getElementById('rosterView').style.display='none';
- document.getElementById('transactionsView').style.display='block';
- document.getElementById('rosterNav').classList.remove('active');
- document.getElementById('txNav').classList.add('active');
- window.scrollTo(0,0);
+  $("transactionsView").style.display="block";
+  $("rosterView").style.display="none";
+  $("documentsView").style.display="none";
+  activateNav("txNav"); window.scrollTo(0,0);
+}
+function showRoster(){
+  $("transactionsView").style.display="none";
+  $("rosterView").style.display="block";
+  $("documentsView").style.display="none";
+  activateNav("rosterNav"); window.scrollTo(0,0);
+}
+function showDocuments(){
+  $("transactionsView").style.display="none";
+  $("rosterView").style.display="none";
+  $("documentsView").style.display="block";
+  activateNav("docsNav"); window.scrollTo(0,0);
 }
 
-
-function demoTeamChange(){
- const team=document.getElementById('teamSelect').value;
- document.getElementById('selectedTeamLabel').textContent=team;
-}
+loadOperations();
 </script>
 </body>
 </html>
