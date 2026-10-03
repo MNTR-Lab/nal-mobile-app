@@ -27,7 +27,7 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
   <div class="brand"><div class="mark">NAL</div><div><h1>NATIONAL ARENA LEAGUE</h1><small>Team Operations Portal</small></div></div>
   <div class="user"><b>DALLAS APEX</b><br>Team Administrator</div>
 </header>
-<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Roster</button><button>Documents</button><button>Account</button></nav>
+<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Roster</button><button id="docsNav" onclick="showDocuments()">Documents</button><button>Account</button></nav>
 
 <main class="wrap"><div id="transactionsView">
   <section class="hero">
@@ -114,6 +114,61 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
 <div class="notice" style="margin:18px 0"><strong>Roster classification preview</strong>Active Roster currently uses the real Dallas Apex records previously pulled from Monday. IR, Commissioner's Exempt, Personal Conduct Exempt and Released are layout previews until we finish mapping each classification to the board's live transaction rules.</div>
 <div class="footer">NAL Team Operations • Internal Team Use Only</div>
 </div>
+
+<div id="documentsView" style="display:none">
+<section class="hero">
+ <div>
+  <div class="eyebrow">2027 SEASON</div>
+  <h2>Team Documents</h2>
+  <p>League forms, manuals and operational resources available to Dallas Apex.</p>
+ </div>
+</section>
+
+<section class="cards" style="grid-template-columns:repeat(3,1fr)">
+ <div class="card approved"><div class="label">AVAILABLE DOCUMENTS</div><div class="num">2</div><div class="sub">Currently active in Monday</div></div>
+ <div class="card"><div class="label">LEAGUE OPERATIONS</div><div class="num">1</div><div class="sub">Active document</div></div>
+ <div class="card"><div class="label">PLAYER FORMS</div><div class="num">1</div><div class="sub">Active document</div></div>
+</section>
+
+<section class="panel">
+ <div class="panelhead"><h3>League Operations</h3><span class="pill p-approved">1 DOCUMENT</span></div>
+ <table>
+  <thead><tr><th>DOCUMENT</th><th>SEASON</th><th>FILE TYPE</th><th>STATUS</th><th>ACTION</th></tr></thead>
+  <tbody>
+   <tr>
+    <td><div class="name">Operations Manual</div><div style="font-size:12px;color:var(--muted);margin-top:4px">League Operations</div></td>
+    <td>2027</td>
+    <td>Word Document</td>
+    <td><span class="pill p-approved">ACTIVE</span></td>
+    <td><a class="btn" style="text-decoration:none;display:inline-block" target="_blank" rel="noopener" href="https://executive-committee-space.monday.com/protected_static/24628318/resources/3291515033/2027%20Operations%20Manual.docx">Open / Download</a></td>
+   </tr>
+  </tbody>
+ </table>
+</section>
+
+<section class="panel">
+ <div class="panelhead"><h3>Player Forms</h3><span class="pill p-approved">1 DOCUMENT</span></div>
+ <table>
+  <thead><tr><th>DOCUMENT</th><th>SEASON</th><th>FILE TYPE</th><th>STATUS</th><th>ACTION</th></tr></thead>
+  <tbody>
+   <tr>
+    <td><div class="name">Player Contract</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Player Forms</div></td>
+    <td>2027</td>
+    <td>Word Document</td>
+    <td><span class="pill p-approved">ACTIVE</span></td>
+    <td><a class="btn" style="text-decoration:none;display:inline-block" target="_blank" rel="noopener" href="https://executive-committee-space.monday.com/protected_static/24628318/resources/3291515285/2027%20-%20NAL%20Standard%20Coaching%20Agreement.docx">Open / Download</a></td>
+   </tr>
+  </tbody>
+ </table>
+</section>
+
+<div class="notice" style="margin:18px 0">
+ <strong>Connected to the Monday document structure</strong>
+ This preview shows the two records currently marked Active on the Documents board. NAL By-Laws is intentionally hidden because its Active box is not checked and it currently has no file attached.
+</div>
+<div class="footer">NAL Team Operations • Internal Team Use Only</div>
+</div>
+
 <div class="modal" id="newTxModal">
  <div class="sheet" style="width:min(780px,100%)">
   <div class="sheethead">
