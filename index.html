@@ -20847,10 +20847,10 @@ setTimeout(configureNalModerationAccess,0);
         .sort((a,b)=>Number(weekMap.get(a[0])?.week_number||0)-Number(weekMap.get(b[0])?.week_number||0))
         .map(([weekId,r])=>{
           const w = weekMap.get(weekId);
-          return `<div class="pickem-board-row"><strong>WEEK ${escPickemLive(w?.week_number||'')}</strong><span>${r.correct} CORRECT</span><b>${r.correct}–${r.total}</b><span>${escPickemLive(pct(r.correct,r.total))}</span></div>`;
+          return `<div class="pickem-board-row"><strong>WEEK ${escPickemLive(w?.week_number||'')}</strong><span>${r.correct} CORRECT</span><b>${r.correct}–${Math.max(0,r.total-r.correct)}</b><span>${escPickemLive(pct(r.correct,r.total))}</span></div>`;
         }).join('');
 
-      host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>${correct}</strong><span>CORRECT PICKS</span><div><b>${correct}–${total}</b><em>${weeksPlayed} WEEK${weeksPlayed===1?'':'S'} PLAYED</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3>${history || '<p>Your completed weeks and results will appear here.</p>'}</div>`;
+      host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>${correct}</strong><span>CORRECT PICKS</span><div><b>${correct}–${Math.max(0,total-correct)}</b><em>${weeksPlayed} WEEK${weeksPlayed===1?'':'S'} PLAYED</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3>${history || '<p>Your completed weeks and results will appear here.</p>'}</div>`;
     }catch(error){
       console.error('NAL Pick Em record load error:',error);
       host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>—</strong><span>CORRECT PICKS</span><div><b>—</b><em>RECORD UNAVAILABLE</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>We could not load your Pick ’Em record. Please try again.</p></div>`;
