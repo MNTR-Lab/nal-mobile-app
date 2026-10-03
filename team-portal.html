@@ -24,10 +24,10 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
 </head>
 <body>
 <header class="top">
-  <div class="brand"><div class="mark">NAL</div><div><h1>NATIONAL ARENA LEAGUE</h1><small>Team Operations Portal</small></div></div>
+  <div class="brand"><div class="mark">NAL</div><div><h1>NATIONAL ARENA LEAGUE</h1><small>League Operations Portal</small></div></div>
   <div class="user"><b>DALLAS APEX</b><br>Team Administrator</div>
 </header>
-<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Roster</button><button id="docsNav" onclick="showDocuments()">Documents</button><button>Account</button></nav>
+<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Rosters</button><button id="docsNav" onclick="showDocuments()">Documents</button><button>Account</button></nav>
 
 <main class="wrap"><div id="transactionsView">
   <section class="hero">
@@ -35,7 +35,15 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
     <button class="primary" onclick="window.open('https://forms.monday.com/forms/d26313aa7135e6742a0daeaac7ac066c?r=use1', '_blank', 'noopener,noreferrer')">+ SUBMIT NEW TRANSACTION</button>
   </section>
 
-  <section class="cards">
+  <section class="panel" style="padding:16px 18px;margin-bottom:18px">
+<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end">
+ <div style="flex:1;min-width:190px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">ORGANIZATION</div><select style="width:100%;padding:11px;border:1px solid #d8dee8;border-radius:7px"><option>All Organizations</option><option>Dallas Apex</option><option>Amarillo Warbirds</option><option>Colorado Spartans</option><option>Louisiana Rouxgaroux</option><option>Omaha Beef</option><option>Pueblo Punishers</option><option>Salina Liberty</option><option>Sioux City Bandits</option><option>Southwest Kansas Storm</option><option>Wheeling Miners</option></select></div>
+ <div style="flex:1;min-width:180px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">TRANSACTION TYPE</div><select style="width:100%;padding:11px;border:1px solid #d8dee8;border-radius:7px"><option>All Transaction Types</option><option>Signing</option><option>Release</option><option>Trade</option><option>Injury Report</option><option>Commissioner's Exempt</option><option>Suspension</option></select></div>
+ <div style="flex:1;min-width:170px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">STATUS</div><select style="width:100%;padding:11px;border:1px solid #d8dee8;border-radius:7px"><option>All Statuses</option><option>Pending</option><option>Approved</option><option>Needs Action</option></select></div>
+ <div style="flex:1.4;min-width:220px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">PLAYER SEARCH</div><input placeholder="Search player name..." style="width:100%;box-sizing:border-box;padding:11px;border:1px solid #d8dee8;border-radius:7px"></div>
+</div></section>
+
+<section class="cards">
     <div class="card pending"><div class="label">PENDING LEAGUE REVIEW</div><div class="num">2</div><div class="sub">Track submissions awaiting a decision</div></div>
     <div class="card approved"><div class="label">APPROVED</div><div class="num">14</div><div class="sub">Approved 2027 transactions</div></div>
     <div class="card action"><div class="label">NEEDS ACTION</div><div class="num">1</div><div class="sub">Returned or rejected submissions</div></div>
@@ -47,8 +55,8 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
     <table>
       <thead><tr><th>PLAYER</th><th>TYPE</th><th>POSITION</th><th>SUBMITTED</th><th>WAITING</th><th>STATUS</th><th></th></tr></thead>
       <tbody>
-        <tr><td><div class="name">Jordan Mitchell</div></td><td>Signing</td><td>Defensive Back</td><td>Oct. 3, 2026<div class="sub">9:42 AM</div></td><td>Today</td><td><span class="pill p-pending">PENDING</span></td><td><button class="view" onclick="openDetail('Jordan Mitchell','Signing','Defensive Back','Oct. 3, 2026 at 9:42 AM')">View</button></td></tr>
-        <tr><td><div class="name">Marcus Reed</div></td><td>Release</td><td>Wide Receiver</td><td>Oct. 2, 2026<div class="sub">4:18 PM</div></td><td>1 day</td><td><span class="pill p-pending">PENDING</span></td><td><button class="view" onclick="openDetail('Marcus Reed','Release','Wide Receiver','Oct. 2, 2026 at 4:18 PM')">View</button></td></tr>
+        <tr><td><div class="name">Jordan Mitchell</div></td><td>Dallas Apex</td><td>Signing</td><td>Defensive Back</td><td>Oct. 3, 2026<div class="sub">9:42 AM</div></td><td>Today</td><td><span class="pill p-pending">PENDING</span></td><td><button class="view" onclick="openDetail('Jordan Mitchell','Signing','Defensive Back','Oct. 3, 2026 at 9:42 AM')">View</button></td></tr>
+        <tr><td><div class="name">Marcus Reed</div></td><td>Omaha Beef</td><td>Release</td><td>Wide Receiver</td><td>Oct. 2, 2026<div class="sub">4:18 PM</div></td><td>1 day</td><td><span class="pill p-pending">PENDING</span></td><td><button class="view" onclick="openDetail('Marcus Reed','Release','Wide Receiver','Oct. 2, 2026 at 4:18 PM')">View</button></td></tr>
       </tbody>
     </table>
   </section>
@@ -66,7 +74,21 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
   <div class="footer">NAL Team Operations • Internal Team Use Only</div></div>
 <div id="rosterView" style="display:none">
 <section class="hero">
- <div><div class="eyebrow">2027 SEASON</div><h2>Team Roster</h2><p>Dallas Apex • Current player status overview</p></div>
+ <div><div class="eyebrow">2027 SEASON</div><h2>Team Roster</h2><p>League-wide roster center • Select an organization below</p></div>
+</section>
+
+<section class="panel" style="padding:18px;margin-bottom:18px">
+ <div style="display:flex;align-items:end;gap:16px;flex-wrap:wrap">
+  <div style="flex:1;min-width:280px">
+   <div style="font-size:12px;font-weight:800;color:var(--muted);margin-bottom:7px">SELECT ORGANIZATION</div>
+   <select id="teamSelect" onchange="demoTeamChange()" style="width:100%;padding:13px 14px;border:1px solid #d8dee8;border-radius:8px;font-size:15px;font-weight:700;background:white">
+    <option>Dallas Apex</option><option>Amarillo Warbirds</option><option>Colorado Spartans</option>
+    <option>Louisiana Rouxgaroux</option><option>Omaha Beef</option><option>Pueblo Punishers</option>
+    <option>Salina Liberty</option><option>Sioux City Bandits</option><option>Southwest Kansas Storm</option><option>Wheeling Miners</option>
+   </select>
+  </div>
+  <div style="min-width:220px"><div style="font-size:12px;font-weight:800;color:var(--muted);margin-bottom:7px">CURRENT VIEW</div><div id="selectedTeamLabel" style="font-size:20px;font-weight:900">Dallas Apex</div></div>
+ </div>
 </section>
 
 <section class="cards" style="grid-template-columns:repeat(5,1fr)">
@@ -120,7 +142,7 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
  <div>
   <div class="eyebrow">2027 SEASON</div>
   <h2>Team Documents</h2>
-  <p>League forms, manuals and operational resources available to Dallas Apex.</p>
+  <p>League forms, manuals and operational resources available to NAL organizations.</p>
  </div>
 </section>
 
@@ -293,6 +315,11 @@ function showTransactions(){
  window.scrollTo(0,0);
 }
 
+
+function demoTeamChange(){
+ const team=document.getElementById('teamSelect').value;
+ document.getElementById('selectedTeamLabel').textContent=team;
+}
 </script>
 </body>
 </html>
