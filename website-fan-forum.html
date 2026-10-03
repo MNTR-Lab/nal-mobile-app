@@ -16279,6 +16279,16 @@ document.addEventListener("DOMContentLoaded", () => {
 #fanPickemPage .pickem-save{display:block!important;color:#fff!important;background:#e31b23!important}
 </style>
 
+
+<style id="nalWebsitePickemLeaderboardFinal">
+#pickemLeaderboardView .pickem-board-row{
+  grid-template-columns:42px minmax(0,1fr) 68px 52px 46px;
+}
+#pickemLeaderboardView .pickem-board-row > :last-child{
+  text-align:right;
+}
+</style>
+
 </head>
 
 
@@ -17324,7 +17334,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="pickem-tiebreak"><small>WEEK 1 TIEBREAKER</small><h3>TOTAL POINTS IN THE OMAHA AT DALLAS GAME</h3><input type="number" min="0" max="199" placeholder="Enter total points"><p>Used only to break leaderboard ties.</p></div>
         <button type="button" class="pickem-save" onclick="pickemPreviewSave()">SAVE WEEK 1 PICKS</button><div id="pickemSaveMessage" class="pickem-save-message"></div>
       </section>
-      <section id="pickemLeaderboardView" class="pickem-view"><div class="pickem-board-head"><small>2027 SEASON</small><h2>FAN LEADERBOARD</h2></div><div class="pickem-board-row header"><span>RANK</span><span>FAN</span><span>CORRECT</span><span>PCT</span></div><div class="pickem-board-row"><strong>1</strong><span>ARENAFAN27</span><b>0–0</b><span>—</span></div><div class="pickem-board-row"><strong>2</strong><span>NALFAN</span><b>0–0</b><span>—</span></div><p class="pickem-preview-note">Leaderboard shown with sample fans until live Pick ’Em data is connected.</p></section>
+      <section id="pickemLeaderboardView" class="pickem-view"><div class="pickem-board-head"><small>2027 SEASON</small><h2>FAN LEADERBOARD</h2></div><div class="pickem-board-row header"><span>RANK</span><span>FAN</span><span>RECORD</span><span>PCT</span><span>DIFF</span></div><div id="pickemLiveLeaderboardRows"><p class="pickem-preview-note">LOADING LIVE LEADERBOARD…</p></div><p class="pickem-preview-note">DIFF = cumulative points away from actual tiebreaker totals. Lower is better and is used when records are tied.</p></section>
       <section id="pickemRecordView" class="pickem-view"><div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>0</strong><span>CORRECT PICKS</span><div><b>0–0</b><em>0 WEEKS PLAYED</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>Your completed weeks and results will appear here.</p></div></section>
     </div>
   </main>
@@ -28698,187 +28708,435 @@ body>.app>main.app-page:not(#fanPage):not(#fanForumPage):not(#fanForumCategoryPa
 })();
 </script>
 
-<script id="nalPickemProductionTest">
+<script id="nalAppPickemProductionTest">
 (function(){
-  function showPickemMessage(text,isError){
+  function msg(text,bad){
     const el=document.getElementById("pickemSaveMessage");
     if(!el)return;
     el.textContent=text||"";
-    el.style.color=isError?"#b5161c":"#14733a";
+    el.style.color=bad?"#ffb3b7":"#b9f5cc";
   }
-
-  async function getPickemUser(){
-    const client=getNalAccountClient();
-    const {data,error}=await client.auth.getSession();
+  async function user(){
+    const c=getNalAccountClient();
+    const {data,error}=await c.auth.getSession();
     if(error)throw error;
     return data?.session?.user||null;
   }
+  const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+  const cards=()=>[...document.querySelectorAll("#pickemPicksView .pickem-game")];
 
-  function pickemCards(){
-    return [...document.querySelectorAll("#pickemPicksView .pickem-game")];
-  }
+  async function save(){
+    const rows=cards();
+    if(!rows.length){msg("PICK ’EM GAMES ARE NOT AVAILABLE YET.",true);return;}
+    if(rows.some(x=>!x.querySelector(".pickem-team.selected"))){msg("MAKE A PICK FOR EACH GAME BEFORE SAVING.",true);return;}
 
-  function normalizePickemTeam(value){
-    return String(value||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
-  }
-
-  async function productionSavePickem(){
-    const cards=pickemCards();
-    if(!cards.length){
-      showPickemMessage("PICK ’EM GAMES ARE NOT AVAILABLE YET.",true);
-      return;
-    }
-    if(cards.some(card=>!card.querySelector(".pickem-team.selected"))){
-      showPickemMessage("MAKE A PICK FOR EACH GAME BEFORE SAVING.",true);
-      return;
-    }
-
-    let user;
-    try{ user=await getPickemUser(); }
-    catch(error){
-      showPickemMessage("ACCOUNT SERVICE COULD NOT BE VERIFIED. PLEASE TRY AGAIN.",true);
-      return;
-    }
-
-    if(!user){
+    let u;
+    try{u=await user();}catch(e){msg("ACCOUNT SERVICE COULD NOT BE VERIFIED. PLEASE TRY AGAIN.",true);return;}
+    if(!u){
       nalAccountPendingAction="pickem-save";
-      showPickemMessage("SIGN IN OR CREATE AN ACCOUNT TO SAVE YOUR PICKS.",true);
+      msg("SIGN IN OR CREATE AN ACCOUNT TO SAVE YOUR PICKS.",true);
       await openFanAccount();
       return;
     }
 
-    const saveButton=document.querySelector("#pickemPicksView .pickem-save");
-    if(saveButton){saveButton.disabled=true;saveButton.textContent="SAVING PICKS...";}
-
+    const btn=document.querySelector("#pickemPicksView .pickem-save");
+    if(btn){btn.disabled=true;btn.textContent="SAVING PICKS...";}
     try{
-      const client=getNalAccountClient();
-
-      const {data:weeks,error:weekError}=await client
-        .from("pickem_weeks")
+      const c=getNalAccountClient();
+      const {data:weeks,error:we}=await c.from("pickem_weeks")
         .select("id,season,week_number,title,status,tiebreaker_enabled,tiebreaker_question")
-        .in("status",["active","published"])
-        .order("week_number",{ascending:true});
-      if(weekError)throw weekError;
+        .in("status",["active","published"]).order("week_number",{ascending:true});
+      if(we)throw we;
       if(!weeks?.length)throw new Error("No published Pick ’Em week is currently available.");
 
-      const visibleWeekNumber=Number(
-        (document.querySelector("#pickemPicksView .pickem-weekbar h2")?.textContent||"")
-        .match(/\d+/)?.[0] || weeks[0].week_number
-      );
-      const week=weeks.find(w=>Number(w.week_number)===visibleWeekNumber)||weeks[0];
+      const visible=Number((document.querySelector("#pickemPicksView .pickem-weekbar h2")?.textContent||"").match(/\d+/)?.[0]||0);
+      const week=weeks.find(w=>Number(w.week_number)===visible);
+      if(!week)throw new Error("The displayed Pick ’Em week is no longer open.");
 
-      const {data:games,error:gameError}=await client
-        .from("pickem_games")
+      const {data:games,error:ge}=await c.from("pickem_games")
         .select("id,week_id,away_team,home_team,kickoff_at,status,display_order")
-        .eq("week_id",week.id)
-        .order("display_order",{ascending:true});
-      if(gameError)throw gameError;
+        .eq("week_id",week.id).order("display_order",{ascending:true});
+      if(ge)throw ge;
 
-      for(const card of cards){
-        const cardText=normalizePickemTeam(card.textContent);
-        const selectedTeam=String(card.querySelector(".pickem-team.selected")?.dataset.team||"").trim();
+      for(const card of rows){
+        const txt=norm(card.textContent);
+        const selectedButton=card.querySelector(".pickem-team.selected");
+        const selected=String(selectedButton?.dataset.team||"").trim();
+        const dbId=card.dataset.dbGameId;
+        const g=(games||[]).find(x=>dbId?String(x.id)===String(dbId):(()=>{const a=norm(x.away_team),h=norm(x.home_team);return a&&h&&txt.includes(a)&&txt.includes(h)})());
+        if(!g)throw new Error("A displayed matchup does not match the published production Pick ’Em schedule.");
+        const selectedSide = selected === g.away_team ? "away" : selected === g.home_team ? "home" : "";
+        if(!selectedSide)throw new Error("The selected team does not match this production matchup.");
+        if(String(g.status||"scheduled").toLowerCase()!=="scheduled")throw new Error("One or more games are no longer open for picks.");
+        if(new Date(g.kickoff_at).getTime()<=Date.now())throw new Error("One or more games have already locked at kickoff.");
 
-        const game=(games||[]).find(g=>{
-          const away=normalizePickemTeam(g.away_team);
-          const home=normalizePickemTeam(g.home_team);
-          return away&&home&&cardText.includes(away)&&cardText.includes(home);
-        });
-
-        if(!game)throw new Error("A displayed matchup does not match the published production Pick ’Em schedule.");
-        if(String(game.status||"scheduled").toLowerCase()!=="scheduled")
-          throw new Error("One or more games are no longer open for picks.");
-        if(new Date(game.kickoff_at).getTime()<=Date.now())
-          throw new Error("One or more games have already locked at kickoff.");
-
-        const {data:existing,error:existingError}=await client
-          .from("pickem_picks")
-          .select("id")
-          .eq("user_id",user.id)
-          .eq("game_id",game.id)
-          .maybeSingle();
-        if(existingError)throw existingError;
-
-        if(existing?.id){
-          const {error}=await client
-            .from("pickem_picks")
-            .update({selected_team:selectedTeam})
-            .eq("id",existing.id)
-            .eq("user_id",user.id);
-          if(error)throw error;
+        const {data:old,error:oe}=await c.from("pickem_picks").select("id").eq("user_id",u.id).eq("game_id",g.id).maybeSingle();
+        if(oe)throw oe;
+        if(old?.id){
+          const {error}=await c.from("pickem_picks").update({selected_team:selectedSide}).eq("id",old.id).eq("user_id",u.id);if(error)throw error;
         }else{
-          const {error}=await client
-            .from("pickem_picks")
-            .insert({
-              user_id:user.id,
-              game_id:game.id,
-              selected_team:selectedTeam
-            });
-          if(error)throw error;
+          const {error}=await c.from("pickem_picks").insert({user_id:u.id,game_id:g.id,selected_team:selectedSide});if(error)throw error;
         }
       }
 
-      const tieInput=document.querySelector("#pickemPicksView .pickem-tiebreak input");
-      const tieValue=String(tieInput?.value||"").trim();
-
-      if(week.tiebreaker_enabled && tieValue!==""){
-        const predictedTotal=Number(tieValue);
-        if(!Number.isInteger(predictedTotal)||predictedTotal<0)
-          throw new Error("Enter a valid whole-number tiebreaker score.");
-
-        const {data:existingTie,error:existingTieError}=await client
-          .from("pickem_tiebreakers")
-          .select("id")
-          .eq("user_id",user.id)
-          .eq("week_id",week.id)
-          .maybeSingle();
-        if(existingTieError)throw existingTieError;
-
-        if(existingTie?.id){
-          const {error}=await client
-            .from("pickem_tiebreakers")
-            .update({predicted_total:predictedTotal})
-            .eq("id",existingTie.id)
-            .eq("user_id",user.id);
-          if(error)throw error;
+      const input=document.querySelector("#pickemPicksView .pickem-tiebreak input"), raw=String(input?.value||"").trim();
+      if(week.tiebreaker_enabled&&raw!==""){
+        const total=Number(raw);
+        if(!Number.isInteger(total)||total<0)throw new Error("Enter a valid whole-number tiebreaker score.");
+        const {data:old,error:oe}=await c.from("pickem_tiebreakers").select("id").eq("user_id",u.id).eq("week_id",week.id).maybeSingle();
+        if(oe)throw oe;
+        if(old?.id){
+          const {error}=await c.from("pickem_tiebreakers").update({predicted_total:total}).eq("id",old.id).eq("user_id",u.id);if(error)throw error;
         }else{
-          const {error}=await client
-            .from("pickem_tiebreakers")
-            .insert({
-              user_id:user.id,
-              week_id:week.id,
-              predicted_total:predictedTotal
-            });
-          if(error)throw error;
+          const {error}=await c.from("pickem_tiebreakers").insert({user_id:u.id,week_id:week.id,predicted_total:total});if(error)throw error;
         }
       }
-
-      showPickemMessage("✓ PICKS SAVED — YOU CAN UPDATE THEM UNTIL EACH GAME KICKS OFF.",false);
-      if(saveButton)saveButton.textContent="UPDATE MY PICKS";
-    }catch(error){
-      console.error("NAL Pick ’Em production save error:",error);
-      showPickemMessage(error?.message||"WE COULD NOT SAVE YOUR PICKS. PLEASE TRY AGAIN.",true);
+      msg("✓ PICKS SAVED — YOU CAN UPDATE THEM UNTIL EACH GAME KICKS OFF.",false);
+      if(btn)btn.textContent="UPDATE MY PICKS";
+    }catch(e){
+      console.error("NAL app Pick ’Em production save error:",e);
+      msg(e?.message||"WE COULD NOT SAVE YOUR PICKS. PLEASE TRY AGAIN.",true);
     }finally{
-      if(saveButton){
-        saveButton.disabled=false;
-        if(saveButton.textContent==="SAVING PICKS...")saveButton.textContent="SAVE WEEK 1 PICKS";
-      }
+      if(btn){btn.disabled=false;if(btn.textContent==="SAVING PICKS...")btn.textContent="SAVE WEEK 1 PICKS";}
     }
   }
 
-  window.pickemPreviewSave=productionSavePickem;
-
-  const previousPendingAction=window.completeNalAccountPendingAction;
+  window.pickemPreviewSave=save;
+  const previous=window.completeNalAccountPendingAction;
   window.completeNalAccountPendingAction=async function(){
     if(nalAccountPendingAction==="pickem-save"){
       nalAccountPendingAction=null;
       closeFanAccount();
-      setTimeout(()=>productionSavePickem(),120);
+      setTimeout(()=>save(),120);
       return;
     }
-    if(typeof previousPendingAction==="function"){
-      return previousPendingAction();
-    }
+    if(typeof previous==="function")return previous();
   };
+})();
+</script>
+
+<script id="nalAppPickemDatabaseLoader">
+(function(){
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function fmtKickoff(iso){
+    try{return new Date(iso).toLocaleString('en-US',{weekday:'long',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).toUpperCase()}
+    catch(_){return iso||'TBA'}
+  }
+  async function loadProductionPickem(){
+    const view=document.getElementById('pickemPicksView'); if(!view)return;
+    try{
+      const c=getNalAccountClient();
+      const {data:weeks,error:we}=await c.from('pickem_weeks')
+        .select('id,season,week_number,title,status,tiebreaker_enabled,tiebreaker_question')
+        .in('status',['active','published']).order('week_number',{ascending:true});
+      if(we)throw we;
+      if(!weeks?.length){
+        view.innerHTML=`<div class="pickem-weekbar"><div><small>REGULAR SEASON</small><h2>PICK ’EM</h2><span>2027 SEASON</span></div><span class="pickem-status">PICKS CLOSED</span></div>
+        <div class="pickem-notice"><strong>PICKS CURRENTLY CLOSED</strong><br>There is no Pick ’Em week open right now. Check your completed results under My Record and the Leaderboard. The next week will appear here automatically when it opens.</div>`;
+        return;
+      }
+
+      const now=Date.now();
+      let selectedWeek=null;
+      for(const w of weeks){
+        const {data:wg,error:wge}=await c.from('pickem_games')
+          .select('kickoff_at,status')
+          .eq('week_id',w.id)
+          .order('kickoff_at',{ascending:true});
+        if(wge)throw wge;
+        const hasOpenGame=(wg||[]).some(g=>
+          String(g.status||'scheduled').toLowerCase()==='scheduled' &&
+          new Date(g.kickoff_at).getTime()>now
+        );
+        if(hasOpenGame){selectedWeek=w;break;}
+      }
+      if(!selectedWeek){
+        view.innerHTML='<div class="pickem-notice">No Pick ’Em week is currently open for picks. Completed results remain available under My Record and the Leaderboard.</div>';
+        return;
+      }
+
+      const {data:games,error:ge}=await c.from('pickem_games')
+        .select('id,week_id,away_team,away_team_logo,home_team,home_team_logo,kickoff_at,status,display_order,away_score,home_score,winner')
+        .eq('week_id',selectedWeek.id).order('display_order',{ascending:true});
+      if(ge)throw ge;
+      if(!games?.length)return;
+
+      let savedPicks=[],savedTie=null;
+      const {data:sess}=await c.auth.getSession();
+      const uid=sess?.session?.user?.id;
+      if(uid){
+        const {data:p}=await c.from('pickem_picks').select('game_id,selected_team').eq('user_id',uid).in('game_id',games.map(g=>g.id));
+        savedPicks=p||[];
+        const {data:t}=await c.from('pickem_tiebreakers').select('predicted_total').eq('user_id',uid).eq('week_id',selectedWeek.id).maybeSingle();
+        savedTie=t||null;
+      }
+
+      const cards=games.map(g=>{
+        const storedSide=savedPicks.find(p=>String(p.game_id)===String(g.id))?.selected_team||'';
+        const pick=storedSide==='away'?g.away_team:storedSide==='home'?g.home_team:'';
+        const isFinal=String(g.status||'scheduled').toLowerCase()==='final';
+        const locked=isFinal||String(g.status||'scheduled').toLowerCase()!=='scheduled'||new Date(g.kickoff_at).getTime()<=now;
+        const winningTeam=g.winner==='away'?g.away_team:g.winner==='home'?g.home_team:'';
+        const pickResult=isFinal&&pick?(pick===winningTeam?'✓ CORRECT PICK':'✕ INCORRECT PICK'):'';
+        const resultLine=isFinal&&g.away_score!=null&&g.home_score!=null
+          ?`<div class="pickem-selection has-pick">FINAL — ${esc(g.away_team)} ${esc(g.away_score)} · ${esc(g.home_team)} ${esc(g.home_score)}</div>`
+          :'';
+        const selectionLine=isFinal
+          ?`<div class="pickem-selection ${pick?'has-pick':''}">${pick?(esc(pickResult)+' — YOUR PICK: '+esc(pick.toUpperCase())):'NO PICK SUBMITTED'}</div>`
+          :`<div class="pickem-selection ${pick?'has-pick':''}">${pick?'YOUR PICK: '+esc(pick.toUpperCase()):'NO PICK YET'}</div>`;
+        return `<div class="pickem-game" data-db-game-id="${g.id}">
+          <div class="pickem-game-meta">${esc(fmtKickoff(g.kickoff_at))} <span>${isFinal?'FINAL':locked?'LOCKED':'LOCKS AT KICKOFF'}</span></div>
+          <h3>WHO WINS?</h3><div class="pickem-matchup">
+          <button type="button" class="pickem-team ${pick===g.away_team?'selected':''}" data-team="${esc(g.away_team)}" ${locked?'disabled':''}>
+            <span class="pickem-teammark"><img src="${esc(g.away_team_logo||'')}" alt="${esc(g.away_team)} logo"></span><b>${esc(g.away_team)}</b><small>AWAY</small></button>
+          <div class="pickem-at">AT</div>
+          <button type="button" class="pickem-team ${pick===g.home_team?'selected':''}" data-team="${esc(g.home_team)}" ${locked?'disabled':''}>
+            <span class="pickem-teammark"><img src="${esc(g.home_team_logo||'')}" alt="${esc(g.home_team)} logo"></span><b>${esc(g.home_team)}</b><small>HOME</small></button>
+          </div>${resultLine}${selectionLine}</div>`;
+      }).join('');
+
+      view.innerHTML=`<div class="pickem-weekbar"><div><small>REGULAR SEASON</small><h2>WEEK ${esc(selectedWeek.week_number)}</h2><span>${esc(selectedWeek.season)}</span></div><span class="pickem-status open">PICKS OPEN</span></div>
+      <div class="pickem-notice">Each matchup locks individually at its scheduled kickoff. You can change your pick until that game locks.</div>
+      ${cards}
+      ${selectedWeek.tiebreaker_enabled?`<div class="pickem-tiebreak"><small>TIEBREAKER</small><h3>${esc(selectedWeek.tiebreaker_question||'TOTAL POINTS')}</h3><input id="pickemTiebreakInput" type="number" min="0" inputmode="numeric" value="${savedTie?.predicted_total??''}" placeholder="Enter total points"><p>Used only to break ties in the weekly standings.</p></div>`:''}
+      <button class="pickem-save" type="button" onclick="pickemPreviewSave()">SAVE MY PICKS</button><div id="pickemSaveMessage" class="pickem-save-message"></div>`;
+    }catch(e){console.error('Load production Pick Em:',e)}
+  }
+  window.loadProductionPickem=loadProductionPickem;
+  const oldOpen=window.openPickemPreview;
+  window.openPickemPreview=function(){if(typeof oldOpen==='function')oldOpen();setTimeout(loadProductionPickem,80)};
+})();
+</script>
+
+<script id="nalAppPickemLiveLeaderboardRecord">
+(function(){
+  const escPickemLive = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+
+  function pct(correct,total){
+    return total ? Math.round((correct/total)*100) + '%' : '—';
+  }
+
+  async function getSignedInPickemUser(){
+    const c = getNalAccountClient();
+    if(!c) return null;
+    const {data,error} = await c.auth.getSession();
+    if(error) throw error;
+    return data?.session?.user || null;
+  }
+
+  async function loadLivePickemLeaderboard(){
+    const host = document.getElementById('pickemLiveLeaderboardRows');
+    if(!host) return;
+    host.innerHTML = '<p class="pickem-preview-note">LOADING LIVE LEADERBOARD…</p>';
+    try{
+      const c = getNalAccountClient();
+      if(!c) throw new Error('Account service is unavailable.');
+      const {data,error} = await c.rpc('get_pickem_leaderboard',{target_season:2027});
+      if(error) throw error;
+      const rows = Array.isArray(data) ? data : [];
+      if(!rows.length){
+        host.innerHTML = '<p class="pickem-preview-note">No completed Pick ’Em results are available yet.</p>';
+        return;
+      }
+      host.innerHTML = rows.map((r,i)=>{
+        const correct = Number(r.correct_picks||0);
+        const total = Number(r.graded_picks||0);
+        const rank = Number(r.rank_position||i+1);
+        const name = r.display_name || 'Deleted User';
+        const rawDiff = r.tiebreaker_difference;
+        const diffNumber = rawDiff === null || rawDiff === undefined ? null : Number(rawDiff);
+        const diff = Number.isFinite(diffNumber) && diffNumber < 9223372036854775807 ? String(diffNumber) : '—';
+        return `<div class="pickem-board-row"><strong>${rank}</strong><span>${escPickemLive(name)}</span><b>${correct}–${Math.max(0,total-correct)}</b><span>${escPickemLive(pct(correct,total))}</span><span>${escPickemLive(diff)}</span></div>`;
+      }).join('');
+    }catch(error){
+      console.error('NAL Pick Em leaderboard load error:',error);
+      host.innerHTML = '<p class="pickem-preview-note">LIVE LEADERBOARD IS NOT AVAILABLE YET.</p>';
+    }
+  }
+
+  async function loadMyLivePickemRecord(){
+    const host = document.getElementById('pickemLiveRecord');
+    if(!host) return;
+    try{
+      const c = getNalAccountClient();
+      if(!c) throw new Error('Account service is unavailable.');
+      const u = await getSignedInPickemUser();
+      if(!u){
+        host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>—</strong><span>CORRECT PICKS</span><div><b>—</b><em>SIGN IN TO VIEW YOUR RECORD</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>Sign in to see your completed weeks and results.</p></div>`;
+        return;
+      }
+
+      const {data:weeks,error:we} = await c.from('pickem_weeks')
+        .select('id,week_number,title,season').eq('season',2027).order('week_number',{ascending:true});
+      if(we) throw we;
+      const weekIds = (weeks||[]).map(w=>w.id);
+      if(!weekIds.length){
+        host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>0</strong><span>CORRECT PICKS</span><div><b>0–0</b><em>0 WEEKS PLAYED</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>No completed weeks yet.</p></div>`;
+        return;
+      }
+
+      const {data:games,error:ge} = await c.from('pickem_games')
+        .select('id,week_id,away_team,home_team,winner,status,away_score,home_score')
+        .in('week_id',weekIds).eq('status','final');
+      if(ge) throw ge;
+
+      const finalGames = games || [];
+      const gameIds = finalGames.map(g=>g.id);
+      let picks = [];
+      if(gameIds.length){
+        const {data,error} = await c.from('pickem_picks')
+          .select('game_id,selected_team').eq('user_id',u.id).in('game_id',gameIds);
+        if(error) throw error;
+        picks = data || [];
+      }
+
+      const gameMap = new Map(finalGames.map(g=>[String(g.id),g]));
+      const weekMap = new Map((weeks||[]).map(w=>[String(w.id),w]));
+      let correct = 0;
+      const byWeek = new Map();
+
+      for(const p of picks){
+        const g = gameMap.get(String(p.game_id));
+        if(!g) continue;
+        const isCorrect = String(p.selected_team||'') === String(g.winner||'');
+        if(isCorrect) correct++;
+        const key = String(g.week_id);
+        if(!byWeek.has(key)) byWeek.set(key,{correct:0,total:0});
+        const w = byWeek.get(key);
+        w.total++;
+        if(isCorrect) w.correct++;
+      }
+
+      const total = picks.length;
+      const weeksPlayed = [...byWeek.values()].filter(x=>x.total>0).length;
+      const history = [...byWeek.entries()]
+        .sort((a,b)=>Number(weekMap.get(a[0])?.week_number||0)-Number(weekMap.get(b[0])?.week_number||0))
+        .map(([weekId,r])=>{
+          const w = weekMap.get(weekId);
+          return `<div class="pickem-board-row"><strong>WEEK ${escPickemLive(w?.week_number||'')}</strong><span>${r.correct} CORRECT</span><b>${r.correct}–${Math.max(0,r.total-r.correct)}</b><span>${escPickemLive(pct(r.correct,r.total))}</span></div>`;
+        }).join('');
+
+      host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>${correct}</strong><span>CORRECT PICKS</span><div><b>${correct}–${Math.max(0,total-correct)}</b><em>${weeksPlayed} WEEK${weeksPlayed===1?'':'S'} PLAYED</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3>${history || '<p>Your completed weeks and results will appear here.</p>'}</div>`;
+    }catch(error){
+      console.error('NAL Pick Em record load error:',error);
+      host.innerHTML = `<div class="pickem-record-card"><small>YOUR 2027 RECORD</small><strong>—</strong><span>CORRECT PICKS</span><div><b>—</b><em>RECORD UNAVAILABLE</em></div></div><div class="pickem-history"><h3>WEEKLY HISTORY</h3><p>We could not load your Pick ’Em record. Please try again.</p></div>`;
+    }
+  }
+
+  window.loadLivePickemLeaderboard = loadLivePickemLeaderboard;
+  window.loadMyLivePickemRecord = loadMyLivePickemRecord;
+
+  document.addEventListener('click',function(e){
+    const tab=e.target.closest('#fanPickemPage [data-picktab]');
+    if(!tab) return;
+    if(tab.dataset.picktab==='leaderboard') setTimeout(loadLivePickemLeaderboard,0);
+    if(tab.dataset.picktab==='record') setTimeout(loadMyLivePickemRecord,0);
+  });
+
+  const previousOpen = window.openPickemPreview;
+  window.openPickemPreview = function(){
+    if(typeof previousOpen==='function') previousOpen();
+    setTimeout(()=>{
+      loadLivePickemLeaderboard();
+      loadMyLivePickemRecord();
+    },120);
+  };
+})();
+</script>
+
+<script id="nalPickemAdminGameResults">
+(function(){
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ async function selectedWeek(){
+  const sel=document.getElementById('pickemAdminWeekSelect');
+  const txt=sel?.options?.[sel.selectedIndex]?.textContent||'';
+  const n=Number(txt.match(/WEEK\s+(\d+)/i)?.[1]||0);
+  if(!n)return null;
+  const c=getNalAccountClient();
+
+  // Production pickem_weeks uses the published week record as the authority.
+  // Do not require a season column match here; the selected admin week number is enough.
+  const {data,error}=await c.from('pickem_weeks')
+    .select('*')
+    .eq('week_number',n)
+    .order('id',{ascending:false})
+    .limit(1);
+
+  if(error)throw error;
+  return Array.isArray(data) && data.length ? data[0] : null;
+ }
+ function card(g){
+  const final=String(g.status||'')==='final';
+  return `<div class="pickem-result-card" data-result-card="${esc(g.id)}"><div class="pickem-result-summary">
+   <div class="pickem-result-matchup"><div class="pickem-result-team">${esc(g.away_team)}<br><small>AWAY</small></div><div class="pickem-result-at">AT</div><div class="pickem-result-team home">${esc(g.home_team)}<br><small>HOME</small></div></div>
+   ${final?`<div class="pickem-result-final">FINAL • ${esc(g.away_team)} ${esc(g.away_score)} – ${esc(g.home_team)} ${esc(g.home_score)}</div>`:''}
+   <div class="pickem-result-actions"><button type="button" class="pickem-result-btn ${final?'secondary':'primary'}" data-open-result>${final?'EDIT RESULT':'ENTER RESULT'}</button>${final?'<button type="button" class="pickem-result-btn secondary" data-reset-result>RESET RESULT</button>':''}</div>
+   </div><div class="pickem-result-editor"><div class="pickem-result-score-grid">
+   <div class="pickem-result-field"><label>${esc(g.away_team)} — AWAY</label><input data-away-score type="number" min="0" inputmode="numeric" value="${esc(g.away_score??'')}"></div><div class="pickem-result-dash">—</div>
+   <div class="pickem-result-field"><label>${esc(g.home_team)} — HOME</label><input data-home-score type="number" min="0" inputmode="numeric" value="${esc(g.home_score??'')}"></div></div>
+   <div class="pickem-result-actions"><button type="button" class="pickem-result-btn primary" data-save-result>${final?'UPDATE FINAL RESULT':'SAVE FINAL RESULT'}</button><button type="button" class="pickem-result-btn secondary" data-cancel-result>CANCEL</button></div>
+   <div class="pickem-result-message">The higher score will automatically be saved as the winner.</div></div></div>`;
+ }
+ async function load(){
+  const list=document.getElementById('pickemAdminGameResultsList'); if(!list)return;
+  list.innerHTML='<div class="pickem-result-empty">Loading saved Pick ’Em games…</div>';
+  try{
+   if(typeof window.nalPickemGetCurrentProductionGames!=='function'){
+     throw new Error('Schedule Sync production bridge is unavailable.');
+   }
+   const result=await window.nalPickemGetCurrentProductionGames();
+   if(!result?.week){
+     list.innerHTML='<div class="pickem-result-empty">This week has not been saved to production Pick ’Em yet. Apply the week above before entering results.</div>';
+     return;
+   }
+   const games=result.games||[];
+   list.innerHTML=games.length?games.map(card).join(''):'<div class="pickem-result-empty">No production Pick ’Em games are saved for this week.</div>';
+  }catch(err){
+   console.error('Pick Em Game Results load error:',err);
+   list.innerHTML='<div class="pickem-result-empty">Game Results could not be loaded. Refresh and try again.</div>';
+  }
+ }
+ async function save(el){
+  const msg=el.querySelector('.pickem-result-message'),btn=el.querySelector('[data-save-result]'),av=String(el.querySelector('[data-away-score]')?.value??'').trim(),hv=String(el.querySelector('[data-home-score]')?.value??'').trim(),a=Number(av),h=Number(hv);
+  msg.classList.remove('error');
+  if(av===''||hv===''){msg.textContent='Enter both final scores.';msg.classList.add('error');return}
+  if(!Number.isInteger(a)||!Number.isInteger(h)||a<0||h<0){msg.textContent='Scores must be whole numbers of 0 or higher.';msg.classList.add('error');return}
+  if(a===h){msg.textContent='A final Pick ’Em result cannot be tied. Verify the final score.';msg.classList.add('error');return}
+  try{
+   btn.disabled=true;btn.textContent='SAVING…';const c=getNalAccountClient();const {data:s,error:se}=await c.auth.getSession();if(se)throw se;if(!s?.session?.user)throw new Error('You must be signed in.');
+   const {error}=await c.from('pickem_games').update({away_score:a,home_score:h,winner:a>h?'away':'home',status:'final',updated_at:new Date().toISOString()}).eq('id',Number(el.dataset.resultCard));if(error)throw error;
+   await load();if(typeof window.loadLivePickemLeaderboard==='function')window.loadLivePickemLeaderboard();if(typeof window.loadMyLivePickemRecord==='function')window.loadMyLivePickemRecord();
+  }catch(err){btn.disabled=false;btn.textContent='SAVE FINAL RESULT';msg.textContent='Result save failed: '+(err?.message||'Unknown error');msg.classList.add('error');}
+ }
+ async function resetResult(el){
+  const btn=el.querySelector('[data-reset-result]');
+  if(!btn)return;
+  if(!window.confirm('Reset this final result? The scores and winner will be cleared and the game will return to scheduled.'))return;
+  try{
+   btn.disabled=true;btn.textContent='RESETTING…';
+   const c=getNalAccountClient();
+   const {data:s,error:se}=await c.auth.getSession();if(se)throw se;if(!s?.session?.user)throw new Error('You must be signed in.');
+   const {error}=await c.from('pickem_games').update({away_score:null,home_score:null,winner:null,status:'scheduled',updated_at:new Date().toISOString()}).eq('id',Number(el.dataset.resultCard));
+   if(error)throw error;
+   await load();
+   if(typeof window.loadLivePickemLeaderboard==='function')window.loadLivePickemLeaderboard();
+   if(typeof window.loadMyLivePickemRecord==='function')window.loadMyLivePickemRecord();
+  }catch(err){
+   btn.disabled=false;btn.textContent='RESET RESULT';
+   window.alert('Result reset failed: '+(err?.message||'Unknown error'));
+  }
+ }
+ document.addEventListener('click',e=>{
+  const o=e.target.closest('[data-open-result]');if(o){o.closest('[data-result-card]').querySelector('.pickem-result-editor').classList.add('open');return}
+  const c=e.target.closest('[data-cancel-result]');if(c){c.closest('[data-result-card]').querySelector('.pickem-result-editor').classList.remove('open');return}
+  const s=e.target.closest('[data-save-result]');if(s){save(s.closest('[data-result-card]'));return}
+  const r=e.target.closest('[data-reset-result]');if(r){resetResult(r.closest('[data-result-card]'));return}
+ });
+ document.addEventListener('change',e=>{if(e.target.id==='pickemAdminWeekSelect')setTimeout(load,80)});
+ document.addEventListener('click',e=>{const t=String(e.target?.textContent||'').trim().toUpperCase();if(t.includes('APPLY')&&t.includes('WEEK'))setTimeout(load,900)});
+ window.loadNalPickemAdminGameResults=load;setTimeout(load,800);
 })();
 </script>
 
