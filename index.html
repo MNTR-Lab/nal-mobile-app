@@ -20742,7 +20742,7 @@ setTimeout(configureNalModerationAccess,0);
       }
 
       const {data:games,error:ge}=await c.from('pickem_games')
-        .select('id,week_id,away_team,away_team_logo,home_team,home_team_logo,kickoff_at,status,display_order')
+        .select('id,week_id,away_team,away_team_logo,home_team,home_team_logo,kickoff_at,status,display_order,away_score,home_score,winner')
         .eq('week_id',selectedWeek.id).order('display_order',{ascending:true});
       if(ge)throw ge;
       if(!games?.length)return;
@@ -20760,16 +20760,25 @@ setTimeout(configureNalModerationAccess,0);
       const cards=games.map(g=>{
         const storedSide=savedPicks.find(p=>String(p.game_id)===String(g.id))?.selected_team||'';
         const pick=storedSide==='away'?g.away_team:storedSide==='home'?g.home_team:'';
-        const locked=String(g.status||'scheduled').toLowerCase()!=='scheduled'||new Date(g.kickoff_at).getTime()<=now;
+        const isFinal=String(g.status||'scheduled').toLowerCase()==='final';
+        const locked=isFinal||String(g.status||'scheduled').toLowerCase()!=='scheduled'||new Date(g.kickoff_at).getTime()<=now;
+        const winningTeam=g.winner==='away'?g.away_team:g.winner==='home'?g.home_team:'';
+        const pickResult=isFinal&&pick?(pick===winningTeam?'✓ CORRECT PICK':'✕ INCORRECT PICK'):'';
+        const resultLine=isFinal&&g.away_score!=null&&g.home_score!=null
+          ?`<div class="pickem-selection has-pick">FINAL — ${esc(g.away_team)} ${esc(g.away_score)} · ${esc(g.home_team)} ${esc(g.home_score)}</div>`
+          :'';
+        const selectionLine=isFinal
+          ?`<div class="pickem-selection ${pick?'has-pick':''}">${pick?(esc(pickResult)+' — YOUR PICK: '+esc(pick.toUpperCase())):'NO PICK SUBMITTED'}</div>`
+          :`<div class="pickem-selection ${pick?'has-pick':''}">${pick?'YOUR PICK: '+esc(pick.toUpperCase()):'NO PICK YET'}</div>`;
         return `<div class="pickem-game" data-db-game-id="${g.id}">
-          <div class="pickem-game-meta">${esc(fmtKickoff(g.kickoff_at))} <span>${locked?'LOCKED':'LOCKS AT KICKOFF'}</span></div>
+          <div class="pickem-game-meta">${esc(fmtKickoff(g.kickoff_at))} <span>${isFinal?'FINAL':locked?'LOCKED':'LOCKS AT KICKOFF'}</span></div>
           <h3>WHO WINS?</h3><div class="pickem-matchup">
           <button type="button" class="pickem-team ${pick===g.away_team?'selected':''}" data-team="${esc(g.away_team)}" ${locked?'disabled':''}>
             <span class="pickem-teammark"><img src="${esc(g.away_team_logo||'')}" alt="${esc(g.away_team)} logo"></span><b>${esc(g.away_team)}</b><small>AWAY</small></button>
           <div class="pickem-at">AT</div>
           <button type="button" class="pickem-team ${pick===g.home_team?'selected':''}" data-team="${esc(g.home_team)}" ${locked?'disabled':''}>
             <span class="pickem-teammark"><img src="${esc(g.home_team_logo||'')}" alt="${esc(g.home_team)} logo"></span><b>${esc(g.home_team)}</b><small>HOME</small></button>
-          </div><div class="pickem-selection ${pick?'has-pick':''}">${pick?'YOUR PICK: '+esc(pick.toUpperCase()):'NO PICK YET'}</div></div>`;
+          </div>${resultLine}${selectionLine}</div>`;
       }).join('');
 
       view.innerHTML=`<div class="pickem-weekbar"><div><small>REGULAR SEASON</small><h2>WEEK ${esc(selectedWeek.week_number)}</h2><span>${esc(selectedWeek.season)}</span></div><span class="pickem-status open">PICKS OPEN</span></div>
