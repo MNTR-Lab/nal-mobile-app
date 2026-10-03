@@ -27,9 +27,9 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
   <div class="brand"><div class="mark">NAL</div><div><h1>NATIONAL ARENA LEAGUE</h1><small>Team Operations Portal</small></div></div>
   <div class="user"><b>DALLAS APEX</b><br>Team Administrator</div>
 </header>
-<nav class="nav"><button class="active">Transactions</button><button>Roster</button><button>Documents</button><button>Account</button></nav>
+<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Roster</button><button>Documents</button><button>Account</button></nav>
 
-<main class="wrap">
+<main class="wrap"><div id="transactionsView">
   <section class="hero">
     <div><div class="eyebrow">2027 SEASON</div><h2>Transaction Center</h2><p>Submit transactions and track league review from one place.</p></div>
     <button class="primary" onclick="window.open('https://forms.monday.com/forms/d26313aa7135e6742a0daeaac7ac066c?r=use1', '_blank', 'noopener,noreferrer')">+ SUBMIT NEW TRANSACTION</button>
@@ -63,8 +63,27 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
       </tbody>
     </table>
   </section>
-  <div class="footer">NAL Team Operations • Internal Team Use Only</div>
-</main>
+  <div class="footer">NAL Team Operations • Internal Team Use Only</div></div>
+<div id="rosterView" style="display:none">
+<section class="hero">
+ <div><div class="eyebrow">2027 SEASON</div><h2>Active Roster</h2><p>Dallas Apex players currently marked Approved and Active Roster in league records.</p></div>
+</section>
+<section class="cards" style="grid-template-columns:1fr 1fr">
+ <div class="card approved"><div class="label">ACTIVE ROSTER</div><div class="num">3</div><div class="sub">Current qualifying players</div></div>
+ <div class="card"><div class="label">ROSTER RULE</div><div style="font-weight:800;margin-top:10px">Approved + Active Roster ✓</div><div class="sub">Removing the Active Roster check removes the player from this list.</div></div>
+</section>
+<section class="panel">
+ <div class="panelhead"><h3>Dallas Apex — Active Roster</h3><span class="pill p-approved">LIVE BOARD SAMPLE</span></div>
+ <table><thead><tr><th>PLAYER</th><th>POSITION</th><th>HEIGHT</th><th>WEIGHT</th><th>COLLEGE / SCHOOL</th></tr></thead>
+ <tbody>
+ <tr><td><div class="name">Var'Keyes Gumms</div></td><td>Wide Receiver</td><td>6'3</td><td>230</td><td>University North Texas</td></tr>
+ <tr><td><div class="name">Quintravious Livingston</div></td><td>Defensive Back</td><td>6’2</td><td>180</td><td>Bacone University</td></tr>
+ <tr><td><div class="name">Arthur Jones Jr.</div></td><td>Defensive Back</td><td>6’0</td><td>200</td><td>TJC</td></tr>
+ </tbody></table>
+</section>
+<div class="notice" style="margin:18px 0"><strong>Prototype connection check</strong>This roster was populated from the current Monday board state for Dallas Apex at the time this HTML file was generated. The production version will refresh from Monday so checkbox removals are reflected automatically.</div>
+
+</div></main>
 
 
 <div class="modal" id="newTxModal">
@@ -174,6 +193,22 @@ function submitPrototype(e){
  closeNewTransaction(); e.target.reset(); updateTxFields();
 }
 document.getElementById('newTxModal').addEventListener('click',e=>{if(e.target.id==='newTxModal')closeNewTransaction()})
+
+
+function showRoster(){
+ document.getElementById('transactionsView').style.display='none';
+ document.getElementById('rosterView').style.display='block';
+ document.getElementById('txNav').classList.remove('active');
+ document.getElementById('rosterNav').classList.add('active');
+ window.scrollTo(0,0);
+}
+function showTransactions(){
+ document.getElementById('rosterView').style.display='none';
+ document.getElementById('transactionsView').style.display='block';
+ document.getElementById('rosterNav').classList.remove('active');
+ document.getElementById('txNav').classList.add('active');
+ window.scrollTo(0,0);
+}
 
 </script>
 </body>
