@@ -318,17 +318,44 @@ function initializeTeams(){
   $("teamSelect").innerHTML = orgs.map(x=>`<option value="${esc(x)}"${x===preferred?" selected":""}>${esc(x)}</option>`).join("");
 }
 
+const POSITION_ORDER = {
+  "Quarterback": 1,
+  "Running Back": 2,
+  "Wide Receiver": 3,
+  "Offensive Line": 4,
+  "Defensive Line": 5,
+  "Linebacker": 6,
+  "Defensive Back": 7,
+  "Kicker/Specialist": 8,
+  "Athlete": 9
+};
+
+function sortRosterPlayers(players){
+  return [...players].sort((a,b)=>{
+    const aPos = POSITION_ORDER[a.position] ?? 999;
+    const bPos = POSITION_ORDER[b.position] ?? 999;
+    if(aPos !== bPos) return aPos - bPos;
+
+    const lastCompare = (a.lastName || "").localeCompare(b.lastName || "", undefined, {sensitivity:"base"});
+    if(lastCompare !== 0) return lastCompare;
+
+    return (a.firstName || "").localeCompare(b.firstName || "", undefined, {sensitivity:"base"});
+  });
+}
+
 function rosterPlayerTable(players,status){
   if(!players.length) return `<div class="empty">No players are currently listed in this section.</div>`;
 
+  const sortedPlayers = sortRosterPlayers(players);
+
   if(status==="Released"){
-    return `<table><thead><tr><th>PLAYER</th><th>TRANSACTION</th><th>DATE</th><th>STATUS</th></tr></thead><tbody>` +
-      players.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.transactionType||"Release")}</td><td>${formatDateOnly(p.submittedAt)}</td><td><span class="pill p-rejected">RELEASED</span></td></tr>`).join("") +
+    return `<table><thead><tr><th>PLAYER</th><th>POSITION</th><th>TRANSACTION</th><th>DATE</th><th>STATUS</th></tr></thead><tbody>` +
+      sortedPlayers.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.transactionType||"Release")}</td><td>${formatDateOnly(p.submittedAt)}</td><td><span class="pill p-rejected">RELEASED</span></td></tr>`).join("") +
       `</tbody></table>`;
   }
 
   return `<table><thead><tr><th>PLAYER</th><th>POSITION</th><th>HEIGHT</th><th>WEIGHT</th><th>COLLEGE / SCHOOL</th><th>STATUS</th></tr></thead><tbody>` +
-    players.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.height||"—")}</td><td>${esc(p.weight||"—")}</td><td>${esc(p.college||"—")}</td><td><span class="pill ${status==="Active"?"p-approved":"p-pending"}">${esc(status).toUpperCase()}</span></td></tr>`).join("") +
+    sortedPlayers.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.height||"—")}</td><td>${esc(p.weight||"—")}</td><td>${esc(p.college||"—")}</td><td><span class="pill ${status==="Active"?"p-approved":"p-pending"}">${esc(status).toUpperCase()}</span></td></tr>`).join("") +
     `</tbody></table>`;
 }
 
