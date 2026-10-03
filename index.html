@@ -8228,23 +8228,15 @@ document.addEventListener("DOMContentLoaded", () => {
 .fan-mod-delete-topic{background:#7d0b10!important;color:#fff!important;border-color:#7d0b10!important}
 </style>
 
-<style id="nalPickemAdminResultStyles">
-.pickem-admin-results{margin-top:10px;padding:12px;border-top:1px solid #dfe5ec;background:#f7f9fb}
-.pickem-admin-results-title{font-size:11px;font-weight:900;letter-spacing:.06em;color:#07172b;margin-bottom:8px}
-.pickem-admin-score-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end}
-.pickem-admin-score-field label{display:block;font-size:10px;font-weight:900;color:#526274;margin-bottom:4px}
-.pickem-admin-score-field input{width:100%;box-sizing:border-box;border:1px solid #cbd4df;border-radius:7px;padding:9px 8px;font-size:16px;font-weight:800;color:#07172b;background:#fff}
-.pickem-admin-score-sep{font-size:12px;font-weight:900;color:#788697;padding-bottom:10px}
-.pickem-admin-result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
-.pickem-admin-result-save,.pickem-admin-result-edit{border:0;border-radius:7px;padding:9px 12px;font-size:11px;font-weight:900;cursor:pointer}
-.pickem-admin-result-save{background:#e31b23;color:#fff}
-.pickem-admin-result-edit{background:#07172b;color:#fff}
-.pickem-admin-result-save:disabled,.pickem-admin-result-edit:disabled{opacity:.55;cursor:wait}
-.pickem-admin-result-state{margin-top:7px;font-size:11px;font-weight:800;color:#526274}
-.pickem-admin-result-state.final{color:#168044}
-.pickem-admin-result-error{margin-top:7px;font-size:11px;font-weight:800;color:#b3121a}
-</style>
 
+<style id="nalPickemAdminGameResultsStyles">
+#pickemAdminGameResults{margin:18px 0 6px;padding-top:16px;border-top:1px solid #d9e0e8}
+.pickem-results-head h4{margin:0;color:#07172b;font-size:18px;font-weight:900}.pickem-results-head p{margin:4px 0 12px;color:#607084;font-size:12px;line-height:1.35}
+.pickem-result-list{display:grid;gap:10px}.pickem-result-card{border:1px solid #d9e0e8;border-radius:10px;background:#fff;overflow:hidden}.pickem-result-summary{padding:12px}
+.pickem-result-matchup{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}.pickem-result-team{font-size:12px;font-weight:900;color:#07172b}.pickem-result-team.home{text-align:right}.pickem-result-at{font-size:11px;font-weight:900;color:#8794a4}
+.pickem-result-final{margin-top:7px;font-size:13px;font-weight:900;color:#168044}.pickem-result-actions{margin-top:9px;display:flex;gap:8px;flex-wrap:wrap}.pickem-result-btn{border:0;border-radius:7px;padding:9px 12px;font-size:11px;font-weight:900;cursor:pointer}.pickem-result-btn.primary{background:#e31b23;color:#fff}.pickem-result-btn.secondary{background:#07172b;color:#fff}
+.pickem-result-editor{display:none;padding:12px;border-top:1px solid #e3e8ee;background:#f7f9fb}.pickem-result-editor.open{display:block}.pickem-result-score-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end}.pickem-result-field label{display:block;margin-bottom:4px;font-size:10px;font-weight:900;color:#526274}.pickem-result-field input{width:100%;box-sizing:border-box;border:1px solid #cbd4df;border-radius:7px;padding:9px 8px;background:#fff;color:#07172b;font-size:16px;font-weight:900}.pickem-result-dash{padding-bottom:10px;color:#7d8a99;font-weight:900}.pickem-result-message{margin-top:7px;font-size:11px;font-weight:800;color:#526274}.pickem-result-message.error{color:#b3121a}.pickem-result-empty{padding:14px;border:1px solid #d9e0e8;border-radius:10px;background:#fff;color:#607084;font-size:12px;font-weight:700}
+</style>
 </head>
 
 <body>
@@ -9752,7 +9744,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="pickem-sync-status" id="pickemSyncStatus">Open Pick ’Em Management to sync the 2027 NAL schedule.</div>
                 <div class="pickem-sync-toolbar"><label for="pickemAdminWeekSelect">WEEK</label><select id="pickemAdminWeekSelect"></select></div>
                 <div id="pickemAdminScheduleSync"><div class="fan-admin-loading">Waiting for schedule data…</div></div>
-                <div class="pickem-admin-section"><h4>LEADERBOARD CONTROLS</h4><p>Fans receive 1 point for each correct pick. Game lock times come directly from the official kickoff time in the NAL schedule feed.</p><button type="button" class="pickem-admin-outline" onclick="openPickemPreview()">PREVIEW FAN PICK ’EM</button></div>
+                <div id="pickemAdminGameResults" class="pickem-admin-section">
+  <div class="pickem-results-head"><h4>GAME RESULTS</h4><p>Enter final scores for games already saved to production Pick ’Em. Results automatically update fan records and the leaderboard.</p></div>
+  <div id="pickemAdminGameResultsList" class="pickem-result-list"><div class="pickem-result-empty">Loading saved Pick ’Em games…</div></div>
+</div>
+<div class="pickem-admin-section"><h4>LEADERBOARD CONTROLS</h4><p>Fans receive 1 point for each correct pick. Game lock times come directly from the official kickoff time in the NAL schedule feed.</p><button type="button" class="pickem-admin-outline" onclick="openPickemPreview()">PREVIEW FAN PICK ’EM</button></div>
                 <p class="fan-admin-note">Schedule Sync uses the same NAL game feed, team logos and kickoff timezone rules as the app Schedule page. Schedule changes are shown for Admin review before the saved Pick ’Em week is updated.</p>
               </div>
 
@@ -20451,7 +20447,7 @@ setTimeout(configureNalModerationAccess,0);
     let changes=0;
     if(savedWeek){g.games.forEach(x=>{const old=(savedWeek.games||[]).find(y=>y.key===gameKey(x));if(!old||old.fingerprint!==fingerprint(x))changes++;});}
     document.getElementById('pickemAdminChangeCount').textContent=changes;
-    const rows=g.games.map((x,i)=>{const m=matchup(x), old=savedWeek&&(savedWeek.games||[]).find(y=>y.key===gameKey(x)), changed=!!old&&old.fingerprint!==fingerprint(x);return `<div class="pickem-sync-game ${changed?'changed':''}"><label class="pickem-sync-check"><input type="checkbox" data-pickem-include="${esc(gameKey(x))}" ${!savedWeek||!old||old.include!==false?'checked':''}><span>INCLUDE</span></label><div class="pickem-sync-match"><span class="pickem-sync-logo"><img src="${esc(logo(m.awayName))}" alt=""></span><div><b>${esc(m.awayName)}</b><small>AWAY</small></div><em>AT</em><span class="pickem-sync-logo"><img src="${esc(logo(m.homeName))}" alt=""></span><div><b>${esc(m.homeName)}</b><small>HOME</small></div></div><div class="pickem-sync-kickoff">${esc(kickoff(x))}</div>${changed?'<div class="pickem-sync-change">SCHEDULE CHANGE DETECTED — REVIEW BEFORE APPLYING</div>':''}<label class="pickem-sync-tie"><input type="radio" name="pickemTiebreaker" value="${esc(gameKey(x))}" ${(savedWeek?.tiebreaker||gameKey(g.games[g.games.length-1]))===gameKey(x)?'checked':''}> USE AS TIEBREAKER</label><div class="pickem-admin-result-slot" data-pickem-result-key="${esc(gameKey(x))}"></div></div>`}).join('');
+    const rows=g.games.map((x,i)=>{const m=matchup(x), old=savedWeek&&(savedWeek.games||[]).find(y=>y.key===gameKey(x)), changed=!!old&&old.fingerprint!==fingerprint(x);return `<div class="pickem-sync-game ${changed?'changed':''}"><label class="pickem-sync-check"><input type="checkbox" data-pickem-include="${esc(gameKey(x))}" ${!savedWeek||!old||old.include!==false?'checked':''}><span>INCLUDE</span></label><div class="pickem-sync-match"><span class="pickem-sync-logo"><img src="${esc(logo(m.awayName))}" alt=""></span><div><b>${esc(m.awayName)}</b><small>AWAY</small></div><em>AT</em><span class="pickem-sync-logo"><img src="${esc(logo(m.homeName))}" alt=""></span><div><b>${esc(m.homeName)}</b><small>HOME</small></div></div><div class="pickem-sync-kickoff">${esc(kickoff(x))}</div>${changed?'<div class="pickem-sync-change">SCHEDULE CHANGE DETECTED — REVIEW BEFORE APPLYING</div>':''}<label class="pickem-sync-tie"><input type="radio" name="pickemTiebreaker" value="${esc(gameKey(x))}" ${(savedWeek?.tiebreaker||gameKey(g.games[g.games.length-1]))===gameKey(x)?'checked':''}> USE AS TIEBREAKER</label></div>`}).join('');
     host.innerHTML=`<div class="pickem-admin-week"><div class="pickem-admin-weekhead"><div><small>2027 REGULAR SEASON • SCHEDULE SYNC</small><h4>WEEK ${g.number}</h4><span>${esc(weekDateRange(g))}</span></div><span class="pickem-status open">${savedWeek?'SAVED':'READY'}</span></div>${rows}<div class="pickem-admin-weekactions"><button type="button" id="pickemImportWeek" onclick="event.preventDefault(); event.stopPropagation(); window.nalPickemApplyCurrentWeek && window.nalPickemApplyCurrentWeek();">${savedWeek?'APPLY / UPDATE WEEK':'IMPORT / PUBLISH WEEK'}</button><button type="button" id="pickemSelectAll">SELECT ALL</button><button type="button" id="pickemClearWeek">CLEAR SAVED WEEK</button></div></div>`;
     const st=document.getElementById('pickemSyncStatus');if(st)st.textContent=`Schedule synced • ${g.games.length} game${g.games.length===1?'':'s'} found for Week ${g.number}${changes?` • ${changes} change${changes===1?'':'s'} need review`:''}.`;
   }
@@ -20897,140 +20893,58 @@ setTimeout(configureNalModerationAccess,0);
 </script>
 
 
-<script id="nalPickemAdminResultEntry">
+
+<script id="nalPickemAdminGameResults">
 (function(){
-  const escR=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const normR=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-
-  async function currentAdminWeek(){
-    const select=document.getElementById('pickemAdminWeekSelect');
-    const label=select?.options?.[select.selectedIndex]?.textContent||'';
-    const weekNo=Number(label.match(/WEEK\s+(\d+)/i)?.[1]||0);
-    if(!weekNo)return null;
-    const c=getNalAccountClient();
-    const {data,error}=await c.from('pickem_weeks').select('id,week_number,season,status')
-      .eq('season',2027).eq('week_number',weekNo).maybeSingle();
-    if(error)throw error;
-    return data||null;
-  }
-
-  function slotMatch(slot,g){
-    const card=slot.closest('.pickem-sync-game');
-    const txt=normR(card?.textContent);
-    return txt.includes(normR(g.away_team)) && txt.includes(normR(g.home_team));
-  }
-
-  function resultMarkup(g){
-    const final=String(g.status||'')==='final';
-    const a=g.away_score??'';
-    const h=g.home_score??'';
-    let state='ENTER THE FINAL SCORE AFTER THE GAME.';
-    if(final){
-      const winner=g.winner==='away'?g.away_team:g.winner==='home'?g.home_team:'';
-      state=`FINAL • ${escR(g.away_team)} ${escR(a)} – ${escR(g.home_team)} ${escR(h)}${winner?` • WINNER: ${escR(winner)}`:''}`;
-    }
-    return `<div class="pickem-admin-results" data-result-game-id="${escR(g.id)}">
-      <div class="pickem-admin-results-title">${final?'FINAL RESULT':'ENTER RESULT'}</div>
-      <div class="pickem-admin-score-grid">
-        <div class="pickem-admin-score-field"><label>${escR(g.away_team)} — AWAY</label><input data-result-away type="number" min="0" inputmode="numeric" value="${escR(a)}" ${final?'disabled':''}></div>
-        <div class="pickem-admin-score-sep">—</div>
-        <div class="pickem-admin-score-field"><label>${escR(g.home_team)} — HOME</label><input data-result-home type="number" min="0" inputmode="numeric" value="${escR(h)}" ${final?'disabled':''}></div>
-      </div>
-      <div class="pickem-admin-result-actions">
-        ${final
-          ? '<button type="button" class="pickem-admin-result-edit" data-result-edit>EDIT RESULT</button>'
-          : '<button type="button" class="pickem-admin-result-save" data-result-save>ENTER FINAL RESULT</button>'}
-      </div>
-      <div class="pickem-admin-result-state ${final?'final':''}">${state}</div>
-      <div class="pickem-admin-result-error" hidden></div>
-    </div>`;
-  }
-
-  async function loadAdminResults(){
-    const slots=[...document.querySelectorAll('#pickemAdminScheduleSync .pickem-admin-result-slot')];
-    if(!slots.length)return;
-    slots.forEach(s=>s.innerHTML='');
-    try{
-      const week=await currentAdminWeek();
-      if(!week)return; // Week has not been published to production yet.
-      const c=getNalAccountClient();
-      const {data:games,error}=await c.from('pickem_games')
-        .select('id,week_id,away_team,home_team,away_score,home_score,winner,status,display_order')
-        .eq('week_id',week.id).order('display_order',{ascending:true});
-      if(error)throw error;
-      for(const slot of slots){
-        const g=(games||[]).find(x=>slotMatch(slot,x));
-        if(g)slot.innerHTML=resultMarkup(g);
-      }
-    }catch(error){
-      console.error('Pick Em admin result load error:',error);
-    }
-  }
-
-  async function saveResult(box){
-    const id=Number(box.dataset.resultGameId);
-    const awayInput=box.querySelector('[data-result-away]');
-    const homeInput=box.querySelector('[data-result-home]');
-    const errorEl=box.querySelector('.pickem-admin-result-error');
-    const btn=box.querySelector('[data-result-save]');
-    const av=String(awayInput?.value??'').trim(), hv=String(homeInput?.value??'').trim();
-    if(av===''||hv===''){errorEl.hidden=false;errorEl.textContent='ENTER BOTH FINAL SCORES.';return;}
-    const away=Number(av),home=Number(hv);
-    if(!Number.isInteger(away)||!Number.isInteger(home)||away<0||home<0){errorEl.hidden=false;errorEl.textContent='SCORES MUST BE WHOLE NUMBERS OF 0 OR HIGHER.';return;}
-    if(away===home){errorEl.hidden=false;errorEl.textContent='A FINAL PICK ’EM RESULT CANNOT END IN A TIE. VERIFY THE FINAL SCORE.';return;}
-    const winner=away>home?'away':'home';
-    try{
-      errorEl.hidden=true;
-      if(btn){btn.disabled=true;btn.textContent='SAVING FINAL RESULT…';}
-      const c=getNalAccountClient();
-      const {data:s,error:se}=await c.auth.getSession();
-      if(se)throw se;
-      if(!s?.session?.user)throw new Error('Sign in as an NAL administrator or moderator.');
-      const {data,error}=await c.from('pickem_games')
-        .update({away_score:away,home_score:home,winner,status:'final',updated_at:new Date().toISOString()})
-        .eq('id',id)
-        .select('id,week_id,away_team,home_team,away_score,home_score,winner,status,display_order').single();
-      if(error)throw error;
-      box.outerHTML=resultMarkup(data);
-      if(typeof window.loadLivePickemLeaderboard==='function')window.loadLivePickemLeaderboard();
-      if(typeof window.loadMyLivePickemRecord==='function')window.loadMyLivePickemRecord();
-    }catch(error){
-      console.error('Pick Em admin result save error:',error);
-      errorEl.hidden=false;errorEl.textContent='RESULT SAVE FAILED: '+(error?.message||'Unknown error');
-      if(btn){btn.disabled=false;btn.textContent='ENTER FINAL RESULT';}
-    }
-  }
-
-  document.addEventListener('click',e=>{
-    const edit=e.target.closest('[data-result-edit]');
-    if(edit){
-      const box=edit.closest('[data-result-game-id]');
-      box.querySelectorAll('input').forEach(x=>x.disabled=false);
-      edit.outerHTML='<button type="button" class="pickem-admin-result-save" data-result-save>UPDATE FINAL RESULT</button>';
-      const st=box.querySelector('.pickem-admin-result-state');
-      if(st){st.classList.remove('final');st.textContent='EDIT THE SCORE, THEN SAVE THE CORRECTED FINAL RESULT.';}
-      return;
-    }
-    const save=e.target.closest('[data-result-save]');
-    if(save){saveResult(save.closest('[data-result-game-id]'));return;}
-  });
-
-  document.addEventListener('change',e=>{
-    if(e.target.id==='pickemAdminWeekSelect')setTimeout(loadAdminResults,80);
-  });
-
-  document.addEventListener('click',e=>{
-    if(e.target.closest('#pickemSyncRefresh')||e.target.closest('#pickemImportWeek'))setTimeout(loadAdminResults,700);
-  });
-
-  const observer=new MutationObserver(()=>{
-    if(document.querySelector('#fanPickemManagementPanel.show .pickem-admin-result-slot'))setTimeout(loadAdminResults,50);
-  });
-  const panel=document.getElementById('fanPickemManagementPanel');
-  if(panel)observer.observe(panel,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
-  setTimeout(loadAdminResults,900);
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ async function selectedWeek(){
+  const sel=document.getElementById('pickemAdminWeekSelect'), txt=sel?.options?.[sel.selectedIndex]?.textContent||'', n=Number(txt.match(/WEEK\s+(\d+)/i)?.[1]||0);
+  if(!n)return null; const c=getNalAccountClient();
+  const {data,error}=await c.from('pickem_weeks').select('id,week_number,season,status,title').eq('season',2027).eq('week_number',n).maybeSingle();
+  if(error)throw error; return data||null;
+ }
+ function card(g){
+  const final=String(g.status||'')==='final';
+  return `<div class="pickem-result-card" data-result-card="${esc(g.id)}"><div class="pickem-result-summary">
+   <div class="pickem-result-matchup"><div class="pickem-result-team">${esc(g.away_team)}<br><small>AWAY</small></div><div class="pickem-result-at">AT</div><div class="pickem-result-team home">${esc(g.home_team)}<br><small>HOME</small></div></div>
+   ${final?`<div class="pickem-result-final">FINAL • ${esc(g.away_team)} ${esc(g.away_score)} – ${esc(g.home_team)} ${esc(g.home_score)}</div>`:''}
+   <div class="pickem-result-actions"><button type="button" class="pickem-result-btn ${final?'secondary':'primary'}" data-open-result>${final?'EDIT RESULT':'ENTER RESULT'}</button></div>
+   </div><div class="pickem-result-editor"><div class="pickem-result-score-grid">
+   <div class="pickem-result-field"><label>${esc(g.away_team)} — AWAY</label><input data-away-score type="number" min="0" inputmode="numeric" value="${esc(g.away_score??'')}"></div><div class="pickem-result-dash">—</div>
+   <div class="pickem-result-field"><label>${esc(g.home_team)} — HOME</label><input data-home-score type="number" min="0" inputmode="numeric" value="${esc(g.home_score??'')}"></div></div>
+   <div class="pickem-result-actions"><button type="button" class="pickem-result-btn primary" data-save-result>${final?'UPDATE FINAL RESULT':'SAVE FINAL RESULT'}</button><button type="button" class="pickem-result-btn secondary" data-cancel-result>CANCEL</button></div>
+   <div class="pickem-result-message">The higher score will automatically be saved as the winner.</div></div></div>`;
+ }
+ async function load(){
+  const list=document.getElementById('pickemAdminGameResultsList'); if(!list)return;
+  list.innerHTML='<div class="pickem-result-empty">Loading saved Pick ’Em games…</div>';
+  try{
+   const w=await selectedWeek(); if(!w){list.innerHTML='<div class="pickem-result-empty">This week has not been saved to production Pick ’Em yet. Apply the week above before entering results.</div>';return;}
+   const c=getNalAccountClient(); const {data,error}=await c.from('pickem_games').select('id,week_id,away_team,home_team,away_score,home_score,winner,status,display_order').eq('week_id',w.id).order('display_order',{ascending:true});
+   if(error)throw error; const games=data||[]; list.innerHTML=games.length?games.map(card).join(''):'<div class="pickem-result-empty">No production Pick ’Em games are saved for this week.</div>';
+  }catch(err){console.error(err);list.innerHTML='<div class="pickem-result-empty">Game Results could not be loaded. Refresh and try again.</div>';}
+ }
+ async function save(el){
+  const msg=el.querySelector('.pickem-result-message'),btn=el.querySelector('[data-save-result]'),av=String(el.querySelector('[data-away-score]')?.value??'').trim(),hv=String(el.querySelector('[data-home-score]')?.value??'').trim(),a=Number(av),h=Number(hv);
+  msg.classList.remove('error');
+  if(av===''||hv===''){msg.textContent='Enter both final scores.';msg.classList.add('error');return}
+  if(!Number.isInteger(a)||!Number.isInteger(h)||a<0||h<0){msg.textContent='Scores must be whole numbers of 0 or higher.';msg.classList.add('error');return}
+  if(a===h){msg.textContent='A final Pick ’Em result cannot be tied. Verify the final score.';msg.classList.add('error');return}
+  try{
+   btn.disabled=true;btn.textContent='SAVING…';const c=getNalAccountClient();const {data:s,error:se}=await c.auth.getSession();if(se)throw se;if(!s?.session?.user)throw new Error('You must be signed in.');
+   const {error}=await c.from('pickem_games').update({away_score:a,home_score:h,winner:a>h?'away':'home',status:'final',updated_at:new Date().toISOString()}).eq('id',Number(el.dataset.resultCard));if(error)throw error;
+   await load();if(typeof window.loadLivePickemLeaderboard==='function')window.loadLivePickemLeaderboard();if(typeof window.loadMyLivePickemRecord==='function')window.loadMyLivePickemRecord();
+  }catch(err){btn.disabled=false;btn.textContent='SAVE FINAL RESULT';msg.textContent='Result save failed: '+(err?.message||'Unknown error');msg.classList.add('error');}
+ }
+ document.addEventListener('click',e=>{
+  const o=e.target.closest('[data-open-result]');if(o){o.closest('[data-result-card]').querySelector('.pickem-result-editor').classList.add('open');return}
+  const c=e.target.closest('[data-cancel-result]');if(c){c.closest('[data-result-card]').querySelector('.pickem-result-editor').classList.remove('open');return}
+  const s=e.target.closest('[data-save-result]');if(s){save(s.closest('[data-result-card]'));return}
+ });
+ document.addEventListener('change',e=>{if(e.target.id==='pickemAdminWeekSelect')setTimeout(load,80)});
+ document.addEventListener('click',e=>{const t=String(e.target?.textContent||'').trim().toUpperCase();if(t.includes('APPLY')&&t.includes('WEEK'))setTimeout(load,900)});
+ window.loadNalPickemAdminGameResults=load;setTimeout(load,800);
 })();
 </script>
-
 </body>
 </html>
