@@ -20656,8 +20656,9 @@ setTimeout(configureNalModerationAccess,0);
       if(we)throw we;
       if(!weeks?.length)throw new Error("No published Pick ’Em week is currently available.");
 
-      const visible=Number((document.querySelector("#pickemPicksView .pickem-weekbar h2")?.textContent||"").match(/\d+/)?.[0]||weeks[0].week_number);
-      const week=weeks.find(w=>Number(w.week_number)===visible)||weeks[0];
+      const visible=Number((document.querySelector("#pickemPicksView .pickem-weekbar h2")?.textContent||"").match(/\d+/)?.[0]||0);
+      const week=weeks.find(w=>Number(w.week_number)===visible);
+      if(!week)throw new Error("The displayed Pick ’Em week is no longer open.");
 
       const {data:games,error:ge}=await c.from("pickem_games")
         .select("id,week_id,away_team,home_team,kickoff_at,status,display_order")
@@ -20740,10 +20741,22 @@ setTimeout(configureNalModerationAccess,0);
       if(!weeks?.length)return; /* retain bundled preview until admin publishes */
 
       const now=Date.now();
-      let selectedWeek=weeks[0];
+      let selectedWeek=null;
       for(const w of weeks){
-        const {data:wg}=await c.from('pickem_games').select('kickoff_at').eq('week_id',w.id).order('kickoff_at',{ascending:true});
-        if((wg||[]).some(g=>new Date(g.kickoff_at).getTime()>now)){selectedWeek=w;break;}
+        const {data:wg,error:wge}=await c.from('pickem_games')
+          .select('kickoff_at,status')
+          .eq('week_id',w.id)
+          .order('kickoff_at',{ascending:true});
+        if(wge)throw wge;
+        const hasOpenGame=(wg||[]).some(g=>
+          String(g.status||'scheduled').toLowerCase()==='scheduled' &&
+          new Date(g.kickoff_at).getTime()>now
+        );
+        if(hasOpenGame){selectedWeek=w;break;}
+      }
+      if(!selectedWeek){
+        view.innerHTML='<div class="pickem-notice">No Pick ’Em week is currently open for picks. Completed results remain available under My Record and the Leaderboard.</div>';
+        return;
       }
 
       const {data:games,error:ge}=await c.from('pickem_games')
