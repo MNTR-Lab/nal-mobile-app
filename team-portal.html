@@ -28,6 +28,7 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
 .btn{border:1px solid #cfd6df;background:white;border-radius:6px;padding:8px 11px;font-weight:700;color:var(--navy);cursor:pointer}
 select,input{font:inherit}
 @media(max-width:1000px){.cards.roster-cards{grid-template-columns:repeat(2,1fr)!important}}
+.manage-help{font-size:12px;color:var(--muted);margin-top:6px}.manage-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}.danger-note{background:#fff1f0;border:1px solid #f6c1bd;color:#8a1c14;padding:11px 12px;border-radius:7px;margin-top:12px;font-size:12px}.saving{opacity:.65;pointer-events:none}
 @media(max-width:760px){.cards{grid-template-columns:1fr}.hero{align-items:start;flex-direction:column}.nav{overflow:auto}.grid{grid-template-columns:1fr}table{min-width:760px}.panel{overflow:auto}}
 
 .tx-footer-actions{display:flex;justify-content:center;padding:18px 0 4px}
@@ -113,11 +114,12 @@ select,input{font:inherit}
     </div>
   </section>
 
-  <section class="cards roster-cards" style="grid-template-columns:repeat(5,1fr)">
+  <section class="cards roster-cards" style="grid-template-columns:repeat(6,1fr)">
     <div class="card approved"><div class="label">ACTIVE ROSTER</div><div class="num" id="rActive">—</div><div class="sub">Active players</div></div>
     <div class="card"><div class="label">INJURED RESERVE</div><div class="num" id="rIR">—</div><div class="sub">IR / injury designation</div></div>
     <div class="card"><div class="label">COMMISSIONER'S EXEMPT</div><div class="num" id="rCE">—</div><div class="sub">League exempt list</div></div>
     <div class="card"><div class="label">PERSONAL CONDUCT</div><div class="num" id="rPC">—</div><div class="sub">Personal conduct exempt</div></div>
+    <div class="card action"><div class="label">SUSPENDED</div><div class="num" id="rSuspended">—</div><div class="sub">Team / league suspension</div></div>
     <div class="card action"><div class="label">RELEASED</div><div class="num" id="rReleased">—</div><div class="sub">Released players</div></div>
   </section>
 
@@ -176,6 +178,27 @@ select,input{font:inherit}
  </div>
 </div>
 
+<div class="modal" id="managePlayerModal">
+ <div class="sheet" style="max-width:560px">
+  <div class="sheethead"><div><b>MANAGE PLAYER</b><div style="opacity:.7;font-size:12px;margin-top:4px"><span id="manageOrg"></span> • Super Admin</div></div><button class="x" onclick="closeManagePlayer()">×</button></div>
+  <div class="sheetbody">
+   <div style="font-size:22px;font-weight:900;color:var(--navy)" id="manageName">Player</div>
+   <div class="sub" id="managePosition"></div>
+   <div class="field" style="margin-top:16px"><small>CURRENT STATUS</small><b id="manageCurrentStatus">—</b></div>
+   <div style="margin-top:16px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">CHANGE ROSTER STATUS</div>
+    <select id="manageStatus" onchange="updateManageFields()" style="width:100%;padding:12px;border:1px solid #d8dee8;border-radius:7px">
+     <option>Active Roster</option><option>Injured Reserve</option><option>Commissioner's Exempt List</option><option>Suspended</option><option>Released</option>
+    </select>
+   </div>
+   <div id="injuryFields" style="display:none;margin-top:14px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">INJURY DESIGNATION</div><select id="manageInjuryLength" style="width:100%;padding:12px;border:1px solid #d8dee8;border-radius:7px"><option value="">Select...</option><option>Short Term</option><option>Long Term</option><option>Season Ending</option><option>Physically Unable to Perform</option></select></div>
+   <div id="reasonFields" style="display:none;margin-top:14px"><div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">SUSPENSION REASON</div><textarea id="manageReason" rows="4" style="width:100%;padding:12px;border:1px solid #d8dee8;border-radius:7px;font:inherit" placeholder="Required for a suspension..."></textarea></div>
+   <div class="danger-note">Saving creates a new approved roster transaction in the MNTR+ Database. It does not erase the player's prior transaction history.</div>
+   <div id="manageMessage" class="auth-message"></div>
+   <div class="manage-actions"><button class="btn" onclick="closeManagePlayer()">CANCEL</button><button id="saveRosterBtn" class="primary" onclick="saveRosterStatus()">UPDATE PLAYER</button></div>
+  </div>
+ </div>
+</div>
+
 <script>
 /*
   NAL LEAGUE OPERATIONS PORTAL
@@ -191,6 +214,8 @@ const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_tHzWH6oFoUemOrdLs_h9bw_UOLBP-yb
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 let IS_SUPER_ADMIN = false;
 const API_URL = SUPABASE_URL + "/functions/v1/nal-operations-api";
+const ROSTER_ADMIN_URL = SUPABASE_URL + "/functions/v1/nal-roster-admin";
+let MANAGE_PLAYER = null;
 
 let API_DATA = null;
 
@@ -448,19 +473,30 @@ function sortRosterPlayers(players){
   });
 }
 
+function currentSuspendedPlayers(team){
+  const approved=(API_DATA?.transactions?.all||[]).filter(tx=>tx.organization===team && tx.state==="Approved");
+  const latest=new Map();
+  approved.forEach(tx=>{
+    const key=((tx.firstName||"")+"|"+(tx.lastName||"")).toLowerCase();
+    const t=Date.parse(tx.submittedAt||tx.transactionDate||0)||0;
+    if(!latest.has(key) || t>(latest.get(key)._t||0)) latest.set(key,{...tx,_t:t});
+  });
+  return [...latest.values()].filter(tx=>(tx.transactionType||"").toLowerCase().includes("suspension"));
+}
+
 function rosterPlayerTable(players,status){
   if(!players.length) return `<div class="empty">No players are currently listed in this section.</div>`;
 
   const sortedPlayers = sortRosterPlayers(players);
 
   if(status==="Released"){
-    return `<table><thead><tr><th>PLAYER</th><th>POSITION</th><th>TRANSACTION</th><th>DATE</th><th>STATUS</th></tr></thead><tbody>` +
-      sortedPlayers.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.transactionType||"Release")}</td><td>${formatDateOnly(p.submittedAt)}</td><td><span class="pill p-rejected">RELEASED</span></td></tr>`).join("") +
+    return `<table><thead><tr><th>PLAYER</th><th>POSITION</th><th>TRANSACTION</th><th>DATE</th><th>STATUS</th>${IS_SUPER_ADMIN?"<th>ADMIN</th>":""}</tr></thead><tbody>` +
+      sortedPlayers.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.transactionType||"Release")}</td><td>${formatDateOnly(p.submittedAt)}</td><td><span class="pill p-rejected">RELEASED</span></td>${IS_SUPER_ADMIN?`<td><button class="view" onclick="openManagePlayer('${esc(p.id)}','Released')">Manage Player</button></td>`:""}</tr>`).join("") +
       `</tbody></table>`;
   }
 
   return `<table><thead><tr><th>PLAYER</th><th>POSITION</th><th>HEIGHT</th><th>WEIGHT</th><th>COLLEGE / SCHOOL</th><th>STATUS</th>${IS_SUPER_ADMIN?"<th>ADMIN</th>":""}</tr></thead><tbody>` +
-    sortedPlayers.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.height||"—")}</td><td>${esc(p.weight||"—")}</td><td>${esc(p.college||"—")}</td><td><span class="pill ${status==="Active"?"p-approved":"p-pending"}">${esc(status).toUpperCase()}</span></td>${IS_SUPER_ADMIN?`<td><button class="view" onclick="alert('Super Admin access is working. Roster write-back is the next connection.')">Manage Player</button></td>`:""}</tr>`).join("") +
+    sortedPlayers.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.height||"—")}</td><td>${esc(p.weight||"—")}</td><td>${esc(p.college||"—")}</td><td><span class="pill ${status==="Active"?"p-approved":"p-pending"}">${esc(status).toUpperCase()}</span></td>${IS_SUPER_ADMIN?`<td><button class="view" onclick="openManagePlayer('${esc(p.id)}','${esc(status)}')">Manage Player</button></td>`:""}</tr>`).join("") +
     `</tbody></table>`;
 }
 
@@ -484,6 +520,8 @@ function renderRoster(){
   $("rIR").textContent = r.counts?.injuredReserve ?? 0;
   $("rCE").textContent = r.counts?.commissionersExempt ?? 0;
   $("rPC").textContent = r.counts?.personalConductExempt ?? 0;
+  const suspended = currentSuspendedPlayers(team);
+  $("rSuspended").textContent = suspended.length;
   $("rReleased").textContent = r.counts?.released ?? 0;
 
   $("rosterSections").innerHTML =
@@ -491,8 +529,52 @@ function renderRoster(){
     rosterSection("Injured Reserve",r.injuredReserve||[],"Injured Reserve") +
     rosterSection("Commissioner's Exempt List",r.commissionersExempt||[],"Commissioner's Exempt") +
     rosterSection("Personal Conduct Exempt List",r.personalConductExempt||[],"Personal Conduct") +
+    rosterSection("Suspended Players",suspended,"Suspended") +
     rosterSection("Released Players",r.released||[],"Released");
 }
+
+function openManagePlayer(id,status){
+  if(!IS_SUPER_ADMIN){ openAdminLogin(); return; }
+  const tx=(API_DATA?.transactions?.all||[]).find(x=>String(x.id)===String(id));
+  if(!tx) return alert("Player record could not be found.");
+  MANAGE_PLAYER=tx;
+  $("manageName").textContent=tx.player||`${tx.firstName||""} ${tx.lastName||""}`.trim();
+  $("manageOrg").textContent=tx.organization||"NAL";
+  $("managePosition").textContent=tx.position||"—";
+  $("manageCurrentStatus").textContent=status;
+  const map={"Active":"Active Roster","Injured Reserve":"Injured Reserve","Commissioner's Exempt":"Commissioner's Exempt List","Suspended":"Suspended","Released":"Released"};
+  $("manageStatus").value=map[status]||"Active Roster";
+  $("manageInjuryLength").value=""; $("manageReason").value=""; $("manageMessage").textContent="";
+  updateManageFields();
+  $("managePlayerModal").classList.add("show");
+}
+function closeManagePlayer(){ $("managePlayerModal").classList.remove("show"); MANAGE_PLAYER=null; }
+function updateManageFields(){
+  const v=$("manageStatus").value;
+  $("injuryFields").style.display=v==="Injured Reserve"?"block":"none";
+  $("reasonFields").style.display=v==="Suspended"?"block":"none";
+}
+async function saveRosterStatus(){
+  if(!IS_SUPER_ADMIN || !MANAGE_PLAYER) return;
+  const rosterStatus=$("manageStatus").value, reason=$("manageReason").value.trim(), injuryLength=$("manageInjuryLength").value;
+  const msg=$("manageMessage");
+  if(rosterStatus==="Suspended" && !reason){ msg.className="auth-message error"; msg.textContent="Enter a suspension reason."; return; }
+  if(rosterStatus==="Injured Reserve" && !injuryLength){ msg.className="auth-message error"; msg.textContent="Select an injury designation."; return; }
+  if(!confirm(`Change ${MANAGE_PLAYER.player} to ${rosterStatus}?`)) return;
+  const btn=$("saveRosterBtn"); btn.classList.add("saving"); btn.textContent="UPDATING…"; msg.className="auth-message"; msg.textContent="Saving roster transaction…";
+  try{
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session?.access_token) throw new Error("Your Super Admin session expired. Please sign in again.");
+    const response=await fetch(ROSTER_ADMIN_URL,{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_PUBLISHABLE_KEY,"Authorization":"Bearer "+session.access_token},body:JSON.stringify({player:MANAGE_PLAYER,rosterStatus,reason,injuryLength})});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok || !data.success) throw new Error(data.error||`Update failed (HTTP ${response.status})`);
+    msg.className="auth-message success"; msg.textContent="Player status updated. Refreshing live roster…";
+    await loadOperations();
+    setTimeout(closeManagePlayer,500);
+  }catch(err){ msg.className="auth-message error"; msg.textContent=err.message||"Roster update failed."; }
+  finally{ btn.classList.remove("saving"); btn.textContent="UPDATE PLAYER"; }
+}
+$("managePlayerModal").addEventListener("click",e=>{if(e.target.id==="managePlayerModal") closeManagePlayer();});
 
 function renderDocuments(){
   if(!API_DATA) return;
