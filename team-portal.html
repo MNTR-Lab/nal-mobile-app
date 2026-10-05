@@ -219,7 +219,7 @@ async function loadOperations(){
       throw new Error(data.error || ("API request failed with HTTP " + response.status));
     }
     API_DATA = data;
-    $("connectionStatus").textContent = "Live <img class="mntr-inline-logo" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_91fb7f00-6bb5-4cbf-93a0-217d5857d097.png?v=1782379927" alt="MNTR+"> Database";
+    $("connectionStatus").innerHTML = `Live <img class="mntr-inline-logo" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_91fb7f00-6bb5-4cbf-93a0-217d5857d097.png?v=1782379927" alt="MNTR+"> Database`;
     $("apiError").innerHTML = "";
     initializeFilters();
     renderDashboard();
