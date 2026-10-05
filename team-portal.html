@@ -35,14 +35,21 @@ select,input{font:inherit}
 .tx-see-all:hover{opacity:.92}
 .tx-back{background:#eef2f6;color:var(--navy);border:0;border-radius:7px;padding:10px 16px;font-weight:900;font-size:12px;cursor:pointer}
 
+
+.admin-only{display:none}.admin-only.show{display:inline-block}
+.admin-badge{display:none;background:#def7ec;color:#08734e;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900;margin-top:5px}
+.auth-message{font-size:13px;margin-top:12px;color:var(--muted)}
+.auth-message.error{color:var(--danger)}
+.auth-message.success{color:var(--green)}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <header class="top">
   <div class="brand"><div class="mark">NAL</div><div><h1>NATIONAL ARENA LEAGUE</h1><small>League Operations Portal</small></div></div>
-  <div class="user"><b>LEAGUE OPERATIONS</b><br><span id="connectionStatus">Connecting…</span></div>
+  <div class="user"><b>LEAGUE OPERATIONS</b><br><span id="connectionStatus">Connecting…</span><br><span id="adminBadge" class="admin-badge">SUPER ADMIN</span></div>
 </header>
-<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Rosters</button><button id="docsNav" onclick="showDocuments()">Documents</button><button onclick="alert('Account access will be connected when Supabase Auth is added.')">Account</button></nav>
+<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Rosters</button><button id="docsNav" onclick="showDocuments()">Documents</button><button id="accountNav" onclick="openAdminLogin()">Admin Login</button></nav>
 
 <main class="wrap">
 <div id="transactionsView">
@@ -151,6 +158,24 @@ select,input{font:inherit}
   </div>
  </div>
 </div>
+<div class="modal" id="adminLoginModal">
+ <div class="sheet" style="max-width:500px">
+  <div class="sheethead"><div><b>SUPER ADMIN ACCESS</b><div style="opacity:.7;font-size:12px;margin-top:4px">NAL Transaction Center</div></div><button class="x" onclick="closeAdminLogin()">×</button></div>
+  <div class="sheetbody">
+   <div id="adminLoggedOut">
+    <p style="margin-top:0;color:var(--muted)">Enter the authorized NAL Super Admin email. We will send a secure passwordless sign-in link.</p>
+    <div class="field"><small>SUPER ADMIN EMAIL</small><input id="adminEmail" type="email" value="brandon@thenationalarenaleague.com" style="width:100%;padding:12px;border:1px solid #d8dee8;border-radius:7px"></div>
+    <button class="primary" style="width:100%;margin-top:14px" onclick="sendAdminMagicLink()">SEND SECURE LOGIN LINK</button>
+   </div>
+   <div id="adminLoggedIn" style="display:none">
+    <div class="notice" style="margin:0 0 16px"><strong>Super Admin authenticated</strong><span id="adminIdentity"></span></div>
+    <button class="btn" style="width:100%" onclick="adminSignOut()">SIGN OUT</button>
+   </div>
+   <div id="authMessage" class="auth-message"></div>
+  </div>
+ </div>
+</div>
+
 <script>
 /*
   NAL LEAGUE OPERATIONS PORTAL
@@ -162,6 +187,9 @@ select,input{font:inherit}
 */
 const SUPABASE_URL = "https://rcoaprzmutcwlpugobry.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjb2FwcnptdXRjd2xwdWdvYnJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MTU1NDUsImV4cCI6MjEwNTQ5MTU0NX0.p42T63zg6me-S3eT1kT73nrMaMqAl_DuWeb602ayink";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_tHzWH6oFoUemOrdLs_h9bw_UOLBP-yb";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+let IS_SUPER_ADMIN = false;
 const API_URL = SUPABASE_URL + "/functions/v1/nal-operations-api";
 
 let API_DATA = null;
@@ -198,6 +226,33 @@ function statusPill(state){
   const cls = state==="Approved" ? "p-approved" : state==="Needs Action" ? "p-rejected" : "p-pending";
   return `<span class="pill ${cls}">${esc(state).toUpperCase()}</span>`;
 }
+
+async function refreshAdminState(){
+  const {data:{session}} = await sb.auth.getSession();
+  IS_SUPER_ADMIN = false;
+  if(session?.user){
+    const {data} = await sb.from("nal_super_admins").select("user_id,is_active").eq("user_id",session.user.id).eq("is_active",true).maybeSingle();
+    IS_SUPER_ADMIN = !!data;
+  }
+  $("adminBadge").style.display = IS_SUPER_ADMIN ? "inline-block" : "none";
+  $("accountNav").textContent = IS_SUPER_ADMIN ? "Super Admin" : "Admin Login";
+  $("adminLoggedOut").style.display = IS_SUPER_ADMIN ? "none" : "block";
+  $("adminLoggedIn").style.display = IS_SUPER_ADMIN ? "block" : "none";
+  if(IS_SUPER_ADMIN) $("adminIdentity").textContent = session.user.email || "Authorized administrator";
+  renderRoster();
+}
+function openAdminLogin(){ $("adminLoginModal").classList.add("show"); refreshAdminState(); }
+function closeAdminLogin(){ $("adminLoginModal").classList.remove("show"); }
+async function sendAdminMagicLink(){
+  const email = $("adminEmail").value.trim().toLowerCase();
+  const msg = $("authMessage");
+  msg.className="auth-message"; msg.textContent="Sending secure login link…";
+  const {error} = await sb.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:window.location.href.split("#")[0]}});
+  if(error){ msg.className="auth-message error"; msg.textContent=error.message; return; }
+  msg.className="auth-message success"; msg.textContent="Check your email for the secure NAL Super Admin sign-in link.";
+}
+async function adminSignOut(){ await sb.auth.signOut(); await refreshAdminState(); $("authMessage").textContent="Signed out."; }
+sb.auth.onAuthStateChange(()=>setTimeout(refreshAdminState,0));
 
 async function loadOperations(){
   try{
@@ -404,8 +459,8 @@ function rosterPlayerTable(players,status){
       `</tbody></table>`;
   }
 
-  return `<table><thead><tr><th>PLAYER</th><th>POSITION</th><th>HEIGHT</th><th>WEIGHT</th><th>COLLEGE / SCHOOL</th><th>STATUS</th></tr></thead><tbody>` +
-    sortedPlayers.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.height||"—")}</td><td>${esc(p.weight||"—")}</td><td>${esc(p.college||"—")}</td><td><span class="pill ${status==="Active"?"p-approved":"p-pending"}">${esc(status).toUpperCase()}</span></td></tr>`).join("") +
+  return `<table><thead><tr><th>PLAYER</th><th>POSITION</th><th>HEIGHT</th><th>WEIGHT</th><th>COLLEGE / SCHOOL</th><th>STATUS</th>${IS_SUPER_ADMIN?"<th>ADMIN</th>":""}</tr></thead><tbody>` +
+    sortedPlayers.map(p=>`<tr><td><div class="name">${esc(p.player)}</div></td><td>${esc(p.position||"—")}</td><td>${esc(p.height||"—")}</td><td>${esc(p.weight||"—")}</td><td>${esc(p.college||"—")}</td><td><span class="pill ${status==="Active"?"p-approved":"p-pending"}">${esc(status).toUpperCase()}</span></td>${IS_SUPER_ADMIN?`<td><button class="view" onclick="alert('Super Admin access is working. Roster write-back is the next connection.')">Manage Player</button></td>`:""}</tr>`).join("") +
     `</tbody></table>`;
 }
 
@@ -489,6 +544,7 @@ function showDocuments(){
   activateNav("docsNav"); window.scrollTo(0,0);
 }
 
+refreshAdminState();
 loadOperations();
 </script>
 </body>
