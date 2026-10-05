@@ -20,6 +20,7 @@ table{width:100%;border-collapse:collapse}th{text-align:left;background:#f8fafc;
 .footer{padding:25px 25px 10px;text-align:center;color:#8993a4;font-size:12px}
 .powered-by{display:flex;align-items:center;justify-content:center;gap:6px;padding:0 20px 25px;color:#8993a4;font-size:12px}
 .powered-by img{display:block;width:auto;height:32px;max-width:150px}
+.mntr-inline-logo{height:22px;width:auto;max-width:105px;vertical-align:middle;display:inline-block;margin:0 3px}
 .modal{position:fixed;inset:0;background:#061528a8;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.sheet{width:min(650px,100%);background:white;border-radius:13px;overflow:hidden;box-shadow:0 24px 70px #0006}.sheethead{background:var(--navy);color:white;padding:20px;display:flex;justify-content:space-between}.sheetbody{padding:22px}.x{background:none;border:0;color:white;font-size:24px;cursor:pointer}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{padding:12px;background:#f7f9fb;border-radius:7px}.field small{display:block;color:var(--muted);font-weight:700;margin-bottom:5px}.timeline{border-left:3px solid #d8dee7;margin:22px 5px;padding-left:18px}.step{margin:14px 0}.step b{display:block}.step span{color:var(--muted);font-size:13px}
 .loading{padding:30px;text-align:center;color:var(--muted);font-weight:700}
 .empty{padding:26px 20px;color:var(--muted)}
@@ -46,7 +47,7 @@ select,input{font:inherit}
 <main class="wrap">
 <div id="transactionsView">
   <section class="hero">
-    <div><div class="eyebrow">2027 SEASON</div><h2>Transaction Center</h2><p>League-wide transactions and live review status from Monday.</p></div>
+    <div><div class="eyebrow">2027 SEASON</div><h2>Transaction Center</h2><p>League-wide transactions and live review status from the <img class="mntr-inline-logo" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_91fb7f00-6bb5-4cbf-93a0-217d5857d097.png?v=1782379927" alt="MNTR+"> Database.</p></div>
     <button class="primary" onclick="window.open('https://forms.monday.com/forms/d26313aa7135e6742a0daeaac7ac066c?r=use1','_blank','noopener,noreferrer')">+ SUBMIT NEW TRANSACTION</button>
   </section>
 
@@ -69,7 +70,7 @@ select,input{font:inherit}
 
   <section class="panel">
     <div class="panelhead"><h3>Pending Transactions</h3><span class="pill p-pending" id="pendingPill">—</span></div>
-    <div class="notice"><strong>Live league review queue</strong>Submissions appear here while they remain in the Monday Pending Transactions group.</div>
+    <div class="notice"><strong>Live league review queue</strong>Submissions appear here while they remain pending in the <img class="mntr-inline-logo" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_91fb7f00-6bb5-4cbf-93a0-217d5857d097.png?v=1782379927" alt="MNTR+"> Database.</div>
     <div id="pendingTable"><div class="loading">Loading live transactions…</div></div>
   </section>
 
@@ -120,10 +121,10 @@ select,input{font:inherit}
 
 <div id="documentsView" style="display:none">
   <section class="hero">
-    <div><div class="eyebrow">2027 SEASON</div><h2>Documents</h2><p>Active league forms, manuals and operational resources from Monday.</p></div>
+    <div><div class="eyebrow">2027 SEASON</div><h2>Documents</h2><p>Active league forms, manuals and operational resources from the <img class="mntr-inline-logo" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_91fb7f00-6bb5-4cbf-93a0-217d5857d097.png?v=1782379927" alt="MNTR+"> Database.</p></div>
   </section>
   <section class="cards" style="grid-template-columns:repeat(3,1fr)">
-    <div class="card approved"><div class="label">AVAILABLE DOCUMENTS</div><div class="num" id="docCount">—</div><div class="sub">Currently active in Monday</div></div>
+    <div class="card approved"><div class="label">AVAILABLE DOCUMENTS</div><div class="num" id="docCount">—</div><div class="sub">Currently active in the <img class="mntr-inline-logo" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_91fb7f00-6bb5-4cbf-93a0-217d5857d097.png?v=1782379927" alt="MNTR+"> Database</div></div>
     <div class="card"><div class="label">CATEGORIES</div><div class="num" id="docCategoryCount">—</div><div class="sub">Document categories</div></div>
     <div class="card"><div class="label">SEASON</div><div class="num" style="font-size:24px">2027</div><div class="sub">Current operations year</div></div>
   </section>
@@ -218,7 +219,7 @@ async function loadOperations(){
       throw new Error(data.error || ("API request failed with HTTP " + response.status));
     }
     API_DATA = data;
-    $("connectionStatus").textContent = "Live Monday Data";
+    $("connectionStatus").textContent = "Live <img class="mntr-inline-logo" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_91fb7f00-6bb5-4cbf-93a0-217d5857d097.png?v=1782379927" alt="MNTR+"> Database";
     $("apiError").innerHTML = "";
     initializeFilters();
     renderDashboard();
