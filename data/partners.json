@@ -36,12 +36,6 @@
     "photo_id": "b0a4c35b-2151-4e6a-a473-3b3632dc8218"
   },
   {
-    "name": "MyBookie",
-    "logo": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/p-f3192c7c-139a-453b-9dbf-bc27a53da01f/1771621885-grid.png",
-    "url": "https://www.mybookie.ag/sportsbook/nal/",
-    "photo_id": "f3192c7c-139a-453b-9dbf-bc27a53da01f"
-  },
-  {
     "name": "1st Phorm",
     "logo": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/p-18dc82a2-b4cd-42ed-b906-f7d56379469c/1772102109-grid.png",
     "url": "https://1stphorm.com/drinkinbros",
@@ -60,12 +54,6 @@
     "photo_id": "c2936271-6db4-4e8f-ae0d-83407c929bd4"
   },
   {
-    "name": "T-Mobile",
-    "logo": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/p-bee0eab2-dd2d-43c4-8378-dfc7e631cfbc/1779392199-grid.png",
-    "url": "https://www.t-mobile.com/home-internet/fiber",
-    "photo_id": "bee0eab2-dd2d-43c4-8378-dfc7e631cfbc"
-  },
-  {
     "name": "Vet Tix",
     "logo": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/p-7381f759-d20d-45ca-8c60-51ecb18dfa90/1788615079-grid.png",
     "url": "https://www.vettix.org/visitor/home",
@@ -76,5 +64,11 @@
     "logo": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/p-57c28623-4c97-4027-84f5-562f6763ab05/1788615679-grid.png",
     "url": "https://www.vetthe.vote/",
     "photo_id": "57c28623-4c97-4027-84f5-562f6763ab05"
+  },
+  {
+    "name": "NAL Partner",
+    "logo": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/p-f0d10311-2d1a-4dfa-b79c-9d763cf03eb8/1791203130-grid.png",
+    "url": "http://app.mntrlab.com",
+    "photo_id": "f0d10311-2d1a-4dfa-b79c-9d763cf03eb8"
   }
 ]
