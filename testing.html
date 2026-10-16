@@ -19939,7 +19939,7 @@ function nalMondayRenderRow(category,id){
   const row=document.getElementById(id);if(!row)return;
   const items=nalMondayList(category);
   const viewAll=Array.from(document.querySelectorAll('[data-monday-category]')).find(el=>el.dataset.mondayCategory===category);
-  if(viewAll){viewAll.hidden=items.length<=3;viewAll.onclick=()=>nalMondayOpen(category);}
+  if(viewAll){viewAll.hidden=items.length===0;viewAll.onclick=()=>nalMondayOpen(category);}
   row.innerHTML=items.length?items.slice(0,3).map(nalMondayCard).join(''):'<div class="wheeling-empty-row">COMING SOON</div>';
   row.querySelectorAll('[data-monday-index]').forEach(el=>el.addEventListener('click',()=>nalMondayOpen(category,Number(el.dataset.mondayIndex))));
 }
@@ -19952,7 +19952,9 @@ async function loadNALMondaySections(){
   }catch(error){for(const id of ['nalMondayHighlights','nalMondayFeatures']){const el=document.getElementById(id);if(el)el.innerHTML='<div class="wheeling-empty-row">Unable to load videos right now.</div>';}}
 }
 function nalMondayOpen(category,index=-1){
-  const content=lightcastTestContent();if(!content)return;
+  const modal=document.getElementById('lightcastTestModal');
+  const content=lightcastTestContent();if(!modal||!content)return;
+  modal.hidden=false;document.body.style.overflow='hidden';
   const items=nalMondayList(category),v=index>=0?items[index]:null;
   setWheelingTeamView(true);setLightcastModalHeading(category,'NAL Network');
   const player=v?`<div class="lightcast-video-wrap"><video controls playsinline preload="metadata" style="width:100%;height:100%;background:#000" src="${lightcastEscape(nalMondaySource(v.playbackUrl))}"></video></div><div class="lightcast-video-meta"><h2>${lightcastEscape(v.title||'Video')}</h2><p>${lightcastEscape(v.description||'')}</p></div>`:'';
