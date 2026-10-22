@@ -247,6 +247,16 @@ function waitingTime(value){
   const days = Math.floor(hrs/24);
   return days + (days===1?" day":" days");
 }
+// Presentation-only transaction type: keep any parenthetical qualifier in the details.
+function displayTransactionType(value){
+  const raw = String(value ?? "").trim();
+  return raw.replace(/\s*\([^()]*\)\s*$/, "").trim() || raw || "—";
+}
+function transactionTypeQualifier(value){
+  const match = String(value ?? "").trim().match(/\(([^()]*)\)\s*$/);
+  return match ? match[1].trim() : "";
+}
+
 function statusPill(state){
   const cls = state==="Approved" ? "p-approved" : state==="Needs Action" ? "p-rejected" : "p-pending";
   return `<span class="pill ${cls}">${esc(state).toUpperCase()}</span>`;
@@ -319,7 +329,7 @@ function initializeFilters(){
   $("organizationFilter").innerHTML = '<option value="">All Organizations</option>' +
     orgs.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
 
-  const types = [...new Set((API_DATA?.transactions?.all || []).map(x=>x.transactionType).filter(Boolean))].sort();
+  const types = [...new Set((API_DATA?.transactions?.all || []).map(x=>displayTransactionType(x.transactionType)).filter(x=>x!=="—"))].sort();
   $("typeFilter").innerHTML = '<option value="">All Transaction Types</option>' +
     types.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
 }
@@ -340,7 +350,7 @@ function filteredTransactions(){
   const search = $("playerSearch").value.trim().toLowerCase();
 
   if(org) rows = rows.filter(x=>x.organization===org);
-  if(type) rows = rows.filter(x=>x.transactionType===type);
+  if(type) rows = rows.filter(x=>displayTransactionType(x.transactionType)===type);
   if(status) rows = rows.filter(x=>x.state===status);
   if(search) rows = rows.filter(x=>(x.player||"").toLowerCase().includes(search));
 
@@ -359,7 +369,7 @@ function transactionTable(rows, pending=false){
     const action = tx.actionReason ? `<div class="sub">${esc(tx.actionReason)}</div>` : "";
     const base = `<td><div class="name">${esc(tx.player)}</div>${action}</td>
       <td>${esc(tx.organization||"—")}</td>
-      <td>${esc(tx.transactionType||"—")}</td>
+      <td>${esc(displayTransactionType(tx.transactionType))}</td>
       <td>${esc(tx.position||"—")}</td>
       <td>${formatDate(tx.submittedAt)}</td>`;
     const wait = pending ? `<td>${waitingTime(tx.submittedAt)}</td>` : "";
@@ -414,7 +424,7 @@ function openTransaction(id){
 
   $("mname").textContent = tx.player || "Player";
   $("morg").textContent = tx.organization || "NAL";
-  $("mtype").textContent = tx.transactionType || "Transaction";
+  $("mtype").textContent = displayTransactionType(tx.transactionType);
   $("mpos").textContent = tx.position || "—";
   $("mdate").textContent = formatDate(tx.submittedAt);
   $("mheight").textContent = tx.height || "—";
@@ -431,6 +441,7 @@ function openTransaction(id){
   else if(tx.tradeDetails) details.push(["Trade Details",tx.tradeDetails]);
   else if(tx.injuryLength) details.push(["Injury Length",tx.injuryLength]);
   else if(tx.suspensionReason) details.push(["Suspension Reason",tx.suspensionReason]);
+  else if(transactionTypeQualifier(tx.transactionType)) details.push(["Transaction Details",transactionTypeQualifier(tx.transactionType)]);
 
   $("specialInfo").style.display = details.length ? "block" : "none";
   if(details.length){
