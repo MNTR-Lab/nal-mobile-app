@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-10-26T11:30:30.879528+00:00",
+  "updatedAt": "2026-10-26T17:37:58.190285+00:00",
   "source": "https://www.thenationalarenaleague.com/",
   "articles": [
+    {
+      "title": "Fan Choice Friday Returns Following Overwhelming Fan Response",
+      "url": "https://www.thenationalarenaleague.com/news/fan-choice-friday-returns-following-overwhelming-f",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-139a79a2-4b48-44f6-801a-c84d8ace7b88/1793017682-1223.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-10-26T13:15:00+00:00",
+      "category": "NAL NEWS"
+    },
     {
       "title": "FANS HAVE SPOKEN! COLORADO SPARTANS VS. PUEBLO PUNISHERS WINS FAN CHOICE FRIDAY BY JUST ONE VOTE!",
       "url": "https://www.thenationalarenaleague.com/news/fans-have-spoken-colorado-spartans-vs-pueblo-punis",
@@ -24,14 +32,6 @@
       "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-bce6c47c-cc9c-4844-bf45-d8ffebaaf6a4/1791458543-1223.png",
       "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
       "date": "2026-10-08T16:30:00+00:00",
-      "category": "NAL NEWS"
-    },
-    {
-      "title": "NATIONAL ARENA LEAGUE ANNOUNCES FULL 2027 SCHEDULE",
-      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-announces-full-2027-schedule",
-      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-3d958b97-b586-4131-8faa-cc20e5df56ac/1790875420-1223.png",
-      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
-      "date": "2026-10-01T01:21:00+00:00",
       "category": "NAL NEWS"
     }
   ]
