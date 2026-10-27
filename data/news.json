@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-10-27T12:46:41.689493+00:00",
+  "updatedAt": "2026-10-27T18:23:43.141471+00:00",
   "source": "https://www.thenationalarenaleague.com/",
   "articles": [
+    {
+      "title": "NAL Roster Moves: Eight Players Signed Across Six Teams",
+      "url": "https://www.thenationalarenaleague.com/news/nal-roster-moves-eight-players-signed-across-six-t",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-007de85d-bcd9-4e2e-a4a3-4753e9f8a3d8/1793103284-1223.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-10-27T13:30:00+00:00",
+      "category": "NAL NEWS"
+    },
     {
       "title": "Fan Choice Friday Returns Following Overwhelming Fan Response",
       "url": "https://www.thenationalarenaleague.com/news/fan-choice-friday-returns-following-overwhelming-f",
@@ -24,14 +32,6 @@
       "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-b1d593e4-094d-4b2a-8257-6ffbb411c476/1791461219-1223.png",
       "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
       "date": "2026-10-09T17:00:00+00:00",
-      "category": "NAL NEWS"
-    },
-    {
-      "title": "NATIONAL ARENA LEAGUE ANNOUNCES EXCLUSIVE PARTNERSHIP WITH DAZZLE SPORTS MARKETING",
-      "url": "https://www.thenationalarenaleague.com/news/national-arena-league-announces-exclusive-partners",
-      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-bce6c47c-cc9c-4844-bf45-d8ffebaaf6a4/1791458543-1223.png",
-      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
-      "date": "2026-10-08T16:30:00+00:00",
       "category": "NAL NEWS"
     }
   ]
