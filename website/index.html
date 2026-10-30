@@ -8648,6 +8648,10 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
  }
  #schedulePage[data-branded-team] .nal-schedule-hero h1 span,#rosterPage[data-branded-team] .nal-roster-hero h1 span{color:#fff}
 }
+
+/* Space below the last team panel. */
+#teamPage{padding-bottom:50px!important}
+@media(max-width:600px){#teamPage{padding-bottom:28px!important}}
 </style>
 </head>
 
@@ -11948,7 +11952,7 @@ async function loadTeamNews(team) {
 
   try {
     const response = await fetch(
-      `data/team-news/${encodeURIComponent(team.slug)}.json?v=${Date.now()}`,
+      team.slug === "amarillo-warbirds" ? `https://nal-network-preview-content.bikard.workers.dev/team-news/amarillo-warbirds?v=${Date.now()}` : `data/team-news/${encodeURIComponent(team.slug)}.json?v=${Date.now()}`,
       {
         cache: "no-store"
       }
