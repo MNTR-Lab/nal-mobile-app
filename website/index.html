@@ -18811,22 +18811,25 @@ function openWebsiteEpisode(index) {
   document.getElementById('websiteVideoContent').innerHTML = websitePlayerMarkup(item, String(item.channel_id || '72124'));
   document.getElementById('websiteVideoDescription').textContent = item.description || '';
 }
+const WEBSITE_TEAM_ARTICLE_HOSTS = {"amarillo-warbirds": "www.amarillowarbirds.com", "colorado-spartans": "www.co-spartans.com", "dallas-apex": "www.dallasapex.com", "louisiana-rouxgaroux": "www.geauxrouxgaroux.com", "omaha-beef": "www.beeffootball.com", "pueblo-punishers": "www.pueblopunishers.com", "salina-liberty": "www.salinaliberty.com", "sioux-city-bandits": "www.gobandits.fun", "southwest-kansas-storm": "www.swkstormfootball.com", "wheeling-miners": "www.wheelingminers.com"};
 async function openWebsiteArticle(url) {
   const u = new URL(url, location.href);
   const match = /^\/news\/([a-z0-9][a-z0-9-]{0,200})\/?$/.exec(u.pathname);
-  if (!['thenationalarenaleague.com', 'www.thenationalarenaleague.com'].includes(u.hostname) || !match) return;
-  if (document.querySelector('.app-page.active')?.id !== 'websiteArticlePage') websiteArticleReturn = document.querySelector('.app-page.active')?.id === 'newsPage' ? 'newsPage' : 'homePage';
+  const teamSlug = Object.keys(WEBSITE_TEAM_ARTICLE_HOSTS).find(slug => WEBSITE_TEAM_ARTICLE_HOSTS[slug].replace(/^www\./,'') === u.hostname.replace(/^www\./,''));
+  if ((!teamSlug && !['thenationalarenaleague.com', 'www.thenationalarenaleague.com'].includes(u.hostname)) || !match) return;
+  const sourceName = teamSlug ? teamSlug.split('-').map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join(' ') : 'National Arena League';
+  if (document.querySelector('.app-page.active')?.id !== 'websiteArticlePage') websiteArticleReturn = teamSlug ? 'teamPage' : document.querySelector('.app-page.active')?.id === 'newsPage' ? 'newsPage' : 'homePage';
   const requestId = ++websiteArticleRequest;
   showPage('websiteArticlePage'); websiteSetNav('newsPage');
   const host = document.getElementById('websiteArticleContent');
   host.innerHTML = '<p class="website-status" role="status">Loading article…</p>';
   try {
-    const r = await fetch(WEBSITE_CONTENT_API + '/article/' + encodeURIComponent(match[1]));
+    const r = await fetch(WEBSITE_CONTENT_API + (teamSlug ? '/team-article/' + teamSlug + '/' : '/article/') + encodeURIComponent(match[1]));
     const p = await r.json();
     if (!r.ok || !p.success || !p.article?.blocks?.length) throw new Error('Article unavailable');
     if (requestId !== websiteArticleRequest) return;
     const a = p.article;
-    host.innerHTML = `<p class="website-kicker">NATIONAL ARENA LEAGUE • NEWS</p><h1 tabindex="-1">${websiteEscape(a.title)}</h1>${a.image && /^https:\/\//.test(a.image) ? `<img class="website-article-image" src="${websiteEscape(a.image)}" alt="">` : ''}<div class="website-article-body">${a.blocks.map(b => { const tag = ['h2', 'h3', 'blockquote'].includes(b.type) ? b.type : 'p'; return `<${tag}>${b.type === 'li' ? '• ' : ''}${websiteEscape(b.text)}</${tag}>`; }).join('')}</div><p class="website-article-source">Source: <a href="${websiteEscape(a.url)}" target="_blank" rel="noopener noreferrer">National Arena League</a></p>`;
+    host.innerHTML = `<p class="website-kicker">${websiteEscape(sourceName.toUpperCase())} • NEWS</p><h1 tabindex="-1">${websiteEscape(a.title)}</h1>${a.image && /^https:\/\//.test(a.image) ? `<img class="website-article-image" src="${websiteEscape(a.image)}" alt="">` : ''}<div class="website-article-body">${a.blocks.map(b => { const tag = ['h2', 'h3', 'blockquote'].includes(b.type) ? b.type : 'p'; return `<${tag}>${b.type === 'li' ? '• ' : ''}${websiteEscape(b.text)}</${tag}>`; }).join('')}</div><p class="website-article-source">Source: <a href="${websiteEscape(a.url)}" target="_blank" rel="noopener noreferrer">${websiteEscape(sourceName)}</a></p>`;
     host.querySelector('h1')?.focus({ preventScroll: true });
   } catch (_) {
     if (requestId !== websiteArticleRequest) return;
@@ -18838,7 +18841,7 @@ document.addEventListener('click', event => {
   const story = event.target.closest('[data-news-story="true"], [data-native-news-story="true"], [data-team-news-story="true"]');
   if (story) {
     const u = new URL(story.getAttribute('href') || '#', location.href);
-    if (['thenationalarenaleague.com', 'www.thenationalarenaleague.com'].includes(u.hostname) && /^\/news\/[a-z0-9-]+\/?$/.test(u.pathname)) {
+    if ((['thenationalarenaleague.com', 'www.thenationalarenaleague.com'].includes(u.hostname) || Object.values(WEBSITE_TEAM_ARTICLE_HOSTS).some(host=>host.replace(/^www\./,'')===u.hostname.replace(/^www\./,''))) && /^\/news\/[a-z0-9-]+\/?$/.test(u.pathname)) {
       event.preventDefault(); event.stopImmediatePropagation(); openWebsiteArticle(u.href); return;
     }
   }
@@ -18852,7 +18855,7 @@ openNALShowChannel = function(slug) {
   if (slug === 'nal-gameday') return openWebsiteShow('gameday');
   return websiteOriginalOpenShow(slug);
 };
-document.getElementById('websiteArticleBack').onclick = () => { ++websiteArticleRequest; showPage(websiteArticleReturn); websiteSetNav(websiteArticleReturn); };
+document.getElementById('websiteArticleBack').onclick = () => { ++websiteArticleRequest; showPage(websiteArticleReturn); websiteSetNav(websiteArticleReturn === 'teamPage' ? 'teamsPage' : websiteArticleReturn); };
 document.getElementById('websiteShowsBack').onclick = () => { showPage('watchPage'); websiteSetNav('watchPage'); };
 document.getElementById('websiteVideoBack').onclick = () => { document.getElementById('websiteVideoContent').innerHTML = ''; showPage('websiteShowsPage'); websiteSetNav('watchPage'); };
 // Stop the dedicated episode player when navigating elsewhere.
@@ -19686,12 +19689,13 @@ html body #teamPage[data-website-team] .team-menu-card .team-menu-icon svg text{
   if(visible('teamPage')&&activeTeam){write('/teams/'+encodeURIComponent(activeTeam.slug));return;}
   for(const [id,path] of Object.entries(paths)){if(visible(id)){write(id==='watchPage'?(tabs[document.querySelector('#watchPage .network-tab.active')?.dataset.networkTab]||path):path);return;}}
  }
- const originalArticle=openWebsiteArticle;openWebsiteArticle=function(url){const u=new URL(url,location.href);if(/^\/news\/[a-z0-9-]+\/?$/.test(u.pathname))write(u.pathname.replace(/\/$/,''));return originalArticle.apply(this,arguments);};
+ const originalArticle=openWebsiteArticle;openWebsiteArticle=function(url){const u=new URL(url,location.href);const teamSlug=Object.keys(WEBSITE_TEAM_ARTICLE_HOSTS).find(slug=>WEBSITE_TEAM_ARTICLE_HOSTS[slug].replace(/^www\./,'')===u.hostname.replace(/^www\./,''));if(/^\/news\/[a-z0-9-]+\/?$/.test(u.pathname))write((teamSlug?'/teams/'+teamSlug:'')+u.pathname.replace(/\/$/,''));return originalArticle.apply(this,arguments);};
  const originalShow=openWebsiteShow;openWebsiteShow=function(kind){write('/watch/shows/'+shows[kind]);return originalShow.apply(this,arguments);};
  async function restore(){restoring=true;document.getElementById('websiteRouteError').style.display='none';const path=decodeURI(location.pathname).replace(/\/$/,'')||'/';
   try{
    let match;
-   if((match=/^\/teams\/([a-z0-9-]+)$/.exec(path))){const r=await fetch('/data/teams.json');if(!r.ok)throw Error('Teams unavailable');const d=await r.json();const team=(Array.isArray(d)?d:d.teams||[]).find(t=>t.slug===match[1]);if(!team)throw Error('Team not found');openTeamHome(team);}
+   if((match=/^\/teams\/([a-z0-9-]+)\/news\/([a-z0-9-]+)$/.exec(path))){const host=WEBSITE_TEAM_ARTICLE_HOSTS[match[1]];if(!host)throw Error('Team not found');const r=await fetch('/data/teams.json');const d=await r.json();const team=(Array.isArray(d)?d:d.teams||[]).find(t=>t.slug===match[1]);if(team)openTeamHome(team);await openWebsiteArticle('https://'+host+'/news/'+match[2]);}
+   else if((match=/^\/teams\/([a-z0-9-]+)$/.exec(path))){const r=await fetch('/data/teams.json');if(!r.ok)throw Error('Teams unavailable');const d=await r.json();const team=(Array.isArray(d)?d:d.teams||[]).find(t=>t.slug===match[1]);if(!team)throw Error('Team not found');openTeamHome(team);}
    else if((match=/^\/news\/([a-z0-9-]+)$/.exec(path))){await openWebsiteArticle('https://www.thenationalarenaleague.com/news/'+match[1]);}
    else if((match=/^\/watch\/shows\/([a-z0-9-]+)$/.exec(path))){const kind=Object.keys(shows).find(k=>shows[k]===match[1]);if(!kind)throw Error('Show not found');await openWebsiteShow(kind);}
    else if(Object.values(tabs).includes(path)||path==='/live'){showPage('watchPage');switchNetworkTab(path==='/live'?'live-channel':Object.keys(tabs).find(k=>tabs[k]===path));}
