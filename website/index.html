@@ -16333,12 +16333,12 @@ const NAL_SHOW_CHANNELS = {
   "around-the-nal": {
     name:"AROUND THE NAL",
     artwork:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_Network_-_Around_the_NAL.png?v=1789841164",
-    source:{label:"EPISODES",channelId:"72121",subId:"30667"}
+    source:{label:"EPISODES",channelId:"72122",subId:"30898"}
   },
   "nal-gameday": {
     name:"NAL GAMEDAY",
     artwork:"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL_GAMEDAY.png?v=1789841164",
-    source:{label:"EPISODES",channelId:"72121",subId:"30668"}
+    source:{label:"EPISODES",channelId:"72122",subId:"30905"}
   }
 };
 let activeNALShowSlug="";
@@ -18724,13 +18724,9 @@ async function openWebsiteShow(kind) {
   const host = document.getElementById('websiteShowsContent');
   host.innerHTML = '<p class="website-status" role="status">Loading episodes…</p>';
   try {
-    let items;
-    if (kind === 'coaches') {
-      const p = await fetchLightcastCatalog({ view: 'media', channelId: '72123' });
-      items = (Array.isArray(p.data) ? p.data : []).map(x => ({ ...x, channel_id: '72123', image: x.poster_image_16x9_640w || x.poster_image_640w || x.thumb_image_16x9_640w || '' }));
-    } else {
-      items = (await websiteCatalog()).filter(x => kind === 'gameday' ? /gameday|game day/i.test(x.title) : /^around\s+(?:the\s+)?nal\b/i.test(x.title));
-    }
+    const source = kind === 'coaches' ? {channelId:'72123'} : NAL_SHOW_CHANNELS[kind === 'gameday' ? 'nal-gameday' : 'around-the-nal'].source;
+    const payload = await fetchLightcastCatalog({view:'media',channelId:source.channelId,...(source.subId ? {subId:source.subId} : {})});
+    const items = (Array.isArray(payload.data) ? payload.data : []).map(x => ({...x,channel_id:source.channelId,image:x.poster_image_16x9_640w || x.poster_image_640w || x.thumb_image_16x9_640w || ''}));
     if (kind !== websiteShowKind) return;
     websiteShowItems = items;
     if (!items.length) { host.innerHTML = '<p class="website-status">No episodes are currently published in this category.</p>'; return; }
