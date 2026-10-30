@@ -8729,6 +8729,20 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
  html body #teamPage .team-news-swipe-hint{display:none;}
 }
 </style>
+<style id="home-stadium-news-refresh">
+html body #homePage{background:#06172b url('assets/teams-arena.webp') center top/cover fixed no-repeat!important;}
+html body #homePage .home-dark-section,
+html body #homePage .news-section,
+html body #homePage .future-section,
+html body #homePage .home-partners{background:linear-gradient(110deg,rgba(3,17,34,.88),rgba(7,30,52,.76))!important;}
+@media(min-width:1001px){
+ html body #homePage .news-scroll{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:18px!important;overflow:visible!important;align-items:stretch;}
+ html body #homePage .news-card{width:100%!important;min-width:0!important;display:flex;flex-direction:column;}
+ html body #homePage .news-card-title{font-size:16px!important;line-height:1.4!important;}
+ html body #homePage .news-card-image-wrap{height:auto!important;aspect-ratio:16/9;}
+}
+@media(max-width:1000px){html body #homePage{background-attachment:scroll!important;}}
+</style>
 </head>
 
 <body>
@@ -11437,7 +11451,7 @@ function renderNews(
   const additional =
     articles.slice(
       1,
-      5
+      6
     );
 
   const leadDescription =
