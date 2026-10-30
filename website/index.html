@@ -8605,6 +8605,35 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
  #teamPage[data-website-team="amarillo-warbirds"] .team-watch-name{font-size:26px}
  #teamPage[data-website-team="amarillo-warbirds"] .team-watch-subtitle{font-size:13px;margin-top:8px}
 }
+
+/* Desktop football views: readable team branding and controls. Mobile retained. */
+@media(min-width:1001px){
+ #teamPage[data-website-team="amarillo-warbirds"] .team-menu-grid{max-width:960px;margin:0 auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-menu-card{aspect-ratio:1;min-height:0;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:linear-gradient(145deg,#fff,#eaf0f8);border-color:#c4d3e7}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-menu-card .team-menu-icon{width:90px;height:90px;min-width:90px;min-height:90px;flex:0 0 90px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-menu-card .team-menu-icon svg{width:58px!important;height:58px!important}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-menu-title{font-size:18px;line-height:1.2;letter-spacing:.8px}
+ #schedulePage .nal-schedule-hero,#rosterPage .nal-roster-hero{text-align:center;padding:34px 30px}
+ #schedulePage .nal-schedule-hero h1,#rosterPage .nal-roster-hero h1{font-size:42px}
+ #schedulePage .nal-schedule-hero p,#rosterPage .nal-roster-hero p{font-size:14px}
+ #schedulePage .nal-schedule-teamstrip,#rosterPage .nal-roster-teamstrip{justify-content:center;gap:18px;padding:20px 12px}
+ #schedulePage .nal-schedule-teamchoice,#rosterPage .nal-roster-teamchoice{min-width:76px}
+ #schedulePage .nal-schedule-mini{width:68px;height:68px}
+ #schedulePage .nal-schedule-teamchoice small,#rosterPage .nal-roster-teamchoice small{font-size:11px;max-width:none}
+ #schedulePage .nal-schedule-teamhero,#rosterPage .nal-roster-banner{justify-content:center;text-align:center;min-height:180px;padding:30px;gap:26px;background:radial-gradient(ellipse at 50% 0%,#194a85,transparent 85%),linear-gradient(120deg,#07172b,#102b4e)}
+ #schedulePage .nal-schedule-big,#rosterPage .nal-roster-banner-logo{width:110px;height:110px;flex:0 0 110px}
+ #schedulePage .nal-schedule-teamhero b,#rosterPage .nal-roster-banner-copy b{font-size:32px;line-height:1.2}
+ #schedulePage .nal-schedule-teamhero span,#rosterPage .nal-roster-banner-copy span{font-size:14px}
+ #rosterPage .nal-roster-banner-copy small{font-size:12px}
+ #schedulePage .nal-schedule-teamgame{grid-template-columns:90px minmax(0,1fr) 190px;gap:28px;padding:22px 28px;min-height:100px;margin-bottom:14px}
+ #schedulePage .nal-schedule-datebox b{font-size:30px}
+ #schedulePage .nal-schedule-datebox span,#schedulePage .nal-schedule-opp small{font-size:12px}
+ #schedulePage .nal-schedule-opp b{font-size:21px}
+ #schedulePage .nal-schedule-gt{font-size:16px}
+ #rosterPage .nal-roster-table th{font-size:12px;padding:16px}
+ #rosterPage .nal-roster-table td{font-size:15px;padding:16px}
+ #rosterPage .nal-roster-table .nal-roster-name,#rosterPage .nal-roster-table .nal-roster-number{font-size:16px}
+}
 </style>
 </head>
 
