@@ -9408,7 +9408,6 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
       <section class="network-live-channel-section">
         <div class="network-section-header"><h2 class="network-section-title">NAL NETWORK LIVE CHANNEL</h2></div>
         <div id="nalNetworkLivePlayer" class="network-live-channel-player"></div>
-        <p class="network-live-channel-note">Watch NAL Network broadcasts here. Player availability follows the live channel.</p>
       </section>
     </div>
 
@@ -9465,8 +9464,8 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
     <div class="network-tab-panel" data-network-panel="team-channels">
       <section class="network-library-head nal-game-live-head">
         <div>
-          <h2>LIVE GAMES</h2>
-          <p>Watch live NAL action from across the league.</p>
+          <h2>UPCOMING</h2>
+          <p>Explore upcoming matchups from across the league.</p>
         </div>
         <div class="nal-game-count" id="nalLiveGameCount">LOADING</div>
       </section>
@@ -19159,5 +19158,29 @@ html body #watchPage .network-tab-panel[data-network-panel="home"] .network-show
 </script>
 
 <style>.website-show-episodes-heading{color:#eef3fa;font-size:24px;margin:30px 0 18px}.website-episode-card[aria-pressed="true"]{outline:2px solid #e31b23;outline-offset:2px}</style>
+<style id="watch-upcoming-polish">
+@media(min-width:1001px){
+html body #watchPage .nal-game-live-head{padding:12px 0 20px !important;margin:0 !important;align-items:center !important;}
+html body #watchPage .nal-game-live-head h2{font-size:30px !important;letter-spacing:.7px;margin:0 0 8px;color:#f3f6fa;}
+html body #watchPage .nal-game-live-head p{font-size:14px !important;line-height:1.5;color:#bdcddd;margin:0;}
+html body #watchPage .nal-game-count{padding:9px 13px !important;font-size:12px !important;background:#14324bd9;border:1px solid #496982;border-radius:20px;color:#e1eaf4 !important;}
+html body #watchPage .nal-game-live-section{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px !important;}
+html body #watchPage .nal-game-card{padding:22px !important;border:1px solid #42617d !important;border-radius:12px !important;min-width:0;box-sizing:border-box;background:radial-gradient(ellipse at top right,#bb142225,transparent 65%),linear-gradient(135deg,#102d49f5,#041326f5) !important;}
+html body #watchPage .nal-game-card-featured{grid-column:1/-1;background:linear-gradient(90deg,#08213ce8,#06152be8),url('/assets/teams-arena.webp') center 75%/cover !important;border-top:3px solid #e31b23 !important;}
+html body #watchPage .nal-game-matchup{grid-template-columns:minmax(0,1fr) minmax(150px,.7fr) minmax(0,1fr) !important;padding:20px 0 !important;gap:16px !important;max-width:1000px;margin:0 auto;}
+html body #watchPage .nal-game-team-mark{width:84px !important;height:84px !important;box-shadow:0 6px 18px #0005;}
+html body #watchPage .nal-game-card-featured .nal-game-team-mark{width:110px !important;height:110px !important;}
+html body #watchPage .nal-game-team strong{font-size:16px !important;line-height:1.25 !important;white-space:normal !important;overflow:visible !important;}
+html body #watchPage .nal-game-team span{font-size:10px !important;margin-top:4px;}
+html body #watchPage .nal-game-versus{font-size:30px !important;}
+html body #watchPage .nal-game-time{font-size:14px !important;line-height:1.5 !important;letter-spacing:.3px !important;color:#d6e2ee !important;margin-top:10px !important;}
+html body #watchPage .nal-game-status{font-size:11px !important;}
+html body #watchPage .nal-game-description{font-size:13px !important;line-height:1.5 !important;text-align:center;max-width:800px;margin:0 auto 18px !important;color:#bcccdc;}
+html body #watchPage .nal-game-watch-button{max-width:300px !important;margin:0 auto !important;min-height:44px !important;font-size:13px !important;border-radius:6px !important;}
+html body #watchPage .nal-game-featured-label,html body #watchPage .nal-game-secondary-label{font-size:11px !important;}
+html body #watchPage .nal-game-live-pill{font-size:11px !important;padding:7px 10px !important;}
+}
+</style>
+
 </body>
 </html>
