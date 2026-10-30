@@ -9036,7 +9036,7 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
       <section class="native-news-hero">
         <div class="native-news-kicker">THE NATIONAL ARENA LEAGUE</div>
         <h1>LATEST NEWS</h1>
-        <p>THE LATEST FROM AROUND THE LEAGUE</p>
+        <p>THE STORIES. THE TEAMS. THE LEAGUE.</p>
       </section>
 
       <div id="nativeNewsContent">
@@ -19015,5 +19015,35 @@ html body #fanPage .fan-zone-header h1,html body #fanPage .fan-zone-header p{tex
       third: "#8D8D8C"
     }
   };function paint(){document.querySelectorAll('#teamsDirectoryGrid .teams-directory-card').forEach(card=>{const name=card.querySelector('.teams-directory-name')?.textContent.toLowerCase().replace(/[^a-z0-9]/g,'')||'';const key=Object.keys(brands).find(k=>k.replace(/-/g,'')===name);if(key){card.style.setProperty('--card-primary',brands[key].primary);card.style.setProperty('--card-accent',brands[key].accent);}});}const grid=document.getElementById('teamsDirectoryGrid');if(grid){new MutationObserver(paint).observe(grid,{childList:true});paint();}})();</script>
+
+<style id="news-broadcast-refresh">
+@media(min-width:1001px){
+html body #newsPage{background:linear-gradient(#04112444,#04112488),url('/assets/teams-arena.webp') center top / cover no-repeat #07172b !important;padding-top:20px !important;}
+html body #newsPage .native-news-hero{display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:transparent !important;border:0 !important;box-shadow:none !important;padding:20px 0 16px !important;margin:0 0 16px !important;border-radius:0 !important;}
+html body #newsPage .native-news-kicker,html body #newsPage .native-news-hero::before,html body #newsPage .native-news-hero::after{display:none !important;}
+/* Identical bright finish across all three section titles. */
+html body #teamsPage .teams-directory-head h1,html body #fanPage .fan-zone-header h1,html body #newsPage .native-news-hero h1{
+font-family:Impact,Haettenschweiler,'Arial Narrow Bold','Arial Black',sans-serif !important;font-weight:900 !important;font-size:clamp(42px,4.3vw,64px) !important;line-height:1 !important;letter-spacing:2.5px !important;margin:0 0 10px !important;text-align:center !important;
+color:#f3f6fa !important;background:linear-gradient(180deg,#fff 0%,#f1f5fa 44%,#dbe3ed 65%,#eef3fa 100%) !important;background-clip:text !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;text-shadow:none !important;filter:drop-shadow(0 2px 0 #8291a5) drop-shadow(0 4px 5px #0009) !important;
+}
+html body #fanPage .fan-zone-header{background:linear-gradient(#06152a55,#06152a99),url('/assets/teams-arena.webp') center 23% / cover !important;border-radius:0 !important;}
+html body #teamsPage .teams-directory-head p,html body #fanPage .fan-zone-header p,html body #newsPage .native-news-hero p{font-size:14px !important;line-height:1.4 !important;font-weight:650 !important;letter-spacing:3px !important;color:#e1e9f3 !important;text-align:center !important;margin:0 !important;text-shadow:0 2px 5px #000;}
+html body #newsPage .native-news-feature{position:relative !important;display:flex !important;flex-direction:column !important;justify-content:flex-end;min-height:420px;aspect-ratio:2.8;max-height:600px;overflow:hidden;margin:0 0 20px !important;border:1px solid #3a6386 !important;border-radius:8px !important;background:#07172b !important;isolation:isolate;}
+html body #newsPage .native-news-feature-image{position:absolute !important;inset:0;width:100% !important;height:100% !important;object-fit:cover !important;z-index:-2;}
+html body #newsPage .native-news-feature::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#020e20 0%,#020e20ed 10%,#020e2066 50%,transparent 80%);pointer-events:none;z-index:-1;}
+html body #newsPage .native-news-feature-body{position:relative;padding:30px !important;flex:none !important;max-width:950px;}
+html body #newsPage .native-news-feature h2{font-size:clamp(26px,2.8vw,42px) !important;line-height:1.12 !important;color:white !important;margin:12px 0 !important;text-shadow:0 2px 5px #0008;}
+html body #newsPage .native-news-section-head{display:none !important;}
+html body #newsPage .native-news-list{gap:20px !important;grid-template-columns:repeat(5,minmax(0,1fr)) !important;}
+html body #newsPage .native-news-card{background:repeating-linear-gradient(135deg,transparent 0 8px,#ffffff03 8px 9px),linear-gradient(145deg,#102c49f5,#051328f5) !important;border:1px solid #335674 !important;border-top:3px solid #e31b23 !important;border-radius:7px !important;overflow:hidden;box-shadow:0 8px 20px #0003;}
+html body #newsPage .native-news-card-body{padding:18px !important;}
+html body #newsPage .native-news-card h3{font-size:18px !important;font-weight:650 !important;line-height:1.35 !important;color:white !important;}
+html body #newsPage .native-news-read{color:#fff !important;font-weight:800;letter-spacing:1px;}
+html body #newsPage .native-news-read::after{content:'';display:block;width:70px;height:2px;background:#e31b23;margin-top:7px;}
+html body #newsPage .native-news-card:hover{border-color:#6f9bbe !important;}
+}
+@media(forced-colors:active){html body #teamsPage .teams-directory-head h1,html body #fanPage .fan-zone-header h1,html body #newsPage .native-news-hero h1{background:none !important;-webkit-text-fill-color:CanvasText !important;filter:none !important;}}
+</style>
+
 </body>
 </html>
