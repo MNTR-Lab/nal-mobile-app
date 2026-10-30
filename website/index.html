@@ -8560,6 +8560,15 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
  #newsPage .native-news-card h3{font-size:18px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;min-height:97.2px;max-height:97.2px}
  #newsPage .native-news-card .native-news-read{margin-top:auto;padding-top:20px}
 }
+
+/* Desktop Teams directory: 4 + 4 + 2 centered. Mobile unchanged. */
+@media(min-width:1001px){
+ #teamsPage .teams-directory{max-width:none;padding:32px 50px 64px!important}
+ #teamsPage .teams-directory-grid{grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:24px!important}
+ #teamsPage .teams-directory-card{grid-column:span 2}
+ #teamsPage .teams-directory-card:nth-child(9):nth-last-child(2){grid-column:3 / span 2}
+ #teamsPage .teams-directory-card:nth-child(10):last-child{grid-column:5 / span 2}
+}
 </style>
 </head>
 
