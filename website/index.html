@@ -8570,49 +8570,49 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
  #teamsPage .teams-directory-card:nth-child(10):last-child{grid-column:5 / span 2}
 }
 
-/* Warbirds panel preview; other team pages retain their current design. */
-#teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCopy{width:100%;max-width:none;margin-left:auto;margin-right:auto;text-align:center}
-#teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCard{
+/* Shared team panels using each team’s own colors and logo. */
+#teamPage[data-website-team] #teamNextGameCopy{width:100%;max-width:none;margin-left:auto;margin-right:auto;text-align:center}
+#teamPage[data-website-team] #teamNextGameCard{
  isolation:isolate;overflow:hidden;
- background:radial-gradient(ellipse at 50% 0%,rgba(0,81,186,.75),transparent 65%),linear-gradient(125deg,#06182f,#123e7a 55%,#07172b)!important;
+ background:radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--team-primary) 75%,transparent),transparent 65%),linear-gradient(125deg,#06182f,color-mix(in srgb,var(--team-primary) 65%,#07172b) 55%,#07172b)!important;
 }
-#teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCard::before{
+#teamPage[data-website-team] #teamNextGameCard::before{
  content:"";position:absolute;inset:0;z-index:-1;opacity:.2;pointer-events:none;
  background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 1px),rgba(255,255,255,.38) calc(10% - 1px),rgba(255,255,255,.38) 10%),linear-gradient(0deg,transparent 48%,rgba(255,255,255,.22) 49%,rgba(255,255,255,.22) 50%,transparent 51%);
  transform:perspective(450px) rotateX(18deg) scale(1.2);transform-origin:bottom;
 }
-#teamPage[data-website-team="amarillo-warbirds"] #teamNextGameLabel{color:#fff}
-#teamPage[data-website-team="amarillo-warbirds"] #teamWatchChannelButton{
+#teamPage[data-website-team] #teamNextGameLabel{color:#fff}
+#teamPage[data-website-team] #teamWatchChannelButton{
  justify-content:center;text-align:center;isolation:isolate;
- background:radial-gradient(ellipse at 50% 0%,rgba(0,81,186,.7),transparent 70%),linear-gradient(120deg,#07172b,#123f80 55%,#07172b)!important;
+ background:radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--team-primary) 70%,transparent),transparent 70%),linear-gradient(120deg,#07172b,color-mix(in srgb,var(--team-primary) 65%,#07172b) 55%,#07172b)!important;
 }
-#teamPage[data-website-team="amarillo-warbirds"] #teamWatchChannelButton::after{
+#teamPage[data-website-team] #teamWatchChannelButton::after{
  content:"";inset:0 0 0 auto;width:35%;height:100%;border-radius:0;background:var(--website-team-logo) center/contain no-repeat!important;opacity:.13;pointer-events:none;
 }
-#teamPage[data-website-team="amarillo-warbirds"] #teamWatchChannelButton .team-watch-copy{text-align:center}
+#teamPage[data-website-team] #teamWatchChannelButton .team-watch-copy{text-align:center}
 @media(min-width:1001px){
- #teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCard{padding:28px 32px}
- #teamPage[data-website-team="amarillo-warbirds"] #teamNextGameTitle{display:none}
- #teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCopy{max-width:960px}
- #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-matchup{grid-template-columns:minmax(0,1fr) 100px minmax(0,1fr);margin:16px auto}
- #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-logo{width:120px!important;height:120px!important}
- #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-logo img{max-width:116px!important;max-height:116px!important}
- #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-side b{font-size:16px}
- #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-side small{font-size:11px}
- #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-date{font-size:22px}
- #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-place{font-size:13px}
- #teamPage[data-website-team="amarillo-warbirds"] #teamWatchChannelButton{min-height:170px;gap:24px}
- #teamPage[data-website-team="amarillo-warbirds"] .team-watch-name{font-size:26px}
- #teamPage[data-website-team="amarillo-warbirds"] .team-watch-subtitle{font-size:13px;margin-top:8px}
+ #teamPage[data-website-team] #teamNextGameCard{padding:28px 32px}
+ #teamPage[data-website-team] #teamNextGameTitle{display:none}
+ #teamPage[data-website-team] #teamNextGameCopy{max-width:960px}
+ #teamPage[data-website-team] .team-next-game-matchup{grid-template-columns:minmax(0,1fr) 100px minmax(0,1fr);margin:16px auto}
+ #teamPage[data-website-team] .team-next-game-logo{width:120px!important;height:120px!important}
+ #teamPage[data-website-team] .team-next-game-logo img{max-width:116px!important;max-height:116px!important}
+ #teamPage[data-website-team] .team-next-game-side b{font-size:16px}
+ #teamPage[data-website-team] .team-next-game-side small{font-size:11px}
+ #teamPage[data-website-team] .team-next-game-date{font-size:22px}
+ #teamPage[data-website-team] .team-next-game-place{font-size:13px}
+ #teamPage[data-website-team] #teamWatchChannelButton{min-height:170px;gap:24px}
+ #teamPage[data-website-team] .team-watch-name{font-size:26px}
+ #teamPage[data-website-team] .team-watch-subtitle{font-size:13px;margin-top:8px}
 }
 
 /* Desktop football views: readable team branding and controls. Mobile retained. */
 @media(min-width:1001px){
- #teamPage[data-website-team="amarillo-warbirds"] .team-menu-grid{max-width:none;margin:0 auto;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
- #teamPage[data-website-team="amarillo-warbirds"] .team-menu-card{aspect-ratio:auto;min-height:170px;padding:22px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:linear-gradient(145deg,#fff,#eaf0f8);border-color:#c4d3e7}
- #teamPage[data-website-team="amarillo-warbirds"] .team-menu-card .team-menu-icon{width:72px;height:72px;min-width:72px;min-height:72px;flex:0 0 72px;border-radius:50%;display:flex;align-items:center;justify-content:center}
- #teamPage[data-website-team="amarillo-warbirds"] .team-menu-card .team-menu-icon svg{width:46px!important;height:46px!important}
- #teamPage[data-website-team="amarillo-warbirds"] .team-menu-title{font-size:14px;line-height:1.2;letter-spacing:.3px}
+ #teamPage[data-website-team] .team-menu-grid{max-width:none;margin:0 auto;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+ #teamPage[data-website-team] .team-menu-card{aspect-ratio:auto;min-height:170px;padding:22px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:linear-gradient(145deg,#fff,#eaf0f8);border-color:#c4d3e7}
+ #teamPage[data-website-team] .team-menu-card .team-menu-icon{width:72px;height:72px;min-width:72px;min-height:72px;flex:0 0 72px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+ #teamPage[data-website-team] .team-menu-card .team-menu-icon svg{width:46px!important;height:46px!important}
+ #teamPage[data-website-team] .team-menu-title{font-size:14px;line-height:1.2;letter-spacing:.3px}
  #schedulePage .nal-schedule-hero,#rosterPage .nal-roster-hero{text-align:center;padding:34px 30px}
  #schedulePage .nal-schedule-hero h1,#rosterPage .nal-roster-hero h1{font-size:42px}
  #schedulePage .nal-schedule-hero p,#rosterPage .nal-roster-hero p{font-size:14px}
@@ -8654,16 +8654,16 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
 @media(max-width:600px){#teamPage{padding-bottom:28px!important}}
 
 @media(min-width:1001px){
- #teamPage[data-website-team="amarillo-warbirds"] .team-section:has(.team-menu-grid){background:transparent;border:0;box-shadow:none;padding:12px 0;margin:16px 12px}
- #teamPage[data-website-team="amarillo-warbirds"] .team-section:has(.team-menu-grid)>.section-header{display:none}
- #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);min-height:0;margin-right:0;background:#102b4e}
- #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-image{position:relative;inset:auto;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;grid-column:1;grid-row:1;align-self:center}
- #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-fallback{position:relative;grid-column:1;grid-row:1;min-height:330px;aspect-ratio:16/9}
- #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-fallback img{width:180px!important;height:180px!important;max-width:50%!important;max-height:180px!important;opacity:.8;object-fit:contain}
- #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-content{position:relative;grid-column:2;grid-row:1;align-self:center;padding:32px}
- #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-overlay{display:none}
- #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-title{font-size:clamp(24px,2.3vw,38px);line-height:1.15}
- #teamPage[data-website-team="amarillo-warbirds"] .team-news-read{font-size:13px;margin-top:18px}
+ #teamPage[data-website-team] .team-section:has(.team-menu-grid){background:transparent;border:0;box-shadow:none;padding:12px 0;margin:16px 12px}
+ #teamPage[data-website-team] .team-section:has(.team-menu-grid)>.section-header{display:none}
+ #teamPage[data-website-team] .team-news-lead{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);min-height:0;margin-right:0;background:#102b4e}
+ #teamPage[data-website-team] .team-news-lead-image{position:relative;inset:auto;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;grid-column:1;grid-row:1;align-self:center}
+ #teamPage[data-website-team] .team-news-lead-fallback{position:relative;grid-column:1;grid-row:1;min-height:330px;aspect-ratio:16/9}
+ #teamPage[data-website-team] .team-news-lead-fallback img{width:180px!important;height:180px!important;max-width:50%!important;max-height:180px!important;opacity:.8;object-fit:contain}
+ #teamPage[data-website-team] .team-news-lead-content{position:relative;grid-column:2;grid-row:1;align-self:center;padding:32px}
+ #teamPage[data-website-team] .team-news-lead-overlay{display:none}
+ #teamPage[data-website-team] .team-news-lead-title{font-size:clamp(24px,2.3vw,38px);line-height:1.15}
+ #teamPage[data-website-team] .team-news-read{font-size:13px;margin-top:18px}
 }
 </style>
 </head>
@@ -12188,8 +12188,7 @@ function openTeamHome(team) {
   const websiteFootballSection = teamPage.querySelector('.team-menu-grid')?.closest('.team-section');
   const websiteNewsSection = teamPage.querySelector('#teamNewsSection');
   if (websiteFootballSection && websiteNewsSection) {
-    if (team.slug === 'amarillo-warbirds') websiteNewsSection.before(websiteFootballSection);
-    else websiteNewsSection.after(websiteFootballSection);
+    websiteNewsSection.before(websiteFootballSection);
   }
 
   teamPage.style.setProperty("--website-team-logo", `url("${getTeamLogo(team)}")`);
