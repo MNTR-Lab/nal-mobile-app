@@ -19212,5 +19212,56 @@ html body #watchPage .nal-game-card-featured .nal-game-team-mark{width:84px !imp
 }
 </style>
 
+<style id="uniform-mobile-website-design">
+@media(max-width:1000px){
+/* Share the desktop visual language while adapting the layout to the viewport. */
+html body #newsPage,html body #watchPage,html body #fanPage,html body #teamsPage{background:linear-gradient(#04112444,#04112499),url('/assets/teams-arena.webp') center top / cover no-repeat #07172b !important;}
+html body #newsPage,html body #watchPage{padding:16px 16px 36px !important;}
+html body #fanPage .fan-zone-shell{padding:16px 16px 36px !important;}
+html body #newsPage .native-news-hero,html body #watchPage .network-hub-header.network-unified-hero,html body #fanPage .fan-zone-header,html body #teamsPage .teams-directory-head{display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;text-align:center !important;background:transparent !important;box-shadow:none !important;border:0 !important;border-radius:0 !important;padding:18px 0 16px !important;margin:0 0 16px !important;min-height:0 !important;}
+html body #newsPage .native-news-kicker,html body #fanPage .fan-zone-kicker,html body #teamsPage .teams-directory-kicker,html body #watchPage .network-unified-kicker,html body #newsPage .native-news-hero::after,html body #watchPage .network-unified-hero::after{display:none !important;}
+html body #newsPage .native-news-hero h1,html body #watchPage .network-unified-title,html body #fanPage .fan-zone-header h1,html body #teamsPage .teams-directory-head h1{font-family:Impact,Haettenschweiler,'Arial Narrow Bold','Arial Black',sans-serif !important;font-weight:900 !important;font-size:clamp(32px,8vw,52px) !important;line-height:1.08 !important;letter-spacing:1.5px !important;margin:0 0 10px !important;text-align:center !important;background:linear-gradient(180deg,#fff,#f1f5fa 44%,#dbe3ed 65%,#eef3fa) !important;background-clip:text !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;color:#f3f6fa !important;text-shadow:none !important;filter:drop-shadow(0 2px 0 #8291a5) drop-shadow(0 4px 5px #0009) !important;max-width:100%;}
+html body #newsPage .native-news-hero p,html body #watchPage .network-unified-tagline,html body #fanPage .fan-zone-header p,html body #teamsPage .teams-directory-head p{font-size:11px !important;line-height:1.5 !important;font-weight:650 !important;letter-spacing:1.7px !important;color:#e1e9f3 !important;text-align:center !important;margin:0 !important;text-shadow:0 2px 5px #000;max-width:100%;}
+html body .website-sticky-header #website-navigation.bottom-nav{background:#06172b !important;}
+html body .website-sticky-header #website-navigation.bottom-nav button.nav-button,html body .website-sticky-header #website-navigation.bottom-nav button.watch-button,html body .website-sticky-header #website-navigation.bottom-nav button>span.website-nav-label{color:white !important;}
+html body .website-sticky-header #website-navigation.bottom-nav button.active,html body .website-sticky-header #website-navigation.bottom-nav button:hover{background:#ffffff0d !important;border-bottom-color:#e31b23 !important;}
+html body #newsPage .native-news-feature,html body #newsPage .native-news-card{border:1px solid #396789 !important;border-radius:7px !important;overflow:hidden;background:repeating-linear-gradient(135deg,transparent 0 8px,#ffffff03 8px 9px),linear-gradient(145deg,#102c49f5,#051328f5) !important;}
+html body #newsPage .native-news-card{border-top:3px solid #e31b23 !important;}
+html body #newsPage .native-news-feature{display:flex !important;flex-direction:column !important;min-height:0 !important;}
+html body #newsPage .native-news-feature-image{position:static !important;width:100% !important;height:auto !important;object-fit:contain !important;}
+html body #newsPage .native-news-feature-body,html body #newsPage .native-news-card-body{padding:18px !important;}
+html body #newsPage .native-news-card img{height:auto !important;width:100% !important;aspect-ratio:16/9;object-fit:contain !important;}
+html body #newsPage .native-news-card h3{font-size:18px !important;line-height:1.35 !important;font-weight:650 !important;}
+html body #newsPage .native-news-read{color:white !important;letter-spacing:1px;}
+html body #newsPage .native-news-read::after{content:'';display:block;width:70px;height:2px;background:#e31b23;margin-top:7px;}
+html body #watchPage .network-tabs{position:relative !important;top:auto !important;background:transparent !important;margin:0 0 20px !important;gap:4px !important;padding:0 !important;border-bottom:1px solid #ffffff30 !important;overflow-x:auto !important;justify-content:flex-start !important;}
+html body #watchPage .network-tab{font-size:11px !important;padding:12px 10px !important;flex:0 0 auto !important;white-space:nowrap;}
+html body #watchPage .network-feature-card{display:flex !important;flex-direction:column !important;border:1px solid #396789 !important;border-radius:7px !important;overflow:hidden;background:#051328dd !important;}
+html body #watchPage .network-feature-info{padding:18px !important;gap:10px;background:repeating-linear-gradient(135deg,transparent 0 8px,#ffffff03 8px 9px),linear-gradient(145deg,#102c4977,#05132877);}
+html body #watchPage .network-feature-info strong{font-size:22px !important;line-height:1.2;}
+html body #watchPage .network-feature-info>span{font-size:14px !important;line-height:1.55;color:#d7e1ed !important;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden;}
+html body #watchPage .watch-feature-label{display:block !important;align-self:flex-start;background:#e31b23;color:white;font-size:10px;font-weight:850;padding:5px 9px;}
+html body #watchPage .watch-feature-action{display:block !important;align-self:flex-start;background:#e31b23;border:0;border-radius:4px;padding:12px 18px;color:white;font-size:13px;font-weight:850;}
+html body #watchPage .network-hub-section{padding:0 !important;margin:0 0 24px !important;}
+html body #watchPage .network-feature-section>.network-section-kicker{display:none !important;}
+html body #watchPage .network-feature-visual{border:0 !important;border-radius:0 !important;}
+html body #watchPage .network-tab-panel[data-network-panel="home"] .network-card-scroll{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:14px !important;margin:0 !important;padding:0 !important;overflow:visible !important;}
+html body #watchPage .network-tab-panel[data-network-panel="home"] .network-show-card{width:100% !important;min-width:0 !important;max-width:none !important;flex:initial !important;height:auto !important;background:linear-gradient(135deg,#102c4999,#051328dd);border-radius:6px;overflow:hidden;}
+html body #watchPage .network-tab-panel[data-network-panel="home"] .network-show-art{width:100% !important;height:auto !important;min-height:0 !important;aspect-ratio:16/9 !important;position:relative !important;display:block !important;border:1px solid #396789 !important;box-sizing:border-box;}
+html body #watchPage .network-tab-panel[data-network-panel="home"] .network-show-art img{position:absolute !important;inset:0 !important;width:100% !important;height:100% !important;object-fit:contain !important;}
+html body #watchPage .network-show-title{font-size:15px !important;line-height:1.25 !important;padding:10px 10px 4px;}
+html body #watchPage .network-show-meta{font-size:11px !important;padding:0 10px 12px;color:#bdcbdc !important;}
+html body #watchPage .network-section-title{font-size:20px !important;color:#e6edf6 !important;}
+html body #watchPage .nal-game-live-head{padding:0 0 18px !important;}
+html body #watchPage .nal-game-matchup{grid-template-columns:minmax(0,1fr) 100px minmax(0,1fr) !important;gap:8px;}
+html body #watchPage .nal-game-team strong{font-size:13px !important;line-height:1.25;white-space:normal !important;}
+html body #watchPage .nal-game-time{font-size:11px !important;line-height:1.4;color:#d6e2ee !important;}
+html body #watchPage .nal-game-description{font-size:12px !important;line-height:1.5 !important;}
+body:has(#watchPage[style*="display: block"]) .app-back-row{display:none !important;}
+}
+@media(max-width:520px){html body #watchPage .network-tab-panel[data-network-panel="home"] .network-card-scroll{grid-template-columns:minmax(0,1fr) !important;}html body #watchPage .network-tab{padding:12px 9px !important;}}
+@media(forced-colors:active){html body #newsPage .native-news-hero h1,html body #watchPage .network-unified-title,html body #fanPage .fan-zone-header h1,html body #teamsPage .teams-directory-head h1{-webkit-text-fill-color:CanvasText !important;background:none !important;filter:none !important;}}
+</style>
+
 </body>
 </html>
