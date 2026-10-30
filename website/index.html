@@ -16822,7 +16822,14 @@ function closeLightcastTest(){
       return;
     }
 
-    list.innerHTML = activeGames.map(gameCard).join("");
+    const visibleKeys = new Set(activeGames.map(liveGameKey));
+    const groups = scheduleWeekGroups().map(group => ({...group,games:group.games.filter(game=>visibleKeys.has(liveGameKey(game)))})).filter(group=>group.games.length);
+    const groupedKeys = new Set(groups.flatMap(group=>group.games.map(liveGameKey)));
+    let cardIndex = 0;
+    list.innerHTML = groups.map(group=>`<header class="nal-upcoming-week"><div><span>REGULAR SEASON</span><h3>WEEK ${group.number}</h3></div><div class="nal-upcoming-week-meta"><strong>${liveEscape(formatScheduleWeekRange(group.key))}</strong><span>${group.games.length} ${group.games.length===1?'GAME':'GAMES'}</span></div></header>${group.games.map(game=>gameCard(game,cardIndex++)).join('')}`).join('');
+    const undated=activeGames.filter(game=>!groupedKeys.has(liveGameKey(game)));
+    if(undated.length)list.innerHTML+=`<header class="nal-upcoming-week"><h3>DATE TO BE ANNOUNCED</h3></header>${undated.map(game=>gameCard(game,cardIndex++)).join('')}`;
+
   }
 
   let nalStandingsView="league";
@@ -19180,6 +19187,20 @@ html body #watchPage .nal-game-watch-button{max-width:300px !important;margin:0 
 html body #watchPage .nal-game-featured-label,html body #watchPage .nal-game-secondary-label{font-size:11px !important;}
 html body #watchPage .nal-game-live-pill{font-size:11px !important;padding:7px 10px !important;}
 }
+</style>
+
+<style id="watch-game-weeks">
+#watchPage .nal-upcoming-week{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 18px;border-left:4px solid #e31b23;border-bottom:1px solid #436381;background:linear-gradient(110deg,#123554ef,#06172bdb);border-radius:5px;margin-top:14px;}
+#watchPage .nal-upcoming-week h3{font-size:23px;line-height:1.1;margin:4px 0 0;color:#f3f6fa;letter-spacing:1px;}
+#watchPage .nal-upcoming-week span{font-size:10px;letter-spacing:1px;color:#b8cadd;font-weight:800;}
+#watchPage .nal-upcoming-week-meta{text-align:right;display:flex;flex-direction:column;gap:6px;}
+#watchPage .nal-upcoming-week-meta strong{font-size:14px;color:#e6eef8;}
+@media(min-width:1001px){
+html body #watchPage{background-image:linear-gradient(#04112444,#04112477),url('/assets/teams-arena.webp') !important;background-size:cover !important;background-position:center top !important;background-repeat:no-repeat !important;background-attachment:fixed !important;}
+html body #watchPage .network-tab-panel[data-network-panel="team-channels"]{background:transparent !important;}
+html body #watchPage .nal-game-live-head{background:transparent !important;}
+}
+@media(max-width:600px){#watchPage .nal-upcoming-week{padding:13px 12px;}#watchPage .nal-upcoming-week h3{font-size:20px;}#watchPage .nal-upcoming-week-meta strong{font-size:12px;}}
 </style>
 
 </body>
