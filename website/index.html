@@ -8569,6 +8569,42 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
  #teamsPage .teams-directory-card:nth-child(9):nth-last-child(2){grid-column:3 / span 2}
  #teamsPage .teams-directory-card:nth-child(10):last-child{grid-column:5 / span 2}
 }
+
+/* Warbirds panel preview; other team pages retain their current design. */
+#teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCopy{width:100%;max-width:none;margin-left:auto;margin-right:auto;text-align:center}
+#teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCard{
+ isolation:isolate;overflow:hidden;
+ background:radial-gradient(ellipse at 50% 0%,rgba(0,81,186,.75),transparent 65%),linear-gradient(125deg,#06182f,#123e7a 55%,#07172b)!important;
+}
+#teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCard::before{
+ content:"";position:absolute;inset:0;z-index:-1;opacity:.2;pointer-events:none;
+ background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 1px),rgba(255,255,255,.38) calc(10% - 1px),rgba(255,255,255,.38) 10%),linear-gradient(0deg,transparent 48%,rgba(255,255,255,.22) 49%,rgba(255,255,255,.22) 50%,transparent 51%);
+ transform:perspective(450px) rotateX(18deg) scale(1.2);transform-origin:bottom;
+}
+#teamPage[data-website-team="amarillo-warbirds"] #teamNextGameLabel{color:#fff}
+#teamPage[data-website-team="amarillo-warbirds"] #teamWatchChannelButton{
+ justify-content:center;text-align:center;isolation:isolate;
+ background:radial-gradient(ellipse at 50% 0%,rgba(0,81,186,.7),transparent 70%),linear-gradient(120deg,#07172b,#123f80 55%,#07172b)!important;
+}
+#teamPage[data-website-team="amarillo-warbirds"] #teamWatchChannelButton::after{
+ content:"";inset:0 0 0 auto;width:35%;height:100%;border-radius:0;background:var(--website-team-logo) center/contain no-repeat!important;opacity:.13;pointer-events:none;
+}
+#teamPage[data-website-team="amarillo-warbirds"] #teamWatchChannelButton .team-watch-copy{text-align:center}
+@media(min-width:1001px){
+ #teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCard{padding:28px 32px}
+ #teamPage[data-website-team="amarillo-warbirds"] #teamNextGameTitle{display:none}
+ #teamPage[data-website-team="amarillo-warbirds"] #teamNextGameCopy{max-width:960px}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-matchup{grid-template-columns:minmax(0,1fr) 100px minmax(0,1fr);margin:16px auto}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-logo{width:120px!important;height:120px!important}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-logo img{max-width:116px!important;max-height:116px!important}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-side b{font-size:16px}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-side small{font-size:11px}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-date{font-size:22px}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-next-game-place{font-size:13px}
+ #teamPage[data-website-team="amarillo-warbirds"] #teamWatchChannelButton{min-height:170px;gap:24px}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-watch-name{font-size:26px}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-watch-subtitle{font-size:13px;margin-top:8px}
+}
 </style>
 </head>
 
@@ -12087,6 +12123,9 @@ function openTeamHome(team) {
       third: "#8D8D8C"
     }
   };
+
+  teamPage.dataset.websiteTeam = team.slug;
+  teamPage.style.setProperty("--website-team-logo", `url("${getTeamLogo(team)}")`);
 
   const brand =
     teamBranding[team.slug] || {
