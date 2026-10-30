@@ -8823,6 +8823,7 @@ html body #homePage .home-partners{background:linear-gradient(110deg,rgba(3,17,3
       aria-label="Fan Zone"
     ><span class="website-nav-label">Fan Zone</span></button>
 
+  <button class="nav-button" data-page="shopPage" aria-label="Shop"><span class="website-nav-label">Shop</span></button>
   </nav>
 </div>
 
@@ -19760,10 +19761,14 @@ function options(p){open(`<h2>${esc(p.title)}</h2><img class="nal-shop-option-im
 function showCart(){open(`<h2>YOUR CART (${cart.reduce((n,x)=>n+x.quantity,0)})</h2>${cart.length?cart.map((x,i)=>`<div class="nal-shop-line"><img src="${safeImage(x.image)}" alt=""><div><strong>${esc(x.title)}</strong><p>${esc(x.option)}</p><p>${money(x.price)}</p><label>Quantity <input type="number" min="1" max="20" value="${x.quantity}" data-qty="${i}"></label> <button class="nal-shop-button" data-remove="${i}">REMOVE</button></div></div>`).join(''):'<p>Your cart is empty.</p>'}${cart.length?`<div class="nal-shop-total"><span>Subtotal</span><span>${money(cart.reduce((n,x)=>n+Number(x.price)*x.quantity,0))}</span></div><button class="nal-shop-button nal-shop-red" id="nalShopCheckout">CHECKOUT</button><p class="nal-shop-notice">Continue to secure checkout at NAL Shop. Shipping, taxes, prices and availability are confirmed there.</p>`:''}`);drawer.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{cart.splice(Number(b.dataset.remove),1);save();showCart();});drawer.querySelectorAll('[data-qty]').forEach(input=>input.onchange=()=>{cart[Number(input.dataset.qty)].quantity=Math.min(20,Math.max(1,parseInt(input.value)||1));save();showCart();});drawer.querySelector('#nalShopCheckout')?.addEventListener('click',()=>{location.href='https://nalshop.com/cart/'+cart.map(x=>x.id+':'+x.quantity).join(',');});}
 window.loadNalShop=async function(more=false){if((loaded&&!more)||loading)return;loading=true;const moreButton=document.getElementById('nalShopMore');moreButton.disabled=true;try{const r=await fetch('https://nal-network-preview-content.bikard.workers.dev/shop/catalog?page='+(more?catalogPage+1:1));const d=await r.json();if(!r.ok||!d.success||!Array.isArray(d.products))throw Error('Unavailable');products=more?products.concat(d.products):d.products;catalogPage=d.page||1;loaded=true;moreButton.style.display=d.hasMore?'block':'none';const types=[...new Set(products.map(p=>p.type).filter(Boolean))].sort();document.getElementById('nalShopType').innerHTML='<option value="">ALL GEAR</option>'+types.map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('');render();}catch{document.getElementById('nalShopCatalog').innerHTML='<p>Merchandise is temporarily unavailable.</p><button class="nal-shop-button" id="nalShopRetry">TRY AGAIN</button><p><a href="https://nalshop.com/" style="color:white">Visit NAL Shop</a></p>';document.getElementById('nalShopRetry').onclick=window.loadNalShop;}finally{loading=false;moreButton.disabled=false;}};
 document.getElementById('nalShopMore').onclick=()=>window.loadNalShop(true);document.getElementById('nalShopSearch').oninput=render;document.getElementById('nalShopType').onchange=render;document.getElementById('nalShopBag').onclick=showCart;save();
-const link=document.createElement('a');link.href='/shop';link.textContent='SHOP';link.className='nal-shop-button';link.style.cssText='position:fixed;right:18px;bottom:20px;z-index:500;box-shadow:0 3px 15px #0006';link.onclick=e=>{e.preventDefault();showPage('shopPage');window.loadNalShop();};document.body.append(link);
+
 new MutationObserver(()=>{if(page.style.display!=='none'&&page.classList.contains('active'))window.loadNalShop();}).observe(page,{attributes:true,attributeFilter:['style','class']});
 if(location.pathname.replace(/\/$/,'')==='/shop'){showPage('shopPage');window.loadNalShop();}
 })();
 </script>
+<style id="website-six-item-navigation">
+html body .website-sticky-header #website-navigation.bottom-nav{display:grid!important;grid-template-columns:repeat(6,minmax(0,160px))!important;justify-content:center!important;}
+@media(max-width:1000px){html body .website-sticky-header #website-navigation.bottom-nav{grid-template-columns:repeat(6,minmax(0,1fr))!important;}}
+</style>
 </body>
 </html>
