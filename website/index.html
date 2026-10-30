@@ -8369,6 +8369,55 @@ body { background:#07172b; }
     font-size:clamp(8px,2.3vw,12px) !important;
   }
 }
+
+/* Roomier desktop content and readable game-week presentation. */
+@media(min-width:768px) {
+  #homePage .home-dark-section, #homePage .news-section,
+  #homePage .future-section, #homePage .home-partners {
+    padding-left:50px !important; padding-right:50px !important;
+  }
+  .app > .app-page:not(#homePage) { padding-left:50px; padding-right:50px; }
+  .app-powered-by { padding-left:50px !important; padding-right:50px !important; }
+  #homePage .home-game-carousel,
+  #homePage .home-quick-grid { width:100%; max-width:none !important; margin-left:0 !important; margin-right:0 !important; }
+  #homePage .home-game-placeholder,
+  #homePage .home-game-placeholder.home-game-slide {
+    min-height:240px !important; padding:28px 32px !important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr) !important;
+    gap:24px !important; align-items:center;
+  }
+  #homePage .home-game-logo-slot {
+    width:100px !important; height:100px !important; margin:0 auto 12px !important; padding:8px !important;
+  }
+  #homePage .home-game-team-name { font-size:18px !important; line-height:1.25 !important; }
+  #homePage .home-game-team-role { font-size:11px !important; margin-top:7px; letter-spacing:1px; }
+  #homePage .home-game-week-label { font-size:12px !important; letter-spacing:1.5px; margin-bottom:9px; }
+  #homePage .home-game-date { font-size:24px !important; line-height:1.3 !important; }
+  #homePage .home-game-location { font-size:14px !important; line-height:1.5 !important; margin-top:10px; }
+  #homePage .home-game-carousel-controls { gap:20px; margin:14px 0 22px; }
+  #homePage .home-game-arrow { width:44px; height:44px; font-size:30px; }
+  #homePage .home-quick-grid { gap:20px !important; margin-top:24px !important; }
+  #homePage .home-quick-button { min-height:120px !important; gap:12px !important; padding:20px 12px !important; border-radius:12px; }
+  #homePage .home-quick-button svg { width:34px !important; height:34px !important; }
+  #homePage .home-quick-button span { font-size:15px !important; line-height:1.25; letter-spacing:.4px; }
+}
+@media(min-width:768px) and (max-width:1023px) {
+  #homePage .home-game-placeholder, #homePage .home-game-placeholder.home-game-slide { padding:24px 18px !important; gap:16px !important; }
+  #homePage .home-game-logo-slot { width:80px !important; height:80px !important; }
+  #homePage .home-game-team-name { font-size:15px !important; }
+  #homePage .home-game-date { font-size:20px !important; }
+  #homePage .home-game-location { font-size:12px !important; }
+  #homePage .home-quick-grid { gap:12px !important; }
+  #homePage .home-quick-button span { font-size:12px !important; }
+}
+@media(max-width:767px) {
+  #homePage .home-dark-section, #homePage .news-section,
+  #homePage .future-section, #homePage .home-partners { padding-left:16px !important; padding-right:16px !important; }
+}
+
+/* Wide desktop artwork; preserve the existing 16:9 artwork on phones. */
+#homePage .website-hero-picture { display:block; width:100%; }
+#homePage .website-hero-image { display:block; width:100%; height:auto; max-height:none; object-fit:contain; }
 </style>
 </head>
 
@@ -8513,7 +8562,10 @@ body { background:#07172b; }
   >
 
     <section class="season-x-hero">
-<img class="website-hero-image" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_-_Updated.png?v=1789954175" alt="National Arena League Season X" fetchpriority="high">
+<picture class="website-hero-picture">
+  <source media="(min-width:768px)" srcset="/assets/website-app.png" width="2155" height="730">
+  <img class="website-hero-image" src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_-_Updated.png?v=1789954175" alt="National Arena League Season X" width="1671" height="941" fetchpriority="high">
+</picture>
       <div class="hero-red-glow"></div>
       <div class="hero-content">
 </div>
