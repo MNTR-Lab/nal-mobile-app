@@ -8418,6 +8418,27 @@ body { background:#07172b; }
 /* Wide desktop artwork; preserve the existing 16:9 artwork on phones. */
 #homePage .website-hero-picture { display:block; width:100%; }
 #homePage .website-hero-image { display:block; width:100%; height:auto; max-height:none; object-fit:contain; }
+
+/* Website header brand: display the wide wordmark without its transparent canvas padding. */
+.website-sticky-header .topbar { --header-height:96px; }
+.website-sticky-header .topbar #headerHome {
+  position:relative !important; display:block !important; overflow:hidden !important;
+  width:min(600px,calc(100vw - 156px)) !important; max-width:100% !important;
+  height:84px !important; margin:0 auto !important; padding:0 !important;
+}
+.website-sticky-header .topbar #headerHome img.nal-logo {
+  display:block !important; position:absolute !important;
+  left:50% !important; top:50% !important; right:auto !important; bottom:auto !important;
+  width:100% !important; height:auto !important; min-width:0 !important; min-height:0 !important;
+  max-width:none !important; max-height:none !important; margin:0 !important; padding:0 !important;
+  transform:translate(-50%,-50%) !important; object-fit:contain !important;
+}
+html { scroll-padding-top:176px; }
+@media(max-width:767px) {
+  .website-sticky-header .topbar { --header-height:72px; }
+  .website-sticky-header .topbar #headerHome { width:calc(100vw - 140px) !important; height:56px !important; }
+  html { scroll-padding-top:144px; }
+}
 </style>
 </head>
 
@@ -8453,11 +8474,7 @@ body { background:#07172b; }
       id="headerHome"
       aria-label="National Arena League Home"
     >
-      <img
-        class="nal-logo"
-        src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/NAL-Only.png?v=1789932055"
-        alt="National Arena League"
-      >
+      <img class="nal-logo" src="/assets/NAL%20NETWORK%20APP.png" alt="NAL Network — The Game. The League. The Network." width="2172" height="724" decoding="async">
     </a>
 
     <div class="header-right">
