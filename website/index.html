@@ -9465,7 +9465,6 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
       <section class="network-library-head nal-game-live-head">
         <div>
           <h2>UPCOMING</h2>
-          <p>Explore upcoming matchups from across the league.</p>
         </div>
         <div class="nal-game-count" id="nalLiveGameCount">LOADING</div>
       </section>
@@ -16826,7 +16825,7 @@ function closeLightcastTest(){
     const groups = scheduleWeekGroups().map(group => ({...group,games:group.games.filter(game=>visibleKeys.has(liveGameKey(game)))})).filter(group=>group.games.length);
     const groupedKeys = new Set(groups.flatMap(group=>group.games.map(liveGameKey)));
     let cardIndex = 0;
-    list.innerHTML = groups.map(group=>`<header class="nal-upcoming-week"><div><span>REGULAR SEASON</span><h3>WEEK ${group.number}</h3></div><div class="nal-upcoming-week-meta"><strong>${liveEscape(formatScheduleWeekRange(group.key))}</strong><span>${group.games.length} ${group.games.length===1?'GAME':'GAMES'}</span></div></header>${group.games.map(game=>gameCard(game,cardIndex++)).join('')}`).join('');
+    list.innerHTML = groups.map(group=>`<header class="nal-upcoming-week"><div><span>REGULAR SEASON</span><h3>WEEK ${group.number}</h3></div><div class="nal-upcoming-week-meta"><strong>${liveEscape(formatScheduleWeekRange(group.key))}</strong><span>${group.games.length} ${group.games.length===1?'GAME':'GAMES'}</span></div></header>${group.games.map((game,index)=>{const markup=gameCard(game,cardIndex++);return group.games.length%2===1&&index===group.games.length-1?markup.replace('class="nal-game-card ','class="nal-game-card nal-game-week-last-centered '):markup;}).join('')}`).join('');
     const undated=activeGames.filter(game=>!groupedKeys.has(liveGameKey(game)));
     if(undated.length)list.innerHTML+=`<header class="nal-upcoming-week"><h3>DATE TO BE ANNOUNCED</h3></header>${undated.map(game=>gameCard(game,cardIndex++)).join('')}`;
 
@@ -19201,6 +19200,16 @@ html body #watchPage .network-tab-panel[data-network-panel="team-channels"]{back
 html body #watchPage .nal-game-live-head{background:transparent !important;}
 }
 @media(max-width:600px){#watchPage .nal-upcoming-week{padding:13px 12px;}#watchPage .nal-upcoming-week h3{font-size:20px;}#watchPage .nal-upcoming-week-meta strong{font-size:12px;}}
+</style>
+
+<style id="watch-games-two-per-row">
+@media(min-width:1001px){
+html body #watchPage .nal-game-live-section{display:grid !important;grid-template-columns:repeat(4,minmax(0,1fr)) !important;gap:22px !important;}
+html body #watchPage .nal-game-live-section>.nal-game-card{grid-column:span 2 !important;}
+html body #watchPage .nal-game-live-section>.nal-game-card.nal-game-week-last-centered{grid-column:2 / span 2 !important;}
+html body #watchPage .nal-upcoming-week{grid-column:1/-1 !important;}
+html body #watchPage .nal-game-card-featured .nal-game-team-mark{width:84px !important;height:84px !important;}
+}
 </style>
 
 </body>
