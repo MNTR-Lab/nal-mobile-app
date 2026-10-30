@@ -19045,5 +19045,15 @@ html body #newsPage .native-news-card:hover{border-color:#6f9bbe !important;}
 @media(forced-colors:active){html body #teamsPage .teams-directory-head h1,html body #fanPage .fan-zone-header h1,html body #newsPage .native-news-hero h1{background:none !important;-webkit-text-fill-color:CanvasText !important;filter:none !important;}}
 </style>
 
+
+<style id="news-full-artwork">
+@media(min-width:1001px){
+html body #newsPage .native-news-feature{display:flex !important;flex-direction:column !important;aspect-ratio:auto !important;min-height:0 !important;max-height:none !important;isolation:auto !important;}
+html body #newsPage .native-news-feature-image{position:static !important;inset:auto !important;display:block !important;width:100% !important;height:auto !important;max-height:none !important;object-fit:contain !important;align-self:stretch !important;z-index:auto !important;}
+html body #newsPage .native-news-feature::after{display:none !important;}
+html body #newsPage .native-news-feature-body{width:100% !important;max-width:none !important;box-sizing:border-box !important;background:linear-gradient(135deg,#102c49,#051328) !important;padding:24px 30px !important;}
+}
+</style>
+
 </body>
 </html>
