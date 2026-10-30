@@ -18909,6 +18909,29 @@ for (const pageId of ['homePage','watchPage']) {
  .website-sticky-header .bottom-nav .nav-button.active,.website-sticky-header .bottom-nav .watch-button.active{background:#ffffff06 !important;border-bottom-color:#e31b23 !important;}
 }
 @media(prefers-reduced-motion:reduce){#teamsPage .teams-directory-card{transition:none !important;}}
+
+@media(min-width:1001px){
+#bottomNav.bottom-nav .nav-button,#bottomNav.bottom-nav .watch-button,#bottomNav.bottom-nav button,#bottomNav.bottom-nav button span,#website-navigation .bottom-nav button,#website-navigation .bottom-nav button span{color:#fff !important;}
+#bottomNav.bottom-nav button.active,#bottomNav.bottom-nav .nav-button.active,#bottomNav.bottom-nav .watch-button.active{background:#ffffff06 !important;border-bottom-color:#e31b23 !important;}
+}
+@media(min-width:1001px){
+.website-sticky-header #website-navigation.bottom-nav button.nav-button,
+.website-sticky-header #website-navigation.bottom-nav button.watch-button,
+.website-sticky-header #website-navigation.bottom-nav button > span.website-nav-label{color:#fff !important;}
+.website-sticky-header #website-navigation.bottom-nav button.active,
+.website-sticky-header #website-navigation.bottom-nav button:hover{background:#ffffff0d !important;border-bottom-color:#e31b23 !important;}
+}
+
+/* Compact desktop navigation with explicit label contrast. */
+@media(min-width:1001px){
+html body .website-sticky-header #website-navigation.bottom-nav{height:34px !important;min-height:34px !important;background:#06172b !important;}
+html body .website-sticky-header #website-navigation.bottom-nav button.nav-button,
+html body .website-sticky-header #website-navigation.bottom-nav button.watch-button{height:34px !important;min-height:34px !important;padding:0 8px !important;color:#fff !important;background:transparent !important;}
+html body .website-sticky-header #website-navigation.bottom-nav button.nav-button > span.website-nav-label,
+html body .website-sticky-header #website-navigation.bottom-nav button.watch-button > span.website-nav-label{color:#fff !important;}
+html body .website-sticky-header #website-navigation.bottom-nav button.active,
+html body .website-sticky-header #website-navigation.bottom-nav button:hover{background:#ffffff0d !important;border-bottom-color:#e31b23 !important;}
+}
 </style>
 <script id="teams-directory-colors">(()=>{const brands={
     "amarillo-warbirds": {
