@@ -18731,6 +18731,13 @@ async function openWebsiteShow(kind) {
   const title = kind === 'coaches' ? 'COACHES’ SHOWS' : kind === 'gameday' ? 'NAL GAMEDAY' : 'AROUND THE NAL';
   document.getElementById('websiteShowsTitle').textContent = title;
   const host = document.getElementById('websiteShowsContent');
+  if (kind === 'around' || kind === 'gameday') {
+    websiteShowItems = [];
+    const subId = kind === 'gameday' ? '30905' : '30898';
+    const src = `https://www.lightcast.com/embed/player.php?id=72122&subId=${subId}&type=vod`;
+    host.innerHTML = `<div class="website-video-frame"><iframe src="${websiteEscape(src)}" title="${websiteEscape(title)} — Lightcast channel player" referrerpolicy="no-referrer-when-downgrade" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+    return;
+  }
   host.innerHTML = '<p class="website-status" role="status">Loading episodes…</p>';
   try {
     const source = kind === 'coaches' ? {channelId:'72123'} : NAL_SHOW_CHANNELS[kind === 'gameday' ? 'nal-gameday' : 'around-the-nal'].source;
@@ -19121,6 +19128,10 @@ html body #watchPage .network-tab-panel[data-network-panel="home"] .network-show
 </style>
 <script id="network-live-channel-player">
 (()=>{const page=document.getElementById('watchPage');const panel=page.querySelector('[data-network-panel="live-channel"]');const host=document.getElementById('nalNetworkLivePlayer');function sync(){const visible=page.style.display!=='none'&&panel.classList.contains('active');if(!visible){host.replaceChildren();return;}if(host.querySelector('iframe'))return;const frame=document.createElement('iframe');frame.src='https://www.lightcast.com/embed/player.php?id=72169&type=live';frame.title='NAL Network Live Channel';frame.referrerPolicy='no-referrer-when-downgrade';frame.allow='fullscreen; picture-in-picture';frame.allowFullscreen=true;host.appendChild(frame);}new MutationObserver(sync).observe(page,{attributes:true,attributeFilter:['style']});new MutationObserver(sync).observe(panel,{attributes:true,attributeFilter:['class']});sync();})();
+</script>
+
+<script id="website-show-embed-lifecycle">
+(()=>{const page=document.getElementById('websiteShowsPage');if(!page)return;new MutationObserver(()=>{if(page.style.display==='none')document.getElementById('websiteShowsContent').replaceChildren();}).observe(page,{attributes:true,attributeFilter:['style']});})();
 </script>
 
 </body>
