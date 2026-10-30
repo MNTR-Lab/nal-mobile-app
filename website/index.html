@@ -8553,6 +8553,13 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
  #newsPage .native-news-list{grid-template-columns:1fr;gap:20px}
  #newsPage .native-news-feature h2{font-size:25px}
 }
+
+/* Compact desktop news headlines; preserve mobile typography. */
+@media(min-width:1001px){
+ #newsPage .native-news-card-body{padding:20px;display:flex;flex-direction:column}
+ #newsPage .native-news-card h3{font-size:18px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;min-height:97.2px;max-height:97.2px}
+ #newsPage .native-news-card .native-news-read{margin-top:auto;padding-top:20px}
+}
 </style>
 </head>
 
