@@ -8634,6 +8634,20 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
  #rosterPage .nal-roster-table td{font-size:15px;padding:16px}
  #rosterPage .nal-roster-table .nal-roster-name,#rosterPage .nal-roster-table .nal-roster-number{font-size:16px}
 }
+
+@media(min-width:1001px){
+ #schedulePage[data-branded-team] .nal-schedule-hero,#schedulePage[data-branded-team] .nal-schedule-teamhero,
+ #rosterPage[data-branded-team] .nal-roster-hero,#rosterPage[data-branded-team] .nal-roster-banner{
+  position:relative;isolation:isolate;overflow:hidden;border-bottom:4px solid var(--view-team-accent);
+  background:radial-gradient(ellipse at 45% 0%,color-mix(in srgb,var(--view-team-primary) 65%,transparent),transparent 80%),linear-gradient(120deg,#07172b,color-mix(in srgb,var(--view-team-primary) 65%,#07172b))!important;
+ }
+ #schedulePage[data-branded-team] .nal-schedule-hero::after,#schedulePage[data-branded-team] .nal-schedule-teamhero::after,
+ #rosterPage[data-branded-team] .nal-roster-hero::after,#rosterPage[data-branded-team] .nal-roster-banner::after{
+  content:"";position:absolute;inset:0 0 0 auto;width:32%;height:100%;border-radius:0;pointer-events:none;z-index:-1;
+  background:var(--view-team-watermark) center/contain no-repeat;opacity:.14;
+ }
+ #schedulePage[data-branded-team] .nal-schedule-hero h1 span,#rosterPage[data-branded-team] .nal-roster-hero h1 span{color:#fff}
+}
 </style>
 </head>
 
@@ -18710,5 +18724,83 @@ for (const pageId of ['homePage','watchPage']) {
   }).observe(page, { attributes: true, attributeFilter: ['style'] });
 }
 </script>
+
+<script id="website-team-view-branding">
+(() => {
+ const brands = {
+    "amarillo-warbirds": {
+      primary: "#0051BA",
+      accent: "#E8000D",
+      third: "#07172B"
+    },
+    "colorado-spartans": {
+      primary: "#2D8BCB",
+      accent: "#000000",
+      third: "#7A7D81"
+    },
+    "dallas-apex": {
+      primary: "#C8102E",
+      accent: "#E1AD01",
+      third: "#000000"
+    },
+    "louisiana-rouxgaroux": {
+      primary: "#CFB53B",
+      accent: "#800000",
+      third: "#000000"
+    },
+    "omaha-beef": {
+      primary: "#F47A20",
+      accent: "#000000",
+      third: "#808080"
+    },
+    "pueblo-punishers": {
+      primary: "#6F2DA8",
+      accent: "#000000",
+      third: "#C0C0C0"
+    },
+    "salina-liberty": {
+      primary: "#1B325A",
+      accent: "#E6252C",
+      third: "#FFFFFF"
+    },
+    "sioux-city-bandits": {
+      primary: "#000000",
+      accent: "#C8102E",
+      third: "#D4AF37"
+    },
+    "southwest-kansas-storm": {
+      primary: "#6B2E8E",
+      accent: "#5FBB46",
+      third: "#009EAE"
+    },
+    "wheeling-miners": {
+      primary: "#C7992C",
+      accent: "#020202",
+      third: "#8D8D8C"
+    }
+  };
+ const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]/g,'');
+ function update(pageId, bannerSelector) {
+  const page = document.getElementById(pageId);
+  const banner = page?.querySelector(bannerSelector);
+  const name = banner?.querySelector('b')?.textContent || '';
+  const team = (typeof nalTeams !== 'undefined' && Array.isArray(nalTeams)) ? nalTeams.find(t => normalize(t.name) === normalize(name)) : null;
+  const brand = team && brands[team.slug];
+  if (!banner || !brand) { page?.removeAttribute('data-branded-team'); return; }
+  page.dataset.brandedTeam = team.slug;
+  page.style.setProperty('--view-team-primary',brand.primary);
+  page.style.setProperty('--view-team-accent',brand.accent);
+  const image = banner.querySelector('img')?.getAttribute('src');
+  if(image) page.style.setProperty('--view-team-watermark',`url("${image.replace(/["\\]/g,'')}")`);
+ }
+ for (const [id,selector] of [['schedulePage','.nal-schedule-teamhero'],['rosterPage','.nal-roster-banner']]) {
+  const page = document.getElementById(id);
+  if(!page) continue;
+  new MutationObserver(() => update(id,selector)).observe(page,{childList:true,subtree:true});
+  update(id,selector);
+ }
+})();
+</script>
+
 </body>
 </html>
