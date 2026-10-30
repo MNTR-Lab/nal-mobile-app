@@ -8482,6 +8482,42 @@ html { scroll-padding-top:176px; }
   .website-sticky-header #website-navigation button.nav-button > span.website-nav-label,
   .website-sticky-header #website-navigation button.watch-button > span.website-nav-label { font-size:clamp(7px,2.1vw,12px) !important; }
 }
+
+.website-content-shell { max-width:1200px; margin:0 auto; padding:28px 0 60px; }
+.website-content-shell h1 { color:#fff; font-size:clamp(26px,3vw,42px); line-height:1.15; margin:16px 0 24px; }
+.website-content-shell .website-kicker { color:#e31b23; font-size:12px; font-weight:900; letter-spacing:1px; }
+#websiteArticlePage,#websiteShowsPage,#websiteVideoPage { background:#07172b; color:#dce6f0; min-height:70vh; }
+#websiteArticlePage .website-content-shell { max-width:1000px; }
+.website-action { background:#fff; color:#07172b; border:1px solid #b8c7d8; border-radius:7px; padding:12px 18px; font:800 13px Arial; cursor:pointer; margin:8px 0; }
+.website-status { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:12px; padding:24px; min-height:140px; color:inherit; }
+.website-status a,.website-article-source a { color:#bddbff; }
+.website-article-image { width:100%; height:auto; max-height:560px; object-fit:contain; margin:0 0 28px; border-radius:10px; }
+.website-article-body { color:#edf3f9; font-size:18px; line-height:1.8; }
+.website-article-body p { margin:0 0 22px; }
+.website-article-body h2,.website-article-body h3 { margin:30px 0 16px; line-height:1.3; }
+.website-article-body blockquote { padding:16px 24px; margin:20px 0; border-left:4px solid #e31b23; background:#102b49; }
+.website-article-source { font-size:12px; margin-top:32px; color:#aabbd0; }
+.website-episode-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.website-episode-card { border:1px solid #28445f; border-radius:12px; padding:0; overflow:hidden; background:#102b49; color:#fff; text-align:left; cursor:pointer; }
+.website-episode-card img,.website-episode-placeholder { display:block; width:100%; aspect-ratio:16/9; object-fit:cover; background:#07172b; }
+.website-episode-placeholder { display:grid; place-items:center; font-weight:900; }
+.website-episode-card strong { display:block; font-size:17px; line-height:1.4; padding:16px 18px 8px; }
+.website-episode-card span { display:block; padding:0 18px 18px; font-size:11px; font-weight:900; color:#bddbff; }
+.website-video-frame { width:100%; aspect-ratio:16/9; position:relative; background:#000; }
+.website-video-frame iframe { display:block; position:absolute; inset:0; width:100%; height:100%; border:0; }
+#websiteVideoDescription { font-size:17px; line-height:1.7; margin-top:20px; white-space:pre-line; }
+#homePage .home-network-caption-small { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+@media(max-width:767px) {
+ #websiteArticlePage,#websiteShowsPage,#websiteVideoPage { padding-left:16px; padding-right:16px; }
+ .website-episode-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+ .website-episode-card strong { font-size:13px; padding:12px; }
+ .website-episode-card span { padding:0 12px 12px; font-size:9px; }
+ .website-article-body { font-size:16px; line-height:1.75; }
+}
+
+body:has(#websiteArticlePage.active) .app-back-row,
+body:has(#websiteShowsPage.active) .app-back-row,
+body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
 </style>
 </head>
 
@@ -8789,6 +8825,9 @@ html { scroll-padding-top:176px; }
 
   </main>
 
+<main id="websiteArticlePage" class="app-page" style="display:none"><div class="website-content-shell"><button type="button" class="website-action" id="websiteArticleBack">‹ BACK</button><article id="websiteArticleContent" aria-live="polite"></article></div></main>
+<main id="websiteShowsPage" class="app-page" style="display:none"><div class="website-content-shell"><button type="button" class="website-action" id="websiteShowsBack">‹ WATCH THE NAL</button><h1 id="websiteShowsTitle">NAL SHOWS</h1><div id="websiteShowsContent" aria-live="polite"></div></div></main>
+<main id="websiteVideoPage" class="app-page" style="display:none"><div class="website-content-shell"><button type="button" class="website-action" id="websiteVideoBack">‹ BACK TO EPISODES</button><h1 id="websiteVideoTitle">NAL NETWORK</h1><div id="websiteVideoContent"></div><p id="websiteVideoDescription"></p></div></main>
   <main id="newsPage" class="app-page native-news-page" style="display:none;">
     <div class="native-news-shell">
       <section class="native-news-hero">
@@ -12611,7 +12650,7 @@ function mountSharedNetworkFeaturedVideo() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", mountSharedNetworkFeaturedVideo);
+document.addEventListener("DOMContentLoaded", () => mountWebsiteFeaturedVideo());
 
 const NAL_POLL_SUPABASE_URL = "https://rcoaprzmutcwlpugobry.supabase.co";
 const NAL_POLL_SUPABASE_KEY = "sb_publishable_tHzWH6oFoUemOrdLs_h9bw_UOLBP-yb";
@@ -18411,6 +18450,146 @@ setTimeout(configureNalModerationAccess,0);
  document.addEventListener('click',e=>{const t=String(e.target?.textContent||'').trim().toUpperCase();if(t.includes('APPLY')&&t.includes('WEEK'))setTimeout(load,900)});
  window.loadNalPickemAdminGameResults=load;setTimeout(load,800);
 })();
+</script>
+<script id="website-content-fixes">
+const WEBSITE_CONTENT_API = 'https://nal-network-preview-content.bikard.workers.dev';
+let websiteCatalogPromise;
+let websiteFeaturedItem;
+let websiteShowItems = [];
+let websiteShowKind = 'around';
+let websiteArticleReturn = 'homePage';
+let websiteArticleRequest = 0;
+function websiteEscape(value) { return escapeHTML(String(value ?? '')); }
+function websiteCatalog() {
+  if (!websiteCatalogPromise) websiteCatalogPromise = fetch(WEBSITE_CONTENT_API + '/catalog')
+    .then(async r => { if (!r.ok) throw new Error('Catalog unavailable'); return r.json(); })
+    .then(p => { if (!p.success || !Array.isArray(p.data)) throw new Error('Catalog unavailable'); return p.data; })
+    .catch(e => { websiteCatalogPromise = null; throw e; });
+  return websiteCatalogPromise;
+}
+function websiteVideoEmbed(item, channelId = '72124') {
+  const id = String(item.media_id || item.id || '');
+  if (!/^\d+$/.test(id) || !/^\d+$/.test(channelId)) return '';
+  const u = new URL('https://www.lightcast.com/embed/player.php');
+  u.searchParams.set('id', id); u.searchParams.set('channelId', channelId);
+  u.searchParams.set('autoPlay', '0'); u.searchParams.set('v', String(Date.now()));
+  return u.href;
+}
+function websitePlayerMarkup(item, channelId) {
+  const src = websiteVideoEmbed(item, channelId);
+  return src ? `<div class="website-video-frame"><iframe src="${websiteEscape(src)}" title="${websiteEscape(item.title || 'NAL Network video')}" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>` : '<p>Playback is unavailable for this item.</p>';
+}
+async function mountWebsiteFeaturedVideo() {
+  const hosts = ['networkHomeFeaturedVideo', 'networkPageFeaturedVideo'].map(id => document.getElementById(id)).filter(Boolean);
+  hosts.forEach(h => h.innerHTML = '<div class="website-status" role="status">Loading the latest NAL Network program…</div>');
+  try {
+    const items = await websiteCatalog(); const item = items[0]; websiteFeaturedItem = item;
+    if (!item) throw new Error('No featured program');
+    hosts.forEach(h => h.innerHTML = h.closest('.app-page')?.style.display === 'none' ? '' : websitePlayerMarkup(item, '72124'));
+    document.querySelector('#homePage .home-network-caption').textContent = item.title;
+    const small = document.querySelector('#homePage .home-network-caption-small');
+    if (small) small.textContent = item.description || 'Latest NAL Network program';
+  } catch (_) {
+    hosts.forEach(h => { h.innerHTML = '<div class="website-status">The featured program is temporarily unavailable.<br><button type="button" class="website-action">TRY AGAIN</button></div>'; h.querySelector('button').onclick = mountWebsiteFeaturedVideo; });
+  }
+}
+function openWatchPage() { showPage('watchPage'); }
+function websiteSetNav(page) {
+  document.querySelectorAll('.bottom-nav .nav-button').forEach(b => b.classList.toggle('active', b.dataset.page === page || (page === 'newsPage' && b.dataset.footerAction === 'news')));
+}
+async function openWebsiteShow(kind) {
+  websiteShowKind = kind;
+  if (typeof closeLightcastTest === 'function') closeLightcastTest();
+  showPage('websiteShowsPage'); websiteSetNav('watchPage');
+  const title = kind === 'coaches' ? 'COACHES’ SHOWS' : kind === 'gameday' ? 'NAL GAMEDAY' : 'AROUND THE NAL';
+  document.getElementById('websiteShowsTitle').textContent = title;
+  const host = document.getElementById('websiteShowsContent');
+  host.innerHTML = '<p class="website-status" role="status">Loading episodes…</p>';
+  try {
+    let items;
+    if (kind === 'coaches') {
+      const p = await fetchLightcastCatalog({ view: 'media', channelId: '72123' });
+      items = (Array.isArray(p.data) ? p.data : []).map(x => ({ ...x, channel_id: '72123', image: x.poster_image_16x9_640w || x.poster_image_640w || x.thumb_image_16x9_640w || '' }));
+    } else {
+      items = (await websiteCatalog()).filter(x => kind === 'gameday' ? /gameday|game day/i.test(x.title) : /^around\s+(?:the\s+)?nal\b/i.test(x.title));
+    }
+    if (kind !== websiteShowKind) return;
+    websiteShowItems = items;
+    if (!items.length) { host.innerHTML = '<p class="website-status">No episodes are currently published in this category.</p>'; return; }
+    host.innerHTML = `<div class="website-episode-grid">${items.map((x, i) => `<button type="button" class="website-episode-card" data-website-episode="${i}">${x.image ? `<img src="${websiteEscape(x.image)}" alt="" loading="lazy">` : '<div class="website-episode-placeholder">NAL NETWORK</div>'}<strong>${websiteEscape(x.title || 'Episode')}</strong><span>WATCH EPISODE →</span></button>`).join('')}</div>`;
+    host.querySelectorAll('[data-website-episode]').forEach(b => b.onclick = () => openWebsiteEpisode(Number(b.dataset.websiteEpisode)));
+  } catch (_) {
+    host.innerHTML = '<div class="website-status">Unable to load episodes right now.<br><button type="button" class="website-action">TRY AGAIN</button></div>';
+    host.querySelector('button').onclick = () => openWebsiteShow(kind);
+  }
+}
+function openWebsiteEpisode(index) {
+  const item = websiteShowItems[index]; if (!item) return;
+  showPage('websiteVideoPage'); websiteSetNav('watchPage');
+  document.getElementById('websiteVideoTitle').textContent = item.title || 'NAL Network';
+  document.getElementById('websiteVideoContent').innerHTML = websitePlayerMarkup(item, String(item.channel_id || '72124'));
+  document.getElementById('websiteVideoDescription').textContent = item.description || '';
+}
+async function openWebsiteArticle(url) {
+  const u = new URL(url, location.href);
+  const match = /^\/news\/([a-z0-9][a-z0-9-]{0,200})\/?$/.exec(u.pathname);
+  if (!['thenationalarenaleague.com', 'www.thenationalarenaleague.com'].includes(u.hostname) || !match) return;
+  if (document.querySelector('.app-page.active')?.id !== 'websiteArticlePage') websiteArticleReturn = document.querySelector('.app-page.active')?.id === 'newsPage' ? 'newsPage' : 'homePage';
+  const requestId = ++websiteArticleRequest;
+  showPage('websiteArticlePage'); websiteSetNav('newsPage');
+  const host = document.getElementById('websiteArticleContent');
+  host.innerHTML = '<p class="website-status" role="status">Loading article…</p>';
+  try {
+    const r = await fetch(WEBSITE_CONTENT_API + '/article/' + encodeURIComponent(match[1]));
+    const p = await r.json();
+    if (!r.ok || !p.success || !p.article?.blocks?.length) throw new Error('Article unavailable');
+    if (requestId !== websiteArticleRequest) return;
+    const a = p.article;
+    host.innerHTML = `<p class="website-kicker">NATIONAL ARENA LEAGUE • NEWS</p><h1 tabindex="-1">${websiteEscape(a.title)}</h1>${a.image && /^https:\/\//.test(a.image) ? `<img class="website-article-image" src="${websiteEscape(a.image)}" alt="">` : ''}<div class="website-article-body">${a.blocks.map(b => { const tag = ['h2', 'h3', 'blockquote'].includes(b.type) ? b.type : 'p'; return `<${tag}>${b.type === 'li' ? '• ' : ''}${websiteEscape(b.text)}</${tag}>`; }).join('')}</div><p class="website-article-source">Source: <a href="${websiteEscape(a.url)}" target="_blank" rel="noopener noreferrer">National Arena League</a></p>`;
+    host.querySelector('h1')?.focus({ preventScroll: true });
+  } catch (_) {
+    if (requestId !== websiteArticleRequest) return;
+    host.innerHTML = `<div class="website-status">This article could not be loaded right now.<br><button type="button" class="website-action" id="websiteArticleRetry">TRY AGAIN</button><p><a href="${websiteEscape(u.href)}" target="_blank" rel="noopener noreferrer">Read the original article</a></p></div>`;
+    document.getElementById('websiteArticleRetry').onclick = () => openWebsiteArticle(url);
+  }
+}
+document.addEventListener('click', event => {
+  const story = event.target.closest('[data-news-story="true"], [data-native-news-story="true"], [data-team-news-story="true"]');
+  if (story) {
+    const u = new URL(story.getAttribute('href') || '#', location.href);
+    if (['thenationalarenaleague.com', 'www.thenationalarenaleague.com'].includes(u.hostname) && /^\/news\/[a-z0-9-]+\/?$/.test(u.pathname)) {
+      event.preventDefault(); event.stopImmediatePropagation(); openWebsiteArticle(u.href); return;
+    }
+  }
+  const coaches = event.target.closest('button[aria-label="Open Coaches Shows"]') || event.target.closest('.network-art-coaches')?.closest('button');
+  if (coaches) { event.preventDefault(); event.stopImmediatePropagation(); openWebsiteShow('coaches'); }
+}, true);
+// Retain every existing show button while replacing the obsolete archive mapping.
+const websiteOriginalOpenShow = openNALShowChannel;
+openNALShowChannel = function(slug) {
+  if (slug === 'around-the-nal') return openWebsiteShow('around');
+  if (slug === 'nal-gameday') return openWebsiteShow('gameday');
+  return websiteOriginalOpenShow(slug);
+};
+document.getElementById('websiteArticleBack').onclick = () => { ++websiteArticleRequest; showPage(websiteArticleReturn); websiteSetNav(websiteArticleReturn); };
+document.getElementById('websiteShowsBack').onclick = () => { showPage('watchPage'); websiteSetNav('watchPage'); };
+document.getElementById('websiteVideoBack').onclick = () => { document.getElementById('websiteVideoContent').innerHTML = ''; showPage('websiteShowsPage'); websiteSetNav('watchPage'); };
+// Stop the dedicated episode player when navigating elsewhere.
+new MutationObserver(() => {
+  if (document.getElementById('websiteVideoPage').style.display === 'none') document.getElementById('websiteVideoContent').innerHTML = '';
+}).observe(document.getElementById('websiteVideoPage'), { attributes: true, attributeFilter: ['style'] });
+
+
+// Unload hidden featured players so video/audio cannot continue behind another page.
+for (const pageId of ['homePage','watchPage']) {
+  const page = document.getElementById(pageId);
+  const host = page?.querySelector(pageId === 'homePage' ? '#networkHomeFeaturedVideo' : '#networkPageFeaturedVideo');
+  if (!page || !host) continue;
+  new MutationObserver(() => {
+    if (page.style.display === 'none') host.innerHTML = '';
+    else if (websiteFeaturedItem && !host.querySelector('iframe')) host.innerHTML = websitePlayerMarkup(websiteFeaturedItem, '72124');
+  }).observe(page, { attributes: true, attributeFilter: ['style'] });
+}
 </script>
 </body>
 </html>
