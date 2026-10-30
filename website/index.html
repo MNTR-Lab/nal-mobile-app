@@ -9398,9 +9398,18 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
 
     <div class="network-tabs" role="tablist" aria-label="NAL Network sections">
       <button class="network-tab active" type="button" data-network-tab="home">HOME</button>
+      <button class="network-tab network-live-channel-tab" type="button" data-network-tab="live-channel">LIVE CHANNEL</button>
       <button class="network-tab" type="button" data-network-tab="team-channels">LIVE GAMES</button>
       <button class="network-tab" type="button" data-network-tab="archives">TEAM CHANNELS</button>
       <button class="network-tab" type="button" data-network-tab="shows">SHOWS</button>
+    </div>
+
+    <div class="network-tab-panel" data-network-panel="live-channel">
+      <section class="network-live-channel-section">
+        <div class="network-section-header"><h2 class="network-section-title">NAL NETWORK LIVE CHANNEL</h2></div>
+        <div id="nalNetworkLivePlayer" class="network-live-channel-player"></div>
+        <p class="network-live-channel-note">Watch NAL Network broadcasts here. Player availability follows the live channel.</p>
+      </section>
     </div>
 
     <div class="network-tab-panel active" data-network-panel="home">
@@ -19099,6 +19108,20 @@ html body #watchPage .network-tab-panel[data-network-panel="home"] .network-show
 html body #watchPage .network-tab-panel[data-network-panel="home"] .network-show-title{margin-top:0 !important;white-space:normal !important;}
 }
 </style>
+
+<style id="network-live-channel-style">
+#watchPage .network-live-channel-section{padding:20px 16px;}
+#watchPage .network-live-channel-player{position:relative;width:100%;aspect-ratio:16/9;background:#000;border:1px solid #396789;border-radius:7px;overflow:hidden;box-sizing:border-box;}
+#watchPage .network-live-channel-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+#watchPage .network-live-channel-note{font-size:14px;line-height:1.5;color:#c4d2e2;margin:15px 0 0;}
+#watchPage .network-tabs{overflow-x:auto !important;}
+#watchPage .network-live-channel-tab{white-space:nowrap;}
+@media(min-width:1001px){#watchPage .network-live-channel-section{padding:0;}#watchPage .network-tabs{gap:10px !important;}}
+@media(max-width:1000px){#watchPage .network-tab{flex:0 0 auto !important;white-space:nowrap;}#watchPage .network-tabs{justify-content:flex-start !important;}}
+</style>
+<script id="network-live-channel-player">
+(()=>{const page=document.getElementById('watchPage');const panel=page.querySelector('[data-network-panel="live-channel"]');const host=document.getElementById('nalNetworkLivePlayer');function sync(){const visible=page.style.display!=='none'&&panel.classList.contains('active');if(!visible){host.replaceChildren();return;}if(host.querySelector('iframe'))return;const frame=document.createElement('iframe');frame.src='https://www.lightcast.com/embed/player.php?id=72169&type=live';frame.title='NAL Network Live Channel';frame.referrerPolicy='no-referrer-when-downgrade';frame.allow='fullscreen; picture-in-picture';frame.allowFullscreen=true;host.appendChild(frame);}new MutationObserver(sync).observe(page,{attributes:true,attributeFilter:['style']});new MutationObserver(sync).observe(panel,{attributes:true,attributeFilter:['class']});sync();})();
+</script>
 
 </body>
 </html>
