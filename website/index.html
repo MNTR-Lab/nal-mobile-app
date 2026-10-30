@@ -8652,6 +8652,19 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
 /* Space below the last team panel. */
 #teamPage{padding-bottom:50px!important}
 @media(max-width:600px){#teamPage{padding-bottom:28px!important}}
+
+@media(min-width:1001px){
+ #teamPage[data-website-team="amarillo-warbirds"] .team-section:has(.team-menu-grid){background:transparent;border:0;box-shadow:none;padding:12px 0;margin:16px 12px}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-section:has(.team-menu-grid)>.section-header{display:none}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);min-height:0;margin-right:0;background:#102b4e}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-image{position:relative;inset:auto;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;grid-column:1;grid-row:1;align-self:center}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-fallback{position:relative;grid-column:1;grid-row:1;min-height:330px;aspect-ratio:16/9}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-fallback img{width:180px!important;height:180px!important;max-width:50%!important;max-height:180px!important;opacity:.8;object-fit:contain}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-content{position:relative;grid-column:2;grid-row:1;align-self:center;padding:32px}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-overlay{display:none}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-news-lead-title{font-size:clamp(24px,2.3vw,38px);line-height:1.15}
+ #teamPage[data-website-team="amarillo-warbirds"] .team-news-read{font-size:13px;margin-top:18px}
+}
 </style>
 </head>
 
@@ -12172,6 +12185,13 @@ function openTeamHome(team) {
   };
 
   teamPage.dataset.websiteTeam = team.slug;
+  const websiteFootballSection = teamPage.querySelector('.team-menu-grid')?.closest('.team-section');
+  const websiteNewsSection = teamPage.querySelector('#teamNewsSection');
+  if (websiteFootballSection && websiteNewsSection) {
+    if (team.slug === 'amarillo-warbirds') websiteNewsSection.before(websiteFootballSection);
+    else websiteNewsSection.after(websiteFootballSection);
+  }
+
   teamPage.style.setProperty("--website-team-logo", `url("${getTeamLogo(team)}")`);
 
   const brand =
