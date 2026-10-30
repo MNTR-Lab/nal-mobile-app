@@ -9569,8 +9569,8 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
   <section class="teams-directory">
     <div class="teams-directory-head">
       <div class="teams-directory-kicker">NAL TEAMS</div>
-      <h1>THE TEAMS</h1>
-      <p>SEASON X • 2027</p>
+      <h1>OUR TEAMS</h1>
+      <p>Find your team. Follow every moment.</p>
     </div>
     <div id="teamsDirectoryGrid" class="teams-directory-grid"></div>
   </section>
@@ -18931,6 +18931,14 @@ html body .website-sticky-header #website-navigation.bottom-nav button.nav-butto
 html body .website-sticky-header #website-navigation.bottom-nav button.watch-button > span.website-nav-label{color:#fff !important;}
 html body .website-sticky-header #website-navigation.bottom-nav button.active,
 html body .website-sticky-header #website-navigation.bottom-nav button:hover{background:#ffffff0d !important;border-bottom-color:#e31b23 !important;}
+}
+
+@media(min-width:1001px){
+html body #teamsPage .teams-directory{padding-top:0 !important;}
+html body #teamsPage .teams-directory-head{display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;text-align:center !important;padding:18px 0 16px !important;margin:0 0 16px !important;min-height:0 !important;height:auto !important;border-radius:0 !important;}
+html body #teamsPage .teams-directory-kicker{display:none !important;}
+html body #teamsPage .teams-directory-head h1{margin:0 0 7px !important;font-size:46px !important;line-height:1.05 !important;letter-spacing:1px !important;text-align:center !important;}
+html body #teamsPage .teams-directory-head p{margin:0 !important;font-size:14px !important;line-height:1.4 !important;letter-spacing:1.5px !important;text-align:center !important;}
 }
 </style>
 <script id="teams-directory-colors">(()=>{const brands={
