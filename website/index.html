@@ -19752,10 +19752,16 @@ html body #teamPage[data-website-team] #teamNextGameCard{
 (()=>{
  const page=document.getElementById('shopPage');
  const shell=document.createElement('div');shell.className='nal-shop-shell';
- shell.innerHTML=`<div class="nal-shop-hero"><h1>NAL SHOP</h1><p>REP YOUR TEAM. WEAR THE LEAGUE.</p></div>
- <section class="nal-shop-team-strip"><h2>SHOP BY TEAM</h2><div id="nalShopCollections" class="nal-shop-collection-links" aria-label="Team collections"></div></section><div class="nal-shop-tools"><input id="nalShopSearch" type="search" placeholder="Search all NAL merchandise…" aria-label="Search merchandise"><select id="nalShopCollection" aria-label="Shop collection"><option value="">ALL MERCHANDISE</option></select><select id="nalShopSort" aria-label="Sort merchandise"><option value="featured">FEATURED</option><option value="newest">NEWEST</option><option value="price-low">PRICE: LOW TO HIGH</option><option value="price-high">PRICE: HIGH TO LOW</option><option value="title">NAME: A–Z</option></select><button class="nal-shop-button nal-shop-red" id="nalShopBag">CART (0)</button></div>
- <nav class="nal-shop-category-tabs" aria-label="Merchandise categories"><a href="/shop" data-category="">All Gear</a><a href="/shop?category=apparel" data-category="apparel">Apparel</a><a href="/shop?category=headwear" data-category="headwear">Headwear</a><a href="/shop?category=accessories" data-category="accessories">Accessories</a></nav>
+ shell.innerHTML=`
+ <section class="nal-shop-team-strip"><h2>SHOP BY TEAM</h2><div id="nalShopCollections" class="nal-shop-collection-links" aria-label="Team collections"></div></section><div class="nal-shop-tools"><h1 class="nal-shop-compact-title"><a href="/shop">NAL SHOP</a></h1><input id="nalShopSearch" type="search" placeholder="Search all NAL merchandise…" aria-label="Search merchandise"><select id="nalShopCollection" aria-label="Shop collection"><option value="">ALL MERCHANDISE</option></select><select id="nalShopSort" aria-label="Sort merchandise"><option value="featured">FEATURED</option><option value="newest">NEWEST</option><option value="price-low">PRICE: LOW TO HIGH</option><option value="price-high">PRICE: HIGH TO LOW</option><option value="title">NAME: A–Z</option></select><button class="nal-shop-button nal-shop-red" id="nalShopBag">CART (0)</button></div>
+ <nav class="nal-shop-category-tabs" aria-label="Merchandise categories"><a href="/shop/all" data-category="">All Gear</a><a href="/shop?category=apparel" data-category="apparel">Apparel</a><a href="/shop?category=headwear" data-category="headwear">Headwear</a><a href="/shop?category=accessories" data-category="accessories">Accessories</a></nav>
  <div id="nalShopNotice" class="nal-shop-notice" role="status" aria-live="polite"></div>
+ <section id="nalShopHome" hidden>
+   <div class="nal-shop-campaign"><div class="nal-shop-campaign-copy"><p>OFFICIAL NAL SHOP</p><h2>GEAR UP FOR<br><em>GAME DAY</em></h2><p>Official team &amp; league merchandise.</p><a href="/shop/all" class="nal-shop-button nal-shop-red">SHOP ALL GEAR <span aria-hidden="true">›</span></a></div><div id="nalShopCampaignProducts" class="nal-shop-campaign-products" aria-label="Featured merchandise"></div></div>
+   <div id="nalShopCategoryTiles" class="nal-shop-category-tiles"></div>
+   <div class="nal-shop-section-heading"><h2>BESTSELLERS</h2><a href="/shop/all">SHOP ALL ›</a></div><div id="nalShopBest" class="nal-shop-grid" aria-live="polite">Loading bestsellers…</div>
+   <div class="nal-shop-section-heading"><h2>NEW ARRIVALS</h2><a href="/shop/all?sort=newest">SHOP ALL ›</a></div><div id="nalShopNew" class="nal-shop-new-grid" aria-live="polite">Loading new arrivals…</div>
+ </section>
  <section id="nalShopBrowse"><h2 class="nal-shop-title" id="nalShopHeading">OFFICIAL LEAGUE & TEAM GEAR</h2><div id="nalShopCatalog" class="nal-shop-status" aria-live="polite">Loading NAL Shop…</div><button class="nal-shop-button" style="display:none;margin:25px auto" id="nalShopMore">LOAD MORE MERCHANDISE</button></section>
  <section id="nalShopProduct" hidden aria-live="polite"></section>`;
  page.append(shell);
@@ -19790,21 +19796,41 @@ html body #teamPage[data-website-team] #teamNextGameCard{
  const teams=["amarillo warbirds", "colorado spartans", "dallas apex", "louisiana rouxgaroux", "omaha beef", "pueblo punishers", "salina liberty", "sioux city bandits", "southwest kansas storm", "wheeling miners"];$('nalShopCollections').innerHTML=teams.map(name=>collections.find(c=>c.title.toLowerCase()===name)).filter(Boolean).map(c=>`<a class="nal-shop-button" href="/shop/collections/${encodeURIComponent(c.handle)}" aria-label="${esc(c.title)}" title="${esc(c.title)}"><img src="${image(teamLogos[c.title.toLowerCase()])}" alt=""><span>${esc(c.title)}</span></a>`).join('');}catch(e){notice('Collections are temporarily unavailable. You can still browse all merchandise.');}}
  function card(p){const price=p.priceRange.minVariantPrice;return `<article class="nal-shop-product"><a href="/shop/products/${encodeURIComponent(p.handle)}" class="nal-shop-product-image" aria-label="${esc(p.title)}"><img src="${image(p.featuredImage?.url)}" alt="${esc(p.featuredImage?.altText||p.title)}" loading="lazy"></a><div class="nal-shop-product-info"><h3><a href="/shop/products/${encodeURIComponent(p.handle)}">${esc(p.title)}</a></h3><p>From ${money(price)}</p><a href="/shop/products/${encodeURIComponent(p.handle)}" class="nal-shop-button">${p.availableForSale?'VIEW OPTIONS':'VIEW PRODUCT'}</a></div></article>`;}
  function sortValues(){return {sortKey:sort.startsWith('price')?'PRICE':sort==='title'?'TITLE':sort==='newest'?(collection?'CREATED':'CREATED_AT'):'BEST_SELLING',reverse:sort==='price-high'||sort==='newest'};}
- async function browse(more=false){if(more&&loadingMore)return;const token=++requestId;loadingMore=true;$('nalShopMore').disabled=true;$('nalShopProduct').hidden=true;$('nalShopBrowse').hidden=false;
+ async function browse(more=false){$('nalShopHome').hidden=true;shell.classList.remove('nal-shop-home-view');if(more&&loadingMore)return;const token=++requestId;loadingMore=true;$('nalShopMore').disabled=true;$('nalShopProduct').hidden=true;$('nalShopBrowse').hidden=false;
  if(!more){items=[];cursor=null;$('nalShopCatalog').className='nal-shop-status';$('nalShopCatalog').textContent='Loading merchandise…';$('nalShopMore').style.display='none';}
- try{const variables={after:more?cursor:null,...sortValues()};const d=collection?await api('collection',{...variables,handle:collection}):await api('catalog',{...variables,query:category==='apparel'?'(shirt OR hoodie OR sweatshirt OR polo OR jacket OR jersey)'+(search?' AND ('+search+')':''):category==='headwear'?'(hat OR cap OR beanie OR snapback)'+(search?' AND ('+search+')':''):search||null});if(token!==requestId)return;const result=collection?d.collection?.products:d.products;if(!result)throw Error('This collection is unavailable.');items=more?items.concat(result.nodes):result.nodes;cursor=result.pageInfo.endCursor;hasMore=result.pageInfo.hasNextPage;
+ try{const variables={after:more?cursor:null,...sortValues()};const d=collection?await api('collection',{...variables,handle:collection}):await api('catalog',{...variables,query:category==='apparel'?'(shirt OR hoodie OR sweatshirt OR polo OR jacket OR jersey)'+(search?' AND ('+search+')':''):category==='mini-helmets'?'(mini AND helmet)'+(search?' AND ('+search+')':''):category==='headwear'?'(product_type:Hat OR product_type:Cap OR product_type:Headwear OR product_type:Beanie OR product_type:Snapback)'+(search?' AND ('+search+')':''):search||null});if(token!==requestId)return;const result=collection?d.collection?.products:d.products;if(!result)throw Error('This collection is unavailable.');items=more?items.concat(result.nodes):result.nodes;cursor=result.pageInfo.endCursor;hasMore=result.pageInfo.hasNextPage;
  const displayed=items.filter(p=>!/^tickets?$|season.ticket/i.test(p.productType));$('nalShopHeading').textContent=search?'SEARCH RESULTS':collection?(d.collection.title):category?category.toUpperCase():'FEATURED GEAR';$('nalShopCatalog').className=displayed.length?'nal-shop-grid':'nal-shop-status';$('nalShopCatalog').innerHTML=displayed.length?displayed.map(card).join(''):'No merchandise found. Try another search or collection.';$('nalShopMore').style.display=hasMore?'block':'none';
  }catch(e){if(token!==requestId)return;$('nalShopCatalog').className='nal-shop-status';$('nalShopCatalog').innerHTML=`<p>${esc(e.message)}</p><button class="nal-shop-button" id="nalShopRetry">TRY AGAIN</button>`;$('nalShopRetry').onclick=()=>browse(false);}finally{if(token===requestId){loadingMore=false;$('nalShopMore').disabled=false;}}}
  function selectedVariant(p){return p.variants.nodes.find(v=>v.selectedOptions.every(o=>$('nalShopOptions').querySelector(`[data-option="${p.options.findIndex(x=>x.name===o.name)}"]`)?.value===o.value));}
- async function product(handle){const token=++requestId;loadingMore=false;$('nalShopBrowse').hidden=true;$('nalShopProduct').hidden=false;$('nalShopProduct').innerHTML='<p class="nal-shop-status">Loading product…</p>';
+ async function product(handle){$('nalShopHome').hidden=true;shell.classList.remove('nal-shop-home-view');const token=++requestId;loadingMore=false;$('nalShopBrowse').hidden=true;$('nalShopProduct').hidden=false;$('nalShopProduct').innerHTML='<p class="nal-shop-status">Loading product…</p>';
  try{const d=await api('product',{handle});if(token!==requestId)return;const p=d.product;if(!p)throw Error('This product is no longer available.');const preferred=p.variants.nodes.find(v=>v.availableForSale)||p.variants.nodes[0];
  $('nalShopProduct').innerHTML=`<a href="${collection?'/shop/collections/'+encodeURIComponent(collection):'/shop'}" class="nal-shop-back">‹ BACK TO MERCHANDISE</a><div class="nal-shop-product-detail"><div><img id="nalShopMainImage" class="nal-shop-detail-image" src="${image(preferred?.image?.url||p.images.nodes[0]?.url)}" alt="${esc(p.title)}"><div class="nal-shop-thumbs">${p.images.nodes.map((img,i)=>`<button data-photo="${i}" aria-label="Product image ${i+1}"><img src="${image(img.url)}" alt="" loading="lazy"></button>`).join('')}</div></div><div><h2>${esc(p.title)}</h2><p id="nalShopDetailPrice" class="nal-shop-detail-price"></p><div id="nalShopOptions">${p.options.map((o,i)=>`<label>${esc(o.name==='Title'?'Option':o.name)}<select data-option="${i}">${o.values.map(value=>`<option value="${esc(value)}" ${preferred?.selectedOptions.some(x=>x.name===o.name&&x.value===value)?'selected':''}>${esc(value)}</option>`).join('')}</select></label>`).join('')}</div><label class="nal-shop-quantity">Quantity <input id="nalShopDetailQty" type="number" value="1" min="1" max="20"></label><p id="nalShopAvailability" aria-live="polite"></p><button id="nalShopDetailAdd" class="nal-shop-button nal-shop-red">ADD TO CART</button><p id="nalShopProductMessage" role="status"></p><div class="nal-shop-description">${esc(p.description)}</div><p class="nal-shop-notice">Official NAL Shop merchandise. Shipping and taxes are calculated at checkout.</p></div></div>`;
  function updateVariant(){const v=selectedVariant(p);$('nalShopDetailPrice').textContent=v?money(v.price):'';$('nalShopAvailability').textContent=!v?'This combination is unavailable.':v.availableForSale?'AVAILABLE':'SOLD OUT';$('nalShopDetailAdd').disabled=!v?.availableForSale;if(v?.image)$('nalShopMainImage').src=v.image.url;}
  $('nalShopOptions').querySelectorAll('select').forEach(select=>select.onchange=updateVariant);updateVariant();$('nalShopProduct').querySelectorAll('[data-photo]').forEach(button=>button.onclick=()=>{$('nalShopMainImage').src=p.images.nodes[+button.dataset.photo].url;});
  $('nalShopDetailAdd').onclick=async()=>{if(busy)return;const v=selectedVariant(p);if(!v?.availableForSale)return;busy=true;$('nalShopDetailAdd').disabled=true;$('nalShopDetailAdd').textContent='ADDING…';const quantity=Math.max(1,Math.min(20,parseInt($('nalShopDetailQty').value)||1));try{const lines=[{merchandiseId:v.id,quantity}];if(cartId){await refreshCart();}if(cartId)await changeCart('add',{cartId,lines});else await changeCart('create',{input:{lines}});$('nalShopProductMessage').textContent='Added to your cart.';cartMessage='';openCart();}catch(e){$('nalShopProductMessage').textContent=e.message;}finally{busy=false;if($('nalShopDetailAdd')){$('nalShopDetailAdd').textContent='ADD TO CART';updateVariant();}if(!overlay.hidden)renderCart();}};
  }catch(e){if(token===requestId)$('nalShopProduct').innerHTML=`<p class="nal-shop-status">${esc(e.message)} <a href="/shop">Return to shop</a></p>`;}}
+
+ let landingCache=null;
+ function merchandiseImage(p){return p?.featuredImage?.url||'';}
+ function tile(p,label,path){return `<a href="${path}" class="nal-shop-category-tile">${p?`<img src="${image(merchandiseImage(p))}" alt="" loading="lazy">`:'<div class="nal-shop-tile-placeholder" aria-hidden="true"><svg viewBox="0 0 160 120" fill="none" stroke="currentColor" stroke-width="4"><path d="M30 76V61a43 43 0 0 1 86 0v15M30 76c23-10 60-10 86 0l29 15c-14 18-47 17-69 3L30 84Z"/><path d="M74 22c-14 14-15 33-13 48M30 76c25 7 57 8 86 0"/></svg></div>'}<span>${label} <b aria-hidden="true">›</b></span></a>`;}
+ async function home(){
+   const token=++requestId;collection='';search='';category='';$('nalShopSearch').value='';$('nalShopCollection').value='';document.querySelectorAll('#nalShopCollections a').forEach(a=>a.classList.remove('active'));document.querySelectorAll('.nal-shop-category-tabs a').forEach(a=>a.classList.toggle('active',a.dataset.category===''));$('nalShopHome').hidden=false;$('nalShopBrowse').hidden=true;$('nalShopProduct').hidden=true;shell.classList.add('nal-shop-home-view');
+   $('nalShopCategoryTiles').innerHTML=tile(null,'APPAREL','/shop?category=apparel')+tile(null,'HEADWEAR','/shop?category=headwear')+tile(null,'MINI HELMETS','/shop?category=mini-helmets')+tile(null,'ACCESSORIES','/shop?category=accessories');
+   try{
+    if(!landingCache){const [best,newest,apparel,headwear,accessories]=await Promise.all([
+      api('catalog',{sortKey:'BEST_SELLING',reverse:false}),api('catalog',{sortKey:'CREATED_AT',reverse:true}),api('catalog',{query:'hoodie',sortKey:'BEST_SELLING'}),api('catalog',{query:'product_type:Hat OR product_type:Cap OR title:beanie OR title:snapback OR title:"Trucker Hat" OR title:"Flexfit Hat"',sortKey:'BEST_SELLING'}),api('catalog',{query:'blanket OR tumbler OR bag',sortKey:'BEST_SELLING'})
+    ]);landingCache={best:best.products.nodes,newest:newest.products.nodes,apparel:apparel.products.nodes,headwear:headwear.products.nodes,accessories:accessories.products.nodes};}
+    if(token!==requestId)return;const data=landingCache;
+    const hoodie=data.apparel.find(p=>p.availableForSale)||data.apparel[0],tee=data.best.find(p=>/tee|shirt/i.test(p.title)&&p.availableForSale)||data.best[0],helmet=data.best.find(p=>/mini.*helmet|helmet.*mini/i.test(p.title));
+    $('nalShopCampaignProducts').innerHTML=[hoodie,tee].filter(Boolean).map(p=>`<a href="/shop/products/${encodeURIComponent(p.handle)}" aria-label="${esc(p.title)}"><img src="${image(merchandiseImage(p))}" alt="${esc(p.title)}"><span>${esc(p.title)}</span></a>`).join('');
+    $('nalShopCategoryTiles').innerHTML=tile(hoodie,'APPAREL','/shop?category=apparel')+tile(data.headwear.find(p=>/\b(hat|cap|beanie|snapback|trucker|flexfit)\b/i.test(p.title)),'HEADWEAR','/shop?category=headwear')+tile(helmet,'MINI HELMETS','/shop?category=mini-helmets')+tile(data.accessories[0],'ACCESSORIES','/shop?category=accessories');
+    $('nalShopBest').innerHTML=data.best.slice(0,4).map(card).join('');
+    $('nalShopNew').innerHTML=data.newest.slice(0,3).map(p=>`<a class="nal-shop-new-tile" href="/shop/products/${encodeURIComponent(p.handle)}"><img src="${image(merchandiseImage(p))}" alt="${esc(p.title)}" loading="lazy"><div><small>JUST ADDED</small><h3>${esc(p.title)}</h3><span>SHOP NOW ›</span></div></a>`).join('');
+   }catch(e){if(token!==requestId)return;$('nalShopBest').innerHTML=`<div class="nal-shop-status">${esc(e.message)} <button class="nal-shop-button" id="nalShopHomeRetry">TRY AGAIN</button></div>`;$('nalShopHomeRetry').onclick=home;}
+ }
+
  function routePath(){return location.pathname.replace(/\/$/,'');}
- async function restore(){const path=routePath();const p=/^\/shop\/products\/([a-z0-9-]+)$/.exec(path),c=/^\/shop\/collections\/([a-z0-9-]+)$/.exec(path);if(p)return product(p[1]);if(!collections.length&&new URLSearchParams(location.search).get('category')==='accessories')await loadCollections();collection=c?c[1]:'';$('nalShopCollection').value=collection;const params=new URLSearchParams(location.search);category=params.get('category')||'';search=params.get('q')||'';if(category==='accessories'){const accessory=collections.find(c=>c.title==='Accessories');if(accessory)collection=accessory.handle;}document.querySelectorAll('.nal-shop-category-tabs a').forEach(a=>{a.classList.toggle('active',a.dataset.category===category);if(a.dataset.category===category)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});document.querySelectorAll('#nalShopCollections a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='/shop/collections/'+collection));$('nalShopSearch').value=search;return browse();}
+ async function restore(){const path=routePath();if(path==='/shop'&&!location.search)return home();const paramsSort=new URLSearchParams(location.search).get('sort');if(paramsSort){sort=paramsSort;$('nalShopSort').value=sort;}const p=/^\/shop\/products\/([a-z0-9-]+)$/.exec(path),c=/^\/shop\/collections\/([a-z0-9-]+)$/.exec(path);if(p)return product(p[1]);if(!collections.length&&new URLSearchParams(location.search).get('category')==='accessories')await loadCollections();collection=c?c[1]:'';$('nalShopCollection').value=collection;const params=new URLSearchParams(location.search);category=params.get('category')||'';search=params.get('q')||'';if(category==='accessories'){const accessory=collections.find(c=>c.title==='Accessories');if(accessory)collection=accessory.handle;}document.querySelectorAll('.nal-shop-category-tabs a').forEach(a=>{a.classList.toggle('active',a.dataset.category===category);if(a.dataset.category===category)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});document.querySelectorAll('#nalShopCollections a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='/shop/collections/'+collection));$('nalShopSearch').value=search;return browse();}
  async function navigate(path){if(!initialized){initialized=true;loadCollections();if(cartId)refreshCart().catch(()=>{});}if(location.pathname+location.search!==path)history.pushState({},'',path);showPage('shopPage');await restore();window.scrollTo({top:0,behavior:'instant'});}
  shell.addEventListener('click',e=>{const link=e.target.closest('a[href^="/shop"]');if(link&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&e.button===0){e.preventDefault();navigate(link.getAttribute('href'));}});
  $('nalShopCollection').onchange=()=>{search='';$('nalShopSearch').value='';navigate($('nalShopCollection').value?'/shop/collections/'+encodeURIComponent($('nalShopCollection').value):'/shop');};
@@ -19886,5 +19912,74 @@ html body #shopPage #nalShopMore{background:#10283f!important;color:white!import
  html body #shopPage .nal-shop-product-info{padding:10px!important;}
 }
 </style>
+<style id="nal-shop-merchandising-landing">/* Merchandising homepage; compact utility controls retain full catalog functions. */
+html body #shopPage .nal-shop-team-strip{padding-top:16px;}
+html body #shopPage .nal-shop-tools{justify-content:flex-end;gap:9px!important;margin-top:12px!important;margin-bottom:8px!important;}
+html body #shopPage .nal-shop-compact-title{margin-right:auto;margin-block:0;font-size:23px;letter-spacing:.5px;font-weight:950;white-space:nowrap;}
+html body #shopPage .nal-shop-compact-title a{color:#10283f;text-decoration:none;}
+html body #shopPage .nal-shop-tools input{flex:0 1 240px!important;width:240px!important;min-height:35px!important;height:35px;padding:7px 10px!important;font-size:11px!important;}
+html body #shopPage .nal-shop-tools select{flex:0 1 165px;max-width:165px;min-height:35px!important;height:35px;padding:6px!important;font-size:10px!important;}
+html body #shopPage .nal-shop-tools #nalShopBag{min-height:35px!important;height:35px;padding:7px 11px!important;font-size:10px!important;}
+html body #shopPage .nal-shop-home-view .nal-shop-tools :is(#nalShopCollection,#nalShopSort){display:none;}
+html body #shopPage #nalShopHome{width:calc(100% - 48px);max-width:1440px;margin:0 auto;}
+html body #shopPage #nalShopHome[hidden]{display:none!important;}
+html body #shopPage .nal-shop-home-view .nal-shop-category-tabs{margin-bottom:16px;}
+.nal-shop-campaign{position:relative;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;overflow:hidden;min-height:300px;border-radius:6px;background:linear-gradient(100deg,#031527f2,#08284a88),url('/assets/teams-arena.webp') center 65%/cover;color:#fff;}
+.nal-shop-campaign-copy{padding:30px 35px;z-index:1;}
+.nal-shop-campaign-copy>p:first-child{font-size:10px;font-weight:900;letter-spacing:2px;margin:0 0 10px;}
+.nal-shop-campaign h2{font-family:Impact,Haettenschweiler,'Arial Narrow Bold','Arial Black',sans-serif;font-weight:950;font-size:clamp(32px,4.2vw,66px);line-height:1.03;letter-spacing:1px;color:white;margin:0 0 15px;text-shadow:0 3px 6px #0007;}
+.nal-shop-campaign h2 em{font-style:normal;color:#ff2931;}
+.nal-shop-campaign-copy>p{font-size:13px;color:#e1e9f4;margin-bottom:20px;}
+.nal-shop-campaign-copy>.nal-shop-button{display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.5px;padding:13px 22px;}
+.nal-shop-campaign-products{display:flex;gap:14px;padding:20px 25px 20px 0;align-items:center;justify-content:center;}
+.nal-shop-campaign-products a{display:flex;flex-direction:column;width:46%;max-width:245px;min-width:0;overflow:hidden;border-radius:7px;background:#f2f4f8;box-shadow:0 10px 25px #0005;color:#152b42;text-decoration:none;transform:rotate(-5deg);}
+.nal-shop-campaign-products a+a{transform:rotate(5deg) translateY(8px);}
+.nal-shop-campaign-products img{width:100%;aspect-ratio:1;object-fit:contain;}
+.nal-shop-campaign-products span{font-size:9px;line-height:1.3;font-weight:800;padding:7px 8px;text-align:center;background:#fff;}
+.nal-shop-category-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:16px;}
+.nal-shop-category-tile{display:flex;position:relative;flex-direction:column;overflow:hidden;border-radius:5px;background:#f1f3f6;text-decoration:none;color:#fff;}
+.nal-shop-category-tile>img{width:100%;height:165px;object-fit:contain;mix-blend-mode:multiply;}
+.nal-shop-category-tile>span{padding:10px 14px;background:linear-gradient(100deg,#06172b,#173d60);font-weight:900;font-size:14px;letter-spacing:.5px;display:flex;justify-content:space-between;}
+.nal-shop-category-tile b{color:#ff2931;font-size:19px;line-height:1;}
+.nal-shop-tile-placeholder{height:165px;display:grid;place-items:center;background:#123457;color:#fff;font-size:38px;font-weight:950;}
+.nal-shop-section-heading{display:flex;justify-content:space-between;align-items:center;margin:30px 0 14px;color:#0c2037;gap:12px;}
+.nal-shop-section-heading h2{font-size:26px;font-weight:950;letter-spacing:.5px;}
+.nal-shop-section-heading a{color:#132f49;text-decoration:none;font-size:11px;font-weight:900;}
+html body #shopPage #nalShopBest.nal-shop-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important;}
+html body #shopPage #nalShopBest .nal-shop-product{border:0!important;}
+html body #shopPage #nalShopBest .nal-shop-product-info{padding:11px 4px!important;}
+html body #shopPage #nalShopBest .nal-shop-product h3{font-size:13px!important;}
+.nal-shop-new-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.nal-shop-new-tile{display:grid;grid-template-columns:1fr 1fr;align-items:center;background:#0b2845;border-radius:5px;overflow:hidden;text-decoration:none;color:white;}
+.nal-shop-new-tile>img{width:100%;height:210px;object-fit:contain;background:#f1f3f5;}
+.nal-shop-new-tile>div{padding:15px;}
+.nal-shop-new-tile small{font-size:9px;font-weight:800;letter-spacing:1px;color:#bccfe4;}
+.nal-shop-new-tile h3{font-size:14px;line-height:1.35;margin:9px 0 15px;color:white;}
+.nal-shop-new-tile span{font-size:10px;color:white;font-weight:900;}
+@media(max-width:750px){
+ html body #shopPage #nalShopHome{width:calc(100% - 28px);}
+ html body #shopPage .nal-shop-compact-title{font-size:19px;}
+ html body #shopPage .nal-shop-tools input{flex:0 1 155px!important;width:155px!important;max-width:40%!important;}
+ html body #shopPage .nal-shop-tools{flex-wrap:wrap;}
+ html body #shopPage .nal-shop-tools select{order:2;flex:1 1 40%;max-width:none;}
+ html body #shopPage .nal-shop-home-view .nal-shop-tools{flex-wrap:nowrap;}
+ .nal-shop-campaign{min-height:255px;grid-template-columns:1fr .85fr;}
+ .nal-shop-campaign-copy{padding:24px 17px;}
+ .nal-shop-campaign h2{font-size:clamp(27px,6vw,42px);}
+ .nal-shop-campaign-copy>p{font-size:10px;line-height:1.5;}
+ .nal-shop-campaign-copy>.nal-shop-button{font-size:10px;padding:11px 13px;}
+ .nal-shop-campaign-products{padding:10px 16px 10px 0;gap:0;}
+ .nal-shop-campaign-products a{width:100%;transform:rotate(4deg);}
+ .nal-shop-campaign-products a+a{display:none;}
+ .nal-shop-category-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+ .nal-shop-category-tile>img,.nal-shop-tile-placeholder{height:130px;}
+ .nal-shop-category-tile>span{font-size:12px;padding:9px 12px;}
+ html body #shopPage #nalShopBest.nal-shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}
+ .nal-shop-section-heading{margin-top:25px;}.nal-shop-section-heading h2{font-size:22px;}
+ .nal-shop-new-grid{grid-template-columns:1fr;gap:12px;}
+ .nal-shop-new-tile>img{height:175px;}
+}
+</style>
+<style>.nal-shop-tile-placeholder svg{width:140px;height:120px;}</style>
 </body>
 </html>
