@@ -8461,6 +8461,27 @@ html { scroll-padding-top:176px; }
     width:72px !important; height:72px !important; min-width:72px !important; flex-basis:72px !important;
   }
 }
+
+/* Keep the desktop links together as a centered group. */
+@media(min-width:1024px) {
+  .website-sticky-header #website-navigation {
+    grid-template-columns:repeat(5,160px) !important;
+    justify-content:center !important; column-gap:0 !important;
+  }
+}
+@media(min-width:768px) and (max-width:1023px) {
+  .website-sticky-header #website-navigation {
+    grid-template-columns:repeat(5,140px) !important;
+    justify-content:center !important; column-gap:0 !important;
+  }
+  .website-sticky-header #website-navigation button.nav-button > span.website-nav-label,
+  .website-sticky-header #website-navigation button.watch-button > span.website-nav-label { font-size:14px !important; }
+}
+@media(max-width:767px) {
+  .website-sticky-header #website-navigation { grid-template-columns:repeat(5,minmax(0,1fr)) !important; }
+  .website-sticky-header #website-navigation button.nav-button > span.website-nav-label,
+  .website-sticky-header #website-navigation button.watch-button > span.website-nav-label { font-size:clamp(7px,2.1vw,12px) !important; }
+}
 </style>
 </head>
 
@@ -8527,8 +8548,8 @@ html { scroll-padding-top:176px; }
     <button
       class="nav-button watch-button"
       data-page="watchPage"
-      aria-label="NAL Network"
-    ><span class="website-nav-label">NAL Network</span></button>
+      aria-label="Watch the NAL"
+    ><span class="website-nav-label">WATCH THE NAL</span></button>
 
     <button
       class="nav-button" data-footer-action="teams"
