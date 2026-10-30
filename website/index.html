@@ -17102,32 +17102,17 @@ function closeLightcastTest(){
     title.textContent = state === "live" ? "GAME IN PROGRESS" : kickoff;
 
     copy.innerHTML = `
-      <div class="team-next-game-matchup">
-        <div class="team-next-game-side">
-          <div class="team-next-game-logo">
-            <img src="${liveEscape(awayLogo)}" alt="${liveEscape(matchup.awayName)}">
-          </div>
-          <b>${liveEscape(matchup.awayName)}</b>
-          <small>AWAY</small>
-        </div>
-
+      <div class="team-next-game-matchup team-next-game-compact">
+        <div class="team-next-game-logo"><img src="${liveEscape(awayLogo)}" alt="${liveEscape(matchup.awayName)}"></div>
         <div class="team-next-game-center">
-          <div class="team-next-game-vs">VS</div>
+          <div class="team-next-game-status">${state === "live" ? "LIVE NOW" : "NEXT GAME"}</div>
+          <div class="team-next-game-names">${liveEscape(matchup.awayName)} <span>at</span> ${liveEscape(matchup.homeName)}</div>
+          <div class="team-next-game-date">${liveEscape(kickoff)}</div>
+          <div class="team-next-game-place">${liveEscape(venue)}</div>
         </div>
-
-        <div class="team-next-game-side">
-          <div class="team-next-game-logo">
-            <img src="${liveEscape(homeLogo)}" alt="${liveEscape(matchup.homeName)}">
-          </div>
-          <b>${liveEscape(matchup.homeName)}</b>
-          <small>HOME</small>
-        </div>
+        <div class="team-next-game-logo"><img src="${liveEscape(homeLogo)}" alt="${liveEscape(matchup.homeName)}"></div>
       </div>
-
-      <div class="team-next-game-date">${liveEscape(kickoff)}</div>
-      <div class="team-next-game-place">${liveEscape(venue)}</div>
-    `;
-  }
+    `;  }
 
   window.renderActiveTeamNextGame = renderActiveTeamNextGame;
 
@@ -19722,6 +19707,32 @@ html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-logo im
 html body #teamPage[data-website-team] #teamNextGameCard::after{display:none!important;}
 html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-side,
 html body #teamPage[data-website-team] #teamNextGameCard #teamNextGameCopy{opacity:1!important;filter:none!important;}
+</style>
+<style id="team-next-game-compact-layout">
+html body #teamPage[data-website-team] #teamNextGameCard{
+ padding:25px 5%!important;min-height:0!important;background:#10253c!important;
+ background-image:repeating-linear-gradient(135deg,#ffffff04 0 1px,transparent 1px 12px)!important;
+}
+html body #teamPage[data-website-team] #teamNextGameCard:has(.team-next-game-compact)>:is(#teamNextGameLabel,#teamNextGameTitle){display:none!important;}
+html body #teamPage[data-website-team] #teamNextGameCopy{margin:0!important;padding:0!important;}
+html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-compact{display:grid!important;grid-template-columns:120px minmax(0,1fr) 120px!important;gap:30px!important;align-items:center!important;margin:0!important;}
+html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-logo{width:120px!important;height:120px!important;margin:0!important;background:transparent!important;border:0!important;}
+html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-logo img{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:contain!important;}
+html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-center{display:flex!important;flex-direction:column!important;gap:6px!important;min-width:0;color:#fff!important;}
+html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-status{font-size:10px;font-weight:900;letter-spacing:1.5px;}
+html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-names{font-size:clamp(14px,1.5vw,22px);font-weight:900;line-height:1.2;}
+html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-names span{font-size:.8em;font-weight:500;padding:0 5px;}
+html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-date{margin:0!important;font-size:15px!important;line-height:1.25!important;}
+html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-place{margin:0!important;font-size:11px!important;line-height:1.25!important;color:#dce6ef!important;}
+@media(max-width:600px){
+ html body #teamPage[data-website-team] #teamNextGameCard{padding:25px 12px!important;}
+ html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-compact{grid-template-columns:64px minmax(0,1fr) 64px!important;gap:8px!important;}
+ html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-logo{width:64px!important;height:100px!important;}
+ html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-center{gap:4px!important;}
+ html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-names{font-size:12px!important;}
+ html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-date{font-size:11px!important;}
+ html body #teamPage[data-website-team] #teamNextGameCard .team-next-game-place{font-size:9px!important;}
+}
 </style>
 </body>
 </html>
