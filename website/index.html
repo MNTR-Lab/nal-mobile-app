@@ -8439,6 +8439,28 @@ html { scroll-padding-top:176px; }
   .website-sticky-header .topbar #headerHome { width:calc(100vw - 140px) !important; height:56px !important; }
   html { scroll-padding-top:144px; }
 }
+
+/* Balance the alerts artwork with the wide header wordmark. */
+.website-sticky-header .topbar #nalNotificationButton img.nal-notification-icon,
+.website-sticky-header .topbar #nalNotificationButton img.nal-notification-icon.has-notification {
+  width:44px !important; height:44px !important; min-width:44px !important;
+  max-width:none !important; max-height:none !important; flex:0 0 44px !important;
+  object-fit:contain !important; transform:none !important;
+}
+@media(min-width:768px) {
+  .website-sticky-header .topbar {
+    grid-template-columns:80px minmax(0,1fr) 80px !important;
+    padding-left:24px !important; padding-right:24px !important;
+  }
+  .website-sticky-header .topbar .header-left { width:80px !important; min-width:80px !important; }
+  .website-sticky-header .topbar #nalNotificationButton {
+    width:80px !important; min-width:80px !important; height:80px !important; min-height:80px !important;
+  }
+  .website-sticky-header .topbar #nalNotificationButton img.nal-notification-icon,
+  .website-sticky-header .topbar #nalNotificationButton img.nal-notification-icon.has-notification {
+    width:72px !important; height:72px !important; min-width:72px !important; flex-basis:72px !important;
+  }
+}
 </style>
 </head>
 
