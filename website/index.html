@@ -12690,10 +12690,12 @@ function renderTeamsDirectory(){
   const teams = (typeof nalTeams !== "undefined" && Array.isArray(nalTeams)) ? nalTeams : [];
   grid.innerHTML = teams.map((team, index) => `
     <button class="teams-directory-card" type="button" data-team-index="${index}" aria-label="Open ${escapeHTML(team.name || "team")}">
+      <img class="teams-card-watermark" src="${getTeamLogo(team)}" alt="" aria-hidden="true" loading="lazy">
       <div class="teams-directory-logo">
         <img src="${getTeamLogo(team)}" alt="${escapeHTML(team.name || "NAL team")}" loading="lazy">
       </div>
       <div class="teams-directory-name">${escapeHTML(team.name || "")}</div>
+      <span class="teams-card-action">VIEW TEAM →</span>
     </button>
   `).join("");
 
@@ -18881,5 +18883,84 @@ for (const pageId of ['homePage','watchPage']) {
 })();
 </script>
 
+
+<style id="teams-stadium-design">
+/* Official team assets remain live; stadium artwork is decorative. */
+#teamsPage{background:linear-gradient(#04112433,#04112466),url('/assets/teams-arena.webp') center top / cover no-repeat #07172b !important;padding-bottom:60px !important;}
+#teamsPage .teams-directory-head{background:transparent !important;border:0 !important;box-shadow:none !important;}
+#teamsPage .teams-directory-head::before,#teamsPage .teams-directory-head::after{display:none !important;}
+#teamsPage .teams-directory-card{background:radial-gradient(ellipse at 20% 0%,color-mix(in srgb,var(--card-primary,#164984) 65%,transparent),transparent 75%),linear-gradient(145deg,#0b2035eb,#030d1bef) !important;border:1px solid #ffffff30 !important;border-bottom:4px solid var(--card-accent,#e31b23) !important;isolation:isolate;}
+#teamsPage .teams-directory-card::before{inset:0 !important;height:auto !important;background:repeating-linear-gradient(135deg,transparent 0 5px,#ffffff04 5px 6px) !important;pointer-events:none;z-index:-1;}
+#teamsPage .teams-card-watermark{position:absolute;right:-16%;top:5%;width:95%;height:90%;object-fit:contain;opacity:.12;transform:rotate(-12deg);pointer-events:none;z-index:-1;filter:grayscale(1);}
+#teamsPage .teams-directory-logo{background:transparent !important;position:relative;}
+#teamsPage .teams-card-action{display:block;color:#e3edf9;font-size:11px;font-weight:700;letter-spacing:1.2px;margin-top:12px;}
+#teamsPage .teams-directory-card:focus-visible{outline:3px solid white;outline-offset:4px;}
+@media(min-width:1001px){
+ #teamsPage .teams-directory-head{padding:30px 0 !important;}
+ #teamsPage .teams-directory-head h1{font-size:46px !important;letter-spacing:1px !important;}
+ #teamsPage .teams-directory-grid{gap:22px !important;}
+ #teamsPage .teams-directory-card{min-height:255px !important;padding:20px 16px !important;transition:transform .18s,box-shadow .18s;}
+ #teamsPage .teams-directory-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px #0006 !important;}
+ #teamsPage .teams-directory-logo{height:155px !important;min-height:155px !important;}
+ #teamsPage .teams-directory-logo img{max-width:155px !important;max-height:145px !important;}
+ #teamsPage .teams-directory-name{font-size:18px !important;min-height:42px !important;}
+ .website-sticky-header .bottom-nav{background:#06172bea !important;border-bottom:1px solid #ffffff20 !important;}
+ .website-sticky-header .bottom-nav button,.website-sticky-header .bottom-nav button span{color:#fff !important;}
+ .website-sticky-header .bottom-nav .nav-button.active,.website-sticky-header .bottom-nav .watch-button.active{background:#ffffff06 !important;border-bottom-color:#e31b23 !important;}
+}
+@media(prefers-reduced-motion:reduce){#teamsPage .teams-directory-card{transition:none !important;}}
+</style>
+<script id="teams-directory-colors">(()=>{const brands={
+    "amarillo-warbirds": {
+      primary: "#0051BA",
+      accent: "#E8000D",
+      third: "#07172B"
+    },
+    "colorado-spartans": {
+      primary: "#2D8BCB",
+      accent: "#000000",
+      third: "#7A7D81"
+    },
+    "dallas-apex": {
+      primary: "#C8102E",
+      accent: "#E1AD01",
+      third: "#000000"
+    },
+    "louisiana-rouxgaroux": {
+      primary: "#CFB53B",
+      accent: "#800000",
+      third: "#000000"
+    },
+    "omaha-beef": {
+      primary: "#F47A20",
+      accent: "#000000",
+      third: "#808080"
+    },
+    "pueblo-punishers": {
+      primary: "#6F2DA8",
+      accent: "#000000",
+      third: "#C0C0C0"
+    },
+    "salina-liberty": {
+      primary: "#1B325A",
+      accent: "#E6252C",
+      third: "#FFFFFF"
+    },
+    "sioux-city-bandits": {
+      primary: "#000000",
+      accent: "#C8102E",
+      third: "#D4AF37"
+    },
+    "southwest-kansas-storm": {
+      primary: "#6B2E8E",
+      accent: "#5FBB46",
+      third: "#009EAE"
+    },
+    "wheeling-miners": {
+      primary: "#C7992C",
+      accent: "#020202",
+      third: "#8D8D8C"
+    }
+  };function paint(){document.querySelectorAll('#teamsDirectoryGrid .teams-directory-card').forEach(card=>{const name=card.querySelector('.teams-directory-name')?.textContent.toLowerCase().replace(/[^a-z0-9]/g,'')||'';const key=Object.keys(brands).find(k=>k.replace(/-/g,'')===name);if(key){card.style.setProperty('--card-primary',brands[key].primary);card.style.setProperty('--card-accent',brands[key].accent);}});}const grid=document.getElementById('teamsDirectoryGrid');if(grid){new MutationObserver(paint).observe(grid,{childList:true});paint();}})();</script>
 </body>
 </html>
