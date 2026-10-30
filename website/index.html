@@ -18733,9 +18733,33 @@ async function openWebsiteShow(kind) {
   const host = document.getElementById('websiteShowsContent');
   if (kind === 'around' || kind === 'gameday') {
     websiteShowItems = [];
+    const slug = kind === 'gameday' ? 'nal-gameday' : 'around-the-nal';
     const subId = kind === 'gameday' ? '30905' : '30898';
     const src = `https://www.lightcast.com/embed/player.php?id=72122&subId=${subId}&type=vod`;
-    host.innerHTML = `<div class="website-video-frame"><iframe src="${websiteEscape(src)}" title="${websiteEscape(title)} — Lightcast channel player" referrerpolicy="no-referrer-when-downgrade" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+    host.innerHTML = `<div id="websiteShowChannelPlayer" class="website-video-frame"><iframe src="${websiteEscape(src)}" title="${websiteEscape(title)} — Lightcast channel player" referrerpolicy="no-referrer-when-downgrade" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div><h2 class="website-show-episodes-heading">EPISODES</h2><div id="websiteShowEpisodeList" role="status">Loading episodes…</div>`;
+    const list = document.getElementById('websiteShowEpisodeList');
+    try {
+      const response = await fetch(`https://nal-network-preview-content.bikard.workers.dev/shows/${slug}`);
+      const payload = await response.json();
+      if (!response.ok || payload.success !== true) throw new Error('Episode list unavailable');
+      if (kind !== websiteShowKind || !list.isConnected) return;
+      websiteShowItems = Array.isArray(payload.data) ? payload.data : [];
+      list.removeAttribute('role');
+      if (!websiteShowItems.length) { list.textContent='No episodes are currently published.'; return; }
+      list.innerHTML = `<div class="website-episode-grid">${websiteShowItems.map((item,index)=>`<button type="button" class="website-episode-card" data-channel-episode="${index}">${item.image?`<img src="${websiteEscape(item.image)}" alt="" loading="lazy">`:''}<strong>${websiteEscape(item.title || 'Episode')}</strong><span>WATCH EPISODE →</span></button>`).join('')}</div>`;
+      list.querySelectorAll('[data-channel-episode]').forEach(button=>button.onclick=()=>{
+        const item=websiteShowItems[Number(button.dataset.channelEpisode)];if(!item)return;
+        const player=document.getElementById('websiteShowChannelPlayer');
+        const url=websiteVideoEmbed(item,'72122');if(!url)return;
+        player.innerHTML=`<iframe src="${websiteEscape(url)}" title="${websiteEscape(item.title)}" referrerpolicy="no-referrer-when-downgrade" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+        list.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+        player.scrollIntoView({block:'center'});
+      });
+    } catch (_) {
+      if (kind !== websiteShowKind || !list.isConnected) return;
+      list.innerHTML='<p>Episode list is temporarily unavailable. The channel player remains available above.</p><button type="button" class="website-action">TRY AGAIN</button>';
+      list.querySelector('button').onclick=()=>openWebsiteShow(kind);
+    }
     return;
   }
   host.innerHTML = '<p class="website-status" role="status">Loading episodes…</p>';
@@ -19134,5 +19158,6 @@ html body #watchPage .network-tab-panel[data-network-panel="home"] .network-show
 (()=>{const page=document.getElementById('websiteShowsPage');if(!page)return;new MutationObserver(()=>{if(page.style.display==='none')document.getElementById('websiteShowsContent').replaceChildren();}).observe(page,{attributes:true,attributeFilter:['style']});})();
 </script>
 
+<style>.website-show-episodes-heading{color:#eef3fa;font-size:24px;margin:30px 0 18px}.website-episode-card[aria-pressed="true"]{outline:2px solid #e31b23;outline-offset:2px}</style>
 </body>
 </html>
