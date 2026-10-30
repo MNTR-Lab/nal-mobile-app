@@ -9392,7 +9392,7 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
 
     <div class="network-hub-header network-unified-hero">
       <div class="network-unified-kicker">NAL NETWORK</div>
-      <div class="network-unified-title">WATCH</div>
+      <h1 class="network-unified-title">WATCH THE NAL</h1>
       <div class="network-unified-tagline">THE GAME. THE LEAGUE. THE NETWORK.</div>
     </div>
 
@@ -9413,8 +9413,10 @@ body:has(#websiteVideoPage.active) .app-back-row { display:none !important; }
             <span class="network-circle-play">▶</span>
           </div>
           <div class="network-feature-info">
-            <strong>Featured NAL Network Programming</strong>
-            <span>Live games, originals and featured league programming.</span>
+            <div class="watch-feature-label">FEATURED</div>
+            <strong id="watchFeaturedTitle">Featured NAL Network Programming</strong>
+            <span id="watchFeaturedDescription">Live games, originals and featured league programming.</span>
+            <button class="watch-feature-action" type="button" onclick="document.querySelector('#networkPageFeaturedVideo').scrollIntoView({block:'center'});document.querySelector('#networkPageFeaturedVideo iframe')?.focus()">WATCH EPISODE ›</button>
           </div>
         </div>
       </section>
@@ -18701,6 +18703,8 @@ async function mountWebsiteFeaturedVideo() {
     if (!item) throw new Error('No featured program');
     hosts.forEach(h => h.innerHTML = h.closest('.app-page')?.style.display === 'none' ? '' : websitePlayerMarkup(item, '72124'));
     document.querySelector('#homePage .home-network-caption').textContent = item.title;
+    const watchTitle=document.getElementById('watchFeaturedTitle');if(watchTitle) watchTitle.textContent=item.title;
+    const watchDescription=document.getElementById('watchFeaturedDescription');if(watchDescription) watchDescription.textContent=item.description || 'Latest NAL Network program';
     const small = document.querySelector('#homePage .home-network-caption-small');
     if (small) small.textContent = item.description || 'Latest NAL Network program';
   } catch (_) {
@@ -19055,5 +19059,39 @@ html body #newsPage .native-news-feature-body{width:100% !important;max-width:no
 }
 </style>
 
+<style id="watch-broadcast-design">
+@media(min-width:1001px){
+html body #watchPage{background:linear-gradient(#04112444,#041124bb),url('/assets/teams-arena.webp') center top / cover no-repeat #07172b !important;padding:20px 50px 60px !important;}
+body:has(#watchPage[style*="display: block"]) .app-back-row{display:none !important;}
+html body #watchPage .network-hub-header.network-unified-hero{display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center !important;background:transparent !important;box-shadow:none !important;border:0 !important;padding:20px 0 16px !important;margin:0 !important;min-height:0 !important;}
+html body #watchPage .network-unified-kicker,html body #watchPage .network-unified-hero::after{display:none !important;}
+html body #watchPage .network-unified-title{font-family:Impact,Haettenschweiler,'Arial Narrow Bold','Arial Black',sans-serif !important;font-size:clamp(42px,4.3vw,64px) !important;font-weight:900 !important;line-height:1 !important;letter-spacing:2.5px !important;margin:0 0 10px !important;background:linear-gradient(180deg,#fff,#f1f5fa 44%,#dbe3ed 65%,#eef3fa) !important;background-clip:text !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;color:#f3f6fa !important;text-shadow:none !important;filter:drop-shadow(0 2px 0 #8291a5) drop-shadow(0 4px 5px #0009);}
+html body #watchPage .network-unified-tagline{font-size:14px !important;font-weight:650 !important;letter-spacing:3px !important;color:#e1e9f3 !important;}
+html body #watchPage .network-tabs{position:relative !important;top:auto !important;display:flex !important;justify-content:center !important;gap:20px !important;background:transparent !important;padding:0 !important;margin:6px 0 22px !important;border-bottom:1px solid #ffffff20 !important;}
+html body #watchPage .network-tab{flex:0 1 auto !important;padding:12px 22px !important;color:#dbe5f2 !important;font-size:14px !important;}
+html body #watchPage .network-tab.active{color:white !important;border-bottom:3px solid #e31b23 !important;}
+html body #watchPage .network-hub-section{padding:0 !important;margin:0 0 28px !important;}
+html body #watchPage .network-feature-section>.network-section-kicker{display:none !important;}
+html body #watchPage .network-feature-card{display:grid !important;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);align-items:stretch;border:1px solid #396789 !important;border-radius:7px;overflow:hidden;background:#051328dd !important;cursor:default;}
+html body #watchPage .network-feature-visual{width:100%;min-width:0;aspect-ratio:16/9 !important;border:0 !important;border-radius:0 !important;align-self:center;}
+html body #watchPage #networkPageFeaturedVideo .website-video-frame{width:100% !important;aspect-ratio:16/9 !important;margin:0 !important;}
+html body #watchPage .network-feature-info{padding:clamp(20px,2.2vw,36px) !important;display:flex;flex-direction:column;justify-content:center;gap:12px;background:radial-gradient(ellipse at top right,#174b7544,transparent 70%),repeating-linear-gradient(135deg,transparent 0 6px,#ffffff03 6px 7px);}
+html body #watchPage .watch-feature-label{align-self:flex-start;background:#e31b23;color:white;font-size:11px;font-weight:900;letter-spacing:1px;padding:6px 10px;border-radius:3px;}
+html body #watchPage .network-feature-info strong{font-size:clamp(22px,2vw,32px) !important;line-height:1.15;}
+html body #watchPage .network-feature-info>span{font-size:15px !important;line-height:1.55;color:#d7e1ed !important;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden;}
+html body #watchPage .watch-feature-action{align-self:flex-start;background:#e31b23;border:0;border-radius:4px;padding:13px 22px;color:white;font-size:14px;font-weight:850;letter-spacing:1px;margin-top:6px;cursor:pointer;}
+html body #watchPage .network-card-scroll{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:22px !important;overflow:visible !important;margin:0 !important;padding:0 !important;}
+html body #watchPage .network-show-card{width:100% !important;min-width:0 !important;background:linear-gradient(135deg,#102c4966,#051328aa) !important;border-radius:6px;overflow:hidden;}
+html body #watchPage .network-show-art{aspect-ratio:16/9 !important;height:auto !important;border:1px solid #396789 !important;border-radius:6px !important;}
+html body #watchPage .network-show-art img{width:100% !important;height:100% !important;object-fit:contain !important;}
+html body #watchPage .network-show-title{font-size:18px !important;padding:12px 12px 4px;}
+html body #watchPage .network-show-meta{font-size:13px !important;padding:0 12px 14px;color:#bdcbdc !important;}
+html body #watchPage .network-section-header{display:flex !important;align-items:center;gap:18px;margin-bottom:15px;}
+html body #watchPage .network-section-title{font-size:24px !important;font-weight:850 !important;color:#e6edf6 !important;}
+html body #watchPage .network-section-header::after{content:'';height:1px;background:#396789;flex:1;order:1;}
+html body #watchPage .network-view-all{order:2;color:#e6edf6 !important;font-size:13px !important;}
+}
+@media(max-width:1000px){#watchPage .watch-feature-label,#watchPage .watch-feature-action{display:none;}}
+</style>
 </body>
 </html>
