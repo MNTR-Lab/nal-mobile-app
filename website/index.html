@@ -20103,6 +20103,25 @@ html body #shopPage .nal-shop-tools :is(input,select){background:#f7f9fb!importa
  html body #shopPage #nalShopHome>.nal-shop-campaign{padding:20px 16px!important;}
  html body #shopPage .nal-shop-collection-links a img{padding:7px!important;}
 }
+/* Compact team rail grows only when additional teams require it. */
+html body #shopPage .nal-shop-team-strip{padding:8px 0 10px!important;}
+html body #shopPage .nal-shop-collection-links{display:flex!important;justify-content:flex-start!important;gap:10px!important;overflow-x:auto!important;}
+html body #shopPage .nal-shop-collection-links a{flex:0 0 60px!important;width:60px;gap:4px;}
+html body #shopPage .nal-shop-collection-links a img{width:44px!important;height:44px!important;padding:6px!important;}
+html body #shopPage .nal-shop-collection-links a span{font-size:8px!important;line-height:1.15;}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-collection-links{gap:8px!important;padding-bottom:5px!important;}
+ html body #shopPage .nal-shop-collection-links a{flex-basis:44px!important;width:44px;}
+ html body #shopPage .nal-shop-collection-links a img{width:40px!important;height:40px!important;}
+}
+/* NAL Shop brand: navy, red, silver, and white. */
+html body #shopPage #nalShopHome>.nal-shop-campaign{background:radial-gradient(ellipse at 100% 90%,rgba(224,28,43,.3),transparent 52%),linear-gradient(115deg,#06172b,#102f50)!important;}
+html body #shopPage .nal-shop-campaign-copy>.nal-shop-button{background:#df1c2b!important;color:#fff!important;border-color:#df1c2b!important;}
+.nal-shop-story-league{background:linear-gradient(130deg,#06172b,#163b60)!important;}
+.nal-shop-story-collect{background:linear-gradient(130deg,#0a203a 30%,#622335 78%,#b62032)!important;}
+html body #shopPage .nal-shop-category-tabs a:is(.active,:hover){border-color:#df1c2b!important;}
+/* Center the compact team rail; retain left-origin scrolling on small screens. */
+html body #shopPage .nal-shop-collection-links{justify-content:safe center!important;}
 
 </style>
 </body>
