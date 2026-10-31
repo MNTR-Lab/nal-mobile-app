@@ -20668,6 +20668,13 @@ html body #shopPage .nal-shop-team-view>.nal-shop-category-tabs{display:flex!imp
 html body #shopPage .nal-shop-team-view>.nal-shop-assurance{display:block!important;}
 html body #shopPage #nalShopBag{white-space:nowrap!important;flex:0 0 auto!important;min-width:76px!important;width:auto!important;line-height:1.2!important;}
 @media(max-width:750px){html body #shopPage .nal-shop-team-view>.nal-shop-unified-header{padding:10px 0;}html body #shopPage #nalShopBag{min-width:65px!important;}}
+
+/* One shared content gutter, matching the retail navigation. */
+html body #shopPage{--shop-content-gutter:50px;--shop-nav-navy:#06172b;}
+html body #shopPage .nal-shop-shell>:is(.nal-shop-unified-header,.nal-shop-category-tabs,#nalShopBrowse,#nalShopProduct,#nalShopNotice),
+html body #shopPage #nalShopHome>:is(.nal-shop-campaign,.nal-shop-jersey-banner,.nal-shop-section-heading,.nal-shop-category-tiles,.nal-shop-grid,.nal-shop-editorial,.nal-shop-new-grid,.nal-shop-service-row){width:calc(100% - var(--shop-content-gutter)*2)!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box;}
+html body #shopPage .nal-shop-category-tabs{background:var(--shop-nav-navy)!important;}
+@media(max-width:750px){html body #shopPage{--shop-content-gutter:16px;}}
 </style>
 </body>
 </html>
