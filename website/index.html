@@ -19752,14 +19752,16 @@ html body #teamPage[data-website-team] #teamNextGameCard{
 /* NAL Network merchandise storefront. All catalog and cart state comes from Shopify Storefront API. */
 (()=>{
  const page=document.getElementById('shopPage');
+ // Replace the blank URLs with your final assets; choose image, video, or placeholder.
+ const heroMedia={mode:'placeholder',desktopImage:'',mobileImage:'',desktopVideo:'',mobileVideo:'',poster:'',alt:'Official National Arena League merchandise'};
  const shell=document.createElement('div');shell.className='nal-shop-shell';
  shell.innerHTML=`
  <div class="nal-shop-assurance">OFFICIAL NATIONAL ARENA LEAGUE MERCHANDISE</div><section class="nal-shop-team-strip"><h2>SHOP BY TEAM</h2><div id="nalShopCollections" class="nal-shop-collection-links" aria-label="Team collections"></div></section><div class="nal-shop-tools"><h1 class="nal-shop-compact-title"><a href="/shop" aria-label="NAL Shop home"><img class="nal-shop-brand" src="https://nalshop.com/cdn/shop/files/NAL_Shop4-test_34128dba-6823-4f08-a767-46b6fd5703cd.png?v=1752487391&amp;width=600" alt="NAL Shop — A GOAT FanHQ Project"></a></h1><input id="nalShopSearch" type="search" placeholder="Search NAL Shop" aria-label="Search merchandise"><select id="nalShopCollection" aria-label="Shop collection"><option value="">ALL MERCHANDISE</option></select><select id="nalShopSort" aria-label="Sort merchandise"><option value="featured">FEATURED</option><option value="newest">NEWEST</option><option value="price-low">PRICE: LOW TO HIGH</option><option value="price-high">PRICE: HIGH TO LOW</option><option value="title">NAME: A–Z</option></select><button class="nal-shop-button nal-shop-red" id="nalShopBag">CART (0)</button></div>
  <nav class="nal-shop-category-tabs" aria-label="Merchandise categories"><a href="/shop/all" data-category="">All Gear</a><a href="/shop?category=apparel" data-category="apparel">Apparel</a><a href="/shop?category=headwear" data-category="headwear">Headwear</a><a href="/shop?category=mini-helmets" data-category="mini-helmets">Mini Helmets</a><a href="/shop?category=accessories" data-category="accessories">Accessories</a><a href="/shop/all?sort=newest" data-category="new">New Arrivals</a></nav>
  <div id="nalShopNotice" class="nal-shop-notice" role="status" aria-live="polite"></div>
  <section id="nalShopHome" hidden>
-   <div class="nal-shop-campaign"><div class="nal-shop-campaign-copy"><p>YOUR TEAM. YOUR COLORS.</p><h2>EVERY DAY.<br>GAME DAY.</h2><p>Rep the league. Wear your pride.</p><a href="/shop?category=apparel" class="nal-shop-button nal-shop-red">SHOP APPAREL</a><a href="/shop/all" class="nal-shop-secondary-cta">SHOP ALL GEAR ›</a><small class="nal-shop-artwork-note">CAMPAIGN PREVIEW · FINAL ARTWORK TO COME</small></div><div id="nalShopCampaignProducts" class="nal-shop-campaign-products" aria-label="Featured merchandise"></div></div>
-   <div class="nal-shop-section-heading"><h2>SHOP BY DEPARTMENT</h2><a href="/shop/all">VIEW ALL ›</a></div>
+   <div class="nal-shop-campaign" id="nalShopHero"><div class="nal-shop-hero-media" id="nalShopHeroMedia" aria-hidden="true"></div><div class="nal-shop-campaign-copy"><p>YOUR TEAM. YOUR COLORS.</p><h2>EVERY DAY.<br>GAME DAY.</h2><p>Rep the league. Wear your pride.</p><a href="/shop?category=apparel" class="nal-shop-button nal-shop-red">SHOP APPAREL</a><a href="/shop/all" class="nal-shop-secondary-cta">SHOP ALL GEAR ›</a><small class="nal-shop-artwork-note">CAMPAIGN PREVIEW · FINAL ARTWORK TO COME</small></div><div id="nalShopCampaignProducts" class="nal-shop-campaign-products" aria-label="Featured merchandise"></div></div>
+   <div class="nal-shop-section-heading"><h2>FEATURED COLLECTIONS</h2><a href="/shop/all">VIEW ALL ›</a></div>
    <div id="nalShopCategoryTiles" class="nal-shop-category-tiles"></div>
    <div class="nal-shop-section-heading"><h2>FAN FAVORITES</h2><a href="/shop/all">SHOP ALL ›</a></div><div id="nalShopBest" class="nal-shop-grid" aria-live="polite">Loading bestsellers…</div>
    <div class="nal-shop-editorial"><a href="/shop?category=apparel" class="nal-shop-story nal-shop-story-league"><small>THE LEAGUE COLLECTION</small><h2>ONE LEAGUE.<br>ALL YOUR PRIDE.</h2><span>EXPLORE THE COLLECTION ›</span><em>Collection artwork placeholder</em></a><a href="/shop?category=mini-helmets" class="nal-shop-story nal-shop-story-collect"><small>FOR THE COLLECTOR</small><h2>SMALL HELMET.<br>BIG TEAM ENERGY.</h2><span>SHOP MINI HELMETS ›</span><em>Collection artwork placeholder</em></a></div>
@@ -19778,6 +19780,29 @@ html body #teamPage[data-website-team] #teamNextGameCard{
  const money=x=>new Intl.NumberFormat('en-US',{style:'currency',currency:x?.currencyCode||'USD'}).format(Number(x?.amount)||0);
  const teamLogos={"amarillo warbirds": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089", "colorado spartans": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans.png?v=1789867089", "dallas apex": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex.png?v=1789867089", "louisiana rouxgaroux": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux.png?v=1789867089", "omaha beef": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef.png?v=1789867089", "pueblo punishers": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers.png?v=1789867089", "salina liberty": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty.png?v=1789867089", "sioux city bandits": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits.png?v=1789867089", "southwest kansas storm": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm.png?v=1789867089", "wheeling miners": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners.png?v=1789867089"};
  const API='https://nal-network-preview-content.bikard.workers.dev/shop/api';
+ function setupHeroMedia(){
+  const target=$('nalShopHeroMedia'),hero=$('nalShopHero');
+  const safeSource=url=>{if(!url)return '';try{const u=new URL(url,location.origin);return u.protocol==='https:'||(u.origin===location.origin&&u.protocol===location.protocol)?u.href:'';}catch{return '';}};
+  const mobile=matchMedia('(max-width:750px)'),reduced=matchMedia('(prefers-reduced-motion:reduce)');
+  let activeVideo=null;
+  const render=()=>{
+   activeVideo?.pause();activeVideo=null;target.replaceChildren();hero.classList.remove('nal-shop-has-media');hero.querySelector('.nal-shop-video-toggle')?.remove();
+   const isMobile=mobile.matches;
+   const imageSrc=safeSource((isMobile?heroMedia.mobileImage:'')||heroMedia.desktopImage||'');
+   if(heroMedia.mode==='image'&&imageSrc){const img=document.createElement('img');img.alt=heroMedia.alt;img.src=imageSrc;img.onload=()=>hero.classList.add('nal-shop-has-media');img.onerror=()=>hero.classList.remove('nal-shop-has-media');target.append(img);}
+   if(heroMedia.mode==='video'){
+    const src=safeSource((isMobile?heroMedia.mobileVideo:'')||heroMedia.desktopVideo||'');if(!src)return;
+    const video=document.createElement('video');activeVideo=video;video.muted=true;video.loop=true;video.playsInline=true;video.preload='metadata';video.autoplay=!reduced.matches;const poster=safeSource(heroMedia.poster||heroMedia.desktopImage||'');if(poster)video.poster=poster;
+    const button=document.createElement('button');button.className='nal-shop-video-toggle';button.type='button';button.textContent='PLAY VIDEO';button.setAttribute('aria-label','Play hero video');
+    const sync=()=>{button.textContent=video.paused?'PLAY VIDEO':'PAUSE VIDEO';button.setAttribute('aria-label',video.paused?'Play hero video':'Pause hero video');};video.onplay=sync;video.onpause=sync;
+    button.onclick=()=>{if(video.paused)video.play().catch(()=>{});else video.pause();};video.onloadeddata=()=>{hero.classList.add('nal-shop-has-media');if(!reduced.matches)video.play().catch(()=>{});sync();};video.onerror=()=>{hero.classList.remove('nal-shop-has-media');button.remove();};video.src=src;target.append(video);hero.append(button);
+   }
+  };
+  mobile.addEventListener('change',render);reduced.addEventListener('change',render);render();
+  new MutationObserver(()=>{if(page.classList.contains('hidden')||getComputedStyle(page).display==='none')activeVideo?.pause();}).observe(page,{attributes:true,attributeFilter:['class','style']});
+ }
+ setupHeroMedia();
+
  let cart=null,collections=[],items=[],cursor=null,hasMore=false,collection='',search='',category='',sort='featured',requestId=0,loadingMore=false,initialized=false,focusReturn=null,busy=false;
  let cartId='';try{cartId=localStorage.getItem('nal-network-shopify-cart')||'';}catch{}
  const overlay=document.createElement('div');overlay.className='nal-shop-overlay';overlay.hidden=true;overlay.innerHTML='<section class="nal-shop-drawer" role="dialog" aria-modal="true" aria-label="Your NAL Shop cart"></section>';document.body.append(overlay);const drawer=overlay.firstElementChild;
@@ -20169,6 +20194,23 @@ html body #shopPage .nal-shop-unified-header .nal-shop-tools :is(#nalShopCollect
 }
 
 .nal-shop-browse-filters{display:flex;justify-content:flex-end;gap:10px;margin:0 0 20px;}.nal-shop-browse-filters select{max-width:48%;padding:9px;border:1px solid #adbdcc;background:#f7f9fb;color:#10283f;border-radius:3px;}
+/* Replaceable hero media: 8:3 desktop and 4:5 phone artwork. */
+html body #shopPage #nalShopHome>.nal-shop-campaign{aspect-ratio:8/3;min-height:0!important;isolation:isolate;}
+.nal-shop-hero-media{position:absolute;inset:0;z-index:-2;pointer-events:none;}
+.nal-shop-hero-media img,.nal-shop-hero-media video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;}
+html body #shopPage .nal-shop-has-media:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#06172bba,transparent 78%);z-index:-1;}
+html body #shopPage .nal-shop-has-media .nal-shop-campaign-products,html body #shopPage .nal-shop-has-media .nal-shop-artwork-note{visibility:hidden;}
+.nal-shop-video-toggle{position:absolute;right:18px;bottom:16px;z-index:3;color:#fff;background:#06172bcc;border:1px solid #ffffff80;border-radius:3px;padding:9px 12px;font-size:10px;font-weight:800;cursor:pointer;}
+html body #shopPage .nal-shop-category-tile{position:relative;background:linear-gradient(145deg,#f5f7f9,#dae2e9);border:1px solid #d5dfe7;}
+html body #shopPage .nal-shop-category-tile>img{height:245px;padding:18px;box-sizing:border-box;transition:transform .2s;}
+html body #shopPage .nal-shop-category-tile:hover>img{transform:scale(1.04);}
+html body #shopPage .nal-shop-category-tile>span{background:#09233e!important;color:#fff!important;padding:16px!important;font-size:13px;border-bottom:3px solid #df1c2b;}
+html body #shopPage .nal-shop-category-tile b{color:#fff;}
+@media(max-width:750px){
+ html body #shopPage #nalShopHome>.nal-shop-campaign{aspect-ratio:4/5;grid-template-columns:1.1fr .9fr;}
+ html body #shopPage .nal-shop-category-tile>img{height:175px;padding:10px;}
+ html body #shopPage .nal-shop-category-tile>span{padding:12px!important;font-size:11px;}
+}
 
 </style>
 </body>
