@@ -20521,6 +20521,11 @@ html body #shopPage .nal-shop-team-landing #nalShopReleaseViewAll{font-family:in
 html body #shopPage .nal-shop-team-landing #nalShopReleaseHeadingRow{margin:24px 0 18px!important;}
 html body #shopPage .nal-shop-team-landing .nal-team-explore-heading{margin-top:24px!important;padding:24px 0 18px!important;}
 @media(max-width:750px){html body #shopPage .nal-shop-amarillo-view #nalShopHeading,html body #shopPage .nal-shop-amarillo-view .nal-team-explore-heading h2{font-size:21px!important;}html body #shopPage .nal-shop-team-landing #nalShopReleaseViewAll{font-size:12px!important;}}
+
+/* Muted team identity behind the Game Day Essentials copy. */
+html body #shopPage .nal-team-gameday-copy{isolation:isolate;background:repeating-linear-gradient(125deg,transparent 0 43px,#ffffff04 44px 45px),radial-gradient(ellipse at 95% 10%,#20496d88,transparent 70%),linear-gradient(135deg,#0b2948,#061a31);}
+html body #shopPage .nal-team-gameday-copy:before{content:'';position:absolute;z-index:-1;inset:8% -7% 6% 26%;background:url('https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089') center/contain no-repeat;opacity:.065;filter:grayscale(1);pointer-events:none;}
+html body #shopPage .nal-team-gameday-copy:after{content:'';position:absolute;left:6.3%;top:15%;width:48px;height:3px;background:#df1731;opacity:.65;pointer-events:none;}
 </style>
 </body>
 </html>
