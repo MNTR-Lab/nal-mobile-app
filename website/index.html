@@ -19772,6 +19772,7 @@ html body #teamPage[data-website-team] #teamNextGameCard{
  const shopTools=shell.querySelector('.nal-shop-tools');
  shopHeader.append(shell.querySelector('.nal-shop-compact-title'),shell.querySelector('.nal-shop-team-strip'),shopTools);
  shell.querySelector('.nal-shop-assurance').after(shopHeader);
+ const browseFilters=document.createElement('div');browseFilters.className='nal-shop-browse-filters';browseFilters.append(shell.querySelector('#nalShopCollection'),shell.querySelector('#nalShopSort'));shell.querySelector('#nalShopBrowse').prepend(browseFilters);
  const $=id=>document.getElementById(id),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const image=x=>/^https:\/\//.test(x||'')?esc(x):'';
  const money=x=>new Intl.NumberFormat('en-US',{style:'currency',currency:x?.currencyCode||'USD'}).format(Number(x?.amount)||0);
@@ -20157,6 +20158,17 @@ html body #shopPage .nal-shop-unified-header .nal-shop-tools select{flex:1 1 100
  html body #shopPage .nal-shop-unified-header .nal-shop-tools input{width:80px!important;flex:1 1 60px!important;}
  html body #shopPage .nal-shop-unified-header .nal-shop-collection-links a img{width:54px!important;height:54px!important;padding:7px!important;}
 }
+/* Pin header positions consistently on home, collections, and product pages. */
+html body #shopPage .nal-shop-unified-header>.nal-shop-compact-title{grid-column:1!important;grid-row:1!important;order:0!important;margin:0!important;justify-self:start;}
+html body #shopPage .nal-shop-unified-header>.nal-shop-team-strip{grid-column:2!important;grid-row:1!important;order:0!important;}
+html body #shopPage .nal-shop-unified-header>.nal-shop-tools{grid-column:3!important;grid-row:1!important;order:0!important;flex-wrap:nowrap!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools :is(#nalShopCollection,#nalShopSort){display:none!important;}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-unified-header>.nal-shop-team-strip{grid-column:1/-1!important;grid-row:2!important;}
+ html body #shopPage .nal-shop-unified-header>.nal-shop-tools{grid-column:2!important;grid-row:1!important;}
+}
+
+.nal-shop-browse-filters{display:flex;justify-content:flex-end;gap:10px;margin:0 0 20px;}.nal-shop-browse-filters select{max-width:48%;padding:9px;border:1px solid #adbdcc;background:#f7f9fb;color:#10283f;border-radius:3px;}
 
 </style>
 </body>
