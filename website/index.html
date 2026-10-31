@@ -8745,6 +8745,7 @@ html body #homePage .home-partners{background:linear-gradient(110deg,rgba(3,17,3
 @media(max-width:1000px){html body #homePage{background-attachment:scroll!important;}}
 </style>
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;600;650&amp;display=swap">
 </head>
 
 <body>
@@ -19816,11 +19817,22 @@ html body #teamPage[data-website-team] #teamNextGameCard{
  function menuEntries(entries){return entries.map(item=>item.children?`<div class="nal-shop-submenu"><button type="button" aria-expanded="false" aria-controls="nalShopSub${++menuId}">${esc(item.label)} <span aria-hidden="true">›</span></button><div class="nal-shop-subpanel" id="nalShopSub${menuId}" hidden>${menuEntries(item.children)}</div></div>`:`<a href="${esc(item.href)}">${esc(item.label)}</a>`).join('');}
  shopMenuData.forEach((item,i)=>{const old=[...shell.querySelectorAll('.nal-shop-category-tabs>a')].find(a=>a.textContent.trim()===item.label);if(!old)return;const box=document.createElement('div');box.className='nal-shop-menu-group';box.innerHTML=`<button class="nal-shop-menu-trigger" type="button" aria-expanded="false" aria-controls="nalShopMenu${i}">${esc(item.label)}</button><div class="nal-shop-dropdown" id="nalShopMenu${i}" hidden>${menuEntries(item.children)}</div>`;old.replaceWith(box);});
  function closeShopMenus(){setTeamMenu(false);shell.querySelectorAll('.nal-shop-menu-group [aria-expanded]').forEach(b=>{b.setAttribute('aria-expanded','false');const panel=$(b.getAttribute('aria-controls'));if(panel)panel.hidden=true;});}
- shell.querySelectorAll('.nal-shop-menu-group button').forEach(button=>button.addEventListener('click',()=>{const open=button.getAttribute('aria-expanded')!=='true';if(button.classList.contains('nal-shop-menu-trigger'))closeShopMenus();else button.closest('.nal-shop-dropdown').querySelectorAll('.nal-shop-submenu>button').forEach(other=>{if(other!==button){other.setAttribute('aria-expanded','false');$(other.getAttribute('aria-controls')).hidden=true;}});button.setAttribute('aria-expanded',String(open));$(button.getAttribute('aria-controls')).hidden=!open;}));
- teamToggle.onclick=()=>{const open=teamDropdown.hidden;closeShopMenus();setTeamMenu(open);};
+ shell.querySelectorAll('.nal-shop-menu-group button').forEach(button=>button.addEventListener('click',e=>{if(e.detail>0&&matchMedia('(hover:hover)').matches&&button.getAttribute('aria-expanded')==='true')return;const open=button.getAttribute('aria-expanded')!=='true';if(button.classList.contains('nal-shop-menu-trigger'))closeShopMenus();else button.closest('.nal-shop-dropdown').querySelectorAll('.nal-shop-submenu>button').forEach(other=>{if(other!==button){other.setAttribute('aria-expanded','false');$(other.getAttribute('aria-controls')).hidden=true;}});button.setAttribute('aria-expanded',String(open));$(button.getAttribute('aria-controls')).hidden=!open;}));
+ teamToggle.onclick=e=>{if(e.detail>0&&matchMedia('(hover:hover)').matches&&!teamDropdown.hidden)return;const open=teamDropdown.hidden;closeShopMenus();setTeamMenu(open);};
  shell.querySelector('.nal-shop-category-tabs').addEventListener('keydown',e=>{if(e.key==='Escape'){const group=e.target.closest('.nal-shop-menu-group');closeShopMenus();group?.querySelector('.nal-shop-menu-trigger').focus();}if(e.key==='ArrowDown'&&e.target.classList.contains('nal-shop-menu-trigger')){e.preventDefault();closeShopMenus();e.target.setAttribute('aria-expanded','true');const panel=$(e.target.getAttribute('aria-controls'));panel.hidden=false;panel.querySelector('a,button')?.focus();}});
  document.addEventListener('click',e=>{if(!e.target.closest('.nal-shop-category-tabs'))closeShopMenus();});
  shell.addEventListener('click',e=>{if(e.target.closest('a[href^="/shop"]'))closeShopMenus();});
+ const hoverEnabled=()=>matchMedia('(hover:hover) and (pointer:fine)').matches;
+ const shopNav=shell.querySelector('.nal-shop-category-tabs');let menuCloseTimer;
+ shopNav.querySelectorAll('.nal-shop-menu-group,.nal-shop-team-menu').forEach(group=>{
+  group.addEventListener('pointerenter',()=>{if(!hoverEnabled())return;clearTimeout(menuCloseTimer);closeShopMenus();const button=group.querySelector(':scope>button');button.setAttribute('aria-expanded','true');$(button.getAttribute('aria-controls')).hidden=false;});
+  group.addEventListener('pointerleave',()=>{if(hoverEnabled())menuCloseTimer=setTimeout(closeShopMenus,180);});
+ });
+ shopNav.querySelectorAll('.nal-shop-submenu').forEach(group=>{
+  group.addEventListener('pointerenter',()=>{if(!hoverEnabled())return;clearTimeout(menuCloseTimer);group.parentElement.querySelectorAll(':scope>.nal-shop-submenu').forEach(sibling=>{const button=sibling.querySelector(':scope>button');const open=sibling===group;button.setAttribute('aria-expanded',String(open));$(button.getAttribute('aria-controls')).hidden=!open;});});
+ });
+ shopNav.addEventListener('pointerenter',()=>clearTimeout(menuCloseTimer));
+
 
 
  function setupHeroMedia(){
@@ -20309,6 +20321,17 @@ html body #shopPage .nal-shop-submenu>button:is(:hover,[aria-expanded=true]){col
 @media(max-width:1100px){html body #shopPage .nal-shop-menu-group:last-of-type .nal-shop-subpanel{left:auto;right:100%;}}
 @media(max-width:950px){html body #shopPage .nal-shop-category-tabs .nal-shop-menu-trigger{font-size:10px;padding:13px 10px 10px;}}
 @media(max-width:750px){.nal-shop-menu-group{position:static;}html body #shopPage .nal-shop-menu-group>.nal-shop-dropdown{width:100%;max-height:60vh;overflow-y:auto;}.nal-shop-subpanel{position:static!important;width:100%;box-shadow:none;max-height:none;padding:0 0 5px 16px;background:#f7f9fb;}.nal-shop-submenu>button{min-height:44px;}html body #shopPage .nal-shop-dropdown a{min-height:44px;box-sizing:border-box;}}
+/* Refined retail navigation: tailored widths and lighter typography. */
+html body #shopPage .nal-shop-category-tabs,html body #shopPage .nal-shop-category-tabs :is(a,button){font-family:'Inter','Helvetica Neue',Arial,sans-serif!important;}
+html body #shopPage .nal-shop-category-tabs>a,html body #shopPage .nal-shop-category-tabs :is(.nal-shop-menu-trigger,#nalShopTeamToggle){font-size:12px!important;font-weight:650!important;letter-spacing:.65px!important;padding:17px 12px 14px!important;}
+html body #shopPage .nal-shop-dropdown,html body #shopPage .nal-shop-subpanel{width:max-content;min-width:185px;max-width:280px;padding:8px 14px;border:1px solid #e2e7ed;border-top:2px solid #df1c2b;border-radius:0 0 5px 5px;box-shadow:0 10px 28px #03142622;}
+html body #shopPage .nal-shop-dropdown a,html body #shopPage .nal-shop-submenu>button{font-size:12px!important;font-weight:450!important;line-height:1.4;letter-spacing:0!important;padding:11px 7px!important;white-space:nowrap;}
+html body #shopPage .nal-shop-dropdown a{border-bottom-color:#edf0f3;}
+html body #shopPage .nal-shop-submenu>button span{font-size:16px;color:#8a99a8;}
+html body #shopPage .nal-shop-dropdown a:hover,html body #shopPage .nal-shop-submenu>button:hover{background:#f1f5f9;border-radius:3px;}
+html body #shopPage .nal-shop-subpanel{margin-left:-1px;}
+@media(max-width:950px){html body #shopPage .nal-shop-category-tabs>a,html body #shopPage .nal-shop-category-tabs :is(.nal-shop-menu-trigger,#nalShopTeamToggle){font-size:10px!important;padding:13px 9px 10px!important;}}
+@media(max-width:750px){html body #shopPage .nal-shop-menu-group>.nal-shop-dropdown,html body #shopPage .nal-shop-team-menu>.nal-shop-dropdown{width:100%;max-width:100%;}html body #shopPage .nal-shop-subpanel{width:100%;max-width:none;min-width:0;margin:0;border:0;border-left:2px solid #e0e6ee;border-radius:0;}}
 
 </style>
 </body>
