@@ -20428,6 +20428,13 @@ html body #shopPage .nal-shop-amarillo-view .nal-shop-product-info{background:#f
 html body #shopPage .nal-shop-amarillo-view .nal-shop-product-info h3{color:#102f50;font-size:14px;line-height:1.45;}
 html body #shopPage .nal-shop-amarillo-view .nal-shop-product-info>.nal-shop-button{background:#0b294b!important;color:#fff!important;border:1px solid #0b294b!important;border-bottom:2px solid #db1933!important;border-radius:3px;font-size:11px;}
 html body #shopPage .nal-shop-amarillo-view .nal-shop-product-info>.nal-shop-button:hover{background:#193e65!important;}
+
+/* Explicit breadcrumb/utility placement and 50px desktop content gutters. */
+html body #shopPage .nal-team-shop-toolbar{display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center;min-height:62px;gap:20px;}
+html body #shopPage .nal-team-shop-toolbar>.nal-team-shop-breadcrumb{grid-column:1;grid-row:1;order:0!important;justify-self:start;margin:0!important;}
+html body #shopPage .nal-team-shop-toolbar>.nal-shop-tools{grid-column:2;grid-row:1;order:0!important;justify-self:end;min-height:0!important;flex-wrap:nowrap!important;margin:0!important;}
+@media(min-width:751px){html body #shopPage .nal-shop-shell>:is(.nal-shop-unified-header,.nal-shop-category-tabs,#nalShopBrowse,#nalShopProduct,#nalShopNotice){width:calc(100% - 100px)!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box;}}
+@media(max-width:600px){html body #shopPage .nal-team-shop-toolbar{grid-template-columns:minmax(0,1fr);gap:10px;}html body #shopPage .nal-team-shop-toolbar>.nal-shop-tools{grid-column:1;grid-row:2;justify-self:end;}}
 </style>
 </body>
 </html>
