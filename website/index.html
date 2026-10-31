@@ -20733,5 +20733,16 @@ b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')!=='tr
 install(document.getElementById('website-navigation'),'nalWebsiteMenuToggle','EXPLORE NAL NETWORK');install(document.querySelector('#shopPage .nal-shop-category-tabs'),'nalShopMobileMenuToggle','SHOP MENU');
 })();
 </script>
+
+<style id="nal-mobile-menu-consistency">
+@media(max-width:750px){
+html body #shopPage .nal-shop-shell>.nal-shop-category-tabs>a,
+html body #shopPage .nal-shop-shell>.nal-shop-category-tabs>.nal-shop-team-menu>button,
+html body #shopPage .nal-shop-shell>.nal-shop-category-tabs>.nal-shop-menu-group>button{
+font-family:Arial,Helvetica,sans-serif!important;font-size:13px!important;font-weight:700!important;line-height:1.25!important;letter-spacing:.4px!important;text-transform:uppercase!important;
+display:flex!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;min-height:46px!important;height:auto!important;padding:14px 16px!important;margin:0!important;box-sizing:border-box!important;border:0!important;border-bottom:1px solid #ffffff15!important;text-align:left!important;text-decoration:none!important;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+html body #shopPage .nal-shop-category-tabs>a:is(.active,[aria-current=page]){color:#ed2233!important;background:#ffffff08!important;border-bottom:1px solid #ffffff15!important;}
+}
+</style>
 </body>
 </html>
