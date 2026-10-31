@@ -19768,6 +19768,10 @@ html body #teamPage[data-website-team] #teamNextGameCard{
  <section id="nalShopBrowse"><h2 class="nal-shop-title" id="nalShopHeading">OFFICIAL LEAGUE & TEAM GEAR</h2><div id="nalShopCatalog" class="nal-shop-status" aria-live="polite">Loading NAL Shop…</div><button class="nal-shop-button" style="display:none;margin:25px auto" id="nalShopMore">LOAD MORE MERCHANDISE</button></section>
  <section id="nalShopProduct" hidden aria-live="polite"></section>`;
  page.append(shell);
+ const shopHeader=document.createElement('div');shopHeader.className='nal-shop-unified-header';
+ const shopTools=shell.querySelector('.nal-shop-tools');
+ shopHeader.append(shell.querySelector('.nal-shop-compact-title'),shell.querySelector('.nal-shop-team-strip'),shopTools);
+ shell.querySelector('.nal-shop-assurance').after(shopHeader);
  const $=id=>document.getElementById(id),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const image=x=>/^https:\/\//.test(x||'')?esc(x):'';
  const money=x=>new Intl.NumberFormat('en-US',{style:'currency',currency:x?.currencyCode||'USD'}).format(Number(x?.amount)||0);
@@ -20122,6 +20126,37 @@ html body #shopPage .nal-shop-campaign-copy>.nal-shop-button{background:#df1c2b!
 html body #shopPage .nal-shop-category-tabs a:is(.active,:hover){border-color:#df1c2b!important;}
 /* Center the compact team rail; retain left-origin scrolling on small screens. */
 html body #shopPage .nal-shop-collection-links{justify-content:safe center!important;}
+/* Larger, closely spaced logos in a centered rail spanning 78% of the shop. */
+html body #shopPage .nal-shop-collection-links{width:78%;max-width:1100px;margin-left:auto!important;margin-right:auto!important;display:grid!important;grid-template-columns:repeat(10,minmax(0,1fr));gap:10px!important;overflow:visible!important;}
+html body #shopPage .nal-shop-collection-links a{width:100%!important;min-width:0;gap:6px;}
+html body #shopPage .nal-shop-collection-links a img{width:clamp(48px,5.6vw,78px)!important;height:clamp(48px,5.6vw,78px)!important;padding:8px!important;}
+html body #shopPage .nal-shop-collection-links a span{font-size:9px!important;line-height:1.2;}
+html body #shopPage .nal-shop-team-strip{padding:12px 0 14px!important;}
+@media(max-width:900px){html body #shopPage .nal-shop-collection-links{width:100%;}}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-collection-links{display:flex!important;gap:10px!important;overflow-x:auto!important;justify-content:safe center!important;}
+ html body #shopPage .nal-shop-collection-links a{flex:0 0 60px!important;width:60px!important;}
+ html body #shopPage .nal-shop-collection-links a img{width:56px!important;height:56px!important;padding:7px!important;}
+}
+/* Shared desktop line: shop mark, team rail, search, and cart. */
+html body #shopPage .nal-shop-unified-header{order:-3;display:grid;grid-template-columns:180px minmax(0,1fr) 245px;align-items:center;gap:18px;width:calc(100% - 64px);max-width:1400px;margin:0 auto;padding:16px 0;}
+html body #shopPage .nal-shop-unified-header .nal-shop-brand{width:180px;height:64px;}
+html body #shopPage .nal-shop-unified-header .nal-shop-team-strip{width:100%;padding:0!important;border:0;}
+html body #shopPage .nal-shop-unified-header .nal-shop-collection-links{width:100%;gap:7px!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-collection-links a img{width:clamp(34px,3.8vw,60px)!important;height:clamp(34px,3.8vw,60px)!important;padding:5px!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-collection-links a span{display:none;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools{width:100%;min-height:0;display:flex;flex-wrap:wrap;justify-content:flex-end;margin:0!important;gap:8px!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools input{width:170px!important;flex:1 1 140px!important;min-width:0;max-width:none!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools select{flex:1 1 100px;max-width:118px;}
+@media(max-width:1050px){html body #shopPage .nal-shop-unified-header{grid-template-columns:145px minmax(0,1fr) 200px;gap:12px;}html body #shopPage .nal-shop-unified-header .nal-shop-brand{width:145px;}}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-unified-header{width:calc(100% - 32px);grid-template-columns:140px minmax(0,1fr);gap:8px 12px;padding:10px 0;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-brand{width:140px;height:50px;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-team-strip{grid-column:1/-1;grid-row:2;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-tools{grid-column:2;grid-row:1;padding:0!important;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-tools input{width:80px!important;flex:1 1 60px!important;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-collection-links a img{width:54px!important;height:54px!important;padding:7px!important;}
+}
 
 </style>
 </body>
