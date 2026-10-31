@@ -8746,6 +8746,7 @@ html body #homePage .home-partners{background:linear-gradient(110deg,rgba(3,17,3
 </style>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;600;650&amp;display=swap">
+
 </head>
 
 <body>
@@ -20679,5 +20680,58 @@ html body #shopPage .nal-shop-category-tabs{background:var(--shop-nav-navy)!impo
 /* Breathing room between the shop navigation and homepage hero. */
 html body #shopPage #nalShopHome>.nal-shop-campaign{margin-top:15px!important;}
 </style>
+
+<style id="nal-mobile-navigation">
+/* Responsive navigation: desktop stays intact; phones use expandable menus. */
+.nal-mobile-menu-toggle{display:none;}
+@media(max-width:750px){
+html,body{max-width:100%;overflow-x:clip;}
+.nal-mobile-menu-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:46px;padding:12px 16px;border:0;border-bottom:1px solid #ffffff20;background:#06172b;color:#fff;font:700 13px/1.2 Arial,sans-serif;letter-spacing:.5px;text-align:left;cursor:pointer;box-sizing:border-box;}
+.nal-mobile-menu-toggle .nal-menu-bars{font-size:21px;line-height:1;}
+.website-sticky-header>#nalWebsiteMenuToggle{width:100%;}
+html body .website-sticky-header #website-navigation.bottom-nav{display:none!important;height:auto!important;min-height:0!important;padding:5px 16px!important;grid-template-columns:1fr!important;background:#06172b;max-height:65dvh;overflow-y:auto;}
+html body .website-sticky-header #website-navigation.bottom-nav.nal-mobile-menu-open{display:grid!important;}
+html body .website-sticky-header #website-navigation.bottom-nav button:is(.nav-button,.watch-button){height:46px!important;min-height:46px!important;justify-content:flex-start!important;padding:0 12px!important;border-bottom:1px solid #ffffff15;}
+html body .website-sticky-header #website-navigation.bottom-nav button>span.website-nav-label{font-size:14px!important;color:#fff!important;}
+html body #shopPage #nalShopMobileMenuToggle{display:flex;width:calc(100% - 32px);margin:0 auto;order:-1;}
+html body #shopPage .nal-shop-shell>.nal-shop-category-tabs{display:none!important;max-height:65dvh;overflow-y:auto!important;flex-direction:column!important;flex-wrap:nowrap!important;align-items:stretch!important;justify-content:flex-start!important;}
+html body #shopPage .nal-shop-shell>.nal-shop-category-tabs.nal-mobile-menu-open{display:flex!important;}
+html body #shopPage .nal-shop-category-tabs :is(.nal-shop-team-menu,.nal-shop-menu-group){display:block;position:relative;}
+html body #shopPage .nal-shop-category-tabs>:is(a,div)>button,html body #shopPage .nal-shop-category-tabs>a{display:block;width:100%;min-height:44px;text-align:left;padding:14px 16px!important;font-size:13px!important;box-sizing:border-box;}
+html body #shopPage .nal-shop-category-tabs :is(.nal-shop-dropdown,.nal-shop-subpanel){position:static!important;width:100%!important;max-width:none!important;max-height:none!important;box-shadow:none;box-sizing:border-box;padding:4px 16px!important;}
+html body #shopPage .nal-shop-submenu>button{min-height:44px;}
+html body #shopPage .nal-shop-unified-header{grid-template-columns:135px minmax(0,1fr);gap:10px;padding:12px 0;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools input{font-size:16px!important;width:90px!important;min-width:0!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools{gap:6px!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-collection-links{justify-content:flex-start!important;overflow-x:auto!important;gap:10px!important;padding-bottom:4px!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-collection-links a{flex:0 0 54px!important;}
+html body #shopPage .nal-shop-product-info h3{font-size:13px!important;line-height:1.35;overflow-wrap:anywhere;}
+html body #shopPage .nal-shop-product-info{padding:10px!important;}
+html body #shopPage .nal-shop-product-info>.nal-shop-button{font-size:10px!important;padding:11px 5px!important;white-space:normal;min-height:42px;}
+html body #shopPage .nal-team-shop-categories{overflow-x:auto;justify-content:flex-start;}
+html body #shopPage .nal-team-shop-hero{min-width:0;}
+html body #shopPage .nal-team-shop-hero-copy{min-width:0;}
+html body #shopPage .nal-team-shop-hero h1{font-size:clamp(24px,8vw,36px)!important;overflow-wrap:anywhere;}
+html body #shopPage .nal-team-retail-footer{gap:20px;}
+html body #shopPage .nal-team-retail-footer a{padding:6px 0;line-height:1.4;}
+html body #shopPage .nal-team-art-jersey{width:100%!important;max-width:100%!important;min-width:0!important;aspect-ratio:auto!important;min-height:230px!important;}
+html body #shopPage .nal-team-art-jersey>div{width:48%;}
+html body #shopPage .nal-team-art-jersey h1{font-size:23px!important;}
+html body #shopPage .nal-team-jersey-actions{flex-wrap:wrap;gap:6px;}
+html body #shopPage .nal-team-art-gameday{width:100%!important;max-width:100%!important;aspect-ratio:1.6;}
+html body #shopPage .nal-team-gameday-copy h2{font-size:clamp(20px,6vw,25px)!important;}
+html body #shopPage .nal-team-gameday-copy p{max-width:95%;}
+}
+</style>
+<script id="nal-mobile-navigation-script">
+(()=>{
+for(const method of ['pushState','replaceState']){const original=history[method];history[method]=function(...args){const result=original.apply(this,args);window.dispatchEvent(new Event('nal-mobile-route-change'));return result;};}
+
+function install(nav,id,label){if(!nav||document.getElementById(id))return;const b=document.createElement('button');b.id=id;b.type='button';b.className='nal-mobile-menu-toggle';if(!nav.id)nav.id='nalShopCategoryNavigation';b.setAttribute('aria-controls',nav.id);b.setAttribute('aria-expanded','false');b.innerHTML='<span class="nal-menu-bars" aria-hidden="true">☰</span><span>'+label+'</span><span aria-hidden="true">⌄</span>';nav.before(b);
+function close(focus=false){document.getElementById(b.getAttribute('aria-controls'))?.classList.remove('nal-mobile-menu-open');b.setAttribute('aria-expanded','false');if(focus)b.focus();}
+b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')!=='true';document.getElementById(b.getAttribute('aria-controls'))?.classList.toggle('nal-mobile-menu-open',open);b.setAttribute('aria-expanded',String(open));});document.addEventListener('click',e=>{if(e.target.closest('#'+b.getAttribute('aria-controls'))&&e.target.closest('a,button[data-page],button[data-footer-action]'))close();},true);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&b.getAttribute('aria-expanded')==='true')close(true);});window.addEventListener('popstate',()=>close());window.addEventListener('nal-mobile-route-change',()=>close());matchMedia('(max-width:750px)').addEventListener('change',()=>close());}
+install(document.getElementById('website-navigation'),'nalWebsiteMenuToggle','EXPLORE NAL NETWORK');install(document.querySelector('#shopPage .nal-shop-category-tabs'),'nalShopMobileMenuToggle','SHOP MENU');
+})();
+</script>
 </body>
 </html>
