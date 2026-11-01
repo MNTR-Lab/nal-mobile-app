@@ -20744,5 +20744,19 @@ display:flex!important;align-items:center!important;justify-content:flex-start!i
 html body #shopPage .nal-shop-category-tabs>a:is(.active,[aria-current=page]){color:#ed2233!important;background:#ffffff08!important;border-bottom:1px solid #ffffff15!important;}
 }
 </style>
+
+<style id="nal-ios-menu-text-sizing">
+@media(max-width:750px){
+/* iOS enlarges ordinary link text separately from native button labels. */
+html body #shopPage .nal-shop-category-tabs,
+html body #shopPage .nal-shop-category-tabs *,
+html body .website-sticky-header #website-navigation,
+html body .website-sticky-header #website-navigation *{-webkit-text-size-adjust:none!important;text-size-adjust:none!important;}
+html body #shopPage #nalShopCategoryNavigation.nal-shop-category-tabs>a,
+html body #shopPage #nalShopCategoryNavigation.nal-shop-category-tabs>.nal-shop-team-menu>button,
+html body #shopPage #nalShopCategoryNavigation.nal-shop-category-tabs>.nal-shop-menu-group>button{
+font:700 13px/18px Arial,Helvetica,sans-serif!important;letter-spacing:.4px!important;padding:14px 16px!important;min-height:47px!important;-webkit-appearance:none;appearance:none;}
+}
+</style>
 </body>
 </html>
