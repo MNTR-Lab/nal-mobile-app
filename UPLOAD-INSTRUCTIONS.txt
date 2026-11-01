@@ -1,1 +1,1 @@
-On branch nal-network-web, open website/. Upload all contents of this ZIP into that folder. Replace index.html and shop/retail-store.css; merge assets/embedded/ with the existing assets folder. Keep all other existing files. Commit the HTML, CSS and image files together.
+Upload these contents INTO website/ on branch nal-network-web. Replace website/index.html and merge assets/embedded/. Includes centered footer v3. Existing assets stay in place.
