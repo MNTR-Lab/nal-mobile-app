@@ -1,0 +1,648 @@
+/* Retail campaign layout inspired by the department-led NBA Store. */
+html body #shopPage .nal-shop-hero{display:none!important;}
+html body #shopPage .nal-shop-shell{display:flex;flex-direction:column;}
+.nal-shop-assurance{order:-4;background:#082851;color:#fff;text-align:center;font-size:10px;font-weight:800;letter-spacing:1.6px;padding:10px 15px;}
+html body #shopPage .nal-shop-tools{order:-3;min-height:94px;margin-top:0!important;margin-bottom:0!important;gap:12px!important;}
+html body #shopPage .nal-shop-compact-title{line-height:1;}
+html body #shopPage .nal-shop-brand{width:230px;height:74px;object-fit:contain;display:block;}
+html body #shopPage .nal-shop-tools input{width:220px!important;flex:0 1 220px!important;border-width:0 0 1px!important;border-radius:0!important;}
+html body #shopPage .nal-shop-tools #nalShopBag{background:#082851!important;border-radius:3px;}
+html body #shopPage .nal-shop-team-strip{order:-2;padding:10px 0 12px!important;border-top:1px solid #e5e8ec;}
+html body #shopPage .nal-shop-team-strip h2{display:none;}
+html body #shopPage .nal-shop-collection-links{margin-bottom:0!important;}
+html body #shopPage .nal-shop-collection-links a img{width:58px;height:58px;border:1px solid #d0d8e1;background:#fff;}
+html body #shopPage .nal-shop-collection-links a span{font-size:9px;}
+html body #shopPage .nal-shop-category-tabs{order:-1;max-width:none;width:100%;margin-bottom:0!important;background:#082851;gap:38px;border:0;overflow-x:auto;justify-content:center;}
+html body #shopPage .nal-shop-category-tabs a{color:#fff;white-space:nowrap;font-size:12px;letter-spacing:.4px;padding:14px 5px 11px;}
+html body #shopPage #nalShopHome{width:100%;max-width:none;padding:0 0 28px;}
+html body #shopPage #nalShopHome>.nal-shop-campaign{border-radius:0;min-height:420px;background:radial-gradient(ellipse at 82% 40%,#557da2 0,transparent 46%),linear-gradient(115deg,#061c36 0%,#123e68 68%,#295a83 100%);grid-template-columns:1fr 1fr;padding:15px max(30px,calc((100vw - 1400px)/2));}
+.nal-shop-campaign:after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(125deg,transparent 0 65px,#ffffff04 66px 68px);pointer-events:none;}
+html body #shopPage .nal-shop-campaign-copy{padding:35px 20px;}
+html body #shopPage .nal-shop-campaign h2{font-family:Arial,Helvetica,sans-serif;font-size:clamp(38px,4.9vw,76px);font-style:italic;font-weight:950;letter-spacing:-2px;line-height:.99;text-shadow:none;margin-bottom:18px;}
+html body #shopPage .nal-shop-campaign-copy>p:first-child{font-size:12px;letter-spacing:3px;}
+html body #shopPage .nal-shop-campaign-copy>p{font-size:16px;}
+html body #shopPage .nal-shop-campaign-copy>.nal-shop-button{background:white!important;color:#082851!important;font-size:12px;}
+.nal-shop-secondary-cta{color:#fff;font-size:11px;font-weight:900;text-decoration:none;margin-left:22px;white-space:nowrap;}
+.nal-shop-artwork-note{display:block;font-size:8px;letter-spacing:1px;margin-top:26px;color:#b9c9db;}
+html body #shopPage .nal-shop-campaign-products{padding:25px 10px;gap:20px;position:relative;z-index:1;}
+html body #shopPage .nal-shop-campaign-products a{transform:rotate(-7deg);width:46%;max-width:255px;border-radius:2px;background:#eef1f5;box-shadow:0 20px 45px #0004;}
+html body #shopPage .nal-shop-campaign-products a+a{transform:rotate(7deg) translateY(25px);}
+html body #shopPage .nal-shop-campaign-products span{font-size:10px;padding:12px;}
+html body #shopPage #nalShopHome>:is(.nal-shop-section-heading,.nal-shop-category-tiles,.nal-shop-grid,.nal-shop-editorial,.nal-shop-new-grid,.nal-shop-service-row){width:calc(100% - 64px);max-width:1400px;margin-left:auto!important;margin-right:auto!important;}
+html body #shopPage .nal-shop-section-heading{margin-top:38px;margin-bottom:20px;}
+html body #shopPage .nal-shop-section-heading h2{font-size:23px;letter-spacing:.3px;font-weight:900;}
+html body #shopPage .nal-shop-category-tiles{gap:18px;margin-top:0;}
+html body #shopPage .nal-shop-category-tile{border-radius:0;background:#f3f4f5;}
+html body #shopPage .nal-shop-category-tile>img{height:230px;}
+html body #shopPage .nal-shop-category-tile>span{background:#fff;color:#10283f;padding:15px 0;font-size:13px;border-bottom:1px solid #e3e6ea;}
+html body #shopPage .nal-shop-category-tile b{color:#10283f;}
+html body #shopPage .nal-shop-tile-placeholder{height:230px;background:#eef1f4;color:#a4b2c0;}
+html body #shopPage #nalShopBest.nal-shop-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:20px!important;}
+html body #shopPage .nal-shop-product{border-radius:0!important;}
+html body #shopPage #nalShopBest .nal-shop-product-info>.nal-shop-button{display:none;}
+html body #shopPage #nalShopBest .nal-shop-product h3{font-weight:600;font-size:12px!important;}
+html body #shopPage #nalShopBest .nal-shop-product-info p{font-weight:800;}
+.nal-shop-editorial{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px;}
+.nal-shop-story{min-height:295px;padding:32px;display:flex;flex-direction:column;justify-content:center;color:#fff;text-decoration:none;position:relative;overflow:hidden;}
+.nal-shop-story-league{background:linear-gradient(130deg,#071f3d,#305574);}
+.nal-shop-story-collect{background:linear-gradient(130deg,#821b2a,#d8424a);}
+.nal-shop-story:after{content:'NAL';position:absolute;font-style:italic;font-weight:950;font-size:150px;right:-20px;bottom:-15px;color:#ffffff09;}
+.nal-shop-story small{font-size:10px;letter-spacing:2px;font-weight:800;}
+.nal-shop-story h2{font-size:clamp(25px,3vw,42px);font-weight:950;font-style:italic;line-height:1.05;letter-spacing:-1px;color:#fff;margin:17px 0 24px;}
+.nal-shop-story span{font-size:11px;font-weight:900;}
+.nal-shop-story em{font-size:9px;opacity:.6;margin-top:20px;font-style:normal;}
+html body #shopPage .nal-shop-new-grid{gap:22px;}
+html body #shopPage .nal-shop-new-tile{border-radius:0;background:#f1f3f5;color:#10283f;grid-template-columns:1fr 1fr;}
+html body #shopPage .nal-shop-new-tile :is(h3,span){color:#10283f;}
+html body #shopPage .nal-shop-new-tile small{color:#62788d;}
+.nal-shop-service-row{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;padding:30px 0;margin-top:40px;border-top:1px solid #e1e6eb;border-bottom:1px solid #e1e6eb;gap:20px;}
+.nal-shop-service-row strong,.nal-shop-service-row span{display:block;}.nal-shop-service-row strong{font-size:12px;letter-spacing:.5px;}.nal-shop-service-row span{font-size:11px;color:#63758a;margin-top:8px;}
+html body #shopPage #nalShopBrowse,html body #shopPage #nalShopProduct{margin-top:25px;}
+@media(max-width:750px){
+ .nal-shop-assurance{font-size:8px;letter-spacing:.6px;padding:9px;}
+ html body #shopPage .nal-shop-tools{min-height:80px;flex-wrap:wrap;padding:8px 0!important;gap:8px!important;}
+ html body #shopPage .nal-shop-brand{width:142px;height:50px;}
+ html body #shopPage .nal-shop-tools input{width:105px!important;flex:1 1 90px!important;max-width:33%!important;font-size:10px!important;}
+ html body #shopPage .nal-shop-tools #nalShopBag{padding:6px 8px!important;font-size:9px!important;}
+ html body #shopPage .nal-shop-collection-links a span{display:none;}
+ html body #shopPage .nal-shop-collection-links a{flex-basis:51px;}
+ html body #shopPage .nal-shop-collection-links a img{width:48px;height:48px;}
+ html body #shopPage .nal-shop-category-tabs{justify-content:flex-start;gap:22px;padding:0 16px;}
+ html body #shopPage .nal-shop-category-tabs a{font-size:10px;padding:12px 0 9px;}
+ html body #shopPage #nalShopHome>.nal-shop-campaign{min-height:360px;padding:20px 16px;grid-template-columns:1.12fr .88fr;}
+ html body #shopPage .nal-shop-campaign-copy{padding:15px 0;}
+ html body #shopPage .nal-shop-campaign h2{font-size:clamp(32px,7vw,48px);letter-spacing:-1px;}
+ html body #shopPage .nal-shop-campaign-copy>p:first-child{font-size:8px;letter-spacing:1px;}
+ html body #shopPage .nal-shop-campaign-copy>p{font-size:11px;}
+ .nal-shop-secondary-cta{display:block;margin:16px 0 0;font-size:10px;}
+ .nal-shop-artwork-note{font-size:6px;letter-spacing:.4px;margin-top:18px;}
+ html body #shopPage .nal-shop-campaign-products{padding:0 8px;}
+ html body #shopPage .nal-shop-campaign-products a{width:100%;}
+ html body #shopPage #nalShopHome>:is(.nal-shop-section-heading,.nal-shop-category-tiles,.nal-shop-grid,.nal-shop-editorial,.nal-shop-new-grid,.nal-shop-service-row){width:calc(100% - 32px);}
+ html body #shopPage .nal-shop-section-heading{margin-top:27px;margin-bottom:14px;}
+ html body #shopPage .nal-shop-section-heading h2{font-size:18px;}
+ html body #shopPage .nal-shop-category-tile>img,html body #shopPage .nal-shop-tile-placeholder{height:155px;}
+ html body #shopPage .nal-shop-category-tile>span{font-size:11px;padding:12px 0;}
+ html body #shopPage #nalShopBest.nal-shop-grid{display:flex!important;overflow-x:auto;gap:12px!important;padding-bottom:10px;scroll-snap-type:x mandatory;}
+ html body #shopPage #nalShopBest .nal-shop-product{flex:0 0 43%;scroll-snap-align:start;}
+ .nal-shop-editorial{grid-template-columns:1fr;gap:14px;margin-top:27px;}.nal-shop-story{min-height:245px;padding:25px;}.nal-shop-story h2{font-size:35px;}
+ .nal-shop-service-row{grid-template-columns:1fr;padding:23px 0;gap:22px;}
+}
+/* Full team marks, matched navigation/hero gutters, and softer retail surface. */
+html body #shopPage.shop-page{background-color:#e9edf1!important;background-image:repeating-linear-gradient(125deg,transparent 0 18px,rgba(15,40,65,.018) 19px 20px)!important;}
+html body #shopPage .nal-shop-collection-links a img{object-fit:contain!important;object-position:center!important;aspect-ratio:1!important;box-sizing:border-box!important;padding:9px!important;border-radius:50%!important;background:#f9fafb!important;overflow:visible!important;}
+html body #shopPage .nal-shop-tools,html body #shopPage .nal-shop-team-strip{background:transparent!important;}
+html body #shopPage .nal-shop-category-tabs{width:calc(100% - 64px)!important;max-width:1400px!important;box-sizing:border-box;}
+html body #shopPage #nalShopHome>.nal-shop-campaign{width:calc(100% - 64px)!important;max-width:1400px!important;box-sizing:border-box;margin:0 auto!important;padding:15px 18px!important;}
+html body #shopPage .nal-shop-category-tile>span{background:transparent!important;}
+html body #shopPage .nal-shop-product,html body #shopPage .nal-shop-product-info{background:#f7f9fb!important;}
+html body #shopPage .nal-shop-tools :is(input,select){background:#f7f9fb!important;}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-category-tabs,html body #shopPage #nalShopHome>.nal-shop-campaign{width:calc(100% - 32px)!important;}
+ html body #shopPage #nalShopHome>.nal-shop-campaign{padding:20px 16px!important;}
+ html body #shopPage .nal-shop-collection-links a img{padding:7px!important;}
+}
+/* Full team marks and softer retail surface. */
+html body #shopPage.shop-page{background-color:#e9edf1!important;background-image:repeating-linear-gradient(125deg,transparent 0 18px,rgba(15,40,65,.018) 19px 20px)!important;}
+html body #shopPage .nal-shop-collection-links a img{object-fit:contain!important;object-position:center!important;aspect-ratio:1!important;box-sizing:border-box!important;padding:9px!important;border-radius:50%!important;background:#f9fafb!important;overflow:visible!important;}
+html body #shopPage .nal-shop-tools,html body #shopPage .nal-shop-team-strip{background:transparent!important;}
+html body #shopPage .nal-shop-category-tabs{width:calc(100% - 64px)!important;max-width:1400px!important;box-sizing:border-box;}
+html body #shopPage #nalShopHome>.nal-shop-campaign{width:calc(100% - 64px)!important;max-width:1400px!important;box-sizing:border-box;margin:0 auto!important;padding:15px 18px!important;}
+html body #shopPage .nal-shop-category-tile>span{background:transparent!important;}
+html body #shopPage .nal-shop-product,html body #shopPage .nal-shop-product-info{background:#f7f9fb!important;}
+html body #shopPage .nal-shop-tools :is(input,select){background:#f7f9fb!important;}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-category-tabs,html body #shopPage #nalShopHome>.nal-shop-campaign{width:calc(100% - 32px)!important;}
+ html body #shopPage #nalShopHome>.nal-shop-campaign{padding:20px 16px!important;}
+ html body #shopPage .nal-shop-collection-links a img{padding:7px!important;}
+}
+/* Compact team rail grows only when additional teams require it. */
+html body #shopPage .nal-shop-team-strip{padding:8px 0 10px!important;}
+html body #shopPage .nal-shop-collection-links{display:flex!important;justify-content:flex-start!important;gap:10px!important;overflow-x:auto!important;}
+html body #shopPage .nal-shop-collection-links a{flex:0 0 60px!important;width:60px;gap:4px;}
+html body #shopPage .nal-shop-collection-links a img{width:44px!important;height:44px!important;padding:6px!important;}
+html body #shopPage .nal-shop-collection-links a span{font-size:8px!important;line-height:1.15;}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-collection-links{gap:8px!important;padding-bottom:5px!important;}
+ html body #shopPage .nal-shop-collection-links a{flex-basis:44px!important;width:44px;}
+ html body #shopPage .nal-shop-collection-links a img{width:40px!important;height:40px!important;}
+}
+/* NAL Shop brand: navy, red, silver, and white. */
+html body #shopPage #nalShopHome>.nal-shop-campaign{background:radial-gradient(ellipse at 100% 90%,rgba(224,28,43,.3),transparent 52%),linear-gradient(115deg,#06172b,#102f50)!important;}
+html body #shopPage .nal-shop-campaign-copy>.nal-shop-button{background:#df1c2b!important;color:#fff!important;border-color:#df1c2b!important;}
+.nal-shop-story-league{background:linear-gradient(130deg,#06172b,#163b60)!important;}
+.nal-shop-story-collect{background:linear-gradient(130deg,#0a203a 30%,#622335 78%,#b62032)!important;}
+html body #shopPage .nal-shop-category-tabs a:is(.active,:hover){border-color:#df1c2b!important;}
+/* Center the compact team rail; retain left-origin scrolling on small screens. */
+html body #shopPage .nal-shop-collection-links{justify-content:safe center!important;}
+/* Larger, closely spaced logos in a centered rail spanning 78% of the shop. */
+html body #shopPage .nal-shop-collection-links{width:78%;max-width:1100px;margin-left:auto!important;margin-right:auto!important;display:grid!important;grid-template-columns:repeat(10,minmax(0,1fr));gap:10px!important;overflow:visible!important;}
+html body #shopPage .nal-shop-collection-links a{width:100%!important;min-width:0;gap:6px;}
+html body #shopPage .nal-shop-collection-links a img{width:clamp(48px,5.6vw,78px)!important;height:clamp(48px,5.6vw,78px)!important;padding:8px!important;}
+html body #shopPage .nal-shop-collection-links a span{font-size:9px!important;line-height:1.2;}
+html body #shopPage .nal-shop-team-strip{padding:12px 0 14px!important;}
+@media(max-width:900px){html body #shopPage .nal-shop-collection-links{width:100%;}}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-collection-links{display:flex!important;gap:10px!important;overflow-x:auto!important;justify-content:safe center!important;}
+ html body #shopPage .nal-shop-collection-links a{flex:0 0 60px!important;width:60px!important;}
+ html body #shopPage .nal-shop-collection-links a img{width:56px!important;height:56px!important;padding:7px!important;}
+}
+/* Shared desktop line: shop mark, team rail, search, and cart. */
+html body #shopPage .nal-shop-unified-header{order:-3;display:grid;grid-template-columns:180px minmax(0,1fr) 245px;align-items:center;gap:18px;width:calc(100% - 64px);max-width:1400px;margin:0 auto;padding:16px 0;}
+html body #shopPage .nal-shop-unified-header .nal-shop-brand{width:180px;height:64px;}
+html body #shopPage .nal-shop-unified-header .nal-shop-team-strip{width:100%;padding:0!important;border:0;}
+html body #shopPage .nal-shop-unified-header .nal-shop-collection-links{width:100%;gap:7px!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-collection-links a img{width:clamp(34px,3.8vw,60px)!important;height:clamp(34px,3.8vw,60px)!important;padding:5px!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-collection-links a span{display:none;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools{width:100%;min-height:0;display:flex;flex-wrap:wrap;justify-content:flex-end;margin:0!important;gap:8px!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools input{width:170px!important;flex:1 1 140px!important;min-width:0;max-width:none!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools select{flex:1 1 100px;max-width:118px;}
+@media(max-width:1050px){html body #shopPage .nal-shop-unified-header{grid-template-columns:145px minmax(0,1fr) 200px;gap:12px;}html body #shopPage .nal-shop-unified-header .nal-shop-brand{width:145px;}}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-unified-header{width:calc(100% - 32px);grid-template-columns:140px minmax(0,1fr);gap:8px 12px;padding:10px 0;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-brand{width:140px;height:50px;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-team-strip{grid-column:1/-1;grid-row:2;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-tools{grid-column:2;grid-row:1;padding:0!important;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-tools input{width:80px!important;flex:1 1 60px!important;}
+ html body #shopPage .nal-shop-unified-header .nal-shop-collection-links a img{width:54px!important;height:54px!important;padding:7px!important;}
+}
+/* Pin header positions consistently on home, collections, and product pages. */
+html body #shopPage .nal-shop-unified-header>.nal-shop-compact-title{grid-column:1!important;grid-row:1!important;order:0!important;margin:0!important;justify-self:start;}
+html body #shopPage .nal-shop-unified-header>.nal-shop-team-strip{grid-column:2!important;grid-row:1!important;order:0!important;}
+html body #shopPage .nal-shop-unified-header>.nal-shop-tools{grid-column:3!important;grid-row:1!important;order:0!important;flex-wrap:nowrap!important;}
+html body #shopPage .nal-shop-unified-header .nal-shop-tools :is(#nalShopCollection,#nalShopSort){display:none!important;}
+@media(max-width:750px){
+ html body #shopPage .nal-shop-unified-header>.nal-shop-team-strip{grid-column:1/-1!important;grid-row:2!important;}
+ html body #shopPage .nal-shop-unified-header>.nal-shop-tools{grid-column:2!important;grid-row:1!important;}
+}
+
+.nal-shop-browse-filters{display:flex;justify-content:flex-end;gap:10px;margin:0 0 20px;}.nal-shop-browse-filters select{max-width:48%;padding:9px;border:1px solid #adbdcc;background:#f7f9fb;color:#10283f;border-radius:3px;}
+/* Replaceable hero media: 8:3 desktop and 4:5 phone artwork. */
+html body #shopPage #nalShopHome>.nal-shop-campaign{aspect-ratio:8/3;min-height:0!important;isolation:isolate;}
+.nal-shop-hero-media{position:absolute;inset:0;z-index:-2;pointer-events:none;}
+.nal-shop-hero-media img,.nal-shop-hero-media video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;}
+html body #shopPage .nal-shop-has-media:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#06172bba,transparent 78%);z-index:-1;}
+html body #shopPage .nal-shop-has-media .nal-shop-campaign-products,html body #shopPage .nal-shop-has-media .nal-shop-artwork-note{visibility:hidden;}
+.nal-shop-video-toggle{position:absolute;right:18px;bottom:16px;z-index:3;color:#fff;background:#06172bcc;border:1px solid #ffffff80;border-radius:3px;padding:9px 12px;font-size:10px;font-weight:800;cursor:pointer;}
+html body #shopPage .nal-shop-category-tile{position:relative;background:linear-gradient(145deg,#f5f7f9,#dae2e9);border:1px solid #d5dfe7;}
+html body #shopPage .nal-shop-category-tile>img{height:245px;padding:18px;box-sizing:border-box;transition:transform .2s;}
+html body #shopPage .nal-shop-category-tile:hover>img{transform:scale(1.04);}
+html body #shopPage .nal-shop-category-tile>span{background:#09233e!important;color:#fff!important;padding:16px!important;font-size:13px;border-bottom:3px solid #df1c2b;}
+html body #shopPage .nal-shop-category-tile b{color:#fff;}
+@media(max-width:750px){
+ html body #shopPage #nalShopHome>.nal-shop-campaign{aspect-ratio:4/5;grid-template-columns:1.1fr .9fr;}
+ html body #shopPage .nal-shop-category-tile>img{height:175px;padding:10px;}
+ html body #shopPage .nal-shop-category-tile>span{padding:12px!important;font-size:11px;}
+}
+/* Campaign collection tiles: two landscape panels per desktop row. */
+html body #shopPage .nal-shop-category-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
+html body #shopPage .nal-shop-campaign-tile{aspect-ratio:16/9;display:block;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 88% 20%,#335777,transparent 70%),#09233e;border:0;}
+html body #shopPage .nal-shop-campaign-tile:nth-child(2n){background:radial-gradient(ellipse at 90% 85%,#8d2639,transparent 70%),#09233e;}
+html body #shopPage .nal-shop-campaign-tile:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#06172be6 8%,#06172b9e 45%,transparent 80%);z-index:0;pointer-events:none;}
+html body #shopPage .nal-shop-campaign-tile>img{position:absolute;right:0;top:0;width:58%;height:100%!important;object-fit:contain;padding:20px!important;mix-blend-mode:normal;}
+html body #shopPage .nal-shop-campaign-tile .nal-shop-tile-placeholder{position:absolute;right:0;top:0;width:58%;height:100%;background:transparent;color:#adbdce;}
+html body #shopPage .nal-shop-campaign-tile>span{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;width:65%;height:100%;box-sizing:border-box;border:0;padding:25px!important;background:transparent!important;color:white;}
+html body #shopPage .nal-shop-campaign-tile small{font-size:9px;letter-spacing:2px;font-weight:800;color:#d6e1ed;}
+html body #shopPage .nal-shop-campaign-tile strong{font-size:clamp(23px,2.5vw,37px);font-weight:950;font-style:italic;line-height:1.05;margin:12px 0;max-width:240px;}
+html body #shopPage .nal-shop-campaign-tile i{font-size:11px;line-height:1.5;font-style:normal;font-weight:400;}
+html body #shopPage .nal-shop-campaign-tile b{font-size:10px;color:white;line-height:1;margin-top:20px;border-bottom:2px solid #e12235;padding-bottom:6px;}
+html body #shopPage #nalShopHome>.nal-shop-jersey-banner{width:calc(100% - 64px);max-width:1400px;margin:30px auto 0;box-sizing:border-box;position:relative;display:grid;grid-template-columns:1.1fr 1fr;align-items:center;min-height:380px;background:repeating-linear-gradient(125deg,transparent 0 60px,#ffffff04 61px 63px),radial-gradient(ellipse at 90% 80%,#ab213a77,transparent 60%),#06172b;color:#fff;overflow:hidden;}
+.nal-shop-jersey-copy{padding:35px 40px;z-index:1;}.nal-shop-jersey-copy>p:first-child{font-size:10px;letter-spacing:3px;font-weight:850;}.nal-shop-jersey-copy h2{font-size:clamp(30px,3.5vw,52px);line-height:1.02;font-style:italic;font-weight:950;color:#fff;margin:16px 0;}.nal-shop-jersey-copy h2 em{color:#f32b40;font-style:normal;}.nal-shop-jersey-copy>p{font-size:13px;color:#d4e0ed;}.nal-shop-jersey-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}.nal-shop-jersey-actions a{font-size:10px;padding:12px;text-decoration:none;}.nal-shop-jersey-actions a+a{background:transparent;color:white;border:1px solid #9baec0;}.nal-shop-jersey-preview{position:relative;display:flex;flex-direction:column;align-items:center;padding:15px 25px;}.nal-shop-jersey-preview svg{width:90%;max-width:390px;filter:drop-shadow(0 15px 20px #0005);transform:rotate(7deg);}.nal-shop-jersey-preview small{font-size:8px;letter-spacing:1.5px;color:#9caec2;margin-top:12px;}
+@media(max-width:750px){html body #shopPage .nal-shop-category-tiles{grid-template-columns:1fr;gap:14px;}html body #shopPage .nal-shop-campaign-tile strong{font-size:27px;}html body #shopPage .nal-shop-campaign-tile>span{padding:20px!important;}html body #shopPage #nalShopHome>.nal-shop-jersey-banner{width:calc(100% - 32px);grid-template-columns:1fr;min-height:0;}.nal-shop-jersey-copy{padding:28px 25px;}.nal-shop-jersey-copy h2{font-size:40px;}.nal-shop-jersey-preview{padding:0 20px 25px;}.nal-shop-jersey-preview svg{max-width:250px;}}
+/* Four landscape category images in one desktop row. */
+html body #shopPage .nal-shop-category-tiles{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+html body #shopPage .nal-shop-campaign-tile>span{width:75%;padding:12px!important;}
+html body #shopPage .nal-shop-campaign-tile small{font-size:7px;letter-spacing:1px;}
+html body #shopPage .nal-shop-campaign-tile strong{font-size:clamp(15px,1.45vw,22px);margin:7px 0;max-width:170px;}
+html body #shopPage .nal-shop-campaign-tile i{display:none;}
+html body #shopPage .nal-shop-campaign-tile b{font-size:8px;margin-top:8px;}
+html body #shopPage .nal-shop-campaign-tile>img{padding:8px!important;}
+@media(max-width:750px){html body #shopPage .nal-shop-category-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}html body #shopPage .nal-shop-campaign-tile strong{font-size:16px;}html body #shopPage .nal-shop-campaign-tile>span{padding:10px!important;}}
+@media(max-width:420px){html body #shopPage .nal-shop-campaign-tile strong{font-size:13px;}html body #shopPage .nal-shop-campaign-tile small{font-size:6px;}html body #shopPage .nal-shop-campaign-tile b{font-size:7px;margin-top:4px;}}
+/* Original NAL Shop menu and team dropdown. */
+html body #shopPage .nal-shop-category-tabs{position:relative;z-index:20;overflow:visible;gap:0;justify-content:space-evenly;background:#062957;}
+html body #shopPage .nal-shop-category-tabs>a,html body #shopPage .nal-shop-team-menu>button{font-family:Arial,Helvetica,sans-serif;font-size:clamp(10px,1.05vw,15px);font-weight:950;letter-spacing:.2px;line-height:1.2;padding:18px 10px 15px;color:#fff;white-space:nowrap;background:transparent;border:0;border-bottom:3px solid transparent;text-decoration:none;cursor:pointer;}
+html body #shopPage .nal-shop-category-tabs>a:hover,html body #shopPage .nal-shop-team-menu>button[aria-expanded=true]{color:#ed2233;border-bottom-color:#ed2233;}
+.nal-shop-team-menu{position:relative;display:flex;align-items:stretch;}
+html body #shopPage .nal-shop-dropdown{position:absolute;left:0;top:100%;width:260px;max-height:65vh;overflow-y:auto;background:#fff;box-shadow:0 10px 22px #03142633;padding:8px 20px;box-sizing:border-box;}
+html body #shopPage .nal-shop-dropdown[hidden]{display:none!important;}
+html body #shopPage .nal-shop-dropdown a{display:block;color:#203040;font-size:13px;font-weight:500;letter-spacing:0;padding:12px 0;border:0;border-bottom:1px solid #e0e5eb;white-space:normal;}
+html body #shopPage .nal-shop-dropdown a:last-child{border:0;}
+html body #shopPage .nal-shop-dropdown a:hover,html body #shopPage .nal-shop-dropdown a:focus-visible{color:#df1c2b;background:#f4f6f8;}
+@media(max-width:950px){html body #shopPage .nal-shop-category-tabs{flex-wrap:wrap;justify-content:center;}html body #shopPage .nal-shop-category-tabs>a,html body #shopPage .nal-shop-team-menu>button{font-size:10px;padding:13px 10px 10px;}}
+@media(max-width:750px){html body #shopPage .nal-shop-category-tabs{padding:0!important;gap:0;}.nal-shop-team-menu{position:static;}html body #shopPage .nal-shop-dropdown{left:0;max-width:100%;max-height:55vh;}}
+/* Matching collection dropdowns and nested flyouts. */
+.nal-shop-menu-group{position:relative;display:flex;align-items:stretch;}
+html body #shopPage .nal-shop-category-tabs .nal-shop-menu-trigger{font-family:Arial,Helvetica,sans-serif;font-size:clamp(10px,1.05vw,15px);font-weight:950;letter-spacing:.2px;line-height:1.2;padding:18px 10px 15px;color:#fff;white-space:nowrap;background:transparent;border:0;border-bottom:3px solid transparent;cursor:pointer;}
+html body #shopPage .nal-shop-category-tabs .nal-shop-menu-trigger:is(:hover,[aria-expanded=true]){color:#ed2233;border-bottom-color:#ed2233;}
+html body #shopPage .nal-shop-menu-group>.nal-shop-dropdown{overflow:visible;max-height:none;}
+.nal-shop-submenu{position:relative;border-bottom:1px solid #e0e5eb;}
+.nal-shop-submenu:last-child{border-bottom:0;}
+html body #shopPage .nal-shop-submenu>button{display:flex;align-items:center;justify-content:space-between;width:100%;background:#fff;border:0;color:#203040;padding:12px 0;font-size:13px;font-weight:500;text-align:left;cursor:pointer;gap:20px;}
+html body #shopPage .nal-shop-submenu>button:is(:hover,[aria-expanded=true]){color:#df1c2b;}
+.nal-shop-subpanel{position:absolute;left:100%;top:0;width:260px;max-height:60vh;overflow-y:auto;padding:8px 20px;box-sizing:border-box;background:#fff;box-shadow:0 8px 22px #03142633;z-index:2;}
+.nal-shop-subpanel[hidden]{display:none!important;}
+@media(max-width:1100px){html body #shopPage .nal-shop-menu-group:last-of-type .nal-shop-subpanel{left:auto;right:100%;}}
+@media(max-width:950px){html body #shopPage .nal-shop-category-tabs .nal-shop-menu-trigger{font-size:10px;padding:13px 10px 10px;}}
+@media(max-width:750px){.nal-shop-menu-group{position:static;}html body #shopPage .nal-shop-menu-group>.nal-shop-dropdown{width:100%;max-height:60vh;overflow-y:auto;}.nal-shop-subpanel{position:static!important;width:100%;box-shadow:none;max-height:none;padding:0 0 5px 16px;background:#f7f9fb;}.nal-shop-submenu>button{min-height:44px;}html body #shopPage .nal-shop-dropdown a{min-height:44px;box-sizing:border-box;}}
+/* Refined retail navigation: tailored widths and lighter typography. */
+html body #shopPage .nal-shop-category-tabs,html body #shopPage .nal-shop-category-tabs :is(a,button){font-family:'Inter','Helvetica Neue',Arial,sans-serif!important;}
+html body #shopPage .nal-shop-category-tabs>a,html body #shopPage .nal-shop-category-tabs :is(.nal-shop-menu-trigger,#nalShopTeamToggle){font-size:12px!important;font-weight:650!important;letter-spacing:.65px!important;padding:17px 12px 14px!important;}
+html body #shopPage .nal-shop-dropdown,html body #shopPage .nal-shop-subpanel{width:max-content;min-width:185px;max-width:280px;padding:8px 14px;border:1px solid #e2e7ed;border-top:2px solid #df1c2b;border-radius:0 0 5px 5px;box-shadow:0 10px 28px #03142622;}
+html body #shopPage .nal-shop-dropdown a,html body #shopPage .nal-shop-submenu>button{font-size:12px!important;font-weight:450!important;line-height:1.4;letter-spacing:0!important;padding:11px 7px!important;white-space:nowrap;}
+html body #shopPage .nal-shop-dropdown a{border-bottom-color:#edf0f3;}
+html body #shopPage .nal-shop-submenu>button span{font-size:16px;color:#8a99a8;}
+html body #shopPage .nal-shop-dropdown a:hover,html body #shopPage .nal-shop-submenu>button:hover{background:#f1f5f9;border-radius:3px;}
+html body #shopPage .nal-shop-subpanel{margin-left:-1px;}
+@media(max-width:950px){html body #shopPage .nal-shop-category-tabs>a,html body #shopPage .nal-shop-category-tabs :is(.nal-shop-menu-trigger,#nalShopTeamToggle){font-size:10px!important;padding:13px 9px 10px!important;}}
+@media(max-width:750px){html body #shopPage .nal-shop-menu-group>.nal-shop-dropdown,html body #shopPage .nal-shop-team-menu>.nal-shop-dropdown{width:100%;max-width:100%;}html body #shopPage .nal-shop-subpanel{width:100%;max-width:none;min-width:0;margin:0;border:0;border-left:2px solid #e0e6ee;border-radius:0;}}
+/* Amarillo Warbirds team storefront concept. */
+#nalShopTeamFeature[hidden]{display:none!important;}
+html body #shopPage .nal-shop-team-view #nalShopBrowse{display:flex;flex-direction:column;}
+.nal-shop-team-view #nalShopTeamFeature{order:-2;}
+html body #shopPage .nal-shop-team-view .nal-shop-browse-filters{order:-1;margin-top:22px;}
+.nal-shop-team-view #nalShopCollection{display:none;}
+.nal-team-shop-back{display:inline-block;color:#193752;font-size:10px;font-weight:700;text-decoration:none;margin:0 0 14px;}
+.nal-team-shop-hero{position:relative;display:grid;grid-template-columns:1.2fr 1fr;align-items:center;min-height:340px;background:linear-gradient(90deg,#072044f5 12%,#12396aca 55%,#09244388),url('/assets/amarillo-city.webp') center 48%/cover;overflow:hidden;border-bottom:4px solid #d51f37;}
+.nal-team-shop-hero:after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(125deg,transparent 0 40px,#ffffff04 41px 43px);}
+.nal-team-shop-hero-copy{position:relative;z-index:1;padding:36px 42px;}
+.nal-team-shop-hero-copy>p:first-child{font-size:10px;letter-spacing:3px;color:#dbe7f3;font-weight:850;}
+.nal-team-shop-hero h1{font-size:clamp(32px,4.4vw,66px);color:#fff;font-weight:950;font-style:italic;line-height:.99;letter-spacing:-1px;margin:16px 0;}
+.nal-team-shop-hero h1 em{font-style:normal;color:#fff;}
+.nal-team-shop-hero-copy>p{font-size:13px;color:#dbe7f3;}
+.nal-team-shop-hero-copy>.nal-shop-button{display:inline-block;text-decoration:none;margin-top:23px;font-size:10px;padding:13px 17px;}
+.nal-team-shop-hero-copy>small{display:block;font-size:7px;letter-spacing:1px;margin-top:20px;color:#aabed4;}
+.nal-team-shop-mark{position:relative;z-index:1;padding:24px;display:flex;justify-content:center;align-items:center;}
+.nal-team-shop-mark:before{content:'';position:absolute;width:260px;height:260px;border:1px solid #ffffff26;border-radius:50%;background:radial-gradient(circle,#ffffff15,transparent 70%);}
+.nal-team-shop-mark img{position:relative;width:80%;max-width:300px;height:245px;object-fit:contain;filter:drop-shadow(0 14px 22px #0005);}
+.nal-team-shop-intro{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:28px 0 18px;}
+.nal-team-shop-intro small{font-size:9px;font-weight:850;color:#c51b32;letter-spacing:1.5px;}
+.nal-team-shop-intro h2{font-size:24px;font-weight:900;color:#102e50;margin-top:7px;}
+.nal-team-shop-intro p{font-size:12px;line-height:1.5;color:#52677d;max-width:310px;}
+.nal-team-shop-categories{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #cbd6e1;padding-bottom:18px;}
+.nal-team-shop-categories a{padding:11px 18px;font-size:10px;font-weight:800;color:#173652;border:1px solid #bdcbd9;background:#f5f8fb;text-decoration:none;border-radius:3px;}
+.nal-team-shop-categories a[aria-current],.nal-team-shop-categories a:hover{color:white;background:#123b68;border-color:#123b68;box-shadow:inset 0 -3px #d51f37;}
+html body #shopPage .nal-shop-team-view .nal-shop-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:18px!important;}
+html body #shopPage .nal-shop-team-view .nal-shop-product-info>.nal-shop-button{border-color:#bccbdc!important;}
+@media(max-width:750px){.nal-team-shop-hero{grid-template-columns:1.2fr .8fr;min-height:280px;}.nal-team-shop-hero-copy{padding:25px 20px;}.nal-team-shop-hero h1{font-size:34px;}.nal-team-shop-hero-copy>p{font-size:11px;}.nal-team-shop-hero-copy>.nal-shop-button{font-size:8px;padding:11px;}.nal-team-shop-mark{padding:8px;}.nal-team-shop-mark img{width:100%;height:150px;}.nal-team-shop-mark:before{width:140px;height:140px;}.nal-team-shop-intro{display:block;}.nal-team-shop-intro h2{font-size:21px;}.nal-team-shop-intro p{margin-top:10px;}.nal-team-shop-categories{gap:6px;}.nal-team-shop-categories a{padding:10px;font-size:9px;}html body #shopPage .nal-shop-team-view .nal-shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}}
+
+/* Five products across on team and collection pages. */
+@media(min-width:1051px){html body #shopPage #nalShopBrowse .nal-shop-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:18px!important;}}
+@media(min-width:751px) and (max-width:1050px){html body #shopPage #nalShopBrowse .nal-shop-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;}}
+@media(max-width:750px){html body #shopPage #nalShopBrowse .nal-shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}}
+
+/* Amarillo editorial masthead: official logo, light city blend, compact category rail. */
+html body #shopPage .nal-shop-team-view{background:#fff!important;}
+html body #shopPage .nal-shop-team-view>.nal-shop-unified-header{display:flex!important;justify-content:flex-end;padding:10px 0;}html body #shopPage .nal-shop-team-view>.nal-shop-unified-header>.nal-shop-compact-title,html body #shopPage .nal-shop-team-view>.nal-shop-unified-header>.nal-shop-team-strip{display:none!important;}
+html body #shopPage .nal-shop-team-view>.nal-shop-category-tabs{display:none!important;}
+html body #shopPage .nal-shop-team-view #nalShopBrowse{background:#fff;padding-top:0!important;}
+.nal-team-shop-breadcrumb{display:flex;gap:14px;align-items:center;padding:13px 0;font-size:12px;color:#102b50;}
+.nal-team-shop-breadcrumb a{color:#536b86;text-decoration:none;}
+html body #shopPage .nal-team-shop-hero{min-height:230px;display:flex;justify-content:flex-start;gap:24px;background:linear-gradient(90deg,#fafaf9 0%,#fafaf9 39%,#fafaf9ef 45%,#fafaf900 63%),url('/assets/amarillo-city.webp') right 48%/cover;border-bottom:2px solid #ed1630;}
+html body #shopPage .nal-team-shop-hero:after{display:none;}
+html body #shopPage .nal-team-shop-mark{padding:20px 0 20px 24px;flex:0 0 190px;}
+html body #shopPage .nal-team-shop-mark:before{display:none;}
+html body #shopPage .nal-team-shop-mark img{width:100%;height:180px;filter:none;}
+html body #shopPage .nal-team-shop-hero-copy{padding:20px 0;}
+html body #shopPage .nal-team-shop-hero-copy>p:first-child{color:#d9162d;font-size:12px;letter-spacing:3px;margin:0 0 8px;}
+html body #shopPage .nal-team-shop-hero h1{color:#061b37;font-family:Impact,'Arial Narrow',sans-serif;font-size:clamp(38px,5.3vw,80px);font-weight:900;font-style:normal;letter-spacing:1px;line-height:1;margin:0 0 9px;}
+html body #shopPage .nal-team-shop-hero-copy>p:last-child{color:#061b37;font-size:16px;letter-spacing:5px;margin:0;}
+html body #shopPage .nal-team-shop-categories{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;padding:0;border-bottom:1px solid #d7dfe7;}
+html body #shopPage .nal-team-shop-categories a{border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:#071d3a;text-align:center;padding:19px 5px;font-size:14px;font-weight:500;box-shadow:none;white-space:nowrap;}
+html body #shopPage .nal-team-shop-categories a:hover,html body #shopPage .nal-team-shop-categories a[aria-current]{border-bottom-color:#ed1630;background:transparent;color:#071d3a;font-weight:700;box-shadow:none;}
+html body #shopPage .nal-shop-team-view #nalShopHeading{font-size:26px;text-transform:none;letter-spacing:-.5px;color:#071d3a;margin:24px 0 18px;}
+html body #shopPage .nal-shop-team-view .nal-shop-browse-filters{margin-top:18px;align-self:flex-end;}
+html body #shopPage .nal-shop-team-view .nal-shop-product{background:#fff!important;border:0!important;box-shadow:none!important;}
+html body #shopPage .nal-shop-team-view .nal-shop-product-image{background:#f1f3f5!important;}
+@media(max-width:750px){html body #shopPage .nal-team-shop-hero{min-height:170px;gap:12px;background:linear-gradient(90deg,#fafaf9 0%,#fafaf9f5 60%,#fafaf950),url('/assets/amarillo-city.webp') right center/cover;}html body #shopPage .nal-team-shop-mark{flex:0 0 95px;padding-left:8px;}html body #shopPage .nal-team-shop-mark img{height:110px;}html body #shopPage .nal-team-shop-hero-copy>p:first-child{font-size:9px;letter-spacing:2px;}html body #shopPage .nal-team-shop-hero h1{font-size:36px;}html body #shopPage .nal-team-shop-hero-copy>p:last-child{font-size:10px;letter-spacing:2px;}html body #shopPage .nal-team-shop-categories{display:flex;overflow-x:auto;flex-wrap:nowrap;}html body #shopPage .nal-team-shop-categories a{flex:0 0 auto;padding:15px 13px;font-size:12px;}}
+
+/* Compact breadcrumb utilities on the Amarillo team shop. */
+html body #shopPage .nal-shop-team-view>.nal-shop-unified-header{display:none!important;}
+html body #shopPage .nal-shop-team-view>.nal-shop-assurance{display:none!important;}
+html body #shopPage .nal-team-shop-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:62px;padding:8px 0;box-sizing:border-box;}
+html body #shopPage .nal-team-shop-toolbar .nal-team-shop-breadcrumb{padding:0;flex:1;}
+html body #shopPage .nal-team-shop-toolbar .nal-shop-tools{display:flex!important;flex:0 0 auto!important;width:auto!important;max-width:340px!important;gap:8px!important;padding:0!important;margin:0!important;align-items:center;}
+html body #shopPage .nal-team-shop-toolbar #nalShopSearch{width:210px!important;min-width:0!important;flex:0 1 210px!important;height:34px!important;padding:7px 11px!important;font-size:12px!important;margin:0!important;border:1px solid #d0dae4!important;border-radius:3px!important;}
+html body #shopPage .nal-team-shop-toolbar #nalShopBag{height:34px!important;min-height:0!important;width:auto!important;white-space:nowrap;padding:7px 12px!important;font-size:11px!important;margin:0!important;}
+html body #shopPage .nal-team-shop-categories a{padding:14px 5px;font-size:13px;}
+html body #shopPage .nal-shop-team-view #nalShopSort{width:180px!important;min-width:180px!important;font-size:12px!important;}
+@media(max-width:600px){html body #shopPage .nal-team-shop-toolbar{flex-wrap:wrap;gap:10px;padding:12px 0;}html body #shopPage .nal-team-shop-toolbar .nal-team-shop-breadcrumb{flex-basis:100%;}html body #shopPage .nal-team-shop-toolbar .nal-shop-tools{margin-left:auto!important;}html body #shopPage .nal-team-shop-toolbar #nalShopSearch{width:180px!important;}}
+
+/* Team retail surfaces aligned with NAL Network navy, silver, and red. */
+html body #shopPage .nal-shop-team-view{background:repeating-linear-gradient(125deg,transparent 0 37px,#12365b05 38px 39px),linear-gradient(180deg,#edf2f7,#f6f8fb)!important;}
+html body #shopPage .nal-shop-team-view #nalShopBrowse{background:transparent!important;}
+html body #shopPage .nal-team-shop-toolbar{border-bottom:1px solid #d6e0ea;}
+html body #shopPage .nal-team-shop-categories{background:#0b294b;border-bottom:2px solid #d71d35;box-shadow:0 3px 8px #06172b0c;}
+html body #shopPage .nal-team-shop-categories a{color:#f5f8fc!important;font-weight:600;letter-spacing:.1px;}
+html body #shopPage .nal-team-shop-categories a:hover,html body #shopPage .nal-team-shop-categories a[aria-current]{background:#193e65!important;color:#fff!important;border-bottom-color:#ed1630;}
+html body #shopPage .nal-shop-team-view #nalShopHeading{border-left:3px solid #db1933;padding-left:13px;line-height:1.3;}
+html body #shopPage .nal-shop-team-view .nal-shop-product{background:#fff!important;border:1px solid #dbe3ec!important;border-radius:4px;overflow:hidden;box-shadow:0 2px 7px #06172b06!important;}
+html body #shopPage .nal-shop-team-view .nal-shop-product-image{background:linear-gradient(140deg,#f9fafc,#edf1f5)!important;}
+html body #shopPage .nal-shop-team-view .nal-shop-product-info{background:#fff!important;border-top:1px solid #e4eaf0;padding:14px!important;}
+html body #shopPage .nal-shop-team-view .nal-shop-product-info h3{color:#102f50;font-size:14px;line-height:1.45;}
+html body #shopPage .nal-shop-team-view .nal-shop-product-info>.nal-shop-button{background:#0b294b!important;color:#fff!important;border:1px solid #0b294b!important;border-bottom:2px solid #db1933!important;border-radius:3px;font-size:11px;}
+html body #shopPage .nal-shop-team-view .nal-shop-product-info>.nal-shop-button:hover{background:#193e65!important;}
+
+/* Explicit breadcrumb/utility placement and 50px desktop content gutters. */
+html body #shopPage .nal-team-shop-toolbar{display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center;min-height:62px;gap:20px;}
+html body #shopPage .nal-team-shop-toolbar>.nal-team-shop-breadcrumb{grid-column:1;grid-row:1;order:0!important;justify-self:start;margin:0!important;}
+html body #shopPage .nal-team-shop-toolbar>.nal-shop-tools{grid-column:2;grid-row:1;order:0!important;justify-self:end;min-height:0!important;flex-wrap:nowrap!important;margin:0!important;}
+@media(min-width:751px){html body #shopPage .nal-shop-shell>:is(.nal-shop-unified-header,.nal-shop-category-tabs,#nalShopBrowse,#nalShopProduct,#nalShopNotice){width:calc(100% - 100px)!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box;}}
+@media(max-width:600px){html body #shopPage .nal-team-shop-toolbar{grid-template-columns:minmax(0,1fr);gap:10px;}html body #shopPage .nal-team-shop-toolbar>.nal-shop-tools{grid-column:1;grid-row:2;justify-self:end;}}
+
+/* Curated team landing: newest merchandise, then image-led category entrances. */
+html body #shopPage .nal-shop-team-landing .nal-team-shop-categories,html body #shopPage .nal-shop-team-landing .nal-shop-browse-filters{display:none!important;}
+#nalShopTeamExplore[hidden]{display:none!important;}
+.nal-team-new-more{text-align:right;padding:18px 0 30px;}
+.nal-team-new-more a,.nal-team-explore-heading>a{font-size:11px;font-weight:750;letter-spacing:.4px;color:#123758;text-decoration:none;}
+.nal-team-explore-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;border-top:1px solid #cbd8e5;padding:27px 0 20px;}
+.nal-team-explore-heading h2{font-size:25px;color:#102f50;border-left:3px solid #db1933;padding-left:13px;margin:0;}
+.nal-team-explore-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;padding-bottom:40px;}
+.nal-team-explore-tile{display:block;text-decoration:none;border:1px solid #d5dfea;overflow:hidden;border-radius:4px;background:#fff;}
+.nal-team-explore-tile>div{aspect-ratio:16/9;background:linear-gradient(130deg,#f9fafc,#e4ebf2);padding:14px;box-sizing:border-box;}
+.nal-team-explore-tile img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;}
+.nal-team-explore-tile>span{display:flex;align-items:center;justify-content:space-between;background:#0b294b;color:white;padding:16px 18px;border-bottom:3px solid #db1933;font-size:15px;font-weight:650;}
+.nal-team-explore-tile:hover>span{background:#193e65;}
+@media(max-width:750px){.nal-team-explore-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.nal-team-explore-heading h2{font-size:21px;}.nal-team-explore-tile>span{font-size:13px;padding:12px;}}
+
+/* Six latest releases and image-led category features. */
+@media(min-width:1051px){html body #shopPage .nal-shop-team-landing #nalShopBrowse #nalShopCatalog.nal-shop-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:16px!important;}}
+.nal-team-new-more a{text-transform:none;font-size:13px;}
+.nal-team-explore-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;}
+.nal-team-explore-tile{position:relative;min-height:280px;background:repeating-linear-gradient(125deg,transparent 0 55px,#ffffff04 56px 58px),linear-gradient(130deg,#173c64,#061b35);border:0;border-radius:0;}
+.nal-team-explore-tile.nal-team-category-apparel{grid-column:span 2;}
+.nal-team-explore-tile>div{position:absolute;inset:0 0 0 40%;aspect-ratio:auto;padding:22px;background:#f0f3f7;clip-path:polygon(12% 0,100% 0,100% 100%,0 100%);}
+.nal-team-explore-tile img{transition:transform .2s ease;}
+.nal-team-explore-tile:hover img{transform:scale(1.035);}
+.nal-team-explore-tile>span{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:280px;box-sizing:border-box;width:53%;padding:28px 22px;background:transparent;border:0;}
+.nal-team-explore-tile:hover>span{background:transparent;}
+.nal-team-explore-tile small{font-size:8px;letter-spacing:1.6px;font-weight:650;color:#c6d5e5;margin-bottom:14px;}
+.nal-team-explore-tile strong{font-size:clamp(21px,2.1vw,32px);line-height:1.08;color:#fff;font-weight:800;}
+.nal-team-explore-tile em{display:block;font-style:normal;color:#fff;font-size:11px;margin-top:23px;padding-bottom:7px;border-bottom:2px solid #ed1933;}
+.nal-team-category-apparel strong{font-size:clamp(30px,3.6vw,50px);}
+.nal-team-category-waiver-wire{background:linear-gradient(135deg,#532339,#0b294b);}
+@media(max-width:900px){.nal-team-explore-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.nal-team-explore-tile.nal-team-category-apparel{grid-column:span 2;}}
+@media(max-width:600px){.nal-team-explore-grid{grid-template-columns:1fr;}.nal-team-explore-tile.nal-team-category-apparel{grid-column:auto;}.nal-team-explore-tile,.nal-team-explore-tile>span{min-height:225px;}.nal-team-explore-heading{align-items:flex-start;}.nal-team-explore-heading h2{font-size:21px;max-width:220px;}.nal-team-explore-tile strong{font-size:27px;}}
+
+/* Temporary campaign artwork is embedded: no extra upload or image files needed. */
+
+.nal-team-campaign-art,.nal-team-category-art{background-image:url("/assets/embedded/nal-7581902593f53642c9dc.png");background-repeat:no-repeat;position:relative;overflow:hidden;}
+.nal-team-jersey-campaign{aspect-ratio:950/175;background-size:107.7895% 877.7143%;background-position:51.3514% 12.6378%;}
+.nal-team-jersey-campaign>a{position:absolute;top:76%;height:17%;border-radius:2px;}
+.nal-team-replica-link{left:2.6%;width:17.7%;}.nal-team-authentic-link{left:21.6%;width:18%;}
+.nal-team-campaign-art a:focus-visible,.nal-team-category-art:focus-visible{outline:3px solid #e9233b;outline-offset:3px;}
+.nal-team-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.nal-team-campaign-categories{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:24px;}
+.nal-team-category-art{display:block;aspect-ratio:230/215;background-size:445.2174% 714.4186%;transition:filter .18s ease;}
+.nal-team-category-art:hover{filter:brightness(1.06);}
+.nal-team-category-art-0{background-position:4.7859% 55.1855%;}.nal-team-category-art-1{background-position:35.0126% 55.1855%;}.nal-team-category-art-2{background-position:65.2393% 55.1855%;}.nal-team-category-art-3{background-position:95.466% 55.1855%;}
+.nal-team-gameday-campaign{aspect-ratio:950/331;background-size:107.7895% 464.0483%;background-position:51.3514% 79.5851%;}
+.nal-team-gameday-copy{position:absolute;inset:0 auto 0 0;width:52%;box-sizing:border-box;padding:4% 3.3%;background:linear-gradient(90deg,#061b35f5 0%,#061b35f0 86%,#061b3500);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;}
+html body #shopPage .nal-team-gameday-copy h2{font:900 clamp(24px,3.5vw,55px)/1.05 Impact,'Arial Narrow',sans-serif;letter-spacing:1px;color:#fff;margin:0 0 15px;}
+.nal-team-gameday-copy p{font-size:clamp(11px,1.2vw,18px);color:#fff;margin:0 0 22px;}
+.nal-team-gameday-copy a{display:inline-block;padding:13px 22px;background:#df1731;color:#fff;font-size:12px;font-weight:750;text-decoration:none;border-radius:2px;}
+.nal-team-service-links{display:flex;justify-content:space-around;gap:20px;padding:23px 0;}.nal-team-service-links a{font-size:12px;color:#193a5a;text-decoration:none;}
+.nal-team-retail-footer{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:30px;padding:35px;background:#082340;color:#dce7f2;margin-bottom:25px;}
+.nal-team-retail-footer img{width:190px;max-width:100%;background:#f2f5f8;padding:12px;box-sizing:border-box;}
+.nal-team-retail-footer h3{font-size:12px;color:#fff;margin:0 0 17px;}.nal-team-retail-footer a{display:block;color:#dce7f2;font-size:12px;text-decoration:none;margin:10px 0;}.nal-team-retail-footer p{font-size:11px;margin-top:16px;}
+@media(max-width:750px){.nal-team-jersey-campaign{min-height:0;}.nal-team-campaign-categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.nal-team-retail-footer{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;padding:23px;}.nal-team-gameday-copy{width:58%;padding:2% 3%;}.nal-team-gameday-copy h2{font-size:25px!important;margin-bottom:7px!important;}.nal-team-gameday-copy p{font-size:10px;margin-bottom:10px;}.nal-team-gameday-copy a{padding:8px 10px;font-size:9px;}.nal-team-service-links{gap:8px;}.nal-team-service-links a{font-size:10px;}}
+
+html body #shopPage .nal-shop-team-landing #nalShopHeading{margin-top:24px!important;}
+.nal-team-gameday-copy{background:#071f39;}
+
+/* New Releases and View All share one compact heading row. */
+#nalShopReleaseViewAll[hidden]{display:none!important;}
+html body #shopPage .nal-shop-team-landing #nalShopReleaseHeadingRow{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:24px 0 18px;}
+html body #shopPage .nal-shop-team-landing #nalShopReleaseHeadingRow #nalShopHeading{margin:0!important;}
+html body #shopPage .nal-shop-team-landing #nalShopReleaseViewAll{font-family:inherit;font-size:26px;font-weight:700;line-height:1.3;color:#071d3a;text-decoration:none;letter-spacing:-.5px;white-space:nowrap;}
+html body #shopPage .nal-shop-team-landing #nalShopReleaseViewAll:hover{text-decoration:underline;text-underline-offset:5px;}
+html body #shopPage .nal-shop-team-landing .nal-team-explore-heading{padding-top:22px;margin-top:24px;}
+@media(max-width:750px){html body #shopPage .nal-shop-team-landing #nalShopReleaseViewAll{font-size:21px;}html body #shopPage .nal-shop-team-landing #nalShopReleaseHeadingRow #nalShopHeading{font-size:21px;}}
+
+/* Unified team section typography; View All remains a small utility link. */
+html body #shopPage .nal-shop-team-view #nalShopHeading,
+html body #shopPage .nal-shop-team-view .nal-team-explore-heading h2{font-family:inherit!important;font-size:24px!important;font-weight:750!important;line-height:1.3!important;letter-spacing:-.3px!important;text-transform:none!important;color:#102f50!important;border-left:3px solid #db1933!important;padding-left:13px!important;}
+html body #shopPage .nal-shop-team-view .nal-team-explore-heading h2{margin:0!important;max-width:none;}
+html body #shopPage .nal-shop-team-landing #nalShopReleaseViewAll{font-family:inherit!important;font-size:13px!important;font-weight:650!important;line-height:1.3!important;letter-spacing:0!important;}
+html body #shopPage .nal-shop-team-landing #nalShopReleaseHeadingRow{margin:24px 0 18px!important;}
+html body #shopPage .nal-shop-team-landing .nal-team-explore-heading{margin-top:24px!important;padding:24px 0 18px!important;}
+@media(max-width:750px){html body #shopPage .nal-shop-team-view #nalShopHeading,html body #shopPage .nal-shop-team-view .nal-team-explore-heading h2{font-size:21px!important;}html body #shopPage .nal-shop-team-landing #nalShopReleaseViewAll{font-size:12px!important;}}
+
+/* Muted team identity behind the Game Day Essentials copy. */
+html body #shopPage .nal-team-gameday-copy{isolation:isolate;background:repeating-linear-gradient(125deg,transparent 0 43px,#ffffff04 44px 45px),radial-gradient(ellipse at 95% 10%,#20496d88,transparent 70%),linear-gradient(135deg,#0b2948,#061a31);}
+html body #shopPage .nal-team-gameday-copy:before{content:'';position:absolute;z-index:-1;inset:8% -7% 6% 26%;background:url('https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089') center/contain no-repeat;opacity:.065;filter:grayscale(1);pointer-events:none;}
+html body #shopPage .nal-team-gameday-copy:after{content:'';position:absolute;left:6.3%;top:15%;width:48px;height:3px;background:#df1731;opacity:.65;pointer-events:none;}
+
+/* Light-to-navy Game Day panel; support links remain in the footer. */
+html body #shopPage .nal-team-gameday-copy{background:repeating-linear-gradient(125deg,transparent 0 43px,#ffffff09 44px 45px),linear-gradient(90deg,rgba(7,31,57,.10) 0%,rgba(7,31,57,.22) 38%,rgba(7,31,57,.65) 72%,rgba(7,31,57,1) 100%),#edf2f7;}
+html body #shopPage .nal-team-gameday-copy h2,html body #shopPage .nal-team-gameday-copy p{color:#061a31!important;text-shadow:0 1px 0 #ffffff20;}
+html body #shopPage .nal-team-gameday-copy p{max-width:75%;font-weight:550;}
+html body #shopPage .nal-team-gameday-copy:before{opacity:.055;}
+html body #shopPage .nal-team-retail-footer{margin-top:24px;}
+
+/* Coordinated retail footer; the global MNTR+ credit remains at page bottom. */
+html body #shopPage .nal-team-retail-footer{position:relative;isolation:isolate;overflow:hidden;background:repeating-linear-gradient(125deg,transparent 0 43px,#ffffff04 44px 45px),radial-gradient(ellipse at 90% 10%,#244b6a66,transparent 65%),linear-gradient(115deg,#0b2a48,#071b31);border-top:2px solid #d91d35;box-shadow:0 4px 15px #06172b0a;}
+html body #shopPage .nal-team-retail-footer:before{content:'';position:absolute;z-index:-1;inset:10% 68% 4% -4%;background:url('https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089') center/contain no-repeat;opacity:.035;filter:grayscale(1);pointer-events:none;}
+html body #shopPage .nal-team-retail-footer h3{font-size:12px;font-weight:750;letter-spacing:.8px;line-height:1.4;margin-bottom:17px;}
+html body #shopPage .nal-team-retail-footer h3:after{content:'';display:block;width:27px;height:2px;background:#dc1c35;margin-top:9px;}
+html body #shopPage .nal-team-retail-footer>div+div{border-left:1px solid #ffffff14;padding-left:25px;}
+html body #shopPage .nal-team-retail-footer a{color:#d5e0ec;line-height:1.5;}
+html body #shopPage .nal-team-retail-footer a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px;}
+html body #shopPage .nal-team-retail-footer img{background:#f0f4f8;border:1px solid #d0dbe6;border-radius:3px;}
+@media(max-width:750px){html body #shopPage .nal-team-retail-footer>div+div{padding-left:14px;}html body #shopPage .nal-team-retail-footer>div:nth-child(3){border-left:0;padding-left:0;}}
+
+/* Shared team shop template, driven by existing secondary brand colors. */
+html body #shopPage .nal-shop-team-view{background:repeating-linear-gradient(125deg,transparent 0 37px,#12365b05 38px 39px),linear-gradient(180deg,rgba(var(--shop-secondary-rgb),.07),#f6f8fb)!important;}
+html body #shopPage .nal-shop-team-view .nal-team-shop-categories{background:var(--shop-secondary)!important;border-bottom-color:var(--shop-secondary)!important;}
+html body #shopPage .nal-shop-team-view .nal-team-shop-categories a{color:var(--shop-secondary-ink)!important;}
+html body #shopPage .nal-shop-team-view .nal-team-shop-categories a:hover,html body #shopPage .nal-shop-team-view .nal-team-shop-categories a[aria-current]{background:color-mix(in srgb,var(--shop-secondary) 80%,#fff)!important;color:var(--shop-secondary-ink)!important;}
+html body #shopPage .nal-shop-team-view #nalShopHeading,html body #shopPage .nal-shop-team-view .nal-team-explore-heading h2{border-left-color:var(--shop-secondary)!important;}
+html body #shopPage .nal-shop-team-view .nal-shop-product-info>.nal-shop-button{border-bottom-color:var(--shop-secondary)!important;}
+html body #shopPage .nal-shop-team-view .nal-team-retail-footer{border-top-color:var(--shop-secondary)!important;background:repeating-linear-gradient(125deg,transparent 0 43px,#ffffff04 44px 45px),linear-gradient(115deg,color-mix(in srgb,var(--shop-secondary) 32%,#0b2a48),#071b31);}
+html body #shopPage .nal-shop-team-view .nal-team-retail-footer:before,html body #shopPage .nal-shop-team-view .nal-team-gameday-copy:before{background-image:var(--shop-team-logo);}
+html body #shopPage .nal-shop-team-view .nal-team-retail-footer h3:after,html body #shopPage .nal-shop-team-view .nal-team-gameday-copy:after{background:var(--shop-secondary);}
+html body #shopPage .nal-shop-team-view .nal-team-gameday-copy{background:repeating-linear-gradient(125deg,transparent 0 43px,#ffffff09 44px 45px),linear-gradient(90deg,rgba(var(--shop-secondary-rgb),.10),rgba(var(--shop-secondary-rgb),1)),#edf2f7;}
+html body #shopPage .nal-shop-team-view .nal-team-gameday-copy a{background:var(--shop-secondary);color:var(--shop-secondary-ink);}
+.nal-team-jersey-feature{display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:25px;padding:32px 38px;background:repeating-linear-gradient(125deg,transparent 0 43px,#ffffff05 44px 45px),linear-gradient(110deg,#081f38,color-mix(in srgb,var(--shop-secondary) 60%,#0b223a));border-bottom:3px solid var(--shop-secondary);color:#fff;}
+.nal-team-jersey-feature small{font-size:10px;letter-spacing:1.6px;color:#d6e0ec;}.nal-team-jersey-feature h1{font:900 clamp(28px,3.6vw,54px)/1.02 Impact,'Arial Narrow',sans-serif;color:#fff;margin:12px 0;}.nal-team-jersey-feature p{font-size:14px;color:#e0e8f1;}
+.nal-team-jersey-actions{display:flex;gap:10px;margin-top:20px;}.nal-team-jersey-actions a{padding:11px 17px;background:var(--shop-secondary);color:var(--shop-secondary-ink);font-size:10px;font-weight:750;text-decoration:none;border:1px solid #ffffff55;}.nal-team-jersey-actions a+a{background:#ffffff0a;color:#fff;}
+.nal-team-jersey-team-art img{display:block;margin:auto;width:100%;max-width:240px;height:200px;object-fit:contain;}
+.nal-team-collection-feature{display:flex;flex-direction:column;overflow:hidden;background:#f0f3f7;border:1px solid #d4dfea;text-decoration:none;}.nal-team-collection-feature>div{aspect-ratio:16/11;padding:20px;background:linear-gradient(135deg,#f8fafc,rgba(var(--shop-secondary-rgb),.08));}.nal-team-collection-feature img{height:100%;width:100%;object-fit:contain;}.nal-team-collection-feature>span{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:18px 15px;background:var(--shop-secondary);color:var(--shop-secondary-ink);}.nal-team-collection-feature strong{font-size:16px;}.nal-team-collection-feature small{font-size:9px;}
+html body #shopPage .nal-shop-team-view:not([data-shop-team="amarillo-warbirds"]) .nal-team-shop-hero{background:linear-gradient(90deg,#fafaf9,color-mix(in srgb,var(--shop-secondary) 14%,#f5f8fb));border-bottom-color:var(--shop-secondary);}
+html body #shopPage .nal-shop-team-view:not([data-shop-team="amarillo-warbirds"]) .nal-team-gameday-campaign{background-image:none;background-color:#f1f4f8;}
+html body #shopPage .nal-shop-team-view:not([data-shop-team="amarillo-warbirds"]) .nal-team-category-art{background-image:none;background-color:#e5ebf2;}
+.nal-team-gameday-team-art{position:absolute;inset:0 0 0 52%;padding:30px;background:linear-gradient(135deg,#f7f9fb,rgba(var(--shop-secondary-rgb),.13));}.nal-team-gameday-team-art img{width:100%;height:100%;object-fit:contain;}
+@media(max-width:750px){.nal-team-jersey-feature{padding:22px 18px;gap:12px;grid-template-columns:1.3fr .7fr;}.nal-team-jersey-feature small{font-size:8px;}.nal-team-jersey-feature p{font-size:11px;}.nal-team-jersey-team-art img{height:120px;}.nal-team-jersey-actions{flex-wrap:wrap;}.nal-team-jersey-actions a{font-size:9px;padding:9px;}.nal-team-collection-feature>span{padding:12px;display:block;}.nal-team-collection-feature strong{font-size:14px;display:block;}.nal-team-collection-feature small{display:block;margin-top:7px;}.nal-team-gameday-team-art{padding:12px;}}
+
+/* Temporary team campaign imagery: separate editable links and artwork. */
+html body #shopPage .nal-team-art-jersey{display:flex;align-items:center;aspect-ratio:3.45;min-height:230px;padding:24px 3.3%;box-sizing:border-box;background-repeat:no-repeat;}
+html body #shopPage .nal-team-art-jersey>div{width:44%;}
+html body #shopPage .nal-team-art-jersey h1{font-size:clamp(28px,3.2vw,48px);}
+html body #shopPage .nal-team-art-jersey .nal-team-jersey-actions{margin-top:14px;}
+html body #shopPage .nal-team-art-category{position:relative;display:block;aspect-ratio:0.76;text-decoration:none;background-repeat:no-repeat;overflow:hidden;border-bottom:3px solid var(--shop-secondary);}
+html body #shopPage .nal-team-art-category>span{position:absolute;inset:auto 0 0;padding:15px 14px;color:#fff;background:linear-gradient(transparent,#07172be6);display:flex;justify-content:space-between;align-items:center;gap:8px;}
+html body #shopPage .nal-team-art-category strong{font-size:clamp(14px,1.5vw,21px);}
+html body #shopPage .nal-team-art-category small{font-size:10px;white-space:nowrap;}
+html body #shopPage .nal-team-art-category:hover{filter:brightness(1.08);}
+html body #shopPage .nal-team-art-gameday{aspect-ratio:3.15;background-repeat:no-repeat;}
+@media(max-width:750px){html body #shopPage .nal-team-art-jersey{min-height:210px;padding:15px;}html body #shopPage .nal-team-art-jersey>div{width:48%;}html body #shopPage .nal-team-art-jersey h1{font-size:25px;}html body #shopPage .nal-team-art-jersey p{font-size:10px;}html body #shopPage .nal-team-art-category>span{padding:12px 10px;display:block;}html body #shopPage .nal-team-art-category small{display:block;margin-top:6px;}html body #shopPage .nal-team-art-gameday{aspect-ratio:2;}}
+html body #shopPage .nal-shop-team-view[data-shop-team="colorado-spartans"] .nal-team-art-jersey,html body #shopPage .nal-shop-team-view[data-shop-team="colorado-spartans"] .nal-team-art-category,html body #shopPage .nal-shop-team-view[data-shop-team="colorado-spartans"] .nal-team-art-gameday{background-image:url("/assets/embedded/nal-9d42e57c74dfd032f5c9.webp");}
+html body #shopPage .nal-shop-team-view[data-shop-team="colorado-spartans"] .nal-team-art-jersey{background-size:100% 349.30362%;background-position:center top;}
+html body #shopPage .nal-shop-team-view[data-shop-team="colorado-spartans"] .nal-team-art-category-0{background-size:400% 288.94009%;background-position:0.00000% 43.78049%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="colorado-spartans"] .nal-team-art-category-1{background-size:400% 288.94009%;background-position:33.33333% 43.78049%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="colorado-spartans"] .nal-team-art-category-2{background-size:400% 288.94009%;background-position:66.66667% 43.78049%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="colorado-spartans"] .nal-team-art-category-3{background-size:400% 288.94009%;background-position:100.00000% 43.78049%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="colorado-spartans"] .nal-team-art-gameday{background-size:100% 272.01735%;background-position:center bottom;}
+html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-jersey,html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-category,html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-gameday{background-image:url("/assets/embedded/nal-3d482128fa04eb180576.webp");}
+html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-jersey{background-size:100% 364.53488%;background-position:center top;}
+html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-category-0{background-image:url("/assets/embedded/dallas-apparel-single.webp")!important;background-size:100% 100%!important;background-position:center!important;}
+html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-category-1{background-image:url("/assets/embedded/dallas-accessories-tote.webp")!important;background-size:100% 100%!important;background-position:center!important;}
+html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-category-2{background-size:400% 246.36542%;background-position:66.66667% 46.17450%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-category-3{background-size:400% 246.36542%;background-position:100.00000% 46.17450%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-gameday{background-size:100% 312.71820%;background-position:center bottom;}
+html body #shopPage .nal-shop-team-view[data-shop-team="louisiana-rouxgaroux"] .nal-team-art-jersey,html body #shopPage .nal-shop-team-view[data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category,html body #shopPage .nal-shop-team-view[data-shop-team="louisiana-rouxgaroux"] .nal-team-art-gameday{background-image:url("/assets/embedded/nal-88c1e79884ced2cfd676.webp");}
+html body #shopPage .nal-shop-team-view[data-shop-team="louisiana-rouxgaroux"] .nal-team-art-jersey{background-size:100% 385.84615%;background-position:center top;}
+html body #shopPage .nal-shop-team-view[data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category-0{background-size:400% 268.52248%;background-position:0.00000% 41.29606%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category-1{background-size:400% 268.52248%;background-position:33.33333% 41.29606%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category-2{background-size:400% 268.52248%;background-position:66.66667% 41.29606%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category-3{background-size:400% 268.52248%;background-position:100.00000% 41.29606%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="louisiana-rouxgaroux"] .nal-team-art-gameday{background-size:100% 271.42857%;background-position:center bottom;}
+html body #shopPage .nal-shop-team-view[data-shop-team="omaha-beef"] .nal-team-art-jersey,html body #shopPage .nal-shop-team-view[data-shop-team="omaha-beef"] .nal-team-art-category,html body #shopPage .nal-shop-team-view[data-shop-team="omaha-beef"] .nal-team-art-gameday{background-image:url("/assets/embedded/nal-a030dd357c3603e8c55f.webp");}
+html body #shopPage .nal-shop-team-view[data-shop-team="omaha-beef"] .nal-team-art-jersey{background-size:100% 334.40000%;background-position:center top;}
+html body #shopPage .nal-shop-team-view[data-shop-team="omaha-beef"] .nal-team-art-category-0{background-size:400% 244.92188%;background-position:0.00000% 50.53908%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="omaha-beef"] .nal-team-art-category-1{background-size:400% 244.92188%;background-position:33.33333% 50.53908%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="omaha-beef"] .nal-team-art-category-2{background-size:400% 244.92188%;background-position:66.66667% 50.53908%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="omaha-beef"] .nal-team-art-category-3{background-size:400% 244.92188%;background-position:100.00000% 50.53908%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="omaha-beef"] .nal-team-art-gameday{background-size:100% 341.68937%;background-position:center bottom;}
+html body #shopPage .nal-shop-team-view[data-shop-team="pueblo-punishers"] .nal-team-art-jersey,html body #shopPage .nal-shop-team-view[data-shop-team="pueblo-punishers"] .nal-team-art-category,html body #shopPage .nal-shop-team-view[data-shop-team="pueblo-punishers"] .nal-team-art-gameday{background-image:url("/assets/embedded/nal-3829b401f76ff2cca43c.webp");}
+html body #shopPage .nal-shop-team-view[data-shop-team="pueblo-punishers"] .nal-team-art-jersey{background-size:100% 300.00000%;background-position:center top;}
+html body #shopPage .nal-shop-team-view[data-shop-team="pueblo-punishers"] .nal-team-art-category-0{background-size:400% 260.16598%;background-position:0.00000% 54.14508%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="pueblo-punishers"] .nal-team-art-category-1{background-size:400% 260.16598%;background-position:33.33333% 54.14508%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="pueblo-punishers"] .nal-team-art-category-2{background-size:400% 260.16598%;background-position:66.66667% 54.14508%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="pueblo-punishers"] .nal-team-art-category-3{background-size:400% 260.16598%;background-position:100.00000% 54.14508%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="pueblo-punishers"] .nal-team-art-gameday{background-size:100% 354.23729%;background-position:center bottom;}
+html body #shopPage .nal-shop-team-view[data-shop-team="salina-liberty"] .nal-team-art-jersey,html body #shopPage .nal-shop-team-view[data-shop-team="salina-liberty"] .nal-team-art-category,html body #shopPage .nal-shop-team-view[data-shop-team="salina-liberty"] .nal-team-art-gameday{background-image:url("/assets/embedded/nal-e514db200b7aa9cf34d6.webp");}
+html body #shopPage .nal-shop-team-view[data-shop-team="salina-liberty"] .nal-team-art-jersey{background-size:100% 302.16867%;background-position:center top;}
+html body #shopPage .nal-shop-team-view[data-shop-team="salina-liberty"] .nal-team-art-category-0{background-size:400% 275.60440%;background-position:0.00000% 51.93992%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="salina-liberty"] .nal-team-art-category-1{background-size:400% 275.60440%;background-position:33.33333% 51.93992%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="salina-liberty"] .nal-team-art-category-2{background-size:400% 275.60440%;background-position:66.66667% 51.93992%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="salina-liberty"] .nal-team-art-category-3{background-size:400% 275.60440%;background-position:100.00000% 51.93992%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="salina-liberty"] .nal-team-art-gameday{background-size:100% 326.56250%;background-position:center bottom;}
+html body #shopPage .nal-shop-team-view[data-shop-team="sioux-city-bandits"] .nal-team-art-jersey,html body #shopPage .nal-shop-team-view[data-shop-team="sioux-city-bandits"] .nal-team-art-category,html body #shopPage .nal-shop-team-view[data-shop-team="sioux-city-bandits"] .nal-team-art-gameday{background-image:url("/assets/embedded/nal-86c933c4b67cdb7ae279.webp");}
+html body #shopPage .nal-shop-team-view[data-shop-team="sioux-city-bandits"] .nal-team-art-jersey{background-size:100% 314.28571%;background-position:center top;}
+html body #shopPage .nal-shop-team-view[data-shop-team="sioux-city-bandits"] .nal-team-art-category-0{background-size:400% 253.84615%;background-position:0.00000% 52.50000%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="sioux-city-bandits"] .nal-team-art-category-1{background-size:400% 253.84615%;background-position:33.33333% 52.50000%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="sioux-city-bandits"] .nal-team-art-category-2{background-size:400% 253.84615%;background-position:66.66667% 52.50000%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="sioux-city-bandits"] .nal-team-art-category-3{background-size:400% 253.84615%;background-position:100.00000% 52.50000%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="sioux-city-bandits"] .nal-team-art-gameday{background-size:100% 347.36842%;background-position:center bottom;}
+html body #shopPage .nal-shop-team-view[data-shop-team="southwest-kansas-storm"] .nal-team-art-jersey,html body #shopPage .nal-shop-team-view[data-shop-team="southwest-kansas-storm"] .nal-team-art-category,html body #shopPage .nal-shop-team-view[data-shop-team="southwest-kansas-storm"] .nal-team-art-gameday{background-image:url("/assets/embedded/nal-b0dc12bf1ce1fecb9089.webp");}
+html body #shopPage .nal-shop-team-view[data-shop-team="southwest-kansas-storm"] .nal-team-art-jersey{background-size:100% 319.89796%;background-position:center top;}
+html body #shopPage .nal-shop-team-view[data-shop-team="southwest-kansas-storm"] .nal-team-art-category-0{background-size:400% 283.71041%;background-position:0.00000% 48.27586%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="southwest-kansas-storm"] .nal-team-art-category-1{background-size:400% 283.71041%;background-position:33.33333% 48.27586%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="southwest-kansas-storm"] .nal-team-art-category-2{background-size:400% 283.71041%;background-position:66.66667% 48.27586%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="southwest-kansas-storm"] .nal-team-art-category-3{background-size:400% 283.71041%;background-position:100.00000% 48.27586%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="southwest-kansas-storm"] .nal-team-art-gameday{background-size:100% 298.57143%;background-position:center bottom;}
+html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-jersey,html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-category,html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-gameday{background-image:url("/assets/embedded/nal-a8904a1e5bea412e1ba1.webp");}
+html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-jersey{background-size:100% 358.28571%;background-position:center top;}
+html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-category-0{background-size:400% 258.02469%;background-position:0.00000% 45.57292%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-category-1{background-size:400% 258.02469%;background-position:33.33333% 45.57292%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-category-2{background-size:400% 258.02469%;background-position:66.66667% 45.57292%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-category-3{background-size:400% 258.02469%;background-position:100.00000% 45.57292%;}
+html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-gameday{background-size:100% 300.00000%;background-position:center bottom;}
+
+/* Keep league retail chrome consistent on every team and collection page. */
+html body #shopPage .nal-shop-team-view{background:transparent!important;}
+html body #shopPage .nal-shop-team-view>.nal-shop-unified-header{display:grid!important;justify-content:normal;padding:16px 0;}
+html body #shopPage .nal-shop-team-view>.nal-shop-unified-header>.nal-shop-compact-title{display:block!important;}
+html body #shopPage .nal-shop-team-view>.nal-shop-unified-header>.nal-shop-team-strip{display:block!important;}
+html body #shopPage .nal-shop-team-view>.nal-shop-category-tabs{display:flex!important;}
+html body #shopPage .nal-shop-team-view>.nal-shop-assurance{display:block!important;}
+html body #shopPage #nalShopBag{white-space:nowrap!important;flex:0 0 auto!important;min-width:76px!important;width:auto!important;line-height:1.2!important;}
+@media(max-width:750px){html body #shopPage .nal-shop-team-view>.nal-shop-unified-header{padding:10px 0;}html body #shopPage #nalShopBag{min-width:65px!important;}}
+
+/* One shared content gutter, matching the retail navigation. */
+html body #shopPage{--shop-content-gutter:50px;--shop-nav-navy:#06172b;}
+html body #shopPage .nal-shop-shell>:is(.nal-shop-unified-header,.nal-shop-category-tabs,#nalShopBrowse,#nalShopProduct,#nalShopNotice),
+html body #shopPage #nalShopHome>:is(.nal-shop-campaign,.nal-shop-jersey-banner,.nal-shop-section-heading,.nal-shop-category-tiles,.nal-shop-grid,.nal-shop-editorial,.nal-shop-new-grid,.nal-shop-service-row){width:calc(100% - var(--shop-content-gutter)*2)!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box;}
+html body #shopPage .nal-shop-category-tabs{background:var(--shop-nav-navy)!important;}
+@media(max-width:750px){html body #shopPage{--shop-content-gutter:16px;}}
+
+/* Breathing room between the shop navigation and homepage hero. */
+html body #shopPage #nalShopHome>.nal-shop-campaign{margin-top:15px!important;}
+
+/* Approved photo-based jersey campaign banners: keep complete artwork on every screen. */
+#shopPage .nal-team-approved-jersey{display:block;width:100%;min-width:0;margin:0 0 24px;background:#08121c;overflow:hidden;}
+#shopPage .nal-team-approved-jersey>img{display:block;width:100%;max-width:100%;height:auto;object-fit:contain;}
+#shopPage .nal-team-approved-actions{display:flex;justify-content:flex-end;gap:12px;padding:12px 18px;background:#08121c;}
+#shopPage .nal-team-approved-actions>a{display:inline-flex;align-items:center;justify-content:center;padding:10px 20px;border:1px solid #b8c2cc;color:#fff;font:700 13px/18px Arial,Helvetica,sans-serif;text-decoration:none;white-space:nowrap;}
+#shopPage .nal-team-approved-actions>a:hover{background:#ffffff20;}
+@media(max-width:750px){#shopPage .nal-team-approved-actions{justify-content:center;gap:10px;padding:10px;}#shopPage .nal-team-approved-actions>a{flex:1;padding:10px;font-size:12px;}}
+
+/* Jersey links overlay the campaign artwork. */
+#shopPage .nal-team-approved-jersey{position:relative;}
+#shopPage .nal-team-approved-actions{position:absolute;bottom:2.5%;left:3.4%;right:auto;justify-content:flex-start;gap:10px;padding:0;background:transparent;}
+#shopPage .nal-team-approved-actions>a{background:#08121ce6;border-color:#fff9;padding:9px 18px;font-size:12px;line-height:16px;}
+#shopPage .nal-team-approved-actions>a:first-child{background:var(--nal-team-secondary,#d70926);border-color:#ffffff70;}
+@media(max-width:750px){#shopPage .nal-team-approved-actions{left:3%;bottom:2%;gap:5px;}#shopPage .nal-team-approved-actions>a{flex:none;padding:4px 7px;font-size:9px;line-height:12px;}}
+
+@media(max-width:750px){html body #shopPage .nal-team-approved-jersey .nal-team-approved-actions{position:static;inset:auto;display:flex;justify-content:center;gap:10px;padding:10px;background:#08121c;}html body #shopPage .nal-team-approved-jersey .nal-team-approved-actions>a{flex:1;min-width:0;min-height:44px;box-sizing:border-box;padding:10px 8px;font:700 12px/18px Arial,Helvetica,sans-serif;white-space:nowrap;}}
+
+#shopPage .nal-team-category-art-2{position:relative;}#shopPage .nal-team-category-art-2::after{content:"Collectibles";position:absolute;left:0;right:0;bottom:12%;height:21%;display:flex;align-items:center;padding:0 7%;box-sizing:border-box;background:linear-gradient(#0b263eeF,#001b32);color:white;font:700 clamp(14px,2vw,28px)/1.2 Arial,Helvetica,sans-serif;text-align:left;}
+#shopPage [data-shop-team="amarillo-warbirds"] .nal-warbirds-product-tile{display:block;position:relative;aspect-ratio:1/1;min-width:0;background-image:url("/assets/embedded/nal-3c49240a76f0158d4b4a.webp");background-size:400% 100%;text-decoration:none;overflow:hidden;}#shopPage .nal-warbirds-product-tile-0{background-position:0.0% center;}#shopPage .nal-warbirds-product-tile-1{background-position:33.333333333333336% center;}#shopPage .nal-warbirds-product-tile-2{background-position:66.66666666666667% center;}#shopPage .nal-warbirds-product-tile-3{background-position:100.0% center;}#shopPage .nal-warbirds-product-tile>span{position:absolute;inset:auto 0 0;padding:15px;background:linear-gradient(transparent,#001a31 40%);color:#fff;}#shopPage .nal-warbirds-product-tile strong{display:block;font:700 clamp(16px,1.8vw,27px)/1.2 Arial,Helvetica,sans-serif;}#shopPage .nal-warbirds-product-tile small{display:block;margin-top:10px;padding-top:8px;border-top:3px solid #e8000d;font:700 12px/1.2 Arial,Helvetica,sans-serif;text-align:right;}#shopPage [data-shop-team="amarillo-warbirds"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/nal-74ba7bb57a743921cddc.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#0b2239;}@media(max-width:750px){#shopPage .nal-warbirds-product-tile>span{padding:10px;}#shopPage .nal-warbirds-product-tile small{font-size:10px;margin-top:6px;}#shopPage [data-shop-team="amarillo-warbirds"] .nal-team-gameday-campaign{background-size:100% auto!important;background-position:center bottom!important;}}
+#shopPage [data-shop-team="colorado-spartans"] .nal-team-art-category{background-image:url("/assets/embedded/nal-ed43144b823a94e74224.webp")!important;background-size:400% 100%!important;}#shopPage [data-shop-team="colorado-spartans"] .nal-team-art-category-0{background-position:0.0% center!important;}#shopPage [data-shop-team="colorado-spartans"] .nal-team-art-category-1{background-position:33.333333333333336% center!important;}#shopPage [data-shop-team="colorado-spartans"] .nal-team-art-category-2{background-position:66.66666666666667% center!important;}#shopPage [data-shop-team="colorado-spartans"] .nal-team-art-category-3{background-position:100.0% center!important;}#shopPage [data-shop-team="colorado-spartans"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/nal-382e00137209f5781ea9.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#121820!important;}@media(max-width:750px){#shopPage [data-shop-team="colorado-spartans"] .nal-team-gameday-campaign{background-size:100% auto!important;background-position:center bottom!important;}}
+#shopPage [data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category{background-image:url("/assets/embedded/nal-acb08d60f8e3b5ca1f5a.webp")!important;background-size:400% 100%!important;}#shopPage [data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category-0{background-position:0.0% center!important;}#shopPage [data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category-1{background-position:33.333333333333336% center!important;}#shopPage [data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category-2{background-position:66.66666666666667% center!important;}#shopPage [data-shop-team="louisiana-rouxgaroux"] .nal-team-art-category-3{background-position:100.0% center!important;}#shopPage [data-shop-team="louisiana-rouxgaroux"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/nal-6571c5567dc59efd3a61.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#121820!important;}@media(max-width:750px){#shopPage [data-shop-team="louisiana-rouxgaroux"] .nal-team-gameday-campaign{background-size:100% auto!important;background-position:center bottom!important;}}
+#shopPage [data-shop-team="omaha-beef"] .nal-team-art-category{background-image:url("/assets/embedded/nal-74c1af85feb315c33ebb.webp")!important;background-size:400% 100%!important;}#shopPage [data-shop-team="omaha-beef"] .nal-team-art-category-0{background-position:0.0% center!important;}#shopPage [data-shop-team="omaha-beef"] .nal-team-art-category-1{background-position:33.333333333333336% center!important;}#shopPage [data-shop-team="omaha-beef"] .nal-team-art-category-2{background-position:66.66666666666667% center!important;}#shopPage [data-shop-team="omaha-beef"] .nal-team-art-category-3{background-position:100.0% center!important;}#shopPage [data-shop-team="omaha-beef"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/nal-fa78994f77705e5919cb.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#121820!important;}@media(max-width:750px){#shopPage [data-shop-team="omaha-beef"] .nal-team-gameday-campaign{background-size:100% auto!important;background-position:center bottom!important;}}
+#shopPage [data-shop-team="pueblo-punishers"] .nal-team-art-category{background-image:url("/assets/embedded/nal-f5924c110b3d23300816.webp")!important;background-size:400% 100%!important;}#shopPage [data-shop-team="pueblo-punishers"] .nal-team-art-category-0{background-position:0.0% center!important;}#shopPage [data-shop-team="pueblo-punishers"] .nal-team-art-category-1{background-position:33.333333333333336% center!important;}#shopPage [data-shop-team="pueblo-punishers"] .nal-team-art-category-2{background-position:66.66666666666667% center!important;}#shopPage [data-shop-team="pueblo-punishers"] .nal-team-art-category-3{background-position:100.0% center!important;}#shopPage [data-shop-team="pueblo-punishers"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/nal-33733aafc135d0e08f68.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#121820!important;}@media(max-width:750px){#shopPage [data-shop-team="pueblo-punishers"] .nal-team-gameday-campaign{background-size:100% auto!important;background-position:center bottom!important;}}
+#shopPage [data-shop-team="salina-liberty"] .nal-team-art-category{background-image:url("/assets/embedded/nal-61ed303372a703bc35dd.webp")!important;background-size:400% 100%!important;}#shopPage [data-shop-team="salina-liberty"] .nal-team-art-category-0{background-position:0.0% center!important;}#shopPage [data-shop-team="salina-liberty"] .nal-team-art-category-1{background-position:33.333333333333336% center!important;}#shopPage [data-shop-team="salina-liberty"] .nal-team-art-category-2{background-position:66.66666666666667% center!important;}#shopPage [data-shop-team="salina-liberty"] .nal-team-art-category-3{background-position:100.0% center!important;}#shopPage [data-shop-team="salina-liberty"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/nal-f344fb03d908ad90ea93.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#121820!important;}@media(max-width:750px){#shopPage [data-shop-team="salina-liberty"] .nal-team-gameday-campaign{background-size:100% auto!important;background-position:center bottom!important;}}
+#shopPage [data-shop-team="sioux-city-bandits"] .nal-team-art-category{background-image:url("/assets/embedded/nal-1334c98a6ec9f01e2d39.webp")!important;background-size:400% 100%!important;}#shopPage [data-shop-team="sioux-city-bandits"] .nal-team-art-category-0{background-position:0.0% center!important;}#shopPage [data-shop-team="sioux-city-bandits"] .nal-team-art-category-1{background-position:33.333333333333336% center!important;}#shopPage [data-shop-team="sioux-city-bandits"] .nal-team-art-category-2{background-position:66.66666666666667% center!important;}#shopPage [data-shop-team="sioux-city-bandits"] .nal-team-art-category-3{background-position:100.0% center!important;}#shopPage [data-shop-team="sioux-city-bandits"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/nal-d67abeed7bf824ecfc61.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#121820!important;}@media(max-width:750px){#shopPage [data-shop-team="sioux-city-bandits"] .nal-team-gameday-campaign{background-size:100% auto!important;background-position:center bottom!important;}}
+#shopPage [data-shop-team="southwest-kansas-storm"] .nal-team-art-category{background-image:url("/assets/embedded/nal-1ea0821af94e1b3f7f18.webp")!important;background-size:400% 100%!important;}#shopPage [data-shop-team="southwest-kansas-storm"] .nal-team-art-category-0{background-position:0.0% center!important;}#shopPage [data-shop-team="southwest-kansas-storm"] .nal-team-art-category-1{background-position:33.333333333333336% center!important;}#shopPage [data-shop-team="southwest-kansas-storm"] .nal-team-art-category-2{background-position:66.66666666666667% center!important;}#shopPage [data-shop-team="southwest-kansas-storm"] .nal-team-art-category-3{background-position:100.0% center!important;}#shopPage [data-shop-team="southwest-kansas-storm"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/nal-0f96fc2076ae38bd3478.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#121820!important;}@media(max-width:750px){#shopPage [data-shop-team="southwest-kansas-storm"] .nal-team-gameday-campaign{background-size:100% auto!important;background-position:center bottom!important;}}
+@media(max-width:750px){
+html body #shopPage .nal-shop-team-view:is([data-shop-team="amarillo-warbirds"],[data-shop-team="colorado-spartans"],[data-shop-team="louisiana-rouxgaroux"],[data-shop-team="omaha-beef"],[data-shop-team="pueblo-punishers"],[data-shop-team="salina-liberty"],[data-shop-team="sioux-city-bandits"],[data-shop-team="southwest-kansas-storm"],[data-shop-team="dallas-apex"],[data-shop-team="wheeling-miners"]) .nal-team-gameday-campaign{
+position:relative!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:auto!important;box-sizing:border-box!important;padding:0 0 66.666667%!important;background-size:100% auto!important;background-position:center bottom!important;background-repeat:no-repeat!important;overflow:hidden!important;}
+html body #shopPage .nal-shop-team-view:is([data-shop-team="amarillo-warbirds"],[data-shop-team="colorado-spartans"],[data-shop-team="louisiana-rouxgaroux"],[data-shop-team="omaha-beef"],[data-shop-team="pueblo-punishers"],[data-shop-team="salina-liberty"],[data-shop-team="sioux-city-bandits"],[data-shop-team="southwest-kansas-storm"],[data-shop-team="dallas-apex"],[data-shop-team="wheeling-miners"]) .nal-team-gameday-campaign .nal-team-gameday-copy{
+position:relative!important;inset:auto!important;width:100%!important;min-height:0!important;box-sizing:border-box!important;padding:24px 20px!important;}
+html body #shopPage .nal-shop-team-view:is([data-shop-team="amarillo-warbirds"],[data-shop-team="colorado-spartans"],[data-shop-team="louisiana-rouxgaroux"],[data-shop-team="omaha-beef"],[data-shop-team="pueblo-punishers"],[data-shop-team="salina-liberty"],[data-shop-team="sioux-city-bandits"],[data-shop-team="southwest-kansas-storm"],[data-shop-team="dallas-apex"],[data-shop-team="wheeling-miners"]) .nal-team-gameday-copy h2{font-size:28px!important;margin:0 0 10px!important;}
+html body #shopPage .nal-shop-team-view:is([data-shop-team="amarillo-warbirds"],[data-shop-team="colorado-spartans"],[data-shop-team="louisiana-rouxgaroux"],[data-shop-team="omaha-beef"],[data-shop-team="pueblo-punishers"],[data-shop-team="salina-liberty"],[data-shop-team="sioux-city-bandits"],[data-shop-team="southwest-kansas-storm"],[data-shop-team="dallas-apex"],[data-shop-team="wheeling-miners"]) .nal-team-gameday-copy p{max-width:100%!important;font-size:13px!important;margin:0 0 16px!important;}
+html body #shopPage .nal-shop-team-view:is([data-shop-team="amarillo-warbirds"],[data-shop-team="colorado-spartans"],[data-shop-team="louisiana-rouxgaroux"],[data-shop-team="omaha-beef"],[data-shop-team="pueblo-punishers"],[data-shop-team="salina-liberty"],[data-shop-team="sioux-city-bandits"],[data-shop-team="southwest-kansas-storm"],[data-shop-team="dallas-apex"],[data-shop-team="wheeling-miners"]) .nal-team-gameday-copy a{padding:12px 16px!important;font-size:12px!important;}
+}
+html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-category-0{background-image:url("/assets/embedded/dallas-apparel-single.webp")!important;background-size:100% 100%!important;background-position:center!important;}html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-category-1{background-image:url("/assets/embedded/dallas-accessories-tote.webp")!important;background-size:100% 100%!important;background-position:center!important;}html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-art-category-3{background-image:url("/assets/embedded/dallas-products.webp")!important;background-size:400% 100%!important;background-position:100.0% center!important;}html body #shopPage .nal-shop-team-view[data-shop-team="dallas-apex"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/dallas-fans-only.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#121820!important;}
+html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-category-0{background-image:url("/assets/embedded/wheeling-apparel.webp")!important;background-size:100% 100%!important;background-position:center!important;}html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-art-category-1{background-image:url("/assets/embedded/wheeling-accessories.webp")!important;background-size:100% 100%!important;background-position:center!important;}html body #shopPage .nal-shop-team-view[data-shop-team="wheeling-miners"] .nal-team-gameday-campaign{background-image:url("/assets/embedded/wheeling-fans.webp")!important;background-size:48% 100%!important;background-position:right center!important;background-repeat:no-repeat!important;background-color:#121820!important;}
+html body #shopPage #nalShopTeamExplore .nal-warbirds-product-tile-0{background-image:url("/assets/embedded/warbirds-category-0-natural.webp")!important;}html body #shopPage #nalShopTeamExplore .nal-warbirds-product-tile-1{background-image:url("/assets/embedded/warbirds-category-1-natural.webp")!important;}html body #shopPage #nalShopTeamExplore .nal-warbirds-product-tile-2{background-image:url("/assets/embedded/warbirds-category-2-natural.webp")!important;}html body #shopPage #nalShopTeamExplore .nal-warbirds-product-tile-3{background-image:url("/assets/embedded/warbirds-category-3-natural.webp")!important;}html body #shopPage [data-shop-team="colorado-spartans"] #nalShopTeamExplore .nal-team-art-category-0{background-image:url("/assets/embedded/colorado-category-0-natural.webp")!important;}html body #shopPage [data-shop-team="colorado-spartans"] #nalShopTeamExplore .nal-team-art-category-1{background-image:url("/assets/embedded/colorado-category-1-natural.webp")!important;}html body #shopPage [data-shop-team="colorado-spartans"] #nalShopTeamExplore .nal-team-art-category-2{background-image:url("/assets/embedded/colorado-category-2-natural.webp")!important;}html body #shopPage [data-shop-team="colorado-spartans"] #nalShopTeamExplore .nal-team-art-category-3{background-image:url("/assets/embedded/colorado-category-3-natural.webp")!important;}html body #shopPage [data-shop-team="louisiana-rouxgaroux"] #nalShopTeamExplore .nal-team-art-category-0{background-image:url("/assets/embedded/louisiana-category-0-natural.webp")!important;}html body #shopPage [data-shop-team="louisiana-rouxgaroux"] #nalShopTeamExplore .nal-team-art-category-1{background-image:url("/assets/embedded/louisiana-category-1-natural.webp")!important;}html body #shopPage [data-shop-team="louisiana-rouxgaroux"] #nalShopTeamExplore .nal-team-art-category-2{background-image:url("/assets/embedded/louisiana-category-2-natural.webp")!important;}html body #shopPage [data-shop-team="louisiana-rouxgaroux"] #nalShopTeamExplore .nal-team-art-category-3{background-image:url("/assets/embedded/louisiana-category-3-natural.webp")!important;}html body #shopPage [data-shop-team="omaha-beef"] #nalShopTeamExplore .nal-team-art-category-0{background-image:url("/assets/embedded/omaha-category-0-natural.webp")!important;}html body #shopPage [data-shop-team="omaha-beef"] #nalShopTeamExplore .nal-team-art-category-1{background-image:url("/assets/embedded/omaha-category-1-natural.webp")!important;}html body #shopPage [data-shop-team="omaha-beef"] #nalShopTeamExplore .nal-team-art-category-2{background-image:url("/assets/embedded/omaha-category-2-natural.webp")!important;}html body #shopPage [data-shop-team="omaha-beef"] #nalShopTeamExplore .nal-team-art-category-3{background-image:url("/assets/embedded/omaha-category-3-natural.webp")!important;}html body #shopPage [data-shop-team="pueblo-punishers"] #nalShopTeamExplore .nal-team-art-category-0{background-image:url("/assets/embedded/pueblo-category-0-natural.webp")!important;}html body #shopPage [data-shop-team="pueblo-punishers"] #nalShopTeamExplore .nal-team-art-category-1{background-image:url("/assets/embedded/pueblo-category-1-natural.webp")!important;}html body #shopPage [data-shop-team="pueblo-punishers"] #nalShopTeamExplore .nal-team-art-category-2{background-image:url("/assets/embedded/pueblo-category-2-natural.webp")!important;}html body #shopPage [data-shop-team="pueblo-punishers"] #nalShopTeamExplore .nal-team-art-category-3{background-image:url("/assets/embedded/pueblo-category-3-natural.webp")!important;}html body #shopPage [data-shop-team="salina-liberty"] #nalShopTeamExplore .nal-team-art-category-0{background-image:url("/assets/embedded/salina-category-0-natural.webp")!important;}html body #shopPage [data-shop-team="salina-liberty"] #nalShopTeamExplore .nal-team-art-category-1{background-image:url("/assets/embedded/salina-category-1-natural.webp")!important;}html body #shopPage [data-shop-team="salina-liberty"] #nalShopTeamExplore .nal-team-art-category-2{background-image:url("/assets/embedded/salina-category-2-natural.webp")!important;}html body #shopPage [data-shop-team="salina-liberty"] #nalShopTeamExplore .nal-team-art-category-3{background-image:url("/assets/embedded/salina-category-3-natural.webp")!important;}html body #shopPage [data-shop-team="sioux-city-bandits"] #nalShopTeamExplore .nal-team-art-category-0{background-image:url("/assets/embedded/sioux-city-category-0-natural.webp")!important;}html body #shopPage [data-shop-team="sioux-city-bandits"] #nalShopTeamExplore .nal-team-art-category-1{background-image:url("/assets/embedded/sioux-city-category-1-natural.webp")!important;}html body #shopPage [data-shop-team="sioux-city-bandits"] #nalShopTeamExplore .nal-team-art-category-2{background-image:url("/assets/embedded/sioux-city-category-2-natural.webp")!important;}html body #shopPage [data-shop-team="sioux-city-bandits"] #nalShopTeamExplore .nal-team-art-category-3{background-image:url("/assets/embedded/sioux-city-category-3-natural.webp")!important;}html body #shopPage [data-shop-team="southwest-kansas-storm"] #nalShopTeamExplore .nal-team-art-category-0{background-image:url("/assets/embedded/storm-category-0-natural.webp")!important;}html body #shopPage [data-shop-team="southwest-kansas-storm"] #nalShopTeamExplore .nal-team-art-category-1{background-image:url("/assets/embedded/storm-category-1-natural.webp")!important;}html body #shopPage [data-shop-team="southwest-kansas-storm"] #nalShopTeamExplore .nal-team-art-category-2{background-image:url("/assets/embedded/storm-category-2-natural.webp")!important;}html body #shopPage [data-shop-team="southwest-kansas-storm"] #nalShopTeamExplore .nal-team-art-category-3{background-image:url("/assets/embedded/storm-category-3-natural.webp")!important;}html body #shopPage [data-shop-team="amarillo-warbirds"] #nalShopTeamExplore .nal-warbirds-product-tile,html body #shopPage [data-shop-team="colorado-spartans"] #nalShopTeamExplore .nal-team-art-category,html body #shopPage [data-shop-team="louisiana-rouxgaroux"] #nalShopTeamExplore .nal-team-art-category,html body #shopPage [data-shop-team="omaha-beef"] #nalShopTeamExplore .nal-team-art-category,html body #shopPage [data-shop-team="pueblo-punishers"] #nalShopTeamExplore .nal-team-art-category,html body #shopPage [data-shop-team="salina-liberty"] #nalShopTeamExplore .nal-team-art-category,html body #shopPage [data-shop-team="sioux-city-bandits"] #nalShopTeamExplore .nal-team-art-category,html body #shopPage [data-shop-team="southwest-kansas-storm"] #nalShopTeamExplore .nal-team-art-category,html body #shopPage [data-shop-team="dallas-apex"] #nalShopTeamExplore .nal-team-art-category-0,html body #shopPage [data-shop-team="dallas-apex"] #nalShopTeamExplore .nal-team-art-category-1,html body #shopPage [data-shop-team="dallas-apex"] #nalShopTeamExplore .nal-team-art-category-3,html body #shopPage [data-shop-team="wheeling-miners"] #nalShopTeamExplore .nal-team-art-category-0,html body #shopPage [data-shop-team="wheeling-miners"] #nalShopTeamExplore .nal-team-art-category-1{background-size:contain!important;background-position:center top!important;background-repeat:no-repeat!important;background-color:#081b2d!important;}html body #shopPage [data-shop-team="dallas-apex"] #nalShopTeamExplore .nal-team-art-category-3{background-image:url("/assets/embedded/dallas-waiver-natural.webp")!important;}html body #shopPage #nalShopTeamExplore .nal-team-art-category,html body #shopPage #nalShopTeamExplore .nal-warbirds-product-tile{aspect-ratio:3/4!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-gameday-campaign{aspect-ratio:25/8!important;background-size:48% auto!important;background-position:right center!important;background-repeat:no-repeat!important;}
+@media(max-width:750px){html body #shopPage #nalShopTeamExplore .nal-team-gameday-campaign{aspect-ratio:auto!important;height:auto!important;min-height:0!important;max-height:none!important;padding:0 0 66.666667%!important;background-size:100% auto!important;background-position:center bottom!important;}html body #shopPage #nalShopTeamExplore .nal-team-gameday-copy{position:relative!important;inset:auto!important;width:100%!important;box-sizing:border-box!important;padding:24px 20px!important;}}
+
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer{background:linear-gradient(115deg,#fff 0%,#fff 48%,color-mix(in srgb,var(--shop-secondary,#df1731) 7%,#fff) 100%)!important;color:#102d49!important;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:28px;padding:30px;min-height:0!important;height:auto!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer:before{opacity:.025;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer img{width:210px;max-width:100%;height:auto;object-fit:contain;background:transparent!important;border:0!important;padding:0!important;border-radius:0;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer h3{color:#102d49!important;font-size:13px;margin:0 0 12px;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer a{color:#23445f!important;font-size:14px;line-height:1.4;margin:0;padding:9px 0;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer>div+div{border-left:1px solid #dbe3eb;padding-left:24px;}
+@media(max-width:750px){html body #shopPage #nalShopTeamExplore .nal-team-retail-footer{grid-template-columns:1fr!important;padding:22px 18px!important;gap:14px!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer>div:first-child{padding-bottom:10px;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer img{width:180px!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer>div+div{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;border-left:0!important;border-top:1px solid #dbe3eb;padding:14px 0 0!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer h3{flex:0 0 100%;font-size:13px!important;margin:0 0 4px!important;letter-spacing:.6px;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer h3:after{display:none;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer a{display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;padding:8px 0!important;font-size:14px!important;margin:0!important;}
+}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer{background:linear-gradient(115deg,#fff 0%,#fff 48%,color-mix(in srgb,var(--shop-secondary,#df1731) 7%,#fff) 100%)!important;color:#102d49!important;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:28px;padding:30px;min-height:0!important;height:auto!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer:before{opacity:.025;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer img{width:210px;max-width:100%;height:auto;object-fit:contain;background:transparent!important;border:0!important;padding:0!important;border-radius:0;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer h3{color:#102d49!important;font-size:13px;margin:0 0 12px;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer a{color:#23445f!important;font-size:14px;line-height:1.4;margin:0;padding:9px 0;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer>div+div{border-left:1px solid #dbe3eb;padding-left:24px;}
+@media(max-width:750px){html body #shopPage #nalShopTeamExplore .nal-team-retail-footer{grid-template-columns:1fr!important;padding:22px 18px!important;gap:14px!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer>div:first-child{padding-bottom:10px;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer img{width:180px!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer>div+div{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;border-left:0!important;border-top:1px solid #dbe3eb;padding:14px 0 0!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer h3{flex:0 0 100%;font-size:13px!important;margin:0 0 4px!important;letter-spacing:.6px;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer h3:after{display:none;}
+html body #shopPage #nalShopTeamExplore .nal-team-retail-footer a{display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;padding:8px 0!important;font-size:14px!important;margin:0!important;}
+}@media(max-width:750px){html body #shopPage #nalShopTeamExplore .nal-team-gameday-campaign{position:relative!important;aspect-ratio:3/2!important;height:auto!important;min-height:0!important;max-height:none!important;padding:0!important;background-size:100% auto!important;background-position:center top!important;overflow:hidden!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-gameday-copy{position:absolute!important;inset:auto 0 0!important;width:100%!important;padding:24px 14px 12px!important;min-height:0!important;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:center!important;justify-content:space-between!important;gap:4px 8px!important;background:linear-gradient(transparent,rgba(3,15,28,.88) 35%,rgba(3,15,28,.96))!important;color:#fff!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-gameday-copy:before,html body #shopPage #nalShopTeamExplore .nal-team-gameday-copy:after{display:none!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-gameday-copy h2{font-size:22px!important;line-height:1.05!important;letter-spacing:.4px!important;color:#fff!important;margin:0!important;flex:1 1 155px!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-gameday-copy h2 br{display:none!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-gameday-copy p{display:none!important;}
+html body #shopPage #nalShopTeamExplore .nal-team-gameday-copy a{font-size:10px!important;line-height:1.2!important;padding:10px!important;min-height:44px!important;box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;margin:0!important;}
+}
