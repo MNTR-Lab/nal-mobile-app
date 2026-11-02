@@ -3,7 +3,7 @@
   "season_label": "2025-2026",
   "stats_section_id": "1200",
   "division_id": "41958",
-  "generated_at": "2026-11-01T22:27:38.221996+00:00",
+  "generated_at": "2026-11-02T06:53:53.490421+00:00",
   "team_count": 10,
   "successful_teams": 10,
   "failed_teams": 0,
@@ -692,6 +692,11 @@
       ],
       "staff": [
         {
+          "staff_id": "121367",
+          "name": "Michael Blair",
+          "position": "Head Coach"
+        },
+        {
           "staff_id": "121368",
           "name": "Thomas Williams",
           "position": "Defensive/Asst. HC"
@@ -705,11 +710,6 @@
           "staff_id": "121370",
           "name": "Mike Clark",
           "position": "Assistant Coach"
-        },
-        {
-          "staff_id": "121367",
-          "name": "Michael Blair",
-          "position": "Head Coach"
         }
       ],
       "player_count": 25,
