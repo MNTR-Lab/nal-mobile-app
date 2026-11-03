@@ -8982,6 +8982,84 @@ html body .website-sticky-header #website-navigation.bottom-nav > a.nav-button[d
  }
 }
 </style>
+
+<style id="nal-social-team-branded-directory-v3">
+/* Social team directory: team-specific color treatment and the same
+   spacious four-column desktop rhythm used by the Teams directory. */
+#socialPage .teams-style-social-grid{
+  display:grid!important;
+  grid-template-columns:repeat(8,minmax(0,1fr))!important;
+  gap:20px!important;
+  max-width:1180px!important;
+  margin:0 auto!important;
+}
+#socialPage .teams-style-social-grid > .teams-style-social-card{
+  grid-column:span 2!important;
+  --team-accent:#315b8a;
+  --team-dark:#0b1d34;
+  min-height:265px!important;
+  padding:20px 14px 17px!important;
+  background:
+    radial-gradient(ellipse at 50% 8%,color-mix(in srgb,var(--team-accent) 55%,transparent),transparent 68%),
+    linear-gradient(155deg,color-mix(in srgb,var(--team-accent) 38%,#0b1c32),var(--team-dark))!important;
+  border:1px solid color-mix(in srgb,var(--team-accent) 65%,#ffffff33)!important;
+  border-radius:16px!important;
+  box-shadow:0 12px 26px #0005,inset 0 1px 0 #ffffff1c!important;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease!important;
+}
+#socialPage .teams-style-social-grid > .teams-style-social-card::before{
+  height:4px!important;
+  background:var(--team-accent)!important;
+}
+#socialPage .teams-style-social-grid .teams-style-social-logo{
+  height:158px!important;min-height:158px!important;
+  background:radial-gradient(circle,#ffffff29 0%,#ffffff0a 42%,transparent 76%)!important;
+}
+#socialPage .teams-style-social-grid .teams-style-social-logo img{
+  max-width:145px!important;max-height:142px!important;
+}
+#socialPage .teams-style-social-grid .teams-style-social-name{
+  font-size:15px!important;line-height:1.15!important;
+  min-height:40px!important;
+}
+#socialPage .teams-style-social-grid .nal-social-team-link{
+  color:#fff!important;font-size:10px!important;letter-spacing:.8px!important;
+  opacity:.85!important;
+}
+#socialPage .teams-style-social-grid > .teams-style-social-card:hover{
+  transform:translateY(-4px)!important;
+  border-color:#ffffffa8!important;
+  box-shadow:0 17px 30px #0007!important;
+}
+/* Colors are visual accents, not a replacement for official team artwork. */
+#socialPage .teams-style-social-card:nth-child(1){--team-accent:#b91f32;--team-dark:#25152a}
+#socialPage .teams-style-social-card:nth-child(2){--team-accent:#c7a24b;--team-dark:#142338}
+#socialPage .teams-style-social-card:nth-child(3){--team-accent:#2575b5;--team-dark:#10213b}
+#socialPage .teams-style-social-card:nth-child(4){--team-accent:#864a9d;--team-dark:#21182e}
+#socialPage .teams-style-social-card:nth-child(5){--team-accent:#c23a32;--team-dark:#251c22}
+#socialPage .teams-style-social-card:nth-child(6){--team-accent:#a88734;--team-dark:#202134}
+#socialPage .teams-style-social-card:nth-child(7){--team-accent:#a83239;--team-dark:#24202e}
+#socialPage .teams-style-social-card:nth-child(8){--team-accent:#d1a43e;--team-dark:#20202d}
+#socialPage .teams-style-social-card:nth-child(9){--team-accent:#3276aa;--team-dark:#11223a}
+#socialPage .teams-style-social-card:nth-child(10){--team-accent:#bb9a43;--team-dark:#172537}
+@media(min-width:901px){
+ #socialPage .teams-style-social-grid > .teams-style-social-card:nth-child(9):nth-last-child(2){grid-column:3/span 2!important}
+ #socialPage .teams-style-social-grid > .teams-style-social-card:nth-child(10):last-child{grid-column:5/span 2!important}
+}
+@media(max-width:900px){
+ #socialPage .teams-style-social-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:13px!important}
+ #socialPage .teams-style-social-grid > .teams-style-social-card{grid-column:auto!important;min-height:235px!important}
+}
+@media(max-width:520px){
+ #socialPage .teams-style-social-grid{gap:10px!important}
+ #socialPage .teams-style-social-grid > .teams-style-social-card{padding:12px 7px!important;min-height:207px!important}
+ #socialPage .teams-style-social-grid .teams-style-social-logo{height:108px!important;min-height:108px!important}
+ #socialPage .teams-style-social-grid .teams-style-social-logo img{max-width:100px!important;max-height:100px!important}
+ #socialPage .teams-style-social-grid .teams-style-social-name{font-size:12px!important;min-height:34px!important}
+ #socialPage .teams-style-social-grid .nal-social-team-link{font-size:9px!important}
+}
+</style>
+
 </head>
 
 <body>
