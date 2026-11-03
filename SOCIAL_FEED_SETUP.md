@@ -14,3 +14,6 @@ This ZIP contains the **complete existing website/index.html**, with an added li
 The Facebook Graph API test previously returned real NAL posts for Page ID `382815872049803`, but the server-side Cloudflare token and deployment have **not** been tested here. Facebook permissions and token lifetime remain subject to Meta. This implementation shows recent Facebook posts with available images and links to reels/videos; it does not stream native video inline. Instagram, TikTok, and X buttons remain outbound links pending separate authorized integrations. Feed cache is approximately 15 minutes per Cloudflare edge location.
 
 No live site deployment or GitHub changes have been made by this ZIP creation.
+
+## Social page display update
+The Social page begins at Latest From the League, without the former hero or feed filters. The Facebook endpoint requests 10 posts, and the browser sorts and displays the 10 newest. Desktop uses 5 columns; tablet/mobile reduce columns responsively. The existing Cloudflare secret is unchanged.

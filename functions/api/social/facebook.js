@@ -15,7 +15,7 @@ export async function onRequestGet({ request, env }) {
   try {
     const endpoint = new URL(`https://graph.facebook.com/${GRAPH_VERSION}/${PAGE_ID}/posts`);
     endpoint.searchParams.set('fields', FIELDS);
-    endpoint.searchParams.set('limit', '15');
+    endpoint.searchParams.set('limit', '10');
     // POST keeps the token out of query URLs and browser-visible requests.
     const upstream = await fetch(endpoint.toString(), {
       method: 'GET',
