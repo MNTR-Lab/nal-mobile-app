@@ -8954,6 +8954,20 @@ html body .website-sticky-header #website-navigation.bottom-nav > button.nav-but
 @media(max-width:1050px){#socialPage .teams-style-social-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:650px){#socialPage .teams-style-social-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}#socialPage .teams-style-social-grid .teams-style-social-card{min-height:200px!important;padding:10px 7px!important}#socialPage .teams-style-social-grid .teams-style-social-logo{height:110px!important;min-height:110px!important}#socialPage .teams-style-social-grid .teams-style-social-logo img{max-width:95px!important;max-height:95px!important}}
 </style>
+<style id="nal-social-nav-reliable-link-style">
+#website-navigation a.nav-button[data-page="socialPage"]{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ text-decoration:none!important;cursor:pointer!important;pointer-events:auto!important;
+ box-sizing:border-box!important;min-width:0!important;color:#fff!important;
+ font:inherit!important;line-height:inherit!important;
+}
+#website-navigation a.nav-button[data-page="socialPage"] .website-nav-label{
+ font:900 14px/1.2 Arial,Helvetica,sans-serif!important;
+ text-transform:uppercase!important;letter-spacing:0!important;color:inherit!important;
+}
+#website-navigation a.nav-button[data-page="socialPage"].active{border-bottom:2px solid #e31b23!important;}
+#website-navigation a.nav-button[data-page="socialPage"]:focus-visible{outline:2px solid #fff;outline-offset:-3px;}
+</style>
 </head>
 
 <body>
@@ -9033,7 +9047,7 @@ html body .website-sticky-header #website-navigation.bottom-nav > button.nav-but
       aria-label="Fan Zone"
     ><span class="website-nav-label">Fan Zone</span></button>
 
-    <button type="button" class="nav-button" data-page="socialPage" aria-label="Social"><span class="website-nav-label">Social</span></button>
+    <a href="/social" class="nav-button" data-page="socialPage" aria-label="Social"><span class="website-nav-label">Social</span></a>
   <button class="nav-button" data-page="shopPage" aria-label="Shop"><span class="website-nav-label">Shop</span></button>
   </nav>
 </div>
@@ -21107,6 +21121,23 @@ async function loadNalSocialTopics(){
 }
 document.addEventListener('click',event=>{if(event.target.closest('.nav-button[data-page="socialPage"]'))setTimeout(loadNalSocialTopics,100)});
 if(location.pathname.replace(/\/$/,'')==='/social')document.addEventListener('DOMContentLoaded',()=>setTimeout(loadNalSocialTopics,500));
+</script>
+<script id="nal-social-nav-reliable-link">
+(function(){
+  var link=document.querySelector('#website-navigation a.nav-button[data-page="socialPage"]');
+  if(!link)return;
+  link.addEventListener('click',function(event){
+    if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    if(typeof window.showPage!=='function')return; // Native /social URL is the fallback.
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    try{
+      window.showPage('socialPage');
+      if(location.pathname!=='/social')history.pushState({},'', '/social');
+      if(typeof window.loadNalSocialTopics==='function')window.loadNalSocialTopics();
+    }catch(error){window.location.assign('/social');}
+  },true);
+})();
 </script>
 </body>
 </html>
