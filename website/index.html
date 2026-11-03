@@ -8855,6 +8855,42 @@ html body #shopPage #nalShopSearch::placeholder{color:#7b8b9b!important;opacity:
 .nal-social-platform{display:flex;flex-direction:column;gap:8px;padding:19px 15px;border-radius:13px;background:white;border:1px solid #d8e1eb;color:#07172b;text-decoration:none;box-shadow:0 3px 12px #07172b0a}.nal-social-platform strong{font-size:17px}.nal-social-platform small{color:#60748b;font-size:11px;overflow-wrap:anywhere}.nal-social-platform span{font-size:11px;color:#c51c2c;font-weight:900}
 .nal-social-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px}.nal-social-panel{background:#fff;border:1px solid #dce3eb;border-radius:16px;padding:21px;min-width:0}.nal-social-panel h3{font-size:19px;margin:0 0 9px}.nal-social-panel p{color:#53667b;font-size:13px;line-height:1.5;margin:0 0 15px}.nal-social-action{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:12px 18px;border-radius:9px;border:0;background:#07172b;color:white;text-decoration:none;font-size:12px;font-weight:900;cursor:pointer}.nal-social-action.secondary{background:#e31b23}.nal-social-embed{width:100%;max-width:500px;min-height:420px;border:0;background:#f2f5f8;border-radius:8px;display:block}.nal-social-fallback{margin-top:12px;font-size:11px;color:#6b7787}.nal-social-discussions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 @media(max-width:700px){.nal-social-platforms{grid-template-columns:repeat(2,minmax(0,1fr))}.nal-social-grid,.nal-social-discussions{grid-template-columns:1fr}.nal-social-embed{min-height:350px}}
+
+/* NAL desktop navigation: seven destinations, exactly one row. */
+@media (min-width: 768px) {
+  html body .website-sticky-header #website-navigation.bottom-nav {
+    display:grid !important;
+    grid-template-columns:repeat(7,minmax(0,1fr)) !important;
+    justify-content:center !important;
+    width:100% !important;
+    max-width:1120px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    column-gap:0 !important;
+    overflow:visible !important;
+  }
+  html body .website-sticky-header #website-navigation.bottom-nav > button {
+    min-width:0 !important;
+    width:100% !important;
+    white-space:nowrap !important;
+  }
+}
+@media (max-width: 767px) {
+  html body .website-sticky-header #website-navigation.bottom-nav {
+    display:grid !important;
+    grid-template-columns:repeat(7,minmax(0,1fr)) !important;
+    width:100% !important;
+    overflow:hidden !important;
+  }
+  html body .website-sticky-header #website-navigation.bottom-nav > button {
+    min-width:0 !important;
+    padding:0 1px !important;
+  }
+  html body .website-sticky-header #website-navigation.bottom-nav > button > .website-nav-label {
+    font-size:clamp(7px,1.8vw,11px) !important;
+    white-space:nowrap !important;
+  }
+}
 </style></head>
 
 <body>
