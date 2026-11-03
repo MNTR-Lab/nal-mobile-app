@@ -9123,6 +9123,40 @@ html body #socialPage{
 @media(max-width:1100px){#socialPage .nal-social-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}#socialPage .nal-social-x-panel{grid-column:1/-1!important}}
 @media(max-width:700px){#socialPage .nal-social-grid,#socialPage .nal-social-discussions,#socialPage .nal-social-participate{grid-template-columns:1fr!important}#socialPage .nal-social-x-panel{grid-column:auto!important}#socialPage .nal-social-panel{padding:18px!important}#socialPage .nal-social-embedded-feed{min-height:360px}#socialPage .nal-social-embedded-feed iframe{height:400px}}
 </style>
+<style id="nal-social-visual-feed-v1">
+#socialPage .nal-feed-shell{padding:24px;border:1px solid #4a698a;border-top:4px solid #c5a253;border-radius:16px;background:linear-gradient(140deg,#173651ed,#07192ceF 70%),repeating-linear-gradient(135deg,#ffffff08 0 1px,transparent 1px 12px);box-shadow:0 18px 36px #0005;color:white;margin:14px 0 28px}
+#socialPage .nal-feed-toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+#socialPage .nal-feed-eyebrow{font-size:10px;font-weight:900;letter-spacing:2px;color:#dfc37c}
+#socialPage .nal-feed-toolbar h3{font-size:24px;line-height:1.1;margin:5px 0;color:white}
+#socialPage .nal-feed-toolbar p,#socialPage .nal-feed-watch p{color:#c6d7e7;margin:5px 0 0;font-size:12px}
+#socialPage .nal-feed-filters{display:flex;gap:7px;flex-wrap:wrap}
+#socialPage .nal-feed-filters button{border:1px solid #ffffff42;background:#ffffff10;color:#e9f1fb;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:800;cursor:pointer}
+#socialPage .nal-feed-filters button[aria-pressed="true"]{background:#d3b16b;color:#091c30;border-color:#d3b16b}
+#socialPage .nal-feed-post-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}
+#socialPage .nal-feed-post{min-width:0;display:flex;flex-direction:column;overflow:hidden;border:1px solid #ffffff2e;border-radius:12px;background:#102a44;color:#fff;text-decoration:none;box-shadow:0 8px 16px #0003;transition:transform .2s,border-color .2s}
+#socialPage .nal-feed-post:hover{transform:translateY(-3px);border-color:#e1c37f}
+#socialPage .nal-feed-post-media{aspect-ratio:4/3;background:radial-gradient(circle at 50% 20%,#315a7c,#081c30);display:flex;align-items:center;justify-content:center;overflow:hidden}
+#socialPage .nal-feed-post-media img{width:100%;height:100%;object-fit:cover}
+#socialPage .nal-feed-post-placeholder{font-size:25px;font-weight:950;letter-spacing:2px;color:#ffffff70}
+#socialPage .nal-feed-post-body{padding:13px;display:flex;flex-direction:column;gap:8px;flex:1}
+#socialPage .nal-feed-post-platform{color:#e4bf70;font-size:10px;font-weight:900;letter-spacing:.8px;text-transform:uppercase}
+#socialPage .nal-feed-post-caption{font-size:12px;line-height:1.45;color:#f2f5f9;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+#socialPage .nal-feed-post-footer{margin-top:auto;font-size:10px;font-weight:900;color:#e5c47e}
+#socialPage .nal-feed-empty{text-align:center;padding:32px 15px 26px;border:1px dashed #ffffff44;border-radius:12px;background:#ffffff09}
+#socialPage .nal-feed-empty-symbol{display:inline-flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;border:2px solid #d3b16b;color:#d3b16b;font-size:21px;font-weight:950;margin-bottom:12px}
+#socialPage .nal-feed-empty h4{font-size:19px;letter-spacing:1px;margin:0 0 8px;color:#fff}
+#socialPage .nal-feed-empty p{font-size:12px;color:#d0dfed;max-width:550px;margin:0 auto;line-height:1.5}
+#socialPage .nal-feed-follow-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:18px}
+#socialPage .nal-feed-follow{--accent:#4f91e8;display:flex;flex-direction:column;gap:5px;min-width:0;padding:18px;border:1px solid #ffffff34;border-top:3px solid var(--accent);border-radius:12px;background:linear-gradient(145deg,#234663,#0d2138);text-decoration:none;color:#fff;transition:transform .2s}
+#socialPage .nal-feed-follow:hover{transform:translateY(-3px);border-color:var(--accent)}
+#socialPage .nal-feed-instagram{--accent:#d978bd}#socialPage .nal-feed-tiktok{--accent:#51d6d2}#socialPage .nal-feed-x{--accent:#c4d2e2}
+#socialPage .nal-feed-follow-icon{font-size:25px;font-weight:950;color:var(--accent)}
+#socialPage .nal-feed-follow strong{font-size:15px;color:#fff}#socialPage .nal-feed-follow small{font-size:11px;color:#b8cce0}#socialPage .nal-feed-follow-cta{font-size:10px;letter-spacing:.6px;font-weight:900;color:#e5c47e;margin-top:7px}
+#socialPage .nal-feed-watch{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:18px 0 0;margin-top:18px;border-top:1px solid #ffffff29}
+#socialPage .nal-feed-watch strong{font-size:13px;letter-spacing:1px;color:#fff}
+@media(max-width:1100px){#socialPage .nal-feed-post-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){#socialPage .nal-feed-shell{padding:14px}#socialPage .nal-feed-post-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#socialPage .nal-feed-follow-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#socialPage .nal-feed-follow{padding:12px}#socialPage .nal-feed-watch{align-items:flex-start;flex-direction:column}#socialPage .nal-feed-toolbar h3{font-size:21px}}
+</style>
 </head>
 
 <body>
@@ -9212,15 +9246,17 @@ html body #socialPage{
       <header class="nal-social-hero"><div class="nal-social-eyebrow">THE GAME. THE LEAGUE. THE NETWORK.</div><h1>NAL SOCIAL</h1><p>One league. Ten teams. One community. Catch the latest content, follow your team, and take the conversation into the NAL Fan Forum.</p><div class="nal-social-hero-actions"><button type="button" class="nal-social-action secondary" onclick="openFanForum()">JOIN THE CONVERSATION</button><a class="nal-social-action outline" href="#nalSocialFeed">EXPLORE THE FEED</a></div></header>
       <nav class="nal-social-jump" aria-label="Social hub sections"><a href="#nalSocialFeed">League Feed</a><a href="#nalSocialTalk">Fan Discussions</a><a href="#nalSocialTeams">Your Teams</a><a href="#nalSocialParticipate">Get Involved</a></nav>
       <h2 class="nal-social-title" id="nalSocialFeed">LATEST FROM THE LEAGUE</h2><p class="nal-social-intro">Follow official league channels. Supported public posts appear here; some platforms require you to open their app to interact.</p>
-      <div class="nal-social-grid">
-        <section class="nal-social-panel nal-social-feed"><div class="nal-social-panel-head"><h3>Facebook Updates</h3><a href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">View Facebook ↗</a></div><div class="nal-social-embedded-feed" aria-label="National Arena League Facebook timeline"><iframe title="National Arena League Facebook posts" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FNationalArenaLeague&amp;tabs=timeline&amp;width=500&amp;height=540&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false" width="500" height="540" style="border:none;overflow:hidden;width:100%;max-width:500px" allow="encrypted-media;picture-in-picture;web-share"></iframe></div><div class="nal-social-facebook-fallback"><span class="nal-social-fb-icon">f</span><strong>National Arena League on Facebook</strong><p>Follow league news, videos, and community updates on our official Facebook page. Facebook may restrict embedded timelines in some browsers.</p><a class="nal-social-action secondary" href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">VIEW OFFICIAL FACEBOOK ↗</a></div><p class="nal-social-fallback">Facebook may block the embed in some browsers. <a href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">View updates directly ↗</a></p></section>
-        <section class="nal-social-panel"><h3>Across the Network</h3><p>Highlights, behind-the-scenes content, league announcements, and the stories that bring the NAL together.</p><div class="nal-social-channel-list">
-          <a href="https://www.instagram.com/nationalarenaleague/" target="_blank" rel="noopener noreferrer"><b>Instagram</b><span>@nationalarenaleague ↗</span></a>
-          <a href="https://www.tiktok.com/@nalfootball" target="_blank" rel="noopener noreferrer"><b>TikTok</b><span>@nalfootball ↗</span></a>
-          <a href="https://x.com/NALFootball" target="_blank" rel="noopener noreferrer"><b>X</b><span>@NALFootball ↗</span></a>
-          <a href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer"><b>Facebook</b><span>National Arena League ↗</span></a>
-        </div><div class="nal-social-inline-cta"><strong>Watch the NAL</strong><p>Watch live programming and Network Originals right here on NAL Network.</p><button class="nal-social-action" type="button" onclick="document.querySelector('.nav-button[data-page=&quot;watchPage&quot;]')?.click()">WATCH THE NAL</button></div></section>
-        <section class="nal-social-panel nal-social-x-panel"><div class="nal-social-panel-head"><h3>Latest on X</h3><a href="https://x.com/NALFootball" target="_blank" rel="noopener noreferrer">VIEW ON X</a></div><div class="nal-social-x-timeline"><a class="twitter-timeline" data-height="490" data-theme="dark" data-chrome="noheader nofooter" href="https://twitter.com/NALFootball">Posts by @NALFootball</a></div><p class="nal-social-fallback">If the timeline is blocked by your browser, open the official NAL account above.</p></section>
+      <div class="nal-feed-shell" id="nalSocialFeedShell">
+        <div class="nal-feed-toolbar"><div><span class="nal-feed-eyebrow">OFFICIAL NAL SOCIAL</span><h3>THE NETWORK FEED</h3><p>League updates from across our social channels, all in one place.</p></div><div class="nal-feed-filters" role="group" aria-label="Filter social posts"><button type="button" data-nal-feed-filter="all" aria-pressed="true">All posts</button><button type="button" data-nal-feed-filter="facebook">Facebook</button><button type="button" data-nal-feed-filter="instagram">Instagram</button><button type="button" data-nal-feed-filter="tiktok">TikTok</button><button type="button" data-nal-feed-filter="x">X</button></div></div>
+        <div id="nalSocialPostGrid" class="nal-feed-post-grid" aria-live="polite"></div>
+        <div id="nalSocialFeedStatus" class="nal-feed-empty"><div class="nal-feed-empty-symbol" aria-hidden="true">NAL</div><h4>FOLLOW THE ACTION</h4><p>We're connecting the official league feeds. Until the feed provider is connected, visit our verified channels below for the latest posts.</p></div>
+        <div class="nal-feed-follow-grid">
+          <a class="nal-feed-follow nal-feed-facebook" href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer"><span class="nal-feed-follow-icon">f</span><strong>Facebook</strong><small>League news &amp; photos</small><span class="nal-feed-follow-cta">VIEW POSTS ↗</span></a>
+          <a class="nal-feed-follow nal-feed-instagram" href="https://www.instagram.com/nationalarenaleague/" target="_blank" rel="noopener noreferrer"><span class="nal-feed-follow-icon">◎</span><strong>Instagram</strong><small>Photos &amp; reels</small><span class="nal-feed-follow-cta">VIEW POSTS ↗</span></a>
+          <a class="nal-feed-follow nal-feed-tiktok" href="https://www.tiktok.com/@nalfootball" target="_blank" rel="noopener noreferrer"><span class="nal-feed-follow-icon">♪</span><strong>TikTok</strong><small>Short-form highlights</small><span class="nal-feed-follow-cta">VIEW POSTS ↗</span></a>
+          <a class="nal-feed-follow nal-feed-x" href="https://x.com/NALFootball" target="_blank" rel="noopener noreferrer"><span class="nal-feed-follow-icon">𝕏</span><strong>X</strong><small>Updates &amp; conversation</small><span class="nal-feed-follow-cta">VIEW POSTS ↗</span></a>
+        </div>
+        <div class="nal-feed-watch"><div><strong>WATCH THE NAL</strong><p>Live programming, original shows and league coverage.</p></div><button type="button" class="nal-social-action" onclick="document.querySelector('.nav-button[data-page=&quot;watchPage&quot;]')?.click()">WATCH NOW</button></div>
       </div>
       <h2 class="nal-social-title" id="nalSocialTalk">THE CONVERSATION STARTS HERE</h2><p class="nal-social-intro">These are NAL conversations—not comments copied from other social networks. Your existing fan account works here.</p>
       <div class="nal-social-discussions"><section class="nal-social-panel"><div class="nal-social-kicker">NAL FAN FORUM</div><h3>Join the Discussion</h3><p>Talk teams, games, free agency, and everything happening around the league.</p><div id="nalSocialRecentTopics" class="nal-social-topics" aria-live="polite"><p>Explore the latest conversations in the Fan Forum.</p></div><button class="nal-social-action" type="button" onclick="openFanForum()">EXPLORE FAN FORUM</button></section><section class="nal-social-panel"><div class="nal-social-kicker">YOUR VOICE MATTERS</div><h3>Start a Conversation</h3><p>Have a question, an opinion, or an idea for Talk About It Tuesday? Post it to the NAL community.</p><div class="nal-social-topic-prompts"><span>Talk About It Tuesday</span><span>Season X Predictions</span><span>Team &amp; Player News</span></div><button class="nal-social-action secondary" type="button" onclick="openFanForum();openNalForumComposer()">START A DISCUSSION</button></section></div>
@@ -21323,6 +21359,46 @@ if(location.pathname.replace(/\/$/,'')==='/social')document.addEventListener('DO
 })();
 </script>
 
-<script id="nal-social-x-official-widget-loader">(function(){let loaded=false;function load(){if(loaded||!document.getElementById('socialPage')?.classList.contains('active'))return;loaded=true;const sc=document.createElement('script');sc.async=true;sc.src='https://platform.twitter.com/widgets.js';sc.charset='utf-8';document.head.appendChild(sc);}document.addEventListener('click',e=>{if(e.target.closest('[data-page="socialPage"]'))setTimeout(load,250)});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(load,500));else setTimeout(load,500);window.addEventListener('popstate',()=>setTimeout(load,300));})();</script>
+
+<script id="nal-social-visual-feed-controller">
+/* Integration contract: GET /data/social-feed.json (or window.NAL_SOCIAL_FEED_URL).
+   Response: {"posts":[{"platform":"instagram","url":"https://...","image":"https://...","caption":"...","published_at":"2026-11-03T12:00:00Z"}]}.
+   No credentials or platform tokens should ever be placed in this HTML file. */
+(function(){
+ const supported=new Set(['facebook','instagram','tiktok','x']);
+ const safeUrl=value=>{try{const u=new URL(String(value||''),location.href);return ['https:','http:'].includes(u.protocol)?u.href:null}catch{return null}};
+ const clean=value=>String(value==null?'':value);
+ const host=document.getElementById('nalSocialPostGrid'),status=document.getElementById('nalSocialFeedStatus');
+ if(!host||!status)return;
+ let posts=[],filter='all';
+ const render=()=>{
+   host.replaceChildren();
+   const visible=posts.filter(p=>filter==='all'||p.platform===filter).slice(0,25);
+   status.style.display=visible.length?'none':'block';
+   if(!visible.length){status.querySelector('p').textContent=posts.length?'No posts from this platform yet. Select All posts or visit the official channels below.':'We’re connecting the official league feeds. Until the feed provider is connected, visit our official channels below for the latest posts.';return}
+   for(const post of visible){
+     const a=document.createElement('a');a.className='nal-feed-post';a.href=post.url;a.target='_blank';a.rel='noopener noreferrer';
+     const media=document.createElement('div');media.className='nal-feed-post-media';
+     if(post.image){const img=document.createElement('img');img.loading='lazy';img.alt='Social post preview';img.src=post.image;img.referrerPolicy='no-referrer';media.append(img)}
+     else {const label=document.createElement('span');label.className='nal-feed-post-placeholder';label.textContent='NAL';media.append(label)}
+     const body=document.createElement('div');body.className='nal-feed-post-body';
+     const platform=document.createElement('span');platform.className='nal-feed-post-platform';platform.textContent=post.platform==='x'?'X':post.platform;
+     const caption=document.createElement('span');caption.className='nal-feed-post-caption';caption.textContent=post.caption||'View the latest NAL update';
+     const foot=document.createElement('span');foot.className='nal-feed-post-footer';foot.textContent='VIEW ORIGINAL POST ↗';
+     body.append(platform,caption,foot);a.append(media,body);host.append(a);
+   }
+ };
+ document.querySelectorAll('#socialPage [data-nal-feed-filter]').forEach(button=>button.addEventListener('click',()=>{filter=button.dataset.nalFeedFilter;document.querySelectorAll('#socialPage [data-nal-feed-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));render()}));
+ async function load(){
+   const endpoint=safeUrl(window.NAL_SOCIAL_FEED_URL||'/data/social-feed.json');if(!endpoint)return;
+   try{const r=await fetch(endpoint,{cache:'no-store'});if(!r.ok)return;const data=await r.json();const raw=Array.isArray(data)?data:data.posts;
+     if(!Array.isArray(raw))return;
+     posts=raw.map(p=>({platform:clean(p.platform).toLowerCase(),url:safeUrl(p.url||p.permalink),image:safeUrl(p.image||p.thumbnail||p.media_url),caption:clean(p.caption||p.text||p.title),published_at:clean(p.published_at||p.date)})).filter(p=>supported.has(p.platform)&&p.url).sort((a,b)=>Date.parse(b.published_at||0)-Date.parse(a.published_at||0));render();
+   }catch(e){/* Provider not configured yet; retain visible official-channel links. */}
+ }
+ render();load();
+ window.NAL_refreshSocialFeed=load;
+})();
+</script>
 </body>
 </html>
