@@ -8984,70 +8984,18 @@ html body .website-sticky-header #website-navigation.bottom-nav > a.nav-button[d
 </style>
 
 <style id="nal-social-team-branded-directory-v3">
-/* Social team directory: team-specific color treatment and the same
-   spacious four-column desktop rhythm used by the Teams directory. */
-#socialPage .teams-style-social-grid{
-  display:grid!important;
-  grid-template-columns:repeat(8,minmax(0,1fr))!important;
-  gap:20px!important;
-  max-width:1180px!important;
-  margin:0 auto!important;
-}
-#socialPage .teams-style-social-grid > .teams-style-social-card{
-  grid-column:span 2!important;
-  --team-accent:#315b8a;
-  --team-dark:#0b1d34;
-  min-height:265px!important;
-  padding:20px 14px 17px!important;
-  background:
-    radial-gradient(ellipse at 50% 8%,color-mix(in srgb,var(--team-accent) 55%,transparent),transparent 68%),
-    linear-gradient(155deg,color-mix(in srgb,var(--team-accent) 38%,#0b1c32),var(--team-dark))!important;
-  border:1px solid color-mix(in srgb,var(--team-accent) 65%,#ffffff33)!important;
-  border-radius:16px!important;
-  box-shadow:0 12px 26px #0005,inset 0 1px 0 #ffffff1c!important;
-  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease!important;
-}
-#socialPage .teams-style-social-grid > .teams-style-social-card::before{
-  height:4px!important;
-  background:var(--team-accent)!important;
-}
-#socialPage .teams-style-social-grid .teams-style-social-logo{
-  height:158px!important;min-height:158px!important;
-  background:radial-gradient(circle,#ffffff29 0%,#ffffff0a 42%,transparent 76%)!important;
-}
-#socialPage .teams-style-social-grid .teams-style-social-logo img{
-  max-width:145px!important;max-height:142px!important;
-}
-#socialPage .teams-style-social-grid .teams-style-social-name{
-  font-size:15px!important;line-height:1.15!important;
-  min-height:40px!important;
-}
-#socialPage .teams-style-social-grid .nal-social-team-link{
-  color:#fff!important;font-size:10px!important;letter-spacing:.8px!important;
-  opacity:.85!important;
-}
-#socialPage .teams-style-social-grid > .teams-style-social-card:hover{
-  transform:translateY(-4px)!important;
-  border-color:#ffffffa8!important;
-  box-shadow:0 17px 30px #0007!important;
-}
-/* Colors are visual accents, not a replacement for official team artwork. */
-@media(min-width:901px){
- #socialPage .teams-style-social-grid > .teams-style-social-card:nth-child(9):nth-last-child(2){grid-column:3/span 2!important}
- #socialPage .teams-style-social-grid > .teams-style-social-card:nth-child(10):last-child{grid-column:5/span 2!important}
-}
-@media(max-width:900px){
- #socialPage .teams-style-social-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:13px!important}
- #socialPage .teams-style-social-grid > .teams-style-social-card{grid-column:auto!important;min-height:235px!important}
-}
-@media(max-width:520px){
- #socialPage .teams-style-social-grid{gap:10px!important}
- #socialPage .teams-style-social-grid > .teams-style-social-card{padding:12px 7px!important;min-height:207px!important}
- #socialPage .teams-style-social-grid .teams-style-social-logo{height:108px!important;min-height:108px!important}
- #socialPage .teams-style-social-grid .teams-style-social-logo img{max-width:100px!important;max-height:100px!important}
- #socialPage .teams-style-social-grid .teams-style-social-name{font-size:12px!important;min-height:34px!important}
- #socialPage .teams-style-social-grid .nal-social-team-link{font-size:9px!important}
-}
+/* Five balanced cards per row on desktop; two on mobile. Official colors are
+   supplied by the shared NAL_TEAM_BRANDING map, not duplicated here. */
+#socialPage .teams-style-social-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:14px!important;max-width:1220px!important;margin:0 auto!important}
+#socialPage .teams-style-social-grid>.teams-style-social-card{grid-column:auto!important;--team-accent:#315b8a;--team-dark:#0b1d34;min-width:0!important;min-height:218px!important;padding:15px 8px 13px!important;background:radial-gradient(ellipse at 50% 8%,color-mix(in srgb,var(--team-accent) 55%,transparent),transparent 68%),linear-gradient(155deg,color-mix(in srgb,var(--team-accent) 38%,#0b1c32),var(--team-dark))!important;border:1px solid color-mix(in srgb,var(--team-accent) 65%,#ffffff33)!important;border-radius:15px!important;box-shadow:0 12px 26px #0005,inset 0 1px 0 #ffffff1c!important;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease!important}
+#socialPage .teams-style-social-grid>.teams-style-social-card::before{height:4px!important;background:var(--team-accent)!important}
+#socialPage .teams-style-social-grid .teams-style-social-logo{height:122px!important;min-height:122px!important;background:radial-gradient(circle,#ffffff29 0%,#ffffff0a 42%,transparent 76%)!important}
+#socialPage .teams-style-social-grid .teams-style-social-logo img{max-width:110px!important;max-height:110px!important}
+#socialPage .teams-style-social-grid .teams-style-social-name{font-size:13px!important;line-height:1.2!important;min-height:35px!important}
+#socialPage .teams-style-social-grid .nal-social-team-link{color:#fff!important;font-size:10px!important;letter-spacing:.7px!important;opacity:.9!important}
+#socialPage .teams-style-social-grid>.teams-style-social-card:hover{transform:translateY(-4px)!important;border-color:#ffffffa8!important;box-shadow:0 17px 30px #0007!important}
+@media(max-width:850px){#socialPage .teams-style-social-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}}
+@media(max-width:570px){#socialPage .teams-style-social-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}#socialPage .teams-style-social-grid>.teams-style-social-card{min-height:197px!important;padding:12px 6px!important}#socialPage .teams-style-social-grid .teams-style-social-logo{height:105px!important;min-height:105px!important}#socialPage .teams-style-social-grid .teams-style-social-logo img{max-width:96px!important;max-height:96px!important}#socialPage .teams-style-social-grid .teams-style-social-name{font-size:12px!important}}
 </style>
 
 
@@ -9135,6 +9083,46 @@ html body #socialPage{
 @media(prefers-reduced-motion:reduce){#socialPage .nal-social-action,#socialPage .nal-social-jump a,#socialPage .nal-social-channel-list a{transition:none!important}}
 </style>
 
+<style id="nal-social-editorial-visual-v4">
+#socialPage{color:#f4f7fc!important}
+#socialPage .nal-social-wrap{max-width:1300px!important}
+#socialPage .nal-social-title{color:#fff!important;letter-spacing:.6px!important;text-shadow:0 2px 10px #0008!important;border-left:5px solid #e4ad45!important;padding-left:14px!important}
+#socialPage .nal-social-intro{color:#e1e8f2!important}
+#socialPage .nal-social-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:stretch!important}
+#socialPage .nal-social-panel{position:relative!important;overflow:hidden!important;background:linear-gradient(145deg,#193451f5,#0b1d33f7 76%)!important;border:1px solid #6784a16b!important;border-radius:18px!important;box-shadow:0 14px 28px #0005,inset 0 1px 0 #ffffff16!important;padding:25px!important;color:#f7faff!important;isolation:isolate!important}
+#socialPage .nal-social-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#d6a33b,#e31b23,#2c8bc9);z-index:2}
+#socialPage .nal-social-panel::after{content:'';position:absolute;right:-60px;top:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,#5699d91c,transparent 70%);pointer-events:none;z-index:-1}
+#socialPage .nal-social-panel h3{color:#fff!important;font-size:clamp(18px,2vw,23px)!important;font-weight:900!important}
+#socialPage .nal-social-panel p,#socialPage .nal-social-panel .nal-social-fallback{color:#cbd9e8!important}
+#socialPage .nal-social-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#socialPage .nal-social-panel-head a{color:#ffca68!important;font-weight:900!important;font-size:11px!important;text-decoration:none!important}
+#socialPage .nal-social-kicker{color:#ffc76a!important;font-size:11px!important;letter-spacing:1.6px!important}
+#socialPage .nal-social-action{background:linear-gradient(115deg,#c21e34,#e43d41)!important;color:white!important;border:1px solid #ffffff30!important;border-radius:10px!important;box-shadow:0 6px 14px #0004!important;transition:transform .2s,box-shadow .2s!important}
+#socialPage .nal-social-action:hover{transform:translateY(-2px)!important;box-shadow:0 10px 20px #0006!important}
+#socialPage .nal-social-action.secondary{background:linear-gradient(110deg,#245b8b,#347eb4)!important}
+#socialPage .nal-social-action.outline,#socialPage .nal-social-action.outline-dark{background:transparent!important;border:1px solid #9fb8d4!important;color:#fff!important}
+#socialPage .nal-social-channel-list a{background:#ffffff0c!important;border:1px solid #ffffff25!important;color:#fff!important;box-shadow:inset 4px 0 0 #c3a052!important;transition:background .2s,transform .2s!important}
+#socialPage .nal-social-channel-list a:hover{background:#ffffff1d!important;transform:translateX(3px)!important}
+#socialPage .nal-social-channel-list a span{color:#ffc76a!important}
+#socialPage .nal-social-channel-list a:nth-child(1){box-shadow:inset 4px 0 0 #dd5599!important}
+#socialPage .nal-social-channel-list a:nth-child(2){box-shadow:inset 4px 0 0 #5de0d0!important}
+#socialPage .nal-social-channel-list a:nth-child(3){box-shadow:inset 4px 0 0 #a7c6e8!important}
+#socialPage .nal-social-channel-list a:nth-child(4){box-shadow:inset 4px 0 0 #4285e7!important}
+#socialPage .nal-social-inline-cta{background:linear-gradient(110deg,#233e5a,#102137)!important;border:1px solid #ffffff28!important}
+#socialPage .nal-social-topics a{background:#ffffff10!important;border-color:#ffffff28!important;color:#fff!important}
+#socialPage .nal-social-topic-prompts span{background:#ffffff16!important;border:1px solid #ffffff24!important;color:#fff!important}
+#socialPage .nal-social-embedded-feed{margin:15px auto 0;min-height:450px;display:flex;justify-content:center;background:#fff;border-radius:10px;overflow:hidden}
+#socialPage .nal-social-facebook-fallback{margin-top:14px!important;background:#ffffff0d!important;border:1px solid #ffffff21!important;border-radius:12px!important;padding:13px!important;color:#fff!important}
+#socialPage .nal-social-facebook-fallback strong{color:#fff!important}
+#socialPage .nal-social-x-timeline{min-height:420px;max-height:520px;overflow:auto;border-radius:10px;background:#0c1521;padding:10px}
+#socialPage .nal-social-x-timeline>a{color:#d7e9ff!important;font-weight:800!important}
+#socialPage .nal-social-participate .nal-social-panel:nth-child(1)::before{background:linear-gradient(90deg,#e4ad45,#fff2a3)}
+#socialPage .nal-social-participate .nal-social-panel:nth-child(2)::before{background:linear-gradient(90deg,#4e98ce,#9de1ff)}
+#socialPage .nal-social-participate .nal-social-panel:nth-child(3)::before{background:linear-gradient(90deg,#7abf68,#d4ed80)}
+#socialPage .nal-social-footer-note{color:#d6e3ef!important}
+@media(max-width:1100px){#socialPage .nal-social-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}#socialPage .nal-social-x-panel{grid-column:1/-1!important}}
+@media(max-width:700px){#socialPage .nal-social-grid,#socialPage .nal-social-discussions,#socialPage .nal-social-participate{grid-template-columns:1fr!important}#socialPage .nal-social-x-panel{grid-column:auto!important}#socialPage .nal-social-panel{padding:18px!important}#socialPage .nal-social-embedded-feed{min-height:360px}#socialPage .nal-social-embedded-feed iframe{height:400px}}
+</style>
 </head>
 
 <body>
@@ -9225,27 +9213,28 @@ html body #socialPage{
       <nav class="nal-social-jump" aria-label="Social hub sections"><a href="#nalSocialFeed">League Feed</a><a href="#nalSocialTalk">Fan Discussions</a><a href="#nalSocialTeams">Your Teams</a><a href="#nalSocialParticipate">Get Involved</a></nav>
       <h2 class="nal-social-title" id="nalSocialFeed">LATEST FROM THE LEAGUE</h2><p class="nal-social-intro">Follow official league channels. Supported public posts appear here; some platforms require you to open their app to interact.</p>
       <div class="nal-social-grid">
-        <section class="nal-social-panel nal-social-feed"><div class="nal-social-panel-head"><h3>Facebook Updates</h3><a href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">View Facebook ↗</a></div><div class="nal-social-facebook-fallback"><span class="nal-social-fb-icon">f</span><strong>National Arena League on Facebook</strong><p>Follow league news, videos, and community updates on our official Facebook page. Facebook may restrict embedded timelines in some browsers.</p><a class="nal-social-action secondary" href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">VIEW OFFICIAL FACEBOOK ↗</a></div><p class="nal-social-fallback">Facebook may block the embed in some browsers. <a href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">View updates directly ↗</a></p></section>
+        <section class="nal-social-panel nal-social-feed"><div class="nal-social-panel-head"><h3>Facebook Updates</h3><a href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">View Facebook ↗</a></div><div class="nal-social-embedded-feed" aria-label="National Arena League Facebook timeline"><iframe title="National Arena League Facebook posts" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FNationalArenaLeague&amp;tabs=timeline&amp;width=500&amp;height=540&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false" width="500" height="540" style="border:none;overflow:hidden;width:100%;max-width:500px" allow="encrypted-media;picture-in-picture;web-share"></iframe></div><div class="nal-social-facebook-fallback"><span class="nal-social-fb-icon">f</span><strong>National Arena League on Facebook</strong><p>Follow league news, videos, and community updates on our official Facebook page. Facebook may restrict embedded timelines in some browsers.</p><a class="nal-social-action secondary" href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">VIEW OFFICIAL FACEBOOK ↗</a></div><p class="nal-social-fallback">Facebook may block the embed in some browsers. <a href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">View updates directly ↗</a></p></section>
         <section class="nal-social-panel"><h3>Across the Network</h3><p>Highlights, behind-the-scenes content, league announcements, and the stories that bring the NAL together.</p><div class="nal-social-channel-list">
           <a href="https://www.instagram.com/nationalarenaleague/" target="_blank" rel="noopener noreferrer"><b>Instagram</b><span>@nationalarenaleague ↗</span></a>
           <a href="https://www.tiktok.com/@nalfootball" target="_blank" rel="noopener noreferrer"><b>TikTok</b><span>@nalfootball ↗</span></a>
           <a href="https://x.com/NALFootball" target="_blank" rel="noopener noreferrer"><b>X</b><span>@NALFootball ↗</span></a>
           <a href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer"><b>Facebook</b><span>National Arena League ↗</span></a>
         </div><div class="nal-social-inline-cta"><strong>Watch the NAL</strong><p>Watch live programming and Network Originals right here on NAL Network.</p><button class="nal-social-action" type="button" onclick="document.querySelector('.nav-button[data-page=&quot;watchPage&quot;]')?.click()">WATCH THE NAL</button></div></section>
+        <section class="nal-social-panel nal-social-x-panel"><div class="nal-social-panel-head"><h3>Latest on X</h3><a href="https://x.com/NALFootball" target="_blank" rel="noopener noreferrer">VIEW ON X</a></div><div class="nal-social-x-timeline"><a class="twitter-timeline" data-height="490" data-theme="dark" data-chrome="noheader nofooter" href="https://twitter.com/NALFootball">Posts by @NALFootball</a></div><p class="nal-social-fallback">If the timeline is blocked by your browser, open the official NAL account above.</p></section>
       </div>
       <h2 class="nal-social-title" id="nalSocialTalk">THE CONVERSATION STARTS HERE</h2><p class="nal-social-intro">These are NAL conversations—not comments copied from other social networks. Your existing fan account works here.</p>
       <div class="nal-social-discussions"><section class="nal-social-panel"><div class="nal-social-kicker">NAL FAN FORUM</div><h3>Join the Discussion</h3><p>Talk teams, games, free agency, and everything happening around the league.</p><div id="nalSocialRecentTopics" class="nal-social-topics" aria-live="polite"><p>Explore the latest conversations in the Fan Forum.</p></div><button class="nal-social-action" type="button" onclick="openFanForum()">EXPLORE FAN FORUM</button></section><section class="nal-social-panel"><div class="nal-social-kicker">YOUR VOICE MATTERS</div><h3>Start a Conversation</h3><p>Have a question, an opinion, or an idea for Talk About It Tuesday? Post it to the NAL community.</p><div class="nal-social-topic-prompts"><span>Talk About It Tuesday</span><span>Season X Predictions</span><span>Team &amp; Player News</span></div><button class="nal-social-action secondary" type="button" onclick="openFanForum();openNalForumComposer()">START A DISCUSSION</button></section></div>
       <h2 class="nal-social-title" id="nalSocialTeams">FOLLOW YOUR TEAM</h2><p class="nal-social-intro">Find your team's community in the NAL Fan Forum. Join the league-wide Fan Forum and follow your favorite teams. Official team social accounts will be added after verification.</p><div class="nal-social-team-grid teams-style-social-grid">
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Amarillo Warbirds"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Amarillo Warbirds</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Colorado Spartans"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Colorado Spartans</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Dallas Apex"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Dallas Apex</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Louisiana Rouxgaroux"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Louisiana Rouxgaroux</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Omaha Beef"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Omaha Beef</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Pueblo Punishers"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Pueblo Punishers</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Salina Liberty"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Salina Liberty</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Sioux City Bandits"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Sioux City Bandits</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Southwest Kansas Storm"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Southwest Kansas Storm</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
-<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Wheeling Miners"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Wheeling Miners</strong><span class="nal-social-team-link">FAN COMMUNITY ↗</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Amarillo Warbirds"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Amarillo Warbirds</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Colorado Spartans"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Colorado Spartans</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Dallas Apex"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Dallas Apex</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Louisiana Rouxgaroux"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Louisiana Rouxgaroux</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Omaha Beef"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Omaha Beef</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Pueblo Punishers"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Pueblo Punishers</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Salina Liberty"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Salina Liberty</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Sioux City Bandits"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Sioux City Bandits</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Southwest Kansas Storm"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Southwest Kansas Storm</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
+<button class="teams-style-social-card" type="button" onclick="openFanForum()" aria-label="Open NAL Fan Forum for Wheeling Miners"><span class="nal-social-team-mark teams-style-social-logo"><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners.png?v=1789867089" alt="" loading="lazy"></span><strong class="teams-style-social-name">Wheeling Miners</strong><span class="nal-social-team-link">FAN COMMUNITY</span></button>
 </div>
       <h2 class="nal-social-title" id="nalSocialParticipate">BE PART OF THE NETWORK</h2><div class="nal-social-participate"><section class="nal-social-panel"><div class="nal-social-kicker">TALK ABOUT IT TUESDAY</div><h3>What's Your Take?</h3><p>Bring your hot takes and questions to the fan community.</p><button type="button" class="nal-social-action" onclick="openFanForum()">JOIN THE DISCUSSION</button></section><section class="nal-social-panel"><div class="nal-social-kicker">NAL FAN VOTE</div><h3>Your League. Your Voice. Your Vote.</h3><p>Vote on Fan Choice Friday matchups, team questions, player polls, predictions, and more in the Fan Zone.</p><button type="button" class="nal-social-action" onclick="openFanPoll()">VIEW FAN POLLS</button></section><section class="nal-social-panel"><div class="nal-social-kicker">NAL FAN LIFE</div><h3>Show Your Colors</h3><p>Share fan photos and explore submissions from across the league.</p><div class="nal-social-mini-actions"><button type="button" class="nal-social-action" onclick="openFanMediaUpload()">SUBMIT A PHOTO</button><button type="button" class="nal-social-action outline-dark" onclick="openFanPhotosGallery()">VIEW GALLERY</button></div></section></div>
       <div class="nal-social-footer-note">The NAL Social Hub connects official channels and NAL-owned community features. Likes, comments, and shares on external platforms remain subject to those platforms' rules and sign-in requirements.</div>
@@ -21334,5 +21323,6 @@ if(location.pathname.replace(/\/$/,'')==='/social')document.addEventListener('DO
 })();
 </script>
 
+<script id="nal-social-x-official-widget-loader">(function(){let loaded=false;function load(){if(loaded||!document.getElementById('socialPage')?.classList.contains('active'))return;loaded=true;const sc=document.createElement('script');sc.async=true;sc.src='https://platform.twitter.com/widgets.js';sc.charset='utf-8';document.head.appendChild(sc);}document.addEventListener('click',e=>{if(e.target.closest('[data-page="socialPage"]'))setTimeout(load,250)});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(load,500));else setTimeout(load,500);window.addEventListener('popstate',()=>setTimeout(load,300));})();</script>
 </body>
 </html>
