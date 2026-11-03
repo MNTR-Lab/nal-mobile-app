@@ -8973,7 +8973,7 @@ html body #shopPage #nalShopSearch::placeholder{color:#7b8b9b!important;opacity:
       aria-label="Fan Zone"
     ><span class="website-nav-label">Fan Zone</span></button>
 
-    <button class="nav-button" data-page="socialPage" aria-label="Social"><span class="website-nav-label">Social</span></button>
+    <a class="nav-button" data-page="socialPage" href="/social" aria-label="Social"><span class="website-nav-label">Social</span></a>
   <button class="nav-button" data-page="shopPage" aria-label="Shop"><span class="website-nav-label">Shop</span></button>
   </nav>
 </div>
@@ -21038,6 +21038,22 @@ async function loadNalSocialTopics(){
 }
 document.addEventListener('click',event=>{if(event.target.closest('.nav-button[data-page="socialPage"]'))setTimeout(loadNalSocialTopics,100)});
 if(location.pathname.replace(/\/$/,'')==='/social')document.addEventListener('DOMContentLoaded',()=>setTimeout(loadNalSocialTopics,500));
+</script>
+<script id="nal-social-navigation-activation">
+/* Dedicated website Social navigation; normal link remains a fallback. */
+document.addEventListener('click', function(event) {
+  const link = event.target.closest('#website-navigation a[data-page="socialPage"]');
+  if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  if (typeof showPage === 'function') {
+    showPage('socialPage');
+    if (location.pathname !== '/social') history.pushState({}, '', '/social');
+    if (typeof loadNalSocialTopics === 'function') loadNalSocialTopics();
+  } else {
+    location.assign('/social');
+  }
+}, true);
 </script>
 </body>
 </html>
