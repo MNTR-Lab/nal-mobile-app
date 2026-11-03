@@ -8846,6 +8846,15 @@ html body #shopPage #nalShopBest .nal-product-refined .nal-shop-product-info{pad
 </style><style id="nal-muted-search-v20">
 html body #shopPage #nalShopSearch{min-width:0!important;box-sizing:border-box;color:#102f50!important;}
 html body #shopPage #nalShopSearch::placeholder{color:#7b8b9b!important;opacity:.65!important;font-weight:400!important;letter-spacing:0!important;}
+</style><style id="nal-social-page-styles">
+#socialPage{background:#edf2f7;color:#07172b;min-height:80vh;padding-bottom:55px}
+.nal-social-wrap{max-width:1150px;margin:auto;padding:22px clamp(14px,3vw,32px) 45px}
+.nal-social-hero{background:radial-gradient(circle at 88% 20%,#24527b,#07172b 70%);color:#fff;border-radius:19px;padding:clamp(25px,5vw,55px);border-bottom:5px solid #e31b23}
+.nal-social-eyebrow{font-size:11px;font-weight:900;letter-spacing:2px;color:#ff858a}.nal-social-hero h1{font-size:clamp(31px,5vw,56px);font-weight:950;margin:10px 0}.nal-social-hero p{max-width:650px;line-height:1.55;color:#d5e2f0;font-size:14px}
+.nal-social-title{font-size:23px;font-weight:950;margin:27px 0 13px}.nal-social-platforms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.nal-social-platform{display:flex;flex-direction:column;gap:8px;padding:19px 15px;border-radius:13px;background:white;border:1px solid #d8e1eb;color:#07172b;text-decoration:none;box-shadow:0 3px 12px #07172b0a}.nal-social-platform strong{font-size:17px}.nal-social-platform small{color:#60748b;font-size:11px;overflow-wrap:anywhere}.nal-social-platform span{font-size:11px;color:#c51c2c;font-weight:900}
+.nal-social-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px}.nal-social-panel{background:#fff;border:1px solid #dce3eb;border-radius:16px;padding:21px;min-width:0}.nal-social-panel h3{font-size:19px;margin:0 0 9px}.nal-social-panel p{color:#53667b;font-size:13px;line-height:1.5;margin:0 0 15px}.nal-social-action{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:12px 18px;border-radius:9px;border:0;background:#07172b;color:white;text-decoration:none;font-size:12px;font-weight:900;cursor:pointer}.nal-social-action.secondary{background:#e31b23}.nal-social-embed{width:100%;max-width:500px;min-height:420px;border:0;background:#f2f5f8;border-radius:8px;display:block}.nal-social-fallback{margin-top:12px;font-size:11px;color:#6b7787}.nal-social-discussions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media(max-width:700px){.nal-social-platforms{grid-template-columns:repeat(2,minmax(0,1fr))}.nal-social-grid,.nal-social-discussions{grid-template-columns:1fr}.nal-social-embed{min-height:350px}}
 </style></head>
 
 <body>
@@ -8925,10 +8934,33 @@ html body #shopPage #nalShopSearch::placeholder{color:#7b8b9b!important;opacity:
       aria-label="Fan Zone"
     ><span class="website-nav-label">Fan Zone</span></button>
 
+    <button class="nav-button" data-page="socialPage" aria-label="Social"><span class="website-nav-label">Social</span></button>
   <button class="nav-button" data-page="shopPage" aria-label="Shop"><span class="website-nav-label">Shop</span></button>
   </nav>
 </div>
 
+  <main id="socialPage" class="app-page" style="display:none;">
+    <div class="nal-social-wrap">
+      <header class="nal-social-hero"><div class="nal-social-eyebrow">THE NATIONAL ARENA LEAGUE COMMUNITY</div><h1>NAL SOCIAL</h1><p>Follow the league, catch the conversation, and connect with fans across the NAL. The discussion happens right here in your NAL Network fan account.</p></header>
+      <h2 class="nal-social-title">FOLLOW THE LEAGUE</h2>
+      <div class="nal-social-platforms">
+        <a class="nal-social-platform" href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer"><strong>Facebook</strong><small>National Arena League</small><span>VIEW OFFICIAL PAGE ↗</span></a>
+        <a class="nal-social-platform" href="https://www.instagram.com/nationalarenaleague/" target="_blank" rel="noopener noreferrer"><strong>Instagram</strong><small>@nationalarenaleague</small><span>VIEW OFFICIAL PROFILE ↗</span></a>
+        <a class="nal-social-platform" href="https://x.com/NALFootball" target="_blank" rel="noopener noreferrer"><strong>X</strong><small>@NALFootball</small><span>VIEW OFFICIAL PROFILE ↗</span></a>
+        <a class="nal-social-platform" href="https://www.tiktok.com/@nalfootball" target="_blank" rel="noopener noreferrer"><strong>TikTok</strong><small>@nalfootball</small><span>VIEW OFFICIAL PROFILE ↗</span></a>
+      </div>
+      <h2 class="nal-social-title">LATEST FROM THE LEAGUE</h2>
+      <div class="nal-social-grid">
+        <section class="nal-social-panel"><h3>Facebook Updates</h3><p>View public league updates in the supported Facebook Page embed. Facebook may limit embedded content based on browser privacy settings.</p><iframe class="nal-social-embed" title="NAL official Facebook page updates" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FNationalArenaLeague&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false"></iframe><p class="nal-social-fallback">If the feed does not appear, <a href="https://www.facebook.com/NationalArenaLeague" target="_blank" rel="noopener noreferrer">open the official Facebook page</a>.</p></section>
+        <section class="nal-social-panel"><h3>More NAL Content</h3><p>Instagram, X and TikTok do not offer a reliable unrestricted full-profile feed embed for every browser. Use these official channels to see their latest posts and interact on the original platform.</p><a class="nal-social-action" href="https://www.instagram.com/nationalarenaleague/" target="_blank" rel="noopener noreferrer">OPEN INSTAGRAM ↗</a><p style="margin-top:16px">Want to talk about a post with fellow NAL fans? Start a discussion in the NAL Fan Forum without leaving the Network.</p><button class="nal-social-action secondary" type="button" onclick="openFanForum()">GO TO FAN FORUM</button></section>
+      </div>
+      <h2 class="nal-social-title">JOIN THE CONVERSATION</h2>
+      <div class="nal-social-discussions">
+        <section class="nal-social-panel"><h3>NAL Fan Forum</h3><p>Browse league and team conversations, share opinions, and reply using your existing NAL fan account.</p><button type="button" class="nal-social-action" onclick="openFanForum()">EXPLORE DISCUSSIONS</button></section>
+        <section class="nal-social-panel"><h3>Start a Conversation</h3><p>Have a question, a game-day opinion, or a topic for other fans? Join the community with the same account used across the NAL Network.</p><button type="button" class="nal-social-action secondary" onclick="openFanForum();openNalForumComposer()">START A CONVERSATION</button></section>
+      </div>
+    </div>
+  </main>
   <main id="fanForumThreadPage" class="app-page" style="display:none;">
     <div class="fan-forum-shell">
       <button class="fan-forum-back" type="button" onclick="closeNalForumThread()">‹ BACK TO CONVERSATIONS</button>
@@ -19754,7 +19786,7 @@ html body #teamPage[data-website-team] .team-menu-card .team-menu-icon svg text{
 </style>
 <script id="website-direct-routes">
 (()=>{
- const paths={homePage:'/',shopPage:'/shop',newsPage:'/news',watchPage:'/watch',teamsPage:'/teams',fanPage:'/fan-zone',fanForumPage:'/fan-forum',fanPollPage:'/fan-zone/polls',fanPickemPage:'/fan-zone/pick-em',fanGalleryPage:'/fan-zone/photos',fanUploadPage:'/fan-zone/submit-photo',schedulePage:'/schedule',rosterPage:'/roster',fanAccountPage:'/account',fanTermsPage:'/terms',fanPrivacyPage:'/privacy',fanGuidelinesPage:'/guidelines'};
+ const paths={homePage:'/',shopPage:'/shop',newsPage:'/news',watchPage:'/watch',teamsPage:'/teams',fanPage:'/fan-zone',fanForumPage:'/fan-forum',socialPage:'/social',fanPollPage:'/fan-zone/polls',fanPickemPage:'/fan-zone/pick-em',fanGalleryPage:'/fan-zone/photos',fanUploadPage:'/fan-zone/submit-photo',schedulePage:'/schedule',rosterPage:'/roster',fanAccountPage:'/account',fanTermsPage:'/terms',fanPrivacyPage:'/privacy',fanGuidelinesPage:'/guidelines'};
  const tabs={home:'/watch','live-channel':'/watch/live','team-channels':'/watch/live-games',archives:'/watch/team-channels',shows:'/watch/shows'};
  const shows={around:'around-the-nal',gameday:'nal-gameday',coaches:'coaches-shows'};
  let restoring=false,scheduled=false;
