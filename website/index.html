@@ -8968,6 +8968,35 @@ html body .website-sticky-header #website-navigation.bottom-nav > button.nav-but
 #website-navigation a.nav-button[data-page="socialPage"].active{border-bottom:2px solid #e31b23!important;}
 #website-navigation a.nav-button[data-page="socialPage"]:focus-visible{outline:2px solid #fff;outline-offset:-3px;}
 </style>
+
+<style id="nal-social-nav-alignment-fix-v2">
+/* The Social entry is a real link; make it visually identical to sibling nav buttons. */
+html body .website-sticky-header #website-navigation.bottom-nav > a.nav-button[data-page="socialPage"] {
+  box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;flex-direction:row!important;
+  position:relative!important;top:auto!important;bottom:auto!important;transform:none!important;
+  width:100%!important;min-width:0!important;max-width:none!important;
+  height:44px!important;min-height:44px!important;margin:0!important;padding:0 8px!important;
+  border:0!important;border-radius:0!important;outline:0!important;box-shadow:none!important;
+  background:transparent!important;color:#fff!important;text-decoration:none!important;cursor:pointer!important;
+  font:800 16px/1.25 Arial,Helvetica,sans-serif!important;gap:0!important;
+}
+html body .website-sticky-header #website-navigation.bottom-nav > a.nav-button[data-page="socialPage"] > span.website-nav-label {
+  display:block!important;font:inherit!important;font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;
+  color:inherit!important;letter-spacing:inherit!important;text-transform:uppercase!important;white-space:nowrap!important;
+}
+html body .website-sticky-header #website-navigation.bottom-nav > a.nav-button[data-page="socialPage"].active {
+  background:rgba(255,255,255,.06)!important;box-shadow:inset 0 -3px 0 #e31b23!important;
+}
+html body .website-sticky-header #website-navigation.bottom-nav > a.nav-button[data-page="socialPage"]:focus-visible {
+  outline:2px solid #fff!important;outline-offset:-2px!important;
+}
+@media(max-width:760px){
+ html body .website-sticky-header #website-navigation.bottom-nav.nal-mobile-menu-open > a.nav-button[data-page="socialPage"] {
+  height:46px!important;min-height:46px!important;justify-content:flex-start!important;padding:0 12px!important;
+  border-bottom:1px solid #ffffff15!important;font-size:14px!important;
+ }
+}
+</style>
 </head>
 
 <body>
