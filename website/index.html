@@ -14527,7 +14527,20 @@ document.addEventListener("click", function(event){
     return;
   }
 
-  showPage("homePage");
+  // The capture-phase navigation handler must open the requested page.
+  // Previously its fallback always opened HOME, intercepting SOCIAL clicks
+  // before the normal navigation handler could run.
+  if (document.getElementById(pageId)) {
+    if (pageId === "socialPage" && location.pathname !== "/social") {
+      history.pushState({}, "", "/social");
+    }
+    showPage(pageId);
+    if (pageId === "socialPage" && typeof loadNalSocialTopics === "function") {
+      loadNalSocialTopics();
+    }
+  } else {
+    showPage("homePage");
+  }
 }, true);
 
 const NAL_HEADER_SOCIAL_LINKS = {
