@@ -9165,6 +9165,21 @@ html body #socialPage{
 #socialPage .nal-social-participate .nal-social-mini-actions{width:100%!important;display:flex!important;justify-content:center!important;align-items:center!important;gap:8px!important;flex-wrap:wrap!important}
 @media(max-width:850px){#socialPage .nal-social-participate > .nal-social-panel{min-height:155px!important}}
 </style>
+<style id="nal-facebook-live-feed-css">
+#socialPage .nal-feed-post-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:18px 0}
+#socialPage .nal-live-post{background:#fff;color:#07172b;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px #0002;min-width:0;text-decoration:none;display:flex;flex-direction:column}
+#socialPage .nal-live-post-media{aspect-ratio:16/10;background:#112840;display:block;position:relative;overflow:hidden}
+#socialPage .nal-live-post-media img{width:100%;height:100%;object-fit:cover;display:block}
+#socialPage .nal-live-post-media .nal-video-pill{position:absolute;bottom:10px;left:10px;background:#07172bd9;color:white;padding:6px 9px;border-radius:5px;font-size:11px;font-weight:800}
+#socialPage .nal-live-post-body{padding:15px;display:flex;flex-direction:column;gap:8px;flex:1}
+#socialPage .nal-live-post-source{font-size:10px;letter-spacing:1px;font-weight:900;color:#b41b29;text-transform:uppercase}
+#socialPage .nal-live-post-text{font-size:13px;line-height:1.45;white-space:pre-line;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}
+#socialPage .nal-live-post-date{font-size:11px;color:#607085;margin-top:auto}
+#socialPage .nal-live-post-link{font-size:11px;font-weight:900;color:#a41a27}
+#socialPage .nal-feed-empty[hidden]{display:none!important}
+@media(max-width:850px){#socialPage .nal-feed-post-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px){#socialPage .nal-feed-post-grid{grid-template-columns:1fr}}
+</style>
 </head>
 
 <body>
@@ -21406,6 +21421,35 @@ if(location.pathname.replace(/\/$/,'')==='/social')document.addEventListener('DO
  }
  render();load();
  window.NAL_refreshSocialFeed=load;
+})();
+</script>
+<script id="nal-facebook-live-feed-js">
+(()=>{
+ const grid=document.getElementById('nalSocialPostGrid');
+ const status=document.getElementById('nalSocialFeedStatus');
+ if(!grid||!status)return;
+ let posts=[];let loaded=false;let pending=null;let active='all';
+ const buttons=Array.from(document.querySelectorAll('[data-nal-feed-filter]'));
+ const clear=()=>grid.replaceChildren();
+ const node=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el;};
+ function message(heading,body){status.hidden=false;status.replaceChildren();const h=node('h4','',heading);const p=node('p','',body);status.append(h,p);}
+ function render(){clear();const visible=active==='all'||active==='facebook'?posts:[];
+  if(!visible.length){message(active==='all'||active==='facebook'?(loaded?'NO FACEBOOK POSTS AVAILABLE':'CONNECTING THE FEED'):'OPEN THE OFFICIAL CHANNEL',active==='all'||active==='facebook'?(loaded?'Facebook has not returned any publicly displayable posts. The official Facebook link is available below.':'Retrieving recent league posts…'):'This platform is not connected to the automatic feed yet. Use the official channel link below.');return;}
+  status.hidden=true;
+  visible.forEach(p=>{const a=node('a','nal-live-post');a.href=p.permalink_url||'https://www.facebook.com/NationalArenaLeague';a.target='_blank';a.rel='noopener noreferrer';
+   if(p.full_picture){const media=node('div','nal-live-post-media');const img=node('img');img.src=p.full_picture;img.alt='NAL Facebook post image';img.loading='lazy';media.append(img);if(p.is_video)media.append(node('span','nal-video-pill','▶ WATCH VIDEO'));a.append(media);}
+   const body=node('div','nal-live-post-body');body.append(node('span','nal-live-post-source','FACEBOOK · NATIONAL ARENA LEAGUE'));
+   if(p.message)body.append(node('p','nal-live-post-text',p.message));
+   if(p.created_time){const d=new Date(p.created_time);if(!Number.isNaN(d.getTime()))body.append(node('time','nal-live-post-date',d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})));}
+   body.append(node('span','nal-live-post-link','VIEW ORIGINAL POST ↗'));a.append(body);grid.append(a);
+  });
+ }
+ async function load(){if(loaded||pending)return pending;message('CONNECTING THE FEED','Retrieving recent league posts…');
+  pending=(async()=>{try{const r=await fetch('/api/social/facebook',{headers:{Accept:'application/json'}});const data=await r.json();if(!r.ok||!data.ok)throw new Error(data.message||'Feed unavailable');posts=Array.isArray(data.posts)?data.posts:[];loaded=true;render();}
+   catch(err){clear();message('FACEBOOK FEED TEMPORARILY UNAVAILABLE','Live posts could not be loaded. You can still visit the official Facebook channel below.');console.warn('NAL Facebook feed:',err.message);}finally{pending=null;}})();return pending;}
+ buttons.forEach(b=>b.addEventListener('click',()=>{active=b.dataset.nalFeedFilter;buttons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();if((active==='all'||active==='facebook')&&!loaded)load();}));
+ // Only request Facebook when the Social page becomes visible.
+ const social=document.getElementById('socialPage');if(social){const observer=new MutationObserver(()=>{if(social.classList.contains('active')||getComputedStyle(social).display!=='none')load();});observer.observe(social,{attributes:true,attributeFilter:['class','style']});if(social.classList.contains('active')||getComputedStyle(social).display!=='none')load();}
 })();
 </script>
 </body>
