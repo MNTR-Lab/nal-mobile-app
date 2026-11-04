@@ -7351,6 +7351,17 @@ document.addEventListener("DOMContentLoaded", () => {
 .nal-delete-confirm{background:#c91527;color:#fff}
 .nal-delete-confirm:disabled{opacity:.55;cursor:not-allowed}
 
+
+/* NAL Social: official free X timeline below the Facebook post grid */
+#socialPage .nal-social-x-section{margin:30px 0 36px}
+#socialPage .nal-social-x-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+#socialPage .nal-social-x-heading .nal-social-title{margin:0}
+#socialPage .nal-social-x-heading>a{font-size:13px;font-weight:800;color:#f3c15b;text-decoration:none}
+#socialPage .nal-social-x-embed{min-height:280px;max-width:800px;margin:0 auto;padding:16px;background:linear-gradient(145deg,#142f4a,#091c31);border:1px solid #365674;border-top:3px solid #f3c15b;border-radius:14px;overflow:hidden}
+#socialPage .nal-social-x-embed .twitter-timeline{display:block;color:#fff;text-align:center;padding:24px}
+#socialPage .nal-social-x-note{margin:12px 0 0;font-size:12px;color:#d0ddeb;text-align:center}
+#socialPage .nal-social-x-note a{color:#f3c15b}
+@media(max-width:600px){#socialPage .nal-social-x-embed{padding:8px}#socialPage .nal-social-x-section{margin:24px 0}}
 </style>
 
 <style>
@@ -8846,13 +8857,6 @@ html body #shopPage #nalShopBest .nal-product-refined .nal-shop-product-info{pad
 </style><style id="nal-muted-search-v20">
 html body #shopPage #nalShopSearch{min-width:0!important;box-sizing:border-box;color:#102f50!important;}
 html body #shopPage #nalShopSearch::placeholder{color:#7b8b9b!important;opacity:.65!important;font-weight:400!important;letter-spacing:0!important;}
-
-/* Compact Social title header, matching the News and Teams page header hierarchy. */
-#socialPage .nal-social-page-heading{padding:25px 24px 23px;margin:0 0 22px;background:linear-gradient(115deg,#07172b,#173d61);border-bottom:4px solid #e31b23;color:#fff;text-align:center;border-radius:9px;}
-#socialPage .nal-social-page-heading-kicker{font-size:10px;font-weight:900;letter-spacing:2px;color:#c4d7eb;}
-#socialPage .nal-social-page-heading h1{font-size:clamp(28px,3.5vw,45px);line-height:1.08;letter-spacing:.8px;font-weight:950;margin:8px 0;}
-#socialPage .nal-social-page-heading p{font-size:11px;letter-spacing:1.4px;font-weight:800;color:#e3eaf2;}
-@media(max-width:650px){#socialPage .nal-social-page-heading{padding:22px 12px 20px;margin-bottom:17px;}#socialPage .nal-social-page-heading h1{font-size:30px;}}
 </style><style id="nal-social-page-styles">
 #socialPage{background:#edf2f7;color:#07172b;min-height:80vh;padding-bottom:55px}
 .nal-social-wrap{max-width:1150px;margin:auto;padding:22px clamp(14px,3vw,32px) 45px}
@@ -9203,16 +9207,6 @@ html body #socialPage{
 @media(max-width:650px){#socialPage .nal-feed-post-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
 @media(max-width:400px){#socialPage .nal-feed-post-grid{grid-template-columns:1fr}}
 </style>
-
-<style id="nal-social-exact-fan-zone-header">
-/* Same title treatment, layout, and arena backdrop as the existing Fan Zone header. */
-html body #socialPage .nal-social-fan-matched-header{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;background:transparent!important;box-shadow:none!important;border:0!important;border-radius:0!important;padding:18px 0 16px!important;margin:0 0 16px!important;min-height:0!important;height:auto!important;}
-html body #socialPage .nal-social-fan-matched-header::after{display:none!important;}
-html body #socialPage .nal-social-fan-matched-header h1{font-family:Impact,Haettenschweiler,'Arial Narrow Bold','Arial Black',sans-serif!important;font-weight:900!important;font-size:clamp(32px,8vw,52px)!important;line-height:1.08!important;letter-spacing:1.5px!important;margin:0 0 10px!important;text-align:center!important;background:linear-gradient(180deg,#fff,#f1f5fa 44%,#dbe3ed 65%,#eef3fa)!important;background-clip:text!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;color:#f3f6fa!important;text-shadow:none!important;filter:drop-shadow(0 2px 0 #8291a5) drop-shadow(0 4px 5px #0009)!important;max-width:100%;}
-html body #socialPage .nal-social-fan-matched-header p{font-size:11px!important;line-height:1.5!important;font-weight:650!important;letter-spacing:1.7px!important;color:#e1e9f3!important;text-align:center!important;margin:0!important;text-shadow:0 2px 5px #000!important;max-width:100%;}
-html body #socialPage{background:linear-gradient(#04112444,#04112499),url('/assets/teams-arena.webp') center top / cover no-repeat #07172b!important;}
-html body #socialPage .nal-social-wrap{padding-top:18px!important;}
-</style>
 </head>
 
 <body>
@@ -9299,10 +9293,6 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
 
   <main id="socialPage" class="app-page" style="display:none;">
     <div class="nal-social-wrap">
-      <section class="fan-zone-header nal-social-fan-matched-header" aria-label="NAL Social page header">
-        <h1>NAL SOCIAL</h1>
-        <p>THE GAME. THE LEAGUE. THE CONVERSATION.</p>
-      </section>
 
       <h2 class="nal-social-title" id="nalSocialFeed">LATEST FROM THE LEAGUE</h2><p class="nal-social-intro">Follow official league channels. Supported public posts appear here; some platforms require you to open their app to interact.</p>
       <div class="nal-feed-shell" id="nalSocialFeedShell">
@@ -9316,6 +9306,14 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
         </div>
         <div class="nal-feed-watch"><div><strong>WATCH THE NAL</strong><p>Live programming, original shows and league coverage.</p></div><button type="button" class="nal-social-action" onclick="document.querySelector('.nav-button[data-page=&quot;watchPage&quot;]')?.click()">WATCH NOW</button></div>
       </div>
+      <!-- Official X timeline: free publish.x.com embed; no X API or billing required. -->
+      <section class="nal-social-x-section" aria-labelledby="nalSocialXTitle">
+        <div class="nal-social-x-heading"><h2 class="nal-social-title" id="nalSocialXTitle">LATEST ON X</h2><a href="https://x.com/NALFootball" target="_blank" rel="noopener noreferrer">VIEW @NALFOOTBALL ON X ↗</a></div>
+        <div class="nal-social-x-embed">
+          <a class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter" data-height="620" data-dnt="true" href="https://twitter.com/NALFootball">Posts by @NALFootball</a>
+        </div>
+        <p class="nal-social-x-note">X controls which public posts appear in this embedded timeline. If the timeline is unavailable in your browser, <a href="https://x.com/NALFootball" target="_blank" rel="noopener noreferrer">view the official account on X</a>.</p>
+      </section>
       <h2 class="nal-social-title" id="nalSocialTalk">THE CONVERSATION STARTS HERE</h2><p class="nal-social-intro">These are NAL conversations—not comments copied from other social networks. Your existing fan account works here.</p>
       <div class="nal-social-discussions"><section class="nal-social-panel"><div class="nal-social-kicker">NAL FAN FORUM</div><h3>Join the Discussion</h3><p>Talk teams, games, free agency, and everything happening around the league.</p><div id="nalSocialRecentTopics" class="nal-social-topics" aria-live="polite"><p>Explore the latest conversations in the Fan Forum.</p></div><button class="nal-social-action" type="button" onclick="openFanForum()">EXPLORE FAN FORUM</button></section><section class="nal-social-panel"><div class="nal-social-kicker">YOUR VOICE MATTERS</div><h3>Start a Conversation</h3><p>Have a question, an opinion, or an idea for Talk About It Tuesday? Post it to the NAL community.</p><div class="nal-social-topic-prompts"><span>Talk About It Tuesday</span><span>Season X Predictions</span><span>Team &amp; Player News</span></div><button class="nal-social-action secondary" type="button" onclick="openFanForum();openNalForumComposer()">START A DISCUSSION</button></section></div>
       <h2 class="nal-social-title" id="nalSocialTeams">FOLLOW YOUR TEAM</h2><p class="nal-social-intro">Find your team's community in the NAL Fan Forum. Join the league-wide Fan Forum and follow your favorite teams. Official team social accounts will be added after verification.</p><div class="nal-social-team-grid teams-style-social-grid">
@@ -21446,5 +21444,6 @@ if(location.pathname.replace(/\/$/,'')==='/social')document.addEventListener('DO
  const social=document.getElementById('socialPage');if(social){const observer=new MutationObserver(()=>{if(social.classList.contains('active')||getComputedStyle(social).display!=='none')load();});observer.observe(social,{attributes:true,attributeFilter:['class','style']});if(social.classList.contains('active')||getComputedStyle(social).display!=='none')load();}
 })();
 </script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 </html>
