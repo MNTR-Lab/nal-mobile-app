@@ -9228,6 +9228,11 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
 @media(max-width:800px){#socialPage .nal-social-x-link-card{flex-wrap:wrap;padding:20px;gap:15px}#socialPage .nal-social-x-primary-link{width:100%}}
 @media(max-width:450px){#socialPage .nal-social-x-avatar{width:58px;height:58px;flex-basis:58px;font-size:38px}#socialPage .nal-social-x-profile p{font-size:12px}}
 </style>
+<style id="nal-social-instagram-profile-card">
+/* Instagram: match the existing NAL Social X account card without changing its layout. */
+#socialPage .nal-social-instagram-section .nal-social-instagram-avatar{display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(145deg,#713ab5,#c13584 56%,#e6683c);}
+#socialPage .nal-social-instagram-section .nal-social-instagram-avatar svg{max-width:65%;height:auto}
+</style>
 </head>
 
 <body>
@@ -9342,6 +9347,18 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
           <a class="nal-social-x-primary-link" href="https://x.com/NALFootball?ref_src=twsrc%5Etfw" target="_blank" rel="noopener noreferrer" aria-label="View National Arena League posts on X">VIEW LATEST POSTS <span aria-hidden="true">↗</span></a>
         </div>
         <p class="nal-social-x-note">X posts open on the official league profile. No account is needed to view public posts when X makes them available.</p>
+      </section>
+      <!-- Instagram public profile: no API, paid feed widget, or third-party tracking required. -->
+      <section class="nal-social-x-section nal-social-instagram-section" aria-labelledby="nalSocialInstagramTitle">
+        <div class="nal-social-x-heading"><h2 class="nal-social-title" id="nalSocialInstagramTitle">LATEST ON INSTAGRAM</h2></div>
+        <div class="nal-social-x-link-card">
+          <div class="nal-social-x-avatar nal-social-instagram-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.7" cy="6.4" r="1" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div class="nal-social-x-profile"><span class="nal-social-x-eyebrow">OFFICIAL NATIONAL ARENA LEAGUE ACCOUNT</span><strong>@nationalarenaleague</strong><p>Behind-the-scenes moments, game highlights, league news, photos and Reels. Explore the latest NAL content on Instagram.</p></div>
+          <a class="nal-social-x-primary-link" href="https://www.instagram.com/nationalarenaleague/" target="_blank" rel="noopener noreferrer" aria-label="View National Arena League posts on Instagram">VIEW LATEST POSTS <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="nal-social-x-note">Instagram posts open on the official league profile. Instagram may ask visitors to sign in to see some content.</p>
       </section>
       <h2 class="nal-social-title" id="nalSocialTalk">THE CONVERSATION STARTS HERE</h2><p class="nal-social-intro">These are NAL conversations—not comments copied from other social networks. Your existing fan account works here.</p>
       <div class="nal-social-discussions"><section class="nal-social-panel"><div class="nal-social-kicker">NAL FAN FORUM</div><h3>Join the Discussion</h3><p>Talk teams, games, free agency, and everything happening around the league.</p><div id="nalSocialRecentTopics" class="nal-social-topics" aria-live="polite"><p>Explore the latest conversations in the Fan Forum.</p></div><button class="nal-social-action" type="button" onclick="openFanForum()">EXPLORE FAN FORUM</button></section><section class="nal-social-panel"><div class="nal-social-kicker">YOUR VOICE MATTERS</div><h3>Start a Conversation</h3><p>Have a question, an opinion, or an idea for Talk About It Tuesday? Post it to the NAL community.</p><div class="nal-social-topic-prompts"><span>Talk About It Tuesday</span><span>Season X Predictions</span><span>Team &amp; Player News</span></div><button class="nal-social-action secondary" type="button" onclick="openFanForum();openNalForumComposer()">START A DISCUSSION</button></section></div>
