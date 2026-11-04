@@ -10703,25 +10703,26 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
                   <span class="fan-member-chev">›</span>
                 </div>
                 <div class="fan-member-vote-empty" id="fanMemberVotingActivity">Your voting history will appear here as account voting is connected.</div>
-                <div class="fan-member-row">
+                <button type="button" class="nal-member-feature-link" onclick="openPickemPreview()"><div class="fan-member-row">
                   <div class="fan-member-ico">🏈</div>
                   <div class="fan-member-rowtext"><b>My Pick ’Em</b><span>Your picks, record and leaderboard position</span></div>
-                  <span class="fan-member-badge">COMING SOON</span>
-                </div>
-                <div class="fan-member-row">
+                  <span class="fan-member-chev" aria-hidden="true">›</span>
+                </div></button>
+                <button type="button" class="nal-member-feature-link" onclick="openNalMemberPanel('forum')"><div class="fan-member-row">
                   <div class="fan-member-ico">💬</div>
                   <div class="fan-member-rowtext"><b>Forum Activity</b><span>Your posts and replies</span></div>
-                  <span class="fan-member-badge">COMING SOON</span>
-                </div>
-                <div class="fan-member-row">
+                  <span class="fan-member-chev" aria-hidden="true">›</span>
+                </div></button>
+                <button type="button" class="nal-member-feature-link" onclick="openNalMemberPanel('preferences')"><div class="fan-member-row">
                   <div class="fan-member-ico">🔔</div>
                   <div class="fan-member-rowtext"><b>Notification Preferences</b><span>Choose the NAL updates you want</span></div>
-                  <span class="fan-member-badge">COMING SOON</span>
-                </div>
+                  <span class="fan-member-chev" aria-hidden="true">›</span>
+                </div></button>
               </div>
             </section>
 
-            <section class="fan-member-section fan-admin-area" id="fanAdminArea" hidden>
+            <section id="nalMemberFeaturePanel" class="nal-member-feature-panel" hidden aria-live="polite"></section>
+<section class="fan-member-section fan-admin-area" id="fanAdminArea" hidden>
               <div class="fan-admin-banner">
                 <div class="fan-admin-shield">◆</div>
                 <div><b>NAL ADMIN</b><span>Authorized league app management</span></div>
@@ -16274,6 +16275,7 @@ function getNalAlertTypeLabel(notification){
 
 function nalNotificationMatchesFan(notification){
   if (!notification || notification.is_active === false) return false;
+  if (!nalMemberAllowsAlert(notification)) return false;
 
   const targetType = String(notification.target_type || "all").toLowerCase();
   if (targetType === "all" || targetType === "league" || !targetType) return true;
@@ -16364,6 +16366,7 @@ async function loadNalAlerts(){
     if (notificationError) throw notificationError;
     if (readsError) throw readsError;
 
+    await loadNalMemberPrefs();
     nalNotifications = Array.isArray(notifications) ? notifications : [];
     nalNotificationReadIds = new Set(
       (Array.isArray(reads) ? reads : []).map(row => String(row.notification_id))
@@ -21614,5 +21617,52 @@ async function submitNalFcfBallot(){
  }catch(error){status.textContent=error.message;button.disabled=false;button.textContent="SUBMIT VOTE";}
 }
 </script>
-</body>
+<style id="nal-member-feature-links">.nal-member-feature-link{display:block;width:100%;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit}.nal-member-feature-link:focus-visible{outline:3px solid #e31b23;outline-offset:-3px}.nal-member-feature-link:hover{background:#f3f6fa}.nal-member-feature-panel{margin:18px 0;padding:20px;border-radius:16px;background:white;color:#102b4e;border:1px solid #d8e1eb}.nal-member-feature-panel h3{margin:0 0 14px}.nal-member-feature-panel p{font-size:13px;line-height:1.5;margin:10px 0}.nal-member-feature-panel label{display:flex;gap:12px;align-items:center;padding:14px 0;font-size:14px;border-bottom:1px solid #e4eaf0}.nal-member-feature-panel input[type=checkbox]{width:20px;height:20px;accent-color:#e31b23}.nal-member-topic{display:block;width:100%;padding:13px 0;background:none;color:#102b4e;border:0;border-bottom:1px solid #e4eaf0;text-align:left;font:inherit;font-size:13px;cursor:pointer}.nal-member-feature-panel .fan-poll-submit{margin-top:15px}</style><script id="nal-member-features-js">
+const NAL_PREF_FIELDS={league_news:"League news and NAL Network",game_updates:"Game updates",schedule_updates:"Schedule updates",favorite_team_updates:"Favorite team updates"};
+let nalMemberPrefs=null,nalMemberPrefsUser=null;
+async function loadNalMemberPrefs(){
+ const uid=nalAccountUser?.id;if(!uid){nalMemberPrefs=null;nalMemberPrefsUser=null;return;}
+ const {data,error}=await getNalAccountClient().from("notification_preferences").select("league_news,game_updates,schedule_updates,favorite_team_updates").eq("user_id",uid).maybeSingle();
+ if(error)throw error;
+ if(nalAccountUser?.id!==uid)return;
+ nalMemberPrefs=data||Object.fromEntries(Object.keys(NAL_PREF_FIELDS).map(k=>[k,true]));nalMemberPrefsUser=uid;
+}
+function nalMemberAllowsAlert(notification){
+ if(nalMemberPrefsUser!==nalAccountUser?.id||!nalMemberPrefs)return true;
+ if(notification.target_type==="user")return true;
+ if(notification.target_type==="team"&&!nalMemberPrefs.favorite_team_updates)return false;
+ const type=String(notification.notification_type||"league").toLowerCase();
+ const key=type==="team"?"favorite_team_updates":type==="game"?"game_updates":type==="schedule"?"schedule_updates":"league_news";
+ return nalMemberPrefs[key]!==false;
+}
+async function openNalMemberPanel(kind){
+ if(!nalAccountUser){await openFanAccount();return;}
+ const panel=document.getElementById("nalMemberFeaturePanel");panel.hidden=false;panel.replaceChildren();
+ const heading=document.createElement("h3");heading.textContent=kind==="forum"?"Your Forum Activity":"Notification Preferences";panel.append(heading);
+ const content=document.createElement("div");content.textContent="Loading…";panel.append(content);panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+ try{
+ if(kind==="preferences"){
+ await loadNalMemberPrefs();content.replaceChildren();
+ const note=document.createElement("p");note.textContent="Choose which updates appear in your NAL Alerts. Direct account messages remain visible. These settings do not enable email or browser push notifications.";content.append(note);
+ const form=document.createElement("form");
+ Object.entries(NAL_PREF_FIELDS).forEach(([key,label])=>{const row=document.createElement("label");const input=document.createElement("input");input.type="checkbox";input.name=key;input.checked=nalMemberPrefs[key]!==false;row.append(input,document.createTextNode(label));form.append(row);});
+ const save=document.createElement("button");save.type="submit";save.className="fan-poll-submit";save.textContent="SAVE PREFERENCES";form.append(save);
+ const status=document.createElement("p");status.setAttribute("role","status");form.append(status);
+ form.addEventListener("submit",async e=>{e.preventDefault();save.disabled=true;status.textContent="Saving…";const uid=nalAccountUser?.id;if(!uid){status.textContent="Please sign in again.";save.disabled=false;return;}const values=Object.fromEntries(Object.keys(NAL_PREF_FIELDS).map(key=>[key,form.elements[key].checked]));
+ try{const {error}=await getNalAccountClient().from("notification_preferences").upsert({user_id:uid,...values,updated_at:new Date().toISOString()},{onConflict:"user_id"});if(error)throw error;await loadNalMemberPrefs();renderNalAlerts();status.textContent="Preferences saved.";}catch(error){status.textContent=error.message||"Preferences could not be saved.";}finally{save.disabled=false;}});
+ content.append(form);
+ }else{
+ const client=getNalAccountClient(),uid=nalAccountUser.id;
+ const [topics,replies]=await Promise.all([client.from("forum_topics").select("id,title,category_id,created_at,is_hidden").eq("user_id",uid).order("created_at",{ascending:false}).limit(30),client.from("forum_replies").select("id,topic_id,body,created_at,is_hidden").eq("user_id",uid).order("created_at",{ascending:false}).limit(30)]);
+ if(topics.error)throw topics.error;if(replies.error)throw replies.error;
+ const replyIds=[...new Set((replies.data||[]).filter(r=>!r.is_hidden).map(r=>r.topic_id))];
+ let parents=[];if(replyIds.length){const result=await client.from("forum_topics").select("id,title,category_id,is_hidden").in("id",replyIds);if(result.error)throw result.error;parents=result.data||[];}
+ const entries=[...(topics.data||[]).filter(t=>!t.is_hidden).map(t=>({topic:t,date:t.created_at,label:"POST: "+t.title})),...(replies.data||[]).filter(r=>!r.is_hidden).map(r=>({topic:parents.find(t=>t.id===r.topic_id&&!t.is_hidden),date:r.created_at,label:"REPLY: "+r.body})).filter(r=>r.topic)].sort((a,b)=>Date.parse(b.date)-Date.parse(a.date));
+ content.replaceChildren();if(!entries.length)content.textContent="You haven’t posted any conversations or replies yet.";
+ entries.forEach(entry=>{const button=document.createElement("button");button.type="button";button.className="nal-member-topic";button.textContent=entry.label.slice(0,180);button.addEventListener("click",async()=>{try{await openFanForum();const category=nalForumCategories.find(c=>c.id===entry.topic.category_id);if(!category)throw Error("This conversation is no longer available.");await openNalForumCategory(category.slug||category.id);await openNalForumThread(entry.topic.id);}catch(error){content.textContent=error.message;}});content.append(button);});
+ const visit=document.createElement("button");visit.type="button";visit.className="fan-poll-submit";visit.textContent="OPEN FAN FORUM";visit.onclick=openFanForum;content.append(visit);
+ }
+ }catch(error){content.textContent=error.message||"This feature could not be loaded. Please try again.";}
+}
+</script></body>
 </html>
