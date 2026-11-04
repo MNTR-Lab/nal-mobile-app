@@ -21508,7 +21508,7 @@ function openNalTeamSocial(slug){
    const arrow=document.createElement('span');arrow.className='nal-social-platform-arrow';arrow.textContent='↗';
    a.append(icon,text,arrow);links.append(a);
  });
- document.getElementById('nalTeamSocialPageButton').onclick=()=>{closeNalTeamSocial();openTeam(slug)};
+ document.getElementById('nalTeamSocialPageButton').onclick=()=>{closeNalTeamSocial();window.location.assign('/teams/'+encodeURIComponent(slug));};
  nalSocialPreviousFocus=document.activeElement;
  if(!dialog.open)dialog.showModal();
 }
