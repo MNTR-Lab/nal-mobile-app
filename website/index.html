@@ -13526,12 +13526,13 @@ async function loadActiveFanPoll(){
 }
 function renderActiveFanPolls(){
   const host=document.getElementById("fanPollList"); if(!host)return;
-  host.innerHTML=activeFanPolls.map(p=>{const opts=fanPollState.get(String(p.id))?.options||[];const labels=opts.map(o=>String(o.option_name||'').toLowerCase());const isPhase=opts.length===3&&['offense','defense','special teams'].every(x=>labels.some(y=>y.includes(x)));const isTeam=opts.length===10&&/off.?season|best.*team|team.*best/i.test(String(p.question||''));const layoutClass=isPhase?' nal-phase-ballot':isTeam?' nal-team-ballot':'';return `<section class="fan-poll-live-card${layoutClass}" data-fan-poll-card="${p.id}"><h2 class="fan-poll-live-question">${fanPollEsc(p.question)}</h2><div class="fan-poll-options" data-fan-poll-options="${p.id}"></div><button class="fan-poll-submit" type="button" data-fan-poll-submit="${p.id}" onclick="submitFanPollVote(${p.id})" disabled>SUBMIT VOTE</button><div class="fan-poll-results-note" data-fan-poll-results-note="${p.id}" hidden>LIVE FAN RESULTS</div><div class="fan-poll-live-status" data-fan-poll-status="${p.id}" aria-live="polite"></div></section>`;}).join("");
+  host.innerHTML=nalFcfCard()+activeFanPolls.map(p=>{const opts=fanPollState.get(String(p.id))?.options||[];const labels=opts.map(o=>String(o.option_name||'').toLowerCase());const isPhase=opts.length===3&&['offense','defense','special teams'].every(x=>labels.some(y=>y.includes(x)));const isTeam=opts.length>0&&opts.every(o=>nalBallotTeams(o.option_name).length===1);const layoutClass=isPhase?' nal-phase-ballot':isTeam?' nal-team-ballot':'';return `<section class="fan-poll-live-card${layoutClass}" data-fan-poll-card="${p.id}"><h2 class="fan-poll-live-question">${fanPollEsc(p.question)}</h2><div class="fan-poll-options" data-fan-poll-options="${p.id}"></div><button class="fan-poll-submit" type="button" data-fan-poll-submit="${p.id}" onclick="submitFanPollVote(${p.id})" disabled>SUBMIT VOTE</button><div class="fan-poll-results-note" data-fan-poll-results-note="${p.id}" hidden>LIVE FAN RESULTS</div><div class="fan-poll-live-status" data-fan-poll-status="${p.id}" aria-live="polite"></div></section>`;}).join("");
   activeFanPolls.forEach(p=>renderFanPollChoices(p.id));
+  loadNalFcfBallot();
 }
 function renderFanPollChoices(pollId){
   const state=fanPollState.get(String(pollId)); const host=document.querySelector(`[data-fan-poll-options="${pollId}"]`); const submit=document.querySelector(`[data-fan-poll-submit="${pollId}"]`); if(!state||!host)return;
-  host.innerHTML=state.options.map(o=>`<button class="fan-poll-option" type="button" data-poll-option="${o.id}" onclick="selectFanPollOption(${pollId},${o.id})">${fanPollMediaHtml(o.image_url,o.option_name)}<span class="fan-poll-option-name">${fanPollEsc(o.option_name)}</span><span class="fan-poll-check">✓</span></button>`).join("");
+  host.innerHTML=state.options.map(o=>`<button class="fan-poll-option" type="button" data-poll-option="${o.id}" aria-label="${fanPollEsc(o.option_name)}" title="${fanPollEsc(o.option_name)}" onclick="selectFanPollOption(${pollId},${o.id})">${nalBallotTeams(o.option_name).length===1 ? '<span class="fan-poll-option-media">'+nalBallotLogo(nalBallotTeams(o.option_name)[0])+'</span>' : fanPollMediaHtml(o.image_url,o.option_name)}<span class="fan-poll-option-name">${fanPollEsc(o.option_name)}</span><span class="fan-poll-check">✓</span></button>`).join("");
   if(submit){submit.hidden=false;submit.disabled=true;submit.textContent="SUBMIT VOTE";} setFanPollCardStatus(pollId,"SELECT ONE CHOICE TO CAST YOUR VOTE.");
 }
 function selectFanPollOption(pollId,optionId){
@@ -21533,6 +21534,85 @@ function openNalTeamSocial(slug){
  if(!dialog.open)dialog.showModal();
 }
 function closeNalTeamSocial(){const dialog=document.getElementById('nalTeamSocialDialog');if(dialog?.open)dialog.close();if(nalSocialPreviousFocus?.isConnected)nalSocialPreviousFocus.focus();}
+</script>
+
+<style id="nal-linked-fcf-ballots">
+#fanPollPage .fan-poll-list{align-items:stretch}
+#fanPollPage .fan-poll-live-card{display:flex;flex-direction:column}
+#fanPollPage .nal-ballot-kicker{font-size:11px;font-weight:800;letter-spacing:1.5px;color:#c4d7ee;margin-bottom:10px}
+#fanPollPage .nal-team-ballot .fan-poll-options{grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
+#fanPollPage .nal-team-ballot .fan-poll-option:nth-last-child(2):nth-child(4n + 1){grid-column:auto}
+#fanPollPage .nal-team-ballot .fan-poll-option-name{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);padding:0;min-height:0}
+#fanPollPage .nal-team-ballot .fan-poll-option-media{height:104px;padding:12px;background:#fff}
+#fanPollPage .nal-team-ballot .fan-poll-option-media img{width:100%;height:100%;object-fit:contain}
+#fanPollPage .nal-fcf-options{display:grid;grid-template-columns:repeat(var(--fcf-choices,3),minmax(0,1fr));gap:10px}
+#fanPollPage .nal-fcf-options .fan-poll-option{min-width:0;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+#fanPollPage .nal-fcf-logos{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:100%;padding:12px;background:#fff;color:#6c7888}
+#fanPollPage .nal-fcf-logos img{height:72px;max-width:100%;object-fit:contain}
+#fanPollPage .nal-fcf-logos>span{font-size:10px;font-weight:800}
+#fanPollPage .nal-fcf-caption{display:block;padding:10px 7px;font-size:11px;font-weight:700;line-height:1.4;text-align:center}
+#fanPollPage .nal-fcf-percent{display:block;text-align:center;padding:4px 8px 14px;font-size:20px;color:#07172b}
+#fanPollPage .nal-fcf-options .fan-poll-result{padding:0;overflow:hidden}
+#fanPollPage .fan-poll-option:focus-visible{outline:3px solid #ffdb6b;outline-offset:2px}
+@media(max-width:430px){#fanPollPage .nal-team-ballot .fan-poll-option-media{height:66px;padding:7px}#fanPollPage .nal-fcf-logos img{height:56px}#fanPollPage .nal-fcf-logos{padding:8px}#fanPollPage .nal-fcf-caption{font-size:10px;padding:8px 4px}#fanPollPage .nal-fcf-options{gap:7px}}
+</style>
+<script id="nal-linked-fcf-ballots-js">
+const NAL_BALLOT_TEAMS = [{"name":"Amarillo Warbirds","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089"},{"name":"Colorado Spartans","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans.png?v=1789867089"},{"name":"Dallas Apex","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex.png?v=1789867089"},{"name":"Louisiana Rouxgaroux","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux.png?v=1789867089"},{"name":"Omaha Beef","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef.png?v=1789867089"},{"name":"Pueblo Punishers","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers.png?v=1789867089"},{"name":"Salina Liberty","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty.png?v=1789867089"},{"name":"Sioux City Bandits","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits.png?v=1789867089"},{"name":"Southwest Kansas Storm","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm.png?v=1789867089"},{"name":"Wheeling Miners","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners.png?v=1789867089"}];
+function nalBallotTeams(label){
+ const text=String(label||"").toLowerCase().replace(/sw kansas/g,"southwest kansas");
+ return NAL_BALLOT_TEAMS.filter(t=>text.includes(t.name.toLowerCase()));
+}
+function nalBallotLogo(team){return '<img src="'+fanPollEsc(team.logo)+'" alt="'+fanPollEsc(team.name)+'" loading="lazy">';}
+function nalFcfToken(){
+ const key="nal_fcf_voter_token";let value=localStorage.getItem(key);
+ if(!value){value=crypto.randomUUID();localStorage.setItem(key,value);}return value;
+}
+let nalFcfCurrent=null,nalFcfSelected=null;
+async function nalFcfRequest(path,body){
+ const response=await fetch(NAL_POLL_SUPABASE_URL+"/functions/v1/fcf-api/"+path,{
+ method:body?"POST":"GET",headers:{"apikey":NAL_POLL_SUPABASE_KEY,...(body?{"Content-Type":"application/json"}:{})},
+ ...(body?{body:JSON.stringify(body)}:{}),cache:"no-store"});
+ const data=await response.json();if(!response.ok){const e=new Error(data.error||"Fan Choice Friday is temporarily unavailable.");e.status=response.status;throw e;}return data;
+}
+function nalFcfCard(){
+ return '<section class="fan-poll-live-card nal-fcf-ballot" id="nalFcfBallot"><div class="nal-ballot-kicker">FAN CHOICE FRIDAY</div><h2 class="fan-poll-live-question">Choose Friday’s Game</h2><div id="nalFcfBody" aria-live="polite">Loading this week’s matchups…</div></section>';
+}
+function nalFcfMedia(option){
+ const teams=nalBallotTeams(option.matchup);
+ return teams.length===2?'<span class="nal-fcf-logos">'+teams.map((t,i)=>(i?'<span aria-hidden="true">VS</span>':"")+nalBallotLogo(t)).join("")+'</span>':"";
+}
+function nalFcfOpen(p){const now=Date.now();return p.status==="active"&&(!p.opens_at||Date.parse(p.opens_at)<=now)&&(!p.closes_at||Date.parse(p.closes_at)>now);}
+async function loadNalFcfBallot(){
+ const body=document.getElementById("nalFcfBody");if(!body)return;
+ try{
+ const data=await nalFcfRequest("poll");nalFcfCurrent=data;nalFcfSelected=null;
+ if(!data.poll){body.textContent="The next Fan Choice Friday poll is coming soon.";return;}
+ const card=document.getElementById("nalFcfBallot");card.querySelector("h2").textContent=data.poll.question||"Choose Friday’s Game";
+ const options=Array.isArray(data.options)?data.options:[];
+ const open=nalFcfOpen(data.poll);
+ body.innerHTML='<div class="nal-fcf-options" style="--fcf-choices:'+Math.max(options.length,1)+'">'+options.map(o=>'<button type="button" class="fan-poll-option" data-fcf-choice="'+o.id+'" aria-pressed="false" aria-label="'+fanPollEsc(o.matchup)+'" '+(!open?'disabled':"")+'>'+nalFcfMedia(o)+'<span class="nal-fcf-caption">'+fanPollEsc(o.matchup)+'</span></button>').join("")+'</div><button type="button" class="fan-poll-submit" id="nalFcfSubmit" disabled>'+(open?"SUBMIT VOTE":"VOTING CLOSED")+'</button><div id="nalFcfStatus" class="fan-poll-live-status" role="status">'+(open?"Select one matchup to cast your vote.":"Check back for the next weekly poll.")+'</div>';
+ body.querySelectorAll("[data-fcf-choice]").forEach(button=>button.addEventListener("click",()=>{
+ nalFcfSelected=Number(button.dataset.fcfChoice);body.querySelectorAll("[data-fcf-choice]").forEach(b=>{const selected=b===button;b.classList.toggle("selected",selected);b.setAttribute("aria-pressed",String(selected));});document.getElementById("nalFcfSubmit").disabled=false;
+ }));
+ document.getElementById("nalFcfSubmit").addEventListener("click",submitNalFcfBallot);
+ if(localStorage.getItem("nal_fcf_voted_"+data.poll.id))await showNalFcfResults();
+ }catch(error){body.textContent=error.message;}
+}
+async function showNalFcfResults(){
+ const data=await nalFcfRequest("results",{poll_id:nalFcfCurrent.poll.id,token:nalFcfToken()});
+ document.getElementById("nalFcfBody").innerHTML='<div class="nal-fcf-options" style="--fcf-choices:'+nalFcfCurrent.options.length+'">'+nalFcfCurrent.options.map(o=>{const result=data.results.find(r=>r.id===o.id);return '<div class="fan-poll-result">'+nalFcfMedia(o)+'<div class="nal-fcf-caption">'+fanPollEsc(o.matchup)+'</div><strong class="nal-fcf-percent">'+Number(result?.percentage||0)+'%</strong></div>';}).join("")+'</div><div class="fan-poll-live-status" role="status">YOUR VOTE IS COUNTED · LIVE FAN RESULTS</div>';
+}
+async function submitNalFcfBallot(){
+ if(!nalFcfCurrent?.poll||!nalFcfSelected)return;
+ const button=document.getElementById("nalFcfSubmit"),status=document.getElementById("nalFcfStatus");button.disabled=true;button.textContent="SUBMITTING…";
+ try{
+ try{await nalFcfRequest("vote",{poll_id:nalFcfCurrent.poll.id,option_id:nalFcfSelected,token:nalFcfToken()});}catch(error){if(error.status!==409)throw error;}
+ localStorage.setItem("nal_fcf_voted_"+nalFcfCurrent.poll.id,"1");
+ status.textContent="Your vote is counted. Loading results…";
+ button.hidden=true;document.querySelectorAll("[data-fcf-choice]").forEach(b=>b.disabled=true);
+ try{await showNalFcfResults();}catch(_){status.textContent="Your vote is counted. Results are temporarily unavailable.";}
+ }catch(error){status.textContent=error.message;button.disabled=false;button.textContent="SUBMIT VOTE";}
+}
 </script>
 </body>
 </html>
