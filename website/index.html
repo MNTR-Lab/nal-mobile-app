@@ -15483,7 +15483,7 @@ document.getElementById("fanSignUpForm")?.addEventListener("submit", async funct
       email,
       password,
       options:{
-        emailRedirectTo: "https://mntr-lab.github.io/nal-mobile-app/",
+        emailRedirectTo: window.location.origin + "/account",
         data:{
           display_name: displayName,
           favorite_team: favoriteTeam,
