@@ -7362,6 +7362,25 @@ document.addEventListener("DOMContentLoaded", () => {
 #socialPage .nal-social-x-note{margin:12px 0 0;font-size:12px;color:#d0ddeb;text-align:center}
 #socialPage .nal-social-x-note a{color:#f3c15b}
 @media(max-width:600px){#socialPage .nal-social-x-embed{padding:8px}#socialPage .nal-social-x-section{margin:24px 0}}
+
+/* NAL Fan Polls: two-column cards and poll-specific ballot layouts */
+#fanPollPage .fan-poll-shell{width:min(1380px,100%)}
+#fanPollPage .fan-poll-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+#fanPollPage .fan-poll-live-card{min-width:0;padding:20px;background:linear-gradient(155deg,#12345a,#081a30);border:1px solid #315477;box-shadow:0 12px 28px rgba(0,0,0,.18)}
+#fanPollPage .fan-poll-live-question{font-size:clamp(18px,1.7vw,24px);min-height:52px}
+#fanPollPage .fan-poll-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#fanPollPage .fan-poll-live-card.nal-team-ballot .fan-poll-options{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+#fanPollPage .fan-poll-live-card.nal-team-ballot .fan-poll-option:nth-last-child(2):nth-child(4n + 1){grid-column:2}
+#fanPollPage .fan-poll-live-card.nal-phase-ballot .fan-poll-options{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#fanPollPage .nal-team-ballot .fan-poll-option-media{height:85px}
+#fanPollPage .nal-team-ballot .fan-poll-option-name{font-size:11px;padding:8px 4px;min-height:48px}
+#fanPollPage .nal-phase-ballot .fan-poll-option{display:flex;flex-direction:column;justify-content:center;min-height:120px}
+#fanPollPage .nal-phase-ballot .fan-poll-option-media.empty-media{display:none}
+#fanPollPage .nal-phase-ballot .fan-poll-option-name{font-size:clamp(11px,1.1vw,15px);padding:18px 5px;min-height:0}
+#fanPollPage .fan-poll-live-card .fan-poll-results-note{font-size:11px}
+@media(max-width:850px){#fanPollPage .fan-poll-list{grid-template-columns:1fr}#fanPollPage .fan-poll-live-question{min-height:0}}
+@media(max-width:430px){#fanPollPage .fan-poll-live-card{padding:12px}#fanPollPage .nal-team-ballot .fan-poll-option-media{height:66px}#fanPollPage .nal-team-ballot .fan-poll-option-name{font-size:10px}#fanPollPage .nal-phase-ballot .fan-poll-option-name{font-size:10px;padding:14px 3px}}
+
 </style>
 
 <style>
@@ -13495,7 +13514,7 @@ async function loadActiveFanPoll(){
   try{
     const pr=await fetch(fanPollApiUrl("polls?status=eq.active&select=id,question,created_at&order=created_at.desc"),{method:"GET",mode:"cors",headers:fanPollHeaders(),cache:"no-store"});
     if(!pr.ok){const detail=await pr.text();throw new Error(`Poll connection error (${pr.status})${detail?": "+detail.slice(0,120):""}`);}
-    activeFanPolls=await pr.json(); if(!activeFanPolls.length)throw new Error("There are no active fan polls right now.");
+    activeFanPolls=await pr.json(); activeFanPolls.sort((a,b)=>{const rank=p=>/fan choice friday/i.test(p.question)?0:/best off.?season|having the best off.?season/i.test(p.question)?1:/what wins championships|offense.*defense.*special teams|phase of the game/i.test(p.question)?2:3;return rank(a)-rank(b);}); if(!activeFanPolls.length)throw new Error("There are no active fan polls right now.");
     const ids=activeFanPolls.map(p=>p.id).join(",");
     const or=await fetch(fanPollApiUrl(`poll_options?poll_id=in.(${ids})&select=id,poll_id,option_name,image_url,display_order&order=display_order.asc`),{method:"GET",mode:"cors",headers:fanPollHeaders(),cache:"no-store"});
     if(!or.ok)throw new Error("Unable to load poll choices."); const allOptions=await or.json();
@@ -13506,7 +13525,7 @@ async function loadActiveFanPoll(){
 }
 function renderActiveFanPolls(){
   const host=document.getElementById("fanPollList"); if(!host)return;
-  host.innerHTML=activeFanPolls.map(p=>`<section class="fan-poll-live-card" data-fan-poll-card="${p.id}"><h2 class="fan-poll-live-question">${fanPollEsc(p.question)}</h2><div class="fan-poll-options" data-fan-poll-options="${p.id}"></div><button class="fan-poll-submit" type="button" data-fan-poll-submit="${p.id}" onclick="submitFanPollVote(${p.id})" disabled>SUBMIT VOTE</button><div class="fan-poll-results-note" data-fan-poll-results-note="${p.id}" hidden>LIVE FAN RESULTS</div><div class="fan-poll-live-status" data-fan-poll-status="${p.id}" aria-live="polite"></div></section>`).join("");
+  host.innerHTML=activeFanPolls.map(p=>{const opts=fanPollState.get(String(p.id))?.options||[];const labels=opts.map(o=>String(o.option_name||'').toLowerCase());const isPhase=opts.length===3&&['offense','defense','special teams'].every(x=>labels.some(y=>y.includes(x)));const isTeam=opts.length===10&&/off.?season|best.*team|team.*best/i.test(String(p.question||''));const layoutClass=isPhase?' nal-phase-ballot':isTeam?' nal-team-ballot':'';return `<section class="fan-poll-live-card${layoutClass}" data-fan-poll-card="${p.id}"><h2 class="fan-poll-live-question">${fanPollEsc(p.question)}</h2><div class="fan-poll-options" data-fan-poll-options="${p.id}"></div><button class="fan-poll-submit" type="button" data-fan-poll-submit="${p.id}" onclick="submitFanPollVote(${p.id})" disabled>SUBMIT VOTE</button><div class="fan-poll-results-note" data-fan-poll-results-note="${p.id}" hidden>LIVE FAN RESULTS</div><div class="fan-poll-live-status" data-fan-poll-status="${p.id}" aria-live="polite"></div></section>`;}).join("");
   activeFanPolls.forEach(p=>renderFanPollChoices(p.id));
 }
 function renderFanPollChoices(pollId){
