@@ -9364,7 +9364,7 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
 </div>
 <section id="nalSiteTicker" class="nal-site-ticker" aria-label="NAL news ticker">
  <iframe id="nalSiteTickerFrame" title="Latest NAL news and announcements" tabindex="-1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
- <span class="nal-site-ticker-label" aria-hidden="true">LEAGUE UPDATES</span>
+ <span class="nal-site-ticker-label" aria-hidden="true">UPDATES</span>
  <span id="nalSiteTickerNotice" class="nal-site-ticker-notice" hidden>News ticker paused</span>
  <button id="nalSiteTickerToggle" class="nal-site-ticker-toggle" type="button" aria-label="Pause news ticker">Ⅱ</button>
 </section>
@@ -22063,10 +22063,10 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
 </style>
 <style id="nal-ticker-custom-label">
 .nal-site-ticker::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;z-index:3;background:#e31b23;pointer-events:none;}
-@media(min-width:601px) and (max-width:1000px){.nal-site-ticker-label{font-size:11px!important;letter-spacing:0!important;}}
-.nal-site-ticker-label{position:absolute;inset:0 auto 0 0;z-index:1;width:var(--nal-ticker-label-width,114px);box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:0 8px;background:#06172b;border-right:2px solid #e31b23;color:#fff;font:800 14px/1 Arial,Helvetica,sans-serif;letter-spacing:.25px;white-space:nowrap;pointer-events:none;}
+@media(min-width:601px) and (max-width:1000px){.nal-site-ticker-label{font-size:15px!important;letter-spacing:.25px!important;}}
+.nal-site-ticker-label{position:absolute;inset:0 auto 0 0;z-index:1;width:var(--nal-ticker-label-width,114px);box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:0 8px;background:#06172b;border-right:2px solid #e31b23;color:#fff;font:800 17px/1 Arial,Helvetica,sans-serif;letter-spacing:.5px;white-space:nowrap;pointer-events:none;}
 .nal-site-ticker:has(#nalSiteTickerFrame[hidden]) .nal-site-ticker-label{display:none;}
-@media(max-width:600px){.nal-site-ticker-label{font-size:10px;letter-spacing:0;padding:0 5px;}}
+@media(max-width:600px){.nal-site-ticker-label{font-size:13px;letter-spacing:.25px;padding:0 5px;}}
 </style>
 </body>
 </html>
