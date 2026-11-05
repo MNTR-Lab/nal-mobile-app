@@ -21911,18 +21911,35 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
 })();
 </script>
 
-<style id="nal-event-chat-style">.nal-player-chat[hidden]{display:none!important}
-.nal-player-chat{background:#fff;color:#0b2036;border:1px solid #d7e0ea;border-radius:12px;padding:18px;min-width:0;text-align:left;box-sizing:border-box}
-.nal-player-chat h3{margin:0 0 8px;font-size:18px;color:#0b2036}.nal-player-chat>p{font-size:13px;line-height:1.5}
-.nal-chat-messages{height:300px;overflow:auto;overscroll-behavior:contain;border-block:1px solid #d7e0ea;padding:8px 0;margin:12px 0}
-.nal-chat-message{padding:10px 0;border-bottom:1px solid #edf1f5;font-size:13px}.nal-chat-message>div{display:flex;justify-content:space-between;gap:12px}.nal-chat-message time{font-size:10px;color:#60738a;white-space:nowrap}.nal-chat-message p{white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0;line-height:1.5}
-.nal-player-chat button{cursor:pointer;background:#e81928;color:white;border:0;border-radius:6px;padding:8px 12px;font-weight:700}.nal-player-chat button:disabled{opacity:.5;cursor:wait}
-.nal-chat-message button{font-size:10px;padding:4px 6px;margin-right:6px;background:#e9eef4;color:#20344d}
-.nal-player-chat textarea,.nal-player-chat input,.nal-player-chat select{box-sizing:border-box;width:100%;border:1px solid #bdcbd9;border-radius:6px;padding:10px;background:white;color:#0b2036;font:inherit}
-.nal-player-chat form{display:grid;gap:8px}.nal-player-chat form[hidden]{display:none}.nal-chat-note{font-size:12px;color:#52667d}.nal-chat-note a{color:#bf1422}.nal-chat-admin{display:grid;gap:8px;font-size:12px}.nal-chat-admin:empty{display:none}.nal-chat-admin small{line-height:1.5}
+<style id="nal-event-chat-style">
+.nal-player-chat{display:flex;flex-direction:column;background:#101010;color:#f1f1f1;border:1px solid #414141;border-radius:12px;padding:0;min-width:0;text-align:left;box-sizing:border-box;overflow:hidden;font-family:Arial,Helvetica,sans-serif;height:600px;max-height:78vh;box-shadow:0 10px 28px #0003}
+.nal-player-chat[hidden]{display:none!important}
+.nal-player-chat h3{display:flex;align-items:center;gap:9px;padding:18px 20px 8px;margin:0;font-size:16px;line-height:22px;font-weight:600;color:#f1f1f1}
+.nal-player-chat h3:before{content:"";width:8px;height:8px;flex:none;background:#ed1b2f;border-radius:50%;box-shadow:0 0 0 3px #ed1b2f22}
+.nal-player-chat>p:not(.nal-chat-note){margin:0;padding:0 20px 14px;border-bottom:1px solid #343434;color:#aaa;font-size:12px;line-height:18px}
+.nal-chat-messages{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:12px 16px;scrollbar-width:thin;scrollbar-color:#555 transparent}
+.nal-chat-messages>p{color:#aaa;font-size:13px;line-height:20px;margin:10px 2px}
+.nal-chat-message{display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:10px;align-items:start;padding:7px 0;font-size:13px;line-height:19px}
+.nal-chat-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;flex:none;user-select:none;margin-top:1px}
+.nal-chat-line{min-width:0;overflow-wrap:anywhere}
+.nal-chat-line time{font-size:10px;color:#888;white-space:nowrap;margin-right:7px}
+.nal-chat-line strong{font-size:12px;color:#aaa;font-weight:700;margin-right:7px}
+.nal-chat-body{white-space:pre-wrap;color:#f1f1f1;font-weight:400}
+.nal-player-chat button{cursor:pointer;border:0;font:inherit}.nal-player-chat button:disabled{opacity:.4;cursor:wait}
+.nal-chat-message button{grid-column:2;justify-self:start;color:#aaa;background:transparent;font-size:10px;line-height:16px;padding:2px 0;margin-top:3px}
+.nal-chat-message button:hover{color:#fff;text-decoration:underline}
+.nal-player-chat form{flex:none;display:flex;align-items:center;gap:10px;border-top:1px solid #343434;padding:14px 16px 6px;margin:0}
+.nal-player-chat form[hidden]{display:none}
+.nal-player-chat textarea{box-sizing:border-box;display:block;flex:1;min-width:0;width:100%;height:40px;min-height:40px;max-height:100px;resize:vertical;border:1px solid #3e3e3e;border-radius:20px;padding:10px 14px;background:#212121;color:#fff;font:13px/18px Arial,Helvetica,sans-serif;outline:none}
+.nal-player-chat textarea:focus{border-color:#8c8c8c}.nal-player-chat textarea::placeholder{color:#999}
+.nal-player-chat form button{display:flex;align-items:center;justify-content:center;flex:none;width:36px;height:36px;border-radius:50%;padding:0;background:#ed1b2f;color:#fff;font-size:18px}
+.nal-player-chat form button:hover{background:#ff3345}.nal-player-chat button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.nal-chat-note{flex:none;margin:0;padding:6px 18px 14px;font-size:10px;line-height:16px;color:#8c8c8c}.nal-chat-note a{color:#8dc6ff}
+.nal-chat-admin:empty{display:none}
 .nal-live-chat-layout.nal-chat-active>.nal-player-chat{margin-top:20px}
 #liveGameViewerPage>.nal-player-chat{max-width:1300px;margin:20px auto}
-@media(min-width:1000px){.nal-live-chat-layout.nal-chat-active{display:grid!important;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}.nal-live-chat-layout.nal-chat-active>.network-section-header{grid-column:1/-1}.nal-live-chat-layout.nal-chat-active>#nalNetworkLivePlayer{min-width:0;grid-column:1;grid-row:2}.nal-live-chat-layout.nal-chat-active>.nal-player-chat{margin-top:0;grid-column:2;grid-row:2}}
+@media(min-width:1000px){.nal-live-chat-layout.nal-chat-active{display:grid!important;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start}.nal-live-chat-layout.nal-chat-active>.network-section-header{grid-column:1/-1}.nal-live-chat-layout.nal-chat-active>#nalNetworkLivePlayer{min-width:0;grid-column:1;grid-row:2}.nal-live-chat-layout.nal-chat-active>.nal-player-chat{margin-top:0;grid-column:2;grid-row:2}}
+@media(max-width:600px){.nal-player-chat{height:440px;max-height:70vh;border-radius:10px}.nal-chat-messages{padding:10px 12px}.nal-player-chat h3{padding-left:16px}}
 </style>
 <script id="nal-event-chat">(()=> {
  let serial=0;
@@ -21932,11 +21949,11 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
   if(!host||mounts.has(host))return;
   const client=getNalAccountClient(), box=el('aside',undefined,'nal-player-chat');
   box.setAttribute('aria-label','Event chat');box.hidden=true;
-  const heading=el('h3','EVENT CHAT'), title=el('p','Loading chat…'), list=el('div',undefined,'nal-chat-messages');
+  const heading=el('h3','Live chat'), title=el('p','Loading chat…'), list=el('div',undefined,'nal-chat-messages');
   list.setAttribute('role','log');list.setAttribute('aria-live','polite');list.setAttribute('aria-relevant','additions');
-  const form=el('form'), input=el('textarea'), send=el('button','Send');
-  input.maxLength=500;input.rows=2;input.placeholder='Talk about this event';input.setAttribute('aria-label','Your chat message');
-  send.type='submit';form.append(input,send);
+  const form=el('form'), input=el('textarea'), send=el('button','➤');
+  input.maxLength=500;input.rows=1;input.placeholder='Say something…';input.setAttribute('aria-label','Your chat message');
+  send.type='submit';send.setAttribute('aria-label','Send message');send.title='Send message';form.append(input,send);
   const note=el('p',undefined,'nal-chat-note'), admin=el('div',undefined,'nal-chat-admin');
   box.append(heading,title,list,form,note,admin);host.append(box);
   let room=null, stopped=false,busy=false,signature='';
@@ -21964,7 +21981,7 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
     form.hidden=!room||!user;
     if(!room)message('An event host can open a chat when the broadcast begins.');
     else if(!user){note.replaceChildren(el('span','Sign in with your NAL Fan Account to post. '));const a=el('a','Sign in');a.href='/account';note.append(a);}
-    else if(!note.dataset.error)message('Keep it respectful. Messages are public. Limit: 500 characters.');
+    else if(!note.dataset.error)message('Keep it respectful • 500 characters max');
     let rows=[];
     if(room){const r=await client.from('player_chat_messages').select('id,user_id,display_name,body,created_at').eq('room_id',room.id).order('created_at',{ascending:false}).limit(100);if(r.error)throw r.error;rows=(r.data||[]).reverse();}
     const sig=JSON.stringify([room?.id,rows,moderator]);
@@ -21974,7 +21991,12 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
      if(!rows.length)list.append(el('p',room?'Be the first to join this event’s conversation.':'No active conversation.'));
      rows.forEach(row=>{
       const item=el('div',undefined,'nal-chat-message'), line=el('div'), name=el('strong',row.display_name), time=el('time',new Date(row.created_at).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}));
-      time.dateTime=row.created_at;line.append(name,time);item.append(line,el('p',row.body));
+      time.dateTime=row.created_at;
+      const initials=String(row.display_name||'NAL Fan').trim().split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase();
+      const avatar=el('span',initials,'nal-chat-avatar');avatar.setAttribute('aria-hidden','true');
+      let color=0;for(const c of String(row.user_id||row.display_name))color=(color*31+c.charCodeAt(0))>>>0;
+      avatar.style.backgroundColor=['#285d86','#70509a','#29766d','#97532e','#8d405d','#596f33'][color%6];
+      const text=el('span',row.body,'nal-chat-body');line.className='nal-chat-line';line.append(time,name,text);item.append(avatar,line);
       if(moderator)for(const [label,mute] of [['Remove',false],['Mute for event',true]]){const b=el('button',label);b.type='button';b.onclick=async()=>{b.disabled=true;const r=await client.rpc('player_chat_moderate',{p_message:row.id,p_mute:mute});if(r.error)message(r.error.message);await refresh();};item.append(b);}
       list.append(item);
      });
