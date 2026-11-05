@@ -9362,13 +9362,11 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
     <button class="nav-button" data-page="shopPage" aria-label="Shop"><span class="website-nav-label">Shop</span></button>
   </nav>
 </div>
-<div id="nalTickerBand">
 <section id="nalSiteTicker" class="nal-site-ticker" aria-label="NAL news ticker">
  <iframe id="nalSiteTickerFrame" title="Latest NAL news and announcements" tabindex="-1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
  <span id="nalSiteTickerNotice" class="nal-site-ticker-notice" hidden>News ticker paused</span>
  <button id="nalSiteTickerToggle" class="nal-site-ticker-toggle" type="button" aria-label="Pause news ticker">Ⅱ</button>
 </section>
-</div>
 
   <main id="socialPage" class="app-page" style="display:none;">
     <div class="nal-social-wrap">
@@ -22052,20 +22050,12 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
  if(!strip||!frame||!toggle)return;
  const source='https://app.overlays.uno/output/4EmoGILY2NbR023pU403k1';
  let paused=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- function size(){const mobile=window.innerWidth<1001,width=mobile?Math.max(960,strip.clientWidth):strip.clientWidth,height=width*9/16,tickerHeight=height*.076,displayHeight=mobile?(window.innerWidth<600?28:32):tickerHeight,scale=displayHeight/tickerHeight;strip.style.height=displayHeight+'px';frame.style.width=width+'px';frame.style.height=height+'px';frame.style.transform=mobile?'scaleY('+scale+')':'none';frame.style.transformOrigin='0 0';frame.style.top=(-height*.924*scale)+'px';}
+ function size(){const width=Math.max(960,strip.clientWidth),height=width*9/16,tickerHeight=height*.076,compactHeight=window.innerWidth<600?28:32,scale=compactHeight/tickerHeight;strip.style.height=compactHeight+'px';frame.style.width=width+'px';frame.style.height=height+'px';frame.style.transform='scaleY('+scale+')';frame.style.transformOrigin='0 0';frame.style.top=(-height*.924*scale)+'px';}
  function render(){frame.src=paused?'about:blank':source;frame.hidden=paused;notice.hidden=!paused;toggle.textContent=paused?'▶':'Ⅱ';toggle.setAttribute('aria-label',paused?'Resume news ticker':'Pause news ticker');toggle.title=paused?'Resume ticker':'Pause ticker';}
  toggle.addEventListener('click',()=>{paused=!paused;render();});
  new ResizeObserver(size).observe(strip);
  size();render();
 })();
 </script>
-<style id="nal-desktop-inset-hero-ticker">
-html body #nalTickerBand{background:#06172b;}
-@media(min-width:1001px){
-html body #nalTickerBand{padding:16px 0 12px;}
-html body #nalSiteTicker{width:calc(100% - 100px);max-width:1440px;margin:0 auto;border-radius:4px;}
-html body #homePage .season-x-hero.nal-home-slideshow{width:calc(100% - 100px)!important;max-width:1440px!important;margin:0 auto 20px!important;border-radius:7px;}
-}
-</style>
 </body>
 </html>
