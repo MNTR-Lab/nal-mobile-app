@@ -9264,6 +9264,20 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
 #socialPage .nal-social-instagram-section .nal-social-instagram-avatar svg{max-width:65%;height:auto}
 </style>
 <style id="nal-team-empty-sections">.wheeling-content-section[hidden]{display:none!important}</style>
+
+<style id="nal-team-channel-desktop-grid">
+@media(min-width:850px){
+  #lightcastTestModal:has([id^="nalTeamRow-"]) .lightcast-test-shell{max-width:1380px;width:calc(100% - 48px)}
+  #lightcastTestModal:has([id^="nalTeamRow-"]) .lightcast-test-content{padding:24px}
+  #lightcastTestModal:has([id^="nalTeamRow-"]) .wheeling-hub-hero{max-width:900px;margin-left:auto;margin-right:auto}
+  #lightcastTestModal [id^="nalTeamRow-"].wheeling-video-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;overflow:visible}
+  #lightcastTestModal [id^="nalTeamRow-"] .wheeling-video-card{width:100%;min-width:0;flex:none}
+  #lightcastTestModal [id^="nalTeamRow-"] .wheeling-video-card strong{font-size:13px;line-height:1.35}
+}
+@media(min-width:1200px){
+  #lightcastTestModal [id^="nalTeamRow-"].wheeling-video-row{grid-template-columns:repeat(6,minmax(0,1fr))}
+}
+</style>
 </head>
 
 <body>
@@ -16912,7 +16926,7 @@ function renderNALTeamRow(key){
   const section=row.closest('.wheeling-content-section');
   if(section) section.hidden=section.dataset.nalVodPaused==='true'||items.length===0;
   if(!items.length){ row.replaceChildren(); return; }
-  row.innerHTML=items.slice(0,3).map((item,index)=>{
+  row.innerHTML=items.slice(0,6).map((item,index)=>{
     const image=nalTeamPoster(item);
     return `<button type="button" class="wheeling-video-card" data-nal-team-source="${lightcastEscape(key)}" data-nal-team-index="${index}">
       ${image ? `<img src="${lightcastEscape(image)}" alt="${lightcastEscape(item.title || team.name+" video")}" loading="lazy">` : `<div class="wheeling-video-placeholder-art">${lightcastEscape(team.name)}</div>`}
