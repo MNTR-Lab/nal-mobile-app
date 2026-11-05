@@ -9366,7 +9366,6 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
  <iframe id="nalSiteTickerFrame" title="Latest NAL news and announcements" tabindex="-1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
  <span class="nal-site-ticker-label" aria-hidden="true">UPDATES</span>
  <span id="nalSiteTickerNotice" class="nal-site-ticker-notice" hidden>News ticker paused</span>
- <button id="nalSiteTickerToggle" class="nal-site-ticker-toggle" type="button" aria-label="Pause news ticker">Ⅱ</button>
 </section>
 
   <main id="socialPage" class="app-page" style="display:none;">
@@ -22048,12 +22047,12 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
 <script id="nal-site-ticker-script">
 (()=> {
  const strip=document.getElementById('nalSiteTicker'),frame=document.getElementById('nalSiteTickerFrame'),toggle=document.getElementById('nalSiteTickerToggle'),notice=document.getElementById('nalSiteTickerNotice');
- if(!strip||!frame||!toggle)return;
+ if(!strip||!frame)return;
  const source='https://app.overlays.uno/output/4EmoGILY2NbR023pU403k1';
- let paused=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let paused=false;
  function size(){const width=Math.max(960,strip.clientWidth),height=width*9/16,tickerHeight=height*.076,compactHeight=window.innerWidth<600?28:32,scale=compactHeight/tickerHeight;strip.style.height=compactHeight+'px';strip.style.setProperty('--nal-ticker-label-width',(width*.118)+'px');frame.style.width=width+'px';frame.style.height=height+'px';frame.style.transform='scaleY('+scale+')';frame.style.transformOrigin='0 0';frame.style.top=(-height*.924*scale)+'px';}
- function render(){frame.src=paused?'about:blank':source;frame.hidden=paused;notice.hidden=!paused;toggle.textContent=paused?'▶':'Ⅱ';toggle.setAttribute('aria-label',paused?'Resume news ticker':'Pause news ticker');toggle.title=paused?'Resume ticker':'Pause ticker';}
- toggle.addEventListener('click',()=>{paused=!paused;render();});
+ function render(){frame.src=paused?'about:blank':source;frame.hidden=paused;notice.hidden=!paused;}
+
  new ResizeObserver(size).observe(strip);
  size();render();
 })();
