@@ -22062,9 +22062,11 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
 @media(min-width:1001px){html body #homePage .season-x-hero.nal-home-slideshow{width:calc(100% - 100px)!important;max-width:none!important;margin-left:50px!important;margin-right:50px!important;box-sizing:border-box!important;}}
 </style>
 <style id="nal-ticker-custom-label">
-.nal-site-ticker-label{position:absolute;inset:0 auto 0 0;z-index:1;width:var(--nal-ticker-label-width,114px);box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:0 8px;background:#06172b;border-right:2px solid #e31b23;color:#fff;font:800 11px/1 Arial,Helvetica,sans-serif;letter-spacing:.65px;white-space:nowrap;pointer-events:none;}
+.nal-site-ticker::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;z-index:3;background:#e31b23;pointer-events:none;}
+@media(min-width:601px) and (max-width:1000px){.nal-site-ticker-label{font-size:11px!important;letter-spacing:0!important;}}
+.nal-site-ticker-label{position:absolute;inset:0 auto 0 0;z-index:1;width:var(--nal-ticker-label-width,114px);box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:0 8px;background:#06172b;border-right:2px solid #e31b23;color:#fff;font:800 14px/1 Arial,Helvetica,sans-serif;letter-spacing:.25px;white-space:nowrap;pointer-events:none;}
 .nal-site-ticker:has(#nalSiteTickerFrame[hidden]) .nal-site-ticker-label{display:none;}
-@media(max-width:600px){.nal-site-ticker-label{font-size:9px;letter-spacing:.35px;padding:0 5px;}}
+@media(max-width:600px){.nal-site-ticker-label{font-size:10px;letter-spacing:0;padding:0 5px;}}
 </style>
 </body>
 </html>
