@@ -9362,6 +9362,11 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
     <button class="nav-button" data-page="shopPage" aria-label="Shop"><span class="website-nav-label">Shop</span></button>
   </nav>
 </div>
+<section id="nalSiteTicker" class="nal-site-ticker" aria-label="NAL news ticker">
+ <iframe id="nalSiteTickerFrame" title="Latest NAL news and announcements" tabindex="-1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+ <span id="nalSiteTickerNotice" class="nal-site-ticker-notice" hidden>News ticker paused</span>
+ <button id="nalSiteTickerToggle" class="nal-site-ticker-toggle" type="button" aria-label="Pause news ticker">Ⅱ</button>
+</section>
 
   <main id="socialPage" class="app-page" style="display:none;">
     <div class="nal-social-wrap">
@@ -22029,6 +22034,27 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
  observer.observe(document.body,{childList:true,subtree:true});
  const player=document.getElementById('nalNetworkLivePlayer');
  if(player?.querySelector('iframe')){player.parentElement.classList.add('nal-live-chat-layout');window.mountNALPlayerChat(player.parentElement,'live-channel','');}
+})();
+</script>
+<style id="nal-site-ticker-style">
+.nal-site-ticker{position:relative;width:100%;height:41.04px;overflow:hidden;background:#06172b;isolation:isolate}
+.nal-site-ticker iframe{position:absolute;left:0;top:-498.96px;width:960px;height:540px;border:0;display:block;max-width:none;pointer-events:none}
+.nal-site-ticker iframe[hidden],.nal-site-ticker-notice[hidden]{display:none!important}
+.nal-site-ticker-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:2;display:flex;align-items:center;justify-content:center;width:28px;height:28px;padding:0;border:1px solid #ffffff55;border-radius:50%;background:#06172be6;color:white;font:700 13px Arial,sans-serif;cursor:pointer}
+.nal-site-ticker-toggle:hover{background:#212e63}.nal-site-ticker-toggle:focus-visible{outline:2px solid white;outline-offset:2px}
+.nal-site-ticker-notice{display:flex;align-items:center;height:100%;padding:0 48px 0 18px;color:#b9c9dd;font:600 12px Arial,sans-serif}
+</style>
+<script id="nal-site-ticker-script">
+(()=> {
+ const strip=document.getElementById('nalSiteTicker'),frame=document.getElementById('nalSiteTickerFrame'),toggle=document.getElementById('nalSiteTickerToggle'),notice=document.getElementById('nalSiteTickerNotice');
+ if(!strip||!frame||!toggle)return;
+ const source='https://app.overlays.uno/output/4EmoGILY2NbR023pU403k1';
+ let paused=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function size(){const width=Math.max(960,strip.clientWidth),height=width*9/16;strip.style.height=(height*.076)+'px';frame.style.width=width+'px';frame.style.height=height+'px';frame.style.top=(-height*.924)+'px';}
+ function render(){frame.src=paused?'about:blank':source;frame.hidden=paused;notice.hidden=!paused;toggle.textContent=paused?'▶':'Ⅱ';toggle.setAttribute('aria-label',paused?'Resume news ticker':'Pause news ticker');toggle.title=paused?'Resume ticker':'Pause ticker';}
+ toggle.addEventListener('click',()=>{paused=!paused;render();});
+ new ResizeObserver(size).observe(strip);
+ size();render();
 })();
 </script>
 </body>
