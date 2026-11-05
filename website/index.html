@@ -21801,6 +21801,14 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
 }
 </style>
 <style id="nal-social-latest-style">
+#nalSocialVideoDialog{width:min(900px,94vw);max-height:92dvh;margin:auto;padding:42px 18px 18px;border:1px solid #ffffff30;border-radius:16px;background:#07172b;color:white;box-shadow:0 20px 80px #0008}
+#nalSocialVideoDialog::backdrop{background:#000c}
+#nalSocialVideoDialog .nal-social-video-close{position:absolute;right:10px;top:5px;width:34px;height:34px;border:0;background:transparent;color:white;font-size:30px;cursor:pointer}
+#nalSocialVideoDialog .nal-social-video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+#nalSocialVideoDialog video,#nalSocialVideoDialog iframe{display:block;width:100%;height:100%;border:0;object-fit:contain}
+#nalSocialVideoDialog h2{margin:14px 0 0;font-size:18px;line-height:1.4}
+#nalSocialVideoDialog .nal-social-video-error{position:absolute;bottom:45px;left:12px;right:12px;padding:12px;background:#07172b}
+
 #nalSocialLatest{margin:28px 0 36px}
 .nal-social-latest-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
 .nal-social-latest-card{min-width:0;border-radius:14px;overflow:hidden;background:#fff;border:1px solid #dfe3e8;box-shadow:0 5px 18px #07172b0a}
@@ -21830,12 +21838,25 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
       .sort((a,b)=>b.publishDate.localeCompare(a.publishDate)).slice(0,6);
   }
   function openVideo(item){
+    document.getElementById('nalSocialVideoDialog')?.remove();
+    const dialog=document.createElement('dialog');dialog.id='nalSocialVideoDialog';dialog.setAttribute('aria-label',item.title||'NAL social video');
+    const close=document.createElement('button');close.type='button';close.className='nal-social-video-close';close.textContent='×';close.setAttribute('aria-label','Close social video');
+    const frameHost=document.createElement('div');frameHost.className='nal-social-video-frame';
     const youtube=typeof nalEditorialYouTubeEmbed==='function'?nalEditorialYouTubeEmbed(item.playbackUrl):'';
-    openNetworkVideo(item.title,api+'/stream?id='+encodeURIComponent(item.id));
     if(youtube){
-      const host=document.getElementById('networkPreviewPlayer');host.replaceChildren();
-      const frame=document.createElement('iframe');frame.src=youtube;frame.title=item.title||'NAL video';frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';frame.style.cssText='width:100%;height:100%;border:0';host.append(frame);
+      const frame=document.createElement('iframe');frame.src=youtube;frame.title=item.title||'NAL video';frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';frameHost.append(frame);
+    }else{
+      const video=document.createElement('video');video.src=api+'/stream?id='+encodeURIComponent(item.id);video.controls=true;video.playsInline=true;video.preload='metadata';
+      if(item.thumbnailUrl)video.poster=item.thumbnailUrl;
+      const status=document.createElement('p');status.className='nal-social-video-error';status.hidden=true;status.textContent='Unable to play this video right now.';
+      video.addEventListener('error',()=>{status.hidden=false;});frameHost.append(video,status);
     }
+    const title=document.createElement('h2');title.textContent=item.title||'NAL Network';
+    dialog.append(close,frameHost,title);document.body.append(dialog);
+    close.onclick=()=>dialog.close();
+    dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
+    dialog.addEventListener('close',()=>{dialog.querySelector('video')?.pause();dialog.remove();});
+    dialog.showModal();
   }
   async function load(){
     const grid=document.getElementById('nalSocialLatestGrid');if(!grid)return;
