@@ -22079,5 +22079,10 @@ html body .website-sticky-header #website-navigation.bottom-nav button:is(.nav-b
 html body .website-sticky-header #website-navigation.bottom-nav button:is(.nav-button,.watch-button):is(.active,:hover,:focus-visible),
 html body .website-sticky-header #website-navigation.bottom-nav button:is(.nav-button,.watch-button):is(.active,:hover,:focus-visible)>span.website-nav-label{color:#e31b23!important;background:transparent!important;}
 </style>
+<style id="nal-nav-label-emphasis">
+html body .website-sticky-header #website-navigation.bottom-nav button:is(.nav-button,.watch-button)>span.website-nav-label{transition:transform .15s ease;transform-origin:center;}
+html body .website-sticky-header #website-navigation.bottom-nav button:is(.nav-button,.watch-button):is(.active,:hover,:focus-visible)>span.website-nav-label{transform:scale(1.33)!important;}
+@media(prefers-reduced-motion:reduce){html body .website-sticky-header #website-navigation.bottom-nav button>span.website-nav-label{transition:none;}}
+</style>
 </body>
 </html>
