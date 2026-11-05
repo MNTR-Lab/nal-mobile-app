@@ -9362,11 +9362,13 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
     <button class="nav-button" data-page="shopPage" aria-label="Shop"><span class="website-nav-label">Shop</span></button>
   </nav>
 </div>
+<div id="nalTickerBand">
 <section id="nalSiteTicker" class="nal-site-ticker" aria-label="NAL news ticker">
  <iframe id="nalSiteTickerFrame" title="Latest NAL news and announcements" tabindex="-1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
  <span id="nalSiteTickerNotice" class="nal-site-ticker-notice" hidden>News ticker paused</span>
  <button id="nalSiteTickerToggle" class="nal-site-ticker-toggle" type="button" aria-label="Pause news ticker">Ⅱ</button>
 </section>
+</div>
 
   <main id="socialPage" class="app-page" style="display:none;">
     <div class="nal-social-wrap">
@@ -22058,8 +22060,10 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
 })();
 </script>
 <style id="nal-desktop-inset-hero-ticker">
+html body #nalTickerBand{background:#06172b;}
 @media(min-width:1001px){
-html body #nalSiteTicker{width:calc(100% - 100px);max-width:1440px;margin:16px auto 12px;border-radius:4px;}
+html body #nalTickerBand{padding:16px 0 12px;}
+html body #nalSiteTicker{width:calc(100% - 100px);max-width:1440px;margin:0 auto;border-radius:4px;}
 html body #homePage .season-x-hero.nal-home-slideshow{width:calc(100% - 100px)!important;max-width:1440px!important;margin:0 auto 20px!important;border-radius:7px;}
 }
 </style>
