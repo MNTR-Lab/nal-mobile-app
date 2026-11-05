@@ -22047,7 +22047,7 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
  if(!strip||!frame)return;
  const source='https://app.overlays.uno/output/4EmoGILY2NbR023pU403k1';
  let paused=false;
- function size(){const width=Math.max(960,strip.clientWidth),height=width*9/16,tickerHeight=height*.076,compactHeight=window.innerWidth<600?28:32,scale=compactHeight/tickerHeight;strip.style.height=compactHeight+'px';frame.style.width=width+'px';frame.style.height=height+'px';frame.style.transform='scaleY('+scale+')';frame.style.transformOrigin='0 0';frame.style.top=(-height*.924*scale)+'px';}
+ function size(){const width=Math.max(960,strip.clientWidth),height=width*9/16,tickerHeight=height*.076,compactHeight=window.innerWidth<600?28:32,scale=compactHeight/tickerHeight;strip.style.height=(compactHeight+6)+'px';frame.style.width=width+'px';frame.style.height=height+'px';frame.style.transform='scaleY('+scale+')';frame.style.transformOrigin='0 0';frame.style.top=(6-height*.924*scale)+'px';}
  function render(){frame.src=paused?'about:blank':source;frame.hidden=paused;notice.hidden=!paused;}
 
  new ResizeObserver(size).observe(strip);
