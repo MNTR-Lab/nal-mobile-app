@@ -16821,8 +16821,57 @@ function setLightcastModalHeading(text, subtitle=""){
 function setWheelingTeamView(enabled){
   document.getElementById("lightcastTestModal")?.classList.toggle("wheeling-team-view",!!enabled);
 }
+
+const NAL_TEAM_EDITORIAL_API = 'https://nal-network-video-api.bikard.workers.dev';
+const NAL_TEAM_EDITORIAL = {highlights:'Highlights',features:'Features & Interviews'};
+function nalTeamSource(key){
+  return NAL_TEAM_EDITORIAL[key] ? {label:NAL_TEAM_EDITORIAL[key].toUpperCase(),editorial:true} : activeNALTeam().sources?.[key];
+}
+function nalEditorialTeamMatch(value,slug){
+  const normalize=v=>String(v||'').toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]/g,'');
+  const team=NAL_TEAM_CHANNELS[slug];
+  const names=[slug,team?.name,slug.split('-')[0]];
+  if(slug==='southwest-kansas-storm') names.push('SW Kansas Storm','SW Kansas','Southwest Kansas');
+  if(slug==='sioux-city-bandits') names.push('Sioux City');
+  return String(value||'').split(/[,;]+/).some(v=>names.some(name=>normalize(v)===normalize(name)));
+}
+function nalEditorialItems(videos,slug,key){
+  return videos.filter(v=>v.status==='Published'&&v.category===NAL_TEAM_EDITORIAL[key]&&
+    /^\d{4}-\d{2}-\d{2}$/.test(v.publishDate||'')&&nalEditorialTeamMatch(v.team,slug))
+    .sort((a,b)=>b.publishDate.localeCompare(a.publishDate));
+}
+async function loadNALTeamEditorial(){
+  const slug=activeNALTeamSlug;
+  const rows=Object.fromEntries(Object.keys(NAL_TEAM_EDITORIAL).map(key=>[key,document.getElementById('nalTeamRow-'+key)]));
+  Object.values(rows).forEach(row=>{if(row)row.innerHTML='<div class="wheeling-row-loading">Loading videos...</div>';});
+  try{
+    const response=await fetch(NAL_TEAM_EDITORIAL_API+'/videos',{cache:'no-store'});
+    const data=await response.json();
+    if(!response.ok||!data.ok||!Array.isArray(data.videos))throw Error('Video library unavailable');
+    for(const key of Object.keys(NAL_TEAM_EDITORIAL)){
+      nalTeamMediaBucket(slug)[key]=nalEditorialItems(data.videos,slug,key);
+      if(activeNALTeamSlug===slug&&rows[key]?.isConnected)renderNALTeamRow(key);
+    }
+  }catch(_){
+    for(const row of Object.values(rows))if(row?.isConnected)row.innerHTML='<div class="wheeling-empty-row">Unable to load videos right now.</div>';
+  }
+}
+function openNALTeamEditorialVideo(key,index){
+  const team=activeNALTeam(),item=nalTeamMediaBucket(activeNALTeamSlug)[key]?.[index],content=lightcastTestContent();
+  if(!item||!content)return;
+  setWheelingTeamView(false);
+  setLightcastModalHeading(team.name+' — '+NAL_TEAM_EDITORIAL[key]);
+  const src=NAL_TEAM_EDITORIAL_API+'/stream?id='+encodeURIComponent(item.id);
+  content.innerHTML=`<div class="lightcast-test-view-head"><button type="button" class="lightcast-test-back" id="nalTeamEditorialBack">‹ BACK</button><div class="lightcast-test-view-title"><h2>NOW PLAYING</h2><p>${lightcastEscape(team.name)}</p></div></div><div class="lightcast-video-wrap"><video controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000" src="${lightcastEscape(src)}" ${item.thumbnailUrl?'poster="'+lightcastEscape(item.thumbnailUrl)+'"':''}></video></div><div class="lightcast-video-meta"><h2>${lightcastEscape(item.title||'Video')}</h2>${item.description?'<p>'+lightcastEscape(item.description)+'</p>':''}<p id="nalTeamEditorialPlaybackError" hidden>Unable to play this video right now.</p></div>`;
+  content.querySelector('video').addEventListener('error',()=>{document.getElementById('nalTeamEditorialPlaybackError')?.removeAttribute('hidden');});
+  document.getElementById('nalTeamEditorialBack').onclick=()=>{
+    if(nalTeamPlayerReturn.view==='catalog'&&nalTeamPlayerReturn.sourceKey)renderNALTeamCatalog(nalTeamPlayerReturn.sourceKey);
+    else renderNALTeamHub();
+  };
+}
+
 function activeNALTeam(){ return NAL_TEAM_CHANNELS[activeNALTeamSlug] || NAL_TEAM_CHANNELS["wheeling-miners"]; }
-function nalTeamPoster(item){ return item?.poster_image_16x9_640w || item?.poster_image_16x9_400w || item?.poster_image_16x9_200w || ""; }
+function nalTeamPoster(item){ return item?.poster_image_16x9_640w || item?.poster_image_16x9_400w || item?.poster_image_16x9_200w || item?.thumbnailUrl || ""; }
 function nalTeamMediaBucket(slug){
   if(!nalTeamHubMedia[slug]) nalTeamHubMedia[slug]={latest:[],archives:[],coaches:[]};
   return nalTeamHubMedia[slug];
@@ -16852,7 +16901,7 @@ function renderNALTeamRow(key){
 
 function renderNALTeamCatalog(key){
   const team=activeNALTeam();
-  const source=team.sources?.[key];
+  const source=nalTeamSource(key);
   const content=lightcastTestContent();
   if(!source || !content) return;
   const items=nalTeamMediaBucket(activeNALTeamSlug)[key] || [];
@@ -16912,10 +16961,11 @@ function renderNALTeamHub(){
     <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>LATEST GAMES (V.O.D.)</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="latest" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-latest"><div class="wheeling-empty-row">COMING SOON</div></div></section>
     <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="archives" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-archives"><div class="wheeling-empty-row">COMING SOON</div></div></section>
     <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>COACHES' SHOW</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="coaches" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-coaches"><div class="wheeling-empty-row">COMING SOON</div></div></section>
-    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>HIGHLIGHTS</h3></div><div class="wheeling-video-row"><div class="wheeling-empty-row">COMING SOON</div></div></section>
-    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3></div><div class="wheeling-video-row"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
+    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>HIGHLIGHTS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="highlights" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-highlights"><div class="wheeling-empty-row">COMING SOON</div></div></section>
+    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="features" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-features"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
   content.querySelectorAll("[data-nal-team-view-all]").forEach(button=>button.addEventListener("click",()=>renderNALTeamCatalog(button.dataset.nalTeamViewAll)));
   ["latest","archives","coaches"].forEach(loadNALTeamRow);
+  loadNALTeamEditorial();
 }
 
 function openNALTeamHub(slug){
@@ -16935,6 +16985,7 @@ function getNALTeamEmbedSrc(item,channelId){
   return `https://www.lightcast.com/embed/player.php?id=${encodeURIComponent(mediaId)}&channelId=${encodeURIComponent(channelId)}`;
 }
 function openNALTeamVideo(sourceKey,index){
+  if(NAL_TEAM_EDITORIAL[sourceKey]){openNALTeamEditorialVideo(sourceKey,index);return;}
   const team=activeNALTeam();
   const source=team.sources?.[sourceKey];
   const item=nalTeamMediaBucket(activeNALTeamSlug)[sourceKey]?.[index];
