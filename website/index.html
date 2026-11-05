@@ -22093,7 +22093,7 @@ html body .website-sticky-header #website-navigation.bottom-nav button:is(.nav-b
 
 <style id="nal-partner-slideshow-style">
 @media(min-width:1001px){
-html body #homePage .partner-scroll{grid-template-rows:auto!important;grid-auto-rows:auto;}
+html body #homePage .partner-scroll{grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-template-rows:auto!important;grid-auto-rows:auto;}
 html body #homePage .partner-scroll > .partner-card.nal-partner-slide-hidden{display:none!important;}
 html body #homePage .partner-scroll > .partner-card{animation:nalPartnerReveal .3s ease;}
 @keyframes nalPartnerReveal{from{opacity:0}to{opacity:1}}
@@ -22109,16 +22109,16 @@ html body #homePage .partner-scroll > .partner-card{animation:nalPartnerReveal .
  let start=0;
  function render(){
   cards.forEach((card,index)=>{
-   const offset=(index-start+cards.length)%cards.length;
-   card.classList.toggle('nal-partner-slide-hidden',desktop.matches&&offset>=5);
+   const offset=index-start;
+   card.classList.toggle('nal-partner-slide-hidden',desktop.matches&&(offset<0||offset>=6));
    card.style.order=desktop.matches?String(offset):'';
   });
  }
  desktop.addEventListener('change',render);
  render();
  window.setInterval(()=>{
-  if(!desktop.matches||document.hidden||cards.length<=5||!row.getClientRects().length||row.contains(document.activeElement))return;
-  start=(start+5)%cards.length;render();
+  if(!desktop.matches||document.hidden||cards.length<=6||!row.getClientRects().length||row.contains(document.activeElement))return;
+  start=start+6>=cards.length?0:start+6;render();
  },5000);
 })();
 </script>
