@@ -9225,7 +9225,7 @@ html body #socialPage{
 #socialPage #nalSocialFeed{margin-top:0;font-size:clamp(21px,2.4vw,32px);letter-spacing:.6px;color:#fff}
 #socialPage #nalSocialFeed + .nal-social-intro{color:#d8e4ef}
 #socialPage .nal-feed-shell{margin-top:16px}
-#socialPage .nal-feed-post-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0 0 18px}
+#socialPage .nal-feed-post-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin:0 0 18px}
 #socialPage .nal-live-post{min-width:0}
 #socialPage .nal-live-post-body{padding:10px;gap:7px}
 #socialPage .nal-live-post-source{font-size:8px;letter-spacing:.35px}
@@ -21613,7 +21613,7 @@ if(location.pathname.replace(/\/$/,'')==='/social')document.addEventListener('DO
   });
  }
  async function load(){if(loaded||pending)return pending;message('CONNECTING THE FEED','Retrieving recent league posts…');
-  pending=(async()=>{try{const r=await fetch('/api/social/facebook',{headers:{Accept:'application/json'}});const data=await r.json();if(!r.ok||!data.ok)throw new Error(data.message||'Feed unavailable');posts=(Array.isArray(data.posts)?data.posts:[]).sort((a,b)=>Date.parse(b.created_time||0)-Date.parse(a.created_time||0)).slice(0,10);loaded=true;render();}
+  pending=(async()=>{try{const r=await fetch('/api/social/facebook',{headers:{Accept:'application/json'}});const data=await r.json();if(!r.ok||!data.ok)throw new Error(data.message||'Feed unavailable');posts=(Array.isArray(data.posts)?data.posts:[]).sort((a,b)=>Date.parse(b.created_time||0)-Date.parse(a.created_time||0)).slice(0,6);loaded=true;render();}
    catch(err){clear();message('FACEBOOK FEED TEMPORARILY UNAVAILABLE','Live posts could not be loaded. You can still visit the official Facebook channel below.');console.warn('NAL Facebook feed:',err.message);}finally{pending=null;}})();return pending;}
  buttons.forEach(b=>b.addEventListener('click',()=>{active=b.dataset.nalFeedFilter;buttons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();if((active==='all'||active==='facebook')&&!loaded)load();}));
  // Only request Facebook when the Social page becomes visible.
