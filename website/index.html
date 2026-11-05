@@ -9263,6 +9263,7 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
 #socialPage .nal-social-instagram-section .nal-social-instagram-avatar{display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(145deg,#713ab5,#c13584 56%,#e6683c);}
 #socialPage .nal-social-instagram-section .nal-social-instagram-avatar svg{max-width:65%;height:auto}
 </style>
+<style id="nal-team-empty-sections">.wheeling-content-section[hidden]{display:none!important}</style>
 </head>
 
 <body>
@@ -16908,7 +16909,9 @@ function renderNALTeamRow(key){
   const items=Array.isArray(bucket[key]) ? bucket[key] : [];
   const viewAll=document.querySelector(`[data-nal-team-view-all="${key}"]`);
   if(viewAll) viewAll.hidden=items.length===0;
-  if(!items.length){ row.innerHTML=`<div class="wheeling-empty-row">COMING SOON</div>`; return; }
+  const section=row.closest('.wheeling-content-section');
+  if(section) section.hidden=section.dataset.nalVodPaused==='true'||items.length===0;
+  if(!items.length){ row.replaceChildren(); return; }
   row.innerHTML=items.slice(0,3).map((item,index)=>{
     const image=nalTeamPoster(item);
     return `<button type="button" class="wheeling-video-card" data-nal-team-source="${lightcastEscape(key)}" data-nal-team-index="${index}">
@@ -16951,6 +16954,7 @@ function renderNALTeamCatalog(key){
 
 async function loadNALTeamRow(key){
   const team=activeNALTeam();
+  const slug=activeNALTeamSlug;
   const source=team.sources?.[key];
   if(!source){ renderNALTeamRow(key); return; }
   const row=document.getElementById(`nalTeamRow-${key}`);
@@ -16959,8 +16963,8 @@ async function loadNALTeamRow(key){
     const params={view:"media",channelId:source.channelId};
     if(source.subId) params.subId=source.subId;
     const payload=await fetchLightcastCatalog(params);
-    nalTeamMediaBucket(activeNALTeamSlug)[key]=Array.isArray(payload.data) ? payload.data : [];
-    renderNALTeamRow(key);
+    nalTeamMediaBucket(slug)[key]=Array.isArray(payload.data) ? payload.data : [];
+    if(activeNALTeamSlug===slug&&row?.isConnected)renderNALTeamRow(key);
   }catch(error){ if(row) row.innerHTML=`<div class="wheeling-empty-row">Unable to load this category right now.</div>`; }
 }
 
@@ -16973,7 +16977,7 @@ function renderNALTeamHub(){
     setLightcastModalHeading(team.name,"NAL Network Archives");
     content.innerHTML=`
       <section class="wheeling-hub-hero"><img class="wheeling-hub-banner" src="${lightcastEscape(team.banner)}" alt="${lightcastEscape(team.name)}"></section>
-      <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="archives" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-archives"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
+      <section class="wheeling-content-section" hidden><div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="archives" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-archives"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
     content.querySelectorAll("[data-nal-team-view-all]").forEach(button=>button.addEventListener("click",()=>renderNALTeamCatalog(button.dataset.nalTeamViewAll)));
     loadNALTeamRow("archives");
     return;
@@ -16982,10 +16986,10 @@ function renderNALTeamHub(){
   content.innerHTML=`
     <section class="wheeling-hub-hero"><img class="wheeling-hub-banner" src="${lightcastEscape(team.banner)}" alt="${lightcastEscape(team.name)}"></section>
     <section class="wheeling-content-section" hidden data-nal-vod-paused="true"><div class="wheeling-section-head"><h3>LATEST GAMES (V.O.D.)</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="latest" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-latest"><div class="wheeling-empty-row">COMING SOON</div></div></section>
-    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="archives" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-archives"><div class="wheeling-empty-row">COMING SOON</div></div></section>
-    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>COACHES' SHOW</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="coaches" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-coaches"><div class="wheeling-empty-row">COMING SOON</div></div></section>
-    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>HIGHLIGHTS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="highlights" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-highlights"><div class="wheeling-empty-row">COMING SOON</div></div></section>
-    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="features" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-features"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
+    <section class="wheeling-content-section" hidden><div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="archives" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-archives"><div class="wheeling-empty-row">COMING SOON</div></div></section>
+    <section class="wheeling-content-section" hidden><div class="wheeling-section-head"><h3>COACHES' SHOW</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="coaches" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-coaches"><div class="wheeling-empty-row">COMING SOON</div></div></section>
+    <section class="wheeling-content-section" hidden><div class="wheeling-section-head"><h3>HIGHLIGHTS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="highlights" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-highlights"><div class="wheeling-empty-row">COMING SOON</div></div></section>
+    <section class="wheeling-content-section" hidden><div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="features" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-features"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
   content.querySelectorAll("[data-nal-team-view-all]").forEach(button=>button.addEventListener("click",()=>renderNALTeamCatalog(button.dataset.nalTeamViewAll)));
   // Latest Games V.O.D. paused until the season; retain channel configuration for restoration.
   ["archives","coaches"].forEach(loadNALTeamRow);
