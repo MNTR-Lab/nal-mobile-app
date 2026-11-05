@@ -2364,7 +2364,7 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   display: none;
 }
 
-.network-tab {
+:is(.network-tab,.nal-wtw-nav) {
   flex: 0 0 auto;
   padding: 13px 13px 11px;
   border: 0;
@@ -2378,7 +2378,7 @@ flex: 0 0 calc((100vw - 72px) / 3.5);
   cursor: pointer;
 }
 
-.network-tab.active {
+:is(.network-tab,.nal-wtw-nav).active {
   color: #ffffff;
   border-bottom-color: var(--nal-red);
 }
@@ -3264,7 +3264,7 @@ body:has(#teamsPage[style*="display: block"]) .content-page:not(#teamsPage){
 #watchPage .network-hub-header{padding:20px 16px 13px!important;}
 #watchPage .network-hub-wordmark{font-size:30px!important;}
 #watchPage .network-tabs{top:var(--header-height);justify-content:space-between;padding:0 8px!important;}
-#watchPage .network-tab{padding:12px 8px 10px!important;font-size:14px!important;}
+#watchPage :is(.network-tab,.nal-wtw-nav){padding:12px 8px 10px!important;font-size:14px!important;}
 #watchPage .network-tab-panel{display:none;}
 #watchPage .network-tab-panel.active{display:block;}
 #watchPage .network-section-kicker{margin-bottom:9px;font-size:10px;font-weight:950;letter-spacing:.8px;color:#fff;}
@@ -19810,8 +19810,8 @@ html body #watchPage .network-unified-kicker,html body #watchPage .network-unifi
 html body #watchPage .network-unified-title{font-family:Impact,Haettenschweiler,'Arial Narrow Bold','Arial Black',sans-serif !important;font-size:clamp(42px,4.3vw,64px) !important;font-weight:900 !important;line-height:1 !important;letter-spacing:2.5px !important;margin:0 0 10px !important;background:linear-gradient(180deg,#fff,#f1f5fa 44%,#dbe3ed 65%,#eef3fa) !important;background-clip:text !important;-webkit-background-clip:text !important;-webkit-text-fill-color:transparent !important;color:#f3f6fa !important;text-shadow:none !important;filter:drop-shadow(0 2px 0 #8291a5) drop-shadow(0 4px 5px #0009);}
 html body #watchPage .network-unified-tagline{font-size:14px !important;font-weight:650 !important;letter-spacing:3px !important;color:#e1e9f3 !important;}
 html body #watchPage .network-tabs{position:relative !important;top:auto !important;display:flex !important;justify-content:center !important;gap:20px !important;background:transparent !important;padding:0 !important;margin:6px 0 22px !important;border-bottom:1px solid #ffffff20 !important;}
-html body #watchPage .network-tab{flex:0 1 auto !important;padding:12px 22px !important;color:#dbe5f2 !important;font-size:14px !important;}
-html body #watchPage .network-tab.active{color:white !important;border-bottom:3px solid #e31b23 !important;}
+html body #watchPage :is(.network-tab,.nal-wtw-nav){flex:0 1 auto !important;padding:12px 22px !important;color:#dbe5f2 !important;font-size:14px !important;}
+html body #watchPage :is(.network-tab,.nal-wtw-nav).active{color:white !important;border-bottom:3px solid #e31b23 !important;}
 html body #watchPage .network-hub-section{padding:0 !important;margin:0 0 28px !important;}
 html body #watchPage .network-feature-section>.network-section-kicker{display:none !important;}
 html body #watchPage .network-feature-card{display:grid !important;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);align-items:stretch;border:1px solid #396789 !important;border-radius:7px;overflow:hidden;background:#051328dd !important;cursor:default;}
@@ -19854,7 +19854,7 @@ html body #watchPage .network-tab-panel[data-network-panel="home"] .network-show
 #watchPage .network-tabs{overflow-x:auto !important;}
 #watchPage .network-live-channel-tab{white-space:nowrap;}
 @media(min-width:1001px){#watchPage .network-live-channel-section{padding:0;}#watchPage .network-tabs{gap:10px !important;}}
-@media(max-width:1000px){#watchPage .network-tab{flex:0 0 auto !important;white-space:nowrap;}#watchPage .network-tabs{justify-content:flex-start !important;}}
+@media(max-width:1000px){#watchPage :is(.network-tab,.nal-wtw-nav){flex:0 0 auto !important;white-space:nowrap;}#watchPage .network-tabs{justify-content:flex-start !important;}}
 </style>
 <script id="network-live-channel-player">
 (()=>{const page=document.getElementById('watchPage');const panel=page.querySelector('[data-network-panel="live-channel"]');const host=document.getElementById('nalNetworkLivePlayer');function sync(){const visible=page.style.display!=='none'&&panel.classList.contains('active');if(!visible){host.replaceChildren();return;}if(host.querySelector('iframe'))return;const frame=document.createElement('iframe');frame.src='https://www.lightcast.com/embed/player.php?id=72169&type=live';frame.title='NAL Network Live Channel';frame.referrerPolicy='no-referrer-when-downgrade';frame.allow='fullscreen; picture-in-picture';frame.allowFullscreen=true;host.appendChild(frame);}new MutationObserver(sync).observe(page,{attributes:true,attributeFilter:['style']});new MutationObserver(sync).observe(panel,{attributes:true,attributeFilter:['class']});sync();})();
@@ -19936,7 +19936,7 @@ html body #newsPage .native-news-card h3{font-size:18px !important;line-height:1
 html body #newsPage .native-news-read{color:white !important;letter-spacing:1px;}
 html body #newsPage .native-news-read::after{content:'';display:block;width:70px;height:2px;background:#e31b23;margin-top:7px;}
 html body #watchPage .network-tabs{position:relative !important;top:auto !important;background:transparent !important;margin:0 0 20px !important;gap:4px !important;padding:0 !important;border-bottom:1px solid #ffffff30 !important;overflow-x:auto !important;justify-content:flex-start !important;}
-html body #watchPage .network-tab{font-size:11px !important;padding:12px 10px !important;flex:0 0 auto !important;white-space:nowrap;}
+html body #watchPage :is(.network-tab,.nal-wtw-nav){font-size:11px !important;padding:12px 10px !important;flex:0 0 auto !important;white-space:nowrap;}
 html body #watchPage .network-feature-card{display:flex !important;flex-direction:column !important;border:1px solid #396789 !important;border-radius:7px !important;overflow:hidden;background:#051328dd !important;}
 html body #watchPage .network-feature-info{padding:18px !important;gap:10px;background:repeating-linear-gradient(135deg,transparent 0 8px,#ffffff03 8px 9px),linear-gradient(145deg,#102c4977,#05132877);}
 html body #watchPage .network-feature-info strong{font-size:22px !important;line-height:1.2;}
@@ -19960,7 +19960,7 @@ html body #watchPage .nal-game-time{font-size:11px !important;line-height:1.4;co
 html body #watchPage .nal-game-description{font-size:12px !important;line-height:1.5 !important;}
 body:has(#watchPage[style*="display: block"]) .app-back-row{display:none !important;}
 }
-@media(max-width:520px){html body #watchPage .network-tab-panel[data-network-panel="home"] .network-card-scroll{grid-template-columns:minmax(0,1fr) !important;}html body #watchPage .network-tab{padding:12px 9px !important;}}
+@media(max-width:520px){html body #watchPage .network-tab-panel[data-network-panel="home"] .network-card-scroll{grid-template-columns:minmax(0,1fr) !important;}html body #watchPage :is(.network-tab,.nal-wtw-nav){padding:12px 9px !important;}}
 @media(forced-colors:active){html body #newsPage .native-news-hero h1,html body #watchPage .network-unified-title,html body #fanPage .fan-zone-header h1,html body #teamsPage .teams-directory-head h1{-webkit-text-fill-color:CanvasText !important;background:none !important;filter:none !important;}}
 </style>
 
@@ -21794,7 +21794,7 @@ async function openNalMemberPanel(kind){
  }
  }catch(error){content.textContent=error.message||"This feature could not be loaded. Please try again.";}
 }
-</script><style id="nal-where-to-watch-style">.network-tabs .nal-wtw-nav{display:flex;align-items:center;justify-content:center;padding:15px 18px;color:inherit;font:900 12px Arial,sans-serif;text-decoration:none;white-space:nowrap}.network-tabs .nal-wtw-nav:hover{color:#e31b23}#whereToWatchPage{background:#07172b;color:white;min-height:70vh}.nal-wtw-shell{max-width:1280px;margin:auto;padding:30px 24px 65px}.nal-wtw-back{color:#cbd8e9;font-size:12px;font-weight:700;text-decoration:none}.nal-wtw-shell header{text-align:center;padding:40px 0 30px}.nal-wtw-shell header h1{font-size:clamp(28px,4vw,48px);margin:12px 0}.nal-wtw-shell header p{color:#b9cbdf;line-height:1.6}.nal-wtw-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}.nal-wtw-card{min-width:0;padding:28px 14px;background:linear-gradient(145deg,#163b62,#0a213b);border:1px solid #345678;border-radius:14px;text-align:center;text-decoration:none;color:white;transition:transform .15s}.nal-wtw-card:hover{transform:translateY(-4px);border-color:#c5d8ee}.nal-wtw-icon{display:flex;align-items:center;justify-content:center;height:95px;margin-bottom:20px}.nal-wtw-icon img{width:85px;height:75px;object-fit:contain}.nal-wtw-icon svg{width:140px;max-width:100%;height:80px}.nal-wtw-card h2{font-size:19px;margin:8px 0}.nal-wtw-card p{font-size:13px;color:#b9cbdf}.nal-wtw-cta{display:block;background:#e31b23;border-radius:7px;padding:12px 5px;margin-top:24px;font-size:12px;font-weight:800}.nal-wtw-note{text-align:center;color:#b9cbdf;line-height:1.6;margin:26px auto 0;max-width:650px}.nal-wtw-card:focus-visible,.nal-wtw-nav:focus-visible{outline:3px solid #ffdc66;outline-offset:3px}@media(max-width:900px){.nal-wtw-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:550px){.nal-wtw-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.nal-wtw-card:last-child{grid-column:1/-1;max-width:260px;width:100%;justify-self:center}.nal-wtw-shell{padding:22px 16px 40px}.nal-wtw-card{padding:20px 10px}.nal-wtw-shell header{padding:28px 0}.network-tabs .nal-wtw-nav{padding:12px 10px;font-size:10px}}</style><style>.nal-wtw-brands{display:flex;align-items:center;justify-content:center;gap:40px;margin:0 auto 26px}.nal-wtw-brands img{width:240px;max-width:42%;height:105px;object-fit:contain}.nal-wtw-brands img+img{width:260px}@media(max-width:550px){.nal-wtw-brands{gap:20px}.nal-wtw-brands img{height:75px}}</style><style id="nal-forum-desktop-width">
+</script><style id="nal-where-to-watch-style">.network-tabs .nal-wtw-nav{display:flex;align-items:center;justify-content:center;padding:15px 18px;color:inherit;font-family:inherit;text-decoration:none;white-space:nowrap}.network-tabs .nal-wtw-nav:hover{color:#e31b23}#whereToWatchPage{background:#07172b;color:white;min-height:70vh}.nal-wtw-shell{max-width:1280px;margin:auto;padding:30px 24px 65px}.nal-wtw-back{color:#cbd8e9;font-size:12px;font-weight:700;text-decoration:none}.nal-wtw-shell header{text-align:center;padding:40px 0 30px}.nal-wtw-shell header h1{font-size:clamp(28px,4vw,48px);margin:12px 0}.nal-wtw-shell header p{color:#b9cbdf;line-height:1.6}.nal-wtw-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}.nal-wtw-card{min-width:0;padding:28px 14px;background:linear-gradient(145deg,#163b62,#0a213b);border:1px solid #345678;border-radius:14px;text-align:center;text-decoration:none;color:white;transition:transform .15s}.nal-wtw-card:hover{transform:translateY(-4px);border-color:#c5d8ee}.nal-wtw-icon{display:flex;align-items:center;justify-content:center;height:95px;margin-bottom:20px}.nal-wtw-icon img{width:85px;height:75px;object-fit:contain}.nal-wtw-icon svg{width:140px;max-width:100%;height:80px}.nal-wtw-card h2{font-size:19px;margin:8px 0}.nal-wtw-card p{font-size:13px;color:#b9cbdf}.nal-wtw-cta{display:block;background:#e31b23;border-radius:7px;padding:12px 5px;margin-top:24px;font-size:12px;font-weight:800}.nal-wtw-note{text-align:center;color:#b9cbdf;line-height:1.6;margin:26px auto 0;max-width:650px}.nal-wtw-card:focus-visible,.nal-wtw-nav:focus-visible{outline:3px solid #ffdc66;outline-offset:3px}@media(max-width:900px){.nal-wtw-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:550px){.nal-wtw-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.nal-wtw-card:last-child{grid-column:1/-1;max-width:260px;width:100%;justify-self:center}.nal-wtw-shell{padding:22px 16px 40px}.nal-wtw-card{padding:20px 10px}.nal-wtw-shell header{padding:28px 0}.network-tabs .nal-wtw-nav{padding:12px 10px;font-size:10px}}</style><style>.nal-wtw-brands{display:flex;align-items:center;justify-content:center;gap:40px;margin:0 auto 26px}.nal-wtw-brands img{width:240px;max-width:42%;height:105px;object-fit:contain}.nal-wtw-brands img+img{width:260px}@media(max-width:550px){.nal-wtw-brands{gap:20px}.nal-wtw-brands img{height:75px}}</style><style id="nal-forum-desktop-width">
 @media(min-width:851px){
 html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-forum-shell{width:100%;max-width:1380px;padding:28px 32px 48px}
 .fan-forum-hero{padding:34px 30px}
