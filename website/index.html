@@ -16981,13 +16981,14 @@ function renderNALTeamHub(){
   setLightcastModalHeading(team.name,"Games, archives, highlights, coaches' shows and team features.");
   content.innerHTML=`
     <section class="wheeling-hub-hero"><img class="wheeling-hub-banner" src="${lightcastEscape(team.banner)}" alt="${lightcastEscape(team.name)}"></section>
-    <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>LATEST GAMES (V.O.D.)</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="latest" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-latest"><div class="wheeling-empty-row">COMING SOON</div></div></section>
+    <section class="wheeling-content-section" hidden data-nal-vod-paused="true"><div class="wheeling-section-head"><h3>LATEST GAMES (V.O.D.)</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="latest" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-latest"><div class="wheeling-empty-row">COMING SOON</div></div></section>
     <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="archives" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-archives"><div class="wheeling-empty-row">COMING SOON</div></div></section>
     <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>COACHES' SHOW</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="coaches" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-coaches"><div class="wheeling-empty-row">COMING SOON</div></div></section>
     <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>HIGHLIGHTS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="highlights" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-highlights"><div class="wheeling-empty-row">COMING SOON</div></div></section>
     <section class="wheeling-content-section"><div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="features" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-features"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
   content.querySelectorAll("[data-nal-team-view-all]").forEach(button=>button.addEventListener("click",()=>renderNALTeamCatalog(button.dataset.nalTeamViewAll)));
-  ["latest","archives","coaches"].forEach(loadNALTeamRow);
+  // Latest Games V.O.D. paused until the season; retain channel configuration for restoration.
+  ["archives","coaches"].forEach(loadNALTeamRow);
   loadNALTeamEditorial();
 }
 
