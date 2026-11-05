@@ -9355,6 +9355,12 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
         <p>THE GAME. THE LEAGUE. THE CONVERSATION.</p>
       </section>
 
+
+      <section id="nalSocialLatest" aria-labelledby="nalSocialLatestTitle">
+        <h2 class="nal-social-title" id="nalSocialLatestTitle">LATEST REELS &amp; SOCIAL POSTS</h2>
+        <p class="nal-social-intro">Highlights, interviews and moments from across the NAL. Watch the latest and follow the conversation.</p>
+        <div id="nalSocialLatestGrid" class="nal-social-latest-grid" aria-live="polite"><p>Loading the latest posts…</p></div>
+      </section>
       <h2 class="nal-social-title" id="nalSocialFeed">LATEST FROM THE LEAGUE</h2><p class="nal-social-intro">Follow official league channels. Supported public posts appear here; some platforms require you to open their app to interact.</p>
       <div class="nal-feed-shell" id="nalSocialFeedShell">
 <div id="nalSocialPostGrid" class="nal-feed-post-grid" aria-live="polite"></div>
@@ -21793,5 +21799,74 @@ html body :is(#fanForumPage,#fanForumCategoryPage,#fanForumThreadPage) .fan-foru
 .fan-forum-compose h3,.fan-forum-reply-compose h3{font-size:20px}
 .fan-forum-start,.fan-forum-reply-login,.fan-forum-compose-actions button{font-size:13px}
 }
-</style></body>
+</style>
+<style id="nal-social-latest-style">
+#nalSocialLatest{margin:28px 0 36px}
+.nal-social-latest-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.nal-social-latest-card{min-width:0;border-radius:14px;overflow:hidden;background:#fff;border:1px solid #dfe3e8;box-shadow:0 5px 18px #07172b0a}
+.nal-social-latest-open{display:block;width:100%;border:0;background:none;text-align:left;color:#07172b;text-decoration:none;cursor:pointer;padding:0}
+.nal-social-latest-art{display:block;position:relative;aspect-ratio:9/16;background:#102b4e;overflow:hidden}
+.nal-social-latest-art img{width:100%;height:100%;object-fit:cover;display:block}
+.nal-social-latest-art:after{content:'▶';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:#07172bc9;color:white;font-size:20px;box-shadow:0 0 0 1px #ffffff80}
+.nal-social-latest-brand{display:block;padding:10px 12px 0;color:#e31b23;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px}
+.nal-social-latest-card strong{display:block;padding:7px 12px 14px;font-size:14px;line-height:1.4}
+.nal-social-latest-card a.nal-social-latest-origin{display:block;padding:0 12px 14px;font-size:11px;font-weight:800;color:#e31b23;text-decoration:none}
+.nal-social-latest-open:focus-visible{outline:3px solid #e31b23;outline-offset:-3px}
+@media(max-width:1100px){.nal-social-latest-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.nal-social-latest-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+</style>
+<script id="nal-social-latest-script">
+(function(){
+  const api='https://nal-network-video-api.bikard.workers.dev';
+  function socialLink(raw){
+    try{const u=new URL(raw);if(u.protocol!=='https:')return null;
+      const host=u.hostname.replace(/^www\./,'');
+      const platforms={'tiktok.com':'TikTok','vm.tiktok.com':'TikTok','vt.tiktok.com':'TikTok','instagram.com':'Instagram','facebook.com':'Facebook','fb.watch':'Facebook','x.com':'X','twitter.com':'X','threads.net':'Threads','threads.com':'Threads','youtube.com':'YouTube','m.youtube.com':'YouTube','youtu.be':'YouTube'};
+      return platforms[host]?{url:u.href,label:platforms[host]}:null;
+    }catch(_){return null;}
+  }
+  function latest(items){
+    return items.filter(v=>v.status==='Published'&&String(v.team||'').split(/[,;]+/).some(t=>t.trim()==='Social Page')&&/^\d{4}-\d{2}-\d{2}$/.test(v.publishDate||'')&&v.playbackUrl)
+      .sort((a,b)=>b.publishDate.localeCompare(a.publishDate)).slice(0,6);
+  }
+  function openVideo(item){
+    const youtube=typeof nalEditorialYouTubeEmbed==='function'?nalEditorialYouTubeEmbed(item.playbackUrl):'';
+    openNetworkVideo(item.title,api+'/stream?id='+encodeURIComponent(item.id));
+    if(youtube){
+      const host=document.getElementById('networkPreviewPlayer');host.replaceChildren();
+      const frame=document.createElement('iframe');frame.src=youtube;frame.title=item.title||'NAL video';frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';frame.style.cssText='width:100%;height:100%;border:0';host.append(frame);
+    }
+  }
+  async function load(){
+    const grid=document.getElementById('nalSocialLatestGrid');if(!grid)return;
+    try{
+      const r=await fetch(api+'/social',{cache:'no-store'}),p=await r.json();
+      if(!r.ok||!p.ok||!Array.isArray(p.videos))throw Error('Unavailable');
+      grid.replaceChildren();
+      const items=latest(p.videos);
+      if(!items.length){grid.textContent='New reels and social posts are coming soon.';return;}
+      items.forEach(item=>{
+        const source=socialLink(item.playbackUrl),youtube=typeof nalEditorialYouTubeEmbed==='function'?nalEditorialYouTubeEmbed(item.playbackUrl):'';
+        const external=source&&!youtube;
+        const card=document.createElement('article');card.className='nal-social-latest-card';
+        const open=document.createElement(external?'a':'button');open.className='nal-social-latest-open';
+        if(external){open.href=source.url;open.target='_blank';open.rel='noopener noreferrer';}else{open.type='button';open.onclick=()=>openVideo(item);}
+        open.setAttribute('aria-label',(external?'View on '+source.label+': ':'Watch: ')+item.title);
+        const art=document.createElement('span');art.className='nal-social-latest-art';
+        if(item.thumbnailUrl){const image=document.createElement('img');image.src=item.thumbnailUrl;image.alt='';image.loading='lazy';art.append(image);}
+        const label=document.createElement('span');label.className='nal-social-latest-brand';label.textContent=source?source.label:'NAL Network';
+        const title=document.createElement('strong');title.textContent=item.title;
+        open.append(art,label,title);card.append(open);
+        if(source){const link=document.createElement('a');link.className='nal-social-latest-origin';link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent='VIEW ON '+source.label.toUpperCase()+' ↗';card.append(link);}
+        grid.append(card);
+      });
+    }catch(_){grid.textContent='Social posts are temporarily unavailable. Please try again shortly.';}
+  }
+  const page=document.getElementById('socialPage');let visible=false;
+  function changed(){const now=page&&getComputedStyle(page).display!=='none';if(now&&!visible)load();visible=now;}
+  if(page){new MutationObserver(changed).observe(page,{attributes:true,attributeFilter:['class','style']});changed();}
+})();
+</script>
+
+</body>
 </html>
