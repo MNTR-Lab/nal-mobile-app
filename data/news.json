@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-11-04T23:36:01.652148+00:00",
+  "updatedAt": "2026-11-05T03:43:12.504120+00:00",
   "source": "https://www.thenationalarenaleague.com/",
   "articles": [
+    {
+      "title": "THE GAME IS CHANGING: NATIONAL ARENA LEAGUE UNVEILS THE NEXT GENERATION OF NAL NETWORK",
+      "url": "https://www.thenationalarenaleague.com/news/the-game-is-changing-national-arena-league-unveils",
+      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-467242e1-8302-47fd-b7cc-1f8c96f5c190/1793837401-1223.png",
+      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
+      "date": "2026-11-05T01:40:00+00:00",
+      "category": "NAL NEWS"
+    },
     {
       "title": "THREE GAMES. SIX TEAMS. ONE CHOICE. FAN CHOICE FRIDAY PUTS THE POWER BACK IN THE HANDS OF NAL FANS!",
       "url": "https://www.thenationalarenaleague.com/news/three-games-six-teams-one-choice-fan-choice-friday",
@@ -24,14 +32,6 @@
       "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-25f2b195-5967-4aa0-88d0-6a86b6ceee06/1793355562-1223.png",
       "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
       "date": "2026-10-30T12:45:00+00:00",
-      "category": "NAL NEWS"
-    },
-    {
-      "title": "NAL Network to Feature Omaha Beef and Southwest Kansas Storm in Thursday Night Team Shows",
-      "url": "https://www.thenationalarenaleague.com/news/nal-network-to-feature-omaha-beef-and-southwest-ka",
-      "image": "https://digitalshift-assets.sfo2.cdn.digitaloceanspaces.com/pw/2f77fc4a-2c6f-4835-8918-ed31460e3e56/p-e81d515c-7c7f-4495-aa7d-19e449bf0f5f/1793215388-1223.png",
-      "description": "The National Arena League (NAL) is a premier professional indoor football league delivering high-speed, high-scoring action in cities across the United Sta",
-      "date": "2026-10-28T19:19:00+00:00",
       "category": "NAL NEWS"
     }
   ]
