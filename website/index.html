@@ -16856,14 +16856,29 @@ async function loadNALTeamEditorial(){
     for(const row of Object.values(rows))if(row?.isConnected)row.innerHTML='<div class="wheeling-empty-row">Unable to load videos right now.</div>';
   }
 }
+function nalEditorialYouTubeEmbed(raw){
+  try{
+    const u=new URL(raw);
+    if(u.protocol!=='https:')return '';
+    let id='';
+    if(['youtu.be','www.youtu.be'].includes(u.hostname))id=u.pathname.split('/')[1]||'';
+    else if(['youtube.com','www.youtube.com','m.youtube.com','youtube-nocookie.com','www.youtube-nocookie.com'].includes(u.hostname)){
+      id=u.pathname==='/watch' ? u.searchParams.get('v')||'' : /^\/(embed|shorts|live)\//.test(u.pathname) ? u.pathname.split('/')[2]||'' : '';
+    }
+    return /^[A-Za-z0-9_-]{11}$/.test(id) ? 'https://www.youtube.com/embed/'+id+'?playsinline=1&rel=0' : '';
+  }catch(_){return '';}
+}
 function openNALTeamEditorialVideo(key,index){
   const team=activeNALTeam(),item=nalTeamMediaBucket(activeNALTeamSlug)[key]?.[index],content=lightcastTestContent();
   if(!item||!content)return;
   setWheelingTeamView(false);
   setLightcastModalHeading(team.name+' — '+NAL_TEAM_EDITORIAL[key]);
   const src=NAL_TEAM_EDITORIAL_API+'/stream?id='+encodeURIComponent(item.id);
-  content.innerHTML=`<div class="lightcast-test-view-head"><button type="button" class="lightcast-test-back" id="nalTeamEditorialBack">‹ BACK</button><div class="lightcast-test-view-title"><h2>NOW PLAYING</h2><p>${lightcastEscape(team.name)}</p></div></div><div class="lightcast-video-wrap"><video controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000" src="${lightcastEscape(src)}" ${item.thumbnailUrl?'poster="'+lightcastEscape(item.thumbnailUrl)+'"':''}></video></div><div class="lightcast-video-meta"><h2>${lightcastEscape(item.title||'Video')}</h2>${item.description?'<p>'+lightcastEscape(item.description)+'</p>':''}<p id="nalTeamEditorialPlaybackError" hidden>Unable to play this video right now.</p></div>`;
-  content.querySelector('video').addEventListener('error',()=>{document.getElementById('nalTeamEditorialPlaybackError')?.removeAttribute('hidden');});
+  const youtube=nalEditorialYouTubeEmbed(item.playbackUrl);
+  const player=youtube ? `<iframe src="${lightcastEscape(youtube)}" title="${lightcastEscape(item.title||'NAL team video')}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>` : `<video controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000" src="${lightcastEscape(src)}" ${item.thumbnailUrl?'poster="'+lightcastEscape(item.thumbnailUrl)+'"':''}></video>`;
+
+  content.innerHTML=`<div class="lightcast-test-view-head"><button type="button" class="lightcast-test-back" id="nalTeamEditorialBack">‹ BACK</button><div class="lightcast-test-view-title"><h2>NOW PLAYING</h2><p>${lightcastEscape(team.name)}</p></div></div><div class="lightcast-video-wrap">${player}</div><div class="lightcast-video-meta"><h2>${lightcastEscape(item.title||'Video')}</h2>${item.description?'<p>'+lightcastEscape(item.description)+'</p>':''}<p id="nalTeamEditorialPlaybackError" hidden>Unable to play this video right now.</p></div>`;
+  content.querySelector('video')?.addEventListener('error',()=>{document.getElementById('nalTeamEditorialPlaybackError')?.removeAttribute('hidden');});
   document.getElementById('nalTeamEditorialBack').onclick=()=>{
     if(nalTeamPlayerReturn.view==='catalog'&&nalTeamPlayerReturn.sourceKey)renderNALTeamCatalog(nalTeamPlayerReturn.sourceKey);
     else renderNALTeamHub();
