@@ -20369,7 +20369,7 @@ html body #teamPage[data-website-team] .team-menu-card .team-menu-icon svg text{
 </style>
 <script id="website-direct-routes">
 (()=>{
- const paths={whereToWatchPage:'/where-to-watch',homePage:'/',shopPage:'/shop',newsPage:'/news',watchPage:'/watch',teamsPage:'/teams',fanPage:'/fan-zone',fanForumPage:'/fan-forum',socialPage:'/social',fanPollPage:'/fan-zone/polls',fanPickemPage:'/fan-zone/pick-em',fanGalleryPage:'/fan-zone/photos',fanUploadPage:'/fan-zone/submit-photo',schedulePage:'/schedule',rosterPage:'/roster',fanAccountPage:'/account',fanTermsPage:'/terms',fanPrivacyPage:'/privacy',fanGuidelinesPage:'/guidelines'};
+ const paths={whereToWatchPage:'/where-to-watch',homePage:'/',shopPage:'/shop',newsPage:'/news',watchPage:'/watch',teamsPage:'/teams',fanPage:'/fan-zone',fanForumPage:'/fan-forum',socialPage:'/social',fanPollPage:'/fan-zone/polls',fanPickemPage:'/fan-zone/pick-em',fanGalleryPage:'/fan-zone/photos',fanUploadPage:'/fan-zone/submit-photo',standingsPage:'/standings',transactionsPage:'/transactions',statsPage:'/stats',schedulePage:'/schedule',rosterPage:'/roster',fanAccountPage:'/account',fanTermsPage:'/terms',fanPrivacyPage:'/privacy',fanGuidelinesPage:'/guidelines'};
  const tabs={home:'/watch','live-channel':'/watch/live','team-channels':'/watch/live-games',archives:'/watch/team-channels',shows:'/watch/shows'};
  const shows={around:'around-the-nal',gameday:'nal-gameday',coaches:'coaches-shows'};
  let restoring=false,scheduled=false;
@@ -20397,6 +20397,12 @@ html body #teamPage[data-website-team] .team-menu-card .team-menu-icon svg text{
    else if(path==='/fan-zone/photos'){openFanPhotosGallery();}
    else if(path==='/fan-zone/submit-photo'){openFanMediaUpload();}
    else if(path==='/teams'){await openTeamsPage();}
+   else if(['/standings','/schedule','/transactions','/stats'].includes(path)){
+    const action=path==='/standings'?'native-standings':path.slice(1);
+    const button=document.querySelector('.home-quick-grid [data-home-action="'+action+'"]');
+    if(!button)throw Error('Page unavailable');
+    button.click();
+   }
    else {const id=Object.keys(paths).find(k=>paths[k]===path);if(!id)throw Error('Page not found');if(id==='schedulePage'&&window.openNalTeamSchedule)window.openNalTeamSchedule('');else if(id==='rosterPage'&&window.openNalRoster)window.openNalRoster('');else {showPage(id);if(id==='shopPage'&&window.restoreNalShopRoute)await window.restoreNalShopRoute();}}
   }catch(error){showPage('websiteRouteError');document.getElementById('websiteRouteErrorText').textContent=error.message;}
   finally{restoring=false;}
