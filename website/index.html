@@ -13869,6 +13869,31 @@ async function loadNalForumTopics(){
       .order("created_at", { ascending:false });
     if (error) throw error;
     nalForumTopics = Array.isArray(data) ? data : [];
+    // Reply totals are derived from forum_replies; forum_topics has no reply_count column.
+    const topicIds = nalForumTopics.map(topic => topic.id);
+    if (topicIds.length){
+      const { data: replyRows, error: replyError } = await client
+        .from("forum_replies")
+        .select("topic_id,created_at")
+        .in("topic_id",topicIds)
+        .eq("is_hidden",false);
+      if (replyError) throw replyError;
+      const activity = new Map();
+      (replyRows || []).forEach(reply => {
+        const key = String(reply.topic_id);
+        const state = activity.get(key) || { count:0, last:null };
+        state.count++;
+        if (!state.last || Date.parse(reply.created_at) > Date.parse(state.last)) state.last = reply.created_at;
+        activity.set(key,state);
+      });
+      nalForumTopics.forEach(topic => {
+        const state = activity.get(String(topic.id));
+        topic._forum_reply_count = state?.count || 0;
+        topic._forum_last_activity = state?.last || topic.created_at;
+      });
+      nalForumTopics.sort((a,b) => Number(!!b.is_pinned)-Number(!!a.is_pinned)
+        || Date.parse(b._forum_last_activity)-Date.parse(a._forum_last_activity));
+    }
     await enrichNalForumAuthors(nalForumTopics);
     renderNalForumTopics();
   }catch(error){
@@ -13888,7 +13913,7 @@ function renderNalForumTopics(){
   host.innerHTML = visible.map(topic => {
     const title = forumTopicValue(topic,["title","topic_title"],"NAL Conversation");
     const body = forumTopicValue(topic,["body","content","message"],"");
-    const replies = Number(forumTopicValue(topic,["reply_count","replies_count"],0)) || 0;
+    const replies = Number(topic._forum_reply_count || 0);
     const created = formatNalForumTime(forumTopicValue(topic,["created_at","posted_at"],""));
     const tag = forumTopicValue(topic,["tag","tag_name","topic_tag"],"");
     const pinned = !!forumTopicValue(topic,["is_pinned","pinned"],false);
@@ -14006,10 +14031,10 @@ function renderNalForumThreadPost(){
   bindNalForumReactionButtons(host);
 }
 
-async function loadNalForumReplies(){
+async function loadNalForumReplies(silent=false){
   const host = document.getElementById("fanForumReplies");
   if (!host || !activeNalForumTopic) return;
-  host.innerHTML = '<div class="fan-forum-loading">LOADING REPLIES…</div>';
+  if (!silent) host.innerHTML = '<div class="fan-forum-loading">LOADING REPLIES…</div>';
   try{
     const client = getNalAccountClient();
     if (!client) throw new Error("NAL community connection unavailable.");
@@ -14020,7 +14045,7 @@ async function loadNalForumReplies(){
     renderNalForumReplies();
   }catch(error){
     console.error("Unable to load NAL Forum replies:",error);
-    host.innerHTML = '<div class="fan-forum-empty">Replies are temporarily unavailable. Please try again.</div>';
+    if (!silent) host.innerHTML = '<div class="fan-forum-empty">Replies are temporarily unavailable. Please try again.</div>';
   }
 }
 
@@ -16561,6 +16586,26 @@ document.addEventListener("DOMContentLoaded", function(){
   }, 700);
 });
 
+// Refresh reply activity and in-app alerts while a fan is viewing the site.
+document.addEventListener("DOMContentLoaded", () => {
+  let forumRefreshBusy = false;
+  setInterval(async () => {
+    if (document.hidden || forumRefreshBusy) return;
+    forumRefreshBusy = true;
+    try {
+      if (nalAccountUser) await loadNalAlerts();
+      if (document.getElementById("fanForumThreadPage")?.classList.contains("active")) {
+        await loadNalForumReplies(true);
+      } else if (document.getElementById("fanForumCategoryPage")?.classList.contains("active")) {
+        await loadNalForumTopics();
+      }
+    } catch (error) {
+      console.warn("NAL forum background refresh unavailable:", error);
+    } finally {
+      forumRefreshBusy = false;
+    }
+  }, 30000);
+});
 document.addEventListener("DOMContentLoaded", initializeNalFanAccount);
 
 // Temporary Lightcast API-driven in-app catalog test.
