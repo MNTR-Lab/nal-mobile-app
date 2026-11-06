@@ -41,3 +41,13 @@ node --test admin/tests/security.test.cjs
 Fan Choice Friday changes go through its existing API; its existing vote-preservation and choice-edit restrictions still apply. Transaction approvals and contract review remain in Monday; roster status changes create approved transactions via the existing API. Additional boards and arbitrary publishing mappings are intentionally not exposed until their workflows are specified.
 
 Database migration `extend_admin_activity_for_network_dashboard` extends the existing audit action constraint with poll, asset, roster, and Fan Choice Friday events while retaining all existing action types.
+
+## Staff workflow update (November 6, 2026)
+
+Closed general polls are excluded from the dashboard query; their stored votes and records remain intact. The Activity Log view has a fixed reset cutoff of 2026-11-06 00:00 America/New_York (05:00 UTC), so future activity remains visible without a rolling daily reset. The staff list includes `verified`, `moderator`, and `admin` accounts, excluding fans and VIP-only accounts.
+
+The Transactions tab follows the existing league `team-portal.html` interface: summary counts, four filters, pending queue with elapsed waiting time, recent ten/all toggle, and player detail sheet. Review links and roster updates use the existing board and API.
+
+Super admins can create accounts and choose email delivery or generate an acceptance link. Link generation does not send email. New invitees remain `verified` and blocked from dashboard actions until email verification and acceptance. Their intended access is stored in server-controlled app metadata; the acceptance endpoint ignores client-supplied roles. The acceptance page lets them choose one password shared with the Forum. Existing eligible accounts can receive access links without duplicating their account or changing its role. Native email delivery uses the project's existing SMTP configuration and redirects through the /admin/accept-invite return page on the allowed Forum origin, which saves the accepted session and continues to the staff dashboard. Generated acceptance links verify directly on the admin domain and do not depend on the Auth redirect allowlist. Email failures are shown as failures, with link generation offered as an alternative.
+
+Audit migration `add_staff_invitation_audit_events` preserves prior action types and adds `staff_invited` and `staff_invite_accepted`.

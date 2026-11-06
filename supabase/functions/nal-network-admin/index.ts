@@ -2,9 +2,13 @@ import { createClient } from 'npm:@supabase/supabase-js@2.57.0';
 const base = Deno.env.get('SUPABASE_URL')!;
 const db = createClient(base, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {auth:{persistSession:false,autoRefreshToken:false}});
 const origins = ['https://admin.nal-network.com'];
+const ACTIVITY_START='2026-11-06T05:00:00.000Z';
+const STAFF_ROLES=['verified','moderator','admin'];
+async function allUsers(){const users=[];for(let page=1;;page++){const r=await db.auth.admin.listUsers({page,perPage:1000});if(r.error)throw r.error;users.push(...r.data.users);if(r.data.users.length<1000)break;}return users;}
 class HttpError extends Error { constructor(message:string, public status=400){super(message);} }
 function check<T>(r:{data:T,error:any}):T {if(r.error)throw new Error(r.error.message);return r.data;}
 function text(v:unknown,max=500){if(typeof v!=='string'||!v.trim()||v.length>max)throw new HttpError('Enter valid text (maximum '+max+' characters).');return v.trim();}
+function pathFor(req:Request){return new URL(req.url).pathname.replace(/^.*\/nal-network-admin/,'')||'/me';}
 function id(v:unknown){if(!/^\d+$/.test(String(v)))throw new HttpError('Invalid record ID.');return String(v);}
 function web(v:unknown){if(!v)return null;const u=new URL(String(v));if(!['http:','https:'].includes(u.protocol))throw new HttpError('Use an http or https URL.');return u.href;}
 async function monday(query:string,variables:Record<string,unknown>,asset=false){
@@ -39,6 +43,19 @@ Deno.serve(async req=>{
   const jwt=req.headers.get('Authorization')?.replace(/^Bearer\s+/i,'');if(!jwt)throw new HttpError('Sign in with your Forum account.',401);
   const {data:{user},error}=await db.auth.getUser(jwt);if(error||!user)throw new HttpError('Your session has expired. Sign in again.',401);
   const profile=check(await db.from('profiles').select('role,account_status,display_name').eq('id',user.id).maybeSingle());
+  const invitation=user.app_metadata?.nal_network_invitation;
+  if(pathFor(req)==='/staff/accept'&&req.method==='POST'){
+   if(!invitation?.pending||!STAFF_ROLES.includes(invitation.role))throw new HttpError('There is no pending staff invitation for this account.',409);
+   if(!user.email_confirmed_at)throw new HttpError('Verify your email using the invitation link first.',403);
+   if(!profile||profile.account_status!=='active')throw new HttpError('This account is not active.',403);
+   check(await db.from('profiles').update({role:invitation.role}).eq('id',user.id));
+   const r=await db.auth.admin.updateUserById(user.id,{app_metadata:{...user.app_metadata,nal_network_invitation:{...invitation,pending:false,accepted_at:new Date().toISOString()}}});if(r.error)throw r.error;
+   await audit(user.id,'staff_invite_accepted','Staff invitation accepted',user.id);
+   return reply({success:true,role:invitation.role});
+  }
+  if(pathFor(req)==='/me'&&invitation?.pending&&profile?.account_status==='active')return reply({invitation_pending:true,user:{id:user.id,email:user.email,name:profile.display_name,role:invitation.role},sections:[]});
+  if(pathFor(req)==='/me'&&profile?.role==='verified'&&profile.account_status==='active')return reply({verified_only:true,user:{id:user.id,email:user.email,name:profile.display_name,role:'verified'},sections:[]});
+  if(invitation?.pending)throw new HttpError('Accept your staff invitation before using the dashboard.',403);
   if(!profile||profile.account_status!=='active'||!['admin','moderator'].includes(profile.role))throw new HttpError('Your account does not have staff access. Ask a super admin to assign access.',403);
   const owner=check(await db.from('nal_super_admins').select('user_id').eq('user_id',user.id).eq('is_active',true).maybeSingle());
   const isSuper=!!owner;const isAdmin=profile.role==='admin';
@@ -46,7 +63,7 @@ Deno.serve(async req=>{
   const x=req.method==='POST'?await req.json():{};
   if(req.method==='GET'&&path==='/me')return reply({user:{id:user.id,email:user.email,name:profile.display_name,role:isSuper?'super_admin':profile.role},sections:isAdmin?['polls','friday','transactions','assets','connections',...(isSuper?['staff','activity']:[])]:['polls']});
   if(path==='/polls'&&req.method==='GET'){
-   const polls=check(await db.from('polls').select('*,poll_options(*)').order('created_at',{ascending:false}).limit(100));
+   const polls=check(await db.from('polls').select('*,poll_options(*)').in('status',['draft','active']).order('created_at',{ascending:false}).limit(100));
    const counts=new Map<string,number>();
    const ids=polls.map(p=>p.id);
    if(ids.length)for(let offset=0;;offset+=1000){
@@ -106,20 +123,44 @@ Deno.serve(async req=>{
    return reply(data);
   }
   if(path==='/staff'&&req.method==='GET'){
-   const p=check(await db.from('profiles').select('id,display_name,role,account_status').order('display_name'));
+   const p=check(await db.from('profiles').select('id,display_name,role,account_status').in('role',STAFF_ROLES).order('display_name'));
    const owners=check(await db.from('nal_super_admins').select('user_id').eq('is_active',true));
    // Only super admins receive account email addresses.
-   const users=[];for(let page=1;;page++){const r=await db.auth.admin.listUsers({page,perPage:1000});if(r.error)throw r.error;users.push(...r.data.users);if(r.data.users.length<1000)break;}
-   return reply({members:p.map(m=>({...m,email:users.find(u=>u.id===m.id)?.email||'',super_admin:owners.some(o=>o.user_id===m.id)}))});
+   const users=await allUsers();
+   return reply({members:p.map(m=>({...m,email:users.find(u=>u.id===m.id)?.email||'',super_admin:owners.some(o=>o.user_id===m.id),invitation_pending:!!users.find(u=>u.id===m.id)?.app_metadata?.nal_network_invitation?.pending}))});
+  }
+  if(path==='/staff/invite'&&req.method==='POST'){
+   const email=text(x.email,254).toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new HttpError('Enter a valid email address.');
+   const role=x.role||'verified';if(!STAFF_ROLES.includes(role))throw new HttpError('Choose NAL Verified, Moderator, or Admin access.');
+   const delivery=x.delivery;if(!['email','link'].includes(delivery))throw new HttpError('Choose email or acceptance link.');
+   const users=await allUsers();const existing=users.find(u=>u.email?.toLowerCase()===email);
+   if(existing&&!x.resend)throw new HttpError('This email already has a Forum account. Use its Send access link option after verifying the account.',409);
+   if(existing){const p=check(await db.from('profiles').select('role,account_status').eq('id',existing.id).maybeSingle());if(!p||!STAFF_ROLES.includes(p.role)||p.account_status!=='active')throw new HttpError('Only active NAL Verified staff accounts can receive access links.',403);}
+   const display_name=existing?undefined:text(x.display_name,30);if(display_name&&display_name.length<3)throw new HttpError('Use a display name of at least 3 characters.');
+   let invited:any,properties:any;
+   if(delivery==='email'){
+    if(existing){const r=await db.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:'https://nal-network.com/admin/accept-invite'}});if(r.error)throw new HttpError('Email could not be sent. '+r.error.message+' You can generate an acceptance link instead.',502);invited=existing;}
+    else{const r=await db.auth.admin.inviteUserByEmail(email,{redirectTo:'https://nal-network.com/admin/accept-invite',data:{display_name}});if(r.error||!r.data.user)throw new HttpError('Invitation email could not be sent. '+(r.error?.message||'Try again.')+' You can generate an acceptance link instead.',502);invited=r.data.user;}
+   }else{
+    const r=await db.auth.admin.generateLink({type:existing&&!existing.app_metadata?.nal_network_invitation?.pending?'magiclink':'invite',email,options:{data:display_name?{display_name}:undefined,redirectTo:'https://admin.nal-network.com/accept-invite'}});if(r.error)throw new HttpError('The acceptance link could not be generated. '+r.error.message,502);invited=r.data.user;properties=r.data.properties;
+   }
+   if(!existing){
+    // New invitees stay verified, with no dashboard privileges, until acceptance.
+    check(await db.from('profiles').update({role:'verified'}).eq('id',invited.id));
+    const r=await db.auth.admin.updateUserById(invited.id,{app_metadata:{...invited.app_metadata,nal_network_invitation:{pending:true,role,invited_by:user.id,invited_at:new Date().toISOString()}}});if(r.error)throw r.error;
+   }
+   await audit(user.id,'staff_invited',(existing?'Access link':'Staff invitation')+' '+(delivery==='email'?'emailed to ':'generated for ')+email,invited.id);
+   const acceptance_url=properties?.hashed_token?'https://admin.nal-network.com/accept-invite?'+new URLSearchParams({token_hash:properties.hashed_token,type:properties.verification_type||'invite'}).toString():undefined;
+   return reply({success:true,email,delivery,acceptance_url});
   }
   if(path==='/staff'&&req.method==='POST'){
    const target=String(x.user_id||'');if(target===user.id)throw new HttpError('You cannot change your own access.');
    const protectedUser=check(await db.from('nal_super_admins').select('user_id').eq('user_id',target).eq('is_active',true).maybeSingle());if(protectedUser)throw new HttpError('Super admin accounts are protected.');
-   if(!['fan','verified','vip','moderator','admin'].includes(x.role))throw new HttpError('Invalid role.');
-   const old=check(await db.from('profiles').select('role').eq('id',target).maybeSingle());if(!old)throw new HttpError('Account not found.',404);
+   if(!['fan',...STAFF_ROLES].includes(x.role))throw new HttpError('Invalid role.');
+   const old=check(await db.from('profiles').select('role').eq('id',target).maybeSingle());if(!old||!STAFF_ROLES.includes(old.role))throw new HttpError('NAL Verified staff account not found.',404);
    check(await db.from('profiles').update({role:x.role}).eq('id',target));await audit(user.id,'role_changed',`Role ${old.role} → ${x.role}`,target);return reply({success:true});
   }
-  if(path==='/activity'&&req.method==='GET')return reply({activity:check(await db.from('admin_activity_log').select('id,action_type,details,created_at').order('created_at',{ascending:false}).limit(100))});
+  if(path==='/activity'&&req.method==='GET')return reply({activity:check(await db.from('admin_activity_log').select('id,action_type,details,created_at').gte('created_at',ACTIVITY_START).order('created_at',{ascending:false}).limit(100))});
   throw new HttpError('Not found',404);
  }catch(e){const status=e instanceof HttpError?e.status:500;console.error(JSON.stringify({event:'admin_api_error',status,message:e instanceof Error?e.message:'Unknown error'}));return reply({error:status===500?'The request could not be completed. Please try again.':(e as Error).message},status);}
 });
