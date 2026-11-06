@@ -14,12 +14,17 @@ async function monday(query:string,variables:Record<string,unknown>,asset=false)
  const j=await r.json();if(!r.ok||j.errors?.length){console.error(JSON.stringify({event:'monday_error',status:r.status,errors:j.errors}));throw new HttpError('Monday could not complete the request. Please try again.',502);}return j.data;
 }
 async function boardItems(board:string,asset=false){
- const fields='id name group { id title } column_values { id text value }';
+ const itemFields='id name group { id title } column_values { id text value }';
+ let fields=itemFields;
+ if(asset)for(let depth=0;depth<5;depth++)fields=itemFields+' subitems { '+fields+' }';
  const j=await monday(`query($ids:[ID!]!){boards(ids:$ids){id name items_page(limit:100){cursor items{${fields}}}}}`,{ids:[board]},asset);
  const b=j.boards?.[0];if(!b)throw new HttpError('The configured Monday account cannot access this board.',503);
  const items=[...b.items_page.items];let cursor=b.items_page.cursor;
  while(cursor){const n=await monday(`query($cursor:String!){next_items_page(limit:100,cursor:$cursor){cursor items{${fields}}}}`,{cursor},asset);items.push(...n.next_items_page.items);cursor=n.next_items_page.cursor;if(items.length>10000)throw new HttpError('Board is too large to load.',413);}
- return {name:b.name,items};
+ const flattened:any[]=[];const seen=new Set<string>();
+ const visit=(item:any,parent:any=null)=>{if(!seen.has(item.id)){seen.add(item.id);flattened.push({...item,group:item.group||parent?.group,parentName:parent?.name||''});}for(const sub of item.subitems||[])visit(sub,{...item,group:item.group||parent?.group});};
+ for(const item of items)visit(item);
+ return {name:b.name,items:flattened};
 }
 const cv=(i:any,k:string)=>i.column_values?.find((c:any)=>c.id===k)?.text||'';
 async function audit(user:string,action:string,details:string,target:string|null=null){check(await db.from('admin_activity_log').insert({admin_user_id:user,target_user_id:target,action_type:action,details}));}
@@ -83,7 +88,7 @@ Deno.serve(async req=>{
   }
   if(path==='/assets'&&req.method==='GET'){
    const b=await boardItems('18437455062',true);
-   return reply({board:b.name,items:b.items.map((i:any)=>({id:i.id,name:i.name,group:i.group?.title||'',details:cv(i,'text_mm8jjxt8'),usage:cv(i,'dropdown_mm8j7gcm'),date:cv(i,'date_mm8j3gz6'),link:(()=>{try{return JSON.parse(i.column_values.find((c:any)=>c.id==='link_mm8jkx6a')?.value||'{}').url||'';}catch{return '';}})(),attachment:cv(i,'file_mm8jsk7z'),url:'https://ai-apparel-group-inc.monday.com/boards/18437455062/pulses/'+i.id}))});
+   return reply({board:b.name,items:b.items.map((i:any)=>({id:i.id,name:i.parentName?i.parentName+' / '+i.name:i.name,group:i.group?.title||'',details:cv(i,'text_mm8jjxt8'),usage:cv(i,'dropdown_mm8j7gcm'),date:cv(i,'date_mm8j3gz6'),link:(()=>{try{return JSON.parse(i.column_values.find((c:any)=>c.id==='link_mm8jkx6a')?.value||'{}').url||'';}catch{return '';}})(),attachment:cv(i,'file_mm8jsk7z'),url:'https://ai-apparel-group-inc.monday.com/boards/18437455062/pulses/'+i.id}))});
   }
   if(path==='/assets'&&req.method==='POST'){
    const itemId=id(x.id);const b=await monday('query($ids:[ID!]!){items(ids:$ids){id board{id}}}',{ids:[itemId]},true);if(b.items?.[0]?.board?.id!=='18437455062')throw new HttpError('Asset not found.',404);
