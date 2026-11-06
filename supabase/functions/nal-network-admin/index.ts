@@ -4,7 +4,12 @@ const db = createClient(base, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {auth:
 const origins = ['https://admin.nal-network.com'];
 const ACTIVITY_START='2026-11-06T05:00:00.000Z';
 const STAFF_ROLES=['verified','moderator','admin'];
-const isLeagueEmail=(email:unknown)=>typeof email==='string'&&email.trim().toLowerCase().endsWith('@thenationalarenaleague.com');
+const CONTENT_SECTIONS=['polls','friday','transactions','assets','connections','activity'];
+const ALL_SECTIONS=[...CONTENT_SECTIONS,'staff'];
+function validateSections(value:unknown){if(!Array.isArray(value)||value.some(k=>typeof k!=='string'||!CONTENT_SECTIONS.includes(k)))throw new HttpError('Choose valid dashboard sections.');return [...new Set(value)] as string[];}
+function sectionsFor(user:any,profile:any,isSuper=false){if(isSuper)return ALL_SECTIONS;if(Array.isArray(user.app_metadata?.nal_network_sections))return user.app_metadata.nal_network_sections.filter((k:string)=>CONTENT_SECTIONS.includes(k));return profile.role==='admin'?CONTENT_SECTIONS.filter(k=>k!=='activity'):profile.role==='moderator'?['polls']:[];}
+const STAFF_EMAIL_DOMAINS=['mntrlab.com','thenationalarenaleague.com'];
+const isStaffEmail=(email:unknown)=>typeof email==='string'&&STAFF_EMAIL_DOMAINS.some(domain=>email.trim().toLowerCase().endsWith('@'+domain));
 async function allUsers(){const users=[];for(let page=1;;page++){const r=await db.auth.admin.listUsers({page,perPage:1000});if(r.error)throw r.error;users.push(...r.data.users);if(r.data.users.length<1000)break;}return users;}
 class HttpError extends Error { constructor(message:string, public status=400){super(message);} }
 function check<T>(r:{data:T,error:any}):T {if(r.error)throw new Error(r.error.message);return r.data;}
@@ -43,6 +48,7 @@ Deno.serve(async req=>{
   if(!['GET','POST'].includes(req.method))throw new HttpError('Method not allowed',405);
   const jwt=req.headers.get('Authorization')?.replace(/^Bearer\s+/i,'');if(!jwt)throw new HttpError('Sign in with your Forum account.',401);
   const {data:{user},error}=await db.auth.getUser(jwt);if(error||!user)throw new HttpError('Your session has expired. Sign in again.',401);
+  if(!isStaffEmail(user.email))throw new HttpError('Admin access is restricted to @mntrlab.com and @thenationalarenaleague.com accounts.',403);
   const profile=check(await db.from('profiles').select('role,account_status,display_name').eq('id',user.id).maybeSingle());
   const invitation=user.app_metadata?.nal_network_invitation;
   if(pathFor(req)==='/staff/accept'&&req.method==='POST'){
@@ -50,19 +56,21 @@ Deno.serve(async req=>{
    if(!user.email_confirmed_at)throw new HttpError('Verify your email using the invitation link first.',403);
    if(!profile||profile.account_status!=='active')throw new HttpError('This account is not active.',403);
    check(await db.from('profiles').update({role:invitation.role}).eq('id',user.id));
-   const r=await db.auth.admin.updateUserById(user.id,{app_metadata:{...user.app_metadata,nal_network_invitation:{...invitation,pending:false,accepted_at:new Date().toISOString()}}});if(r.error)throw r.error;
+   const acceptedSections=Array.isArray(invitation.sections)?validateSections(invitation.sections):sectionsFor({app_metadata:{}},{role:invitation.role});
+   const r=await db.auth.admin.updateUserById(user.id,{app_metadata:{...user.app_metadata,nal_network_sections:acceptedSections,nal_network_invitation:{...invitation,pending:false,accepted_at:new Date().toISOString()}}});if(r.error)throw r.error;
    await audit(user.id,'staff_invite_accepted','Staff invitation accepted',user.id);
-   return reply({success:true,role:invitation.role});
+   return reply({success:true,role:invitation.role,sections:acceptedSections});
   }
   if(pathFor(req)==='/me'&&invitation?.pending&&profile?.account_status==='active')return reply({invitation_pending:true,user:{id:user.id,email:user.email,name:profile.display_name,role:invitation.role},sections:[]});
-  if(pathFor(req)==='/me'&&profile?.role==='verified'&&profile.account_status==='active')return reply({verified_only:true,user:{id:user.id,email:user.email,name:profile.display_name,role:'verified'},sections:[]});
   if(invitation?.pending)throw new HttpError('Accept your staff invitation before using the dashboard.',403);
-  if(!profile||profile.account_status!=='active'||!['admin','moderator'].includes(profile.role))throw new HttpError('Your account does not have staff access. Ask a super admin to assign access.',403);
+  if(!profile||profile.account_status!=='active')throw new HttpError('Your account does not have staff access. Ask a super admin to assign access.',403);
   const owner=check(await db.from('nal_super_admins').select('user_id').eq('user_id',user.id).eq('is_active',true).maybeSingle());
-  const isSuper=!!owner;const isAdmin=profile.role==='admin';
+  const isSuper=!!owner;const sections=sectionsFor(user,profile,isSuper);
   const url=new URL(req.url);const path=url.pathname.replace(/^.*\/nal-network-admin/,'')||'/me';
   const x=req.method==='POST'?await req.json():{};
-  if(req.method==='GET'&&path==='/me')return reply({user:{id:user.id,email:user.email,name:profile.display_name,role:isSuper?'super_admin':profile.role},sections:isAdmin?['polls','friday','transactions','assets','connections',...(isSuper?['staff','activity']:[])]:['polls']});
+  if(req.method==='GET'&&path==='/me')return reply({user:{id:user.id,email:user.email,name:profile.display_name,role:isSuper?'super_admin':profile.role},sections,verified_only:sections.length===0});
+  const required=path==='/polls'?'polls':path.startsWith('/friday/')?'friday':path==='/transactions'||path==='/roster'?'transactions':path==='/assets'?'assets':path.startsWith('/staff')?'staff':path==='/activity'?'activity':null;
+  if(!required||!sections.includes(required))throw new HttpError('You have not been assigned access to this section.',403);
   if(path==='/polls'&&req.method==='GET'){
    const polls=check(await db.from('polls').select('*,poll_options(*)').in('status',['draft','active']).order('created_at',{ascending:false}).limit(100));
    const counts=new Map<string,number>();
@@ -91,7 +99,6 @@ Deno.serve(async req=>{
    }
    throw new HttpError('Unknown poll action.');
   }
-  if(!isAdmin)throw new HttpError('Administrator access required.',403);
   if(path.startsWith('/friday/admin/')){
    const suffix=path.slice('/friday'.length);
    const allowed=(req.method==='GET'&&['/admin/polls','/admin/poll','/admin/library'].includes(suffix))||(req.method==='POST'&&['/admin/poll','/admin/archive'].includes(suffix));
@@ -116,6 +123,7 @@ Deno.serve(async req=>{
    await monday('mutation($board:ID!,$item:ID!,$values:JSON!){change_multiple_column_values(board_id:$board,item_id:$item,column_values:$values){id}}',{board:'18437455062',item:itemId,values:JSON.stringify(values)},true);
    await audit(user.id,'asset_updated','Digital Asset Management item '+itemId);return reply({success:true});
   }
+  if(path==='/activity'&&req.method==='GET')return reply({activity:check(await db.from('admin_activity_log').select('id,action_type,details,created_at').gte('created_at',ACTIVITY_START).order('created_at',{ascending:false}).limit(100))});
   if(!isSuper)throw new HttpError('Super admin access required.',403);
   if(path==='/roster'&&req.method==='POST'){
    const response=await fetch(base+'/functions/v1/nal-roster-admin',{method:'POST',headers:{Authorization:'Bearer '+jwt,'Content-Type':'application/json'},body:JSON.stringify(x),signal:AbortSignal.timeout(40000)});
@@ -129,15 +137,16 @@ Deno.serve(async req=>{
    // Only super admins receive account email addresses.
    const users=await allUsers();
    const byId=new Map(users.map(u=>[u.id,u]));
-   return reply({members:p.filter(m=>STAFF_ROLES.includes(m.role)||isLeagueEmail(byId.get(m.id)?.email)).sort((a,b)=>a.display_name.localeCompare(b.display_name)).map(m=>({...m,email:byId.get(m.id)?.email||'',eligible_by_domain:isLeagueEmail(byId.get(m.id)?.email),super_admin:owners.some(o=>o.user_id===m.id),invitation_pending:!!byId.get(m.id)?.app_metadata?.nal_network_invitation?.pending}))});
+   return reply({members:p.filter(m=>isStaffEmail(byId.get(m.id)?.email)).sort((a,b)=>a.display_name.localeCompare(b.display_name)).map(m=>({...m,email:byId.get(m.id)?.email||'',eligible_by_domain:isStaffEmail(byId.get(m.id)?.email),sections:byId.get(m.id)?.app_metadata?.nal_network_invitation?.pending?(byId.get(m.id)?.app_metadata?.nal_network_invitation?.sections||sectionsFor(byId.get(m.id)||{},{role:byId.get(m.id)?.app_metadata?.nal_network_invitation?.role})):sectionsFor(byId.get(m.id)||{},m,owners.some(o=>o.user_id===m.id)),super_admin:owners.some(o=>o.user_id===m.id),invitation_pending:!!byId.get(m.id)?.app_metadata?.nal_network_invitation?.pending}))});
   }
   if(path==='/staff/invite'&&req.method==='POST'){
    const email=text(x.email,254).toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new HttpError('Enter a valid email address.');
-   const role=x.role||'verified';if(!STAFF_ROLES.includes(role))throw new HttpError('Choose NAL Verified, Moderator, or Admin access.');
+   if(!isStaffEmail(email))throw new HttpError('Staff invitations are restricted to @mntrlab.com and @thenationalarenaleague.com accounts.',403);
+   const role='verified';const invitedSections=validateSections(x.sections||[]);
    const delivery=x.delivery;if(!['email','link'].includes(delivery))throw new HttpError('Choose email or acceptance link.');
    const users=await allUsers();const existing=users.find(u=>u.email?.toLowerCase()===email);
    if(existing&&!x.resend)throw new HttpError('This email already has a Forum account. Use its Send access link option after verifying the account.',409);
-   if(existing){const p=check(await db.from('profiles').select('role,account_status').eq('id',existing.id).maybeSingle());if(!p||(!STAFF_ROLES.includes(p.role)&&!isLeagueEmail(existing.email))||p.account_status!=='active')throw new HttpError('Only active NAL Verified staff or league email accounts can receive access links.',403);}
+   if(existing){const p=check(await db.from('profiles').select('role,account_status').eq('id',existing.id).maybeSingle());if(!p||!isStaffEmail(existing.email)||p.account_status!=='active')throw new HttpError('Only active accounts with an approved staff email domain can receive access links.',403);}
    const display_name=existing?undefined:text(x.display_name,30);if(display_name&&display_name.length<3)throw new HttpError('Use a display name of at least 3 characters.');
    let invited:any,properties:any;
    if(delivery==='email'){
@@ -149,7 +158,7 @@ Deno.serve(async req=>{
    if(!existing){
     // New invitees stay verified, with no dashboard privileges, until acceptance.
     check(await db.from('profiles').update({role:'verified'}).eq('id',invited.id));
-    const r=await db.auth.admin.updateUserById(invited.id,{app_metadata:{...invited.app_metadata,nal_network_invitation:{pending:true,role,invited_by:user.id,invited_at:new Date().toISOString()}}});if(r.error)throw r.error;
+    const r=await db.auth.admin.updateUserById(invited.id,{app_metadata:{...invited.app_metadata,nal_network_sections:[],nal_network_invitation:{pending:true,role,sections:invitedSections,invited_by:user.id,invited_at:new Date().toISOString()}}});if(r.error)throw r.error;
    }
    await audit(user.id,'staff_invited',(existing?'Access link':'Staff invitation')+' '+(delivery==='email'?'emailed to ':'generated for ')+email,invited.id);
    const acceptance_url=properties?.hashed_token?'https://admin.nal-network.com/accept-invite?'+new URLSearchParams({token_hash:properties.hashed_token,type:properties.verification_type||'invite'}).toString():undefined;
@@ -158,12 +167,15 @@ Deno.serve(async req=>{
   if(path==='/staff'&&req.method==='POST'){
    const target=String(x.user_id||'');if(target===user.id)throw new HttpError('You cannot change your own access.');
    const protectedUser=check(await db.from('nal_super_admins').select('user_id').eq('user_id',target).eq('is_active',true).maybeSingle());if(protectedUser)throw new HttpError('Super admin accounts are protected.');
-   if(!['fan',...STAFF_ROLES].includes(x.role))throw new HttpError('Invalid role.');
+   const selectedSections=validateSections(x.sections);
    const old=check(await db.from('profiles').select('role').eq('id',target).maybeSingle());if(!old)throw new HttpError('Staff account not found.',404);
-   if(!STAFF_ROLES.includes(old.role)){const targetUser=await db.auth.admin.getUserById(target);if(targetUser.error||!isLeagueEmail(targetUser.data.user?.email))throw new HttpError('NAL Verified staff or league email account required.',403);}
-   check(await db.from('profiles').update({role:x.role}).eq('id',target));await audit(user.id,'role_changed',`Role ${old.role} → ${x.role}`,target);return reply({success:true});
+   const targetUser=await db.auth.admin.getUserById(target);if(targetUser.error||!isStaffEmail(targetUser.data.user?.email))throw new HttpError('An @mntrlab.com or @thenationalarenaleague.com account is required.',403);
+   const targetAccount=targetUser.data.user;const metadata={...targetAccount.app_metadata};
+   if(metadata.nal_network_invitation?.pending)metadata.nal_network_invitation={...metadata.nal_network_invitation,sections:selectedSections};
+   else metadata.nal_network_sections=selectedSections;
+   const updated=await db.auth.admin.updateUserById(target,{app_metadata:metadata});if(updated.error)throw updated.error;
+   await audit(user.id,'permissions_changed','Dashboard access: '+(selectedSections.join(', ')||'none'),target);return reply({success:true});
   }
-  if(path==='/activity'&&req.method==='GET')return reply({activity:check(await db.from('admin_activity_log').select('id,action_type,details,created_at').gte('created_at',ACTIVITY_START).order('created_at',{ascending:false}).limit(100))});
   throw new HttpError('Not found',404);
  }catch(e){const status=e instanceof HttpError?e.status:500;console.error(JSON.stringify({event:'admin_api_error',status,message:e instanceof Error?e.message:'Unknown error'}));return reply({error:status===500?'The request could not be completed. Please try again.':(e as Error).message},status);}
 });

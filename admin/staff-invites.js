@@ -1,18 +1,22 @@
 'use strict';
+const STAFF_ACCESS_OPTIONS=[['polls','Polls'],['friday','Fan Choice Friday'],['transactions','Transactions'],['assets','Digital Assets'],['connections','Monday Boards'],['activity','Activity Log']];
+function permissionCheckboxes(selected=[]){return '<fieldset class="permission-options"><legend>Dashboard access</legend>'+STAFF_ACCESS_OPTIONS.map(([key,label])=>'<label class="check"><input type="checkbox" name="sections" value="'+key+'" '+(selected.includes(key)?'checked':'')+'>'+label+'</label>').join('')+'<label class="check"><input type="checkbox" disabled>Staff & Permissions — super admin only</label></fieldset>';}
+function accessLabels(selected=[]){return selected.map(key=>STAFF_ACCESS_OPTIONS.find(([k])=>k===key)?.[1]||(key==='staff'?'Staff & Permissions':key)).join(', ')||'No dashboard access';}
+
 function inviteEditor(id){
  const member=id?members.find(m=>m.id===id):null;
  showEditor(member?'Send staff access link':'Create a NAL Verified account',
  '<form id="invite-form" data-id="'+esc(member?.id||'')+'">'+
  '<label>Display name<input name="display_name" minlength="3" maxlength="30" required value="'+esc(member?.display_name||'')+'" '+(member?'readonly':'')+'></label>'+
- '<label>Email<input name="email" type="email" autocomplete="off" maxlength="254" required value="'+esc(member?.email||'')+'" '+(member?'readonly':'')+'></label>'+
- (member?'':'<label>Access after acceptance<select name="role"><option value="verified">NAL Verified — Forum account</option><option value="moderator">Moderator — fan poll management</option><option value="admin">Admin — content management</option></select></label>')+
- '<p class="muted">'+(member?'This uses their existing Forum account and preserves their current access.':'They choose their own password after accepting. Their account also works for the Forum.')+'</p>'+
+ '<p class="muted">Only @mntrlab.com and @thenationalarenaleague.com accounts can be invited.</p><label>Email<input name="email" type="email" autocomplete="off" maxlength="254" required value="'+esc(member?.email||'')+'" '+(member?'readonly':'')+'></label>'+
+ (member?'':permissionCheckboxes())+
+ '<p class="muted">'+(member?'This uses their existing Forum account and preserves their current access.':'They choose their own password after accepting. Their account also works for the Forum. Dashboard permissions do not change their Forum badge.')+'</p>'+
  '<div class="actions"><button type="submit" name="delivery" value="email" class="primary">'+(member?'Email access link':'Create & email invitation')+'</button><button type="submit" name="delivery" value="link">'+(member?'Generate access link':'Create & get acceptance link')+'</button></div></form><div id="invite-result" hidden></div>');
 }
 async function submitInvitation(form,button){
  const values=new FormData(form),delivery=button.value,email=values.get('email');
  if(delivery==='email'&&!confirm('Send '+(form.dataset.id?'an access link':'an invitation')+' to '+email+'?'))return;
- const result=await api('staff/invite',{email,display_name:values.get('display_name'),role:values.get('role')||undefined,delivery,resend:!!form.dataset.id});
+ const result=await api('staff/invite',{email,display_name:values.get('display_name'),sections:values.getAll('sections'),delivery,resend:!!form.dataset.id});
  form.hidden=true;const host=$('#invite-result');host.hidden=false;
  if(result.acceptance_url){
   host.innerHTML='<div class="invite-result"><strong>Acceptance link ready</strong><p>Share this private, single-use link with '+esc(email)+'.</p><label>Acceptance link<input class="invite-link" readonly id="staff-acceptance-link"></label><button type="button" id="copy-staff-invite">Copy link</button><p class="muted">No email was sent. The recipient sets their password after accepting.</p></div>';
@@ -29,7 +33,7 @@ function showInvitationSetup(me){
 }
 function showVerifiedReady(){
  current=null;$('#login').hidden=true;$('#dashboard').hidden=true;$('#invite-setup').hidden=false;$('#signout').hidden=false;
- $('#invitation-form').hidden=true;$('#invite-complete').hidden=false;$('#invite-identity').textContent='Your NAL Verified account is ready.';
+ $('#invitation-form').hidden=true;$('#invite-complete').hidden=false;$('#invite-identity').textContent='Your account is ready. Dashboard access has not been assigned yet.';
 }
 async function startInvitation(){
  if(!invitationFlow)return false;

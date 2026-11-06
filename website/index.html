@@ -13820,7 +13820,7 @@ function nalForumAuthorData(item){
   const name = retainedDeletedUser
     ? "Deleted User"
     : (profile.display_name || forumTopicValue(item,["author_display_name","display_name","author_name"],"NAL Fan"));
-  const role = retainedDeletedUser ? "" : (profile.role || forumTopicValue(item,["role","author_role"],"fan"));
+  const role = retainedDeletedUser ? "" : (profile.forum_badge || profile.role || forumTopicValue(item,["role","author_role"],"fan"));
   const avatar = retainedDeletedUser ? "" : (profile.avatar_url || forumTopicValue(item,["avatar_url","author_avatar_url"],""));
   return { name:String(name || "Deleted User"), role:String(role || "").toLowerCase(), avatar:String(avatar || "") };
 }
@@ -13841,7 +13841,7 @@ async function enrichNalForumAuthors(items){
   try{
     const client = getNalAccountClient();
     if (!client) return rows;
-    const { data, error } = await client.from("profiles").select("id,display_name,avatar_url,role").in("id",ids);
+    const { data, error } = await client.from("profiles").select("id,display_name,avatar_url,role,forum_badge").in("id",ids);
     if (error) throw error;
     const profiles = new Map((Array.isArray(data)?data:[]).map(profile => [String(profile.id),profile]));
     rows.forEach(item => {

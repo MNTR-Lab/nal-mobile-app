@@ -55,3 +55,15 @@ Audit migration `add_staff_invitation_audit_events` preserves prior action types
 ## League email eligibility
 
 The staff directory also includes existing Auth accounts with the exact, case-insensitive email suffix `@thenationalarenaleague.com`, regardless of their current profile role. Eligibility is checked from Auth records on the server when listing accounts, assigning roles, or sending access links. Directory inclusion alone never grants dashboard access or changes profile roles. Existing NAL Verified staff and protected administrators remain listed.
+
+## Strict staff domain restriction
+
+Only Auth accounts ending in `@mntrlab.com` or `@thenationalarenaleague.com` may access this dashboard, appear in its staff directory, receive staff invitations/access links, or be assigned permissions here. Matching is case-insensitive and exact. The server applies this check before returning account information or processing invitation acceptance, including for existing admins and super admins. Assigned roles, active status, and super-admin protections still apply. Outside-domain accounts retain their separate Forum accounts and existing Forum roles; this restriction concerns the admin dashboard. This restriction supersedes the earlier directory rule that listed all verified/admin/moderator accounts.
+
+## Dashboard checkboxes and Forum badges
+
+Per-person dashboard sections are stored in server-controlled Auth app metadata (`nal_network_sections`). An explicit empty list revokes dashboard tools. When the field is absent, existing admin/moderator defaults are retained for compatibility. Server authorization checks each requested section on every call; menu visibility is not the access boundary. Staff permission management and roster writes remain protected super-admin actions. Activity Log can be assigned separately.
+
+Saving dashboard checkboxes does not modify the person's Forum role or badge. New invitations carry a pending section list and keep the Forum role `verified`; the selected sections activate only after invitation acceptance. The existing Fan Choice Friday API also checks the same section grants and allowed email domains.
+
+`profiles.forum_badge` is a nullable presentation override, protected from client-side edits. Forum author display falls back to the profile role when no override exists. The owner's existing account has the `verified` override, preserving the blue NAL Employee verification icon while retaining its admin role and super-admin authorization. Migration `separate_forum_badges_and_dashboard_permissions` adds the override protection and permissions audit event.

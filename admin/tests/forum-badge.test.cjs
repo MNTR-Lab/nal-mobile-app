@@ -1,0 +1,7 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');const path=require('node:path');
+const source=fs.readFileSync(path.join(__dirname,'../../website/index.html'),'utf8');
+const functions=source.slice(source.indexOf('function nalMemberBadgeHTML('),source.indexOf('async function enrichNalForumAuthors('));
+function render(profile,id='employee'){const ctx={forumTopicValue:(item,keys,fallback)=>{for(const k of keys)if(item[k]!=null)return item[k];return fallback},escapeHTML:v=>String(v).replace(/[<>&"]/g,'')};vm.createContext(ctx);vm.runInContext(functions,ctx);return ctx.nalForumAuthorHTML({user_id:id,_forum_author:profile},'');}
+test('employee verification icon can remain visible on an admin Forum account',()=>{const profile={display_name:'NAL Employee',role:'admin',forum_badge:'verified'};const html=render(profile);assert(html.includes('nal-member-badge-verified'));assert(!html.includes('nal-member-badge-admin'));assert.equal(profile.role,'admin');});
+test('accounts without a badge override retain their existing Forum badge',()=>{assert(render({display_name:'Admin',role:'admin'}).includes('nal-member-badge-admin'));});
+test('deleted authors do not retain an employee badge',()=>{assert(!render({display_name:'NAL Employee',role:'admin',forum_badge:'verified'},'').includes('nal-member-badge-verified'));});
