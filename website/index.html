@@ -13854,10 +13854,10 @@ async function enrichNalForumAuthors(items){
   return rows;
 }
 
-async function loadNalForumTopics(){
+async function loadNalForumTopics(silent=false){
   const host = document.getElementById("fanForumTopics");
   if (!host || !activeNalForumCategory) return;
-  host.innerHTML = '<div class="fan-forum-loading">LOADING CONVERSATIONS…</div>';
+  if (!silent) host.innerHTML = '<div class="fan-forum-loading">LOADING CONVERSATIONS…</div>';
   try{
     const client = getNalAccountClient();
     if (!client) throw new Error("NAL community connection unavailable.");
@@ -16597,7 +16597,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (document.getElementById("fanForumThreadPage")?.classList.contains("active")) {
         await loadNalForumReplies(true);
       } else if (document.getElementById("fanForumCategoryPage")?.classList.contains("active")) {
-        await loadNalForumTopics();
+        await loadNalForumTopics(true);
       }
     } catch (error) {
       console.warn("NAL forum background refresh unavailable:", error);
