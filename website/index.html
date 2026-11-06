@@ -16894,6 +16894,11 @@ const NAL_TEAM_CHANNELS = {
 let activeNALTeamSlug="wheeling-miners";
 let nalTeamHubMedia={};
 let nalTeamPlayerReturn={view:"hub",sourceKey:null};
+let nalTeamRouteView=null;
+function setNALTeamRouteView(view){
+  nalTeamRouteView=view;
+  window.dispatchEvent(new Event("nal-team-view-change"));
+}
 
 function setLightcastModalHeading(text, subtitle=""){
   const heading=document.getElementById("lightcastModalHeading");
@@ -16954,6 +16959,7 @@ function nalEditorialYouTubeEmbed(raw){
 function openNALTeamEditorialVideo(key,index){
   const team=activeNALTeam(),item=nalTeamMediaBucket(activeNALTeamSlug)[key]?.[index],content=lightcastTestContent();
   if(!item||!content)return;
+  setNALTeamRouteView({slug:activeNALTeamSlug,key,id:String(item.id)});
   setWheelingTeamView(false);
   setLightcastModalHeading(team.name+' — '+NAL_TEAM_EDITORIAL[key]);
   const src=NAL_TEAM_EDITORIAL_API+'/stream?id='+encodeURIComponent(item.id);
@@ -17004,6 +17010,7 @@ function renderNALTeamCatalog(key){
   const source=nalTeamSource(key);
   const content=lightcastTestContent();
   if(!source || !content) return;
+  setNALTeamRouteView({slug:activeNALTeamSlug,key});
   const items=nalTeamMediaBucket(activeNALTeamSlug)[key] || [];
   setWheelingTeamView(true);
   setLightcastModalHeading(`${team.name} — ${source.label}`);
@@ -17043,6 +17050,7 @@ async function loadNALTeamRow(key){
 }
 
 function renderNALTeamHub(){
+  setNALTeamRouteView({slug:activeNALTeamSlug});
   const team=activeNALTeam();
   const content=lightcastTestContent();
   if(!content) return;
@@ -17053,8 +17061,7 @@ function renderNALTeamHub(){
       <section class="wheeling-hub-hero"><img class="wheeling-hub-banner" src="${lightcastEscape(team.banner)}" alt="${lightcastEscape(team.name)}"></section>
       <section class="wheeling-content-section" hidden><div class="wheeling-section-head"><h3>ARCHIVES</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="archives" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-archives"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
     content.querySelectorAll("[data-nal-team-view-all]").forEach(button=>button.addEventListener("click",()=>renderNALTeamCatalog(button.dataset.nalTeamViewAll)));
-    loadNALTeamRow("archives");
-    return;
+    return loadNALTeamRow("archives");
   }
   setLightcastModalHeading(team.name,"Games, archives, highlights, coaches' shows and team features.");
   content.innerHTML=`
@@ -17066,8 +17073,7 @@ function renderNALTeamHub(){
     <section class="wheeling-content-section" hidden><div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="features" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-features"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
   content.querySelectorAll("[data-nal-team-view-all]").forEach(button=>button.addEventListener("click",()=>renderNALTeamCatalog(button.dataset.nalTeamViewAll)));
   // Latest Games V.O.D. paused until the season; retain channel configuration for restoration.
-  ["archives","coaches"].forEach(loadNALTeamRow);
-  loadNALTeamEditorial();
+  return Promise.all([loadNALTeamRow("archives"),loadNALTeamRow("coaches"),loadNALTeamEditorial()]);
 }
 
 function openNALTeamHub(slug){
@@ -17077,7 +17083,7 @@ function openNALTeamHub(slug){
   if(!modal) return;
   modal.hidden=false;
   document.body.style.overflow="hidden";
-  renderNALTeamHub();
+  return renderNALTeamHub();
 }
 function openWheelingMinersHub(){ openNALTeamHub("wheeling-miners"); }
 
@@ -17093,6 +17099,7 @@ function openNALTeamVideo(sourceKey,index){
   const item=nalTeamMediaBucket(activeNALTeamSlug)[sourceKey]?.[index];
   const content=lightcastTestContent();
   if(!source || !item || !content) return;
+  setNALTeamRouteView({slug:activeNALTeamSlug,key:sourceKey,id:String(item.media_id || item.id)});
   setWheelingTeamView(false);
   setLightcastModalHeading(`${team.name} — ${source.label}`);
   const embedSrc=getNALTeamEmbedSrc(item,source.channelId);
@@ -17126,6 +17133,7 @@ async function openNALShowChannel(slug){
   const modal=document.getElementById("lightcastTestModal");
   const content=lightcastTestContent();
   if(!show || !modal || !content) return;
+  setNALTeamRouteView(null);
   activeNALShowSlug=slug;
   modal.hidden=false;
   document.body.style.overflow="hidden";
@@ -17181,6 +17189,7 @@ function openNALShowVideo(index){
 }
 
 function closeLightcastTest(){
+  setNALTeamRouteView(null);
   setLightcastModalHeading("NAL NETWORK");
   const modal=document.getElementById("lightcastTestModal");
   if(modal) modal.hidden=true;
@@ -20421,6 +20430,10 @@ html body #teamPage[data-website-team] .team-menu-card .team-menu-icon svg text{
  function write(path){if(restoring||!path||location.pathname===path)return;history.pushState({},'',path);}
  function visible(id){const p=document.getElementById(id);return p&&p.style.display!=='none'&&getComputedStyle(p).display!=='none';}
  function sync(){scheduled=false;if(restoring)return;if(document.querySelector('.app-page.active:not(#websiteRouteError)'))document.getElementById('websiteRouteError').style.display='none';
+  if(nalTeamRouteView&&!document.getElementById('lightcastTestModal')?.hidden){
+   const view=nalTeamRouteView;
+   write('/watch/team-channels/'+encodeURIComponent(view.slug)+(view.key?'/'+encodeURIComponent(view.key):'')+(view.id?'/'+encodeURIComponent(view.id):''));return;
+  }
   if(visible('websiteArticlePage')||visible('websiteShowsPage'))return;if(visible('shopPage')&&location.pathname.startsWith('/shop/'))return;
   if(visible('teamPage')&&activeTeam){write('/teams/'+encodeURIComponent(activeTeam.slug));return;}
   for(const [id,path] of Object.entries(paths)){if(visible(id)){write(id==='watchPage'?(tabs[document.querySelector('#watchPage .network-tab.active')?.dataset.networkTab]||path):path);return;}}
@@ -20430,7 +20443,24 @@ html body #teamPage[data-website-team] .team-menu-card .team-menu-icon svg text{
  async function restore(){restoring=true;document.getElementById('websiteRouteError').style.display='none';const path=decodeURI(location.pathname).replace(/\/$/,'')||'/';
   try{
    let match;
-   if(path.startsWith('/shop/')){showPage('shopPage');if(window.restoreNalShopRoute)await window.restoreNalShopRoute();}
+   if(!document.getElementById('lightcastTestModal')?.hidden)closeLightcastTest();
+   if((match=/^\/watch\/team-channels\/([a-z0-9-]+)(?:\/([a-z]+)(?:\/([A-Za-z0-9_-]+))?)?$/.exec(path))){
+    const [,slug,key,id]=match;
+    const team=NAL_TEAM_CHANNELS[slug];
+    if(!team||key&&!(team.sources?.[key]||NAL_TEAM_EDITORIAL[key]))throw Error('Team channel not found');
+    showPage('watchPage');switchNetworkTab('archives');
+    await openNALTeamHub(slug);
+    if(key){
+     if(key==='latest')await loadNALTeamRow(key);
+     const items=nalTeamMediaBucket(slug)[key]||[];
+     if(id){
+      const index=items.findIndex(item=>String(NAL_TEAM_EDITORIAL[key]?item.id:item.media_id||item.id)===id);
+      if(index<0)throw Error('Video unavailable');
+      nalTeamPlayerReturn={view:'catalog',sourceKey:key};openNALTeamVideo(key,index);
+     }else renderNALTeamCatalog(key);
+    }
+   }
+   else if(path.startsWith('/shop/')){showPage('shopPage');if(window.restoreNalShopRoute)await window.restoreNalShopRoute();}
    else if((match=/^\/teams\/([a-z0-9-]+)\/news\/([a-z0-9-]+)$/.exec(path))){const host=WEBSITE_TEAM_ARTICLE_HOSTS[match[1]];if(!host)throw Error('Team not found');const r=await fetch('/data/teams.json');const d=await r.json();const team=(Array.isArray(d)?d:d.teams||[]).find(t=>t.slug===match[1]);if(team)openTeamHome(team);await openWebsiteArticle('https://'+host+'/news/'+match[2]);}
    else if((match=/^\/teams\/([a-z0-9-]+)$/.exec(path))){const r=await fetch('/data/teams.json');if(!r.ok)throw Error('Teams unavailable');const d=await r.json();const team=(Array.isArray(d)?d:d.teams||[]).find(t=>t.slug===match[1]);if(!team)throw Error('Team not found');openTeamHome(team);}
    else if((match=/^\/news\/([a-z0-9-]+)$/.exec(path))){await openWebsiteArticle('https://www.thenationalarenaleague.com/news/'+match[1]);}
@@ -20449,11 +20479,12 @@ html body #teamPage[data-website-team] .team-menu-card .team-menu-icon svg text{
     button.click();
    }
    else {const id=Object.keys(paths).find(k=>paths[k]===path);if(!id)throw Error('Page not found');if(id==='schedulePage'&&window.openNalTeamSchedule)window.openNalTeamSchedule('');else if(id==='rosterPage'&&window.openNalRoster)window.openNalRoster('');else {showPage(id);if(id==='shopPage'&&window.restoreNalShopRoute)await window.restoreNalShopRoute();}}
-  }catch(error){showPage('websiteRouteError');document.getElementById('websiteRouteErrorText').textContent=error.message;}
+  }catch(error){closeLightcastTest();showPage('websiteRouteError');document.getElementById('websiteRouteErrorText').textContent=error.message;}
   finally{restoring=false;}
  }
  const error=document.createElement('main');error.id='websiteRouteError';error.className='app-page';error.style.display='none';error.innerHTML='<div style="padding:70px 24px;text-align:center;color:white"><h1>PAGE UNAVAILABLE</h1><p id="websiteRouteErrorText"></p><p><a href="/" style="color:white">RETURN HOME</a></p></div>';document.querySelector('.app')?.append(error);
  new MutationObserver(()=>{if(!scheduled){scheduled=true;queueMicrotask(sync);}}).observe(document.querySelector('.app')||document.body,{subtree:true,attributes:true,attributeFilter:['style','class','data-website-team']});
+ window.addEventListener('nal-team-view-change',()=>{if(!scheduled){scheduled=true;queueMicrotask(sync);}});
  window.addEventListener('popstate',restore);
  restore();
 })();
