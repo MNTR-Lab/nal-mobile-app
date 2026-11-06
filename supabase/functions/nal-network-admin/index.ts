@@ -4,6 +4,7 @@ const db = createClient(base, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {auth:
 const origins = ['https://admin.nal-network.com'];
 const ACTIVITY_START='2026-11-06T05:00:00.000Z';
 const STAFF_ROLES=['verified','moderator','admin'];
+const isLeagueEmail=(email:unknown)=>typeof email==='string'&&email.trim().toLowerCase().endsWith('@thenationalarenaleague.com');
 async function allUsers(){const users=[];for(let page=1;;page++){const r=await db.auth.admin.listUsers({page,perPage:1000});if(r.error)throw r.error;users.push(...r.data.users);if(r.data.users.length<1000)break;}return users;}
 class HttpError extends Error { constructor(message:string, public status=400){super(message);} }
 function check<T>(r:{data:T,error:any}):T {if(r.error)throw new Error(r.error.message);return r.data;}
@@ -123,11 +124,12 @@ Deno.serve(async req=>{
    return reply(data);
   }
   if(path==='/staff'&&req.method==='GET'){
-   const p=check(await db.from('profiles').select('id,display_name,role,account_status').in('role',STAFF_ROLES).order('display_name'));
+   const p=[];for(let offset=0;;offset+=1000){const rows=check(await db.from('profiles').select('id,display_name,role,account_status').order('id').range(offset,offset+999));p.push(...rows);if(rows.length<1000)break;}
    const owners=check(await db.from('nal_super_admins').select('user_id').eq('is_active',true));
    // Only super admins receive account email addresses.
    const users=await allUsers();
-   return reply({members:p.map(m=>({...m,email:users.find(u=>u.id===m.id)?.email||'',super_admin:owners.some(o=>o.user_id===m.id),invitation_pending:!!users.find(u=>u.id===m.id)?.app_metadata?.nal_network_invitation?.pending}))});
+   const byId=new Map(users.map(u=>[u.id,u]));
+   return reply({members:p.filter(m=>STAFF_ROLES.includes(m.role)||isLeagueEmail(byId.get(m.id)?.email)).sort((a,b)=>a.display_name.localeCompare(b.display_name)).map(m=>({...m,email:byId.get(m.id)?.email||'',eligible_by_domain:isLeagueEmail(byId.get(m.id)?.email),super_admin:owners.some(o=>o.user_id===m.id),invitation_pending:!!byId.get(m.id)?.app_metadata?.nal_network_invitation?.pending}))});
   }
   if(path==='/staff/invite'&&req.method==='POST'){
    const email=text(x.email,254).toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new HttpError('Enter a valid email address.');
@@ -135,7 +137,7 @@ Deno.serve(async req=>{
    const delivery=x.delivery;if(!['email','link'].includes(delivery))throw new HttpError('Choose email or acceptance link.');
    const users=await allUsers();const existing=users.find(u=>u.email?.toLowerCase()===email);
    if(existing&&!x.resend)throw new HttpError('This email already has a Forum account. Use its Send access link option after verifying the account.',409);
-   if(existing){const p=check(await db.from('profiles').select('role,account_status').eq('id',existing.id).maybeSingle());if(!p||!STAFF_ROLES.includes(p.role)||p.account_status!=='active')throw new HttpError('Only active NAL Verified staff accounts can receive access links.',403);}
+   if(existing){const p=check(await db.from('profiles').select('role,account_status').eq('id',existing.id).maybeSingle());if(!p||(!STAFF_ROLES.includes(p.role)&&!isLeagueEmail(existing.email))||p.account_status!=='active')throw new HttpError('Only active NAL Verified staff or league email accounts can receive access links.',403);}
    const display_name=existing?undefined:text(x.display_name,30);if(display_name&&display_name.length<3)throw new HttpError('Use a display name of at least 3 characters.');
    let invited:any,properties:any;
    if(delivery==='email'){
@@ -157,7 +159,8 @@ Deno.serve(async req=>{
    const target=String(x.user_id||'');if(target===user.id)throw new HttpError('You cannot change your own access.');
    const protectedUser=check(await db.from('nal_super_admins').select('user_id').eq('user_id',target).eq('is_active',true).maybeSingle());if(protectedUser)throw new HttpError('Super admin accounts are protected.');
    if(!['fan',...STAFF_ROLES].includes(x.role))throw new HttpError('Invalid role.');
-   const old=check(await db.from('profiles').select('role').eq('id',target).maybeSingle());if(!old||!STAFF_ROLES.includes(old.role))throw new HttpError('NAL Verified staff account not found.',404);
+   const old=check(await db.from('profiles').select('role').eq('id',target).maybeSingle());if(!old)throw new HttpError('Staff account not found.',404);
+   if(!STAFF_ROLES.includes(old.role)){const targetUser=await db.auth.admin.getUserById(target);if(targetUser.error||!isLeagueEmail(targetUser.data.user?.email))throw new HttpError('NAL Verified staff or league email account required.',403);}
    check(await db.from('profiles').update({role:x.role}).eq('id',target));await audit(user.id,'role_changed',`Role ${old.role} → ${x.role}`,target);return reply({success:true});
   }
   if(path==='/activity'&&req.method==='GET')return reply({activity:check(await db.from('admin_activity_log').select('id,action_type,details,created_at').gte('created_at',ACTIVITY_START).order('created_at',{ascending:false}).limit(100))});
