@@ -8,8 +8,8 @@ const source=fs.readFileSync(path.join(__dirname,'../../supabase/functions/nal-n
 function handler({role='admin',status='active',superAdmin=false,valid=true,protectedTarget=false}={}){
  let serve;const changes=[];
  const db={auth:{getUser:async()=>({data:{user:valid?{id:'staff-1',email:'staff@mntrlab.com'}:null},error:valid?null:new Error('bad token')})},from(table){let op='select';const q={select(){return q},eq(){return q},update(v){op='update';changes.push({table,v});return q},insert(v){op='insert';changes.push({table,v});return q},maybeSingle:async()=>({data:table==='profiles'?{role,account_status:status,display_name:'Staff'}:table==='nal_super_admins'?(superAdmin||protectedTarget?{user_id:'staff-1'}:null):null,error:null}),then(resolve){return Promise.resolve({data:[],error:null}).then(resolve)}};return q;}};
- const js=stripTypeScriptTypes(source.replace(/^import[^\n]+\n/,''),{mode:'transform'});
- vm.runInNewContext(js,{Deno:{env:{get:()=>''},serve:h=>serve=h},createClient:()=>db,Response,URL,AbortSignal,console:{error(){}},fetch:()=>{throw new Error('Unexpected external fetch');}});
+ const js=stripTypeScriptTypes(source.replace(/^import[^\n]+\n/gm,''),{mode:'transform'});
+ vm.runInNewContext(js,{Deno:{env:{get:()=>''},serve:h=>serve=h},handleMondayWorkspace:async()=>null,createClient:()=>db,Response,URL,AbortSignal,console:{error(){}},fetch:()=>{throw new Error('Unexpected external fetch');}});
  return {serve,changes};
 }
 const req=(path='/me',body,token='valid')=>new Request('https://test.invalid/functions/v1/nal-network-admin'+path,{method:body?'POST':'GET',headers:{...(token?{Authorization:'Bearer '+token}:{}),'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});

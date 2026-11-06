@@ -1,4 +1,5 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.57.0';
+import { handleMondayWorkspace } from './workspace.ts';
 const base = Deno.env.get('SUPABASE_URL')!;
 const db = createClient(base, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {auth:{persistSession:false,autoRefreshToken:false}});
 const origins = ['https://admin.nal-network.com'];
@@ -67,10 +68,11 @@ Deno.serve(async req=>{
   const owner=check(await db.from('nal_super_admins').select('user_id').eq('user_id',user.id).eq('is_active',true).maybeSingle());
   const isSuper=!!owner;const sections=sectionsFor(user,profile,isSuper);
   const url=new URL(req.url);const path=url.pathname.replace(/^.*\/nal-network-admin/,'')||'/me';
-  const x=req.method==='POST'?await req.json():{};
+  const x=req.method==='POST'&&path!=='/assets/upload'?await req.json():{};
   if(req.method==='GET'&&path==='/me')return reply({user:{id:user.id,email:user.email,name:profile.display_name,role:isSuper?'super_admin':profile.role},sections,verified_only:sections.length===0});
-  const required=path==='/polls'?'polls':path.startsWith('/friday/')?'friday':path==='/transactions'||path==='/roster'?'transactions':path==='/assets'?'assets':path.startsWith('/staff')?'staff':path==='/activity'?'activity':null;
+  const required=path==='/polls'?'polls':path.startsWith('/friday/')?'friday':path.startsWith('/transactions')||path==='/roster'?'transactions':path.startsWith('/assets')?'assets':path==='/library'?'friday':path==='/connections'?'connections':path.startsWith('/staff')?'staff':path==='/activity'?'activity':null;
   if(!required||!sections.includes(required))throw new HttpError('You have not been assigned access to this section.',403);
+  const workspace=await handleMondayWorkspace({path,req,x,url,headers,user,profile,isSuper,monday,boardItems,audit,check,text,id,web,HttpError});if(workspace)return workspace;
   if(path==='/polls'&&req.method==='GET'){
    const polls=check(await db.from('polls').select('*,poll_options(*)').in('status',['draft','active']).order('created_at',{ascending:false}).limit(100));
    const counts=new Map<string,number>();
@@ -109,19 +111,7 @@ Deno.serve(async req=>{
    return reply(data);
   }
   if(path==='/transactions'&&req.method==='GET'){
-   const r=await fetch(base+'/functions/v1/nal-operations-api',{headers:{Authorization:'Bearer '+jwt},signal:AbortSignal.timeout(45000)});const j=await r.json();if(!r.ok||j.success===false)throw new HttpError('The transaction connection is unavailable. Try again or open its Monday board.',502);return reply(j);
-  }
-  if(path==='/assets'&&req.method==='GET'){
-   const b=await boardItems('18437455062',true);
-   return reply({board:b.name,items:b.items.map((i:any)=>({id:i.id,name:i.parentName?i.parentName+' / '+i.name:i.name,group:i.group?.title||'',details:cv(i,'text_mm8jjxt8'),usage:cv(i,'dropdown_mm8j7gcm'),date:cv(i,'date_mm8j3gz6'),link:(()=>{try{return JSON.parse(i.column_values.find((c:any)=>c.id==='link_mm8jkx6a')?.value||'{}').url||'';}catch{return '';}})(),attachment:cv(i,'file_mm8jsk7z'),url:'https://ai-apparel-group-inc.monday.com/boards/18437455062/pulses/'+i.id}))});
-  }
-  if(path==='/assets'&&req.method==='POST'){
-   const itemId=id(x.id);const b=await monday('query($ids:[ID!]!){items(ids:$ids){id board{id}}}',{ids:[itemId]},true);if(b.items?.[0]?.board?.id!=='18437455062')throw new HttpError('Asset not found.',404);
-   const usage=Array.isArray(x.usage)?x.usage:[];if(usage.some((s:string)=>!['Free for use','Website','Social media'].includes(s)))throw new HttpError('Invalid usage.');
-   if(x.date&&!/^\d{4}-\d{2}-\d{2}$/.test(x.date))throw new HttpError('Invalid date.');
-   const link=web(x.link);const values={text_mm8jjxt8:typeof x.details==='string'?x.details.slice(0,10000):'',dropdown_mm8j7gcm:{labels:usage},date_mm8j3gz6:x.date?{date:x.date}:{},link_mm8jkx6a:link?{url:link,text:'Open asset usage'}:{}};
-   await monday('mutation($board:ID!,$item:ID!,$values:JSON!){change_multiple_column_values(board_id:$board,item_id:$item,column_values:$values){id}}',{board:'18437455062',item:itemId,values:JSON.stringify(values)},true);
-   await audit(user.id,'asset_updated','Digital Asset Management item '+itemId);return reply({success:true});
+   const r=await fetch(base+'/functions/v1/nal-operations-api',{headers:{Authorization:'Bearer '+jwt},signal:AbortSignal.timeout(45000)});const j=await r.json();if(!r.ok||j.success===false)throw new HttpError('The transaction connection is unavailable. Please refresh to try again.',502);return reply(j);
   }
   if(path==='/activity'&&req.method==='GET')return reply({activity:check(await db.from('admin_activity_log').select('id,action_type,details,created_at').gte('created_at',ACTIVITY_START).order('created_at',{ascending:false}).limit(100))});
   if(!isSuper)throw new HttpError('Super admin access required.',403);
