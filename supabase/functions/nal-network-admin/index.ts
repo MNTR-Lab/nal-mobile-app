@@ -1,11 +1,12 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.57.0';
 import { handleMondayWorkspace } from './workspace.ts';
+import { handleSocial } from './social.ts';
 const base = Deno.env.get('SUPABASE_URL')!;
 const db = createClient(base, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {auth:{persistSession:false,autoRefreshToken:false}});
 const origins = ['https://admin.nal-network.com'];
 const ACTIVITY_START='2026-11-06T05:00:00.000Z';
 const STAFF_ROLES=['verified','moderator','admin'];
-const CONTENT_SECTIONS=['polls','friday','transactions','assets','connections','activity'];
+const CONTENT_SECTIONS=['social','polls','friday','transactions','assets','connections','activity'];
 const ALL_SECTIONS=[...CONTENT_SECTIONS,'staff'];
 function validateSections(value:unknown){if(!Array.isArray(value)||value.some(k=>typeof k!=='string'||!CONTENT_SECTIONS.includes(k)))throw new HttpError('Choose valid dashboard sections.');return [...new Set(value)] as string[];}
 function sectionsFor(user:any,profile:any,isSuper=false){if(isSuper)return ALL_SECTIONS;if(Array.isArray(user.app_metadata?.nal_network_sections))return user.app_metadata.nal_network_sections.filter((k:string)=>CONTENT_SECTIONS.includes(k));return profile.role==='admin'?CONTENT_SECTIONS.filter(k=>k!=='activity'):profile.role==='moderator'?['polls']:[];}
@@ -70,8 +71,9 @@ Deno.serve(async req=>{
   const url=new URL(req.url);const path=url.pathname.replace(/^.*\/nal-network-admin/,'')||'/me';
   const x=req.method==='POST'&&path!=='/assets/upload'?await req.json():{};
   if(req.method==='GET'&&path==='/me')return reply({user:{id:user.id,email:user.email,name:profile.display_name,role:isSuper?'super_admin':profile.role},sections,verified_only:sections.length===0});
-  const required=path==='/polls'?'polls':path.startsWith('/friday/')?'friday':path.startsWith('/transactions')||path==='/roster'?'transactions':path.startsWith('/assets')?'assets':path==='/library'?'friday':path==='/connections'?'connections':path.startsWith('/staff')?'staff':path==='/activity'?'activity':null;
+  const required=path.startsWith('/social')?'social':path==='/polls'?'polls':path.startsWith('/friday/')?'friday':path.startsWith('/transactions')||path==='/roster'?'transactions':path.startsWith('/assets')?'assets':path==='/library'?'friday':path==='/connections'?'connections':path.startsWith('/staff')?'staff':path==='/activity'?'activity':null;
   if(!required||!sections.includes(required))throw new HttpError('You have not been assigned access to this section.',403);
+  if(path.startsWith('/social')){const result=await handleSocial({path,req,x,url,headers,user,monday,boardItems,check,text,id,web,HttpError});if(result)return result;}
   const workspace=await handleMondayWorkspace({path,req,x,url,headers,user,profile,isSuper,monday,boardItems,audit,check,text,id,web,HttpError});if(workspace)return workspace;
   if(path==='/polls'&&req.method==='GET'){
    const polls=check(await db.from('polls').select('*,poll_options(*)').in('status',['draft','active']).order('created_at',{ascending:false}).limit(100));

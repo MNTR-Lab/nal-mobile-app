@@ -77,3 +77,13 @@ Digital assets support metadata editing, category selection on creation, and att
 The Fan Choice Friday game library supports adding and editing game metadata, media URLs, and game/highlight approval statuses. Connected Workspaces displays connection status and opens each native dashboard module, subject to its assigned section permissions.
 
 Migration `audit_native_monday_workspace_writes` adds transaction and library audit events while preserving prior actions. Run `node --test admin/tests/*.test.cjs` for the full authorization and workflow suite.
+
+## Social Media Schedule (November 7, 2026)
+
+`/social#social` is the native NAL planning desk for Monday board `18437085764`. All API reads and writes enforce exact case-insensitive Organization=NAL, including file downloads and archival, so shared-board MNTR+ and team records stay outside this dashboard. New posts are assigned NAL and Client Visible=No on the server. Existing audience, client visibility, and attachments are preserved by edits. Staff access is controlled by the `social` permission checkbox; existing explicitly assigned section lists do not gain this permission automatically.
+
+The board retains its existing Draft/Scheduled/Posted/Rejected labels and now also supports Pending Review and Approved. Asset Link is `link_mm8wqjxz`; original uploaded Post Media remains `file_mm8gwyhd`. The page supports a seven-day view, all-post list, platform/status/search filters, creation, editing, duplication, archival, captions, campaign, assignments, creative links, existing attachment downloads, and published links. Staff publish manually on each platform. Native calendar date and Publish At ET are updated together; legacy dates normalize to Eastern wall-clock time. Edits and archives reject stale updated_at values.
+
+Deployment adds `social.js` to the Worker text modules, `social.ts` to the admin Edge Function, and `/social`, `/social/files`, `/social/download` to the gateway allowlist. No additional database table or duplicate calendar is created. API write events are recorded in structured Worker logs; Monday retains item history.
+
+Verification: 66 automated checks passed. In the production dashboard, a private test was created as Draft, edited to Scheduled at 2026-11-08 12:30 ET, and independently read from Monday to verify the native date, NAL organization, private visibility, platforms, caption, and Completed / Scheduled group. Test item 13495697650 was archived after verification.
