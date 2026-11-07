@@ -1,0 +1,5 @@
+/events https://mntr-network-development.bikard.workers.dev/events 302
+/events/ https://mntr-network-development.bikard.workers.dev/events 302
+/events/* https://mntr-network-development.bikard.workers.dev/events 302
+/watch https://mntr-network-development.bikard.workers.dev/streaming 302
+/watch/ https://mntr-network-development.bikard.workers.dev/streaming 302
