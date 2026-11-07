@@ -6,10 +6,12 @@ const db = createClient(base, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, {auth:
 const origins = ['https://admin.nal-network.com'];
 const ACTIVITY_START='2026-11-06T05:00:00.000Z';
 const STAFF_ROLES=['verified','moderator','admin'];
-const CONTENT_SECTIONS=['social','polls','friday','transactions','assets','connections','activity'];
+const CONTENT_SECTIONS=['social','polls','friday','transactions','assets','connections'];
 const ALL_SECTIONS=[...CONTENT_SECTIONS,'staff'];
+const ACTIVITY_OWNER_EMAIL='brandon@thenationalarenaleague.com';
+const canViewActivity=(user:any,isSuper=false)=>isSuper&&String(user?.email||'').trim().toLowerCase()===ACTIVITY_OWNER_EMAIL;
 function validateSections(value:unknown){if(!Array.isArray(value)||value.some(k=>typeof k!=='string'||!CONTENT_SECTIONS.includes(k)))throw new HttpError('Choose valid dashboard sections.');return [...new Set(value)] as string[];}
-function sectionsFor(user:any,profile:any,isSuper=false){if(isSuper)return ALL_SECTIONS;if(Array.isArray(user.app_metadata?.nal_network_sections))return user.app_metadata.nal_network_sections.filter((k:string)=>CONTENT_SECTIONS.includes(k));return profile.role==='admin'?CONTENT_SECTIONS.filter(k=>k!=='activity'):profile.role==='moderator'?['polls']:[];}
+function sectionsFor(user:any,profile:any,isSuper=false){if(isSuper)return canViewActivity(user,isSuper)?[...CONTENT_SECTIONS,'activity','staff']:ALL_SECTIONS;if(Array.isArray(user.app_metadata?.nal_network_sections))return user.app_metadata.nal_network_sections.filter((k:string)=>CONTENT_SECTIONS.includes(k));return profile.role==='admin'?CONTENT_SECTIONS:profile.role==='moderator'?['polls']:[];}
 const STAFF_EMAIL_DOMAINS=['mntrlab.com','thenationalarenaleague.com'];
 const isStaffEmail=(email:unknown)=>typeof email==='string'&&STAFF_EMAIL_DOMAINS.some(domain=>email.trim().toLowerCase().endsWith('@'+domain));
 async function allUsers(){const users=[];for(let page=1;;page++){const r=await db.auth.admin.listUsers({page,perPage:1000});if(r.error)throw r.error;users.push(...r.data.users);if(r.data.users.length<1000)break;}return users;}
@@ -58,7 +60,7 @@ Deno.serve(async req=>{
    if(!user.email_confirmed_at)throw new HttpError('Verify your email using the invitation link first.',403);
    if(!profile||profile.account_status!=='active')throw new HttpError('This account is not active.',403);
    check(await db.from('profiles').update({role:invitation.role}).eq('id',user.id));
-   const acceptedSections=Array.isArray(invitation.sections)?validateSections(invitation.sections):sectionsFor({app_metadata:{}},{role:invitation.role});
+   const acceptedSections=Array.isArray(invitation.sections)?validateSections(invitation.sections.filter((k:string)=>k!=='activity')):sectionsFor({app_metadata:{}},{role:invitation.role});
    const r=await db.auth.admin.updateUserById(user.id,{app_metadata:{...user.app_metadata,nal_network_sections:acceptedSections,nal_network_invitation:{...invitation,pending:false,accepted_at:new Date().toISOString()}}});if(r.error)throw r.error;
    await audit(user.id,'staff_invite_accepted','Staff invitation accepted',user.id);
    return reply({success:true,role:invitation.role,sections:acceptedSections});
@@ -72,6 +74,7 @@ Deno.serve(async req=>{
   const x=req.method==='POST'&&path!=='/assets/upload'?await req.json():{};
   if(req.method==='GET'&&path==='/me')return reply({user:{id:user.id,email:user.email,name:profile.display_name,role:isSuper?'super_admin':profile.role},sections,verified_only:sections.length===0});
   const required=path.startsWith('/social')?'social':path==='/polls'?'polls':path.startsWith('/friday/')?'friday':path.startsWith('/transactions')||path==='/roster'?'transactions':path.startsWith('/assets')?'assets':path==='/library'?'friday':path==='/connections'?'connections':path.startsWith('/staff')?'staff':path==='/activity'?'activity':null;
+  if(path==='/activity'&&!canViewActivity(user,isSuper))throw new HttpError('The Activity Log is restricted to its owner.',403);
   if(!required||!sections.includes(required))throw new HttpError('You have not been assigned access to this section.',403);
   if(path.startsWith('/social')){const result=await handleSocial({path,req,x,url,headers,user,monday,boardItems,check,text,id,web,HttpError});if(result)return result;}
   const workspace=await handleMondayWorkspace({path,req,x,url,headers,user,profile,isSuper,monday,boardItems,audit,check,text,id,web,HttpError});if(workspace)return workspace;
@@ -129,7 +132,7 @@ Deno.serve(async req=>{
    // Only super admins receive account email addresses.
    const users=await allUsers();
    const byId=new Map(users.map(u=>[u.id,u]));
-   return reply({members:p.filter(m=>isStaffEmail(byId.get(m.id)?.email)).sort((a,b)=>a.display_name.localeCompare(b.display_name)).map(m=>({...m,email:byId.get(m.id)?.email||'',eligible_by_domain:isStaffEmail(byId.get(m.id)?.email),sections:byId.get(m.id)?.app_metadata?.nal_network_invitation?.pending?(byId.get(m.id)?.app_metadata?.nal_network_invitation?.sections||sectionsFor(byId.get(m.id)||{},{role:byId.get(m.id)?.app_metadata?.nal_network_invitation?.role})):sectionsFor(byId.get(m.id)||{},m,owners.some(o=>o.user_id===m.id)),super_admin:owners.some(o=>o.user_id===m.id),invitation_pending:!!byId.get(m.id)?.app_metadata?.nal_network_invitation?.pending}))});
+   return reply({members:p.filter(m=>isStaffEmail(byId.get(m.id)?.email)).sort((a,b)=>a.display_name.localeCompare(b.display_name)).map(m=>({...m,email:byId.get(m.id)?.email||'',eligible_by_domain:isStaffEmail(byId.get(m.id)?.email),sections:byId.get(m.id)?.app_metadata?.nal_network_invitation?.pending?(byId.get(m.id)?.app_metadata?.nal_network_invitation?.sections||sectionsFor(byId.get(m.id)||{},{role:byId.get(m.id)?.app_metadata?.nal_network_invitation?.role})).filter((k:string)=>CONTENT_SECTIONS.includes(k)):sectionsFor(byId.get(m.id)||{},m,owners.some(o=>o.user_id===m.id)),super_admin:owners.some(o=>o.user_id===m.id),invitation_pending:!!byId.get(m.id)?.app_metadata?.nal_network_invitation?.pending}))});
   }
   if(path==='/staff/invite'&&req.method==='POST'){
    const email=text(x.email,254).toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new HttpError('Enter a valid email address.');

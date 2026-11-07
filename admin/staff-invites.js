@@ -1,5 +1,5 @@
 'use strict';
-const STAFF_ACCESS_OPTIONS=[['social','Social Media Schedule'],['polls','Polls'],['friday','Fan Choice Friday'],['transactions','Transactions'],['assets','Digital Assets'],['connections','Connected Workspaces'],['activity','Activity Log']];
+const STAFF_ACCESS_OPTIONS=[['social','Social Media Schedule'],['polls','Polls'],['friday','Fan Choice Friday'],['transactions','Transactions'],['assets','Digital Assets'],['connections','Connected Workspaces']];
 function permissionCheckboxes(selected=[]){return '<fieldset class="permission-options"><legend>Dashboard access</legend>'+STAFF_ACCESS_OPTIONS.map(([key,label])=>'<label class="check"><input type="checkbox" name="sections" value="'+key+'" '+(selected.includes(key)?'checked':'')+'>'+label+'</label>').join('')+'<label class="check"><input type="checkbox" disabled>Staff & Permissions — super admin only</label></fieldset>';}
 function accessLabels(selected=[]){return selected.map(key=>STAFF_ACCESS_OPTIONS.find(([k])=>k===key)?.[1]||(key==='staff'?'Staff & Permissions':key)).join(', ')||'No dashboard access';}
 

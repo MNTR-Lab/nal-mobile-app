@@ -93,3 +93,11 @@ Verification: 66 automated checks passed. In the production dashboard, a private
 The Social Media Schedule includes the weekly playbook and the November 9–December 18, 2026 six-week topic plan. Source images are bundled as Worker data modules in `admin/guides/weekly.webp` and `admin/guides/six-week.webp`. Serve them only through `/api/social/guides/weekly` and `/api/social/guides/six-week`, which verify the current session and social section access through the existing admin API. No unauthenticated dashboard asset route is added. Responses use no-store caching. The page fetches authorized images as local blob URLs, offers full-size viewing and downloads, and clears cached blob URLs on sign-out. Reference sheets do not create posts or publish content; staff use Plan a post for the existing Monday workflow.
 
 Deployment must upload the two WebP files as application/octet-stream Worker modules in addition to the existing JavaScript/text modules. Verification: both live images loaded at 1672×941; full-size viewer and a guide download worked. All 69 checks passed, including session and social permission enforcement on guide requests.
+
+## Owner-only Activity Log
+
+Activity Log access is restricted to the active Super Admin account with current Auth email `brandon@thenationalarenaleague.com` (case-insensitive). It is removed from delegable section options and assignment validation. Existing stored section grants cannot expose the menu or authorize log reads; other Super Admins are also denied. Legacy pending invitations ignore the retired activity grant when accepted. This supersedes earlier documentation allowing Activity Log assignments.
+
+The migration `restrict_activity_log_to_owner` revokes direct SELECT for anon/authenticated database roles, restricting the legacy SELECT policy to the owner email and active admin profile. The existing service-role backend still reads and writes logs; its activity endpoint checks the current owner account. Historical log records are retained. `supabase/owner-only-activity-log.sql` records the applied SQL.
+
+Verification: 72 checks passed, including legacy grants, other Super Admins, the designated owner, and non-delegation. Database checks confirm anon/authenticated SELECT=false and service_role SELECT=true.
