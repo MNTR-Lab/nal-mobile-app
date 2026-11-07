@@ -101,3 +101,7 @@ Activity Log access is restricted to the active Super Admin account with current
 The migration `restrict_activity_log_to_owner` revokes direct SELECT for anon/authenticated database roles, restricting the legacy SELECT policy to the owner email and active admin profile. The existing service-role backend still reads and writes logs; its activity endpoint checks the current owner account. Historical log records are retained. `supabase/owner-only-activity-log.sql` records the applied SQL.
 
 Verification: 72 checks passed, including legacy grants, other Super Admins, the designated owner, and non-delegation. Database checks confirm anon/authenticated SELECT=false and service_role SELECT=true.
+
+## Binary-safe Worker updates
+
+Cloudflare Worker downloads contain multipart binary parts with a name but no filename. Generic FormData parsers return these parts as strings and silently corrupt WebP bytes. Never round-trip a downloaded binary part through text. For small text changes, retain exact original binary byte slices or re-upload the checked-in guide files as Uint8Array/Blob with application/octet-stream and an explicit filename. `admin/scripts/read-worker-modules.py` parses downloaded multipart bodies as bytes, validates WebP RIFF lengths, and emits a base64 manifest with hashes and exact sizes. `python -m unittest discover -s admin/tests -p 'test_worker_binary.py'` covers the regression. Original guide sizes: weekly.webp=419304 bytes; six-week.webp=393060 bytes.
