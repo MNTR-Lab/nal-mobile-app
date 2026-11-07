@@ -6,6 +6,8 @@ import transactions from './transactions.js';
 import invites from './staff-invites.js';
 import workspace from './workspace.js';
 import social from './social.js';
+import weeklyGuide from './guides/weekly.webp';
+import sixWeekGuide from './guides/six-week.webp';
 const functions='https://rcoaprzmutcwlpugobry.supabase.co/functions/v1/';
 const security={
  'Cache-Control':'no-store',
@@ -23,6 +25,14 @@ export default {async fetch(request){
    if(!request.headers.get('Authorization'))return Response.json({error:'Sign in with your Forum account.'},{status:401,headers:security});
    if(request.method==='POST'&&request.headers.get('Origin')!==url.origin)return Response.json({error:'Origin not allowed'},{status:403,headers:security});
    const path=url.pathname.slice(5);let target;
+   if(['social/guides/weekly','social/guides/six-week'].includes(path)){
+    if(request.method!=='GET')return Response.json({error:'Method not allowed'},{status:405,headers:security});
+    const check=await fetch(functions+'nal-network-admin/me',{headers:{Authorization:request.headers.get('Authorization'),Origin:'https://admin.nal-network.com'},signal:AbortSignal.timeout(15000)});
+    if(!check.ok)return Response.json({error:'Sign in with an authorized staff account to view this guide.'},{status:check.status,headers:security});
+    const me=await check.json();if(!me.sections?.includes('social'))return Response.json({error:'Social Media Schedule access required.'},{status:403,headers:security});
+    const guide=path.endsWith('/weekly')?weeklyGuide:sixWeekGuide;
+    return new Response(guide,{headers:{...security,'Content-Type':'image/webp','Content-Disposition':'inline; filename="NAL-'+(path.endsWith('/weekly')?'Weekly-Playbook':'Six-Week-Plan')+'.webp"'}});
+   }
    if(path.startsWith('fcf/admin/'))target='nal-network-admin/friday/'+path.slice(4);
    else if(path==='roster')target='nal-network-admin/roster';
    else if(['social','social/files','social/download','me','polls','transactions','transactions/schema','assets','assets/files','assets/upload','assets/download','library','connections','staff','staff/invite','staff/accept','activity'].includes(path))target='nal-network-admin/'+path;

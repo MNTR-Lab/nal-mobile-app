@@ -87,3 +87,9 @@ The board retains its existing Draft/Scheduled/Posted/Rejected labels and now al
 Deployment adds `social.js` to the Worker text modules, `social.ts` to the admin Edge Function, and `/social`, `/social/files`, `/social/download` to the gateway allowlist. No additional database table or duplicate calendar is created. API write events are recorded in structured Worker logs; Monday retains item history.
 
 Verification: 66 automated checks passed. In the production dashboard, a private test was created as Draft, edited to Scheduled at 2026-11-08 12:30 ET, and independently read from Monday to verify the native date, NAL organization, private visibility, platforms, caption, and Completed / Scheduled group. Test item 13495697650 was archived after verification.
+
+## Team planning guide graphics
+
+The Social Media Schedule includes the weekly playbook and the November 9–December 18, 2026 six-week topic plan. Source images are bundled as Worker data modules in `admin/guides/weekly.webp` and `admin/guides/six-week.webp`. Serve them only through `/api/social/guides/weekly` and `/api/social/guides/six-week`, which verify the current session and social section access through the existing admin API. No unauthenticated dashboard asset route is added. Responses use no-store caching. The page fetches authorized images as local blob URLs, offers full-size viewing and downloads, and clears cached blob URLs on sign-out. Reference sheets do not create posts or publish content; staff use Plan a post for the existing Monday workflow.
+
+Deployment must upload the two WebP files as application/octet-stream Worker modules in addition to the existing JavaScript/text modules. Verification: both live images loaded at 1672×941; full-size viewer and a guide download worked. All 69 checks passed, including session and social permission enforcement on guide requests.
