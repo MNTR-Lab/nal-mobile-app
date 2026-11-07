@@ -11,6 +11,6 @@ window.MNTR = {
     {slug:'creative',icon:'◇',title:'Design & Content',summary:'Creative that gives your story a consistent identity.',details:'Visual content for the places your audience watches, follows, and connects.',items:['Social media graphics','Promotional videos','Broadcast design','Content planning']},
     {slug:'streaming',icon:'◉',title:'Streaming & Event Pages',summary:'Your event. Your branding. One easy place to watch.',details:'A dedicated destination that brings the player, event information, sponsors, and replay together.',items:['Embedded Lightcast player','Shareable event URLs','Sponsor placements','Live and replay destinations']}
   ],
-  projects:[{title:'League Websites',type:'Digital experiences',image:'website'},{title:'Broadcast Graphics',type:'Visual identity on screen',image:'graphics'},{title:'Live Event Production',type:'From the venue to the viewer',image:'production'}],
+  projects:[{title:'Websites & Platforms',type:'League sites, organizations & event destinations',image:'website'},{title:'Graphics & Branding',type:'Event artwork, channel identities & broadcast design',image:'graphics'},{title:'Live Production',type:'Broadcasts, live coverage & replay experiences',image:'production'}],
   events:[{slug:'panther-classic',title:'38th Annual Panther Classics',eyebrow:'UPCOMING EVENT',description:'Championship rounds at Buckeye Local High School.',date:'January 30, 2027',venue:'Buckeye Local High School',embedUrl:'',replayUrl:'',sponsors:[]}]
 };
