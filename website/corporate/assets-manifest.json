@@ -10,7 +10,7 @@
   "/index.html": "aa90b57cdaccd6b4e0620d6308052f2f",
   "/services/index.html": "aa90b57cdaccd6b4e0620d6308052f2f",
   "/shared-navigation.css": "5dec4968d299b35ab7645975534bbf91",
-  "/shared-navigation.js": "3599f5dd590d08adcfa6384c8c649944",
+  "/shared-navigation.js": "424d09f6ee2d0f895c5fc8479be93c7d",
   "/styles.css": "32780547e4fda69c375f97ba98934f17",
   "/work/graphics/index.html": "aa90b57cdaccd6b4e0620d6308052f2f",
   "/work/index.html": "aa90b57cdaccd6b4e0620d6308052f2f",
@@ -21,5 +21,7 @@
   "/assets/images/organizations/beyond-the-game.png": "4fbf4b4eb8af0482c6544894a6639efb",
   "/assets/images/categories/podcast.png": "a5a593a14c26a5230bf358d67dc7010b",
   "/assets/images/organizations/inside-the-walls.png": "05f90a6fde8e488a52d3fcc9b3ed862b",
-  "/assets/images/categories/professional-wrestling.png": "13344733ad632c512b8d3330b115a0be"
+  "/assets/images/categories/professional-wrestling.png": "13344733ad632c512b8d3330b115a0be",
+  "/favicon.png": "0fcf0eaa6080296753f86d8174dd6a83",
+  "/favicon.ico": "9f831b44089897be8cbf9f5df01aa7ab"
 }
