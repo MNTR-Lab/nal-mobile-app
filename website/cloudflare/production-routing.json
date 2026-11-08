@@ -1,0 +1,39 @@
+{
+  "domain": "mntrplus.com",
+  "pagesProject": "mntr-lab-dev",
+  "zoneId": "754bcbf71ad99375372b81a36bb5a6f3",
+  "routes": [
+    {
+      "pattern": "mntrplus.com/network*",
+      "script": "mntr-network-development"
+    },
+    {
+      "pattern": "mntrplus.com/streaming*",
+      "script": "mntr-network-development"
+    },
+    {
+      "pattern": "mntrplus.com/events*",
+      "script": "mntr-network-development"
+    },
+    {
+      "pattern": "mntrplus.com/sports*",
+      "script": "mntr-network-development"
+    },
+    {
+      "pattern": "mntrplus.com/organizations*",
+      "script": "mntr-network-development"
+    },
+    {
+      "pattern": "mntrplus.com/shop*",
+      "script": "mntr-network-development"
+    },
+    {
+      "pattern": "mntrplus.com/events/panther-classic*",
+      "script": "panther-classic"
+    },
+    {
+      "pattern": "www.mntrplus.com/*",
+      "script": "mntrplus-www-redirect"
+    }
+  ]
+}
