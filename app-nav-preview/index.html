@@ -35,7 +35,16 @@ h2{margin:0;font-size:22px}
 .social-page article button,.social-page article a{display:block;margin-top:8px}
 .social-team-grid,.social-channels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .social-team-card,.social-channel{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid #43516b;border-radius:9px;background:#152640;text-align:center;text-decoration:none;cursor:pointer}
-.social-team-card{flex-direction:column;border-bottom:3px solid var(--team-color,#e31b23);font-weight:700}
+.social-team-card{
+  flex-direction:column;
+  background:radial-gradient(ellipse at 50% 8%,color-mix(in srgb,var(--team-accent) 55%,transparent),transparent 68%),linear-gradient(155deg,color-mix(in srgb,var(--team-accent) 38%,#0b1c32),var(--team-dark));
+  border:1px solid color-mix(in srgb,var(--team-accent) 65%,#ffffff33);
+  border-top:4px solid var(--team-accent);
+  box-shadow:0 12px 26px #0005,inset 0 1px 0 #ffffff1c;
+  text-shadow:0 1px 4px #000;
+  font-weight:700;
+}
+#social-team-dialog{background:linear-gradient(155deg,color-mix(in srgb,var(--team-accent) 28%,#111c30),color-mix(in srgb,var(--team-dark) 36%,#111c30));border-top:4px solid var(--team-accent)}
 .social-team-card img{width:70px;height:62px;object-fit:contain}
 .social-team-card small{color:#c9d5e8}
 .social-player{margin:auto}
@@ -255,7 +264,9 @@ function renderSocialDirectory() {
     button.type = 'button';
     button.className = 'social-team-card';
     button.setAttribute('aria-haspopup', 'dialog');
-    button.style.setProperty('--team-color', teamColors[team.slug]?.[1] || '#e31b23');
+    const [primary, accent] = teamColors[team.slug] || ['#0b1d34', '#315b8a'];
+    button.style.setProperty('--team-dark', primary);
+    button.style.setProperty('--team-accent', accent);
     const logo = document.createElement('img');
     logo.src = team.logo;
     logo.alt = '';
@@ -266,6 +277,8 @@ function renderSocialDirectory() {
     label.textContent = 'Social accounts';
     button.append(logo, name, label);
     button.addEventListener('click', () => {
+      dialog.style.setProperty('--team-dark', primary);
+      dialog.style.setProperty('--team-accent', accent);
       document.getElementById('social-team-title').textContent = team.name;
       const links = socialChannelLinks(team.accounts);
       const host = document.getElementById('social-team-links');
