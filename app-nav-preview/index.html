@@ -92,6 +92,7 @@ const sheet = document.getElementById('sheet');
 const destinations = document.getElementById('destinations');
 const tabs = document.querySelectorAll('[data-tab]');
 const screens = {
+  watch: '[data-page="watchPage"]',
   home: '[data-page="homePage"]',
   teams: '[data-footer-action="teams"]',
   news: '[data-footer-action="news"]',
@@ -123,7 +124,59 @@ function selectTab(key) {
 
 const shopPage = document.getElementById('app-shop');
 const watchPage = document.getElementById('app-watch');
-const networkPages = {shop: shopPage, watch: watchPage};
+const networkPages = {shop: shopPage, 'watch-network': watchPage};
+const watchRoutes = {
+  'live-channel': '/watch/live',
+  'team-channels': '/watch/live-games',
+  archives: '/watch/team-channels',
+  shows: '/watch/shows',
+  'where-to-watch': '/where-to-watch'
+};
+
+function openWatchRoute(route) {
+  const url = new URL(route, watchPage.dataset.src).href;
+  if (watchPage.src !== url) watchPage.src = url;
+  openScreen('watch-network', 'watch');
+}
+
+function configureWatchHome(doc) {
+  const home = doc.querySelector('#watchPage [data-network-panel="home"]');
+  const nav = doc.querySelector('#watchPage .network-tabs');
+  const title = doc.querySelector('#watchPage .network-unified-title');
+  if (!home || !nav || !title || nav.querySelector('[data-network-tab="live-channel"]')) return;
+  title.textContent = 'WATCH THE NAL';
+  const originals = [...home.querySelectorAll('.network-card-scroll')].find(row => row.querySelector('.network-art-around'));
+  if (originals) {
+    originals.classList.add('app-originals-row');
+    const style = doc.createElement('style');
+    style.textContent = `
+      #watchPage .app-originals-row{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;overflow:visible!important}
+      #watchPage .app-originals-row>.network-show-card{min-width:0!important;width:100%!important}
+      #watchPage .app-originals-row .network-show-art{height:auto!important;aspect-ratio:2/3!important}
+      #watchPage .app-originals-row img{width:100%!important;height:100%!important;object-fit:contain!important}
+    `;
+    doc.head.append(style);
+    originals.closest('.network-hub-section').querySelector('.network-view-all').addEventListener('click', event => {
+      event.stopImmediatePropagation();
+      openWatchRoute(watchRoutes.shows);
+    }, true);
+  }
+  for (const [key, label] of [['live-channel','LIVE CHANNEL'],['where-to-watch','WHERE TO WATCH']]) {
+    const button = doc.createElement('button');
+    button.type = 'button';
+    button.className = 'network-tab';
+    button.dataset.networkTab = key;
+    button.textContent = label;
+    if (key === 'live-channel') nav.firstElementChild.after(button);
+    else nav.append(button);
+  }
+  nav.addEventListener('click', event => {
+    const route = watchRoutes[event.target.closest('[data-network-tab]')?.dataset.networkTab];
+    if (!route) return;
+    event.stopPropagation();
+    openWatchRoute(route);
+  }, true);
+}
 const socialPage = document.getElementById('app-social');
 const socialPosts = document.getElementById('social-posts');
 const socialPlayer = document.getElementById('social-player');
@@ -406,6 +459,7 @@ function openScreen(screen, tab) {
   socialPage.hidden = true;
   app.hidden = false;
   control.click();
+  if (screen === 'watch') app.contentDocument.querySelector('#watchPage [data-network-tab="home"]')?.click();
   selectTab(tab);
 }
 
@@ -466,7 +520,10 @@ function matchNetworkTeams(doc) {
 }
 
 app.addEventListener('load', () => {
-  if (app.contentDocument) matchNetworkTeams(app.contentDocument);
+  if (app.contentDocument) {
+    matchNetworkTeams(app.contentDocument);
+    configureWatchHome(app.contentDocument);
+  }
   const appDocument = app.contentDocument;
   const home = appDocument?.getElementById('homePage');
   if (home && !home.querySelector('.preview-news-ticker')) {
