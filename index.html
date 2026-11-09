@@ -15617,6 +15617,7 @@ async function enrichNalForumAuthors(items){
 async function loadNalForumTopics(){
   const host = document.getElementById("fanForumTopics");
   if (!host || !activeNalForumCategory) return;
+  const categoryId = activeNalForumCategory.id;
   host.innerHTML = '<div class="fan-forum-loading">LOADING CONVERSATIONS…</div>';
   try{
     const client = getNalAccountClient();
@@ -15624,14 +15625,43 @@ async function loadNalForumTopics(){
     const { data, error } = await client
       .from("forum_topics")
       .select("*")
-      .eq("category_id", activeNalForumCategory.id)
+      .eq("category_id", categoryId)
       .order("is_pinned", { ascending:false })
       .order("created_at", { ascending:false });
     if (error) throw error;
-    nalForumTopics = Array.isArray(data) ? data : [];
-    await enrichNalForumAuthors(nalForumTopics);
+    const topics = Array.isArray(data) ? data : [];
+    const replyCounts = new Map();
+    const batchSize = 100;
+    const pageSize = 500;
+    try {
+      for (let start = 0; start < topics.length; start += batchSize) {
+        const ids = topics.slice(start, start + batchSize).map(topic => topic.id);
+        for (let offset = 0; ; offset += pageSize) {
+          const { data: replies, error: replyError } = await client
+            .from("forum_replies")
+            .select("topic_id")
+            .in("topic_id", ids)
+            .eq("is_hidden", false)
+            .order("id")
+            .range(offset, offset + pageSize - 1);
+          if (replyError) throw replyError;
+          for (const reply of replies) {
+            const key = String(reply.topic_id);
+            replyCounts.set(key, (replyCounts.get(key) || 0) + 1);
+          }
+          if (replies.length < pageSize) break;
+        }
+      }
+      for (const topic of topics) topic._forum_reply_count = replyCounts.get(String(topic.id)) || 0;
+    } catch (replyError) {
+      console.warn("Unable to load NAL Forum reply counts:", replyError);
+    }
+    await enrichNalForumAuthors(topics);
+    if (activeNalForumCategory?.id !== categoryId) return;
+    nalForumTopics = topics;
     renderNalForumTopics();
   }catch(error){
+    if (activeNalForumCategory?.id !== categoryId) return;
     console.error("Unable to load NAL Forum topics:", error);
     host.innerHTML = '<div class="fan-forum-empty">Conversations are temporarily unavailable. Please try again.</div>';
   }
@@ -15648,7 +15678,7 @@ function renderNalForumTopics(){
   host.innerHTML = visible.map(topic => {
     const title = forumTopicValue(topic,["title","topic_title"],"NAL Conversation");
     const body = forumTopicValue(topic,["body","content","message"],"");
-    const replies = Number(forumTopicValue(topic,["reply_count","replies_count"],0)) || 0;
+    const replies = topic._forum_reply_count;
     const created = formatNalForumTime(forumTopicValue(topic,["created_at","posted_at"],""));
     const tag = forumTopicValue(topic,["tag","tag_name","topic_tag"],"");
     const pinned = !!forumTopicValue(topic,["is_pinned","pinned"],false);
@@ -15659,7 +15689,7 @@ function renderNalForumTopics(){
       <h3>${escapeHTML(title)}</h3>
       ${body ? `<p class="fan-forum-topic-preview">${escapeHTML(body)}</p>` : ''}
       ${nalForumAuthorHTML(topic,created)}
-      <div class="fan-forum-topic-meta">${replies} ${replies===1?'REPLY':'REPLIES'}</div>
+      <div class="fan-forum-topic-meta">${replies == null ? "REPLY COUNT UNAVAILABLE" : replies + (replies === 1 ? " REPLY" : " REPLIES")}</div>
       ${String(nalAccountProfile?.role||"").toLowerCase()==="admin" ? `<button type="button" class="nal-forum-admin-delete" data-admin-delete-topic="${topicId}" aria-label="Permanently delete ${escapeHTML(title)}">DELETE TOPIC</button>` : ""}
     </article>`;
   }).join("");
