@@ -26,6 +26,10 @@ h2{margin:0;font-size:22px}
 .social-page{flex:1;min-height:0;overflow:auto;padding:22px 16px;background:linear-gradient(#07172be6,#07172b),url('https://nal-network.com/assets/teams-arena.webp') center top/cover}
 .social-page[hidden],iframe[hidden]{display:none}
 .social-page h1{margin:0;border-bottom:3px solid #e31b23;padding-bottom:12px}
+#social-posts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+#social-posts article{min-width:0;padding:5px;font-size:clamp(10px,2.5vw,13px);overflow-wrap:anywhere}
+#social-posts article .close{width:100%;padding:4px 2px;font-size:inherit}
+#social-posts>.close{grid-column:1/-1;justify-self:start}
 .social-page article{margin:12px 0;padding:12px;background:#152640;border:1px solid #37445b;border-radius:10px}
 .social-page article img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;margin-bottom:8px}
 .social-page article button,.social-page article a{display:block;margin-top:8px}
@@ -235,7 +239,7 @@ function socialChannelLinks(accounts) {
     if (!url || !platformNames[platform]) return [];
     const link = document.createElement('a');
     link.className = 'social-channel';
-    link.textContent = platformNames[platform] + ' ↗';
+    link.textContent = platformNames[platform];
     link.href = url;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
@@ -317,7 +321,7 @@ async function loadSocial() {
     const posts = feed.videos.filter(item => item.status === 'Published'
       && String(item.team || '').split(/[,;]+/).some(team => team.trim() === 'Social Page')
       && /^\d{4}-\d{2}-\d{2}$/.test(item.publishDate || '') && httpsUrl(item.playbackUrl))
-      .sort((a, b) => b.publishDate.localeCompare(a.publishDate)).slice(0, 6);
+      .sort((a, b) => b.publishDate.localeCompare(a.publishDate)).slice(0, 4);
     socialPosts.replaceChildren(...posts.map(item => {
       const card = document.createElement('article');
       const thumbnail = httpsUrl(item.thumbnailUrl);
