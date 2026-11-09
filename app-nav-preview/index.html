@@ -53,6 +53,7 @@ h2{margin:0;font-size:22px}
 <div class="preview">
 <header>NAL App · Navigation Preview</header>
 <iframe id="app" title="NAL app development build" src="../index.html" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<iframe id="app-shop" title="NAL Network Shop" data-src="https://nal-network.com/shop" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox" hidden></iframe>
 <main id="app-social" class="social-page" hidden>
 <h1>NAL SOCIAL</h1>
 <p>Highlights, interviews and moments from across the league.</p>
@@ -109,7 +110,7 @@ const menus = {
     ['News', 'League and team headlines', 'news'],
     ['Fan Zone', 'Forum, polls and fan features', 'fan'],
     ['Social', 'NAL Network social hub', 'social'],
-    ['Shop', 'NAL Network shop', 'https://nal-network.com/shop']
+    ['Shop', 'NAL Network shop', 'shop']
   ]]
 };
 
@@ -120,6 +121,7 @@ function selectTab(key) {
   });
 }
 
+const shopPage = document.getElementById('app-shop');
 const socialPage = document.getElementById('app-social');
 const socialPosts = document.getElementById('social-posts');
 const socialPlayer = document.getElementById('social-player');
@@ -379,7 +381,16 @@ async function loadSocial() {
 }
 
 function openScreen(screen, tab) {
+  if (screen === 'shop') {
+    app.hidden = true;
+    socialPage.hidden = true;
+    shopPage.hidden = false;
+    if (!shopPage.hasAttribute('src')) shopPage.src = shopPage.dataset.src;
+    selectTab(tab);
+    return;
+  }
   if (screen === 'social') {
+    shopPage.hidden = true;
     app.hidden = true;
     socialPage.hidden = false;
     selectTab(tab);
@@ -391,6 +402,7 @@ function openScreen(screen, tab) {
     || app.contentDocument?.querySelector(screens[screen]);
   if (!control) return;
   socialPage.hidden = true;
+  shopPage.hidden = true;
   app.hidden = false;
   control.click();
   selectTab(tab);
