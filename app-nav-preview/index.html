@@ -22,10 +22,25 @@ h2{margin:0;font-size:22px}
 .close{padding:7px 12px}
 .destination{display:block;text-align:left;width:100%;padding:12px;margin-top:8px;text-decoration:none}
 .destination small{display:block;margin-top:2px;color:#c9d5e8}
+
+.social-page{flex:1;min-height:0;overflow:auto;padding:22px 16px;background:linear-gradient(#07172be6,#07172b),url('https://nal-network.com/assets/teams-arena.webp') center top/cover}
+.social-page[hidden],iframe[hidden]{display:none}
+.social-page h1{margin:0;border-bottom:3px solid #e31b23;padding-bottom:12px}
+.social-page article{margin:12px 0;padding:12px;background:#152640;border:1px solid #37445b;border-radius:10px}
+.social-page article img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;margin-bottom:8px}
+.social-page article button,.social-page article a{display:block;margin-top:8px}
+.social-player{margin:auto}
+.social-player iframe,.social-player video{width:100%;aspect-ratio:16/9;display:block}
 </style>
 <div class="preview">
 <header>NAL App · Navigation Preview</header>
 <iframe id="app" title="NAL app development build" src="../index.html" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<main id="app-social" class="social-page" hidden>
+<h1>NAL SOCIAL</h1>
+<p>Highlights, interviews and moments from across the league.</p>
+<h2>NAL Quick Hits</h2>
+<div id="social-posts" aria-live="polite"></div>
+</main>
 <nav aria-label="App navigation">
 <button type="button" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10l9-7 9 7v10H3z M9 20v-7h6v7"/></svg>Home</button>
 <button type="button" data-tab="games" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z M12 5v14 M7 9v6 M17 9v6"/></svg>Game Center</button>
@@ -37,6 +52,10 @@ h2{margin:0;font-size:22px}
 <dialog id="sheet" aria-labelledby="sheet-title">
 <div class="sheet-header"><h2 id="sheet-title"></h2><form method="dialog"><button class="close">Close</button></form></div>
 <div id="destinations"></div>
+</dialog>
+<dialog id="social-player" class="social-player" aria-labelledby="social-video-title">
+<div class="sheet-header"><h2 id="social-video-title"></h2><form method="dialog"><button class="close">Close</button></form></div>
+<div id="social-media"></div>
 </dialog>
 <script>
 const app = document.getElementById('app');
@@ -62,7 +81,7 @@ const menus = {
   more: ['More', [
     ['News', 'League and team headlines', 'news'],
     ['Fan Zone', 'Forum, polls and fan features', 'fan'],
-    ['Social', 'NAL Network social hub', 'https://nal-network.com/social'],
+    ['Social', 'NAL Network social hub', 'social'],
     ['Shop', 'NAL Network shop', 'https://nal-network.com/shop']
   ]]
 };
@@ -74,10 +93,114 @@ function selectTab(key) {
   });
 }
 
+const socialPage = document.getElementById('app-social');
+const socialPosts = document.getElementById('social-posts');
+const socialPlayer = document.getElementById('social-player');
+const socialMedia = document.getElementById('social-media');
+const socialApi = 'https://nal-network-video-api.bikard.workers.dev';
+let socialLoaded = false;
+
+function httpsUrl(raw) {
+  try {
+    const url = new URL(raw);
+    return url.protocol === 'https:' ? url : null;
+  } catch {
+    return null;
+  }
+}
+
+function youtubeId(url) {
+  const host = url.hostname.replace(/^(www\.|m\.)/, '');
+  const id = host === 'youtu.be' ? url.pathname.split('/')[1]
+    : host === 'youtube.com' ? url.searchParams.get('v') || url.pathname.match(/^\/(?:shorts|embed|live)\/([^/]+)/)?.[1] : '';
+  return /^[\w-]{11}$/.test(id || '') ? id : '';
+}
+
+function playSocialVideo(item, youtube) {
+  document.getElementById('social-video-title').textContent = item.title || 'NAL video';
+  const media = document.createElement(youtube ? 'iframe' : 'video');
+  if (youtube) {
+    media.src = 'https://www.youtube-nocookie.com/embed/' + youtube;
+    media.title = item.title || 'NAL video';
+    media.allow = 'encrypted-media; picture-in-picture';
+    media.allowFullscreen = true;
+  } else {
+    media.src = socialApi + '/stream?id=' + encodeURIComponent(item.id);
+    media.controls = true;
+    media.playsInline = true;
+  }
+  socialMedia.replaceChildren(media);
+  socialPlayer.showModal();
+}
+
+socialPlayer.addEventListener('close', () => socialMedia.replaceChildren());
+
+async function loadSocial() {
+  socialPosts.textContent = 'Loading the latest posts…';
+  try {
+    const response = await fetch(socialApi + '/social', {cache: 'no-store'});
+    const feed = await response.json();
+    if (!response.ok || !feed.ok || !Array.isArray(feed.videos)) throw new Error('Social feed unavailable');
+    const posts = feed.videos.filter(item => item.status === 'Published'
+      && String(item.team || '').split(/[,;]+/).some(team => team.trim() === 'Social Page')
+      && /^\d{4}-\d{2}-\d{2}$/.test(item.publishDate || '') && httpsUrl(item.playbackUrl))
+      .sort((a, b) => b.publishDate.localeCompare(a.publishDate)).slice(0, 6);
+    socialPosts.replaceChildren(...posts.map(item => {
+      const card = document.createElement('article');
+      const thumbnail = httpsUrl(item.thumbnailUrl);
+      if (thumbnail) {
+        const image = document.createElement('img');
+        image.src = thumbnail.href;
+        image.alt = '';
+        image.loading = 'lazy';
+        card.append(image);
+      }
+      const title = document.createElement('strong');
+      title.textContent = item.title || 'NAL Quick Hit';
+      card.append(title);
+      const url = httpsUrl(item.playbackUrl);
+      const youtube = youtubeId(url);
+      const external = /(^|\.)(facebook\.com|fb\.watch|instagram\.com|tiktok\.com|x\.com|twitter\.com|threads\.net|threads\.com|youtube\.com|youtu\.be)$/.test(url.hostname);
+      const action = document.createElement(external && !youtube ? 'a' : 'button');
+      action.className = 'close';
+      if (external && !youtube) {
+        action.textContent = 'Open original post ↗';
+        action.href = url.href;
+        action.target = '_blank';
+        action.rel = 'noopener noreferrer';
+      } else {
+        action.type = 'button';
+        action.textContent = 'Watch in app';
+        action.onclick = () => playSocialVideo(item, youtube);
+      }
+      card.append(action);
+      return card;
+    }));
+    if (!posts.length) socialPosts.textContent = 'New social posts are coming soon.';
+    socialLoaded = true;
+  } catch {
+    socialPosts.textContent = 'Social posts are temporarily unavailable.';
+    const retry = document.createElement('button');
+    retry.className = 'close';
+    retry.textContent = 'Try again';
+    retry.onclick = loadSocial;
+    socialPosts.append(' ', retry);
+  }
+}
+
 function openScreen(screen, tab) {
+  if (screen === 'social') {
+    app.hidden = true;
+    socialPage.hidden = false;
+    selectTab(tab);
+    if (!socialLoaded) loadSocial();
+    return;
+  }
   const control = app.contentDocument?.querySelector('.bottom-nav ' + screens[screen])
     || app.contentDocument?.querySelector(screens[screen]);
   if (!control) return;
+  socialPage.hidden = true;
+  app.hidden = false;
   control.click();
   selectTab(tab);
 }
@@ -189,8 +312,8 @@ tabs.forEach(button => button.addEventListener('click', () => {
     } else {
       item.type = 'button';
       item.addEventListener('click', () => {
-        openScreen(target, key);
         sheet.close();
+        openScreen(target, key);
       });
     }
     return item;
