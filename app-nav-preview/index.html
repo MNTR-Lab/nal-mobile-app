@@ -29,6 +29,11 @@ h2{margin:0;font-size:22px}
 .social-page article{margin:12px 0;padding:12px;background:#152640;border:1px solid #37445b;border-radius:10px}
 .social-page article img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;margin-bottom:8px}
 .social-page article button,.social-page article a{display:block;margin-top:8px}
+.social-team-grid,.social-channels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.social-team-card,.social-channel{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid #43516b;border-radius:9px;background:#152640;text-align:center;text-decoration:none;cursor:pointer}
+.social-team-card{flex-direction:column;border-bottom:3px solid var(--team-color,#e31b23);font-weight:700}
+.social-team-card img{width:70px;height:62px;object-fit:contain}
+.social-team-card small{color:#c9d5e8}
 .social-player{margin:auto}
 .social-player iframe,.social-player video{width:100%;aspect-ratio:16/9;display:block}
 </style>
@@ -40,6 +45,11 @@ h2{margin:0;font-size:22px}
 <p>Highlights, interviews and moments from across the league.</p>
 <h2>NAL Quick Hits</h2>
 <div id="social-posts" aria-live="polite"></div>
+<h2>Latest from the League</h2>
+<div id="social-league-channels" class="social-channels"></div>
+<h2>Follow Your Team</h2>
+<p>Select a team to see its official social accounts.</p>
+<div id="social-team-grid" class="social-team-grid"></div>
 </main>
 <nav aria-label="App navigation">
 <button type="button" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10l9-7 9 7v10H3z M9 20v-7h6v7"/></svg>Home</button>
@@ -52,6 +62,10 @@ h2{margin:0;font-size:22px}
 <dialog id="sheet" aria-labelledby="sheet-title">
 <div class="sheet-header"><h2 id="sheet-title"></h2><form method="dialog"><button class="close">Close</button></form></div>
 <div id="destinations"></div>
+</dialog>
+<dialog id="social-team-dialog" aria-labelledby="social-team-title">
+<div class="sheet-header"><h2 id="social-team-title"></h2><form method="dialog"><button class="close">Close</button></form></div>
+<div id="social-team-links" class="social-channels"></div>
 </dialog>
 <dialog id="social-player" class="social-player" aria-labelledby="social-video-title">
 <div class="sheet-header"><h2 id="social-video-title"></h2><form method="dialog"><button class="close">Close</button></form></div>
@@ -99,6 +113,165 @@ const socialPlayer = document.getElementById('social-player');
 const socialMedia = document.getElementById('social-media');
 const socialApi = 'https://nal-network-video-api.bikard.workers.dev';
 let socialLoaded = false;
+
+const socialTeams = [
+  {
+    "slug": "amarillo-warbirds",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089",
+    "name": "Amarillo Warbirds",
+    "accounts": {
+      "facebook": "https://www.facebook.com/profile.php?id=61577150014645",
+      "instagram": "https://www.instagram.com/amarillowarbirdsfootball",
+      "tiktok": "https://www.tiktok.com/@amarillo.warbirds",
+      "x": null
+    }
+  },
+  {
+    "slug": "colorado-spartans",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans.png?v=1789867089",
+    "name": "Colorado Spartans",
+    "accounts": {
+      "facebook": "https://www.facebook.com/profile.php?id=100094974981687",
+      "instagram": "https://www.instagram.com/coloradospartans",
+      "tiktok": "https://www.tiktok.com/@coloradospartans",
+      "x": "https://x.com/ColoSpartansNAL"
+    }
+  },
+  {
+    "slug": "dallas-apex",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex.png?v=1789867089",
+    "name": "Dallas Apex",
+    "accounts": {
+      "facebook": "https://www.facebook.com/dallas.apex",
+      "instagram": "https://www.instagram.com/dallasapex",
+      "tiktok": "https://www.tiktok.com/@dallasapex",
+      "x": "https://x.com/Dallasapexx"
+    }
+  },
+  {
+    "slug": "louisiana-rouxgaroux",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux.png?v=1789867089",
+    "name": "Louisiana Rouxgaroux",
+    "accounts": {
+      "facebook": "https://www.facebook.com/LouisianaRouxgaroux",
+      "instagram": "https://www.instagram.com/louisianarouxgaroux",
+      "tiktok": "https://www.tiktok.com/@louisianarouxgaroux",
+      "x": "https://x.com/LARouxgaroux26"
+    }
+  },
+  {
+    "slug": "omaha-beef",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef.png?v=1789867089",
+    "name": "Omaha Beef",
+    "accounts": {
+      "facebook": "https://www.facebook.com/TheOmahaBeef",
+      "instagram": "https://www.instagram.com/theomahabeef",
+      "tiktok": "https://www.tiktok.com/@omahabeeffootball",
+      "x": "https://x.com/TheOmahaBeef"
+    }
+  },
+  {
+    "slug": "pueblo-punishers",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers.png?v=1789867089",
+    "name": "Pueblo Punishers",
+    "accounts": {
+      "facebook": "https://www.facebook.com/pueblopunishers",
+      "instagram": "https://www.instagram.com/pueblopunishers",
+      "tiktok": "https://www.tiktok.com/@pueblopunishers",
+      "x": null
+    }
+  },
+  {
+    "slug": "salina-liberty",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty.png?v=1789867089",
+    "name": "Salina Liberty",
+    "accounts": {
+      "facebook": "https://www.facebook.com/Salinalibertyfootball",
+      "instagram": "https://www.instagram.com/salina_liberty",
+      "tiktok": "https://www.tiktok.com/@salina_liberty",
+      "x": "https://x.com/salina_liberty"
+    }
+  },
+  {
+    "slug": "sioux-city-bandits",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits.png?v=1789867089",
+    "name": "Sioux City Bandits",
+    "accounts": {
+      "facebook": "https://www.facebook.com/SiouxCityBandits",
+      "instagram": "https://www.instagram.com/scbandits712",
+      "tiktok": "https://www.tiktok.com/@siouxcitybandits",
+      "x": "https://x.com/sc_bandits"
+    }
+  },
+  {
+    "slug": "southwest-kansas-storm",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm.png?v=1789867089",
+    "name": "Southwest Kansas Storm",
+    "accounts": {
+      "facebook": "https://www.facebook.com/thesouthweststorm",
+      "instagram": "https://www.instagram.com/swkstormfootball",
+      "tiktok": null,
+      "x": "https://x.com/SWKStormFB",
+      "youtube": "https://www.youtube.com/@SWKStormFootball"
+    }
+  },
+  {
+    "slug": "wheeling-miners",
+    "logo": "https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners.png?v=1789867089",
+    "name": "Wheeling Miners",
+    "accounts": {
+      "facebook": "https://www.facebook.com/wheelingminers",
+      "instagram": "https://www.instagram.com/wheelingminers",
+      "tiktok": null,
+      "x": null
+    }
+  }
+];
+const leagueChannels = {"facebook":"https://www.facebook.com/NationalArenaLeague","instagram":"https://www.instagram.com/nationalarenaleague/","tiktok":"https://www.tiktok.com/@nalfootball","x":"https://x.com/NALFootball"};
+const platformNames = {facebook:'Facebook',instagram:'Instagram',tiktok:'TikTok',x:'X',youtube:'YouTube'};
+
+function socialChannelLinks(accounts) {
+  return Object.entries(accounts).flatMap(([platform, url]) => {
+    if (!url || !platformNames[platform]) return [];
+    const link = document.createElement('a');
+    link.className = 'social-channel';
+    link.textContent = platformNames[platform] + ' ↗';
+    link.href = url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    return [link];
+  });
+}
+
+function renderSocialDirectory() {
+  const dialog = document.getElementById('social-team-dialog');
+  document.getElementById('social-league-channels').replaceChildren(...socialChannelLinks(leagueChannels));
+  document.getElementById('social-team-grid').replaceChildren(...socialTeams.map(team => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'social-team-card';
+    button.setAttribute('aria-haspopup', 'dialog');
+    button.style.setProperty('--team-color', teamColors[team.slug]?.[1] || '#e31b23');
+    const logo = document.createElement('img');
+    logo.src = team.logo;
+    logo.alt = '';
+    logo.loading = 'lazy';
+    const name = document.createElement('span');
+    name.textContent = team.name;
+    const label = document.createElement('small');
+    label.textContent = 'Social accounts';
+    button.append(logo, name, label);
+    button.addEventListener('click', () => {
+      document.getElementById('social-team-title').textContent = team.name;
+      const links = socialChannelLinks(team.accounts);
+      const host = document.getElementById('social-team-links');
+      host.replaceChildren(...links);
+      if (!links.length) host.textContent = 'Official social accounts are coming soon.';
+      dialog.showModal();
+    });
+    return button;
+  }));
+}
 
 function httpsUrl(raw) {
   try {
@@ -193,6 +366,7 @@ function openScreen(screen, tab) {
     app.hidden = true;
     socialPage.hidden = false;
     selectTab(tab);
+    if (!document.getElementById('social-team-grid').childElementCount) renderSocialDirectory();
     if (!socialLoaded) loadSocial();
     return;
   }
