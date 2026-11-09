@@ -21779,6 +21779,10 @@ function closeNalTeamSocial(){const dialog=document.getElementById('nalTeamSocia
 #fanPollPage .nal-fcf-options .fan-poll-option{min-width:0;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 #fanPollPage .nal-fcf-logos{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:100%;padding:12px;background:#fff;color:#6c7888}
 #fanPollPage .nal-fcf-logos img{height:72px;max-width:100%;object-fit:contain}
+#fanPollPage .nal-fcf-logos{min-height:176px}
+#fanPollPage .nal-fcf-text-fallback{font-size:12px;font-weight:800;text-align:center;overflow-wrap:anywhere}
+#fanPollPage .nal-fcf-options .fan-poll-result{display:flex;flex-direction:column}
+#fanPollPage .nal-fcf-options .fan-poll-result .nal-fcf-caption{flex:1}
 #fanPollPage .nal-fcf-logos>span{font-size:10px;font-weight:800}
 #fanPollPage .nal-fcf-caption{display:block;padding:10px 7px;font-size:11px;font-weight:700;line-height:1.4;text-align:center}
 #fanPollPage .nal-fcf-percent{display:block;text-align:center;padding:4px 8px 14px;font-size:20px;color:#07172b}
@@ -21789,7 +21793,7 @@ function closeNalTeamSocial(){const dialog=document.getElementById('nalTeamSocia
 <script id="nal-linked-fcf-ballots-js">
 const NAL_BALLOT_TEAMS = [{"name":"Amarillo Warbirds","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Amarillo_Warbirds.png?v=1789867089"},{"name":"Colorado Spartans","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Colorado_Spartans.png?v=1789867089"},{"name":"Dallas Apex","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Dallas_Apex.png?v=1789867089"},{"name":"Louisiana Rouxgaroux","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Louisiana_Roux.png?v=1789867089"},{"name":"Omaha Beef","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Omaha_Beef.png?v=1789867089"},{"name":"Pueblo Punishers","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Pueblo_Punishers.png?v=1789867089"},{"name":"Salina Liberty","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Salina_Liberty.png?v=1789867089"},{"name":"Sioux City Bandits","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Sioux_City_Bandits.png?v=1789867089"},{"name":"Southwest Kansas Storm","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/SW_Kansas_Storm.png?v=1789867089"},{"name":"Wheeling Miners","logo":"https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Wheeling_Miners.png?v=1789867089"},{"name":"Beaumont Renegades","logo":"https://cdn.shopify.com/s/files/1/0754/0116/7061/files/beaumont-renegades-fan-choice.png?v=1794239094"},{"name":"Shreveport Rouxgaroux","logo":"https://cdn.shopify.com/s/files/1/0754/0116/7061/files/shreveport-rouxgaroux-fan-choice.png?v=1794239089"}];
 function nalBallotTeams(label){
- const text=String(label||"").toLowerCase().replace(/sw kansas/g,"southwest kansas");
+ const text=String(label||"").toLowerCase().replace(/sw kansas/g,"southwest kansas").replace(/shrevport|shreve port|shreeveport/g,"shreveport").replace(/rougaroux|rouxgarou/g,"rouxgaroux");
  return NAL_BALLOT_TEAMS.filter(t=>text.includes(t.name.toLowerCase()));
 }
 function nalBallotLogo(team){return '<img src="'+fanPollEsc(team.logo)+'" alt="'+fanPollEsc(team.name)+'" loading="lazy">';}
@@ -21809,7 +21813,7 @@ function nalFcfCard(){
 }
 function nalFcfMedia(option){
  const teams=nalBallotTeams(option.matchup);
- return teams.length===2?'<span class="nal-fcf-logos">'+teams.map((t,i)=>(i?'<span aria-hidden="true">VS</span>':"")+nalBallotLogo(t)).join("")+'</span>':"";
+ return teams.length===2?'<span class="nal-fcf-logos">'+teams.map((t,i)=>(i?'<span aria-hidden="true">VS</span>':"")+nalBallotLogo(t)).join("")+'</span>':'<span class="nal-fcf-logos nal-fcf-text-fallback">'+fanPollEsc(option.matchup)+'</span>';
 }
 function nalFcfOpen(p){const now=Date.now();return p.status==="active"&&(!p.opens_at||Date.parse(p.opens_at)<=now)&&(!p.closes_at||Date.parse(p.closes_at)>now);}
 async function loadNalFcfBallot(){
