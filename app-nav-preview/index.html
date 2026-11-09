@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NAL App Navigation Preview</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07101f;color:white;font:16px system-ui,sans-serif}
+.preview{height:100dvh;max-width:540px;margin:auto;display:flex;flex-direction:column;background:#101b30}
+header{text-align:center;padding:calc(5px + env(safe-area-inset-top)) 12px 5px;background:#101b30;color:#c9d5e8;font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+iframe{width:100%;flex:1;min-height:0;border:0;background:#07101f}
+nav{display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom);border-top:1px solid #37445b}
+button,a{font:inherit;color:inherit}
+nav button{border:0;border-top:3px solid transparent;background:transparent;min-height:62px;display:grid;justify-items:center;align-content:center;gap:5px;padding:4px 1px;font-size:clamp(10px,2.8vw,12px);font-weight:700;color:#c9d5e8}
+nav button[aria-current="page"]{color:white;border-color:#ff5059;background:#23304a}
+svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+dialog{width:min(94vw,510px);margin:auto auto calc(72px + env(safe-area-inset-bottom));border:1px solid #43516b;border-radius:18px;background:#111c30;color:white;padding:16px}
+dialog::backdrop{background:#040915a8}
+.sheet-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h2{margin:0;font-size:22px}
+.close,.destination{background:#202d46;border:1px solid #43516b;border-radius:9px;cursor:pointer}
+.close{padding:7px 12px}
+.destination{display:block;text-align:left;width:100%;padding:12px;margin-top:8px;text-decoration:none}
+.destination small{display:block;margin-top:2px;color:#c9d5e8}
+</style>
+<div class="preview">
+<header>NAL App · Navigation Preview</header>
+<iframe id="app" title="NAL app development build" src="../index.html" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<nav aria-label="App navigation">
+<button type="button" data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10l9-7 9 7v10H3z M9 20v-7h6v7"/></svg>Home</button>
+<button type="button" data-tab="games" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z M12 5v14 M7 9v6 M17 9v6"/></svg>Game Center</button>
+<button type="button" data-tab="watch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v16H3z M10 8l6 4-6 4z"/></svg>Watch</button>
+<button type="button" data-tab="teams"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg>Teams</button>
+<button type="button" data-tab="more" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16 M4 12h16 M4 18h16"/></svg>More</button>
+</nav>
+</div>
+<dialog id="sheet" aria-labelledby="sheet-title">
+<div class="sheet-header"><h2 id="sheet-title"></h2><form method="dialog"><button class="close">Close</button></form></div>
+<div id="destinations"></div>
+</dialog>
+<script>
+const app = document.getElementById('app');
+const sheet = document.getElementById('sheet');
+const destinations = document.getElementById('destinations');
+const tabs = document.querySelectorAll('[data-tab]');
+const screens = {
+  home: '[data-page="homePage"]',
+  watch: '[data-page="watchPage"]',
+  teams: '[data-footer-action="teams"]',
+  news: '[data-footer-action="news"]',
+  fan: '[data-page="fanPage"]',
+  scores: '[data-home-action="scores"]',
+  schedule: '[data-home-action="schedule"]',
+  stats: '[data-home-action="stats"]'
+};
+const menus = {
+  games: ['Game Center', [
+    ['Scores', 'Live scores and final results', 'scores'],
+    ['Schedule', 'Upcoming matchups', 'schedule'],
+    ['Stats', 'League and player stats', 'stats']
+  ]],
+  more: ['More', [
+    ['News', 'League and team headlines', 'news'],
+    ['Fan Zone', 'Forum, polls and fan features', 'fan'],
+    ['Social', 'NAL Network social hub', 'https://nal-network.com/social'],
+    ['Shop', 'NAL Network shop', 'https://nal-network.com/shop']
+  ]]
+};
+
+function selectTab(key) {
+  tabs.forEach(tab => {
+    if (tab.dataset.tab === key) tab.setAttribute('aria-current', 'page');
+    else tab.removeAttribute('aria-current');
+  });
+}
+
+function openScreen(screen, tab) {
+  const control = app.contentDocument?.querySelector('.bottom-nav ' + screens[screen])
+    || app.contentDocument?.querySelector(screens[screen]);
+  if (!control) return;
+  control.click();
+  selectTab(tab);
+}
+
+app.addEventListener('load', () => {
+  const footer = app.contentDocument?.querySelector('.bottom-nav');
+  if (footer) footer.hidden = true;
+  if (footer) footer.style.setProperty('display', 'none', 'important');
+});
+
+tabs.forEach(button => button.addEventListener('click', () => {
+  const key = button.dataset.tab;
+  const menu = menus[key];
+  if (!menu) {
+    openScreen(key, key);
+    return;
+  }
+  const [title, items] = menu;
+  document.getElementById('sheet-title').textContent = title;
+  destinations.replaceChildren(...items.map(([label, description, target]) => {
+    const external = target.startsWith('https:');
+    const item = document.createElement(external ? 'a' : 'button');
+    item.className = 'destination';
+    item.textContent = label;
+    const detail = document.createElement('small');
+    detail.textContent = description;
+    item.append(detail);
+    if (external) {
+      item.href = target;
+      item.target = '_blank';
+      item.rel = 'noopener';
+    } else {
+      item.type = 'button';
+      item.addEventListener('click', () => {
+        openScreen(target, key);
+        sheet.close();
+      });
+    }
+    return item;
+  }));
+  sheet.showModal();
+}));
+</script>
+</html>
