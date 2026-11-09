@@ -38,18 +38,20 @@ if(path==='/admin/library'&&req.method==='GET'){
 
 if(path==='/poll'&&req.method==='GET'){const {data:poll,error}=await db.from('fcf_polls').select('*').in('status',['active','closed','published']).order('created_at',{ascending:false}).limit(1).maybeSingle();if(error)throw error;if(!poll)return reply({poll:null,options:[]});const {data:options}=await db.from('fcf_options').select('*').eq('poll_id',poll.id).order('display_order');return reply({poll,options})}
 if(path==='/vote'&&req.method==='POST'){const {poll_id,option_id,token}=await req.json();if(!Number.isSafeInteger(poll_id)||!Number.isSafeInteger(option_id)||typeof token!=='string'||!/^[0-9a-f-]{36}$/i.test(token))return fail('Invalid vote');const {data:p}=await db.from('fcf_polls').select('*').eq('id',poll_id).maybeSingle();const now=Date.now();if(!p||p.status!=='active'||(p.opens_at&&Date.parse(p.opens_at)>now)||(p.closes_at&&Date.parse(p.closes_at)<=now))return fail('Voting is not open',403);const {data:o}=await db.from('fcf_options').select('id').eq('id',option_id).eq('poll_id',poll_id).maybeSingle();if(!o)return fail('Invalid game selection');const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(token));const hash=Array.from(new Uint8Array(bytes),x=>x.toString(16).padStart(2,'0')).join('');const {error}=await db.from('fcf_votes').insert({poll_id,option_id,voter_token_hash:hash});if(error?.code==='23505')return fail('You have already voted in this poll',409);if(error)throw error;return reply({success:true})}
-if(path==='/results'&&(req.method==='GET'||req.method==='POST')){
- const raw=req.method==='GET'?new URL(req.url).searchParams.get('poll_id'):(await req.json().catch(()=>({}))).poll_id;
- const poll_id=Number(raw);
- if(!Number.isSafeInteger(poll_id)||poll_id<=0)return fail('Invalid poll',400);
- const {data:poll,error:pe}=await db.from('fcf_polls').select('id,status').eq('id',poll_id).maybeSingle();
- if(pe)throw pe;if(!poll||!['active','closed','published'].includes(poll.status))return fail('Poll unavailable',404);
- const {data:opts,error:oe}=await db.from('fcf_options').select('id,matchup').eq('poll_id',poll_id).order('display_order');if(oe)throw oe;
- const counts=new Map<number,number>();
- for(let offset=0;;offset+=1000){const {data:votes,error:ve}=await db.from('fcf_votes').select('id,option_id').eq('poll_id',poll_id).order('id').range(offset,offset+999);if(ve)throw ve;for(const v of votes||[])counts.set(v.option_id,(counts.get(v.option_id)||0)+1);if((votes||[]).length<1000)break;}
- const total=[...counts.values()].reduce((a,b)=>a+b,0);
- const results=(opts||[]).map((o:any)=>({id:o.id,matchup:o.matchup,votes:counts.get(o.id)||0,percentage:total?Math.round((counts.get(o.id)||0)*1000/total)/10:0})).sort((a:any,b:any)=>b.votes-a.votes);
- return reply({poll_id,total,results:results.map((o:any,i:number)=>({...o,rank:i+1}))});
+if(path==='/results'&&req.method==='POST'){
+ const {poll_id,token}=await req.json().catch(()=>({}));
+ if(!Number.isSafeInteger(poll_id)||typeof token!=='string'||!/^[0-9a-f-]{36}$/i.test(token))return fail('Invalid request',400);
+ const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(token));
+ const hash=Array.from(new Uint8Array(bytes),x=>x.toString(16).padStart(2,'0')).join('');
+ const {data:verified}=await db.from('fcf_votes').select('id').eq('poll_id',poll_id).eq('voter_token_hash',hash).maybeSingle();
+ if(!verified)return fail('Results are available after you vote.',403);
+ const {data:opts,error:oe}=await db.from('fcf_options').select('id,matchup').eq('poll_id',poll_id).order('display_order');
+ if(oe)throw oe;
+ const {data:votes,error:ve}=await db.from('fcf_votes').select('option_id').eq('poll_id',poll_id);
+ if(ve)throw ve;
+ const total=(votes||[]).length;
+ const results=(opts||[]).map((o:any)=>({id:o.id,matchup:o.matchup,percentage:total?Math.round((votes||[]).filter((v:any)=>v.option_id===o.id).length*1000/total)/10:0})).sort((a:any,b:any)=>b.percentage-a.percentage);
+ return reply({results:results.map((o:any,i:number)=>({...o,rank:i+1}))});
 }
 if(path==='/admin/polls'&&req.method==='GET'){
  const {data:polls,error}=await db.from('fcf_polls').select('*').order('created_at',{ascending:false});
