@@ -83,6 +83,26 @@ function openScreen(screen, tab) {
 }
 
 app.addEventListener('load', () => {
+  const appDocument = app.contentDocument;
+  const home = appDocument?.getElementById('homePage');
+  if (home && !home.querySelector('.preview-news-ticker')) {
+    const ticker = appDocument.createElement('section');
+    ticker.className = 'preview-news-ticker';
+    ticker.setAttribute('aria-label', 'NAL news ticker');
+    ticker.style.cssText = 'position:relative;height:34px;overflow:hidden;background:#06172b;border-top:3px solid #e31b23';
+    const overlay = appDocument.createElement('iframe');
+    overlay.title = 'Latest NAL news and announcements';
+    overlay.tabIndex = -1;
+    overlay.referrerPolicy = 'strict-origin-when-cross-origin';
+    overlay.src = 'https://app.overlays.uno/output/4EmoGILY2NbR023pU403k1';
+    // Crop the lower 7.6% of the 960 × 540 UNO output, as on NAL Network.
+    const scale = 28 / (540 * 0.076);
+    overlay.style.cssText = 'position:absolute;left:0;width:960px;height:540px;max-width:none;border:0;pointer-events:none;transform-origin:0 0';
+    overlay.style.transform = 'scaleY(' + scale + ')';
+    overlay.style.top = (3 - 540 * 0.924 * scale) + 'px';
+    ticker.append(overlay);
+    home.prepend(ticker);
+  }
   const footer = app.contentDocument?.querySelector('.bottom-nav');
   if (footer) footer.hidden = true;
   if (footer) footer.style.setProperty('display', 'none', 'important');
