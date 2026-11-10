@@ -41,16 +41,7 @@ function editable(user,team){return user.isAdmin||user.teams.includes(team)}
 function values(b,body){const f=fields(b.columns),out={};for(const k of Object.keys(f)){if(f[k])out[f[k].id]=k==='affiliation'?{label:body[k]||''}:k==='email'?(body[k]?{email:body[k],text:body[k]}:{}):k==='phone'?(body[k]?{phone:body[k],countryShortName:'US'}:{}):body[k]||''}return out}
 export default {async fetch(req,env){const url=new URL(req.url);try{
  
- const user={email:'Shared portal access',isAdmin:true,teams,canAdd:true};
- if(!env.PORTAL_PASSWORD)return json({error:'Portal password configuration pending'},503);
- const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(env.PORTAL_PASSWORD),{name:'HMAC',hash:'SHA-256'},false,['sign']);
- const sign=async v=>Array.from(new Uint8Array(await crypto.subtle.sign('HMAC',key,new TextEncoder().encode(v)))).map(x=>x.toString(16).padStart(2,'0')).join('');
- const cookie=req.headers.get('cookie')?.match(/(?:^|; )nal_session=([^;]+)/)?.[1]||'';
- const [exp,sig]=cookie.split('.');
- const valid=exp&&Number(exp)>Date.now()&&sig===await sign(exp);
- if(url.pathname==='/login'&&req.method==='POST'){const form=await req.formData();if(form.get('password')!==env.PORTAL_PASSWORD)return new Response('Incorrect password',{status:403});const expiry=String(Date.now()+86400000);return new Response(null,{status:303,headers:{location:'/', 'set-cookie':'nal_session='+expiry+'.'+await sign(expiry)+'; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=86400'}})}
- if(!valid){if(url.pathname.startsWith('/api/'))return json({error:'Password required'},401);return new Response('<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>NAL Directory Login</title></head><body style="font:16px system-ui;background:#08172c;color:white;display:grid;place-items:center;min-height:90vh"><form action="/login" method="post" style="padding:36px;background:#152a45;border-radius:12px"><h1>NAL Directory</h1><p>Enter the staff password</p><input name="password" type="password" required style="padding:12px"><button style="padding:12px">Enter Directory</button></form></body></html>',{headers:{'content-type':'text/html; charset=utf-8'}})}
-
+ const user={email:'Public directory',isAdmin:true,teams,canAdd:true};
  if(url.pathname==='/'&&req.method==='GET')return new Response(html,{headers:{'content-type':'text/html; charset=utf-8','cache-control':'no-store'}});
  if(!['/api/directory','/api/activity'].includes(url.pathname)&&!/^\/api\/directory\/\d+$/.test(url.pathname))return json({error:'Not found'},404);
  const b=await board(env);
