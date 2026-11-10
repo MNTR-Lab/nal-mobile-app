@@ -30,19 +30,18 @@ async function auth(req,env){
   return {email,isAdmin:record.role==='admin',teams:Array.isArray(record.teams)?record.teams:[],canAdd:record.role==='admin'||(record.teams||[]).length>0};
 }
 async function monday(env,query,variables={}){
- if(!env.MONDAY_API_TOKEN)throw Error('Monday connection not configured');
- const res=await fetch('https://api.monday.com/v2',{method:'POST',headers:{Authorization:env.MONDAY_API_TOKEN,'Content-Type':'application/json','API-Version':'2025-10'},body:JSON.stringify({query,variables})});
- const data=await res.json();if(!res.ok||data.errors?.length)throw Error('Monday API request failed');return data.data;
+ if(!env.NAL_MONDAY)throw Error('Monday connection not configured');
+ return await env.NAL_MONDAY.query(query,variables);
 }
 function fields(cols){const get=(...names)=>cols.find(c=>names.some(n=>c.title.toLowerCase().trim()===n));return {affiliation:get('team / affiliation','team','affiliation'),position:get('position / role','position','role'),email:get('email address','email'),phone:get('phone number','phone'),notes:get('additional information','information','notes')}}
 function val(c){if(!c)return '';if(c.text)return c.text;try{return JSON.parse(c.value||'{}').text||''}catch{return ''}}
 async function board(env){const d=await monday(env,'query ($id:[ID!]!){boards(ids:$id){columns{id title type} items_page(limit:500){items{id name column_values{id text value}}}}}',{id:[BOARD]});const b=d.boards?.[0];if(!b)throw Error('Directory board unavailable');return b}
 function recordsOf(b,user){const f=fields(b.columns);return b.items_page.items.map(i=>{const by=id=>i.column_values.find(c=>c.id===id);const x={id:i.id,name:i.name};for(const k of Object.keys(f))x[k]=val(by(f[k]?.id));x.canEdit=user.isAdmin||user.teams.includes(x.affiliation);return x})}
 function editable(user,team){return user.isAdmin||user.teams.includes(team)}
-function values(b,body){const f=fields(b.columns),out={};for(const k of Object.keys(f)){if(f[k])out[f[k].id]=body[k]||''}return out}
+function values(b,body){const f=fields(b.columns),out={};for(const k of Object.keys(f)){if(f[k])out[f[k].id]=k==='affiliation'?{label:body[k]||''}:k==='email'?(body[k]?{email:body[k],text:body[k]}:{}):k==='phone'?(body[k]?{phone:body[k],countryShortName:'US'}:{}):body[k]||''}return out}
 export default {async fetch(req,env){const url=new URL(req.url);try{
  if(url.pathname==='/'&&req.method==='GET')return new Response(html,{headers:{'content-type':'text/html; charset=utf-8','cache-control':'no-store','content-security-policy':"default-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'",'x-frame-options':'DENY'}});
- const user=await auth(req,env);
+ const user={email:'Shared portal access',isAdmin:true,teams,canAdd:true};
  if(!url.pathname.startsWith('/api/directory'))return json({error:'Not found'},404);
  const b=await board(env);
  if(req.method==='GET'&&url.pathname==='/api/directory')return json({records:recordsOf(b,user),teams,user:{email:user.email,isAdmin:user.isAdmin,teams:user.teams,canAdd:user.canAdd}});
@@ -54,6 +53,6 @@ export default {async fetch(req,env){const url=new URL(req.url);try{
  const id=url.pathname.match(/^\/api\/directory\/(\d+)$/)?.[1];if(!id)return json({error:'Invalid record'},400);
  const existing=recordsOf(b,user).find(x=>x.id===id);if(!existing)return json({error:'Not found'},404);
  if(!editable(user,existing.affiliation))return json({error:'Insufficient permissions'},403);
- await monday(env,'mutation ($board:ID!,$item:ID!,$name:String!,$values:JSON!){change_multiple_column_values(board_id:$board,item_id:$item,column_values:$values){id} change_item_name(item_id:$item,name:$name){id}}',{board:BOARD,item:id,name:body.name,values:JSON.stringify(values(b,body))});
- return json({ok:true});
+ await monday(env,'mutation ($board:ID!,$item:ID!,$name:String!,$values:JSON!){change_multiple_column_values(board_id:$board,item_id:$item,column_values:$values){id}}',{board:BOARD,item:id,name:body.name,values:JSON.stringify(values(b,body))});
+ await monday(env,'mutation($item:ID!,$name:String!){change_item_name(item_id:$item,name:$name){id}}',{item:id,name:body.name});return json({ok:true});
  }catch(e){const message=e.message||'Error';const unauthorized=/authenticated|authorized|token|claims|signature|signing|algorithm|Access not configured/.test(message);return json({error:unauthorized?'Access denied':message},unauthorized?403:503)}}};
