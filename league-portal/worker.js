@@ -42,6 +42,7 @@ function values(b,body){const f=fields(b.columns),out={};for(const k of Object.k
 export default {async fetch(req,env){const url=new URL(req.url);try{
  
  const user={email:'Shared portal access',isAdmin:true,teams,canAdd:true};
+ if(!env.PORTAL_PASSWORD)return json({error:'Portal password configuration pending'},503);
  const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(env.PORTAL_PASSWORD),{name:'HMAC',hash:'SHA-256'},false,['sign']);
  const sign=async v=>Array.from(new Uint8Array(await crypto.subtle.sign('HMAC',key,new TextEncoder().encode(v)))).map(x=>x.toString(16).padStart(2,'0')).join('');
  const cookie=req.headers.get('cookie')?.match(/(?:^|; )nal_session=([^;]+)/)?.[1]||'';
@@ -64,6 +65,6 @@ export default {async fetch(req,env){const url=new URL(req.url);try{
  const id=url.pathname.match(/^\/api\/directory\/(\d+)$/)?.[1];if(!id)return json({error:'Invalid record'},400);
  const existing=recordsOf(b,user).find(x=>x.id===id);if(!existing)return json({error:'Not found'},404);
  if(!editable(user,existing.affiliation))return json({error:'Insufficient permissions'},403);
- await monday(env,'mutation ($board:ID!,$item:ID!,$values:JSON!){change_multiple_column_values(board_id:$board,item_id:$item,column_values:$values){id}}',{board:BOARD,item:id,name:body.name,values:JSON.stringify(values(b,body))});
+ await monday(env,'mutation ($board:ID!,$item:ID!,$values:JSON!){change_multiple_column_values(board_id:$board,item_id:$item,column_values:$values){id}}',{board:BOARD,item:id,values:JSON.stringify(values(b,body))});
  await monday(env,'mutation($item:ID!,$name:String!){change_item_name(item_id:$item,name:$name){id}}',{item:id,name:body.name});await monday(env,'mutation($id:ID!,$text:String!){create_update(item_id:$id,body:$text){id}}',{id,text:'NAL Directory activity | Edited by '+body.editor+' | '+new Date().toISOString()+' | Before: '+JSON.stringify(existing)+' | After: '+JSON.stringify(body)});return json({ok:true});
  }catch(e){const message=e.message||'Error';const unauthorized=/authenticated|authorized|token|claims|signature|signing|algorithm|Access not configured/.test(message);return json({error:unauthorized?'Access denied':message},unauthorized?403:503)}}};
