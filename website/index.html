@@ -10801,6 +10801,10 @@ html body #socialPage .nal-social-wrap{padding-top:18px!important;}
 
               <div class="fan-admin-panel" id="fanAdminUsersPanel">
                 <h3 class="fan-member-title">USER MANAGEMENT</h3>
+                <label for="fanAdminTeamFilter">FAVORITE TEAM</label>
+                <select class="fan-admin-search" id="fanAdminTeamFilter"><option value="">All teams</option></select>
+                <details class="fan-admin-team-summary"><summary>Fan totals by team</summary><div id="fanAdminTeamTotals"></div></details>
+                <p id="fanAdminFilteredTotal" role="status" aria-live="polite"></p>
                 <input class="fan-admin-search" id="fanAdminUserSearch" type="search" placeholder="Search by display name or email">
                 <div id="fanAdminUsersList">
                   <div class="fan-admin-loading">Open User Management to load registered members.</div>
@@ -15819,6 +15823,10 @@ This notification will publish immediately.'))return;
   const list = document.getElementById("fanAdminUsersList");
   const search = document.getElementById("fanAdminUserSearch");
   const memberCount = document.getElementById("fanAdminMemberCount");
+  const teamFilter = document.getElementById("fanAdminTeamFilter");
+  const filteredTotal = document.getElementById("fanAdminFilteredTotal");
+  const teamTotals = document.getElementById("fanAdminTeamTotals");
+  const teamKey = value => String(value || "").trim().toLowerCase();
   let adminMembers = [];
   let loaded = false;
   let selectedAdminMember = null;
@@ -15839,12 +15847,41 @@ This notification will publish immediately.'))return;
   function renderAdminMembers(){
     if (!list) return;
     const query = (search?.value || "").trim().toLowerCase();
+    const selectedTeam = teamFilter?.value || "";
+    const counts = new Map();
+    const labels = new Map();
+    document.querySelectorAll("#fanSignUpFavoriteTeam option").forEach(option => {
+      if (option.value) labels.set(teamKey(option.value), option.textContent.trim());
+    });
+    adminMembers.forEach(member => {
+      const key = teamKey(member.favorite_team);
+      if (key && !labels.has(key)) labels.set(key, String(member.favorite_team).trim());
+      counts.set(key, (counts.get(key) || 0) + 1);
+    });
+    const teams = [...labels].sort((a,b) => a[1].localeCompare(b[1]));
+    const entries = [...teams, ["__none__", "No favorite team"]];
+    if (teamFilter) {
+      teamFilter.innerHTML = '<option value="">All teams (' + adminMembers.length + ')</option>' +
+        entries.map(([key,label]) => '<option value="' + escapeAdminText(key) + '">' +
+          escapeAdminText(label) + ' (' + (counts.get(key === "__none__" ? "" : key) || 0) + ')</option>').join("");
+      teamFilter.value = selectedTeam;
+    }
+    if (teamTotals) teamTotals.innerHTML = '<table style="width:100%;text-align:left"><thead><tr><th>Favorite team</th><th>Total fans</th></tr></thead><tbody>' +
+      entries.map(([key,label]) => '<tr><td>' + escapeAdminText(label) + '</td><td>' +
+        (counts.get(key === "__none__" ? "" : key) || 0) + '</td></tr>').join("") +
+      '<tr><th>All registered users</th><th>' + adminMembers.length + '</th></tr></tbody></table>';
+    if (memberCount) memberCount.textContent = String(adminMembers.length);
     const members = adminMembers.filter(function(member){
+      const key = teamKey(member.favorite_team);
+      if (selectedTeam && (selectedTeam === "__none__" ? key !== "" : key !== selectedTeam)) return false;
       if (!query) return true;
       return String(member.display_name || "").toLowerCase().includes(query) ||
              String(member.email || "").toLowerCase().includes(query);
     });
 
+    if (filteredTotal) filteredTotal.textContent =
+      (selectedTeam ? (selectedTeam === "__none__" ? "No favorite team" : labels.get(selectedTeam)) : "All teams") +
+      " — Total: " + members.length + (query ? " matching users" : " users");
     if (!members.length){
       list.innerHTML = '<div class="fan-admin-empty">' +
         (query ? "No members match your search." : "No registered members found.") +
@@ -15900,9 +15937,16 @@ This notification will publish immediately.'))return;
 
     try{
       const client = getNalAccountClient();
-      const { data, error } = await client.rpc("admin_list_members");
-      if (error) throw error;
-      adminMembers = Array.isArray(data) ? data : [];
+      const allMembers = [];
+      const pageSize = 500;
+      for (let offset = 0; ; offset += pageSize){
+        const { data, error } = await client.rpc("admin_list_members").order("id").range(offset, offset + pageSize - 1);
+        if (error) throw error;
+        const page = Array.isArray(data) ? data : [];
+        allMembers.push(...page);
+        if (page.length < pageSize) break;
+      }
+      adminMembers = allMembers;
       loaded = true;
       if (memberCount) memberCount.textContent = String(adminMembers.length);
       renderAdminMembers();
@@ -16240,6 +16284,10 @@ This notification will publish immediately.'))return;
   });
 
   search?.addEventListener("input", renderAdminMembers);
+  teamFilter?.addEventListener("change", function(){
+    document.getElementById("fanAdminMemberDetail")?.classList.remove("show");
+    renderAdminMembers();
+  });
 
   button?.addEventListener("click", async function(){
     if (document.getElementById("fanAdminArea")?.hidden) return;
@@ -16247,7 +16295,7 @@ This notification will publish immediately.'))return;
     document.getElementById("fanAdminNotificationPanel")?.classList.remove("show");
     panel?.classList.toggle("show");
     if (panel?.classList.contains("show")){
-      if (!loaded) await loadAdminMembers();
+      await loadAdminMembers();
       setTimeout(function(){ panel.scrollIntoView({behavior:"smooth",block:"nearest"}); }, 50);
     }
   });
