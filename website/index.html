@@ -16959,7 +16959,7 @@ function setWheelingTeamView(enabled){
 }
 
 const NAL_TEAM_EDITORIAL_API = 'https://nal-network-video-api.bikard.workers.dev';
-const NAL_TEAM_EDITORIAL = {highlights:'Highlights',features:'Features & Interviews'};
+const NAL_TEAM_EDITORIAL = {highlights:'Highlights',features:'Features & Interviews',coaches:'Coaches Shows'};
 function nalTeamSource(key){
   return NAL_TEAM_EDITORIAL[key] ? {label:NAL_TEAM_EDITORIAL[key].toUpperCase(),editorial:true} : activeNALTeam().sources?.[key];
 }
@@ -17121,7 +17121,7 @@ function renderNALTeamHub(){
     <section class="wheeling-content-section" hidden><div class="wheeling-section-head"><h3>FEATURES &amp; INTERVIEWS</h3><button type="button" class="wheeling-view-all" data-nal-team-view-all="features" hidden>VIEW ALL ›</button></div><div class="wheeling-video-row" id="nalTeamRow-features"><div class="wheeling-empty-row">COMING SOON</div></div></section>`;
   content.querySelectorAll("[data-nal-team-view-all]").forEach(button=>button.addEventListener("click",()=>renderNALTeamCatalog(button.dataset.nalTeamViewAll)));
   // Latest Games V.O.D. paused until the season; retain channel configuration for restoration.
-  return Promise.all([loadNALTeamRow("archives"),loadNALTeamRow("coaches"),loadNALTeamEditorial()]);
+  return Promise.all([loadNALTeamRow("archives"),loadNALTeamEditorial()]);
 }
 
 function openNALTeamHub(slug){
@@ -19584,9 +19584,10 @@ async function openWebsiteShow(kind) {
   }
   host.innerHTML = '<p class="website-status" role="status">Loading episodes…</p>';
   try {
-    const source = kind === 'coaches' ? {channelId:'72123'} : NAL_SHOW_CHANNELS[kind === 'gameday' ? 'nal-gameday' : 'around-the-nal'].source;
-    const payload = await fetchLightcastCatalog({view:'media',channelId:source.channelId,...(source.subId ? {subId:source.subId} : {})});
-    const items = (Array.isArray(payload.data) ? payload.data : []).map(x => ({...x,channel_id:source.channelId,image:x.poster_image_16x9_640w || x.poster_image_640w || x.thumb_image_16x9_640w || ''}));
+    const response = await fetch(NAL_TEAM_EDITORIAL_API+'/videos?category='+encodeURIComponent('Coaches Shows'),{cache:'no-store'});
+    const payload = await response.json();
+    if (!response.ok || !payload.ok || !Array.isArray(payload.videos)) throw Error('Episode list unavailable');
+    const items = payload.videos.map(x => ({...x,editorial:true,image:x.thumbnailUrl || ''}));
     if (kind !== websiteShowKind) return;
     websiteShowItems = items;
     if (!items.length) { host.innerHTML = '<p class="website-status">No episodes are currently published in this category.</p>'; return; }
@@ -19601,7 +19602,11 @@ function openWebsiteEpisode(index) {
   const item = websiteShowItems[index]; if (!item) return;
   showPage('websiteVideoPage'); websiteSetNav('watchPage');
   document.getElementById('websiteVideoTitle').textContent = item.title || 'NAL Network';
-  document.getElementById('websiteVideoContent').innerHTML = websitePlayerMarkup(item, String(item.channel_id || '72124'));
+  const youtube = item.editorial ? nalEditorialYouTubeEmbed(item.playbackUrl) : '';
+  document.getElementById('websiteVideoContent').innerHTML = item.editorial
+    ? (youtube ? '<iframe src="'+websiteEscape(youtube)+'" title="'+websiteEscape(item.title || 'Coaches Show')+'" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>'
+      : '<video controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000" src="'+websiteEscape(NAL_TEAM_EDITORIAL_API+'/stream?id='+encodeURIComponent(item.id))+'"'+(item.thumbnailUrl?' poster="'+websiteEscape(item.thumbnailUrl)+'"':'')+'></video>')
+    : websitePlayerMarkup(item, String(item.channel_id || '72124'));
   document.getElementById('websiteVideoDescription').textContent = item.description || '';
 }
 const WEBSITE_TEAM_ARTICLE_HOSTS = {"amarillo-warbirds": "www.amarillowarbirds.com", "colorado-spartans": "www.co-spartans.com", "dallas-apex": "www.dallasapex.com", "louisiana-rouxgaroux": "www.geauxrouxgaroux.com", "omaha-beef": "www.beeffootball.com", "pueblo-punishers": "www.pueblopunishers.com", "salina-liberty": "www.salinaliberty.com", "sioux-city-bandits": "www.gobandits.fun", "southwest-kansas-storm": "www.swkstormfootball.com", "wheeling-miners": "www.wheelingminers.com"};
