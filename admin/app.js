@@ -3,7 +3,79 @@ const $=s=>document.querySelector(s), esc=v=>String(v??'').replace(/[&<>"']/g,c=
 const sb=window.supabase?.createClient(window.NAL_CONFIG.url,window.NAL_CONFIG.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 let invitationFlow=location.pathname==='/accept-invite';
 let current=null,section=(location.pathname==='/social'?'social':location.pathname.includes('transactions')?'transactions':'polls'),viewGeneration=0,transactions=[],assets=[],members=[],fcfGames=[],fcfPolls=[],fcfCurrent=null;
-const sectionInfo={social:['Social Media Schedule','Plan NAL posts, prepare captions, and track the publishing schedule.'],polls:['Polls','Create fan polls and manage voting on the website.'],friday:['Fan Choice Friday','Manage the weekly replay poll and approved games from Monday.'],transactions:['Transactions','Review the live transaction dashboard and update player roster status.'],assets:['Digital Assets','Graphics and files from your Digital Asset Management board.'],connections:['Connected Workspaces','Manage connected records and files here.'],staff:['Staff & Permissions','Manage NAL Verified staff and invitations.'],activity:['Activity Log','Activity from November 6, 2026 onward (Eastern time).']};
+const sectionInfo={social:['Social Media Schedule','Plan NAL posts, prepare captions, and track the publishing schedule.'],polls:['Polls','Create fan polls and manage voting on the website.'],friday:['Fan Choice Friday','Manage the weekly replay poll and approved games from Monday.'],transactions:['Transactions','Review the live transaction dashboard and update player roster status.'],suspensions:['Suspensions','Add or remove entries on the 2027 league suspension list.'],assets:['Digital Assets','Graphics and files from your Digital Asset Management board.'],connections:['Connected Workspaces','Manage connected records and files here.'],staff:['Staff & Permissions','Manage NAL Verified staff and invitations.'],activity:['Activity Log','Activity from November 6, 2026 onward (Eastern time).']};
+
+const suspensionColumns = [
+  ['first_name', 'First Name', 80],
+  ['last_name', 'Last Name', 80],
+  ['suspension_term', 'Return Date / Suspension Term', 160],
+  ['suspension_information', 'Suspension Information', 240],
+  ['details', 'Details', 1000],
+  ['current_organization', 'Current Organization', 120],
+];
+let adminSuspensions = [];
+
+async function enableSuspensions(me){
+  const {data} = await sb.from('nal_super_admins').select('user_id').eq('is_active', true).maybeSingle();
+  if(data && !me.sections.includes('suspensions')){
+    const position = me.sections.indexOf('transactions');
+    me.sections.splice(position < 0 ? me.sections.length : position + 1, 0, 'suspensions');
+  }
+}
+
+async function renderAdminSuspensions(gen){
+  const columns = suspensionColumns.map(([key]) => key);
+  const {data,error} = await sb.from('nal_portal_suspensions')
+    .select(['id', ...columns].join(',')).eq('archived', false).order('sort_order');
+  if(gen !== viewGeneration) return;
+  if(error) throw error;
+  adminSuspensions = data;
+  const headings = suspensionColumns.map(([,label]) => '<th scope="col">'+esc(label)+'</th>').join('');
+  const rows = data.map(row => '<tr>'+columns.map(key => '<td>'+esc(row[key])+'</td>').join('')+
+    '<td>'+action('suspension-remove','Remove','data-id="'+esc(row.id)+'" aria-label="Remove '+esc(row.first_name+' '+row.last_name)+'"')+'</td></tr>').join('');
+  $('#page').innerHTML = '<div class="actions">'+action('suspension-add','Add Suspension','','primary')+'</div>'+
+    (rows ? '<div class="table-wrap"><table><thead><tr>'+headings+'<th scope="col">Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+      : '<p class="empty">No active suspensions.</p>');
+}
+
+function openSuspensionEditor(){
+  const fields = suspensionColumns.map(([key,label,length],index) => {
+    const attrs = ' name="'+key+'" maxlength="'+length+'"'+(index < 4 ? ' required' : '');
+    const control = key === 'details' ? '<textarea'+attrs+'></textarea>'
+      : '<input'+attrs+(key === 'current_organization' ? ' placeholder="Free Agent"' : '')+'>';
+    return '<label>'+esc(label)+control+'</label>';
+  }).join('');
+  showEditor('Add Suspension','<form id="suspension-editor">'+fields+'<button type="submit" class="primary">Save Suspension</button></form>');
+}
+
+async function removeAdminSuspension(id){
+  const row = adminSuspensions.find(record => record.id === id);
+  if(!row) return;
+  if(!confirm('Remove '+row.first_name+' '+row.last_name+' from the public suspension list?')) return;
+  const {data,error} = await sb.from('nal_portal_suspensions').update({archived:true})
+    .eq('id',id).eq('archived',false).select('id').maybeSingle();
+  if(error) throw error;
+  if(section !== 'suspensions') return;
+  await renderAdminSuspensions(viewGeneration);
+  if(section === 'suspensions') message(data ? 'Suspension removed.' : 'This suspension was already removed.');
+}
+
+document.addEventListener('submit', event => {
+  if(event.target.id !== 'suspension-editor') return;
+  event.preventDefault();
+  busy(event.submitter, async () => {
+    const input = new FormData(event.target);
+    const values = Object.fromEntries(suspensionColumns.map(([key]) => [key, input.get(key).trim()]));
+    values.current_organization ||= 'Free Agent';
+    const {error} = await sb.from('nal_portal_suspensions').insert(values);
+    if(error) throw error;
+    closeEditor();
+    if(section !== 'suspensions') return;
+    await renderAdminSuspensions(viewGeneration);
+    if(section === 'suspensions') message('Suspension added.');
+  });
+});
+
 const safeLink=v=>{try{const u=new URL(String(v));return ['https:','http:'].includes(u.protocol)?u.href:'#';}catch{return '#';}};
 const date=v=>v?new Date(v).toLocaleString():'—';
 function message(t,error=false){$('#message').textContent=t;$('#message').className=error?'error':'success';}
@@ -12,7 +84,7 @@ function showEditor(title,html){$('#editor-title').textContent=title;$('#editor-
 function closeEditor(){$('#editor').close();}
 async function api(path,body){const {data:{session}}=await sb.auth.getSession();if(!session)throw new Error('Sign in again to continue.');const r=await fetch('/api/'+path,{method:body?'POST':'GET',headers:{Authorization:'Bearer '+session.access_token,'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});let j;try{j=await r.json();}catch{throw new Error('The server did not respond. Please try again.');}if(!r.ok||j.error||j.success===false)throw new Error(j.error||'The request failed.');return j;}
 function bridge(type,session){for(const name of ['root','www']){const frame=$('#forum-'+name);frame.contentWindow?.postMessage({type,...(session?{session:{access_token:session.access_token,refresh_token:session.refresh_token}}:{})},name==='root'?'https://nal-network.com':'https://www.nal-network.com');}}
-async function enter(){if(!sb){$('#login-message').textContent='Sign-in could not load. Please refresh the page.';return;}try{const me=await api('me');if(me.invitation_pending){showInvitationSetup(me);return;}if(me.verified_only){showVerifiedReady();return;}$('#invite-setup').hidden=true;current=me;$('#login').hidden=true;$('#dashboard').hidden=false;$('#signout').hidden=false;$('#identity').innerHTML='<strong>'+esc(me.user.name)+'</strong>'+esc(me.user.email)+'<br>'+esc(me.user.role.replaceAll('_',' '));$('nav').innerHTML=me.sections.map(k=>'<button data-section="'+k+'">'+sectionInfo[k][0]+'</button>').join('');await navigate(me.sections.includes(location.hash.slice(1))?location.hash.slice(1):(me.sections.includes(section)?section:me.sections[0]));}catch(e){current=null;$('#login').hidden=false;$('#dashboard').hidden=true;$('#signout').hidden=false;$('#login-message').textContent=e.message;$('#login-message').className='error';}}
+async function enter(){if(!sb){$('#login-message').textContent='Sign-in could not load. Please refresh the page.';return;}try{const me=await api('me');if(me.invitation_pending){showInvitationSetup(me);return;}if(me.verified_only){showVerifiedReady();return;}await enableSuspensions(me);$('#invite-setup').hidden=true;current=me;$('#login').hidden=true;$('#dashboard').hidden=false;$('#signout').hidden=false;$('#identity').innerHTML='<strong>'+esc(me.user.name)+'</strong>'+esc(me.user.email)+'<br>'+esc(me.user.role.replaceAll('_',' '));$('nav').innerHTML=me.sections.map(k=>'<button data-section="'+k+'">'+sectionInfo[k][0]+'</button>').join('');await navigate(me.sections.includes(location.hash.slice(1))?location.hash.slice(1):(me.sections.includes(section)?section:me.sections[0]));}catch(e){current=null;$('#login').hidden=false;$('#dashboard').hidden=true;$('#signout').hidden=false;$('#login-message').textContent=e.message;$('#login-message').className='error';}}
 async function navigate(next){section=next;location.hash=next;viewGeneration++;const gen=viewGeneration;$('#page-title').textContent=sectionInfo[next][0];$('#page-description').textContent=sectionInfo[next][1];document.querySelectorAll('[data-section]').forEach(b=>{if(b.dataset.section===next)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});message('');$('#page').innerHTML='<p class="muted">Loading…</p>';try{await render(next,gen);}catch(e){if(gen===viewGeneration){$('#page').innerHTML='<div class="empty">This section could not be loaded. Use Refresh to try again.</div>';message(e.message,true);}}}
 async function busy(button,fn){if(button.disabled)return;button.disabled=true;try{await fn();}catch(e){if($('#editor').open)editorMessage(e.message,true);else message(e.message,true);}finally{button.disabled=false;}}
 function action(name,label,extra='',cls=''){return '<button type="button" class="'+cls+'" data-action="'+name+'" '+extra+'>'+label+'</button>';}
@@ -22,6 +94,7 @@ async function render(k,gen){
  if(k==='polls'){const data=await api('polls');if(gen!==viewGeneration)return;$('#page').innerHTML='<div class="actions">'+action('new-poll','Create poll','','primary')+'</div>'+(data.polls.length?data.polls.map(p=>'<article class="panel"><div class="panel-head"><h2>'+esc(p.question)+'</h2><span class="status '+esc(p.status)+'">'+esc(p.status)+'</span></div>'+results(p.options)+'<div class="actions">'+(p.status==='active'?action('poll-status','Close voting','data-id="'+p.id+'" data-status="closed"'):action('poll-status','Activate poll','data-id="'+p.id+'" data-status="active"'))+'</div></article>').join(''):'<p class="empty">No active or draft polls. Create a draft to get started.</p>');}
  if(k==='friday'){const [p,g]=await Promise.allSettled([api('fcf/admin/polls'),api('fcf/admin/library')]);if(gen!==viewGeneration)return;if(p.status==='rejected')throw p.reason;fcfPolls=p.value.polls;fcfGames=g.status==='fulfilled'?g.value.games:[];$('#page').innerHTML='<div class="actions">'+action('new-friday','Create weekly poll','','primary')+''+action('library-open','Game library')+'</div><div class="filters"><label>Poll<select id="friday-select"><option value="">Choose a poll</option>'+fcfPolls.map(p=>'<option value="'+p.id+'">'+esc(p.title)+' — '+esc(p.status)+'</option>').join('')+'</select></label></div><div id="friday-detail"></div>';if(g.status==='rejected')message('Polls are available, but the Monday game library could not load: '+g.reason.message,true);if(fcfPolls.length){$('#friday-select').value=fcfPolls[0].id;await loadFriday(fcfPolls[0].id);}else $('#friday-detail').innerHTML='<p class="empty">No Fan Choice Friday polls yet.</p>';}
  if(k==='transactions'){const data=await api('transactions');if(gen!==viewGeneration)return;initTransactions(data);}
+ if(k==='suspensions'){await renderAdminSuspensions(gen);}
  if(k==='assets'){const data=await api('assets');if(gen!==viewGeneration)return;assets=data.items;assetGroups=data.groups;$('#page').innerHTML='<div class="actions">'+action('asset-new','Add digital asset','','primary')+'</div><div class="filters"><input id="asset-search" type="search" aria-label="Search assets" placeholder="Search assets"><select id="asset-group" aria-label="Asset group"><option value="">All groups</option>'+[...new Set(assets.map(a=>a.group))].map(g=>'<option>'+esc(g)+'</option>').join('')+'</select></div><div id="asset-list"></div>';drawAssets();}
  if(k==='connections'){await renderConnections(gen);}
  if(k==='staff'){const data=await api('staff');if(gen!==viewGeneration)return;members=data.members;$('#page').innerHTML='<div class="actions staff-banner">'+action('invite-staff','Create account & invite','','primary')+'</div><p class="muted">Only accounts ending in @mntrlab.com or @thenationalarenaleague.com appear here. You choose their access; an approved email domain alone grants no dashboard permissions. Use Change access to choose each person’s dashboard sections. Forum badges and roles are managed separately.</p><div class="filters"><input id="staff-search" type="search" placeholder="Search name or email" aria-label="Search accounts"></div><div id="staff-list"></div>';drawStaff();}
@@ -67,7 +140,7 @@ function rosterEditor(id,status){
 function updateRosterFields(){const f=$('#roster-form');if(!f)return;const status=f.elements.rosterStatus.value;$('#roster-injury').hidden=status!=='Injured Reserve';f.elements.injuryLength.required=status==='Injured Reserve';$('#roster-reason').hidden=status!=='Suspended';f.elements.reason.required=status==='Suspended';}
 document.addEventListener('change',e=>{if(e.target.name==='rosterStatus'&&e.target.closest('#roster-form'))updateRosterFields();});
 function staffEditor(id){const m=members.find(m=>m.id===id);showEditor('Choose dashboard access','<form id="staff-form" data-id="'+m.id+'"><p>'+esc(m.display_name)+' · '+esc(m.email)+'</p>'+permissionCheckboxes(m.sections||[])+'<p class="muted">These choices control dashboard access only. Their Forum role and NAL Employee badge stay unchanged.</p><button class="primary" type="submit">Save access</button></form>');}
-document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.section){navigate(b.dataset.section);return;}if(b.id==='refresh'){navigate(section);return;}if(b.id==='close-editor'){closeEditor();return;}if(!b.dataset.action)return;busy(b,async()=>{switch(b.dataset.action){case 'tx-filter':$('#tx-status').value=b.dataset.status;drawTransactions();break;case 'tx-all':txShowAll=true;drawTransactions();break;case 'tx-recent':txShowAll=false;drawTransactions();break;case 'view-transaction':transactionDetail(b.dataset.id);break;case 'roster-from-detail':closeEditor();rosterEditor(b.dataset.id);break;case 'invite-staff':inviteEditor();break;case 'staff-link':inviteEditor(b.dataset.id);break;case 'new-poll':newPoll();break;case 'add-choice':addChoice();break;case 'poll-status':if(confirm('Set this poll to '+b.dataset.status+'?')){await api('polls',{action:'status',id:b.dataset.id,status:b.dataset.status});await navigate('polls');message('Poll updated.');}break;case 'new-friday':fridayEditor();break;case 'edit-friday':fridayEditor(true);break;case 'add-friday-game':addFridayGame();break;case 'close-friday':await fridayStatus('closed');break;case 'activate-friday':await fridayStatus('active');break;case 'edit-asset':await openAssetEditor(b.dataset.id);break;case 'roster':rosterEditor(b.dataset.id);break;case 'staff-role':staffEditor(b.dataset.id);break;}});});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.section){navigate(b.dataset.section);return;}if(b.id==='refresh'){navigate(section);return;}if(b.id==='close-editor'){closeEditor();return;}if(!b.dataset.action)return;busy(b,async()=>{switch(b.dataset.action){case 'suspension-add':openSuspensionEditor();break;case 'suspension-remove':await removeAdminSuspension(b.dataset.id);break;case 'tx-filter':$('#tx-status').value=b.dataset.status;drawTransactions();break;case 'tx-all':txShowAll=true;drawTransactions();break;case 'tx-recent':txShowAll=false;drawTransactions();break;case 'view-transaction':transactionDetail(b.dataset.id);break;case 'roster-from-detail':closeEditor();rosterEditor(b.dataset.id);break;case 'invite-staff':inviteEditor();break;case 'staff-link':inviteEditor(b.dataset.id);break;case 'new-poll':newPoll();break;case 'add-choice':addChoice();break;case 'poll-status':if(confirm('Set this poll to '+b.dataset.status+'?')){await api('polls',{action:'status',id:b.dataset.id,status:b.dataset.status});await navigate('polls');message('Poll updated.');}break;case 'new-friday':fridayEditor();break;case 'edit-friday':fridayEditor(true);break;case 'add-friday-game':addFridayGame();break;case 'close-friday':await fridayStatus('closed');break;case 'activate-friday':await fridayStatus('active');break;case 'edit-asset':await openAssetEditor(b.dataset.id);break;case 'roster':rosterEditor(b.dataset.id);break;case 'staff-role':staffEditor(b.dataset.id);break;}});});
 document.addEventListener('input',e=>{if(e.target.id==='tx-search')drawTransactions();if(e.target.id==='asset-search')drawAssets();if(e.target.id==='staff-search')drawStaff();});
 document.addEventListener('change',e=>{if(['tx-status','tx-org','tx-type'].includes(e.target.id))drawTransactions();if(e.target.id==='asset-group')drawAssets();if(e.target.id==='friday-select'&&e.target.value)loadFriday(e.target.value).catch(e=>message(e.message,true));});
 document.addEventListener('submit',e=>{if(['login-form','invitation-form'].includes(e.target.id))return;const f=e.target;if(!['poll-form','friday-form','asset-form','roster-form','staff-form','invite-form'].includes(f.id))return;e.preventDefault();const b=e.submitter,values=new FormData(f);busy(b,async()=>{
