@@ -42,7 +42,7 @@ select,input{font:inherit}
 .auth-message{font-size:13px;margin-top:12px;color:var(--muted)}
 .auth-message.error{color:var(--danger)}
 .auth-message.success{color:var(--green)}
-#suspensionsView th,#suspensionsView td{text-align:center}
+#suspensionsView th,#suspensionsView td,#transactionsView th,#transactionsView td{text-align:center}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -407,7 +407,7 @@ function transactionTable(rows, pending=false){
   const body = rows.map(tx=>{
     const action = tx.actionReason ? `<div class="sub">${esc(tx.actionReason)}</div>` : "";
     const base = `<td><div class="name">${esc(tx.player)}</div>${action}</td>
-      <td>${esc(tx.organization||"—")}</td>
+      <td>${esc(/^free\s+agent$/i.test(String(tx.organization||"").trim()) ? "" : tx.organization||"—")}</td>
       <td>${esc(displayTransactionType(tx.transactionType))}</td>
       <td>${esc(tx.position||"—")}</td>
       <td>${formatDate(tx.submittedAt)}</td>`;
