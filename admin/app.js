@@ -36,7 +36,7 @@ async function renderAdminSuspensions(gen){
   adminSuspensions = data;
   const headings = suspensionColumns.map(([,label]) => '<th scope="col" style="text-align:center">'+esc(label)+'</th>').join('');
   const rows = data.map(row => '<tr>'+columns.map(key => '<td style="text-align:center">'+esc(suspensionDisplayValue(key,row[key]))+'</td>').join('')+
-    '<td style="text-align:center">'+action('suspension-edit','Edit','data-id="'+esc(row.id)+'" aria-label="Edit '+esc(row.first_name+' '+row.last_name)+'"')+' '+action('suspension-remove','Remove','data-id="'+esc(row.id)+'" aria-label="Remove '+esc(row.first_name+' '+row.last_name)+'"')+'</td></tr>').join('');
+    '<td style="text-align:center"><span style="display:inline-flex;gap:4px;white-space:nowrap">'+action('suspension-edit','Edit','data-id="'+esc(row.id)+'" aria-label="Edit '+esc(row.first_name+' '+row.last_name)+'" style="padding:4px 7px;font-size:12px;line-height:1.25"')+action('suspension-remove','Remove','data-id="'+esc(row.id)+'" aria-label="Remove '+esc(row.first_name+' '+row.last_name)+'" style="padding:4px 7px;font-size:12px;line-height:1.25"')+'</span></td></tr>').join('');
   $('#page').innerHTML = '<div class="actions">'+action('suspension-add','Add Suspension','','primary')+'</div>'+
     (rows ? '<div class="table-wrap"><table><thead><tr>'+headings+'<th scope="col" style="text-align:center">Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
       : '<p class="empty">No active suspensions.</p>');
