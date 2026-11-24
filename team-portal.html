@@ -50,7 +50,7 @@ select,input{font:inherit}
   <div class="brand"><div class="mark">NAL</div><div><h1>NATIONAL ARENA LEAGUE</h1><small>League Operations Portal</small></div></div>
   <div class="user"><b>LEAGUE OPERATIONS</b><br><span id="connectionStatus">Connecting…</span><br><span id="adminBadge" class="admin-badge">SUPER ADMIN</span></div>
 </header>
-<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Rosters</button><button id="docsNav" onclick="showDocuments()">Documents</button></nav>
+<nav class="nav"><button id="txNav" class="active" onclick="showTransactions()">Transactions</button><button id="rosterNav" onclick="showRoster()">Rosters</button><button id="docsNav" onclick="showDocuments()">Documents</button><button id="suspensionsNav" onclick="showSuspensions()">Suspensions</button></nav>
 
 <main class="wrap">
 <div id="transactionsView">
@@ -141,6 +141,59 @@ select,input{font:inherit}
   <div id="documentSections"><div class="panel"><div class="loading">Loading live documents…</div></div></div>
   <div class="footer">NAL League Operations • Internal Use Only</div>
   <div class="powered-by"><span>Powered by:</span><img src="https://cdn.shopify.com/s/files/1/0719/1966/5231/files/Watermark_Small_91fb7f00-6bb5-4cbf-93a0-217d5857d097.png?v=1782379927" alt="MNTR+"></div>
+</div>
+<div id="suspensionsView" style="display:none">
+  <section class="hero">
+    <div><div class="eyebrow">2027 SEASON</div><h2>Suspensions</h2></div>
+  </section>
+  <section class="panel">
+    <div class="panelhead"><h3>League Suspension List</h3><span class="pill">38 ENTRIES</span></div>
+    <div style="overflow-x:auto" role="region" aria-label="League suspension list" tabindex="0">
+      <table>
+        <thead><tr><th scope="col">First Name</th><th scope="col">Last Name</th><th scope="col">Return Date / Suspension Term</th><th scope="col">Suspension Information</th><th scope="col">Details</th><th scope="col">Current Organization</th></tr></thead>
+        <tbody>
+          <tr><td>Shamari</td><td>Williams</td><td>2/2/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Llonel</td><td>Whitteingham</td><td>2/27/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Keith</td><td>Coffee</td><td>2/27/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Jaron</td><td>Wilson</td><td>2/27/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Carlos</td><td>Thompson</td><td>3/25/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Aaron</td><td>Dilworth</td><td>4/11/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Douglas</td><td>Tucker</td><td>4/13/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Jared</td><td>Bronson</td><td>4/30/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Cayden</td><td>Burger</td><td>10/22/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Brandon</td><td>Thorpe</td><td>10/28/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Dominique</td><td>Robertson</td><td>11/1/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Tabyus</td><td>Taylor</td><td>11/2/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Lou</td><td>Dorsey</td><td>11/5/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Alex</td><td>Coleman</td><td>11/17/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Jaelyn</td><td>Lay</td><td>11/20/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
+          <tr><td>Rodney</td><td>Timmons</td><td>1 League Game</td><td>Conduct Unbecoming</td><td>Ejection from game</td><td>Free Agent</td></tr>
+          <tr><td>Matt</td><td>Friess</td><td>2027 Season</td><td>$500 Fine Due</td><td>Entering the stands</td><td>Free Agent</td></tr>
+          <tr><td>LaGrant</td><td>Pegram Jr</td><td>2 League Games</td><td>Conduct Unbecoming</td><td>Ejection from game / language towards officials</td><td>Amarillo</td></tr>
+          <tr><td>Damion</td><td>Powell</td><td>2 League Games</td><td>Conduct Unbecoming</td><td>Ejection from game / language towards officials</td><td>Free Agent</td></tr>
+          <tr><td>Miqueal</td><td>Pillow-Smiley</td><td>2 League Games</td><td>Conduct Unbecoming</td><td>Ejection from game / language towards officials</td><td>Amarillo</td></tr>
+          <tr><td>Desmond</td><td>Raiford</td><td>2 League Games</td><td>Conduct Unbecoming</td><td>$175 fine due before games count</td><td>Louisiana</td></tr>
+          <tr><td>Laronji</td><td>Vason-McCoy</td><td>2 League Games</td><td>Conduct Detrimental</td><td>Social media post damaging to league</td><td>Colorado</td></tr>
+          <tr><td>Kyle</td><td>Lester</td><td>2027 Season + 2 League Games (2028)</td><td>Breach of Contract / Ejection Altercation</td><td>Multiple offenses</td><td>Free Agent</td></tr>
+          <tr><td>Monquez</td><td>Moore</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
+          <tr><td>Joshua</td><td>Neal</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Amarillo</td><td>Free Agent</td></tr>
+          <tr><td>Juwon</td><td>Mullins</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
+          <tr><td>Aaron</td><td>Young</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
+          <tr><td>D'Nerius</td><td>Antoine</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
+          <tr><td>Rashad</td><td>Ridley</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
+          <tr><td>Jacobi</td><td>Brewer</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
+          <tr><td>Larry</td><td>Moton</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
+          <tr><td>Trayoun</td><td>Maxie</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
+          <tr><td>Brian</td><td>Price</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Omaha</td><td>Free Agent</td></tr>
+          <tr><td>Myron</td><td>Mounds</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Wheeling</td><td>Free Agent</td></tr>
+          <tr><td>Raymond</td><td>Cutts</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Wheeling</td><td>Free Agent</td></tr>
+          <tr><td>Kendrey</td><td>Thurman</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Wheeling</td><td>Free Agent</td></tr>
+          <tr><td>Andre</td><td>Thomas-Cobb</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Wheeling</td><td>Free Agent</td></tr>
+          <tr><td>Darrien</td><td>Crowe</td><td>Indefinite</td><td>Conduct Detrimental / Conduct Unbecoming</td><td>Physical altercation with a fan</td><td>Free Agent</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
 </main>
 
@@ -616,26 +669,37 @@ function renderDocuments(){
 }
 
 function activateNav(id){
-  ["txNav","rosterNav","docsNav"].forEach(x=>$(x)?.classList.remove("active"));
+  ["txNav","rosterNav","docsNav","suspensionsNav"].forEach(x=>$(x)?.classList.remove("active"));
   $(id)?.classList.add("active");
 }
 function showTransactions(){
   $("transactionsView").style.display="block";
   $("rosterView").style.display="none";
   $("documentsView").style.display="none";
+  $("suspensionsView").style.display="none";
   activateNav("txNav"); window.scrollTo(0,0);
 }
 function showRoster(){
   $("transactionsView").style.display="none";
   $("rosterView").style.display="block";
   $("documentsView").style.display="none";
+  $("suspensionsView").style.display="none";
   activateNav("rosterNav"); window.scrollTo(0,0);
 }
 function showDocuments(){
   $("transactionsView").style.display="none";
   $("rosterView").style.display="none";
   $("documentsView").style.display="block";
+  $("suspensionsView").style.display="none";
   activateNav("docsNav"); window.scrollTo(0,0);
+}
+
+function showSuspensions(){
+  $("transactionsView").style.display="none";
+  $("rosterView").style.display="none";
+  $("documentsView").style.display="none";
+  $("suspensionsView").style.display="block";
+  activateNav("suspensionsNav"); window.scrollTo(0,0);
 }
 
 refreshAdminState();
