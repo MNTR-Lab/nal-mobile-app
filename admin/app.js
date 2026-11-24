@@ -8,12 +8,16 @@ const sectionInfo={social:['Social Media Schedule','Plan NAL posts, prepare capt
 const suspensionColumns = [
   ['first_name', 'First Name', 80],
   ['last_name', 'Last Name', 80],
-  ['suspension_term', 'Return Date / Suspension Term', 160],
+  ['suspension_term', 'Return Date / Suspension', 160],
   ['suspension_information', 'Suspension Information', 240],
   ['details', 'Details', 1000],
   ['current_organization', 'Current Organization', 120],
 ];
 let adminSuspensions = [];
+
+function suspensionDisplayValue(key,value){
+  return key === 'current_organization' && value === 'Free Agent' ? '' : value;
+}
 
 async function enableSuspensions(me){
   const {data} = await sb.from('nal_super_admins').select('user_id').eq('is_active', true).maybeSingle();
@@ -30,11 +34,11 @@ async function renderAdminSuspensions(gen){
   if(gen !== viewGeneration) return;
   if(error) throw error;
   adminSuspensions = data;
-  const headings = suspensionColumns.map(([,label]) => '<th scope="col">'+esc(label)+'</th>').join('');
-  const rows = data.map(row => '<tr>'+columns.map(key => '<td>'+esc(row[key])+'</td>').join('')+
-    '<td>'+action('suspension-edit','Edit','data-id="'+esc(row.id)+'" aria-label="Edit '+esc(row.first_name+' '+row.last_name)+'"')+' '+action('suspension-remove','Remove','data-id="'+esc(row.id)+'" aria-label="Remove '+esc(row.first_name+' '+row.last_name)+'"')+'</td></tr>').join('');
+  const headings = suspensionColumns.map(([,label]) => '<th scope="col" style="text-align:center">'+esc(label)+'</th>').join('');
+  const rows = data.map(row => '<tr>'+columns.map(key => '<td style="text-align:center">'+esc(suspensionDisplayValue(key,row[key]))+'</td>').join('')+
+    '<td style="text-align:center">'+action('suspension-edit','Edit','data-id="'+esc(row.id)+'" aria-label="Edit '+esc(row.first_name+' '+row.last_name)+'"')+' '+action('suspension-remove','Remove','data-id="'+esc(row.id)+'" aria-label="Remove '+esc(row.first_name+' '+row.last_name)+'"')+'</td></tr>').join('');
   $('#page').innerHTML = '<div class="actions">'+action('suspension-add','Add Suspension','','primary')+'</div>'+
-    (rows ? '<div class="table-wrap"><table><thead><tr>'+headings+'<th scope="col">Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+    (rows ? '<div class="table-wrap"><table><thead><tr>'+headings+'<th scope="col" style="text-align:center">Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
       : '<p class="empty">No active suspensions.</p>');
 }
 
@@ -45,7 +49,7 @@ function openSuspensionEditor(id){
   const fields = suspensionColumns.map(([key,label,length],index) => {
     const attrs = ' name="'+key+'" maxlength="'+length+'"'+(index < 4 ? ' required' : '');
     const control = key === 'details' ? '<textarea'+attrs+'>'+esc(record[key])+'</textarea>'
-      : '<input'+attrs+' value="'+esc(record[key])+'"'+(key === 'current_organization' ? ' placeholder="Free Agent"' : '')+'>';
+      : '<input'+attrs+' value="'+esc(suspensionDisplayValue(key,record[key]))+'"'+'>';
     return '<label>'+esc(label)+control+'</label>';
   }).join('');
   showEditor(row ? 'Edit Suspension' : 'Add Suspension','<form id="suspension-editor" data-id="'+esc(id)+'">'+fields+'<button type="submit" class="primary">Save Suspension</button></form>');
