@@ -32,20 +32,23 @@ async function renderAdminSuspensions(gen){
   adminSuspensions = data;
   const headings = suspensionColumns.map(([,label]) => '<th scope="col">'+esc(label)+'</th>').join('');
   const rows = data.map(row => '<tr>'+columns.map(key => '<td>'+esc(row[key])+'</td>').join('')+
-    '<td>'+action('suspension-remove','Remove','data-id="'+esc(row.id)+'" aria-label="Remove '+esc(row.first_name+' '+row.last_name)+'"')+'</td></tr>').join('');
+    '<td>'+action('suspension-edit','Edit','data-id="'+esc(row.id)+'" aria-label="Edit '+esc(row.first_name+' '+row.last_name)+'"')+' '+action('suspension-remove','Remove','data-id="'+esc(row.id)+'" aria-label="Remove '+esc(row.first_name+' '+row.last_name)+'"')+'</td></tr>').join('');
   $('#page').innerHTML = '<div class="actions">'+action('suspension-add','Add Suspension','','primary')+'</div>'+
     (rows ? '<div class="table-wrap"><table><thead><tr>'+headings+'<th scope="col">Actions</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
       : '<p class="empty">No active suspensions.</p>');
 }
 
-function openSuspensionEditor(){
+function openSuspensionEditor(id){
+  const row = id ? adminSuspensions.find(record => record.id === id) : null;
+  if(id && !row) return;
+  const record = row || {};
   const fields = suspensionColumns.map(([key,label,length],index) => {
     const attrs = ' name="'+key+'" maxlength="'+length+'"'+(index < 4 ? ' required' : '');
-    const control = key === 'details' ? '<textarea'+attrs+'></textarea>'
-      : '<input'+attrs+(key === 'current_organization' ? ' placeholder="Free Agent"' : '')+'>';
+    const control = key === 'details' ? '<textarea'+attrs+'>'+esc(record[key])+'</textarea>'
+      : '<input'+attrs+' value="'+esc(record[key])+'"'+(key === 'current_organization' ? ' placeholder="Free Agent"' : '')+'>';
     return '<label>'+esc(label)+control+'</label>';
   }).join('');
-  showEditor('Add Suspension','<form id="suspension-editor">'+fields+'<button type="submit" class="primary">Save Suspension</button></form>');
+  showEditor(row ? 'Edit Suspension' : 'Add Suspension','<form id="suspension-editor" data-id="'+esc(id)+'">'+fields+'<button type="submit" class="primary">Save Suspension</button></form>');
 }
 
 async function removeAdminSuspension(id){
@@ -67,12 +70,17 @@ document.addEventListener('submit', event => {
     const input = new FormData(event.target);
     const values = Object.fromEntries(suspensionColumns.map(([key]) => [key, input.get(key).trim()]));
     values.current_organization ||= 'Free Agent';
-    const {error} = await sb.from('nal_portal_suspensions').insert(values);
+    const id = event.target.dataset.id;
+    const table = sb.from('nal_portal_suspensions');
+    const {data,error} = id
+      ? await table.update(values).eq('id',id).eq('archived',false).select('id').maybeSingle()
+      : await table.insert(values);
     if(error) throw error;
+    if(id && !data) throw new Error('This suspension is no longer on the active list. Close this form and refresh.');
     closeEditor();
     if(section !== 'suspensions') return;
     await renderAdminSuspensions(viewGeneration);
-    if(section === 'suspensions') message('Suspension added.');
+    if(section === 'suspensions') message(id ? 'Suspension updated.' : 'Suspension added.');
   });
 });
 
@@ -140,7 +148,7 @@ function rosterEditor(id,status){
 function updateRosterFields(){const f=$('#roster-form');if(!f)return;const status=f.elements.rosterStatus.value;$('#roster-injury').hidden=status!=='Injured Reserve';f.elements.injuryLength.required=status==='Injured Reserve';$('#roster-reason').hidden=status!=='Suspended';f.elements.reason.required=status==='Suspended';}
 document.addEventListener('change',e=>{if(e.target.name==='rosterStatus'&&e.target.closest('#roster-form'))updateRosterFields();});
 function staffEditor(id){const m=members.find(m=>m.id===id);showEditor('Choose dashboard access','<form id="staff-form" data-id="'+m.id+'"><p>'+esc(m.display_name)+' · '+esc(m.email)+'</p>'+permissionCheckboxes(m.sections||[])+'<p class="muted">These choices control dashboard access only. Their Forum role and NAL Employee badge stay unchanged.</p><button class="primary" type="submit">Save access</button></form>');}
-document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.section){navigate(b.dataset.section);return;}if(b.id==='refresh'){navigate(section);return;}if(b.id==='close-editor'){closeEditor();return;}if(!b.dataset.action)return;busy(b,async()=>{switch(b.dataset.action){case 'suspension-add':openSuspensionEditor();break;case 'suspension-remove':await removeAdminSuspension(b.dataset.id);break;case 'tx-filter':$('#tx-status').value=b.dataset.status;drawTransactions();break;case 'tx-all':txShowAll=true;drawTransactions();break;case 'tx-recent':txShowAll=false;drawTransactions();break;case 'view-transaction':transactionDetail(b.dataset.id);break;case 'roster-from-detail':closeEditor();rosterEditor(b.dataset.id);break;case 'invite-staff':inviteEditor();break;case 'staff-link':inviteEditor(b.dataset.id);break;case 'new-poll':newPoll();break;case 'add-choice':addChoice();break;case 'poll-status':if(confirm('Set this poll to '+b.dataset.status+'?')){await api('polls',{action:'status',id:b.dataset.id,status:b.dataset.status});await navigate('polls');message('Poll updated.');}break;case 'new-friday':fridayEditor();break;case 'edit-friday':fridayEditor(true);break;case 'add-friday-game':addFridayGame();break;case 'close-friday':await fridayStatus('closed');break;case 'activate-friday':await fridayStatus('active');break;case 'edit-asset':await openAssetEditor(b.dataset.id);break;case 'roster':rosterEditor(b.dataset.id);break;case 'staff-role':staffEditor(b.dataset.id);break;}});});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.section){navigate(b.dataset.section);return;}if(b.id==='refresh'){navigate(section);return;}if(b.id==='close-editor'){closeEditor();return;}if(!b.dataset.action)return;busy(b,async()=>{switch(b.dataset.action){case 'suspension-add':openSuspensionEditor();break;case 'suspension-edit':openSuspensionEditor(b.dataset.id);break;case 'suspension-remove':await removeAdminSuspension(b.dataset.id);break;case 'tx-filter':$('#tx-status').value=b.dataset.status;drawTransactions();break;case 'tx-all':txShowAll=true;drawTransactions();break;case 'tx-recent':txShowAll=false;drawTransactions();break;case 'view-transaction':transactionDetail(b.dataset.id);break;case 'roster-from-detail':closeEditor();rosterEditor(b.dataset.id);break;case 'invite-staff':inviteEditor();break;case 'staff-link':inviteEditor(b.dataset.id);break;case 'new-poll':newPoll();break;case 'add-choice':addChoice();break;case 'poll-status':if(confirm('Set this poll to '+b.dataset.status+'?')){await api('polls',{action:'status',id:b.dataset.id,status:b.dataset.status});await navigate('polls');message('Poll updated.');}break;case 'new-friday':fridayEditor();break;case 'edit-friday':fridayEditor(true);break;case 'add-friday-game':addFridayGame();break;case 'close-friday':await fridayStatus('closed');break;case 'activate-friday':await fridayStatus('active');break;case 'edit-asset':await openAssetEditor(b.dataset.id);break;case 'roster':rosterEditor(b.dataset.id);break;case 'staff-role':staffEditor(b.dataset.id);break;}});});
 document.addEventListener('input',e=>{if(e.target.id==='tx-search')drawTransactions();if(e.target.id==='asset-search')drawAssets();if(e.target.id==='staff-search')drawStaff();});
 document.addEventListener('change',e=>{if(['tx-status','tx-org','tx-type'].includes(e.target.id))drawTransactions();if(e.target.id==='asset-group')drawAssets();if(e.target.id==='friday-select'&&e.target.value)loadFriday(e.target.value).catch(e=>message(e.message,true));});
 document.addEventListener('submit',e=>{if(['login-form','invitation-form'].includes(e.target.id))return;const f=e.target;if(!['poll-form','friday-form','asset-form','roster-form','staff-form','invite-form'].includes(f.id))return;e.preventDefault();const b=e.submitter,values=new FormData(f);busy(b,async()=>{
