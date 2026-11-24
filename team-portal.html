@@ -42,6 +42,7 @@ select,input{font:inherit}
 .auth-message{font-size:13px;margin-top:12px;color:var(--muted)}
 .auth-message.error{color:var(--danger)}
 .auth-message.success{color:var(--green)}
+#suspensionsView th,#suspensionsView td{text-align:center}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -154,10 +155,10 @@ select,input{font:inherit}
     <div class="grid">
       <label class="field">First Name<input style="display:block;width:100%;margin-top:6px" name="first_name" maxlength="80" required></label>
       <label class="field">Last Name<input style="display:block;width:100%;margin-top:6px" name="last_name" maxlength="80" required></label>
-      <label class="field">Return Date / Suspension Term<input style="display:block;width:100%;margin-top:6px" name="suspension_term" maxlength="160" required></label>
+      <label class="field">Return Date / Suspension<input style="display:block;width:100%;margin-top:6px" name="suspension_term" maxlength="160" required></label>
       <label class="field">Suspension Information<input style="display:block;width:100%;margin-top:6px" name="suspension_information" maxlength="240" required></label>
       <label class="field">Details<input style="display:block;width:100%;margin-top:6px" name="details" maxlength="1000"></label>
-      <label class="field">Current Organization<input style="display:block;width:100%;margin-top:6px" name="current_organization" maxlength="120" placeholder="Free Agent"></label>
+      <label class="field">Current Organization<input style="display:block;width:100%;margin-top:6px" name="current_organization" maxlength="120"></label>
     </div>
     <div class="manage-actions">
       <button type="button" class="btn" onclick="this.form.reset(); this.form.hidden = true">Cancel</button>
@@ -169,7 +170,7 @@ select,input{font:inherit}
     <div class="panelhead"><h3>League Suspension List</h3><span class="pill" id="suspensionCount"></span></div>
     <div style="overflow-x:auto" role="region" aria-label="League suspension list" tabindex="0">
       <table>
-        <thead><tr><th scope="col">First Name</th><th scope="col">Last Name</th><th scope="col">Return Date / Suspension Term</th><th scope="col">Suspension Information</th><th scope="col">Details</th><th scope="col">Current Organization</th><th scope="col" id="suspensionActions" hidden>Actions</th></tr></thead>
+        <thead><tr><th scope="col">First Name</th><th scope="col">Last Name</th><th scope="col">Return Date / Suspension</th><th scope="col">Suspension Information</th><th scope="col">Details</th><th scope="col">Current Organization</th><th scope="col" id="suspensionActions" hidden>Actions</th></tr></thead>
         <tbody id="suspensionRows"></tbody>
       </table>
     </div>
@@ -686,7 +687,7 @@ function renderSuspensions(){
   $("suspensionCount").textContent = suspensions.length + (suspensions.length === 1 ? " ENTRY" : " ENTRIES");
   $("suspensionActions").hidden = !IS_SUPER_ADMIN;
   $("suspensionRows").innerHTML = suspensions.map(row => {
-    const cells = suspensionFields.map(field => "<td>" + esc(row[field]) + "</td>").join("");
+    const cells = suspensionFields.map(field => "<td>" + esc(field === "current_organization" && row[field] === "Free Agent" ? "" : row[field]) + "</td>").join("");
     const action = IS_SUPER_ADMIN ? '<td><button type="button" class="btn" data-suspension-id="' + esc(row.id) + '" aria-label="Remove ' + esc(row.first_name + " " + row.last_name) + '">Remove</button></td>' : "";
     return "<tr>" + cells + action + "</tr>";
   }).join("");
