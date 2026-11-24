@@ -145,52 +145,32 @@ select,input{font:inherit}
 <div id="suspensionsView" style="display:none">
   <section class="hero">
     <div><div class="eyebrow">2027 SEASON</div><h2>Suspensions</h2></div>
+    <div>
+      <button type="button" id="suspensionLogin" class="btn" onclick="openAdminLogin()">Manage Suspensions</button>
+      <button type="button" id="addSuspensionButton" class="primary" hidden onclick="$('suspensionForm').hidden = false; $('suspensionForm').elements.first_name.focus()">+ Add Suspension</button>
+    </div>
   </section>
+  <form id="suspensionForm" class="panel" style="padding:18px" hidden>
+    <div class="grid">
+      <label class="field">First Name<input style="display:block;width:100%;margin-top:6px" name="first_name" maxlength="80" required></label>
+      <label class="field">Last Name<input style="display:block;width:100%;margin-top:6px" name="last_name" maxlength="80" required></label>
+      <label class="field">Return Date / Suspension Term<input style="display:block;width:100%;margin-top:6px" name="suspension_term" maxlength="160" required></label>
+      <label class="field">Suspension Information<input style="display:block;width:100%;margin-top:6px" name="suspension_information" maxlength="240" required></label>
+      <label class="field">Details<input style="display:block;width:100%;margin-top:6px" name="details" maxlength="1000"></label>
+      <label class="field">Current Organization<input style="display:block;width:100%;margin-top:6px" name="current_organization" maxlength="120" placeholder="Free Agent"></label>
+    </div>
+    <div class="manage-actions">
+      <button type="button" class="btn" onclick="this.form.reset(); this.form.hidden = true">Cancel</button>
+      <button type="submit" class="primary">Save Suspension</button>
+    </div>
+  </form>
+  <p id="suspensionMessage" role="status"></p>
   <section class="panel">
-    <div class="panelhead"><h3>League Suspension List</h3><span class="pill">38 ENTRIES</span></div>
+    <div class="panelhead"><h3>League Suspension List</h3><span class="pill" id="suspensionCount"></span></div>
     <div style="overflow-x:auto" role="region" aria-label="League suspension list" tabindex="0">
       <table>
-        <thead><tr><th scope="col">First Name</th><th scope="col">Last Name</th><th scope="col">Return Date / Suspension Term</th><th scope="col">Suspension Information</th><th scope="col">Details</th><th scope="col">Current Organization</th></tr></thead>
-        <tbody>
-          <tr><td>Shamari</td><td>Williams</td><td>2/2/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Llonel</td><td>Whitteingham</td><td>2/27/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Keith</td><td>Coffee</td><td>2/27/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Jaron</td><td>Wilson</td><td>2/27/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Carlos</td><td>Thompson</td><td>3/25/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Aaron</td><td>Dilworth</td><td>4/11/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Douglas</td><td>Tucker</td><td>4/13/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Jared</td><td>Bronson</td><td>4/30/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Cayden</td><td>Burger</td><td>10/22/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Brandon</td><td>Thorpe</td><td>10/28/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Dominique</td><td>Robertson</td><td>11/1/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Tabyus</td><td>Taylor</td><td>11/2/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Lou</td><td>Dorsey</td><td>11/5/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Alex</td><td>Coleman</td><td>11/17/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Jaelyn</td><td>Lay</td><td>11/20/27</td><td>Breach of Contract</td><td>Signed with another league</td><td>Free Agent</td></tr>
-          <tr><td>Rodney</td><td>Timmons</td><td>1 League Game</td><td>Conduct Unbecoming</td><td>Ejection from game</td><td>Free Agent</td></tr>
-          <tr><td>Matt</td><td>Friess</td><td>2027 Season</td><td>$500 Fine Due</td><td>Entering the stands</td><td>Free Agent</td></tr>
-          <tr><td>LaGrant</td><td>Pegram Jr</td><td>2 League Games</td><td>Conduct Unbecoming</td><td>Ejection from game / language towards officials</td><td>Amarillo</td></tr>
-          <tr><td>Damion</td><td>Powell</td><td>2 League Games</td><td>Conduct Unbecoming</td><td>Ejection from game / language towards officials</td><td>Free Agent</td></tr>
-          <tr><td>Miqueal</td><td>Pillow-Smiley</td><td>2 League Games</td><td>Conduct Unbecoming</td><td>Ejection from game / language towards officials</td><td>Amarillo</td></tr>
-          <tr><td>Desmond</td><td>Raiford</td><td>2 League Games</td><td>Conduct Unbecoming</td><td>$175 fine due before games count</td><td>Louisiana</td></tr>
-          <tr><td>Laronji</td><td>Vason-McCoy</td><td>2 League Games</td><td>Conduct Detrimental</td><td>Social media post damaging to league</td><td>Colorado</td></tr>
-          <tr><td>Kyle</td><td>Lester</td><td>2027 Season + 2 League Games (2028)</td><td>Breach of Contract / Ejection Altercation</td><td>Multiple offenses</td><td>Free Agent</td></tr>
-          <tr><td>Monquez</td><td>Moore</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
-          <tr><td>Joshua</td><td>Neal</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Amarillo</td><td>Free Agent</td></tr>
-          <tr><td>Juwon</td><td>Mullins</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
-          <tr><td>Aaron</td><td>Young</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
-          <tr><td>D'Nerius</td><td>Antoine</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
-          <tr><td>Rashad</td><td>Ridley</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
-          <tr><td>Jacobi</td><td>Brewer</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
-          <tr><td>Larry</td><td>Moton</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
-          <tr><td>Trayoun</td><td>Maxie</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Louisiana</td><td>Free Agent</td></tr>
-          <tr><td>Brian</td><td>Price</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Omaha</td><td>Free Agent</td></tr>
-          <tr><td>Myron</td><td>Mounds</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Wheeling</td><td>Free Agent</td></tr>
-          <tr><td>Raymond</td><td>Cutts</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Wheeling</td><td>Free Agent</td></tr>
-          <tr><td>Kendrey</td><td>Thurman</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Wheeling</td><td>Free Agent</td></tr>
-          <tr><td>Andre</td><td>Thomas-Cobb</td><td>Indefinite</td><td>Equipment Owed to Organization</td><td>Wheeling</td><td>Free Agent</td></tr>
-          <tr><td>Darrien</td><td>Crowe</td><td>Indefinite</td><td>Conduct Detrimental / Conduct Unbecoming</td><td>Physical altercation with a fan</td><td>Free Agent</td></tr>
-        </tbody>
+        <thead><tr><th scope="col">First Name</th><th scope="col">Last Name</th><th scope="col">Return Date / Suspension Term</th><th scope="col">Suspension Information</th><th scope="col">Details</th><th scope="col">Current Organization</th><th scope="col" id="suspensionActions" hidden>Actions</th></tr></thead>
+        <tbody id="suspensionRows"></tbody>
       </table>
     </div>
   </section>
@@ -324,6 +304,10 @@ async function refreshAdminState(){
     IS_SUPER_ADMIN = !!data;
   }
   $("adminBadge").style.display = IS_SUPER_ADMIN ? "inline-block" : "none";
+  $("suspensionLogin").hidden = IS_SUPER_ADMIN;
+  $("addSuspensionButton").hidden = !IS_SUPER_ADMIN;
+  if(!IS_SUPER_ADMIN) $("suspensionForm").hidden = true;
+  renderSuspensions();
   $("accountNav").textContent = IS_SUPER_ADMIN ? "Super Admin" : "Admin Login";
   $("adminLoggedOut").style.display = IS_SUPER_ADMIN ? "none" : "block";
   $("adminLoggedIn").style.display = IS_SUPER_ADMIN ? "block" : "none";
@@ -694,12 +678,76 @@ function showDocuments(){
   activateNav("docsNav"); window.scrollTo(0,0);
 }
 
+
+const suspensionFields = ["first_name","last_name","suspension_term","suspension_information","details","current_organization"];
+let suspensions = [];
+
+function renderSuspensions(){
+  $("suspensionCount").textContent = suspensions.length + (suspensions.length === 1 ? " ENTRY" : " ENTRIES");
+  $("suspensionActions").hidden = !IS_SUPER_ADMIN;
+  $("suspensionRows").innerHTML = suspensions.map(row => {
+    const cells = suspensionFields.map(field => "<td>" + esc(row[field]) + "</td>").join("");
+    const action = IS_SUPER_ADMIN ? '<td><button type="button" class="btn" data-suspension-id="' + esc(row.id) + '" aria-label="Remove ' + esc(row.first_name + " " + row.last_name) + '">Remove</button></td>' : "";
+    return "<tr>" + cells + action + "</tr>";
+  }).join("");
+}
+
+async function loadSuspensions(){
+  const {data,error} = await sb.from("nal_portal_suspensions")
+    .select(["id", ...suspensionFields].join(",")).eq("archived",false).order("sort_order");
+  if(error){
+    $("suspensionMessage").textContent = "Unable to load suspensions. Please reopen this tab to retry.";
+    return false;
+  }
+  suspensions = data;
+  renderSuspensions();
+  return true;
+}
+
+$("suspensionForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if(!IS_SUPER_ADMIN) return;
+  const form = event.currentTarget;
+  const input = new FormData(form);
+  const values = Object.fromEntries(suspensionFields.map(field => [field,input.get(field).trim()]));
+  values.current_organization ||= "Free Agent";
+  const save = form.querySelector('[type="submit"]');
+  save.disabled = true;
+  const {error} = await sb.from("nal_portal_suspensions").insert(values);
+  save.disabled = false;
+  if(error){
+    $("suspensionMessage").textContent = "Unable to save the suspension. Check the fields and try again.";
+    return;
+  }
+  form.reset();
+  form.hidden = true;
+  if(await loadSuspensions()) $("suspensionMessage").textContent = "Suspension added.";
+});
+
+$("suspensionRows").addEventListener("click", async event => {
+  const button = event.target.closest("button[data-suspension-id]");
+  if(!button || !IS_SUPER_ADMIN) return;
+  const row = suspensions.find(item => item.id === button.dataset.suspensionId);
+  if(!row || !window.confirm("Remove " + row.first_name + " " + row.last_name + " from the suspension list?")) return;
+  button.disabled = true;
+  const {data,error} = await sb.from("nal_portal_suspensions").update({archived:true})
+    .eq("id",row.id).eq("archived",false).select("id").maybeSingle();
+  if(error){
+    button.disabled = false;
+    $("suspensionMessage").textContent = "Unable to remove the suspension. Please try again.";
+    return;
+  }
+  if(await loadSuspensions()) $("suspensionMessage").textContent = data ? "Suspension removed." : "This suspension was already removed.";
+});
+
 function showSuspensions(){
   $("transactionsView").style.display="none";
   $("rosterView").style.display="none";
   $("documentsView").style.display="none";
   $("suspensionsView").style.display="block";
   activateNav("suspensionsNav"); window.scrollTo(0,0);
+  $("suspensionMessage").textContent = "Loading suspensions…";
+  loadSuspensions().then(loaded => { if(loaded && $("suspensionMessage").textContent === "Loading suspensions…") $("suspensionMessage").textContent = ""; });
 }
 
 refreshAdminState();
